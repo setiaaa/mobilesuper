@@ -1,17 +1,22 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    presets: [
+      "babel-preset-expo",
+      ["@babel/preset-typescript", { allowDeclareFields: true }],
+    ],
     plugins: [
+      "react-native-reanimated/plugin",
       [
-        'react-native-reanimated/plugin', {
-          relativeSourceLocation: true,
-        }
-      ]
+        "babel-plugin-inline-import",
+        {
+          extensions: [".svg"],
+        },
+      ],
     ],
     env: {
       production: {
-        plugins: ['react-native-paper/babel'],
+        plugins: ["react-native-paper/babel"],
       },
     },
   };
