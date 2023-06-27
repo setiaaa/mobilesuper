@@ -10,7 +10,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import { Button, Chip, IconButton } from "react-native-paper";
+import { Button, Chip, Divider, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
@@ -27,6 +27,12 @@ import moment from "moment";
 import SearchFilter from "../../../components/UI/SearchFilter";
 import { Config } from "../../../constants/config";
 import LottieView from "lottie-react-native";
+
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+
+import { LinearGradient } from "expo-linear-gradient";
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 
 function IncomingList({ route }) {
   const [list, setList] = useState([]);
@@ -155,15 +161,122 @@ function IncomingList({ route }) {
     </>
   );
 
+  // const skeleton = () => {
+  //   for (let i = 0; i <= 4; i++) {
+  //     return (
+  //       <>
+  //         <View key={i} style={{ backgroundColor: '#f0f0f0', height: 100, width: '100%' }}>
+  //           <ShimmerPlaceholder width={400} height={20} />
+  //           <View style={{ flexDirection: 'row', marginLeft: 20, marginVertical: 10 }}>
+  //             <ShimmerPlaceholder width={40} height={40} shimmerStyle={{ marginTop: 5, borderRadius: 40 }} />
+  //             <View>
+  //               <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+  //               <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+  //             </View>
+  //             <View style={{ marginLeft: 70 }}>
+  //               <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+  //               <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+  //             </View>
+  //           </View>
+  //           <Divider bold style={{ marginTop: 10 }} />
+  //         </View>
+
+  //         <View key={i} style={{ backgroundColor: '#f0f0f0', height: 100, width: '100%' }}>
+  //           <ShimmerPlaceholder width={400} height={20} />
+  //           <View style={{ flexDirection: 'row', marginLeft: 20, marginVertical: 10 }}>
+  //             <ShimmerPlaceholder width={40} height={40} shimmerStyle={{ marginTop: 5, borderRadius: 40 }} />
+  //             <View>
+  //               <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+  //               <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+  //             </View>
+  //             <View style={{ marginLeft: 70 }}>
+  //               <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+  //               <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+  //             </View>
+  //           </View>
+  //           <Divider bold style={{ marginTop: 10 }} />
+  //         </View>
+  //       </>
+  //     )
+  //   }
+  // }
+
   const listEmpty = (
     <View style={styles.notFound}>
-      <LottieView
+      {/* <LottieView
         autoPlay
         ref={animation}
         style={[styles.titleNotFound, { width: "100%", height: 200 }]}
         // Find more Lottie files at https://lottiefiles.com/featured
         source={Config.notFound}
-      />
+      /> */}
+      <View style={{ backgroundColor: '#f0f0f0', height: 100, width: '100%' }}>
+        <ShimmerPlaceholder width={400} height={20} />
+        <View style={{ flexDirection: 'row', marginLeft: 20, marginVertical: 10 }}>
+          <ShimmerPlaceholder width={40} height={40} shimmerStyle={{ marginTop: 5, borderRadius: 40 }} />
+          <View>
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+          </View>
+          <View style={{ marginLeft: 70 }}>
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+          </View>
+        </View>
+        <Divider bold style={{ marginTop: 10 }} />
+      </View>
+
+      <View style={{ backgroundColor: '#f0f0f0', height: 100, width: '100%' }}>
+        <ShimmerPlaceholder width={400} height={20} />
+        <View style={{ flexDirection: 'row', marginLeft: 20, marginVertical: 10 }}>
+          <ShimmerPlaceholder width={40} height={40} shimmerStyle={{ marginTop: 5, borderRadius: 40 }} />
+          <View>
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+          </View>
+          <View style={{ marginLeft: 70 }}>
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+          </View>
+        </View>
+        <Divider bold style={{ marginTop: 10 }} />
+      </View>
+
+      <View style={{ backgroundColor: '#f0f0f0', height: 100, width: '100%' }}>
+        <ShimmerPlaceholder width={400} height={20} />
+        <View style={{ flexDirection: 'row', marginLeft: 20, marginVertical: 10 }}>
+          <ShimmerPlaceholder width={40} height={40} shimmerStyle={{ marginTop: 5, borderRadius: 40 }} />
+          <View>
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+          </View>
+          <View style={{ marginLeft: 70 }}>
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+          </View>
+        </View>
+        <Divider bold style={{ marginTop: 10 }} />
+      </View>
+
+      <View style={{ backgroundColor: '#f0f0f0', height: 100, width: '100%' }}>
+        <ShimmerPlaceholder width={400} height={20} />
+        <View style={{ flexDirection: 'row', marginLeft: 20, marginVertical: 10 }}>
+          <ShimmerPlaceholder width={40} height={40} shimmerStyle={{ marginTop: 5, borderRadius: 40 }} />
+          <View>
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+            <ShimmerPlaceholder width={200} height={15} shimmerStyle={{ marginVertical: 5, marginLeft: 10 }} />
+          </View>
+          <View style={{ marginLeft: 70 }}>
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+            <ShimmerPlaceholder width={30} height={15} shimmerStyle={{ marginVertical: 5 }} />
+          </View>
+        </View>
+        <Divider bold style={{ marginTop: 10 }} />
+      </View>
+      {/* <View style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+        {skeleton()}
+      </View> */}
       <Text style={styles.titleNotFound}>
         {isLoading
           ? "Loading..."
@@ -445,6 +558,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    marginVertical: 20
   },
   titleNotFound: {
     textAlign: "center",

@@ -32,6 +32,12 @@ import { setDataNotif } from "../../../../store/pushnotif";
 import * as Clipboard from "expo-clipboard";
 import { setClipboard } from "../../../../store/snackbar";
 
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+
+import { LinearGradient } from "expo-linear-gradient";
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
+
 //untuk detail agenda yang isi suratnya langsung terbaca tanpa view document
 function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
   const profile = useSelector((state) => state.profile.profile);
@@ -40,6 +46,17 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
   const [openKepada, setOpenKepada] = useState(false);
   const [openTembusan, setOpenTembusan] = useState(false);
   const [view, setView] = useState("");
+
+  const [loading, setLoading] = useState(true)
+  const [title, setTitle] = useState("")
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000);
+  })
+
+
   const zoomInOutAndroid = `
                     const meta = document.createElement('meta');
                     meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0');
@@ -143,8 +160,8 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
         // this changes the bit after the last slash of the uri (the document's name) to "invoice_<date of transaction"
 
         const pdfName = `${uri?.slice(0, uri?.lastIndexOf("/") + 1)}${Platform.OS == "android"
-            ? data.subject
-            : data.subject.slice(0, 55).replaceAll(" ", "_")
+          ? data.subject
+          : data.subject.slice(0, 55).replaceAll(" ", "_")
           }.pdf`;
         try {
           await FileSystem.moveAsync({
@@ -228,9 +245,13 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
           <View>
             <Text style={styles.titleLabel}>Perihal</Text>
             <View style={styles.subtitleCopy}>
-              <Text style={[styles.subtitleLabel, { width: "88%" }]}>
-                {data && data.subject}
-              </Text>
+              {loading ? (
+                <ShimmerPlaceholder width={300} shimmerStyle={{ borderRadius: 40 }} />
+              ) : (
+                <Text style={[styles.subtitleLabel, { width: "88%" }]}>
+                  {data && data.subject}
+                </Text>
+              )}
               <IconButton
                 icon="content-copy"
                 size={20}
@@ -252,38 +273,66 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
         <View style={styles.containerLabel}>
           <View>
             <Text style={styles.titleLabel}>Tgl Diterima</Text>
-            <Text style={styles.subtitleLabel}>{data && data.letter_date}</Text>
+            {loading ? (
+              <ShimmerPlaceholder width={50} shimmerStyle={{ borderRadius: 40 }} />
+            ) : (
+              <Text style={styles.subtitleLabel}>
+                {data && data.letter_date}
+              </Text>
+            )}
           </View>
           <View>
             <Text style={styles.titleLabel}>Lampiran</Text>
-            <Text style={styles.subtitleLabel}>
-              {data && data.attachment ? data.attachment : "-"}
-            </Text>
+            {loading ? (
+              <ShimmerPlaceholder width={30} shimmerStyle={{ borderRadius: 40 }} />
+            ) : (
+              <Text style={styles.subtitleLabel}>
+                {data && data.attachment ? data.attachment : "-"}
+              </Text>
+            )}
           </View>
           <View>
             <Text style={styles.titleLabel}>Kode Masalah</Text>
-            <Text style={styles.subtitleLabel}>
-              {data && data.problem_code}
-            </Text>
+            {loading ? (
+              <ShimmerPlaceholder width={50} shimmerStyle={{ borderRadius: 40 }} />
+            ) : (
+              <Text style={styles.subtitleLabel}>
+                {data && data.problem_code}
+              </Text>
+            )}
           </View>
         </View>
-        {noAgenda != null && (
+        <View style={[styles.containerLabel, { marginBottom: 0 }]}>
+          <View>
+            <Text style={styles.titleLabel}>Nomor Agenda</Text>
+            {loading ? (
+              <ShimmerPlaceholder width={100} shimmerStyle={{ borderRadius: 40 }} />
+            ) : (
+              <Text style={styles.subtitleLabel}>{noAgenda}</Text>
+            )}
+          </View>
+        </View>
+        {/* {noAgenda != null && (
           <View style={[styles.containerLabel, { marginBottom: 0 }]}>
             <View>
               <Text style={styles.titleLabel}>Nomor Agenda</Text>
               <Text style={styles.subtitleLabel}>{noAgenda}</Text>
             </View>
           </View>
-        )}
+        )} */}
         <View style={[styles.containerLabel, { marginBottom: -2 }]}>
           <View>
-            <Text style={[styles.titleLabel, { marginBottom: -8 }]}>
+            <Text style={[styles.titleLabel, { marginBottom: -10 }]}>
               Nomor Surat
             </Text>
             <View style={[styles.subtitleCopy, { paddingBottom: 0 }]}>
-              <Text style={styles.subtitleLabel}>
-                {data && data.ref_number}
-              </Text>
+              {loading ? (
+                <ShimmerPlaceholder width={200} shimmerStyle={{ borderRadius: 40 }} />
+              ) : (
+                <Text style={styles.subtitleLabel}>
+                  {data && data.ref_number}
+                </Text>
+              )}
               <IconButton
                 icon="content-copy"
                 size={20}
@@ -321,6 +370,11 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                 {data && data.kepada_bank}
               </Text>
             )}
+            {loading ? (
+              <ShimmerPlaceholder width={300} shimmerStyle={{ borderRadius: 40 }} />
+            ) : (
+              <></>
+            )}
             {data &&
               data.receivers_display?.length == 0 &&
               data.kepada_bank?.length == 0 && (
@@ -328,11 +382,13 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                   {data && data.receivers?.length == 0 && <Text>-</Text>}
                   {data && data.receivers?.length == 1 && (
                     <>
-                      {data.template.name != "nota_external" && (
+                      {data.template.name != "nota_external" && !loading ? (
                         <Text>
                           {Config.prefix}
                           {data.receivers[0]}
                         </Text>
+                      ) : (
+                        <></>
                       )}
                       {data.template.name == "nota_external" && (
                         <RenderHTML
@@ -446,12 +502,14 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
         <View style={styles.containerLabel}>
           <View>
             <Text style={styles.titleLabel}>Dari</Text>
-            {data && data.komentar.length <= 1 && (
+            {data && data.komentar.length <= 1 && !loading ? (
               <Text style={styles.subtitleLabel}>
                 {data && data?.senders[0].title
                   ? data.senders[0].title
                   : data.senders[0].name}
               </Text>
+            ) : (
+              <ShimmerPlaceholder width={350} shimmerStyle={{ borderRadius: 40 }} />
             )}
             {data && data.komentar.length > 1 && (
               <Text>
@@ -531,31 +589,36 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                 // data?.template?.name != "undangan" &&
                 // data?.template?.name != "poh"&& */}
               <View style={{ borderWidth: 1 }}>
-                <WebView
-                  bounces={true}
-                  originWhitelist={["*"]}
-                  source={{
-                    html: body,
-                  }}
-                  style={{
-                    width: width - 34,
-                    minHeight: 400,
-                  }}
-                  // injectedJavaScript={
-                  //   Platform.OS == "android" ? '' : zoomInOutIos
-                  // }
-                  setBuiltInZoomControls={true}
-                  onShouldStartLoadWithRequest={(event) => {
-                    if (event.url != "about:blank") {
-                      if (event.url !== body) {
-                        Linking.openURL(event.url);
-                        return false;
+                {loading ? (
+                  <ShimmerPlaceholder height={400} width={350} />
+                ) : (
+
+                  <WebView
+                    bounces={true}
+                    originWhitelist={["*"]}
+                    source={{
+                      html: body,
+                    }}
+                    style={{
+                      width: width - 34,
+                      minHeight: 400,
+                    }}
+                    // injectedJavaScript={
+                    //   Platform.OS == "android" ? '' : zoomInOutIos
+                    // }
+                    setBuiltInZoomControls={true}
+                    onShouldStartLoadWithRequest={(event) => {
+                      if (event.url != "about:blank") {
+                        if (event.url !== body) {
+                          Linking.openURL(event.url);
+                          return false;
+                        } else return true;
                       } else return true;
-                    } else return true;
-                  }}
-                  scalesPageToFit={true}
-                  nestedScrollEnabled
-                />
+                    }}
+                    scalesPageToFit={true}
+                    nestedScrollEnabled
+                  />
+                )}
               </View>
               {/* )} */}
               {body?.length == 0 && data?.body != "<p>\r\n  <br />\r\n</p>" && (

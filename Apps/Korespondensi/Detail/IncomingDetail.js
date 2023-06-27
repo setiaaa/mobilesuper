@@ -1,13 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Alert } from "react-native";
+import { Alert, Text, View } from "react-native";
 // import FABactions from "../../components/FABactions";
 import TabViewBg from "../../../components/TabViewBg";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { initAgenda } from "../../../utils/agenda";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
+
 
 function IncomingDetail({ route }) {
   let id = route.params.id;
@@ -68,6 +69,8 @@ function IncomingDetail({ route }) {
       <LoadingOverlay visible={isLoading} />
     </>
   );
+
+  console.log(detail)
   return (
     <>
       {loadingOverlay}
@@ -79,12 +82,6 @@ function IncomingDetail({ route }) {
         position="bottom"
         routes={routes}
       />
-      {/* <FABactions
-        id={id}
-        noAgenda={detail?.agenda_number}
-        data={detail}
-        type="in"
-      /> */}
     </>
   );
 }

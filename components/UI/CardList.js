@@ -52,8 +52,8 @@ function CardList({ data, tipe, onPress }) {
         data.unread
           ? styles.cardUnread
           : data.disposisi
-          ? styles.cardReadDispo
-          : styles.cardRead,
+            ? styles.cardReadDispo
+            : styles.cardRead,
         data.is_pejabat == false ? styles.cardSecre : "",
       ]}
     >
@@ -176,45 +176,45 @@ function CardList({ data, tipe, onPress }) {
           data.type == "disposition" ||
           data.type == "submitted" ||
           data.type == "outgoing") && (
-          <View
-            style={[
-              data.type == "disposition"
-                ? {
+            <View
+              style={[
+                data.type == "disposition"
+                  ? {
                     backgroundColor: GlobalStyles.colors.yellow,
                   }
-                : data.type == "incoming"
-                ? {
-                    backgroundColor: GlobalStyles.colors.tertiery,
-                  }
-                : data.type == "submitted"
-                ? {
-                    backgroundColor: GlobalStyles.colors.red,
-                  }
-                : data.type == "outgoing"
-                ? {
-                    backgroundColor: GlobalStyles.colors.yellow,
-                  }
-                : {},
-              styles.badgeTipeLetter,
-            ]}
-          >
-            <Text
-              style={{
-                color: GlobalStyles.colors.textWhite,
-              }}
+                  : data.type == "incoming"
+                    ? {
+                      backgroundColor: GlobalStyles.colors.tertiery,
+                    }
+                    : data.type == "submitted"
+                      ? {
+                        backgroundColor: GlobalStyles.colors.red,
+                      }
+                      : data.type == "outgoing"
+                        ? {
+                          backgroundColor: GlobalStyles.colors.yellow,
+                        }
+                        : {},
+                styles.badgeTipeLetter,
+              ]}
             >
-              {data.type == "incoming"
-                ? "Incoming"
-                : data.type == "disposition"
-                ? "Disposition"
-                : data.type == "submitted"
-                ? "Submitted"
-                : data.type == "outgoing"
-                ? "Need Follow Up"
-                : ""}
-            </Text>
-          </View>
-        )}
+              <Text
+                style={{
+                  color: GlobalStyles.colors.textWhite,
+                }}
+              >
+                {data.type == "incoming"
+                  ? "Incoming"
+                  : data.type == "disposition"
+                    ? "Disposition"
+                    : data.type == "submitted"
+                      ? "Submitted"
+                      : data.type == "outgoing"
+                        ? "Need Follow Up"
+                        : ""}
+              </Text>
+            </View>
+          )}
         {data.remaining != null && (
           <View style={styles.badgeRemaining}>
             <IconButton
@@ -237,12 +237,12 @@ function CardList({ data, tipe, onPress }) {
             style={[
               data.status == "In Progress"
                 ? {
-                    backgroundColor: GlobalStyles.colors.yellow,
-                  }
+                  backgroundColor: GlobalStyles.colors.yellow,
+                }
                 : {
-                    backgroundColor: GlobalStyles.colors.red,
-                    color: GlobalStyles.colors.textWhite,
-                  },
+                  backgroundColor: GlobalStyles.colors.red,
+                  color: GlobalStyles.colors.textWhite,
+                },
               styles.badgeStatus,
             ]}
           >

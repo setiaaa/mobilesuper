@@ -14,9 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-// import { setToken, setValidVersion } from "../store/auth";
 import { setToken, setValidVersion } from "../../store/auth";
-// import { GlobalStyles } from "../constants/styles";
 import { GlobalStyles } from "../../constants/styles";
 import { toolbarBack } from "../../components/UI/ToolbarBack";
 import Login from "../Login";
@@ -64,15 +62,17 @@ import { Notification } from '../SuperApps/Notification'
 import { FAQ } from '../SuperApps/FAQ'
 import { Profile } from '../SuperApps/Profile'
 import Main from "../SuperApps/Main";
-import Dashboard from '../../Apps/Kebijakan/Dashboard'
 import DetailDashboard from '../../Apps/Kebijakan/DetailDashboard'
 import PdfViewer from '../../Apps/Kebijakan/PdfViewer'
-import CustomDrawer from '../../components/CardKebijakan/CustomDrawer'
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { DrawerNavigation } from '../Kebijakan/Drawer'
+import MyTabBar from "../SuperApps/BottomTabs";
+import { Onboarding } from "../Onboarding";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { ListBerita } from "../SuperApps/ListBerita";
+import { DetailBerita } from "../SuperApps/DetailBerita";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
 
 function AuthStack() {
   const showBg = useSelector((state) => state.auth.showbg);
@@ -98,20 +98,34 @@ function AuthStack() {
           />
           <Stack.Navigator>
             <Stack.Screen
-              name="Main"
-              component={Main}
+              name="Onboarding"
+              component={Onboarding}
               options={{
                 headerShown: false,
               }}
             />
             <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false,
+              }}
+            />
+            {/* <Stack.Screen
+              name="Main"
+              component={Main}
+              options={{
+                headerShown: false,
+              }}
+            /> */}
+            {/* <Stack.Screen
               name="Kebijakan"
               component={DrawerNavigation}
               options={{
                 headerShown: false,
                 gestureEnabled: false
               }}
-            />
+            /> */}
             <Stack.Screen
               name="DetailDashboard"
               component={DetailDashboard}
@@ -126,13 +140,7 @@ function AuthStack() {
                 headerTitle: ''
               }}
             />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{
-                headerShown: false,
-              }}
-            />
+
             <Stack.Screen
               name="TermOfUse"
               component={TermOfUse}
@@ -149,33 +157,24 @@ function AuthStack() {
 
 export const BottomTabs = () => {
   return (
-    <Tab.Navigator initialRouteName='Home'>
-      <Tab.Screen name='Home' component={Home} />
-      <Tab.Screen name='Notification' component={Notification} />
-      <Tab.Screen name='FAQ' component={FAQ} />
-      <Tab.Screen name='Profile' component={Profile} />
-      <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Home'>
+        <Tab.Screen name='Home' component={Home} options={{ headerShown: false }} />
+        <Tab.Screen name='Notification' component={Notification} options={{ headerShown: false }} />
+        <Tab.Screen name='FAQ' component={FAQ} options={{ headerShown: false }} />
+        <Tab.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
+        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
         options={{
           headerShown: false,
           tabBarStyle: { display: 'none' },
           tabBarItemStyle: { display: 'none' }
         }}
-      />
-    </Tab.Navigator>
+      /> */}
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
   )
 }
 
-const DrawerNavigation = () => {
-  return (
-    <Drawer.Navigator
-      initialRouteName="Dashboard"
-      drawerContent={props => <CustomDrawer {...props} />}
-    >
-      <Drawer.Screen name="Dashboard" component={Dashboard} options={{ headerTitle: '' }} />
-      <Drawer.Screen name='Main' component={Main} options={{ headerShown: false, swipeEnabled: false }} />
-    </Drawer.Navigator>
-  )
-}
 
 function AuthenticatedStack() {
   const profile = useSelector((state) => state.profile.profile);
@@ -245,166 +244,198 @@ function AuthenticatedStack() {
   }, [profile, deviceUUID, deviceId, deviceName, deviceOS]);
 
   return (
-    <SafeAreaView style={styles.rootScreen}>
-      <StatusBar
-        barStyle={Config.statusbarAuthenticated}
-        backgroundColor={GlobalStyles.colors.secondary}
-      />
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Drawer"
-          component={DrawerNavigator}
-          options={{
-            headerShown: false,
-          }}
+    <BottomSheetModalProvider>
+      <SafeAreaView style={styles.rootScreen}>
+        <StatusBar
+          barStyle={Config.statusbarAuthenticated}
+          backgroundColor={GlobalStyles.colors.secondary}
         />
-        {/* DETAIL LETTER */}
-        <Stack.Screen
-          name="IncomingDetail"
-          component={IncomingDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DispositionDetail"
-          component={DispositionDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="SubmittedDetail"
-          component={SubmittedDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="NeedFollowUpDetail"
-          component={NeedFollowUpDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="TrackingDetail"
-          component={TrackingDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DelegationDetail"
-          component={DelegationDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="SecretaryDetail"
-          component={SecretaryDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="TodoDetail"
-          component={TodoDetail}
-          options={{ header: toolbarBack }}
-        />
-        {/* TAB DETAIL LETTER */}
-        <Stack.Screen
-          name="AgendaDetail"
-          component={AgendaDetail}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailAttachment"
-          component={DetailAttachment}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DetailComment"
-          component={DetailComment}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DetailLog"
-          component={DetailLog}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DetailDispo"
-          component={DetailDispo}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="LetterDetail"
-          component={LetterDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DetailPreview"
-          component={DetailPreview}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="ViewAttachment"
-          component={ViewAttachment}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="ReferenceDetail"
-          component={ReferenceDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="TrackingLogDetail"
-          component={TrackingLogDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="ScanLogDetail"
-          component={ScanLogDetail}
-          options={{ header: toolbarBack }}
-        />
-        {/* FORM */}
-        <Stack.Screen
-          name="DelegationForm"
-          component={DelegationForm}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="SecretaryForm"
-          component={SecretaryForm}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DispositionForm"
-          component={DispositionForm}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="ForwardForm"
-          component={ForwardForm}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="AddressbookEmployee"
-          component={AddressbookEmployee}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="AddressbookTitle"
-          component={AddressbookTitle}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="Addressbook"
-          component={Addressbook}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="AddressbookKM"
-          component={AddressbookKM}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DigisignSearchEmail"
-          component={DigisignSearchEmail}
-          options={{ header: toolbarBack }}
-        />
-      </Stack.Navigator>
-    </SafeAreaView>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Main"
+            component={Main}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Drawer"
+            component={DrawerNavigator}
+            options={{
+              headerShown: false,
+              gestureEnabled: false
+            }}
+          />
+          <Stack.Screen
+            name="Kebijakan"
+            component={DrawerNavigation}
+            options={{
+              headerShown: false,
+              gestureEnabled: false
+            }}
+          />
+          <Stack.Screen
+            name="ListBerita"
+            component={ListBerita}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailBerita"
+            component={DetailBerita}
+            options={{
+              headerShown: false,
+            }}
+          />
+          {/* DETAIL LETTER */}
+          <Stack.Screen
+            name="IncomingDetail"
+            component={IncomingDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionDetail"
+            component={DispositionDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SubmittedDetail"
+            component={SubmittedDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="NeedFollowUpDetail"
+            component={NeedFollowUpDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TrackingDetail"
+            component={TrackingDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DelegationDetail"
+            component={DelegationDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SecretaryDetail"
+            component={SecretaryDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TodoDetail"
+            component={TodoDetail}
+            options={{ header: toolbarBack }}
+          />
+          {/* TAB DETAIL LETTER */}
+          <Stack.Screen
+            name="AgendaDetail"
+            component={AgendaDetail}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailAttachment"
+            component={DetailAttachment}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DetailComment"
+            component={DetailComment}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DetailLog"
+            component={DetailLog}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DetailDispo"
+            component={DetailDispo}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="LetterDetail"
+            component={LetterDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DetailPreview"
+            component={DetailPreview}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="ViewAttachment"
+            component={ViewAttachment}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="ReferenceDetail"
+            component={ReferenceDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TrackingLogDetail"
+            component={TrackingLogDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="ScanLogDetail"
+            component={ScanLogDetail}
+            options={{ header: toolbarBack }}
+          />
+          {/* FORM */}
+          <Stack.Screen
+            name="DelegationForm"
+            component={DelegationForm}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SecretaryForm"
+            component={SecretaryForm}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionForm"
+            component={DispositionForm}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="ForwardForm"
+            component={ForwardForm}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="AddressbookEmployee"
+            component={AddressbookEmployee}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="AddressbookTitle"
+            component={AddressbookTitle}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="Addressbook"
+            component={Addressbook}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="AddressbookKM"
+            component={AddressbookKM}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DigisignSearchEmail"
+            component={DigisignSearchEmail}
+            options={{ header: toolbarBack }}
+          />
+        </Stack.Navigator>
+      </SafeAreaView>
+    </BottomSheetModalProvider>
   );
 }
 
@@ -517,8 +548,10 @@ function AppNavigator() {
   return (
     <>
       <NavigationContainer>
-        {!isLoading && !isAuthenticated && <AuthStack />}
-        {!isLoading && isAuthenticated && <AuthenticatedStack />}
+        <BottomSheetModalProvider>
+          {!isLoading && !isAuthenticated && <AuthStack />}
+          {!isLoading && isAuthenticated && <AuthenticatedStack />}
+        </BottomSheetModalProvider>
       </NavigationContainer>
       {loadingOverlay}
     </>

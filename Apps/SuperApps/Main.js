@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import { BottomTabs } from '../Korespondensi/AppNavigator'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 export default function Main() {
     return (
-        <BottomTabs />
+        <BottomSheetModalProvider>
+            <BottomTabs />
+        </BottomSheetModalProvider>
     )
 }
 
