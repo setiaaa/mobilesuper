@@ -58,7 +58,7 @@ import * as Device from "expo-device";
 import { setDataNotif } from "../../store/pushnotif";
 import * as Application from 'expo-application';
 import { Home } from "../SuperApps/Home";
-import { Notification } from '../SuperApps/Notification'
+import { Satker } from "../SuperApps/Satker";
 import { FAQ } from '../SuperApps/FAQ'
 import { Profile } from '../SuperApps/Profile'
 import Main from "../SuperApps/Main";
@@ -160,7 +160,7 @@ export const BottomTabs = () => {
     <BottomSheetModalProvider>
       <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Home'>
         <Tab.Screen name='Home' component={Home} options={{ headerShown: false }} />
-        <Tab.Screen name='Notification' component={Notification} options={{ headerShown: false }} />
+        <Tab.Screen name='Satker' component={Satker} options={{ headerShown: false }} />
         <Tab.Screen name='FAQ' component={FAQ} options={{ headerShown: false }} />
         <Tab.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
         {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
