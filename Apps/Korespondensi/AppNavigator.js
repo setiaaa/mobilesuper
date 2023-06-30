@@ -70,6 +70,10 @@ import { Onboarding } from "../Onboarding";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ListBerita } from "../SuperApps/ListBerita";
 import { DetailBerita } from "../SuperApps/DetailBerita";
+import { Dokumen } from "../Repository/Dokumen";
+import MyTabBarRepo from "../Repository/BottomTabsRepo";
+import { Dibagikan } from "../Repository/Dibagikan";
+import MainRepo from "../Repository/MainRepo";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -175,6 +179,24 @@ export const BottomTabs = () => {
   )
 }
 
+export const BottomTabsRepo = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarRepo {...props} />} initialRouteName='Dokumen'>
+        <Tab.Screen name='Dokumen' component={Dokumen} options={{ headerShown: false }} />
+        <Tab.Screen name='Dibagikan' component={Dibagikan} options={{ headerShown: false }} />
+        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+        options={{
+          headerShown: false,
+          tabBarStyle: { display: 'none' },
+          tabBarItemStyle: { display: 'none' }
+        }}
+      /> */}
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
 
 function AuthenticatedStack() {
   const profile = useSelector((state) => state.profile.profile);
@@ -256,6 +278,14 @@ function AuthenticatedStack() {
             component={Main}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainRepo"
+            component={MainRepo}
+            options={{
+              headerShown: false,
+              gestureEnabled: false
             }}
           />
           <Stack.Screen
@@ -432,6 +462,13 @@ function AuthenticatedStack() {
             name="DigisignSearchEmail"
             component={DigisignSearchEmail}
             options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="Dokumen"
+            component={Dokumen}
+            options={{
+              headerShown: false,
+            }}
           />
         </Stack.Navigator>
       </SafeAreaView>

@@ -46,7 +46,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', marginLeft: 20 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
                         <View style={[styles.cardApps, { backgroundColor: '#F0F0F0', justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='library-outline' size={24} color={'#752A2B'} />
                         </View>
