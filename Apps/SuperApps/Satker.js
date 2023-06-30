@@ -12,6 +12,7 @@ import { CardLiniMasaSatker } from '../../components/CardLinimasaSatker';
 import { Divider } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import { CardUltah } from '../../components/CardUltah';
 
 const ENTRIES = [
     {
@@ -374,6 +375,10 @@ export const Satker = () => {
                     />
                 </View>
             </View>
+            <View style={{ marginTop: 20, marginBottom: 40 }}>
+                <CardUltah />
+            </View>
+
         </ScrollView>
     )
 }
