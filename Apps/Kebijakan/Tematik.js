@@ -1,0 +1,134 @@
+import React from 'react'
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native';
+import { Image } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+
+
+const data = [
+    {
+        image: require('../../assets/superApp/gambar.png'),
+        judul: 'Kesekretariatan'
+    },
+    {
+        image: require('../../assets/superApp/gambar2.png'),
+        judul: 'Pengelolaan Ruang Laut',
+    },
+    {
+        image: require('../../assets/superApp/gambar3.png'),
+        judul: 'Perikanan Tangkap',
+    },
+    {
+        image: require('../../assets/superApp/gambar4.png'),
+        judul: 'Perikanan Budidaya',
+    },
+    {
+        image: require('../../assets/superApp/gambar5.png'),
+        judul: 'Penguatan Daya Saing Produk Kelautan dan Perikanan',
+    },
+    {
+        image: require('../../assets/superApp/gambar6.png'),
+        judul: 'Pengawasan Sumber Daya Kelautan dan Perikanan',
+    },
+    {
+        image: require('../../assets/superApp/gambar7.png'),
+        judul: 'Pengawasan Internal',
+    },
+    {
+        image: require('../../assets/superApp/gambar8.png'),
+        judul: 'Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+    },
+    {
+        image: require('../../assets/superApp/gambar9.png'),
+        judul: 'Karantina Ikan, Pengendalian Mutu dan Hasil Keamanan',
+    }
+];
+
+const DataGrid = ({ judul, item }) => {
+
+    return (
+        <View style={{ marginVertical: 20, marginHorizontal: 10 }}>
+            <View style={styles.cardNo}>
+                <Image source={item.image} />
+            </View>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+                <View style={{ flexDirection: 'row', }}>
+                    <Text
+                        style={{
+                            fontSize: 13,
+                            fontWeight: 400,
+                            marginBottom: 10,
+                            color: '#111827',
+                            width: 100,
+                            textAlign: 'center'
+                        }}
+                    // numberOfLines={2}
+                    >
+                        {judul}
+                    </Text>
+                </View>
+            </View>
+        </View>
+    )
+}
+
+
+export const Tematik = () => {
+    const navigation = useNavigation()
+    return (
+        <ScrollView>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+                <View style={{
+                    backgroundColor: 'white',
+                    borderRadius: 20,
+                    width: 28,
+                    height: 28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 20
+                }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name='close-outline' size={24} color={'#800000'} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Tematik</Text>
+                </View>
+            </View>
+            <View style={{ backgroundColor: 'white', width: '95%', borderRadius: 16, marginLeft: 10, marginVertical: 20 }}>
+                <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600, }}>Peraturan Tematik</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 400, marginTop: 20 }}>Kumpulan Peraturan Perundang-undangan Bidang Kelautan dan Perikanan</Text>
+                </View>
+                <FlatList
+                    key={'#'}
+                    data={data}
+                    renderItem={({ item }) => <DataGrid
+                        judul={item.judul}
+                        tanggal={item.tanggal}
+                        item={item}
+                    />
+                    }
+                    numColumns={3}
+                    keyExtractor={item => "#" + item.id}
+                    style={{ height: 460 }}
+                />
+            </View>
+        </ScrollView>
+    )
+}
+
+const styles = StyleSheet.create({
+    cardNo: {
+        width: 48,
+        height: 48,
+        borderRadius: 8,
+        backgroundColor: '#F0F0F0',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 30,
+        marginBottom: 10
+    },
+})

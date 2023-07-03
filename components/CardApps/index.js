@@ -17,7 +17,7 @@ export const CardApps = ({ handlePressModal }) => {
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: 11 }}>Korespondensi</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Kebijakan')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainKeb')}>
                         <View style={[styles.cardApps, { backgroundColor: '#F0F0F0', justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='business-outline' size={24} color={'#752A2B'} />
                         </View>

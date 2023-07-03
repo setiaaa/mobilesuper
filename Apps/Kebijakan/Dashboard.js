@@ -16,6 +16,9 @@ import {
 } from '@gorhom/bottom-sheet';
 import { Button } from '../../components/Button'
 import { CardKebijakanCard } from '../../components/CardKebijkanCard'
+import { useNavigation } from "@react-navigation/native";
+import { Divider } from 'react-native-paper';
+
 
 export default function Dashboard() {
     const [open, setOpen] = useState(false);
@@ -94,11 +97,36 @@ export default function Dashboard() {
         setFilterData(filter);
     };
 
+    const navigation = useNavigation()
+
+
     return (
         <BottomSheetModalProvider>
-            <View style={{ backgroundColor: '#F4F7FE', flex: 1 }}>
-                <Text style={styles.judul}>Kebijakan</Text>
-                <View style={styles.dropdown}>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+                <View style={{
+                    backgroundColor: 'white',
+                    borderRadius: 20,
+                    width: 28,
+                    height: 28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 20
+                }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name='close-outline' size={24} color={'#800000'} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Kebijakan</Text>
+                </View>
+            </View>
+            <View style={{ width: '90%', marginLeft: 20, marginTop: 20 }}>
+                <Search
+                    placeholder={'Pencarian Kebijakan'}
+                    onSearch={filterData}
+                />
+            </View>
+            {/* <View style={styles.dropdown}>
                     <Text style={styles.subJudul}>Dokumen Hukum</Text>
                     <DropDownPicker
                         open={open}
@@ -187,66 +215,62 @@ export default function Dashboard() {
                             <Button title='Terapkan' textColor={'white'} style={styles.button} />
                         </BottomSheetView>
                     </BottomSheetModal>
-                </View>
-                <View style={styles.ContainerCard}>
-                    <View style={{ marginLeft: 10, flexDirection: 'row', alignItems: 'center', gap: 5, marginBottom: 10 }}>
-                        <View style={{ width: '70%' }}>
-                            <Search
-                                placeholder={'Search'}
-                                onSearch={filterData}
-                            />
+                </View> */}
+            <View style={styles.ContainerCard}>
+                <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
+                    <TouchableOpacity>
+                        <View style={styles.circleList}>
+                            <Ionicons name='list-outline' size={25} color={variant === 'list' ? '#800000' : 'grey'} onPress={() => handleVariant('list')} />
                         </View>
-                        <TouchableOpacity>
-                            <View style={{ backgroundColor: '#ebf6fc', borderRadius: 50, height: 40, width: 40, justifyContent: 'center', alignItems: 'center' }}>
-                                <Ionicons name='list-outline' size={25} color={variant === 'list' ? '#0A8FDC' : 'grey'} onPress={() => handleVariant('list')} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={{ backgroundColor: '#ebf6fc', borderRadius: 50, height: 40, width: 40, justifyContent: 'center', alignItems: 'center' }}>
-                                <Ionicons name='apps-outline' size={25} color={variant === 'card' ? '#0A8FDC' : 'grey'} onPress={() => handleVariant('card')} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    {variant === 'list' ? (
-                        <FlatList
-                            data={dataFilter && dataFilter.length > 0 ? dataFilter : items.results}
-                            renderItem={({ item }) => <CardKebijakan
-                                subjek={item.subjek}
-                                bentuk={item.bentuk}
-                                id_peraturan={item.id_peraturan}
-                                item={item}
-                                nomor={item.nomor}
-                                tahun={item.tahun} />}
-                            keyExtractor={item => item.id_peraturan}
-                        />
-
-                    ) : (
-                        <FlatList
-                            data={dataFilter && dataFilter.length > 0 ? dataFilter : items.results}
-                            renderItem={({ item }) => <CardKebijakanCard
-                                subjek={item.subjek}
-                                bentuk={item.bentuk}
-                                id_peraturan={item.id_peraturan}
-                                item={item}
-                                nomor={item.nomor}
-                                tahun={item.tahun}
-                                tgl_penetapan={item.tgl_penetapan}
-                                tgl_diundangkan={item.tgl_diundangkan}
-                            />}
-                            keyExtractor={item => item.id_peraturan}
-                        />
-                    )}
-                    <View style={{ marginVertical: 10, marginBottom: 30, flexDirection: 'row', justifyContent: 'flex-end', display: 'flex', gap: 20, marginRight: 30 }}>
-                        <Text style={{ fontSize: 15, marginTop: 10 }}>{page} of {count}</Text>
-                        <TouchableOpacity onPress={() => setPage(page === 1 ? 1 : page - 1)} disabled={items.previous === null ? true : false}>
-                            <Ionicons name='chevron-back-outline' size={30} color={items.previous === null ? '#D0D5DD' : 'grey'} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setPage(page + 1)} disabled={items.next === null ? true : false}>
-                            <Ionicons name='chevron-forward-outline' size={30} color={items.next === null ? '#D0D5DD' : 'grey'} />
-                        </TouchableOpacity>
-                    </View>
-                    <StatusBar style="auto" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <View style={styles.circleList}>
+                            <Ionicons name='apps-outline' size={25} color={variant === 'card' ? '#800000' : 'grey'} onPress={() => handleVariant('card')} />
+                        </View>
+                    </TouchableOpacity>
                 </View>
+                <View style={{ marginBottom: 40 }}>
+                    <Divider bold />
+                </View>
+                {variant === 'list' ? (
+                    <FlatList
+                        data={dataFilter && dataFilter.length > 0 ? dataFilter : items.results}
+                        renderItem={({ item }) => <CardKebijakan
+                            subjek={item.subjek}
+                            bentuk={item.bentuk}
+                            id_peraturan={item.id_peraturan}
+                            item={item}
+                            nomor={item.nomor}
+                            tahun={item.tahun} />}
+                        keyExtractor={item => item.id_peraturan}
+                    />
+
+                ) : (
+                    <FlatList
+                        data={dataFilter && dataFilter.length > 0 ? dataFilter : items.results}
+                        renderItem={({ item }) => <CardKebijakanCard
+                            subjek={item.subjek}
+                            bentuk={item.bentuk}
+                            id_peraturan={item.id_peraturan}
+                            item={item}
+                            nomor={item.nomor}
+                            tahun={item.tahun}
+                            tgl_penetapan={item.tgl_penetapan}
+                            tgl_diundangkan={item.tgl_diundangkan}
+                        />}
+                        keyExtractor={item => item.id_peraturan}
+                    />
+                )}
+                <View style={{ marginVertical: 10, marginBottom: 30, flexDirection: 'row', justifyContent: 'flex-end', display: 'flex', gap: 20, marginRight: 30 }}>
+                    <Text style={{ fontSize: 15, marginTop: 10 }}>{page} of {count}</Text>
+                    <TouchableOpacity onPress={() => setPage(page === 1 ? 1 : page - 1)} disabled={items.previous === null ? true : false}>
+                        <Ionicons name='chevron-back-outline' size={30} color={items.previous === null ? '#D0D5DD' : 'grey'} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setPage(page + 1)} disabled={items.next === null ? true : false}>
+                        <Ionicons name='chevron-forward-outline' size={30} color={items.next === null ? '#D0D5DD' : 'grey'} />
+                    </TouchableOpacity>
+                </View>
+                <StatusBar style="auto" />
             </View>
         </BottomSheetModalProvider>
     )
@@ -271,7 +295,8 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         borderRadius: 12,
         backgroundColor: "#FFFFFF",
-        paddingTop: 10
+        paddingTop: 10,
+        marginBottom: 20
     },
     dropdown: {
         borderRadius: 12,
@@ -326,5 +351,13 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         width: 360,
         marginLeft: 15,
+    },
+    circleList: {
+        width: 35,
+        height: 35,
+        backgroundColor: '#F0F0F0',
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });

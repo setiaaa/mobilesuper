@@ -74,6 +74,10 @@ import { Dokumen } from "../Repository/Dokumen";
 import MyTabBarRepo from "../Repository/BottomTabsRepo";
 import { Dibagikan } from "../Repository/Dibagikan";
 import MainRepo from "../Repository/MainRepo";
+import MyTabBarKeb from "../Kebijakan/BottomtabsKeb";
+import MainKeb from "../Kebijakan/MainKeb";
+import Dashboard from "../Kebijakan/Dashboard";
+import { Tematik } from "../Kebijakan/Tematik";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -197,6 +201,24 @@ export const BottomTabsRepo = () => {
   )
 }
 
+export const BottomTabsKeb = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarKeb {...props} />} initialRouteName='Dashboard'>
+        <Tab.Screen name='Dashboard' component={Dashboard} options={{ headerShown: false }} />
+        <Tab.Screen name='Tematik' component={Tematik} options={{ headerShown: false }} />
+        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+        options={{
+          headerShown: false,
+          tabBarStyle: { display: 'none' },
+          tabBarItemStyle: { display: 'none' }
+        }}
+      /> */}
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
 
 function AuthenticatedStack() {
   const profile = useSelector((state) => state.profile.profile);
@@ -289,6 +311,14 @@ function AuthenticatedStack() {
             }}
           />
           <Stack.Screen
+            name="MainKeb"
+            component={MainKeb}
+            options={{
+              headerShown: false,
+              gestureEnabled: false
+            }}
+          />
+          <Stack.Screen
             name="Drawer"
             component={DrawerNavigator}
             options={{
@@ -296,14 +326,14 @@ function AuthenticatedStack() {
               gestureEnabled: false
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Kebijakan"
             component={DrawerNavigation}
             options={{
               headerShown: false,
               gestureEnabled: false
             }}
-          />
+          /> */}
           <Stack.Screen
             name="ListBerita"
             component={ListBerita}
