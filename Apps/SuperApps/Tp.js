@@ -1,0 +1,40 @@
+import React from 'react'
+import { TouchableOpacity } from 'react-native'
+import { View } from 'react-native'
+import { Text } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+import { TopsTP } from '../Korespondensi/AppNavigator';
+import MyTopBar from './TopTabs';
+
+
+
+export const Tp = () => {
+    const navigation = useNavigation()
+    return (
+        <View style={{ flex: 1 }}>
+
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+                <View style={{
+                    backgroundColor: 'white',
+                    borderRadius: 20,
+                    width: 28,
+                    height: 28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 20
+                }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name='close-outline' size={24} color={'#800000'} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Tautan Pintas</Text>
+                </View>
+            </View>
+            <View style={{ flex: 1, backgroundColor: 'red' }}>
+                <TopsTP />
+            </View>
+        </View>
+    )
+}

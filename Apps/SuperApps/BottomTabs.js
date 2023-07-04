@@ -64,7 +64,7 @@ function MyTabBar({ props, navigation }) {
                     key={6}
                     onPress={() => {
                         setTabItemIndex(6)
-                        // navigation.navigate('Notification', { unread: false })
+                        navigation.navigate('Tp', { unread: false })
                         // props.navigation.navigate('Home', { unread: false })
                     }}
                     style={{

@@ -78,9 +78,16 @@ import MyTabBarKeb from "../Kebijakan/BottomtabsKeb";
 import MainKeb from "../Kebijakan/MainKeb";
 import Dashboard from "../Kebijakan/Dashboard";
 import { Tematik } from "../Kebijakan/Tematik";
+import { Tp } from "../SuperApps/Tp";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import MyTopBar from "../SuperApps/TopTabs";
+import { KRT } from "../SuperApps/KRT";
+import { Pengawasan } from "../SuperApps/Pengawasan";
+import { KPP } from "../SuperApps/KPP";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Top = createMaterialTopTabNavigator();
 
 function AuthStack() {
   const showBg = useSelector((state) => state.auth.showbg);
@@ -171,6 +178,7 @@ export const BottomTabs = () => {
         <Tab.Screen name='Satker' component={Satker} options={{ headerShown: false }} />
         <Tab.Screen name='FAQ' component={FAQ} options={{ headerShown: false }} />
         <Tab.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
+        {/* <Tab.Screen name='Tp' component={Tp} options={{ headerShown: false }} /> */}
         {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
         options={{
           headerShown: false,
@@ -215,6 +223,33 @@ export const BottomTabsKeb = () => {
         }}
       /> */}
       </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const TopsTP = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName='KRT'
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: '#800000' },
+          tabBarLabelStyle: { fontSize: 10, textTransform: 'none' },
+        }}
+      >
+        <Top.Screen name='KRT' component={KRT}
+          options={{
+            title: 'Kerumahtanggaan',
+          }} />
+        <Top.Screen name='Pengawasan' component={Pengawasan}
+          options={{
+            title: 'Pengawasan'
+          }} />
+        <Top.Screen name='KPP' component={KPP}
+          options={{
+            title: 'Kinerja dan Pengembangan Pegawai'
+          }}
+        />
+      </Top.Navigator>
     </BottomSheetModalProvider>
   )
 }
@@ -337,6 +372,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="ListBerita"
             component={ListBerita}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Tp"
+            component={Tp}
             options={{
               headerShown: false,
             }}
