@@ -84,6 +84,9 @@ import MyTopBar from "../SuperApps/TopTabs";
 import { KRT } from "../SuperApps/KRT";
 import { Pengawasan } from "../SuperApps/Pengawasan";
 import { KPP } from "../SuperApps/KPP";
+import { DetailActivity } from "../Repository/DetailActivity";
+import MyTabBarDetailRepo from "../Repository/BottomTabsDetailRepo";
+import { MainDetailRepo } from "../Repository/MainDetailRepo";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -227,6 +230,18 @@ export const BottomTabsKeb = () => {
   )
 }
 
+export const BottomTabsDetailRepo = () => {
+
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarDetailRepo {...props} />} initialRouteName='DetailActivity'>
+        <Stack.Screen name="DetailActivity" component={DetailActivity} options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
 export const TopsTP = () => {
   return (
     <BottomSheetModalProvider>
@@ -348,6 +363,14 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="MainKeb"
             component={MainKeb}
+            options={{
+              headerShown: false,
+              gestureEnabled: false
+            }}
+          />
+          <Stack.Screen
+            name="MainDetailRepo"
+            component={MainDetailRepo}
             options={{
               headerShown: false,
               gestureEnabled: false
@@ -538,6 +561,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="Dokumen"
             component={Dokumen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailActivity"
+            component={DetailActivity}
             options={{
               headerShown: false,
             }}

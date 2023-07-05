@@ -5,9 +5,6 @@ import { Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { TopsTP } from '../Korespondensi/AppNavigator';
-import MyTopBar from './TopTabs';
-
-
 
 export const Tp = () => {
     const navigation = useNavigation()
