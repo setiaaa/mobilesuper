@@ -87,6 +87,8 @@ import { KPP } from "../SuperApps/KPP";
 import { DetailActivity } from "../Repository/DetailActivity";
 import MyTabBarDetailRepo from "../Repository/BottomTabsDetailRepo";
 import { MainDetailRepo } from "../Repository/MainDetailRepo";
+import { Lampiran } from "../Repository/Lampiran";
+import { Komentar } from "../Repository/Komentar";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -235,8 +237,9 @@ export const BottomTabsDetailRepo = () => {
   return (
     <BottomSheetModalProvider>
       <Tab.Navigator tabBar={props => <MyTabBarDetailRepo {...props} />} initialRouteName='DetailActivity'>
-        <Stack.Screen name="DetailActivity" component={DetailActivity} options={{ headerShown: false }}
-        />
+        <Stack.Screen name="DetailActivity" component={DetailActivity} options={{ headerShown: false }} />
+        <Stack.Screen name="Lampiran" component={Lampiran} options={{ headerShown: false }} />
+        <Stack.Screen name="Komentar" component={Komentar} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )

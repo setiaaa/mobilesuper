@@ -89,7 +89,7 @@ export const DetailActivity = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Business Agility with Scrum</Text>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>{item.judul}</Text>
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 20, marginVertical: 20 }}>

@@ -25,7 +25,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                         key={2}
                         onPress={() => {
                             setTabItemIndex(2)
-                            // navigation.navigate('Dibagikan', { unread: false })
+                            navigation.navigate('Lampiran', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }} style={{ alignItems: 'center' }}>
                         <Ionicons name='attach-outline' color={tabItemIndex === 2 ? '#752A2B' : 'grey'} size={24} />
@@ -36,7 +36,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                         key={3}
                         onPress={() => {
                             setTabItemIndex(3)
-                            // navigation.navigate('Dibagikan', { unread: false })
+                            navigation.navigate('Komentar', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }} style={{ alignItems: 'center' }}>
                         <Ionicons name='chatbox-outline' color={tabItemIndex === 3 ? '#752A2B' : 'grey'} size={24} />
