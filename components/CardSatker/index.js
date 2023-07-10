@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 export const CardSatker = () => {
     const navigation = useNavigation()
     return (
         <View style={styles.card}>
             <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text style={{ textAlign: 'center', color: '#752A2B', fontWeight: 600, fontSize: 17 }}>DIREKTORAT JENDRAL PERIKANAN TANGKAP</Text>
+                <Text style={{ textAlign: 'center', color: COLORS.primary, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>DIREKTORAT JENDRAL PERIKANAN TANGKAP</Text>
             </View>
         </View>
     )

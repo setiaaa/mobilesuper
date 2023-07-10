@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
 import { Image } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 
 const data = [
@@ -58,9 +59,8 @@ const DataGrid = ({ judul, item }) => {
                     <Text
                         style={{
                             fontSize: 13,
-                            fontWeight: 400,
+                            fontWeight: FONTWEIGHT.normal,
                             marginBottom: 10,
-                            color: '#111827',
                             width: 100,
                             textAlign: 'center'
                         }}
@@ -79,9 +79,9 @@ export const Tematik = () => {
     const navigation = useNavigation()
     return (
         <ScrollView>
-            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
-                    backgroundColor: 'white',
+                    backgroundColor: COLORS.white,
                     borderRadius: 20,
                     width: 28,
                     height: 28,
@@ -90,17 +90,17 @@ export const Tematik = () => {
                     marginLeft: 20
                 }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name='close-outline' size={24} color={'#800000'} />
+                        <Ionicons name='close-outline' size={24} color={COLORS.primary} />
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Tematik</Text>
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Tematik</Text>
                 </View>
             </View>
-            <View style={{ backgroundColor: 'white', width: '95%', borderRadius: 16, marginLeft: 10, marginVertical: 20 }}>
+            <View style={{ backgroundColor: COLORS.white, width: '95%', borderRadius: 16, marginLeft: 10, marginVertical: 20 }}>
                 <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, }}>Peraturan Tematik</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, marginTop: 20 }}>Kumpulan Peraturan Perundang-undangan Bidang Kelautan dan Perikanan</Text>
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Peraturan Tematik</Text>
+                    <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, marginTop: 20 }}>Kumpulan Peraturan Perundang-undangan Bidang Kelautan dan Perikanan</Text>
                 </View>
                 <FlatList
                     key={'#'}

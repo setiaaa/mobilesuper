@@ -14,6 +14,7 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet';
 import { useMemo } from 'react'
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 const data = [
     {
@@ -217,17 +218,17 @@ const DataList = ({ item, bottomSheetAttach }) => {
             <View style={{ flexDirection: 'row', marginVertical: 20, }}>
                 <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
                     <View style={styles.cardNo}>
-                        <Ionicons name='document-outline' size={30} color={'#800000'} />
+                        <Ionicons name='document-outline' size={30} color={COLORS.primary} />
                     </View>
                 </TouchableOpacity>
                 <View style={{ marginLeft: 20, flex: 1, justifyContent: 'center' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
-                            <Text style={{ fontSize: 13, fontWeight: 400, marginBottom: 10, color: '#111827' }}>{item.judul}</Text>
-                            <Text style={{ fontSize: 11, fontWeight: 400, marginBottom: 10, color: '#6B7280' }}>{item.tanggal}</Text>
+                            <Text style={{ fontSize: 13, fontWeight: FONTWEIGHT.normal, marginBottom: 10 }}>{item.judul}</Text>
+                            <Text style={{ fontSize: 11, fontWeight: FONTWEIGHT.normal, marginBottom: 10, color: COLORS.lighter }}>{item.tanggal}</Text>
                         </TouchableOpacity>
                         <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
-                            <Ionicons name='ellipsis-vertical-outline' size={24} color={'#999999'} />
+                            <Ionicons name='ellipsis-vertical-outline' size={24} color={COLORS.grey} />
                         </View>
                     </View>
                 </View>
@@ -242,7 +243,7 @@ const DataGrid = ({ item, bottomSheetAttach }) => {
         <View style={{ marginVertical: 20, marginHorizontal: 25 }}>
             <View style={styles.cardNo}>
                 <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
-                    <Ionicons name='document-outline' size={30} color={'#800000'} />
+                    <Ionicons name='document-outline' size={30} color={COLORS.primary} />
                 </TouchableOpacity>
             </View>
             <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -251,9 +252,8 @@ const DataGrid = ({ item, bottomSheetAttach }) => {
                         <Text
                             style={{
                                 fontSize: 13,
-                                fontWeight: 400,
+                                fontWeight: FONTWEIGHT.normal,
                                 marginBottom: 10,
-                                color: '#111827',
                                 width: 100,
                                 textAlign: 'center'
                             }}
@@ -263,7 +263,7 @@ const DataGrid = ({ item, bottomSheetAttach }) => {
                         </Text>
                     </TouchableOpacity>
                     <View style={{ justifyContent: 'center', }}>
-                        <Ionicons name='ellipsis-vertical-outline' size={24} color={'#999999'} />
+                        <Ionicons name='ellipsis-vertical-outline' size={24} color={COLORS.grey} />
                     </View>
                 </View>
             </View>
@@ -300,7 +300,7 @@ export const Dokumen = () => {
         <BottomSheetModalProvider>
             <ScrollView>
                 <View style={{ marginBottom: 20 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                         <View style={{
                             backgroundColor: 'white',
                             borderRadius: 20,
@@ -325,12 +325,12 @@ export const Dokumen = () => {
                         <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
                             <TouchableOpacity onPress={() => handleVariant('list')}>
                                 <View style={styles.circleList}>
-                                    <Ionicons name='list-outline' size={24} color={variant === 'list' ? '#800000' : 'grey'} />
+                                    <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => handleVariant('grid')}>
                                 <View style={styles.circleList}>
-                                    <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? '#800000' : 'grey'} />
+                                    <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -385,8 +385,8 @@ export const Dokumen = () => {
                             <BottomSheetView onLayout={handleContentLayout} >
                                 <View style={{ marginVertical: 20 }}>
                                     <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                        <Ionicons name='document-outline' size={32} color={'#800000'} />
-                                        <Text style={{ fontSize: 13, fontWeight: 400 }}>{dataM.judul}</Text>
+                                        <Ionicons name='document-outline' size={32} color={COLORS.primary} />
+                                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>{dataM.judul}</Text>
                                     </View>
                                     <View style={{ marginTop: 20 }}>
                                         <Divider bold />
@@ -394,13 +394,13 @@ export const Dokumen = () => {
                                     <TouchableOpacity>
                                         <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
                                             <Ionicons name='download-outline' size={32} color={'#6B7280'} />
-                                            <Text style={{ fontSize: 13, fontWeight: 400 }}>Download</Text>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Download</Text>
                                         </View>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => navigation.navigate('MainDetailRepo')}>
                                         <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
                                             <Ionicons name='information-circle-outline' size={32} color={'#6B7280'} />
-                                            <Text style={{ fontSize: 13, fontWeight: 400 }}>Details & activity</Text>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Details & activity</Text>
                                         </View>
                                     </TouchableOpacity>
                                 </View>

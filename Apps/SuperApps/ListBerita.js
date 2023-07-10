@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import { COLORS } from '../../config/SuperAppps';
 
 const Item = ({ image, tanggal, subtitle, title, id, data, item }) => {
     const navigation = useNavigation()
@@ -25,9 +26,9 @@ const Item = ({ image, tanggal, subtitle, title, id, data, item }) => {
                     <Image source={image} style={{ height: 193, width: 361, borderRadius: 16 }} />
                 </View>
                 <View style={{ marginVertical: 20, marginHorizontal: 5 }}>
-                    <Text style={{ color: '#6B7280', marginVertical: 5, fontSize: 10, fontWeight: 400 }}>{tanggal}</Text>
-                    <Text style={{ color: '#6B7280', marginVertical: 5, fontSize: 10, fontWeight: 400 }}>{subtitle}</Text>
-                    <Text style={{ color: '#111827', marginVertical: 5, fontSize: 10, fontWeight: 400 }}>{title}</Text>
+                    <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 10, fontWeight: 400 }}>{tanggal}</Text>
+                    <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 10, fontWeight: 400 }}>{subtitle}</Text>
+                    <Text style={{ marginVertical: 5, fontSize: 10, fontWeight: 400 }}>{title}</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -84,10 +85,10 @@ export const ListBerita = () => {
     const navigation = useNavigation()
     return (
         <View style={{ backgroundColor: '#f7f7f7', flex: 1 }}>
-            <View style={{ backgroundColor: '#752A2B', height: '10%', flexDirection: 'row' }}>
+            <View style={{ backgroundColor: COLORS.primary, height: '10%', flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <View style={[styles.backIcon, { justifyContent: 'center', alignItems: 'center', marginTop: 25, marginLeft: 20 }]}>
-                        <Ionicons name='chevron-back' size={24} color={'#752A2B'} />
+                        <Ionicons name='chevron-back' size={24} color={COLORS.primary} />
                     </View>
                 </TouchableOpacity>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 40 }}>

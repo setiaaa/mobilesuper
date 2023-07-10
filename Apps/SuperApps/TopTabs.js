@@ -5,6 +5,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useNavigation } from "@react-navigation/native";
 import { Animated } from 'react-native';
 import { Divider } from 'react-native-paper';
+import { COLORS } from '../../config/SuperAppps';
 
 
 function MyTopBar({ props, state, descriptors, position }) {
@@ -12,7 +13,7 @@ function MyTopBar({ props, state, descriptors, position }) {
     const [tabItemIndex, setTabItemIndex] = useState(2);
 
     return (
-        <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
+        <View style={{ flexDirection: 'row', backgroundColor: COLORS.white }}>
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label =

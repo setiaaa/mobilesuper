@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image } from 'react-native'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native'
+import { COLORS } from '../../config/SuperAppps'
 
 export const DetailBerita = ({ route }) => {
     const { item } = route.params
@@ -18,32 +19,32 @@ export const DetailBerita = ({ route }) => {
                 <View>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', zIndex: 1 }}>
                         <View style={[styles.backIcon, { justifyContent: 'center', alignItems: 'center', marginTop: 25, marginLeft: 20 }]}>
-                            <Ionicons name='chevron-back' size={24} color={'#752A2B'} />
+                            <Ionicons name='chevron-back' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
                     <View style={{ position: 'relative' }}>
                         <Image source={item.image} style={{ width: 390, height: 260 }} />
-                        <View style={{ backgroundColor: '#FFFFFF', height: 50, position: 'absolute', width: '100%', bottom: 0, borderTopLeftRadius: 100, borderTopRightRadius: 100 }} />
+                        <View style={{ backgroundColor: COLORS.white, height: 50, position: 'absolute', width: '100%', bottom: 0, borderTopLeftRadius: 100, borderTopRightRadius: 100 }} />
                     </View>
-                    <View style={{ backgroundColor: '#FFFFFF' }}>
+                    <View style={{ backgroundColor: COLORS.white }}>
                         <Text style={{ paddingBottom: 20, paddingHorizontal: 20 }}>{item.title}</Text>
                         <Text style={{ paddingHorizontal: 20, textAlign: 'justify' }}>{item.deskripsi}</Text>
                         <View style={{ marginLeft: 20, marginTop: 20, flexDirection: 'row' }}>
-                            <Ionicons name='calendar-outline' size={24} color={'#752A2B'} />
+                            <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
                             <View style={{ flex: 1, justifyContent: 'center', marginLeft: 10 }}>
                                 <Text>{item.tanggal}</Text>
                             </View>
                         </View>
 
                         <View style={{ marginLeft: 20, marginTop: 10, flexDirection: 'row' }}>
-                            <Ionicons name='person-circle-outline' size={24} color={'#752A2B'} />
+                            <Ionicons name='person-circle-outline' size={24} color={COLORS.primary} />
                             <View style={{ flex: 1, justifyContent: 'center', marginLeft: 10 }}>
                                 <Text>{item.pembuat}</Text>
                             </View>
                         </View>
 
                         <View style={{ marginLeft: 20, marginTop: 10, flexDirection: 'row' }}>
-                            <Ionicons name='eye-outline' size={24} color={'#752A2B'} />
+                            <Ionicons name='eye-outline' size={24} color={COLORS.primary} />
                             <View style={{ flex: 1, justifyContent: 'center', marginLeft: 10 }}>
                                 <Text>Dilihat: {item.dilihat}</Text>
                             </View>

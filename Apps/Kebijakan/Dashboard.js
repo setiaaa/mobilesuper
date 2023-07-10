@@ -18,6 +18,7 @@ import { Button } from '../../components/Button'
 import { CardKebijakanCard } from '../../components/CardKebijkanCard'
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from 'react-native-paper';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 
 export default function Dashboard() {
@@ -102,9 +103,9 @@ export default function Dashboard() {
 
     return (
         <BottomSheetModalProvider>
-            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
-                    backgroundColor: 'white',
+                    backgroundColor: COLORS.white,
                     borderRadius: 20,
                     width: 28,
                     height: 28,
@@ -113,11 +114,11 @@ export default function Dashboard() {
                     marginLeft: 20
                 }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name='close-outline' size={24} color={'#800000'} />
+                        <Ionicons name='close-outline' size={24} color={COLORS.primary} />
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Kebijakan</Text>
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Kebijakan</Text>
                 </View>
             </View>
             <View style={{ width: '90%', marginLeft: 20, marginTop: 20 }}>
@@ -220,12 +221,12 @@ export default function Dashboard() {
                 <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
                     <TouchableOpacity>
                         <View style={styles.circleList}>
-                            <Ionicons name='list-outline' size={25} color={variant === 'list' ? '#800000' : 'grey'} onPress={() => handleVariant('list')} />
+                            <Ionicons name='list-outline' size={25} color={variant === 'list' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('list')} />
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <View style={styles.circleList}>
-                            <Ionicons name='apps-outline' size={25} color={variant === 'card' ? '#800000' : 'grey'} onPress={() => handleVariant('card')} />
+                            <Ionicons name='apps-outline' size={25} color={variant === 'card' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('card')} />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -262,12 +263,12 @@ export default function Dashboard() {
                     />
                 )}
                 <View style={{ marginVertical: 10, marginBottom: 30, flexDirection: 'row', justifyContent: 'flex-end', display: 'flex', gap: 20, marginRight: 30 }}>
-                    <Text style={{ fontSize: 15, marginTop: 10 }}>{page} of {count}</Text>
+                    <Text style={{ fontSize: FONTSIZE.H1, marginTop: 10 }}>{page} of {count}</Text>
                     <TouchableOpacity onPress={() => setPage(page === 1 ? 1 : page - 1)} disabled={items.previous === null ? true : false}>
-                        <Ionicons name='chevron-back-outline' size={30} color={items.previous === null ? '#D0D5DD' : 'grey'} />
+                        <Ionicons name='chevron-back-outline' size={30} color={items.previous === null ? '#D0D5DD' : COLORS.grey} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setPage(page + 1)} disabled={items.next === null ? true : false}>
-                        <Ionicons name='chevron-forward-outline' size={30} color={items.next === null ? '#D0D5DD' : 'grey'} />
+                        <Ionicons name='chevron-forward-outline' size={30} color={items.next === null ? '#D0D5DD' : COLORS.grey} />
                     </TouchableOpacity>
                 </View>
                 <StatusBar style="auto" />
@@ -279,7 +280,7 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: COLORS.white,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
@@ -294,13 +295,13 @@ const styles = StyleSheet.create({
         height: 1,
         marginLeft: 20,
         borderRadius: 12,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: COLORS.white,
         paddingTop: 10,
         marginBottom: 20
     },
     dropdown: {
         borderRadius: 12,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: COLORS.white,
         width: '90%',
         height: '20%',
         // justifyContent: 'center',
@@ -309,25 +310,25 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     cardList: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: COLORS.white,
     },
     judul: {
         fontSize: 20,
-        fontWeight: '600',
+        fontWeight: FONTWEIGHT.bold,
         textAlign: 'left',
         paddingLeft: 20,
         paddingTop: 20
     },
     subJudul: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: FONTWEIGHT.bold,
         textAlign: 'left',
         marginTop: 20,
         marginLeft: 20
     },
     judulFilter: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: FONTWEIGHT.bold,
         textAlign: 'left',
         color: '#499CD7'
     },

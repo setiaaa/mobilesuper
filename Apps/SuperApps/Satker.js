@@ -13,6 +13,7 @@ import { Divider } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { CardUltah } from '../../components/CardUltah';
+import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 const ENTRIES = [
     {
@@ -183,15 +184,15 @@ export const Satker = () => {
                     parallaxFactor={0.4}
                     {...parallaxProps}
                 />
-                <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8, paddingHorizontal: 20 }}>
+                <View style={{ backgroundColor: COLORS.white, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, paddingHorizontal: 20 }}>
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
                         <Image source={item.avatar} style={{ borderRadius: 50 }} />
                         <View>
-                            <Text style={{ marginLeft: 10, color: '#6B7280', marginVertical: 10, fontSize: 12, fontWeight: 600, color: '#1868AB' }}>{item.nama}</Text>
-                            <Text style={{ marginLeft: 8, color: '#6B7280' }}> {item.tanggal} </Text>
+                            <Text style={{ marginLeft: 10, marginVertical: 10, fontSize: 12, fontWeight: 600, color: '#1868AB' }}>{item.nama}</Text>
+                            <Text style={{ marginLeft: 8, color: COLORS.lighter }}> {item.tanggal} </Text>
                         </View>
                     </View>
-                    <Text style={{ color: '#111827', marginVertical: 20 }}>{item.deskripsi}</Text>
+                    <Text style={{ marginVertical: 20 }}>{item.deskripsi}</Text>
                 </View>
             </View>
         );
@@ -204,13 +205,13 @@ export const Satker = () => {
                     <Image source={image} style={{ width: 80, height: 80 }} />
                     <View style={{ marginLeft: 10 }}>
                         <View style={{ width: '90%' }}>
-                            <Text style={{ fontSize: 13, fontWeight: 600 }}>{judul}</Text>
+                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{judul}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
                             <View style={{
                                 flexDirection: 'row',
                                 gap: 5,
-                                backgroundColor: jenis === 'Penelitian' ? '#FEF2DB' : jenis === 'Kegiatan' ? '#E4EEF5' : '#D9F5E5',
+                                backgroundColor: jenis === 'Penelitian' ? COLORS.warningLight : jenis === 'Kegiatan' ? COLORS.infoLight : COLORS.successLight,
                                 borderRadius: 30,
                                 height: 30,
                                 width: 90,
@@ -225,11 +226,11 @@ export const Satker = () => {
                                 ) : (
                                     <Ionicons name='videocam-outline' color={'#11C15B'} style={{ marginTop: 2 }} />
                                 )}
-                                <Text style={{ color: jenis === 'Penelitian' ? '#F6AD1D' : jenis === 'Kegiatan' ? '#1868AB' : '#11C15B' }}>{jenis}</Text>
+                                <Text style={{ color: jenis === 'Penelitian' ? COLORS.warning : jenis === 'Kegiatan' ? COLORS.info : COLORS.success }}>{jenis}</Text>
                             </View>
 
                             {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
-                            <Text style={{ fontSize: 11, color: '#9F9EA3' }}>| {nama}</Text>
+                            <Text style={{ fontSize: 11, color: COLORS.lighter }}>| {nama}</Text>
 
                         </View>
                     </View>
@@ -262,21 +263,21 @@ export const Satker = () => {
 
     return (
         <ScrollView style={{ flex: 1 }}>
-            <View style={{ backgroundColor: '#752A2B', flexDirection: 'row', gap: 20, paddingTop: 20, height: 120 }}>
+            <View style={{ backgroundColor: COLORS.primary, flexDirection: 'row', gap: 20, paddingTop: 20, height: 120 }}>
                 <View style={{ paddingLeft: 20 }}>
-                    <Ionicons name='notifications-outline' size={25} color={'white'} />
+                    <Ionicons name='notifications-outline' size={25} color={COLORS.white} />
                 </View>
                 <View style={{ marginLeft: '23%', marginTop: 5 }}>
-                    <Text style={{ color: 'white', textAlign: 'right', fontWeight: 800, marginBottom: 10 }}>YANI DAMA PUTERA</Text>
-                    <Text style={{ color: 'white', textAlign: 'right', fontSize: 11 }}>Direktur Utama ARMS</Text>
+                    <Text style={{ color: 'white', textAlign: 'right', fontWeight: FONTWEIGHT.bold, marginBottom: 10 }}>YANI DAMA PUTERA</Text>
+                    <Text style={{ color: 'white', textAlign: 'right', fontSize: FONTSIZE.H3 }}>Direktur Utama ARMS</Text>
                 </View>
                 <View>
-                    <Image source={require('../../assets/superApp/img.png')} style={{ width: 50, height: 50 }} />
+                    <Image source={AVATAR.U1} style={{ width: 50, height: 50 }} />
                 </View>
             </View>
 
             <View>
-                <View style={{ height: '40%', backgroundColor: '#752A2B', width: '100%', position: 'absolute' }} />
+                <View style={{ height: '40%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
                 <CardSatker />
             </View>
 
@@ -330,17 +331,17 @@ export const Satker = () => {
                     setSelected(day.dateString);
                 }}
                 markedDates={{
-                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: '#800000' }
+                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: COLORS.primary }
                 }}
                 style={{ width: '90%', marginLeft: 20, borderRadius: 16 }}
                 theme={{
-                    arrowColor: '#800000',
-                    selectedDayBackgroundColor: '#800000',
-                    todayTextColor: '#800000',
+                    arrowColor: COLORS.primary,
+                    selectedDayBackgroundColor: COLORS.primary,
+                    todayTextColor: COLORS.primary,
                 }}
             />
             <View style={[styles.cardListSatker, { flex: 1, justifyContent: 'center', paddingVertical: 40 }]}>
-                <Text style={{ marginLeft: 20, color: '#111827', fontWeight: 600, fontSize: 17 }}>Linimasa Pengetahuan</Text>
+                <Text style={{ marginLeft: 20, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>Linimasa Pengetahuan</Text>
                 <View style={{ marginTop: 10 }}>
                     <FlatList
                         data={data}
@@ -357,9 +358,9 @@ export const Satker = () => {
                 </View>
             </View>
             <View style={{ marginLeft: 20, flexDirection: 'row', marginBottom: 20 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 13 }}>Berita Terkini</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 12, flex: 1, color: '#1868AB' }}>View all</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
                 </TouchableOpacity>
             </View>
             <View>

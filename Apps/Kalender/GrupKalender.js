@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { CardAgenda } from '../../components/CardAgenda';
 
 export const GrupKalender = () => {
   const navigation = useNavigation()
@@ -24,9 +26,9 @@ export const GrupKalender = () => {
 
   return (
     <View>
-      <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
         <View style={{
-          backgroundColor: 'white',
+          backgroundColor: COLORS.white,
           borderRadius: 20,
           width: 28,
           height: 28,
@@ -35,11 +37,11 @@ export const GrupKalender = () => {
           marginLeft: 20
         }}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name='chevron-back-outline' size={24} color={'#800000'} />
+            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Agenda Bersama</Text>
+          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Agenda Bersama</Text>
         </View>
       </View>
       <View style={{ flexDirection: 'row', marginVertical: 20, gap: 10 }}>
@@ -49,11 +51,11 @@ export const GrupKalender = () => {
             data={data}
             save="value"
             placeholder='Pilih Grup'
-            boxStyles={{ borderColor: 'white', backgroundColor: 'white' }}
+            boxStyles={{ borderColor: COLORS.white, backgroundColor: COLORS.white }}
           />
         </View>
-        <View style={{ backgroundColor: 'white', width: '11%', justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
-          <Ionicons name='information-circle-outline' size={24} color={'#800000'} />
+        <View style={{ backgroundColor: 'white', width: '11%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, height: 45 }}>
+          <Ionicons name='information-circle-outline' size={24} color={COLORS.primary} />
         </View>
       </View>
       <Calendar
@@ -80,12 +82,18 @@ export const GrupKalender = () => {
         markingType='multi-dot'
         style={{ width: '90%', marginLeft: 20, borderRadius: 16 }}
         theme={{
-          arrowColor: '#800000',
-          selectedDayBackgroundColor: '#800000',
-          todayTextColor: '#800000',
+          arrowColor: COLORS.primary,
+          selectedDayBackgroundColor: COLORS.primary,
+          todayTextColor: COLORS.primary,
 
         }}
       />
+      <View style={{ marginVertical: 20, marginHorizontal: 20 }}>
+        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Agenda hari ini</Text>
+        <View style={{ marginTop: 20 }}>
+          <CardAgenda />
+        </View>
+      </View>
     </View>
   )
 }

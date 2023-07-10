@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { Divider } from 'react-native-paper';
 import { FlatList } from 'react-native';
+import { FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 const data = [
     {
@@ -43,10 +44,10 @@ const CardLiniMasaSatker = ({ no, nama, unit }) => {
     return (
         <View style={{ flexDirection: 'row', marginVertical: 20, }}>
             <View style={styles.cardNo}>
-                <Text style={{ fontSize: 13, fontWeight: 600 }}>{no}.</Text>
+                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{no}.</Text>
             </View>
             <View style={{ marginLeft: 20, flex: 1, justifyContent: 'center' }}>
-                <Text style={{ fontSize: 13, fontWeight: 600 }}>{nama}</Text>
+                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{nama}</Text>
                 <Text>{unit}</Text>
             </View>
         </View>
@@ -60,7 +61,7 @@ export const CardUltah = () => {
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, justifyContent: 'center', flex: 1, marginVertical: 20 }}>
                     <Image source={require('../../assets/superApp/cake_24.png')} />
-                    <Text style={{ textAlign: 'center', color: '#474747', fontWeight: 600, fontSize: 15, paddingTop: 10 }}>Selamat Ulang Tahun Bulan Juni</Text>
+                    <Text style={{ textAlign: 'center', color: '#474747', fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H1, paddingTop: 10 }}>Selamat Ulang Tahun Bulan Juni</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     <Divider bold style={{ width: '75%', backgroundColor: '#999999' }} />

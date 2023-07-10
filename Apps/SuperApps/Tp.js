@@ -5,13 +5,14 @@ import { Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { TopsTP } from '../Korespondensi/AppNavigator';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 export const Tp = () => {
     const navigation = useNavigation()
     return (
         <View style={{ flex: 1 }}>
 
-            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: 'white',
                     borderRadius: 20,
@@ -26,7 +27,7 @@ export const Tp = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Tautan Pintas</Text>
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: 'white' }}>Tautan Pintas</Text>
                 </View>
             </View>
             <View style={{ flex: 1, backgroundColor: 'red' }}>

@@ -18,6 +18,7 @@ import { useMemo } from 'react'
 import { BottomTabsDetailRepo } from '../Korespondensi/AppNavigator';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 const item = {
     judul: 'Business Agility with Scrum',
@@ -74,7 +75,7 @@ export const DetailActivity = () => {
         <BottomSheetModalProvider>
 
             <View>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
                         backgroundColor: 'white',
                         borderRadius: 20,
@@ -93,7 +94,7 @@ export const DetailActivity = () => {
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: 600 }}>{item.subjudul}</Text>
+                    <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{item.subjudul}</Text>
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -102,8 +103,8 @@ export const DetailActivity = () => {
                     marginHorizontal: 20
                 }}>
                     <Image source={item.image} />
-                    <Text style={{ fontSize: 13, fontWeight: 400, color: '#1868AB' }}>{item.nama}</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400 }}>|  {item.unit}</Text>
+                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: '#1868AB' }}>{item.nama}</Text>
+                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>|  {item.unit}</Text>
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -112,8 +113,8 @@ export const DetailActivity = () => {
                     marginHorizontal: 20,
                     marginTop: 10
                 }}>
-                    <Text style={{ fontSize: 13, fontWeight: 400, color: '#9F9EA3' }}>Tanggal Acara</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400 }}>:  {item.tanggal}</Text>
+                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }}>Tanggal Acara</Text>
+                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, }}>:  {item.tanggal}</Text>
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -122,27 +123,27 @@ export const DetailActivity = () => {
                     marginHorizontal: 20,
                     marginTop: 10
                 }}>
-                    <Text style={{ fontSize: 13, fontWeight: 400, color: '#9F9EA3' }}>Tempat Acara</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400 }}>:  {item.tempat}</Text>
+                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }}>Tempat Acara</Text>
+                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>:  {item.tempat}</Text>
                 </View>
                 <View style={{ marginVertical: 30, width: '90%', marginHorizontal: 20 }}>
                     <Divider bold />
                 </View>
                 <View style={{ marginHorizontal: 20 }}>
-                    <Text style={{ textAlign: 'justify', fontSize: 13, fontWeight: 400, color: '#6B7280' }}>{item.deskripsi}</Text>
+                    <Text style={{ textAlign: 'justify', fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }}>{item.deskripsi}</Text>
                 </View>
                 <View style={{ marginHorizontal: 20, marginTop: 30, flexDirection: 'row' }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: '#6B7280' }}>Dibagikan Kepada</Text>
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Dibagikan Kepada</Text>
                     <View style={{ alignItems: 'flex-end', flex: 1 }}>
                         <TouchableOpacity onPress={bottomSheetAttach}>
-                            <Ionicons name='chevron-forward-outline' size={24} color={'#7E7E7E'} />
+                            <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 20, marginTop: 10, flexDirection: 'row', gap: 20, }}>
                     <Image source={item.image} />
                     {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
-                    <View style={{ height: '100%', width: 2, backgroundColor: '#DBDADE' }} />
+                    <View style={{ height: '100%', width: 2, backgroundColor: COLORS.lighter }} />
                     <View style={{ flexDirection: 'row', position: 'relative' }}>
                         {item.subimage.map((data) => {
                             return (
@@ -170,12 +171,12 @@ export const DetailActivity = () => {
                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                                 <Image source={item.image} />
                                 <View style={{}}>
-                                    <Text style={{ color: '#6B7280' }}>Penulis</Text>
-                                    <Text style={{ color: '#999999' }}>{item.nama}</Text>
+                                    <Text style={{ color: COLORS.lighter }}>Penulis</Text>
+                                    <Text style={{ color: COLORS.lighter }}>{item.nama}</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: 30 }}>
-                                <Text style={{ fontSize: 15, fontWeight: 600 }}>Dibagikan Kepada</Text>
+                                <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Dibagikan Kepada</Text>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Image source={item.avatarDibagikan} />
                                     <View style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 30 }}>
@@ -183,8 +184,8 @@ export const DetailActivity = () => {
                                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                                                 <Image source={data.avatarDibagikan} />
                                                 <View>
-                                                    <Text style={{ color: '#6B7280' }}>{data.jabatan}</Text>
-                                                    <Text style={{ color: '#999999' }}>{data.nama}</Text>
+                                                    <Text style={{ color: COLORS.lighter }}>{data.jabatan}</Text>
+                                                    <Text style={{ color: COLORS.lighter }}>{data.nama}</Text>
                                                 </View>
                                             </View>
                                         )

@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native';
 import { FlatList } from 'react-native';
 import { Image } from 'react-native';
 import { useState } from 'react';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 
 const data = [
@@ -130,7 +131,7 @@ const DaftarKomentar = ({ items }) => {
     return (
         <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}>
             {items.Komentar.map((listData) => (
-                <View style={{ backgroundColor: '#FFFFFF', borderRadius: 10, width: '90%', marginVertical: 5 }}>
+                <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5 }}>
                     <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
 
                         <View>
@@ -138,10 +139,9 @@ const DaftarKomentar = ({ items }) => {
                         </View>
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{
-                                color: '#111827',
-                                fontSize: 13,
+                                fontSize: FONTSIZE.H2,
                                 fontFamily: 'Inter',
-                                fontWeight: '700',
+                                fontWeight: FONTWEIGHT.bold,
                                 lineHeight: 20,
                                 wordWrap: 'break-word'
                             }}>
@@ -149,10 +149,10 @@ const DaftarKomentar = ({ items }) => {
                             </Text>
                             <View style={{ flexDirection: 'row', gap: 5 }}>
                                 <Text style={{
-                                    color: '#999999',
-                                    fontSize: 10,
+                                    color: COLORS.lighter,
+                                    fontSize: FONTSIZE.H5,
                                     fontFamily: 'Inter',
-                                    fontWeight: '400',
+                                    fontWeight: FONTWEIGHT.normal,
                                     lineHeight: 18,
                                     wordWrap: 'break-word',
                                     marginBottom: 10
@@ -161,10 +161,10 @@ const DaftarKomentar = ({ items }) => {
                                 </Text>
                                 <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
                                 <Text style={{
-                                    color: '#999999',
-                                    fontSize: 10,
+                                    color: COLORS.lighter,
+                                    fontSize: FONTSIZE.H5,
                                     fontFamily: 'Inter',
-                                    fontWeight: '400',
+                                    fontWeight: FONTWEIGHT.normal,
                                     lineHeight: 18,
                                     wordWrap: 'break-word'
                                 }}>
@@ -172,10 +172,10 @@ const DaftarKomentar = ({ items }) => {
                                 </Text>
                             </View>
                             <Text style={{
-                                color: '#999999',
-                                fontSize: 10,
+                                color: COLORS.lighter,
+                                fontSize: FONTSIZE.H5,
                                 fontFamily: 'Inter',
-                                fontWeight: '400',
+                                fontWeight: FONTWEIGHT.normal,
                                 lineHeight: 18,
                                 wordWrap: 'break-word',
                             }}>
@@ -193,10 +193,10 @@ const DaftarKomentar = ({ items }) => {
                                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
                                                     <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
                                                     <Text style={{
-                                                        color: '#999999',
-                                                        fontSize: 10,
+                                                        color: COLORS.lighter,
+                                                        fontSize: FONTSIZE.H5,
                                                         fontFamily: 'Inter',
-                                                        fontWeight: '400',
+                                                        fontWeight: FONTWEIGHT.normal,
                                                         lineHeight: 18,
                                                         wordWrap: 'break-word',
                                                     }}>
@@ -219,10 +219,9 @@ const DaftarKomentar = ({ items }) => {
                                                         </View>
                                                         <View style={{ marginLeft: 10 }}>
                                                             <Text style={{
-                                                                color: '#111827',
-                                                                fontSize: 13,
+                                                                fontSize: FONTSIZE.H2,
                                                                 fontFamily: 'Inter',
-                                                                fontWeight: '700',
+                                                                fontWeight: FONTWEIGHT.bold,
                                                                 lineHeight: 20,
                                                                 wordWrap: 'break-word'
                                                             }}>
@@ -230,10 +229,10 @@ const DaftarKomentar = ({ items }) => {
                                                             </Text>
                                                             <View style={{ flexDirection: 'row', gap: 5 }}>
                                                                 <Text style={{
-                                                                    color: '#999999',
-                                                                    fontSize: 10,
+                                                                    color: COLORS.lighter,
+                                                                    fontSize: FONTSIZE.H5,
                                                                     fontFamily: 'Inter',
-                                                                    fontWeight: '400',
+                                                                    fontWeight: FONTWEIGHT.normal,
                                                                     lineHeight: 18,
                                                                     wordWrap: 'break-word',
                                                                     marginBottom: 10
@@ -242,10 +241,10 @@ const DaftarKomentar = ({ items }) => {
                                                                 </Text>
                                                                 <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
                                                                 <Text style={{
-                                                                    color: '#999999',
-                                                                    fontSize: 10,
+                                                                    color: COLORS.lighter,
+                                                                    fontSize: FONTSIZE.H5,
                                                                     fontFamily: 'Inter',
-                                                                    fontWeight: '400',
+                                                                    fontWeight: FONTWEIGHT.normal,
                                                                     lineHeight: 18,
                                                                     wordWrap: 'break-word'
                                                                 }}>
@@ -254,9 +253,9 @@ const DaftarKomentar = ({ items }) => {
                                                             </View>
                                                             <Text style={{
                                                                 color: '#999999',
-                                                                fontSize: 10,
+                                                                fontSize: FONTSIZE.H5,
                                                                 fontFamily: 'Inter',
-                                                                fontWeight: '400',
+                                                                fontWeight: FONTWEIGHT.normal,
                                                                 lineHeight: 18,
                                                                 wordWrap: 'break-word',
                                                             }}>
@@ -270,10 +269,10 @@ const DaftarKomentar = ({ items }) => {
                                                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
                                                                             <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
                                                                             <Text style={{
-                                                                                color: '#999999',
-                                                                                fontSize: 10,
+                                                                                color: COLORS.lighter,
+                                                                                fontSize: FONTSIZE.H5,
                                                                                 fontFamily: 'Inter',
-                                                                                fontWeight: '400',
+                                                                                fontWeight: FONTWEIGHT.normal,
                                                                                 lineHeight: 18,
                                                                                 wordWrap: 'break-word',
                                                                             }}>

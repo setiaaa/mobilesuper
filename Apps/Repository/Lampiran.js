@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 const data = [
     {
@@ -61,17 +62,17 @@ const DataLampiran = ({ items }) => {
     return (
         <View style={{ marginTop: 20, justifyContent: 'center', flex: 1, alignItems: 'center' }}>
             {items.lampiran.map((listData) => (
-                <View style={{ backgroundColor: '#FFFFFF', borderRadius: 10, width: '90%', marginVertical: 5 }}>
+                <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, marginHorizontal: 20 }}>
                         <View>
-                            <Ionicons name='document-outline' size={24} color={'#999999'} />
+                            <Ionicons name='document-outline' size={24} color={COLORS.lighter} />
                         </View>
                         <View style={{ marginLeft: 10 }}>
-                            <Text style={{ width: '100%', color: '#111827', fontSize: 11, fontFamily: 'Inter', fontWeight: '400', lineHeight: 14, wordWrap: 'break-word' }}>{listData.file}</Text>
-                            <Text style={{ width: '100%', color: '#999999', fontSize: 10, fontFamily: 'Inter', fontWeight: '400', lineHeight: 18, wordWrap: 'break-word' }}>{listData.size}</Text>
+                            <Text style={{ width: '100%', fontSize: FONTSIZE.H4, fontFamily: 'Inter', fontWeight: FONTWEIGHT.normal, lineHeight: 14, wordWrap: 'break-word' }}>{listData.file}</Text>
+                            <Text style={{ width: '100%', color: COLORS.lighter, fontSize: 10, fontFamily: 'Inter', fontWeight: FONTWEIGHT.normal, lineHeight: 18, wordWrap: 'break-word' }}>{listData.size}</Text>
                         </View>
                         <View style={{ alignItems: 'flex-end', flex: 1 }}>
-                            <Ionicons name='download-outline' size={24} color={'#6B7280'} />
+                            <Ionicons name='download-outline' size={24} color={COLORS.lighter} />
                         </View>
                     </View>
                 </View>
@@ -85,7 +86,7 @@ export const Lampiran = () => {
     const navigation = useNavigation()
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#800000', height: 80, paddingBottom: 20 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: 'white',
                     borderRadius: 20,
@@ -96,11 +97,11 @@ export const Lampiran = () => {
                     marginLeft: 20
                 }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name='chevron-back-outline' size={24} color={'#800000'} />
+                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>{data[0].judul}</Text>
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{data[0].judul}</Text>
                 </View>
             </View>
             <FlatList

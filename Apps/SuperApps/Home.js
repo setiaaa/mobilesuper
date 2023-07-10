@@ -22,6 +22,7 @@ import {
 import { useMemo } from 'react'
 import { CardAppsB } from '../../components/CardAppsB'
 import { useNavigation } from "@react-navigation/native";
+import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 
 const ENTRIES1 = [
     {
@@ -178,9 +179,9 @@ export const Home = () => {
                     {...parallaxProps}
                 />
                 <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
-                    <Text style={{ marginLeft: 10, color: '#6B7280', marginVertical: 10 }}>{item.tanggal}</Text>
-                    <Text style={{ marginLeft: 10, color: '#6B7280' }}> {item.subtitle} </Text>
-                    <Text style={{ marginLeft: 10, color: '#111827', marginVertical: 10 }}>{item.dari}</Text>
+                    <Text style={{ marginLeft: 10, color: COLORS.lighter, marginVertical: 10 }}>{item.tanggal}</Text>
+                    <Text style={{ marginLeft: 10, color: COLORS.lighter }}> {item.subtitle} </Text>
+                    <Text style={{ marginLeft: 10, marginVertical: 10 }}>{item.dari}</Text>
                 </View>
             </View>
         );
@@ -196,13 +197,12 @@ export const Home = () => {
                     parallaxFactor={0.4}
                     {...parallaxProps}
                 />
-                <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
+                <View style={{ backgroundColor: COLORS.white, borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
                     <Text style={{
-                        marginLeft: 10, color: '#111827',
+                        marginLeft: 10,
                         marginVertical: 50,
                         textAlign: 'center',
                         fontSize: 13,
-                        fontWeight: 400
                     }}>
                         {item.title}
                     </Text>
@@ -221,13 +221,12 @@ export const Home = () => {
                     parallaxFactor={0.4}
                     {...parallaxProps}
                 />
-                <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
+                <View style={{ backgroundColor: COLORS.white, borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
                     <Text style={{
-                        marginLeft: 10, color: '#111827',
+                        marginLeft: 10,
                         marginVertical: 50,
                         textAlign: 'center',
                         fontSize: 13,
-                        fontWeight: 400
                     }}>
                         {item.title}
                     </Text>
@@ -277,26 +276,21 @@ export const Home = () => {
     return (
         <BottomSheetModalProvider>
             <ScrollView style={{ flex: 1 }}>
-                <View style={{ backgroundColor: '#752A2B', height: '6%', flexDirection: 'row', gap: 20, paddingTop: 20 }}>
-                    {/* <View style={{ width: '90%' }}>
-                    <Search
-                        placeholder={'Pencarian'}
-                    />
-                </View> */}
+                <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', gap: 20, paddingTop: 20 }}>
                     <View style={{ paddingLeft: 20 }}>
                         <Ionicons name='notifications-outline' size={25} color={'white'} />
                     </View>
                     <View style={{ marginLeft: '23%', marginTop: 5 }}>
-                        <Text style={{ color: 'white', textAlign: 'right', fontWeight: 800, marginBottom: 10 }}>YANI DAMA PUTERA</Text>
-                        <Text style={{ color: 'white', textAlign: 'right', fontSize: 11 }}>Direktur Utama ARMS</Text>
+                        <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>YANI DAMA PUTERA</Text>
+                        <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>Direktur Utama ARMS</Text>
                     </View>
                     <View>
-                        <Image source={require('../../assets/superApp/img.png')} style={{ width: 50, height: 50 }} />
+                        <Image source={AVATAR.U1} style={{ width: 50, height: 50 }} />
                     </View>
                 </View>
 
                 <View>
-                    <View style={{ height: '20%', backgroundColor: '#752A2B', width: '100%', position: 'absolute' }} />
+                    <View style={{ height: '20%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
                     <CardApps
                         handlePressModal={handlePressModal}
                     />
@@ -316,7 +310,7 @@ export const Home = () => {
                         <BottomSheetView onLayout={handleContentLayout} >
                             <View style={{ marginVertical: 20 }}>
                                 <View style={{ marginLeft: 30 }}>
-                                    <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>
                                         Aplikasi
                                     </Text>
                                 </View>
@@ -329,9 +323,9 @@ export const Home = () => {
                 </View>
 
                 <View style={{ marginVertical: 20, marginLeft: 20, flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 13 }}>Berita Terkini</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 12, flex: 1, color: '#1868AB' }}>View all</Text>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -351,7 +345,7 @@ export const Home = () => {
                 </View>
 
                 <View style={{ marginVertical: 20, marginLeft: 20, }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 13, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
                 </View>
                 <View style={styles.containerr}>
                     <Carousel
@@ -377,7 +371,7 @@ export const Home = () => {
                 </View>
 
                 <View style={{ marginLeft: 20, marginBottom: 20 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 13, }}>7 Program Prioritas</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
                 </View>
 
                 <View style={styles.containerr}>
@@ -404,7 +398,7 @@ export const Home = () => {
                 </View>
 
                 <View style={{ marginLeft: 20, marginBottom: 20 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 13, }}>Galeri</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
                 </View>
 
                 <View style={[styles.containerr, { marginBottom: 80 }]}>
