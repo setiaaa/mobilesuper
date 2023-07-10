@@ -179,7 +179,7 @@ const DaftarKomentar = ({ items }) => {
                                 lineHeight: 18,
                                 wordWrap: 'break-word',
                             }}>
-                                {listData.isi + toggleComment.id + listData.id}
+                                {listData.isi}
                             </Text>
                             {listData.jmlhBalas === '' ? (
                                 null

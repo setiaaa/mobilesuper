@@ -89,6 +89,10 @@ import MyTabBarDetailRepo from "../Repository/BottomTabsDetailRepo";
 import { MainDetailRepo } from "../Repository/MainDetailRepo";
 import { Lampiran } from "../Repository/Lampiran";
 import { Komentar } from "../Repository/Komentar";
+import MyTabBarKal from "../Kalender/BottomTabsKal";
+import { Agenda } from "../Kalender/Agenda";
+import { MainKalender } from "../Kalender/MainKalender";
+import { GrupKalender } from "../Kalender/GrupKalender";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -245,6 +249,17 @@ export const BottomTabsDetailRepo = () => {
   )
 }
 
+export const BottomTabsKalender = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarKal {...props} />} initialRouteName='GrupKalender'>
+        <Tab.Screen name='GrupKalender' component={GrupKalender} options={{ headerShown: false }} />
+        <Tab.Screen name='Agenda' component={Agenda} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
 export const TopsTP = () => {
   return (
     <BottomSheetModalProvider>
@@ -374,6 +389,14 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="MainDetailRepo"
             component={MainDetailRepo}
+            options={{
+              headerShown: false,
+              gestureEnabled: false
+            }}
+          />
+          <Stack.Screen
+            name="MainKalender"
+            component={MainKalender}
             options={{
               headerShown: false,
               gestureEnabled: false

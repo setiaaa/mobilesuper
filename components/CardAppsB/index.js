@@ -37,7 +37,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginLeft: 18, marginTop: 30 }}>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainKalender')}>
                         <View style={[styles.cardApps, { backgroundColor: '#F0F0F0', justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='calendar-outline' size={24} color={'#752A2B'} />
                         </View>
