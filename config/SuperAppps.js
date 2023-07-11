@@ -10,7 +10,9 @@ export const COLORS = {
     info: '#1868AB',
     infoLight: '#E4EEF5',
     success: '#11C15B',
-    successLight: '#D9F5E5'
+    successLight: '#D9F5E5',
+    danger: '#EA5455',
+    orange: '#FF8F28',
 }
 export const FONTSIZE = {
     H1: "15",
@@ -29,4 +31,5 @@ export const FONTWEIGHT = {
 
 export const AVATAR = {
     U1: require('../assets/superApp/img.png'),
+    U2: require('../assets/superApp/AvatarDetail.png')
 }

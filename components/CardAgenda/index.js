@@ -1,19 +1,50 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Touchable, View } from 'react-native'
 import { Text } from 'react-native'
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Image } from 'react-native'
-export const CardAgenda = () => {
+import { TouchableOpacity } from 'react-native'
+export const CardAgenda = ({ kegiatan, subAvatar, warna }) => {
+
     return (
-        <View style={{ width: '100%', backgroundColor: COLORS.white, borderRadius: 8, flexDirection: 'row', gap: 15 }}>
-            <View style={{ width: '5%', backgroundColor: COLORS.info, height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ fontSize: FONTSIZE.H4, fontWeight: FONTWEIGHT.normal }}>Rapat Gabungan dengan seluruh anggota</Text>
+        <View style={{
+            width: '100%',
+            backgroundColor: COLORS.white,
+            borderRadius: 8,
+            flexDirection: 'row',
+            gap: 15,
+            marginVertical: 5,
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: '#171717',
+            shadowOpacity: 0.2,
+            shadowRadius: 3,
+        }}>
+            {warna === "#1868AB" ? (
+                <View style={{ width: '5%', backgroundColor: COLORS.info, height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
+            ) : warna === "#EA5455" ? (
+                <View style={{ width: '5%', backgroundColor: '#EA5455', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
+
+            ) : warna === "#F6AD1D" ? (
+                <View style={{ width: '5%', backgroundColor: '#F6AD1D', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
+
+            ) : warna === "#FF8F28" ? (
+                <View style={{ width: '5%', backgroundColor: '#FF8F28', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
+
+            ) : warna === "#11C15B" ? (
+                <View style={{ width: '5%', backgroundColor: '#11C15B', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
+            ) : (
+                <></>
+            )}
+            <View style={{ alignItems: 'center', justifyContent: 'center', marginRight: 20 }}>
+                <Text style={{ fontSize: FONTSIZE.H4, fontWeight: FONTWEIGHT.normal }}>{kegiatan}</Text>
             </View>
             <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', alignItems: 'center' }}>
-                <Image source={require('../../assets/superApp/AvatarDetail.png')} />
-                <Image source={require('../../assets/superApp/AvatarDetail.png')} style={{ marginLeft: -15 }} />
-                <Image source={require('../../assets/superApp/AvatarDetail.png')} style={{ marginLeft: -15 }} />
+                {subAvatar.map((data) => {
+                    return (
+                        <Image source={data.avatar} style={{ marginLeft: -20 }} />
+                    )
+                })}
+                <Image source={subAvatar} />
             </View>
         </View>
     )
