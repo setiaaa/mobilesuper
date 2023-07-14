@@ -37,6 +37,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { useRef } from "react";
 import { useMemo } from "react";
+import { Image } from "react-native";
 
 function Login() {
   const app_name = Config.app_name;
@@ -502,18 +503,22 @@ function Login() {
           behavior="position"
           keyboardVerticalOffset={-150}
         >
-          <ImageBackground
-            source={Config.backgroundLogin}
-            style={styles.rootScreen}
-            imageStyle={styles.backgroundImage}
-          >
-            <View style={[styles.login, { height: height }]}>
+
+          <View style={[styles.login, { height: '100%' }]}>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 100 }}>
+              <Image
+                source={require('../assets/superApp/logokkp.png')}
+                style={styles.backgroundImage}
+              />
+            </View>
+            <View style={{}}>
               {loadingOverlay}
               {!Config.loginSSO && firstLogin && formLogin}
               {!Config.loginSSO && !firstLogin && loginAsUser}
               {Config.loginSSO && loginSSO}
             </View>
-          </ImageBackground>
+          </View>
+
         </KeyboardAvoidingView>
 
         <BottomSheetModalProvider>
@@ -600,14 +605,15 @@ const styles = StyleSheet.create({
     top: -25,
     width: "100%",
     height: 380,
+    backgroundColor: 'red',
   },
   login: {
     flexDirection: "column",
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   backgroundImage: {
-    resizeMode: "cover",
-    alignSelf: "flex-start",
+    width: 200,
+    height: 200
   },
   contentContainer: {
     flex: 1,

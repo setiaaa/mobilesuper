@@ -1,11 +1,34 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { COLORS } from '../../config/SuperAppps';
+import { useRef, useState } from 'react';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+    BottomSheetBackdrop,
+    BottomSheetView,
+    BottomSheetTextInput,
+    useBottomSheetDynamicSnapPoints
+} from '@gorhom/bottom-sheet';
+import { useMemo } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 function MyTabBarKal({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);
+    const bottomSheetModalAddRef = useRef(null);
+
+    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
+    const {
+        animatedHandleHeight,
+        animatedSnapPoints,
+        animatedContentHeight,
+        handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
+
+    const bottomSheetAdd = () => {
+        bottomSheetModalAddRef.current?.present()
+    }
 
     return (
         <BottomSheetModalProvider>
@@ -26,7 +49,7 @@ function MyTabBarKal({ props, navigation }) {
                         key={3}
                         onPress={() => {
                             setTabItemIndex(3)
-                            // navigation.navigate('Tp', { unread: false })
+                            bottomSheetAdd()
                             // props.navigation.navigate('Home', { unread: false })
                         }}
                         style={{
@@ -55,6 +78,43 @@ function MyTabBarKal({ props, navigation }) {
                             </View>
                         </View>
                     </TouchableOpacity>
+                    <BottomSheetModal
+                        ref={bottomSheetModalAddRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout} >
+                            <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 40, borderRadius: 8 }}>
+                                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                                    <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Agenda</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                                    <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Task</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                                <TouchableOpacity
+                                    style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                                    onPress={() => {
+                                        navigation.navigate('TambahGrup', { unread: false })
+                                        // props.navigation.navigate('Home', { unread: false })
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Grup</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </BottomSheetView>
+                    </BottomSheetModal>
 
                     <TouchableOpacity
                         key={2}
@@ -74,15 +134,6 @@ function MyTabBarKal({ props, navigation }) {
 
 
 const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5
-    }
+
 })
 export default MyTabBarKal

@@ -140,7 +140,6 @@ const DaftarKomentar = ({ items }) => {
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{
                                 fontSize: FONTSIZE.H2,
-                                fontFamily: 'Inter',
                                 fontWeight: FONTWEIGHT.bold,
                                 lineHeight: 20,
                                 wordWrap: 'break-word'
@@ -151,7 +150,6 @@ const DaftarKomentar = ({ items }) => {
                                 <Text style={{
                                     color: COLORS.lighter,
                                     fontSize: FONTSIZE.H5,
-                                    fontFamily: 'Inter',
                                     fontWeight: FONTWEIGHT.normal,
                                     lineHeight: 18,
                                     wordWrap: 'break-word',
@@ -163,7 +161,6 @@ const DaftarKomentar = ({ items }) => {
                                 <Text style={{
                                     color: COLORS.lighter,
                                     fontSize: FONTSIZE.H5,
-                                    fontFamily: 'Inter',
                                     fontWeight: FONTWEIGHT.normal,
                                     lineHeight: 18,
                                     wordWrap: 'break-word'
@@ -174,7 +171,6 @@ const DaftarKomentar = ({ items }) => {
                             <Text style={{
                                 color: COLORS.lighter,
                                 fontSize: FONTSIZE.H5,
-                                fontFamily: 'Inter',
                                 fontWeight: FONTWEIGHT.normal,
                                 lineHeight: 18,
                                 wordWrap: 'break-word',
@@ -195,7 +191,6 @@ const DaftarKomentar = ({ items }) => {
                                                     <Text style={{
                                                         color: COLORS.lighter,
                                                         fontSize: FONTSIZE.H5,
-                                                        fontFamily: 'Inter',
                                                         fontWeight: FONTWEIGHT.normal,
                                                         lineHeight: 18,
                                                         wordWrap: 'break-word',
@@ -220,7 +215,6 @@ const DaftarKomentar = ({ items }) => {
                                                         <View style={{ marginLeft: 10 }}>
                                                             <Text style={{
                                                                 fontSize: FONTSIZE.H2,
-                                                                fontFamily: 'Inter',
                                                                 fontWeight: FONTWEIGHT.bold,
                                                                 lineHeight: 20,
                                                                 wordWrap: 'break-word'
@@ -231,7 +225,6 @@ const DaftarKomentar = ({ items }) => {
                                                                 <Text style={{
                                                                     color: COLORS.lighter,
                                                                     fontSize: FONTSIZE.H5,
-                                                                    fontFamily: 'Inter',
                                                                     fontWeight: FONTWEIGHT.normal,
                                                                     lineHeight: 18,
                                                                     wordWrap: 'break-word',
@@ -243,7 +236,6 @@ const DaftarKomentar = ({ items }) => {
                                                                 <Text style={{
                                                                     color: COLORS.lighter,
                                                                     fontSize: FONTSIZE.H5,
-                                                                    fontFamily: 'Inter',
                                                                     fontWeight: FONTWEIGHT.normal,
                                                                     lineHeight: 18,
                                                                     wordWrap: 'break-word'
@@ -254,7 +246,6 @@ const DaftarKomentar = ({ items }) => {
                                                             <Text style={{
                                                                 color: '#999999',
                                                                 fontSize: FONTSIZE.H5,
-                                                                fontFamily: 'Inter',
                                                                 fontWeight: FONTWEIGHT.normal,
                                                                 lineHeight: 18,
                                                                 wordWrap: 'break-word',
@@ -271,7 +262,6 @@ const DaftarKomentar = ({ items }) => {
                                                                             <Text style={{
                                                                                 color: COLORS.lighter,
                                                                                 fontSize: FONTSIZE.H5,
-                                                                                fontFamily: 'Inter',
                                                                                 fontWeight: FONTWEIGHT.normal,
                                                                                 lineHeight: 18,
                                                                                 wordWrap: 'break-word',

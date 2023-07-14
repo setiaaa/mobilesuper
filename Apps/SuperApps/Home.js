@@ -23,6 +23,7 @@ import { useMemo } from 'react'
 import { CardAppsB } from '../../components/CardAppsB'
 import { useNavigation } from "@react-navigation/native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const ENTRIES1 = [
     {
@@ -274,157 +275,159 @@ export const Home = () => {
     }
     const navigation = useNavigation()
     return (
-        <BottomSheetModalProvider>
-            <ScrollView style={{ flex: 1 }}>
-                <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', gap: 20, paddingTop: 20 }}>
-                    <View style={{ paddingLeft: 20 }}>
-                        <Ionicons name='notifications-outline' size={25} color={'white'} />
+        <GestureHandlerRootView>
+            <BottomSheetModalProvider>
+                <ScrollView>
+                    <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', gap: 20, paddingTop: 20 }}>
+                        <View style={{ paddingLeft: 20 }}>
+                            <Ionicons name='notifications-outline' size={25} color={'white'} />
+                        </View>
+                        <View style={{ marginLeft: '23%', marginTop: 5 }}>
+                            <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>YANI DAMA PUTERA</Text>
+                            <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>Direktur Utama ARMS</Text>
+                        </View>
+                        <View>
+                            <Image source={AVATAR.U1} style={{ width: 50, height: 50 }} />
+                        </View>
                     </View>
-                    <View style={{ marginLeft: '23%', marginTop: 5 }}>
-                        <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>YANI DAMA PUTERA</Text>
-                        <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>Direktur Utama ARMS</Text>
-                    </View>
+
                     <View>
-                        <Image source={AVATAR.U1} style={{ width: 50, height: 50 }} />
+                        <View style={{ height: '20%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
+                        <CardApps
+                            handlePressModal={handlePressModal}
+                        />
+                        <BottomSheetModal
+                            ref={bottomSheetModalRef}
+                            snapPoints={animatedSnapPoints}
+                            handleHeight={animatedHandleHeight}
+                            contentHeight={animatedContentHeight}
+                            index={0}
+                            style={{ borderRadius: 50 }}
+                            keyboardBlurBehavior="restore"
+                            android_keyboardInputMode="adjust"
+                            backdropComponent={({ style }) => (
+                                <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                            )}
+                        >
+                            <BottomSheetView onLayout={handleContentLayout} >
+                                <View style={{ marginVertical: 20 }}>
+                                    <View style={{ marginLeft: 30 }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>
+                                            Aplikasi
+                                        </Text>
+                                    </View>
+                                    <View style={{ marginVertical: 50 }}>
+                                        <CardAppsB />
+                                    </View>
+                                </View>
+                            </BottomSheetView>
+                        </BottomSheetModal>
                     </View>
-                </View>
 
-                <View>
-                    <View style={{ height: '20%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
-                    <CardApps
-                        handlePressModal={handlePressModal}
-                    />
-                    <BottomSheetModal
-                        ref={bottomSheetModalRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout} >
-                            <View style={{ marginVertical: 20 }}>
-                                <View style={{ marginLeft: 30 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>
-                                        Aplikasi
-                                    </Text>
-                                </View>
-                                <View style={{ marginVertical: 50 }}>
-                                    <CardAppsB />
-                                </View>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-                </View>
+                    <View style={{ marginVertical: 20, marginLeft: 20, flexDirection: 'row' }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                <View style={{ marginVertical: 20, marginLeft: 20, flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View>
+                        <View style={styles.containerr}>
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                sliderHeight={screenWidth}
+                                itemWidth={screenWidth - 60}
+                                data={entries}
+                                renderItem={renderItem}
+                                hasParallaxImages={true}
+                            />
+                        </View>
+                        {/* <Carousel data={CarouselData} /> */}
+                    </View>
 
-                <View>
+                    <View style={{ marginVertical: 20, marginLeft: 20, }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
+                    </View>
                     <View style={styles.containerr}>
                         <Carousel
                             ref={carouselRef}
                             sliderWidth={screenWidth}
                             sliderHeight={screenWidth}
                             itemWidth={screenWidth - 60}
-                            data={entries}
-                            renderItem={renderItem}
+                            data={entries2}
+                            renderItem={renderItem2}
                             hasParallaxImages={true}
+                            onSnapToItem={setSlide2}
+                        />
+                        <Pagination
+                            dotsLength={entries.length}
+                            inactiveDotColor={'black'}
+                            dotStyle={styles.paginationDot}
+                            inactiveDotOpacity={0.4}
+                            inactiveDotScale={0.6}
+                            activeDotIndex={slide2}
+                            carouselRef={carouselRef}
+                            tappableDots={!!carouselRef}
                         />
                     </View>
-                    {/* <Carousel data={CarouselData} /> */}
-                </View>
 
-                <View style={{ marginVertical: 20, marginLeft: 20, }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
-                </View>
-                <View style={styles.containerr}>
-                    <Carousel
-                        ref={carouselRef}
-                        sliderWidth={screenWidth}
-                        sliderHeight={screenWidth}
-                        itemWidth={screenWidth - 60}
-                        data={entries2}
-                        renderItem={renderItem2}
-                        hasParallaxImages={true}
-                        onSnapToItem={setSlide2}
-                    />
-                    <Pagination
-                        dotsLength={entries.length}
-                        inactiveDotColor={'black'}
-                        dotStyle={styles.paginationDot}
-                        inactiveDotOpacity={0.4}
-                        inactiveDotScale={0.6}
-                        activeDotIndex={slide2}
-                        carouselRef={carouselRef}
-                        tappableDots={!!carouselRef}
-                    />
-                </View>
+                    <View style={{ marginLeft: 20, marginBottom: 20 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
+                    </View>
 
-                <View style={{ marginLeft: 20, marginBottom: 20 }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
-                </View>
+                    <View style={styles.containerr}>
+                        <Carousel
+                            ref={carouselRef}
+                            sliderWidth={screenWidth}
+                            sliderHeight={screenWidth}
+                            itemWidth={screenWidth - 60}
+                            data={entries3}
+                            renderItem={renderItem3}
+                            hasParallaxImages={true}
+                            onSnapToItem={setSlide3}
+                        />
+                        <Pagination
+                            dotsLength={entries2.length}
+                            inactiveDotColor={'black'}
+                            dotStyle={styles.paginationDot}
+                            inactiveDotOpacity={0.4}
+                            inactiveDotScale={0.6}
+                            activeDotIndex={slide3}
+                            carouselRef={carouselRef}
+                            tappableDots={!!carouselRef}
+                        />
+                    </View>
 
-                <View style={styles.containerr}>
-                    <Carousel
-                        ref={carouselRef}
-                        sliderWidth={screenWidth}
-                        sliderHeight={screenWidth}
-                        itemWidth={screenWidth - 60}
-                        data={entries3}
-                        renderItem={renderItem3}
-                        hasParallaxImages={true}
-                        onSnapToItem={setSlide3}
-                    />
-                    <Pagination
-                        dotsLength={entries2.length}
-                        inactiveDotColor={'black'}
-                        dotStyle={styles.paginationDot}
-                        inactiveDotOpacity={0.4}
-                        inactiveDotScale={0.6}
-                        activeDotIndex={slide3}
-                        carouselRef={carouselRef}
-                        tappableDots={!!carouselRef}
-                    />
-                </View>
+                    <View style={{ marginLeft: 20, marginBottom: 20 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
+                    </View>
 
-                <View style={{ marginLeft: 20, marginBottom: 20 }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
-                </View>
-
-                <View style={[styles.containerr, { marginBottom: 80 }]}>
-                    <Carousel
-                        ref={carouselRef}
-                        sliderWidth={screenWidth}
-                        sliderHeight={screenWidth}
-                        itemWidth={screenWidth - 60}
-                        data={entries4}
-                        renderItem={renderItem4}
-                        hasParallaxImages={true}
-                        onSnapToItem={setSlide4}
-                    />
-                    <Pagination
-                        dotsLength={entries.length}
-                        inactiveDotColor={'black'}
-                        dotStyle={styles.paginationDot}
-                        inactiveDotOpacity={0.4}
-                        inactiveDotScale={0.6}
-                        activeDotIndex={slide4}
-                        carouselRef={carouselRef}
-                        tappableDots={!!carouselRef}
-                    />
-                </View>
-            </ScrollView >
-        </BottomSheetModalProvider>
+                    <View style={[styles.containerr, { marginBottom: 80 }]}>
+                        <Carousel
+                            ref={carouselRef}
+                            sliderWidth={screenWidth}
+                            sliderHeight={screenWidth}
+                            itemWidth={screenWidth - 60}
+                            data={entries4}
+                            renderItem={renderItem4}
+                            hasParallaxImages={true}
+                            onSnapToItem={setSlide4}
+                        />
+                        <Pagination
+                            dotsLength={entries.length}
+                            inactiveDotColor={'black'}
+                            dotStyle={styles.paginationDot}
+                            inactiveDotOpacity={0.4}
+                            inactiveDotScale={0.6}
+                            activeDotIndex={slide4}
+                            carouselRef={carouselRef}
+                            tappableDots={!!carouselRef}
+                        />
+                    </View>
+                </ScrollView >
+            </BottomSheetModalProvider>
+        </GestureHandlerRootView>
     )
 }
 
@@ -448,8 +451,7 @@ const styles = StyleSheet.create({
         height: screenWidth - 60,
     },
     imageContainer: {
-        flex: 1,
-        marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+        flex: 1,// Prevent a random Android rendering issue
         backgroundColor: 'white',
         // borderRadius: 8,
         borderTopLeftRadius: 8,
@@ -466,8 +468,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 8
     },
     galeri: {
-        flex: 1,
-        marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+        flex: 1, // Prevent a random Android rendering issue
         backgroundColor: 'white',
         borderRadius: 8
     }

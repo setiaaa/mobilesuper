@@ -13,14 +13,16 @@ export const COLORS = {
     successLight: '#D9F5E5',
     danger: '#EA5455',
     orange: '#FF8F28',
+    infoDanger: '#C34647',
+    ExtraDivinder: '#DBDADE'
 }
 export const FONTSIZE = {
-    H1: "15",
-    H2: "14",
-    H3: "12",
-    H4: "11",
-    H5: "10",
-    Judul: "17"
+    H1: 15,
+    H2: 14,
+    H3: 12,
+    H4: 11,
+    H5: 10,
+    Judul: 17
 }
 
 export const FONTWEIGHT = {

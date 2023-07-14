@@ -93,6 +93,7 @@ import MyTabBarKal from "../Kalender/BottomTabsKal";
 import { Agenda } from "../Kalender/Agenda";
 import { MainKalender } from "../Kalender/MainKalender";
 import { GrupKalender } from "../Kalender/GrupKalender";
+import { TambahGrup } from "../Kalender/TambahGrup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -121,7 +122,7 @@ function AuthStack() {
             translucent
           />
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Onboarding"
               component={Onboarding}
               options={{
@@ -131,6 +132,95 @@ function AuthStack() {
             <Stack.Screen
               name="Login"
               component={Login}
+              options={{
+                headerShown: false,
+              }}
+            /> */}
+            <Stack.Screen
+              name="Main"
+              component={Main}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MainRepo"
+              component={MainRepo}
+              options={{
+                headerShown: false,
+                gestureEnabled: false
+              }}
+            />
+            <Stack.Screen
+              name="MainKeb"
+              component={MainKeb}
+              options={{
+                headerShown: false,
+                gestureEnabled: false
+              }}
+            />
+            <Stack.Screen
+              name="MainDetailRepo"
+              component={MainDetailRepo}
+              options={{
+                headerShown: false,
+                gestureEnabled: false
+              }}
+            />
+            {/* <Stack.Screen
+              name="MainKalender"
+              component={MainKalender}
+              options={{
+                headerShown: false,
+                gestureEnabled: false
+              }}
+            /> */}
+            <Stack.Screen
+              name="GrupKalender"
+              component={GrupKalender}
+              options={{
+                headerShown: false,
+                gestureEnabled: false
+              }}
+            />
+            <Stack.Screen
+              name="ListBerita"
+              component={ListBerita}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Tp"
+              component={Tp}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailBerita"
+              component={DetailBerita}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="TambahGrup"
+              component={TambahGrup}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Dokumen"
+              component={Dokumen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailActivity"
+              component={DetailActivity}
               options={{
                 headerShown: false,
               }}
@@ -435,6 +525,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="DetailBerita"
             component={DetailBerita}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahGrup"
+            component={TambahGrup}
             options={{
               headerShown: false,
             }}

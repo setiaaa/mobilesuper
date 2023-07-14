@@ -68,8 +68,8 @@ const DataLampiran = ({ items }) => {
                             <Ionicons name='document-outline' size={24} color={COLORS.lighter} />
                         </View>
                         <View style={{ marginLeft: 10 }}>
-                            <Text style={{ width: '100%', fontSize: FONTSIZE.H4, fontFamily: 'Inter', fontWeight: FONTWEIGHT.normal, lineHeight: 14, wordWrap: 'break-word' }}>{listData.file}</Text>
-                            <Text style={{ width: '100%', color: COLORS.lighter, fontSize: 10, fontFamily: 'Inter', fontWeight: FONTWEIGHT.normal, lineHeight: 18, wordWrap: 'break-word' }}>{listData.size}</Text>
+                            <Text style={{ width: '100%', fontSize: FONTSIZE.H4, fontWeight: FONTWEIGHT.normal, lineHeight: 14, wordWrap: 'break-word' }}>{listData.file}</Text>
+                            <Text style={{ width: '100%', color: COLORS.lighter, fontSize: 10, fontWeight: FONTWEIGHT.normal, lineHeight: 18, wordWrap: 'break-word' }}>{listData.size}</Text>
                         </View>
                         <View style={{ alignItems: 'flex-end', flex: 1 }}>
                             <Ionicons name='download-outline' size={24} color={COLORS.lighter} />

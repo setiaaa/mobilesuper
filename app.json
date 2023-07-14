@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "Notadinas V2",
-    "slug": "NotadinasV2",
-    "version": "1.0.0",
+    "name": "KKP SuperApps",
+    "slug": "KKP SuperApps",
+    "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logokkp.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logokkp.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

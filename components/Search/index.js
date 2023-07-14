@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
+import { COLORS } from '../../config/SuperAppps'
 
 export const Search = ({ onSearch, placeholder }) => {
     return (
         <View style={styles.input}>
+            <Ionicons name='search' size={20} color={'grey'} />
             <TextInput
                 placeholder={placeholder}
                 style={{ fontSize: 16, flex: 1 }}
@@ -12,7 +14,6 @@ export const Search = ({ onSearch, placeholder }) => {
                 onChangeText={onSearch}
                 clearButtonMode='always'
             />
-            <Ionicons name='search' size={20} color={'grey'} />
         </View>
     )
 }
@@ -21,10 +22,11 @@ const styles = StyleSheet.create({
     input: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#F4F7FE',
         gap: 20,
-        borderRadius: 100,
         paddingHorizontal: 20,
-        paddingVertical: 15
+        paddingVertical: 10,
+        borderWidth: 1,
+        borderColor: COLORS.ExtraDivinder,
+        borderRadius: 8
     },
 })
