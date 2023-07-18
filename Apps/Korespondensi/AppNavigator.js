@@ -94,6 +94,9 @@ import { Agenda } from "../Kalender/Agenda";
 import { MainKalender } from "../Kalender/MainKalender";
 import { GrupKalender } from "../Kalender/GrupKalender";
 import { TambahGrup } from "../Kalender/TambahGrup";
+import { TambahAgenda } from "../Kalender/TambahAgenda";
+import { DetailAcara } from "../Kalender/DetailAcara";
+import { ListSuka } from "../Kalender/ListSuka";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -207,6 +210,27 @@ function AuthStack() {
             <Stack.Screen
               name="TambahGrup"
               component={TambahGrup}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="TambahAgenda"
+              component={TambahAgenda}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailAcara"
+              component={DetailAcara}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ListSuka"
+              component={ListSuka}
               options={{
                 headerShown: false,
               }}
@@ -532,6 +556,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="TambahGrup"
             component={TambahGrup}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahAgenda"
+            component={TambahAgenda}
             options={{
               headerShown: false,
             }}

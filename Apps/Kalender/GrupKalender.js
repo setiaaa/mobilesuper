@@ -321,7 +321,13 @@ export const GrupKalender = () => {
               >
                 <BottomSheetView onLayout={handleContentLayout} >
                   <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 40, borderRadius: 8 }}>
-                    <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                    <TouchableOpacity
+                      style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                      onPress={() => {
+                        navigation.navigate('TambahAgenda', { unread: false })
+                        // props.navigation.navigate('Home', { unread: false })
+                      }}
+                    >
                       <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Agenda</Text>
                     </TouchableOpacity>
                   </View>

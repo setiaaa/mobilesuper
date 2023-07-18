@@ -372,7 +372,7 @@ export const TambahGrup = () => {
                                         <Ionicons name='close-outline' size={24} />
                                     </TouchableOpacity>
                                     <View style={{ marginBottom: 40 }}>
-                                        <Image source={require('../../assets/superApp/alertBerhasil.png')} />
+                                        <Image source={require('../../assets/superApp/alertGagal.png')} />
                                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
                                             <Text >Terjadi Kesalahan!</Text>
                                         </View>
