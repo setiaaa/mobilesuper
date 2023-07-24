@@ -262,7 +262,7 @@ export const Home = () => {
     };
     const bottomSheetModalRef = useRef(null);
 
-    const initialSnapPoints = useMemo(() => ["50%", "CONTENT_HEIGHT"], [])
+    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
         animatedHandleHeight,
         animatedSnapPoints,

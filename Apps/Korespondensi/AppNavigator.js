@@ -97,6 +97,16 @@ import { TambahGrup } from "../Kalender/TambahGrup";
 import { TambahAgenda } from "../Kalender/TambahAgenda";
 import { DetailAcara } from "../Kalender/DetailAcara";
 import { ListSuka } from "../Kalender/ListSuka";
+import { MyTask } from "../Task Management/MyTask";
+import { InProgres } from "../Task Management/InProgres";
+import { Pending } from "../Task Management/Pending";
+import { BackLog } from "../Task Management/BackLog";
+import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
+import { Complete } from "../Task Management/Complete";
+import MyTabBarDetailTask from "../Task Management/BottmTabsDetailTask";
+import { DetailTask } from "../Task Management/DetailTask";
+import { LampiranTask } from "../Task Management/LampiranTask";
+import MainDetailTask from "../Task Management/MainDetailTask";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -231,6 +241,20 @@ function AuthStack() {
             <Stack.Screen
               name="ListSuka"
               component={ListSuka}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MyTask"
+              component={MyTask}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MainDetailTask"
+              component={MainDetailTask}
               options={{
                 headerShown: false,
               }}
@@ -374,6 +398,17 @@ export const BottomTabsKalender = () => {
   )
 }
 
+export const BottomTabsDetailTask = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarDetailTask {...props} />} initialRouteName='DetailTask'>
+        <Tab.Screen name='DetailTask' component={DetailTask} options={{ headerShown: false }} />
+        <Tab.Screen name='LampiranTask' component={LampiranTask} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
 export const TopsTP = () => {
   return (
     <BottomSheetModalProvider>
@@ -394,6 +429,39 @@ export const TopsTP = () => {
         <Top.Screen name='KPP' component={KPP}
           options={{
             title: 'Kinerja dan Pengembangan Pegawai'
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const TopsTaks = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName='Inprogres'
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 13, textTransform: 'none', fontWeight: FONTWEIGHT.bold },
+        }}
+      >
+        <Top.Screen name='Inprogres' component={InProgres}
+          options={{
+            title: 'In Progres',
+          }} />
+        <Top.Screen name='Pending' component={Pending}
+          options={{
+            title: 'Pending'
+          }} />
+        <Top.Screen name='Complete' component={Complete}
+          options={{
+            title: 'Complete'
+          }} />
+        <Top.Screen name='BackLog' component={BackLog}
+          options={{
+            title: 'Back Log'
           }}
         />
       </Top.Navigator>
@@ -722,6 +790,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="DetailActivity"
             component={DetailActivity}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MyTask"
+            component={MyTask}
             options={{
               headerShown: false,
             }}

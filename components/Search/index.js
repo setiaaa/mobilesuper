@@ -3,10 +3,10 @@ import React from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import { COLORS } from '../../config/SuperAppps'
 
-export const Search = ({ onSearch, placeholder }) => {
+export const Search = ({ onSearch, placeholder, iconColor }) => {
     return (
         <View style={styles.input}>
-            <Ionicons name='search' size={20} color={'grey'} />
+            <Ionicons name='search' size={20} color={iconColor} />
             <TextInput
                 placeholder={placeholder}
                 style={{ fontSize: 16, flex: 1 }}
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     input: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 20,
+        gap: 10,
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderWidth: 1,

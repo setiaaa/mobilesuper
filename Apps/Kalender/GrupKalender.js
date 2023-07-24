@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { SelectList } from 'react-native-dropdown-select-list';
+import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
@@ -48,13 +48,31 @@ export const GrupKalender = () => {
     bottomSheetModalAddRef.current?.present()
   }
 
+  const [category, setCategory] = useState('')
+  const [subCategory, setSubCategory] = useState('')
+
+  const ketegori = [
+    { key: 'KKP', value: 'KKP' },
+    { key: 'CK', value: 'CEK' }
+  ]
+
+  const subKategori = {
+    'KKP': [
+      { key: '1', value: 'Kalender Direksi' },
+      { key: '2', value: 'Kalender Grup' }
+    ],
+    'CK': [
+      { key: '3', value: 'cek' },
+      { key: '4', value: 'halo' }
+    ]
+  }
 
 
   const data = [
-    { key: '1', value: 'Mobiles', disabled: true },
+    { key: '1', value: 'Mobiles' },
     { key: '2', value: 'Appliances' },
     { key: '3', value: 'Cameras' },
-    { key: '4', value: 'Computers', disabled: true },
+    { key: '4', value: 'Computers' },
     { key: '5', value: 'Vegetables' },
     { key: '6', value: 'Diary Products' },
     { key: '7', value: 'Drinks' },
@@ -188,15 +206,31 @@ export const GrupKalender = () => {
               <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Agenda Bersama</Text>
             </View>
           </View>
+
           <View style={{ flexDirection: 'row', marginVertical: 20, gap: 10 }}>
             <View style={{ width: '75%', marginLeft: 20 }}>
               <SelectList
-                setSelected={(val) => setSelected(val)}
-                data={data}
-                save="value"
+                dropdownStyles={{ backgroundColor: COLORS.white, borderColor: COLORS.white, }}
+                setSelected={(val) => setCategory(val)}
+                data={ketegori}
                 placeholder='Pilih Grup'
                 boxStyles={{ borderColor: COLORS.white, backgroundColor: COLORS.white }}
               />
+
+              {category === '' ? (
+                <></>
+              ) : (
+                <View style={{ marginTop: 10 }}>
+                  <SelectList
+                    dropdownStyles={{ backgroundColor: COLORS.white, borderColor: COLORS.white, }}
+                    search={false}
+                    setSelected={(val) => setSubCategory(val)}
+                    data={subKategori[category]}
+                    placeholder='Pilih Kategori'
+                    boxStyles={{ borderColor: COLORS.white, backgroundColor: COLORS.white }}
+                  />
+                </View>
+              )}
             </View>
             <View style={{ backgroundColor: 'white', width: '11%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, height: 45 }}>
               <TouchableOpacity onPress={bottomSheetinfo}>

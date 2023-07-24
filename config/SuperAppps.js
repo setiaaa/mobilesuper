@@ -14,6 +14,7 @@ export const COLORS = {
     danger: '#EA5455',
     orange: '#FF8F28',
     infoDanger: '#C34647',
+    infoDangerLight: '#FBDDDD',
     ExtraDivinder: '#DBDADE'
 }
 export const FONTSIZE = {
