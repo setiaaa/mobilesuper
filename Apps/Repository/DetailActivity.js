@@ -20,39 +20,41 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
-const item = {
-    judul: 'Business Agility with Scrum',
-    subjudul: 'Business Agility Scrum 2023 with All Employee',
-    tanggal: '16 Mei 2023',
-    nama: 'Rizky Novriansyah',
-    unit: 'Unit Kelompok Fungsional',
-    tempat: 'Golden Tulip Kota Malang',
-    deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
-    image: require('../../assets/superApp/AvatarDetail.png'),
-    subimage: [
-        { image: require('../../assets/superApp/AvatarDetail.png') },
-        { image: require('../../assets/superApp/AvatarDetail.png') },
-        { image: require('../../assets/superApp/AvatarDetail.png') },
-    ],
-    dibagikan: [
-        {
-            avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-            jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            nama: 'Rizky Novriansyahh',
-        },
-        {
-            avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-            jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            nama: 'Rizky Novriansyahh',
-        },
-        {
-            avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-            jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            nama: 'Rizky Novriansyahh'
-        },
-    ]
-}
+// const item = {
+//     judul: 'Business Agility with Scrum',
+//     subjudul: 'Business Agility Scrum 2023 with All Employee',
+//     tanggal: '16 Mei 2023',
+//     nama: 'Rizky Novriansyah',
+//     unit: 'Unit Kelompok Fungsional',
+//     tempat: 'Golden Tulip Kota Malang',
+//     deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
+//     image: require('../../assets/superApp/AvatarDetail.png'),
+//     subimage: [
+//         { image: require('../../assets/superApp/AvatarDetail.png') },
+//         { image: require('../../assets/superApp/AvatarDetail.png') },
+//         { image: require('../../assets/superApp/AvatarDetail.png') },
+//     ],
+//     dibagikan: [
+//         {
+//             avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
+//             jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+//             nama: 'Rizky Novriansyahh',
+//         },
+//         {
+//             avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
+//             jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+//             nama: 'Rizky Novriansyahh',
+//         },
+//         {
+//             avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
+//             jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+//             nama: 'Rizky Novriansyahh'
+//         },
+//     ]
+// }
+
 
 export const DetailActivity = () => {
     // const { item } = route.params
@@ -71,6 +73,10 @@ export const DetailActivity = () => {
     const bottomSheetAttach = () => {
         bottomSheetModalRef.current?.present()
     }
+    const { dokumen } = useSelector(state => state.repository)
+    const detail = dokumen.detail
+
+    console.log(detail)
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -91,11 +97,11 @@ export const DetailActivity = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>{item.judul}</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>{detail.judul}</Text>
                         </View>
                     </View>
                     <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-                        <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{item.subjudul}</Text>
+                        <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{detail.subjudul}</Text>
                     </View>
                     <View style={{
                         flexDirection: 'row',
@@ -103,9 +109,9 @@ export const DetailActivity = () => {
                         alignItems: 'center',
                         marginHorizontal: 20
                     }}>
-                        <Image source={item.image} />
-                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: '#1868AB' }}>{item.nama}</Text>
-                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>|  {item.unit}</Text>
+                        <Image source={detail.image} />
+                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: '#1868AB' }}>{detail.nama}</Text>
+                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>|  {detail.unit}</Text>
                     </View>
                     <View style={{
                         flexDirection: 'row',
@@ -115,7 +121,7 @@ export const DetailActivity = () => {
                         marginTop: 10
                     }}>
                         <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }}>Tanggal Acara</Text>
-                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, }}>:  {item.tanggal}</Text>
+                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, }}>:  {detail.tanggal}</Text>
                     </View>
                     <View style={{
                         flexDirection: 'row',
@@ -125,13 +131,13 @@ export const DetailActivity = () => {
                         marginTop: 10
                     }}>
                         <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }}>Tempat Acara</Text>
-                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>:  {item.tempat}</Text>
+                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>:  {detail.tempat}</Text>
                     </View>
                     <View style={{ marginVertical: 30, width: '90%', marginHorizontal: 20 }}>
                         <Divider bold />
                     </View>
                     <View style={{ marginHorizontal: 20 }}>
-                        <Text style={{ textAlign: 'justify', fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }}>{item.deskripsi}</Text>
+                        <Text style={{ textAlign: 'justify', fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }}>{detail.deskripsi}</Text>
                     </View>
                     <View style={{ marginHorizontal: 20, marginTop: 30, flexDirection: 'row' }}>
                         <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Dibagikan Kepada</Text>
@@ -142,11 +148,11 @@ export const DetailActivity = () => {
                         </View>
                     </View>
                     <View style={{ marginHorizontal: 20, marginTop: 10, flexDirection: 'row', gap: 20, }}>
-                        <Image source={item.image} />
+                        <Image source={detail.image} />
                         {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
                         <View style={{ height: '100%', width: 2, backgroundColor: COLORS.lighter }} />
                         <View style={{ flexDirection: 'row', position: 'relative' }}>
-                            {item.subimage.map((data) => {
+                            {detail.subimage?.map((data) => {
                                 return (
                                     <Image source={data.image} style={{ marginLeft: -7 }} />
                                 )
@@ -173,18 +179,18 @@ export const DetailActivity = () => {
                         <BottomSheetView onLayout={handleContentLayout} >
                             <View style={{ marginHorizontal: 20 }}>
                                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                                    <Image source={item.image} />
+                                    <Image source={detail.image} />
                                     <View style={{}}>
                                         <Text style={{ color: COLORS.lighter }}>Penulis</Text>
-                                        <Text style={{ color: COLORS.lighter }}>{item.nama}</Text>
+                                        <Text style={{ color: COLORS.lighter }}>{detail.nama}</Text>
                                     </View>
                                 </View>
                                 <View style={{ marginTop: 30 }}>
                                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Dibagikan Kepada</Text>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Image source={item.avatarDibagikan} />
+                                        <Image source={detail.avatarDibagikan} />
                                         <View style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 30 }}>
-                                            {item.dibagikan.map((data) => (
+                                            {detail.dibagikan?.map((data) => (
                                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                                                     <Image source={data.avatarDibagikan} />
                                                     <View>

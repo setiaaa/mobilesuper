@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search';
 import { FlatList } from 'react-native';
@@ -16,201 +16,9 @@ import {
 import { useMemo } from 'react'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-const data = [
-    {
-        judul: 'Business Agility with Scrum',
-        subjudul: 'Business Agility Scrum 2023 with All Employee',
-        tanggal: '16 Mei 2023',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit Kelompok Fungsional',
-        tempat: 'Golden Tulip Kota Malang',
-        deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
-        image: require('../../assets/superApp/AvatarDetail.png'),
-        subimage: [
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-        ],
-        dibagikan: [
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh'
-            },
-        ]
-    },
-    {
-        judul: 'Gathering Investor',
-        subjudul: 'Business Agility Scrum 2023 with All Employee',
-        tanggal: '16 Mei 2023',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit Kelompok Fungsional',
-        tempat: 'Golden Tulip Kota Malang',
-        deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
-        image: require('../../assets/superApp/AvatarDetail.png'),
-        subimage: [
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-        ],
-        dibagikan: [
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh'
-            },
-        ]
-    },
-    {
-        judul: 'Business Agility with Scrum',
-        subjudul: 'Business Agility Scrum 2023 with All Employee',
-        tanggal: '16 Mei 2023',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit Kelompok Fungsional',
-        tempat: 'Golden Tulip Kota Malang',
-        deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
-        image: require('../../assets/superApp/AvatarDetail.png'),
-        subimage: [
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-        ],
-        dibagikan: [
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh'
-            },
-        ]
-    },
-    {
-        judul: 'Business Agility with Scrum',
-        subjudul: 'Business Agility Scrum 2023 with All Employee',
-        tanggal: '16 Mei 2023',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit Kelompok Fungsional',
-        tempat: 'Golden Tulip Kota Malang',
-        deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
-        image: require('../../assets/superApp/AvatarDetail.png'),
-        subimage: [
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-        ],
-        dibagikan: [
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh'
-            },
-        ]
-    },
-    {
-        judul: 'Business Agility with Scrum',
-        subjudul: 'Business Agility Scrum 2023 with All Employee',
-        tanggal: '16 Mei 2023',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit Kelompok Fungsional',
-        tempat: 'Golden Tulip Kota Malang',
-        deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
-        image: require('../../assets/superApp/AvatarDetail.png'),
-        subimage: [
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-        ],
-        dibagikan: [
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh'
-            },
-        ]
-    },
-    {
-        judul: 'Business Agility with Scrum',
-        subjudul: 'Business Agility Scrum 2023 with All Employee',
-        tanggal: '16 Mei 2023',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit Kelompok Fungsional',
-        tempat: 'Golden Tulip Kota Malang',
-        deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
-        image: require('../../assets/superApp/AvatarDetail.png'),
-        subimage: [
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-            { image: require('../../assets/superApp/AvatarDetail.png') },
-        ],
-        dibagikan: [
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh',
-            },
-            {
-                avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyahh'
-            },
-        ]
-    }
-];
+import { setDokumentlists } from '../../store/Repository';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 
 const DataList = ({ item, bottomSheetAttach }) => {
@@ -297,120 +105,124 @@ export const Dokumen = () => {
         setDataM(item)
     }
 
+    const { dokumen } = useSelector(state => state.repository)
+
     return (
         <GestureHandlerRootView>
             <BottomSheetModalProvider>
-                <ScrollView>
-                    <View style={{ marginBottom: 20 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                            <View style={{
-                                backgroundColor: 'white',
-                                borderRadius: 20,
-                                width: 28,
-                                height: 28,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginLeft: 20
-                            }}>
-                                <TouchableOpacity onPress={() => navigation.goBack()}>
-                                    <Ionicons name='close-outline' size={24} color={'#800000'} />
-                                </TouchableOpacity>
+                <SafeAreaView>
+                    <ScrollView>
+                        <View style={{ marginBottom: 20 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                                <View style={{
+                                    backgroundColor: 'white',
+                                    borderRadius: 20,
+                                    width: 28,
+                                    height: 28,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginLeft: 20
+                                }}>
+                                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                                        <Ionicons name='close-outline' size={24} color={'#800000'} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                                    <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Repositori</Text>
+                                </View>
                             </View>
-                            <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Repositori</Text>
+                            <View style={{ width: '90%', marginLeft: 20, marginVertical: 20 }}>
+                                <Search placeholder={'Cari'} />
                             </View>
-                        </View>
-                        <View style={{ width: '90%', marginLeft: 20, marginVertical: 20 }}>
-                            <Search placeholder={'Cari'} />
-                        </View>
-                        <View style={styles.card}>
-                            <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
-                                <TouchableOpacity onPress={() => handleVariant('list')}>
-                                    <View style={styles.circleList}>
-                                        <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleVariant('grid')}>
-                                    <View style={styles.circleList}>
-                                        <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <Divider bold />
-                            {variant === 'list' ? (
-                                <FlatList
-                                    key={'_'}
-                                    data={data}
-                                    renderItem={({ item }) => <DataList
-                                        bottomSheetAttach={bottomSheetAttach}
-                                        // judul={item.judul}
-                                        // tanggal={item.tanggal}
-                                        item={item}
-                                    />
-                                    }
-                                    keyExtractor={item => "_" + item.id}
-                                    style={{ height: 440 }}
-                                />
-
-                            ) : (
-                                <FlatList
-                                    key={'#'}
-                                    data={data}
-                                    renderItem={({ item }) => <DataGrid
-                                        bottomSheetAttach={bottomSheetAttach}
-                                        // judul={item.judul}
-                                        // tanggal={item.tanggal}
-                                        item={item}
-                                    />
-                                    }
-                                    numColumns={2}
-                                    keyExtractor={item => "#" + item.id}
-                                    style={{ height: 440 }}
-                                />
-                            )}
-                            <View style={{ marginBottom: 40 }}>
+                            <View style={styles.card}>
+                                <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
+                                    <TouchableOpacity onPress={() => handleVariant('list')}>
+                                        <View style={styles.circleList}>
+                                            <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleVariant('grid')}>
+                                        <View style={styles.circleList}>
+                                            <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
                                 <Divider bold />
-                            </View>
-                            <BottomSheetModal
-                                ref={bottomSheetModalRef}
-                                snapPoints={animatedSnapPoints}
-                                handleHeight={animatedHandleHeight}
-                                contentHeight={animatedContentHeight}
-                                index={0}
-                                style={{ borderRadius: 50 }}
-                                keyboardBlurBehavior="restore"
-                                android_keyboardInputMode="adjust"
-                                backdropComponent={({ style }) => (
-                                    <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                {variant === 'list' ? (
+                                    <FlatList
+                                        key={'_'}
+                                        data={dokumen.lists}
+                                        renderItem={({ item }) => <DataList
+                                            bottomSheetAttach={bottomSheetAttach}
+                                            // judul={item.judul}
+                                            // tanggal={item.tanggal}
+                                            item={item}
+                                        />
+                                        }
+                                        keyExtractor={item => "_" + item.id}
+                                        style={{ height: 440 }}
+                                    />
+
+                                ) : (
+                                    <FlatList
+                                        key={'#'}
+                                        data={dokumen.lists}
+                                        renderItem={({ item }) => <DataGrid
+                                            bottomSheetAttach={bottomSheetAttach}
+                                            // judul={item.judul}
+                                            // tanggal={item.tanggal}
+                                            item={item}
+                                        />
+                                        }
+                                        numColumns={2}
+                                        keyExtractor={item => "#" + item.id}
+                                        style={{ height: 440 }}
+                                    />
                                 )}
-                            >
-                                <BottomSheetView onLayout={handleContentLayout} >
-                                    <View style={{ marginVertical: 20 }}>
-                                        <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                            <Ionicons name='document-outline' size={32} color={COLORS.primary} />
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>{dataM.judul}</Text>
-                                        </View>
-                                        <View style={{ marginTop: 20 }}>
-                                            <Divider bold />
-                                        </View>
-                                        <TouchableOpacity>
-                                            <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
-                                                <Ionicons name='download-outline' size={32} color={'#6B7280'} />
-                                                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Download</Text>
+                                <View style={{ marginBottom: 40 }}>
+                                    <Divider bold />
+                                </View>
+                                <BottomSheetModal
+                                    ref={bottomSheetModalRef}
+                                    snapPoints={animatedSnapPoints}
+                                    handleHeight={animatedHandleHeight}
+                                    contentHeight={animatedContentHeight}
+                                    index={0}
+                                    style={{ borderRadius: 50 }}
+                                    keyboardBlurBehavior="restore"
+                                    android_keyboardInputMode="adjust"
+                                    backdropComponent={({ style }) => (
+                                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                    )}
+                                >
+                                    <BottomSheetView onLayout={handleContentLayout} >
+                                        <View style={{ marginVertical: 20, }}>
+                                            <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                                                <Ionicons name='document-outline' size={32} color={COLORS.primary} />
+                                                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>{dataM.judul}</Text>
                                             </View>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => navigation.navigate('MainDetailRepo')}>
-                                            <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
-                                                <Ionicons name='information-circle-outline' size={32} color={'#6B7280'} />
-                                                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Details & activity</Text>
+                                            <View style={{ marginTop: 20 }}>
+                                                <Divider bold />
                                             </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </BottomSheetView>
-                            </BottomSheetModal>
+                                            <TouchableOpacity>
+                                                <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
+                                                    <Ionicons name='download-outline' size={32} color={'#6B7280'} />
+                                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Download</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => navigation.navigate('MainDetailRepo')}>
+                                                <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
+                                                    <Ionicons name='information-circle-outline' size={32} color={'#6B7280'} />
+                                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Details & activity</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </BottomSheetView>
+                                </BottomSheetModal>
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
+                    </ScrollView>
+                </SafeAreaView>
             </BottomSheetModalProvider>
         </GestureHandlerRootView>
     )

@@ -9,7 +9,7 @@ function MyTabBarRepo({ props, navigation }) {
 
     return (
         <BottomSheetModalProvider>
-            <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white }}>
+            <View style={{ flexDirection: 'row', backgroundColor: COLORS.white, }}>
                 <View style={{ flexDirection: 'row', gap: 35, marginVertical: 20, justifyContent: 'space-around', marginLeft: 20, display: 'flex', flex: 1 }}>
                     <TouchableOpacity
                         key={1}
