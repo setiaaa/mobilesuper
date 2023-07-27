@@ -6,39 +6,7 @@ import { Divider } from 'react-native-paper';
 import { FlatList } from 'react-native';
 import { FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
-const data = [
-    {
-        no: '1',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit [Nama Unit]'
 
-    },
-    {
-        no: '2',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit [Nama Unit]'
-    },
-    {
-        no: '3',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit [Nama Unit]'
-    },
-    {
-        no: '4',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit [Nama Unit]'
-    },
-    {
-        no: '5',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit [Nama Unit]'
-    },
-    {
-        no: '6',
-        nama: 'Rizky Novriansyah',
-        unit: 'Unit [Nama Unit]'
-    }
-];
 
 const CardLiniMasaSatker = ({ no, nama, unit }) => {
     return (
@@ -54,7 +22,7 @@ const CardLiniMasaSatker = ({ no, nama, unit }) => {
     )
 }
 
-export const CardUltah = () => {
+export const CardUltah = ({ ultah }) => {
     const navigation = useNavigation()
     return (
         <View style={styles.card}>
@@ -67,7 +35,7 @@ export const CardUltah = () => {
                     <Divider bold style={{ width: '75%', backgroundColor: '#999999' }} />
                 </View>
                 <FlatList
-                    data={data}
+                    data={ultah}
                     renderItem={({ item }) => <CardLiniMasaSatker
                         no={item.no}
                         nama={item.nama}

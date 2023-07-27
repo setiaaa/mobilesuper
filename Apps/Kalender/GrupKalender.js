@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
 import { TouchableOpacity } from 'react-native'
@@ -20,6 +20,8 @@ import {
 import { useMemo } from 'react'
 import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { Dropdown } from '../../components/DropDown';
 
 export const GrupKalender = () => {
   const navigation = useNavigation()
@@ -48,35 +50,32 @@ export const GrupKalender = () => {
     bottomSheetModalAddRef.current?.present()
   }
 
-  const [category, setCategory] = useState('')
-  const [subCategory, setSubCategory] = useState('')
+  const [kategoriField, setKategoriField] = useState('')
+  const [subkategoriField, setSubKategoriField] = useState('')
 
-  const ketegori = [
+  const kategori = [
     { key: 'KKP', value: 'KKP' },
     { key: 'CK', value: 'CEK' }
   ]
 
+
   const subKategori = {
     'KKP': [
-      { key: '1', value: 'Kalender Direksi' },
-      { key: '2', value: 'Kalender Grup' }
+      {
+        key: '1',
+        value: 'Kalender Direksi'
+      },
+      {
+        key: '2',
+        value: 'Kalender Grup'
+      }
     ],
     'CK': [
       { key: '3', value: 'cek' },
       { key: '4', value: 'halo' }
     ]
   }
-
-
-  const data = [
-    { key: '1', value: 'Mobiles' },
-    { key: '2', value: 'Appliances' },
-    { key: '3', value: 'Cameras' },
-    { key: '4', value: 'Computers' },
-    { key: '5', value: 'Vegetables' },
-    { key: '6', value: 'Diary Products' },
-    { key: '7', value: 'Drinks' },
-  ]
+  console.log(kategoriField)
 
   const item = [
     {
@@ -184,6 +183,8 @@ export const GrupKalender = () => {
     }
   ]
 
+  const [current, setCurrent] = useState()
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -207,29 +208,23 @@ export const GrupKalender = () => {
             </View>
           </View>
 
-          <View style={{ flexDirection: 'row', marginVertical: 20, gap: 10 }}>
+          <View style={{ flexDirection: 'row', marginVertical: 20, gap: 10, zIndex: 1 }}>
             <View style={{ width: '75%', marginLeft: 20 }}>
-              <SelectList
-                dropdownStyles={{ backgroundColor: COLORS.white, borderColor: COLORS.white, }}
-                setSelected={(val) => setCategory(val)}
-                data={ketegori}
-                placeholder='Pilih Grup'
-                boxStyles={{ borderColor: COLORS.white, backgroundColor: COLORS.white }}
+              <Dropdown
+                data={kategori}
+                setSelected={setKategoriField}
+                placeHolder={'Pilih Kategori'}
               />
-
-              {category === '' ? (
-                <></>
-              ) : (
-                <View style={{ marginTop: 10 }}>
-                  <SelectList
-                    dropdownStyles={{ backgroundColor: COLORS.white, borderColor: COLORS.white, }}
-                    search={false}
-                    setSelected={(val) => setSubCategory(val)}
-                    data={subKategori[category]}
-                    placeholder='Pilih Kategori'
-                    boxStyles={{ borderColor: COLORS.white, backgroundColor: COLORS.white }}
+              {kategoriField !== '' ? (
+                <View style={{ marginTop: 20 }}>
+                  <Dropdown
+                    data={subKategori[kategoriField.key]}
+                    setSelected={setSubKategoriField}
+                    placeHolder={'Pilih SubKategori'}
                   />
                 </View>
+              ) : (
+                <></>
               )}
             </View>
             <View style={{ backgroundColor: 'white', width: '11%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, height: 45 }}>
@@ -282,36 +277,56 @@ export const GrupKalender = () => {
               </BottomSheetModal>
             </View>
           </View>
-          <Calendar
-            onDayPress={day => {
-              setSelected(day.dateString);
-              console.log(day.dateString)
-            }}
-            markedDates={{
-              [moment(Date.now()).format('YYYY-MM-DD')]: {
-                selected: true,
-              },
 
-              ['2023-07-06']: {
-                marked: 'true',
-                type: 'multi-dot',
-                dots: [
-                  { color: 'red' },
-                  { color: 'blue' },
-                  { color: 'green' },
-                  { color: 'orange' }
-                ]
-              }
-            }}
-            markingType='multi-dot'
-            style={{ width: '90%', marginLeft: 20, borderRadius: 8 }}
-            theme={{
-              arrowColor: COLORS.primary,
-              selectedDayBackgroundColor: COLORS.primary,
-              todayTextColor: COLORS.primary,
+          <View>
+            <TouchableOpacity onPress={() => setCurrent(moment(Date.now()).format('YYYY-MM-DD'))} style={{ position: 'absolute', marginTop: 15, right: 90, zIndex: 1 }}>
+              <Ionicons name='calendar-outline' size={20} color={COLORS.primary} />
+            </TouchableOpacity>
+            <Calendar
+              current={current}
+              key={current}
+              onDayPress={day => {
+                setSelected(day.dateString);
+                console.log(day.dateString)
+                setCurrent(day.dateString);
+              }}
+              markedDates={{
+                [moment(Date.now()).format('YYYY-MM-DD')]: {
+                  customStyles: {
+                    container: {
+                      backgroundColor: COLORS.primary,
+                      borderTopRightRadius: 4,
+                      borderTopLeftRadius: 8,
+                      borderBottomLeftRadius: 4,
+                      borderBottomRightRadius: 8
+                    },
+                    text: {
+                      color: COLORS.white,
+                    }
+                  }
+                },
 
-            }}
-          />
+                ['2023-07-06']: {
+                  marked: 'true',
+                  type: 'multi-dot',
+                  dots: [
+                    { color: 'red' },
+                    { color: 'blue' },
+                    { color: 'green' },
+                    { color: 'orange' }
+                  ],
+
+                }
+              }}
+              markingType='custom'
+              style={{ width: '90%', marginLeft: 20, borderRadius: 8 }}
+              theme={{
+                arrowColor: COLORS.primary,
+                // selectedDayBackgroundColor: COLORS.primary,
+                todayTextColor: COLORS.primary,
+              }}
+            />
+          </View>
           <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 20 }}>
             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Agenda hari ini</Text>
             <View style={{ marginVertical: 20 }}>

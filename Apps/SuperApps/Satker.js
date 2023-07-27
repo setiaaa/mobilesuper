@@ -14,133 +14,8 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { CardUltah } from '../../components/CardUltah';
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { useSelector } from 'react-redux';
 
-const ENTRIES = [
-    {
-        nama: 'DRS. ANTAM NOVAMBAR, S.H., M.HUM',
-        tanggal: '12 Juni 2023',
-        deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
-        image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
-        avatar: require('../../assets/superApp/Avatar2.png')
-    },
-    {
-        nama: 'DRS. ANTAM NOVAMBAR, S.H., M.HUM',
-        tanggal: '12 Juni 2023',
-        deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
-        image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
-        avatar: require('../../assets/superApp/Avatar2.png')
-    },
-    {
-        nama: 'DRS. ANTAM NOVAMBAR, S.H., M.HUM',
-        tanggal: '12 Juni 2023',
-        deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
-        image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
-        avatar: require('../../assets/superApp/Avatar2.png')
-    },
-    {
-        nama: 'DRS. ANTAM NOVAMBAR, S.H., M.HUM',
-        tanggal: '12 Juni 2023',
-        deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
-        image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
-        avatar: require('../../assets/superApp/Avatar2.png')
-    },
-    {
-        nama: 'DRS. ANTAM NOVAMBAR, S.H., M.HUM',
-        tanggal: '12 Juni 2023',
-        deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
-        image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
-        avatar: require('../../assets/superApp/Avatar2.png')
-    },
-];
-
-const data = [
-    {
-        id: '1',
-        image: require('../../assets/superApp/ikan.png'),
-        judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        nama: 'Rizky Novriansyah',
-        jenis: 'Penelitian',
-
-    },
-    {
-        id: '2',
-        image: require('../../assets/superApp/ikan.png'),
-        judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        nama: 'Rizky Novriansyah',
-        jenis: 'Kegiatan',
-    },
-    {
-        id: '3',
-        image: require('../../assets/superApp/ikan.png'),
-        judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        nama: 'Rizky Novriansyah',
-        jenis: 'Infografis',
-    },
-    {
-        id: '4',
-        image: require('../../assets/superApp/ikan.png'),
-        judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        nama: 'Rizky Novriansyah',
-        jenis: 'Penelitian',
-    },
-    {
-        id: '5',
-        image: require('../../assets/superApp/ikan.png'),
-        judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        nama: 'Rizky Novriansyah',
-        jenis: 'Penelitian',
-    },
-    {
-        id: '6',
-        image: require('../../assets/superApp/ikan.png'),
-        judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        nama: 'Rizky Novriansyah',
-        jenis: 'Penelitian',
-    }
-];
-
-const Berita = [
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/MABUbpDl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-];
 
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -149,16 +24,18 @@ export const Satker = () => {
     const carouselRef = useRef(null);
 
     const [entries, setEntries] = useState([]);
-    const [berita, setBerita] = useState([]);
+    // const [berita, setBerita] = useState([]);
     const [selected, setSelected] = useState('');
 
     const [slide, setSlide] = useState()
     const [slide2, setSlide2] = useState()
 
-    useEffect(() => {
-        setEntries(ENTRIES);
-        setBerita(Berita);
-    }, []);
+    // useEffect(() => {
+    //     setEntries(ENTRIES);
+    //     setBerita(Berita);
+    // }, []);
+
+    const { berita, galeri, profile, mading, linimasa, ultah } = useSelector(state => state.superApps)
 
     const renderItem = ({ item, index }, parallaxProps) => {
         return (
@@ -267,12 +144,12 @@ export const Satker = () => {
                 <View style={{ paddingLeft: 20 }}>
                     <Ionicons name='notifications-outline' size={25} color={COLORS.white} />
                 </View>
-                <View style={{ marginLeft: '23%', marginTop: 5 }}>
-                    <Text style={{ color: 'white', textAlign: 'right', fontWeight: FONTWEIGHT.bold, marginBottom: 10 }}>YANI DAMA PUTERA</Text>
-                    <Text style={{ color: 'white', textAlign: 'right', fontSize: FONTSIZE.H3 }}>Direktur Utama ARMS</Text>
+                <View style={{ marginLeft: '7%', marginTop: 5 }}>
+                    <Text style={{ color: 'white', textAlign: 'right', fontWeight: FONTWEIGHT.bold, marginBottom: 10 }}>{profile.nama}</Text>
+                    <Text style={{ color: 'white', textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
                 </View>
                 <View>
-                    <Image source={AVATAR.U1} style={{ width: 50, height: 50 }} />
+                    <Image source={profile.avatar} style={{ width: 50, height: 50 }} />
                 </View>
             </View>
 
@@ -287,13 +164,13 @@ export const Satker = () => {
                     sliderWidth={screenWidth}
                     sliderHeight={screenWidth}
                     itemWidth={screenWidth - 60}
-                    data={entries}
+                    data={galeri}
                     renderItem={renderItem}
                     hasParallaxImages={true}
                     onSnapToItem={setSlide}
                 />
                 <Pagination
-                    dotsLength={entries.length}
+                    dotsLength={galeri.length}
                     inactiveDotColor={'black'}
                     dotStyle={styles.paginationDot}
                     inactiveDotOpacity={0.4}
@@ -310,13 +187,13 @@ export const Satker = () => {
                     sliderWidth={screenWidth}
                     sliderHeight={screenWidth}
                     itemWidth={screenWidth - 60}
-                    data={entries}
+                    data={mading}
                     renderItem={renderItem2}
                     hasParallaxImages={true}
                     onSnapToItem={setSlide2}
                 />
                 <Pagination
-                    dotsLength={entries.length}
+                    dotsLength={mading.length}
                     inactiveDotColor={'black'}
                     dotStyle={styles.paginationDot}
                     inactiveDotOpacity={0.4}
@@ -344,7 +221,7 @@ export const Satker = () => {
                 <Text style={{ marginLeft: 20, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>Linimasa Pengetahuan</Text>
                 <View style={{ marginTop: 10 }}>
                     <FlatList
-                        data={data}
+                        data={linimasa}
                         renderItem={({ item }) => <CardLiniMasaSatker
                             image={item.image}
                             judul={item.judul}
@@ -357,7 +234,7 @@ export const Satker = () => {
                     />
                 </View>
             </View>
-            <View style={{ marginLeft: 20, flexDirection: 'row', marginBottom: 20 }}>
+            <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
@@ -370,14 +247,16 @@ export const Satker = () => {
                         sliderWidth={screenWidth}
                         sliderHeight={screenWidth}
                         itemWidth={screenWidth - 60}
-                        data={berita}
+                        data={berita.lists}
                         renderItem={renderItem3}
                         hasParallaxImages={true}
                     />
                 </View>
             </View>
             <View style={{ marginTop: 20, marginBottom: 40 }}>
-                <CardUltah />
+                <CardUltah
+                    ultah={ultah}
+                />
             </View>
 
         </ScrollView>

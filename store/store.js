@@ -8,6 +8,7 @@ import payloadReducer from "./payload";
 import pushnotifReducer from "./pushnotif";
 import snackbarReducer from "./snackbar";
 import referensiReducer from "./referensi";
+import superAppsReducer from "./SuperApps";
 
 export const store = configureStore({
   reducer: {
@@ -19,5 +20,6 @@ export const store = configureStore({
     pushnotif: pushnotifReducer,
     snackbar: snackbarReducer,
     referensi: referensiReducer,
+    superApps: superAppsReducer,
   },
 });

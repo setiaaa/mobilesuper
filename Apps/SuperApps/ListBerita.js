@@ -5,8 +5,9 @@ import { Search } from '../../components/Search';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from '../../config/SuperAppps';
+import { useSelector } from 'react-redux';
 
-const Item = ({ image, tanggal, subtitle, title, id, data, item }) => {
+const Item = ({ image, tanggal, subtitle, title, item }) => {
     const navigation = useNavigation()
     return (
         <View style={{
@@ -35,53 +36,9 @@ const Item = ({ image, tanggal, subtitle, title, id, data, item }) => {
     );
 }
 
-const datas = [
-    {
-        id: 1,
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan1.. ',
-        title: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/Card.png'),
-        pembuat: 'Firman Hidranto',
-        dilihat: '219'
-    },
-    {
-        id: 2,
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan2.. ',
-        title: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/Card.png'),
-        pembuat: 'Firman Hidranto',
-        dilihat: '219'
-    },
-    {
-        id: 3,
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        title: 'KKP RESMI PUNYA LOGO BARU',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/logobaru.png'),
-        deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-        pembuat: 'Firman Hidranto',
-        dilihat: '219'
-    },
-];
-
-// const renderItem = ({ item }) => (
-//     <Item
-//         image={item.image}
-//         tanggal={item.tanggal}
-//         subtitle={item.subtitle}
-//         dari={item.dari}
-//         id={item.id}
-//         item={item}
-//     />
-// );
-
 
 export const ListBerita = () => {
+    const { berita } = useSelector(state => state.superApps)
     const navigation = useNavigation()
     return (
         <View style={{ backgroundColor: '#f7f7f7', flex: 1 }}>
@@ -101,7 +58,7 @@ export const ListBerita = () => {
                 />
             </View>
             <FlatList
-                data={datas}
+                data={berita.lists}
                 renderItem={({ item }) => <Item
                     image={item.image}
                     tanggal={item.tanggal}

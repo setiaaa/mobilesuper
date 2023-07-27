@@ -193,7 +193,7 @@ function AuthStack() {
               component={GrupKalender}
               options={{
                 headerShown: false,
-                gestureEnabled: false
+                // gestureEnabled: false
               }}
             />
             <Stack.Screen

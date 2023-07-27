@@ -70,22 +70,22 @@ export const CardAppsB = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            {/* <Ionicons name='calendar-outline' size={24} color={COLORS.primary} /> */}
+                            <Ionicons name='briefcase-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task Management</Text>
                 </View>
 
-                {/* <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', marginLeft: 20 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', marginLeft: 25 }}>
+                    <TouchableOpacity>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='library-outline' size={24} color={COLORS.primary} />
+                            <Ionicons name='clipboard-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repository</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Event Management</Text>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', marginRight: 25 }}>
+                {/* <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', marginRight: 25 }}>
                     <TouchableOpacity>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='school-outline' size={24} color={COLORS.primary} />

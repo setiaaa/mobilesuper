@@ -24,130 +24,12 @@ import { CardAppsB } from '../../components/CardAppsB'
 import { useNavigation } from "@react-navigation/native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { useSelector } from 'react-redux'
 
-const ENTRIES1 = [
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/MABUbpDl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
-        image: require('../../assets/superApp/Card.png')
-    },
-];
 
-const ENTRIES2 = [
-    {
-        title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
-    },
-    {
-        title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
-    },
-    {
-        title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
-    },
-    {
-        title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
-    },
-    {
-        ttitle: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
-    },
-];
-
-const ENTRIES3 = [
-    {
-        title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
-    },
-    {
-        title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
-    },
-    {
-        title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
-    },
-    {
-        title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
-    },
-    {
-        title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
-    },
-];
-
-const ENTRIES4 = [
-    {
-        image: require('../../assets/superApp/Photo.png')
-    },
-    {
-        image: require('../../assets/superApp/Photo.png')
-    },
-    {
-        image: require('../../assets/superApp/Photo.png')
-    },
-    {
-        image: require('../../assets/superApp/Photo.png')
-    },
-    {
-        image: require('../../assets/superApp/Photo.png')
-    },
-];
 
 const { width: screenWidth } = Dimensions.get('window');
 export const Home = () => {
-    const CarouselData = [
-        {
-            image: require('../../assets/superApp/Card.png')
-        },
-        {
-            image: require('../../assets/superApp/Card.png')
-        },
-        {
-            image: require('../../assets/superApp/Card.png')
-        },
-        {
-            image: require('../../assets/superApp/Card.png')
-        },
-    ];
-
-    const [entries, setEntries] = useState([]);
-    const [entries2, setEntries2] = useState([]);
-    const [entries3, setEntries3] = useState([]);
-    const [entries4, setEntries4] = useState([]);
 
     const carouselRef = useRef(null);
 
@@ -155,19 +37,12 @@ export const Home = () => {
         carouselRef.current.snapToNext();
     };
 
-    const [slide, setSlide] = useState()
     const [slide2, setSlide2] = useState()
     const [slide3, setSlide3] = useState()
     const [slide4, setSlide4] = useState()
 
-    useEffect(() => {
-        setEntries(ENTRIES1);
-        setEntries2(ENTRIES2);
-        setEntries3(ENTRIES3);
-        setEntries4(ENTRIES4);
-    }, []);
 
-
+    const { berita, agenda, program, galeri, profile } = useSelector(state => state.superApps)
 
     const renderItem = ({ item, index }, parallaxProps) => {
         return (
@@ -278,16 +153,16 @@ export const Home = () => {
         <GestureHandlerRootView>
             <BottomSheetModalProvider>
                 <ScrollView>
-                    <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', gap: 20, paddingTop: 20 }}>
+                    <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', paddingTop: 20, gap: 20 }}>
                         <View style={{ paddingLeft: 20 }}>
                             <Ionicons name='notifications-outline' size={25} color={'white'} />
                         </View>
-                        <View style={{ marginLeft: '23%', marginTop: 5 }}>
-                            <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>YANI DAMA PUTERA</Text>
-                            <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>Direktur Utama ARMS</Text>
+                        <View style={{ marginLeft: '7%', marginTop: 5 }}>
+                            <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
+                            <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
                         </View>
                         <View>
-                            <Image source={AVATAR.U1} style={{ width: 50, height: 50 }} />
+                            <Image source={profile.avatar} style={{ width: 50, height: 50 }} />
                         </View>
                     </View>
 
@@ -324,7 +199,7 @@ export const Home = () => {
                         </BottomSheetModal>
                     </View>
 
-                    <View style={{ marginVertical: 20, marginLeft: 20, flexDirection: 'row' }}>
+                    <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
@@ -338,7 +213,7 @@ export const Home = () => {
                                 sliderWidth={screenWidth}
                                 sliderHeight={screenWidth}
                                 itemWidth={screenWidth - 60}
-                                data={entries}
+                                data={berita.lists.slice(0, 3)}
                                 renderItem={renderItem}
                                 hasParallaxImages={true}
                             />
@@ -346,7 +221,7 @@ export const Home = () => {
                         {/* <Carousel data={CarouselData} /> */}
                     </View>
 
-                    <View style={{ marginVertical: 20, marginLeft: 20, }}>
+                    <View style={{ marginVertical: 20, marginLeft: 30, }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
                     </View>
                     <View style={styles.containerr}>
@@ -355,13 +230,13 @@ export const Home = () => {
                             sliderWidth={screenWidth}
                             sliderHeight={screenWidth}
                             itemWidth={screenWidth - 60}
-                            data={entries2}
+                            data={agenda}
                             renderItem={renderItem2}
                             hasParallaxImages={true}
                             onSnapToItem={setSlide2}
                         />
                         <Pagination
-                            dotsLength={entries.length}
+                            dotsLength={agenda.length}
                             inactiveDotColor={'black'}
                             dotStyle={styles.paginationDot}
                             inactiveDotOpacity={0.4}
@@ -372,7 +247,7 @@ export const Home = () => {
                         />
                     </View>
 
-                    <View style={{ marginLeft: 20, marginBottom: 20 }}>
+                    <View style={{ marginLeft: 30, marginBottom: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
                     </View>
 
@@ -382,13 +257,13 @@ export const Home = () => {
                             sliderWidth={screenWidth}
                             sliderHeight={screenWidth}
                             itemWidth={screenWidth - 60}
-                            data={entries3}
+                            data={program}
                             renderItem={renderItem3}
                             hasParallaxImages={true}
                             onSnapToItem={setSlide3}
                         />
                         <Pagination
-                            dotsLength={entries2.length}
+                            dotsLength={program.length}
                             inactiveDotColor={'black'}
                             dotStyle={styles.paginationDot}
                             inactiveDotOpacity={0.4}
@@ -399,7 +274,7 @@ export const Home = () => {
                         />
                     </View>
 
-                    <View style={{ marginLeft: 20, marginBottom: 20 }}>
+                    <View style={{ marginLeft: 30, marginBottom: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
                     </View>
 
@@ -409,13 +284,13 @@ export const Home = () => {
                             sliderWidth={screenWidth}
                             sliderHeight={screenWidth}
                             itemWidth={screenWidth - 60}
-                            data={entries4}
+                            data={galeri}
                             renderItem={renderItem4}
                             hasParallaxImages={true}
                             onSnapToItem={setSlide4}
                         />
                         <Pagination
-                            dotsLength={entries.length}
+                            dotsLength={galeri.length}
                             inactiveDotColor={'black'}
                             dotStyle={styles.paginationDot}
                             inactiveDotOpacity={0.4}
