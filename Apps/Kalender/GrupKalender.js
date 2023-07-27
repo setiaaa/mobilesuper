@@ -22,6 +22,10 @@ import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Dropdown } from '../../components/DropDown';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAgenda } from '../../store/GrupKalender';
+import { setKategori } from '../../store/GrupKalender';
+import { setSubKategori } from '../../store/GrupKalender';
 
 export const GrupKalender = () => {
   const navigation = useNavigation()
@@ -75,30 +79,6 @@ export const GrupKalender = () => {
       { key: '4', value: 'halo' }
     ]
   }
-  console.log(kategoriField)
-
-  const item = [
-    {
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#1868AB'
-    },
-    {
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#1868AB'
-    }
-  ]
 
   const items = [
     {
@@ -185,6 +165,16 @@ export const GrupKalender = () => {
 
   const [current, setCurrent] = useState()
 
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setAgenda(items))
+    dispatch(setKategori(kategori))
+    dispatch(setSubKategori(subKategori))
+  }, []);
+
+  const { agenda, dropdown } = useSelector(state => state.grupKalender)
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -211,14 +201,14 @@ export const GrupKalender = () => {
           <View style={{ flexDirection: 'row', marginVertical: 20, gap: 10, zIndex: 1 }}>
             <View style={{ width: '75%', marginLeft: 20 }}>
               <Dropdown
-                data={kategori}
+                data={dropdown.kategori}
                 setSelected={setKategoriField}
                 placeHolder={'Pilih Kategori'}
               />
               {kategoriField !== '' ? (
                 <View style={{ marginTop: 20 }}>
                   <Dropdown
-                    data={subKategori[kategoriField.key]}
+                    data={dropdown.subKategori[kategoriField.key]}
                     setSelected={setSubKategoriField}
                     placeHolder={'Pilih SubKategori'}
                   />
@@ -331,7 +321,7 @@ export const GrupKalender = () => {
             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Agenda hari ini</Text>
             <View style={{ marginVertical: 20 }}>
               <FlatList
-                data={item}
+                data={agenda.lists.slice(0, 2)}
                 renderItem={({ item }) => <CardAgenda
                   kegiatan={item.kegiatan}
                   subAvatar={item.subAvatar}
@@ -419,7 +409,7 @@ export const GrupKalender = () => {
                   </View>
                   <View style={{ marginHorizontal: 20, marginBottom: 40 }}>
                     <FlatList
-                      data={items}
+                      data={agenda.lists}
                       renderItem={({ item }) => <CardAgenda
                         kegiatan={item.kegiatan}
                         subAvatar={item.subAvatar}

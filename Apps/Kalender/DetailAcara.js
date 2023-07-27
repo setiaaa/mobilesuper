@@ -21,6 +21,8 @@ import { useEffect } from 'react'
 import { Image } from 'react-native'
 import { useMemo } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAgendaDetail } from '../../store/GrupKalender'
 
 
 const data =
@@ -195,9 +197,16 @@ export const DetailAcara = () => {
         bottomSheetModalRef.current?.present()
     }
 
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        setGambar(data)
+        // setGambar(data)
+        dispatch(setAgendaDetail(data))
     }, []);
+
+    const { agenda } = useSelector(state => state.grupKalender)
+
+    const detail = agenda.detail
 
     const [toggleComment, setToggleComment] = useState({
         toggle: false,
@@ -241,13 +250,13 @@ export const DetailAcara = () => {
                                 sliderWidth={screenWidth}
                                 sliderHeight={screenWidth}
                                 itemWidth={screenWidth - 60}
-                                data={data.gambar}
+                                data={detail.gambar}
                                 renderItem={renderItem}
                                 hasParallaxImages={true}
                                 onSnapToItem={setSlide}
                             />
                             <Pagination
-                                dotsLength={data.gambar.length}
+                                dotsLength={detail.gambar?.length}
                                 inactiveDotColor={'black'}
                                 dotStyle={styles.paginationDot}
                                 inactiveDotOpacity={0.4}
@@ -257,14 +266,14 @@ export const DetailAcara = () => {
                                 tappableDots={!!carouselRef}
                             />
                             <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{data.judul}</Text>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail.judul}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginHorizontal: 20, gap: 20, alignItems: 'center', marginTop: 10 }}>
                                 <View style={{ backgroundColor: '#FFD6D6', borderRadius: 30 }}>
-                                    <Text style={{ marginHorizontal: 10, marginVertical: 5, color: COLORS.infoDanger }}>{data.nama}</Text>
+                                    <Text style={{ marginHorizontal: 10, marginVertical: 5, color: COLORS.infoDanger }}>{detail.nama}</Text>
                                 </View>
                                 <View>
-                                    <Text>{data.tanggal}</Text>
+                                    <Text>{detail.tanggal}</Text>
                                 </View>
                             </View>
 
@@ -272,7 +281,7 @@ export const DetailAcara = () => {
                                 <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Member</Text>
                                     <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', justifyContent: 'center', flex: 1, marginRight: 20 }}>
-                                        {data.member.map((item) => {
+                                        {detail.member?.map((item) => {
                                             return (
                                                 <Image source={item.avatar} style={{
                                                     marginLeft: -8,
@@ -291,7 +300,7 @@ export const DetailAcara = () => {
                                 <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
                                     <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
-                                        <Text>{data.lokasi}</Text>
+                                        <Text>{detail.lokasi}</Text>
                                     </View>
                                 </View>
                                 <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -301,7 +310,7 @@ export const DetailAcara = () => {
                                 <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
                                     <View style={{ justifyContent: 'center', flex: 1, marginLeft: 10 }}>
-                                        <Text>{data.busana}</Text>
+                                        <Text>{detail.busana}</Text>
                                     </View>
                                 </View>
                                 <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -311,7 +320,7 @@ export const DetailAcara = () => {
                                 <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pengingat</Text>
                                     <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                        <Text>{data.pengingat}</Text>
+                                        <Text>{detail.pengingat}</Text>
                                     </View>
                                 </View>
                                 <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -320,7 +329,7 @@ export const DetailAcara = () => {
                             <View>
                                 <View style={{ marginHorizontal: 20, marginTop: 20 }}>
                                     <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
-                                        <Text style={{ textAlign: 'justify' }}>{data.deskripsi}</Text>
+                                        <Text style={{ textAlign: 'justify' }}>{detail.deskripsi}</Text>
                                     </View>
                                 </View>
                                 <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -330,7 +339,7 @@ export const DetailAcara = () => {
                                 <TouchableOpacity onPress={() => { setTabItemIndex(1) }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                                         <Ionicons name='thumbs-up-outline' size={20} color={tabItemIndex === 1 ? COLORS.primary : null} />
-                                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>{data.disukai}</Text>
+                                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>{detail.disukai}</Text>
                                         <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>Disukai</Text>
                                     </View>
                                 </TouchableOpacity>
@@ -359,14 +368,14 @@ export const DetailAcara = () => {
                                         <View>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginLeft: 20 }}>
                                                 <Ionicons name='thumbs-up-outline' size={20} color={COLORS.primary} />
-                                                <Text style={{ color: COLORS.primary }}>{data.disukai}</Text>
+                                                <Text style={{ color: COLORS.primary }}>{detail.disukai}</Text>
                                                 <Text style={{ color: COLORS.primary }}>Disukai</Text>
-                                                <TouchableOpacity onPress={() => navigation.navigate('ListSuka', { data: data })}>
+                                                <TouchableOpacity onPress={() => navigation.navigate('ListSuka', { detail: detail })}>
                                                     <Ionicons name='chevron-forward-outline' size={20} color={COLORS.primary} />
                                                 </TouchableOpacity>
                                             </View>
                                             <View style={{ marginLeft: 20, marginVertical: 20 }}>
-                                                <Text style={{ color: COLORS.ExtraDivinder }}>Komentar({data.jmlKomentar})</Text>
+                                                <Text style={{ color: COLORS.ExtraDivinder }}>Komentar({detail.jmlKomentar})</Text>
                                             </View>
                                             <View style={{
                                                 justifyContent: 'center',
@@ -377,7 +386,7 @@ export const DetailAcara = () => {
                                                 shadowColor: '#171717',
                                                 shadowOpacity: 0.2,
                                             }}>
-                                                {data.Komentar.map((listData) => (
+                                                {detail.Komentar?.map((listData) => (
                                                     <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5 }}>
                                                         <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
 
@@ -453,7 +462,7 @@ export const DetailAcara = () => {
 
                                                                         {listData.id === toggleComment.id && toggleComment.toggle ? (
                                                                             <View>
-                                                                                {listData.balas.map((listKomen, index) =>
+                                                                                {listData.balas?.map((listKomen, index) =>
                                                                                     <>
                                                                                         <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
                                                                                             <View>
@@ -572,7 +581,7 @@ export const DetailAcara = () => {
 
                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                                     <Ionicons name='eye-outline' size={20} />
-                                    <Text>{data.dilihat}</Text>
+                                    <Text>{detail.dilihat}</Text>
                                     <Text>Dilihat</Text>
                                 </View>
                             </View>

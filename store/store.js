@@ -9,6 +9,7 @@ import pushnotifReducer from "./pushnotif";
 import snackbarReducer from "./snackbar";
 import referensiReducer from "./referensi";
 import superAppsReducer from "./SuperApps";
+import GrupKalenderReducer from "./GrupKalender";
 
 export const store = configureStore({
   reducer: {
@@ -21,5 +22,6 @@ export const store = configureStore({
     snackbar: snackbarReducer,
     referensi: referensiReducer,
     superApps: superAppsReducer,
+    grupKalender: GrupKalenderReducer,
   },
 });

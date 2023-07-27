@@ -10,7 +10,7 @@ import { CardSuka } from '../../components/CardSuka'
 export const ListSuka = ({ route }) => {
 
     const navigation = useNavigation()
-    const { data } = route.params
+    const { detail } = route.params
     return (
         <View>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -29,11 +29,11 @@ export const ListSuka = ({ route }) => {
                 </View>
             </View>
             <View style={{ marginLeft: 20, marginTop: 20 }}>
-                <Text style={{ opacity: 0.5 }}>Disukai ({data.disukai})</Text>
+                <Text style={{ opacity: 0.5 }}>Disukai ({detail.disukai})</Text>
             </View>
             <View>
                 <FlatList
-                    data={data.orangSuka}
+                    data={detail.orangSuka}
                     renderItem={({ item }) => <CardSuka
                         avatar={item.avatar}
                         nama={item.nama}
