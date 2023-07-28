@@ -11,6 +11,7 @@ import referensiReducer from "./referensi";
 import superAppsReducer from "./SuperApps";
 import GrupKalenderReducer from "./GrupKalender";
 import Repository from "./Repository";
+import TaskReducer from "./Task";
 
 export const store = configureStore({
   reducer: {
@@ -25,5 +26,6 @@ export const store = configureStore({
     superApps: superAppsReducer,
     grupKalender: GrupKalenderReducer,
     repository: Repository,
+    task: TaskReducer,
   },
 });

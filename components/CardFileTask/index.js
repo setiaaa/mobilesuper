@@ -4,32 +4,6 @@ import { View } from 'react-native'
 import { COLORS, FONTSIZE } from '../../config/SuperAppps'
 import { Image } from 'react-native'
 
-const data = [
-    {
-        image: require('../../assets/superApp/FileIkan.png'),
-        file: 'tuna.png',
-    },
-    {
-        image: require('../../assets/superApp/FileIkan.png'),
-        file: 'tuna.png',
-    },
-    {
-        image: require('../../assets/superApp/FileIkan.png'),
-        file: 'tuna.png',
-    },
-    {
-        image: require('../../assets/superApp/FileIkan.png'),
-        file: 'tuna.png',
-    },
-    {
-        image: require('../../assets/superApp/FileIkan.png'),
-        file: 'tuna.png',
-    },
-    {
-        image: require('../../assets/superApp/FileIkan.png'),
-        file: 'tuna.png',
-    },
-]
 
 export const CardFile = ({ image, file }) => {
     return (
@@ -42,12 +16,12 @@ export const CardFile = ({ image, file }) => {
     )
 }
 
-export const CardFileTask = () => {
+export const CardFileTask = ({ taskDetail }) => {
     return (
         <View style={{ marginHorizontal: 20 }}>
             <FlatList
                 key={'*'}
-                data={data}
+                data={taskDetail[0].lampiranFile}
                 renderItem={({ item }) => <CardFile
                     image={item.image}
                     file={item.file}

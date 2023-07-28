@@ -22,6 +22,9 @@ import { FlatList } from 'react-native'
 import { CardListTask } from '../../components/CardListTask'
 import { CardTaskCari } from '../../components/CardTaskCari'
 import { Search } from '../../components/Search'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTaskLists } from '../../store/Task'
+import { useEffect } from 'react'
 
 
 const item = [
@@ -115,7 +118,18 @@ const item = [
     },
 ]
 
+
 export const MyTask = () => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setTaskLists(item))
+    }, []);
+
+    const { task } = useSelector(state => state.task)
+    const taskLists = task.lists
+
     const navigation = useNavigation()
     const [variant, setVariant] = useState('list')
     const bottomSheetModalRef = useRef(null);
@@ -336,7 +350,7 @@ export const MyTask = () => {
 
                             <View style={{ marginHorizontal: 20, marginBottom: 40 }}>
                                 <FlatList
-                                    data={item}
+                                    data={taskLists}
                                     renderItem={({ item }) => <CardTaskCari
                                         kegiatan={item.kegiatan}
                                         subAvatar={item.subAvatar}

@@ -10,10 +10,14 @@ import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { CardFileTask } from '../../components/CardFileTask'
 import { CardDokumenTask } from '../../components/CardDokumenTask'
+import { useSelector } from 'react-redux'
 
 
 export const LampiranTask = () => {
     const navigation = useNavigation()
+    const { task } = useSelector(state => state.task)
+    const taskDetail = task.detail
+
     return (
         <GestureHandlerRootView>
             <BottomSheetModalProvider>
@@ -41,13 +45,17 @@ export const LampiranTask = () => {
                         <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Files</Text>
                     </View>
 
-                    <CardFileTask />
+                    <CardFileTask
+                        taskDetail={taskDetail}
+                    />
 
                     <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
                         <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Dokumen</Text>
                     </View>
 
-                    <CardDokumenTask />
+                    <CardDokumenTask
+                        taskDetail={taskDetail}
+                    />
 
                 </ScrollView>
             </BottomSheetModalProvider>

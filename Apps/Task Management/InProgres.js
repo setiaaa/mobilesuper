@@ -4,103 +4,15 @@ import { Text } from 'react-native'
 import { AVATAR } from '../../config/SuperAppps'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../components/CardListTask'
-
-const item = [
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: '#1868AB'
-    },
-]
+import { useSelector } from 'react-redux'
 
 export const InProgres = () => {
+    const { task } = useSelector(state => state.task)
+    const taskLists = task.lists
     return (
         <View style={{ flex: 1, marginTop: 20 }}>
             <FlatList
-                data={item}
+                data={taskLists}
                 renderItem={({ item }) => <CardListTask
                     kegiatan={item.kegiatan}
                     subAvatar={item.subAvatar}

@@ -41,12 +41,12 @@ export const CardDokumen = ({ image, file, size }) => {
     )
 }
 
-export const CardDokumenTask = () => {
+export const CardDokumenTask = ({ taskDetail }) => {
     return (
         <View style={{ marginHorizontal: 20 }}>
             <FlatList
                 key={'#'}
-                data={data}
+                data={taskDetail[0].lampiranDokumen}
                 renderItem={({ item }) => <CardDokumen
                     image={item.image}
                     file={item.file}

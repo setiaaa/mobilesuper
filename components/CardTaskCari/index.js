@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 export const CardTaskCari = ({ kegiatan, subAvatar, warna }) => {
     const navigation = useNavigation()
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('DetailAcara')}>
+        <TouchableOpacity onPress={() => navigation.navigate('MainDetailTask')}>
             <View style={{
                 width: '100%',
                 backgroundColor: COLORS.white,
