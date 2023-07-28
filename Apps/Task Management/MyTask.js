@@ -23,7 +23,7 @@ import { CardListTask } from '../../components/CardListTask'
 import { CardTaskCari } from '../../components/CardTaskCari'
 import { Search } from '../../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
-import { setTaskLists } from '../../store/Task'
+import { setTaskLists, setVariant } from '../../store/Task'
 import { useEffect } from 'react'
 
 
@@ -37,7 +37,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
     },
     {
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
@@ -48,7 +61,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
     },
     {
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
@@ -59,7 +85,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ],
     },
     {
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
@@ -70,7 +109,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
     },
     {
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
@@ -81,7 +133,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
     },
     {
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
@@ -92,7 +157,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
     },
     {
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
@@ -103,7 +181,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
     },
     {
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
@@ -114,7 +205,20 @@ const item = [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 }
         ],
-        warna: COLORS.infoDanger
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
     },
 ]
 
@@ -127,11 +231,11 @@ export const MyTask = () => {
         dispatch(setTaskLists(item))
     }, []);
 
-    const { task } = useSelector(state => state.task)
+    const { task, variant } = useSelector(state => state.task)
     const taskLists = task.lists
 
     const navigation = useNavigation()
-    const [variant, setVariant] = useState('list')
+    // const [variantLocal, setVariantLocal] = useState('list')
     const bottomSheetModalRef = useRef(null);
     const [badge, setBadge] = useState(1)
 
@@ -186,22 +290,22 @@ export const MyTask = () => {
                 <View style={{ marginHorizontal: 15, flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Task Saya</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => dispatch(setVariant("filter"))}>
                             <View style={styles.circleList}>
-                                <Ionicons name='filter-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
+                                <Ionicons name='filter-outline' size={24} color={variant === 'filter' ? COLORS.primary : COLORS.grey} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => dispatch(setVariant("reorder"))}>
                             <View style={styles.circleList}>
-                                <Ionicons name='reorder-three-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
+                                <Ionicons name='reorder-three-outline' size={24} color={variant === 'reorder' ? COLORS.primary : COLORS.grey} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
                             <View style={styles.circleList}>
                                 <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
                             <View style={styles.circleList}>
                                 <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
                             </View>

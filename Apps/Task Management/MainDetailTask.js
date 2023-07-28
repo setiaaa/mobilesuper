@@ -154,7 +154,8 @@ export default function MainDetailTask() {
 
     useEffect(() => {
         dispatch(setTaskDetail(item))
-    }, []);
+        console.log('dispach detail')
+    }, [dispatch]);
 
     return (
         <BottomSheetModalProvider>

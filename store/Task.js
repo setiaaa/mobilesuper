@@ -5,8 +5,9 @@ const TaskSlice = createSlice({
     initialState: {
         task: {
             lists: [],
-            detail: {},
-        }
+            detail: null,
+        },
+        variant: 'list',
     },
     reducers: {
         setTaskLists: (state, action) => {
@@ -17,10 +18,14 @@ const TaskSlice = createSlice({
             state.task.detail = action.payload;
 
         },
+        setVariant: (state, action) => {
+            state.variant = action.payload;
+
+        },
     }
 })
 
-export const { setTaskLists, setTaskDetail } =
+export const { setTaskLists, setTaskDetail, setVariant } =
     TaskSlice.actions;
 
 export default TaskSlice.reducer;
