@@ -107,6 +107,7 @@ import MyTabBarDetailTask from "../Task Management/BottmTabsDetailTask";
 import { DetailTask } from "../Task Management/DetailTask";
 import { LampiranTask } from "../Task Management/LampiranTask";
 import MainDetailTask from "../Task Management/MainDetailTask";
+import { AddTask } from "../Task Management/AddTask";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -248,6 +249,13 @@ function AuthStack() {
             <Stack.Screen
               name="MyTask"
               component={MyTask}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="AddTask"
+              component={AddTask}
               options={{
                 headerShown: false,
               }}

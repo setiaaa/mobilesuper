@@ -468,7 +468,7 @@ export const MyTask = () => {
                     </BottomSheetView>
                 </BottomSheetModal>
                 <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('AddTask')}>
                         <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                             <Ionicons name='add-outline' size={24} color={COLORS.white} />
                         </View>

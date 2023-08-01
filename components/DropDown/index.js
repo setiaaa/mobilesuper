@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 
 
-export const Dropdown = ({ data, setSelected, placeHolder }) => {
+export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWidth, borderwidthDrop, borderColorDrop, borderWidthValue, borderColorValue }) => {
     const [press, setPress] = useState(0)
     const handlePress = () => {
         if (press === 0) {
@@ -17,7 +17,6 @@ export const Dropdown = ({ data, setSelected, placeHolder }) => {
             setPress(0)
         }
     }
-    console.log(data)
     const [pressData, setPressData] = useState('')
     const [displayData, setDisplayData] = useState('')
     const handlePressData = (item) => {
@@ -29,7 +28,7 @@ export const Dropdown = ({ data, setSelected, placeHolder }) => {
     return (
         <View>
             {press === 0 ? (
-                <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8 }}>
+                <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8, borderColor: borderColor, borderWidth: borderWidth }}>
                     <TouchableOpacity onPress={handlePress}>
                         <Animated.View
                             entering={FadeInUp}
@@ -50,7 +49,7 @@ export const Dropdown = ({ data, setSelected, placeHolder }) => {
                     exiting={FadeOutUp}
                 >
                     <View>
-                        <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8 }}>
+                        <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8, borderWidth: borderwidthDrop, borderColor: borderColorDrop }}>
                             <TouchableOpacity onPress={handlePress} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row' }}>
                                 <Text style={{ color: COLORS.lighter }}>{displayData !== '' ? displayData : placeHolder}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
@@ -58,7 +57,7 @@ export const Dropdown = ({ data, setSelected, placeHolder }) => {
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10 }}>
+                        <View style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: borderWidthValue, borderColor: borderColorValue }}>
                             {data.map(kategori => {
                                 return (
                                     <TouchableOpacity onPress={() => handlePressData(kategori)} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row', gap: 10, marginVertical: 5 }}>
