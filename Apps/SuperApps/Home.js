@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Image, Dimensions } from 'react-native'
 import { CardProfile } from '../../components/CardProfile'
 import { CardMenu } from '../../components/CardMenu'
 // import { Carousel } from '../../components/Carousel/Carousel'
@@ -25,6 +25,9 @@ import { useNavigation } from "@react-navigation/native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
+import { CardTautan } from '../../components/CardTautan'
+import { Modal } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 
@@ -40,6 +43,9 @@ export const Home = () => {
     const [slide2, setSlide2] = useState()
     const [slide3, setSlide3] = useState()
     const [slide4, setSlide4] = useState()
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
 
 
     const { berita, agenda, program, galeri, profile } = useSelector(state => state.superApps)
@@ -150,159 +156,323 @@ export const Home = () => {
     }
     const navigation = useNavigation()
     return (
-        <GestureHandlerRootView>
-            <BottomSheetModalProvider>
-                <ScrollView>
-                    <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', paddingTop: 20, gap: 20 }}>
-                        <View style={{ paddingLeft: 20 }}>
-                            <Ionicons name='notifications-outline' size={25} color={'white'} />
+        <SafeAreaView style={{ flex: 1 }}>
+            <GestureHandlerRootView >
+                <BottomSheetModalProvider>
+                    <ScrollView>
+                        <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', paddingTop: 20, gap: 20 }}>
+                            <View style={{ paddingLeft: 20 }}>
+                                <Ionicons name='notifications-outline' size={25} color={'white'} />
+                            </View>
+                            <View style={{ justifyContent: 'flex-end', flex: 1, marginTop: 5, flexDirection: 'row', gap: 10, marginRight: '11%' }}>
+                                <View style={{}}>
+                                    <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
+                                    <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
+                                </View>
+                                <View>
+                                    <Image source={profile.avatar} style={{ width: 50, height: 50 }} />
+                                </View>
+                            </View>
                         </View>
-                        <View style={{ marginLeft: '7%', marginTop: 5 }}>
-                            <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
-                            <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
-                        </View>
-                        <View>
-                            <Image source={profile.avatar} style={{ width: 50, height: 50 }} />
-                        </View>
-                    </View>
 
-                    <View>
-                        <View style={{ height: '20%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
-                        <CardApps
-                            handlePressModal={handlePressModal}
-                        />
-                        <BottomSheetModal
-                            ref={bottomSheetModalRef}
-                            snapPoints={animatedSnapPoints}
-                            handleHeight={animatedHandleHeight}
-                            contentHeight={animatedContentHeight}
-                            index={0}
-                            style={{ borderRadius: 50 }}
-                            keyboardBlurBehavior="restore"
-                            android_keyboardInputMode="adjust"
-                            backdropComponent={({ style }) => (
-                                <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                            )}
-                        >
-                            <BottomSheetView onLayout={handleContentLayout} >
-                                <View style={{ marginVertical: 20 }}>
-                                    <View style={{ marginLeft: 30 }}>
-                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>
-                                            Aplikasi
-                                        </Text>
+                        <View>
+                            <View style={{ height: '20%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
+                            <CardApps
+                                handlePressModal={handlePressModal}
+                            />
+                            <BottomSheetModal
+                                ref={bottomSheetModalRef}
+                                snapPoints={animatedSnapPoints}
+                                handleHeight={animatedHandleHeight}
+                                contentHeight={animatedContentHeight}
+                                index={0}
+                                style={{ borderRadius: 50 }}
+                                keyboardBlurBehavior="restore"
+                                android_keyboardInputMode="adjust"
+                                backdropComponent={({ style }) => (
+                                    <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                )}
+                            >
+                                <BottomSheetView onLayout={handleContentLayout} >
+                                    <View style={{ marginVertical: 20 }}>
+                                        <View style={{ marginLeft: 30 }}>
+                                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>
+                                                Aplikasi
+                                            </Text>
+                                        </View>
+                                        <View style={{ marginVertical: 50 }}>
+                                            <CardAppsB />
+                                        </View>
                                     </View>
-                                    <View style={{ marginVertical: 50 }}>
-                                        <CardAppsB />
+                                </BottomSheetView>
+                            </BottomSheetModal>
+                        </View>
+
+                        <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View>
+                            <View style={styles.containerr}>
+                                <Carousel
+                                    ref={carouselRef}
+                                    sliderWidth={screenWidth}
+                                    sliderHeight={screenWidth}
+                                    itemWidth={screenWidth - 60}
+                                    data={berita.lists.slice(0, 3)}
+                                    renderItem={renderItem}
+                                    hasParallaxImages={true}
+                                />
+                            </View>
+                            {/* <Carousel data={CarouselData} /> */}
+                        </View>
+
+                        <View style={{ marginHorizontal: 30, marginTop: 20 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
+                        </View>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20, marginLeft: 30 }}>
+                            <CardTautan
+                                setModalVisible={setModalVisible}
+                            />
+                        </View>
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ alignItems: 'center', flex: 1 }}>
+                                <View style={{ backgroundColor: COLORS.white, width: '90%', height: 500, borderRadius: 10, marginTop: 100 }}>
+                                    {/* <TouchableOpacity onPress={() => setModalVisible(false)} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
+                                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 35, height: 35, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Ionicons name='close-outline' size={24} color={COLORS.white} />
+                                    </View>
+                                </TouchableOpacity> */}
+                                    {/* <View style={{ width: '100%' }}>
+                                    <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                        <View style={{ backgroundColor: COLORS.primary, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                            <Text style={{ color: COLORS.white }}>Ok</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View> */}
+                                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Kerumahtanggaan</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20 }}>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/Tp1.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ fontSize: FONTSIZE.H4 }}>Semar</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/Tp2.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ fontSize: FONTSIZE.H4 }}>Sistolik</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/Tp3.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Bus Jemputan</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Pengawasan</Text>
+                                    </View>
+
+                                    <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20 }}>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Lapor.go.id</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>WBS KKP</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Sidak</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>JDIH</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Kinerja dan Pengembangan Pegawai</Text>
+                                    </View>
+
+                                    <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20, }}>
+                                        <View>
+                                            <View>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Emonev{'\n'} Bapennas</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Kinerjaku</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>E-Milea</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>E-Kinerja {'\n'}BKN</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>SIASN{'\n'} BKN</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+
+                                </View>
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => { setModalVisible(false) }}
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '9%',
+                                    left: '40%'
+                                }}>
+                                <View style={{
+                                    backgroundColor: COLORS.white,
+                                    height: 70,
+                                    width: 70,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 50
+                                }}>
+                                    <View style={{
+                                        backgroundColor: COLORS.primary,
+                                        width: 51,
+                                        height: 51,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        borderRadius: 50
+                                    }}>
+                                        <Ionicons name='close-outline' color={COLORS.white} size={24} />
                                     </View>
                                 </View>
-                            </BottomSheetView>
-                        </BottomSheetModal>
-                    </View>
+                            </TouchableOpacity>
+                        </Modal>
 
-                    <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View>
+                        <View style={{ marginVertical: 20, marginLeft: 30, }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
+                        </View>
                         <View style={styles.containerr}>
                             <Carousel
                                 ref={carouselRef}
                                 sliderWidth={screenWidth}
                                 sliderHeight={screenWidth}
                                 itemWidth={screenWidth - 60}
-                                data={berita.lists.slice(0, 3)}
-                                renderItem={renderItem}
+                                data={agenda}
+                                renderItem={renderItem2}
                                 hasParallaxImages={true}
+                                onSnapToItem={setSlide2}
+                            />
+                            <Pagination
+                                dotsLength={agenda.length}
+                                inactiveDotColor={'black'}
+                                dotStyle={styles.paginationDot}
+                                inactiveDotOpacity={0.4}
+                                inactiveDotScale={0.6}
+                                activeDotIndex={slide2}
+                                carouselRef={carouselRef}
+                                tappableDots={!!carouselRef}
                             />
                         </View>
-                        {/* <Carousel data={CarouselData} /> */}
-                    </View>
 
-                    <View style={{ marginVertical: 20, marginLeft: 30, }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
-                    </View>
-                    <View style={styles.containerr}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={agenda}
-                            renderItem={renderItem2}
-                            hasParallaxImages={true}
-                            onSnapToItem={setSlide2}
-                        />
-                        <Pagination
-                            dotsLength={agenda.length}
-                            inactiveDotColor={'black'}
-                            dotStyle={styles.paginationDot}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
-                            activeDotIndex={slide2}
-                            carouselRef={carouselRef}
-                            tappableDots={!!carouselRef}
-                        />
-                    </View>
+                        <View style={{ marginLeft: 30, marginBottom: 20 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
+                        </View>
 
-                    <View style={{ marginLeft: 30, marginBottom: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
-                    </View>
+                        <View style={styles.containerr}>
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                sliderHeight={screenWidth}
+                                itemWidth={screenWidth - 60}
+                                data={program}
+                                renderItem={renderItem3}
+                                hasParallaxImages={true}
+                                onSnapToItem={setSlide3}
+                            />
+                            <Pagination
+                                dotsLength={program.length}
+                                inactiveDotColor={'black'}
+                                dotStyle={styles.paginationDot}
+                                inactiveDotOpacity={0.4}
+                                inactiveDotScale={0.6}
+                                activeDotIndex={slide3}
+                                carouselRef={carouselRef}
+                                tappableDots={!!carouselRef}
+                            />
+                        </View>
 
-                    <View style={styles.containerr}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={program}
-                            renderItem={renderItem3}
-                            hasParallaxImages={true}
-                            onSnapToItem={setSlide3}
-                        />
-                        <Pagination
-                            dotsLength={program.length}
-                            inactiveDotColor={'black'}
-                            dotStyle={styles.paginationDot}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
-                            activeDotIndex={slide3}
-                            carouselRef={carouselRef}
-                            tappableDots={!!carouselRef}
-                        />
-                    </View>
+                        <View style={{ marginLeft: 30, marginBottom: 20 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
+                        </View>
 
-                    <View style={{ marginLeft: 30, marginBottom: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
-                    </View>
-
-                    <View style={[styles.containerr, { marginBottom: 80 }]}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={galeri}
-                            renderItem={renderItem4}
-                            hasParallaxImages={true}
-                            onSnapToItem={setSlide4}
-                        />
-                        <Pagination
-                            dotsLength={galeri.length}
-                            inactiveDotColor={'black'}
-                            dotStyle={styles.paginationDot}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
-                            activeDotIndex={slide4}
-                            carouselRef={carouselRef}
-                            tappableDots={!!carouselRef}
-                        />
-                    </View>
-                </ScrollView >
-            </BottomSheetModalProvider>
-        </GestureHandlerRootView>
+                        <View style={[styles.containerr, { marginBottom: 80 }]}>
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                sliderHeight={screenWidth}
+                                itemWidth={screenWidth - 60}
+                                data={galeri}
+                                renderItem={renderItem4}
+                                hasParallaxImages={true}
+                                onSnapToItem={setSlide4}
+                            />
+                            <Pagination
+                                dotsLength={galeri.length}
+                                inactiveDotColor={'black'}
+                                dotStyle={styles.paginationDot}
+                                inactiveDotOpacity={0.4}
+                                inactiveDotScale={0.6}
+                                activeDotIndex={slide4}
+                                carouselRef={carouselRef}
+                                tappableDots={!!carouselRef}
+                            />
+                        </View>
+                    </ScrollView >
+                </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+        </SafeAreaView>
     )
 }
 
@@ -346,5 +516,20 @@ const styles = StyleSheet.create({
         flex: 1, // Prevent a random Android rendering issue
         backgroundColor: 'white',
         borderRadius: 8
+    },
+    iOSBackdrop: {
+        backgroundColor: "#000000",
+        opacity: 0.3
+    },
+    androidBackdrop: {
+        backgroundColor: "#232f34",
+        opacity: 0.32
+    },
+    backdrop: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     }
 });

@@ -452,7 +452,7 @@ export const TopsTaks = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: '#C34647',
           tabBarInactiveTintColor: 'black',
-          tabBarLabelStyle: { fontSize: 13, textTransform: 'none', fontWeight: FONTWEIGHT.bold },
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none', fontWeight: FONTWEIGHT.bold },
         }}
       >
         <Top.Screen name='Inprogres' component={InProgres}

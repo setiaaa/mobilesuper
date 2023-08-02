@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import { Text } from 'react-native'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const DataLampiran = ({ item }) => {
     return (

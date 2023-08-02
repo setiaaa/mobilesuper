@@ -3,14 +3,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { COLORS } from '../../config/SuperAppps';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function MyTabBar({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);
 
     return (
         <BottomSheetModalProvider>
-            <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, }}>
-                <View style={{ flexDirection: 'row', gap: 35, marginVertical: 20, justifyContent: 'center', marginLeft: 20 }}>
+            <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'center', paddingRight: 15 }}>
+                <View style={{ flexDirection: 'row', marginVertical: 20, justifyContent: 'center', gap: 30 }}>
                     <TouchableOpacity
                         key={1}
                         onPress={() => {
@@ -32,43 +33,40 @@ function MyTabBar({ props, navigation }) {
                         <Ionicons name='business-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
                         <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Satker</Text>
                     </TouchableOpacity>
-                </View>
 
-                <TouchableOpacity
-                    key={4}
-                    onPress={() => {
-                        setTabItemIndex(4)
-                        navigation.navigate('Tp', { unread: false })
-                        // props.navigation.navigate('Home', { unread: false })
-                    }}
-                    style={{
-                        top: -35,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flex: 1,
-                    }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        height: 70,
-                        width: 70,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 50
-                    }}>
+                    <TouchableOpacity
+                        key={4}
+                        onPress={() => {
+                            setTabItemIndex(4)
+                            navigation.navigate('Tp', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }}
+                        style={{
+                            top: -35,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
                         <View style={{
-                            backgroundColor: COLORS.primary,
-                            width: 51,
-                            height: 51,
+                            backgroundColor: COLORS.white,
+                            height: 70,
+                            width: 70,
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 50
                         }}>
-                            <Ionicons name='grid-outline' color={COLORS.white} size={24} />
+                            <View style={{
+                                backgroundColor: COLORS.primary,
+                                width: 51,
+                                height: 51,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 50
+                            }}>
+                                <Ionicons name='grid-outline' color={COLORS.white} size={24} />
+                            </View>
                         </View>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
 
-                <View style={{ flexDirection: 'row', gap: 35, marginVertical: 20, justifyContent: 'flex-end', flex: 1, marginRight: 20 }}>
                     <TouchableOpacity
                         key={5}
                         onPress={() => {
@@ -91,6 +89,14 @@ function MyTabBar({ props, navigation }) {
                         <Text style={{ color: tabItemIndex === 6 ? COLORS.primary : COLORS.grey }}>Profile</Text>
                     </TouchableOpacity>
                 </View>
+                {/* 
+                
+                
+                <View style={{ flexDirection: 'row', gap: 35, marginVertical: 20, justifyContent: 'flex-end', flex: 1, marginRight: 20 }}>
+                
+                
+                
+            </View> */}
             </View>
         </BottomSheetModalProvider>
     )

@@ -18,7 +18,7 @@ export const CardFile = ({ image, file }) => {
 
 export const CardFileTask = ({ taskDetail }) => {
     return (
-        <View style={{ marginHorizontal: 20 }}>
+        <View>
             <FlatList
                 key={'*'}
                 data={taskDetail[0].lampiranFile}

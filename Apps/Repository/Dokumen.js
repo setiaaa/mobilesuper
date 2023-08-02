@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search';
 import { FlatList } from 'react-native';
@@ -19,7 +19,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { setDokumentlists } from '../../store/Repository';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DataList = ({ item, bottomSheetAttach }) => {
     return (

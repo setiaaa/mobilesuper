@@ -4,12 +4,12 @@ import { View } from 'react-native'
 import { Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from 'react-native';
 import { FlatList } from 'react-native';
 import { Image } from 'react-native';
 import { useState } from 'react';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DaftarKomentar = ({ items }) => {
     const [toggleComment, setToggleComment] = useState({

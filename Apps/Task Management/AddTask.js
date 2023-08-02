@@ -6,7 +6,7 @@ import {
     BottomSheetTextInput,
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { Text } from 'react-native'
@@ -27,6 +27,8 @@ import { Dropdown } from '../../components/DropDown'
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker';
+import { useDispatch, useSelector } from 'react-redux'
+import { setAddTask } from '../../store/Task'
 
 
 export const AddTask = () => {
@@ -78,6 +80,14 @@ export const AddTask = () => {
 
     const [document, setDocument] = useState([])
     const [type, setType] = useState([])
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setAddTask(kategori))
+    }, []);
+
+    const { addTask } = useSelector(state => state.task)
 
     const pickDocument = async () => {
         let result = await DocumentPicker.getDocumentAsync({});
@@ -216,7 +226,7 @@ export const AddTask = () => {
                         </View>
                         <View style={{ width: '90%', marginLeft: 17 }}>
                             <Dropdown
-                                data={kategori}
+                                data={addTask}
                                 setSelected={setKategoriField}
                                 placeHolder={'Pilih Prioritas'}
                                 borderWidth={1}

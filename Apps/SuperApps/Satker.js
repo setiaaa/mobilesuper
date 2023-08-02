@@ -8,13 +8,13 @@ import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel'
 import { useRef } from 'react';
 import { Dimensions } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { CardLiniMasaSatker } from '../../components/CardLinimasaSatker';
 import { Divider } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { CardUltah } from '../../components/CardUltah';
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -139,127 +139,131 @@ export const Satker = () => {
     const navigation = useNavigation()
 
     return (
-        <ScrollView style={{ flex: 1 }}>
-            <View style={{ backgroundColor: COLORS.primary, flexDirection: 'row', gap: 20, paddingTop: 20, height: 120 }}>
-                <View style={{ paddingLeft: 20 }}>
-                    <Ionicons name='notifications-outline' size={25} color={COLORS.white} />
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView>
+                <View style={{ backgroundColor: COLORS.primary, flexDirection: 'row', gap: 20, paddingTop: 20, height: 120 }}>
+                    <View style={{ paddingLeft: 20 }}>
+                        <Ionicons name='notifications-outline' size={25} color={COLORS.white} />
+                    </View>
+                    <View style={{ justifyContent: 'flex-end', flex: 1, marginTop: 5, flexDirection: 'row', gap: 10, marginRight: '11%' }}>
+                        <View style={{}}>
+                            <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
+                            <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
+                        </View>
+                        <View>
+                            <Image source={profile.avatar} style={{ width: 50, height: 50 }} />
+                        </View>
+                    </View>
                 </View>
-                <View style={{ marginLeft: '7%', marginTop: 5 }}>
-                    <Text style={{ color: 'white', textAlign: 'right', fontWeight: FONTWEIGHT.bold, marginBottom: 10 }}>{profile.nama}</Text>
-                    <Text style={{ color: 'white', textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
-                </View>
+
                 <View>
-                    <Image source={profile.avatar} style={{ width: 50, height: 50 }} />
+                    <View style={{ height: '40%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
+                    <CardSatker />
                 </View>
-            </View>
 
-            <View>
-                <View style={{ height: '40%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
-                <CardSatker />
-            </View>
-
-            <View style={[styles.containerr]}>
-                <Carousel
-                    ref={carouselRef}
-                    sliderWidth={screenWidth}
-                    sliderHeight={screenWidth}
-                    itemWidth={screenWidth - 60}
-                    data={galeri}
-                    renderItem={renderItem}
-                    hasParallaxImages={true}
-                    onSnapToItem={setSlide}
-                />
-                <Pagination
-                    dotsLength={galeri.length}
-                    inactiveDotColor={'black'}
-                    dotStyle={styles.paginationDot}
-                    inactiveDotOpacity={0.4}
-                    inactiveDotScale={0.6}
-                    activeDotIndex={slide}
-                    carouselRef={carouselRef}
-                    tappableDots={!!carouselRef}
-                />
-            </View>
-
-            <View style={[styles.containerr]}>
-                <Carousel
-                    ref={carouselRef}
-                    sliderWidth={screenWidth}
-                    sliderHeight={screenWidth}
-                    itemWidth={screenWidth - 60}
-                    data={mading}
-                    renderItem={renderItem2}
-                    hasParallaxImages={true}
-                    onSnapToItem={setSlide2}
-                />
-                <Pagination
-                    dotsLength={mading.length}
-                    inactiveDotColor={'black'}
-                    dotStyle={styles.paginationDot}
-                    inactiveDotOpacity={0.4}
-                    inactiveDotScale={0.6}
-                    activeDotIndex={slide2}
-                    carouselRef={carouselRef}
-                    tappableDots={!!carouselRef}
-                />
-            </View>
-            <Calendar
-                onDayPress={day => {
-                    setSelected(day.dateString);
-                }}
-                markedDates={{
-                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: COLORS.primary }
-                }}
-                style={{ width: '90%', marginLeft: 20, borderRadius: 16 }}
-                theme={{
-                    arrowColor: COLORS.primary,
-                    selectedDayBackgroundColor: COLORS.primary,
-                    todayTextColor: COLORS.primary,
-                }}
-            />
-            <View style={[styles.cardListSatker, { flex: 1, justifyContent: 'center', paddingVertical: 40 }]}>
-                <Text style={{ marginLeft: 20, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>Linimasa Pengetahuan</Text>
-                <View style={{ marginTop: 10 }}>
-                    <FlatList
-                        data={linimasa}
-                        renderItem={({ item }) => <CardLiniMasaSatker
-                            image={item.image}
-                            judul={item.judul}
-                            nama={item.nama}
-                            jenis={item.jenis}
-                            item={item}
-                        />
-                        }
-                        keyExtractor={item => item.id}
-                    />
-                </View>
-            </View>
-            <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <View style={styles.containerr}>
+                <View style={[styles.containerr]}>
                     <Carousel
                         ref={carouselRef}
                         sliderWidth={screenWidth}
                         sliderHeight={screenWidth}
                         itemWidth={screenWidth - 60}
-                        data={berita.lists}
-                        renderItem={renderItem3}
+                        data={galeri}
+                        renderItem={renderItem}
                         hasParallaxImages={true}
+                        onSnapToItem={setSlide}
+                    />
+                    <Pagination
+                        dotsLength={galeri.length}
+                        inactiveDotColor={'black'}
+                        dotStyle={styles.paginationDot}
+                        inactiveDotOpacity={0.4}
+                        inactiveDotScale={0.6}
+                        activeDotIndex={slide}
+                        carouselRef={carouselRef}
+                        tappableDots={!!carouselRef}
                     />
                 </View>
-            </View>
-            <View style={{ marginTop: 20, marginBottom: 40 }}>
-                <CardUltah
-                    ultah={ultah}
-                />
-            </View>
 
-        </ScrollView>
+                <View style={[styles.containerr]}>
+                    <Carousel
+                        ref={carouselRef}
+                        sliderWidth={screenWidth}
+                        sliderHeight={screenWidth}
+                        itemWidth={screenWidth - 60}
+                        data={mading}
+                        renderItem={renderItem2}
+                        hasParallaxImages={true}
+                        onSnapToItem={setSlide2}
+                    />
+                    <Pagination
+                        dotsLength={mading.length}
+                        inactiveDotColor={'black'}
+                        dotStyle={styles.paginationDot}
+                        inactiveDotOpacity={0.4}
+                        inactiveDotScale={0.6}
+                        activeDotIndex={slide2}
+                        carouselRef={carouselRef}
+                        tappableDots={!!carouselRef}
+                    />
+                </View>
+                <Calendar
+                    onDayPress={day => {
+                        setSelected(day.dateString);
+                    }}
+                    markedDates={{
+                        [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: COLORS.primary }
+                    }}
+                    style={{ width: '90%', marginLeft: 20, borderRadius: 16 }}
+                    theme={{
+                        arrowColor: COLORS.primary,
+                        selectedDayBackgroundColor: COLORS.primary,
+                        todayTextColor: COLORS.primary,
+                    }}
+                />
+                <View style={[styles.cardListSatker, { flex: 1, justifyContent: 'center', paddingVertical: 40 }]}>
+                    <Text style={{ marginLeft: 20, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>Linimasa Pengetahuan</Text>
+                    <View style={{ marginTop: 10 }}>
+                        <FlatList
+                            data={linimasa}
+                            renderItem={({ item }) => <CardLiniMasaSatker
+                                image={item.image}
+                                judul={item.judul}
+                                nama={item.nama}
+                                jenis={item.jenis}
+                                item={item}
+                            />
+                            }
+                            keyExtractor={item => item.id}
+                        />
+                    </View>
+                </View>
+                <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <View style={styles.containerr}>
+                        <Carousel
+                            ref={carouselRef}
+                            sliderWidth={screenWidth}
+                            sliderHeight={screenWidth}
+                            itemWidth={screenWidth - 60}
+                            data={berita.lists}
+                            renderItem={renderItem3}
+                            hasParallaxImages={true}
+                        />
+                    </View>
+                </View>
+                <View style={{ marginTop: 20, marginBottom: 40 }}>
+                    <CardUltah
+                        ultah={ultah}
+                    />
+                </View>
+
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

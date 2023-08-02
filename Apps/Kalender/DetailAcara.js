@@ -23,6 +23,7 @@ import { useMemo } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAgendaDetail } from '../../store/GrupKalender'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 const data =
@@ -221,375 +222,386 @@ export const DetailAcara = () => {
     }
 
     return (
-        <GestureHandlerRootView>
-            <BottomSheetModalProvider>
-                <ScrollView>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            borderRadius: 20,
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginLeft: 20
-                        }}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Acara</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.container}>
-                        <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20 }}>
-                            <Carousel
-                                ref={carouselRef}
-                                sliderWidth={screenWidth}
-                                sliderHeight={screenWidth}
-                                itemWidth={screenWidth - 60}
-                                data={detail.gambar}
-                                renderItem={renderItem}
-                                hasParallaxImages={true}
-                                onSnapToItem={setSlide}
-                            />
-                            <Pagination
-                                dotsLength={detail.gambar?.length}
-                                inactiveDotColor={'black'}
-                                dotStyle={styles.paginationDot}
-                                inactiveDotOpacity={0.4}
-                                inactiveDotScale={0.6}
-                                activeDotIndex={slide}
-                                carouselRef={carouselRef}
-                                tappableDots={!!carouselRef}
-                            />
-                            <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail.judul}</Text>
+        <SafeAreaView>
+            <GestureHandlerRootView>
+                <BottomSheetModalProvider>
+                    <ScrollView>
+                        <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                            <View style={{
+                                backgroundColor: COLORS.white,
+                                borderRadius: 20,
+                                width: 28,
+                                height: 28,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginLeft: 20
+                            }}>
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                                </TouchableOpacity>
                             </View>
-                            <View style={{ flexDirection: 'row', marginHorizontal: 20, gap: 20, alignItems: 'center', marginTop: 10 }}>
-                                <View style={{ backgroundColor: '#FFD6D6', borderRadius: 30 }}>
-                                    <Text style={{ marginHorizontal: 10, marginVertical: 5, color: COLORS.infoDanger }}>{detail.nama}</Text>
+                            <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Acara</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.container}>
+                            <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20 }}>
+                                <Carousel
+                                    ref={carouselRef}
+                                    sliderWidth={screenWidth}
+                                    sliderHeight={screenWidth}
+                                    itemWidth={screenWidth - 60}
+                                    data={detail.gambar}
+                                    renderItem={renderItem}
+                                    hasParallaxImages={true}
+                                    onSnapToItem={setSlide}
+                                />
+                                <Pagination
+                                    dotsLength={detail.gambar?.length}
+                                    inactiveDotColor={'black'}
+                                    dotStyle={styles.paginationDot}
+                                    inactiveDotOpacity={0.4}
+                                    inactiveDotScale={0.6}
+                                    activeDotIndex={slide}
+                                    carouselRef={carouselRef}
+                                    tappableDots={!!carouselRef}
+                                />
+                                <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail.judul}</Text>
                                 </View>
+                                <View style={{ flexDirection: 'row', marginHorizontal: 20, gap: 20, alignItems: 'center', marginTop: 10 }}>
+                                    <View style={{ backgroundColor: '#FFD6D6', borderRadius: 30 }}>
+                                        <Text style={{ marginHorizontal: 10, marginVertical: 5, color: COLORS.infoDanger }}>{detail.nama}</Text>
+                                    </View>
+                                    <View>
+                                        <Text>{detail.tanggal}</Text>
+                                    </View>
+                                </View>
+
                                 <View>
-                                    <Text>{detail.tanggal}</Text>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Member</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', }}>
+                                            {detail.member?.map((item) => {
+                                                return (
+                                                    <Image source={item.avatar} style={{
+                                                        marginLeft: -8,
+                                                        borderWidth: 2,
+                                                        borderRadius: 50,
+                                                        borderColor: COLORS.white,
+                                                    }} />
+                                                )
+                                            })}
+                                        </View>
+                                    </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
-                            </View>
 
-                            <View>
-                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Member</Text>
-                                    <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', justifyContent: 'center', flex: 1, marginRight: 20 }}>
-                                        {detail.member?.map((item) => {
-                                            return (
-                                                <Image source={item.avatar} style={{
-                                                    marginLeft: -8,
-                                                    borderWidth: 2,
-                                                    borderRadius: 50,
-                                                    borderColor: COLORS.white,
-                                                }} />
-                                            )
-                                        })}
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detail.lokasi}</Text>
+                                        </View>
                                     </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
-                                <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                            </View>
 
-                            <View>
-                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
-                                    <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
-                                        <Text>{detail.lokasi}</Text>
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detail.busana}</Text>
+                                        </View>
                                     </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
-                                <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                            </View>
 
-                            <View>
-                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
-                                    <View style={{ justifyContent: 'center', flex: 1, marginLeft: 10 }}>
-                                        <Text>{detail.busana}</Text>
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pengingat</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detail.pengingat}</Text>
+                                        </View>
                                     </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
-                                <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                            </View>
 
-                            <View>
-                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pengingat</Text>
-                                    <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                        <Text>{detail.pengingat}</Text>
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                                        <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
+                                            <Text style={{ textAlign: 'justify' }}>{detail.deskripsi}</Text>
+                                        </View>
                                     </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
-                                <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                            </View>
 
-                            <View>
-                                <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                                    <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
-                                        <Text style={{ textAlign: 'justify' }}>{detail.deskripsi}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                            </View>
+                                <View style={{ marginHorizontal: 20, marginVertical: 20, flexDirection: 'row', gap: 20 }}>
+                                    <TouchableOpacity onPress={() => { setTabItemIndex(1) }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                                            <Ionicons name='thumbs-up-outline' size={20} color={tabItemIndex === 1 ? COLORS.primary : null} />
+                                            <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>{detail.disukai}</Text>
+                                            <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>Disukai</Text>
+                                        </View>
+                                    </TouchableOpacity>
 
-                            <View style={{ marginHorizontal: 20, marginVertical: 20, flexDirection: 'row', gap: 20 }}>
-                                <TouchableOpacity onPress={() => { setTabItemIndex(1) }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                        <Ionicons name='thumbs-up-outline' size={20} color={tabItemIndex === 1 ? COLORS.primary : null} />
-                                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>{detail.disukai}</Text>
-                                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>Disukai</Text>
-                                    </View>
-                                </TouchableOpacity>
+                                    <TouchableOpacity onPress={bottomSheetAttach}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                                            <Ionicons name='chatbox-ellipses-outline' size={20} />
+                                            <Text>Komentar</Text>
+                                        </View>
+                                    </TouchableOpacity>
 
-                                <TouchableOpacity onPress={bottomSheetAttach}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                        <Ionicons name='chatbox-ellipses-outline' size={20} />
-                                        <Text>Komentar</Text>
-                                    </View>
-                                </TouchableOpacity>
-
-                                <BottomSheetModal
-                                    ref={bottomSheetModalRef}
-                                    snapPoints={animatedSnapPoints}
-                                    handleHeight={animatedHandleHeight}
-                                    contentHeight={animatedContentHeight}
-                                    index={0}
-                                    style={{ borderRadius: 50 }}
-                                    keyboardBlurBehavior="restore"
-                                    android_keyboardInputMode="adjust"
-                                    backdropComponent={({ style }) => (
-                                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                                    )}
-                                >
-                                    <BottomSheetView onLayout={handleContentLayout} style={{}}>
-                                        <View>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginLeft: 20 }}>
-                                                <Ionicons name='thumbs-up-outline' size={20} color={COLORS.primary} />
-                                                <Text style={{ color: COLORS.primary }}>{detail.disukai}</Text>
-                                                <Text style={{ color: COLORS.primary }}>Disukai</Text>
-                                                <TouchableOpacity onPress={() => navigation.navigate('ListSuka', { detail: detail })}>
-                                                    <Ionicons name='chevron-forward-outline' size={20} color={COLORS.primary} />
-                                                </TouchableOpacity>
-                                            </View>
-                                            <View style={{ marginLeft: 20, marginVertical: 20 }}>
-                                                <Text style={{ color: COLORS.ExtraDivinder }}>Komentar({detail.jmlKomentar})</Text>
-                                            </View>
-                                            <View style={{
-                                                justifyContent: 'center',
-                                                flex: 1,
-                                                alignItems: 'center',
-                                                //shadow
-                                                shadowOffset: { width: -2, height: 4 },
-                                                shadowColor: '#171717',
-                                                shadowOpacity: 0.2,
-                                            }}>
-                                                {detail.Komentar?.map((listData) => (
-                                                    <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5 }}>
-                                                        <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
-
-                                                            <View>
-                                                                <Image source={listData.avatarKomen} />
-                                                            </View>
-                                                            <View style={{ marginLeft: 10 }}>
-                                                                <Text style={{
-                                                                    fontSize: FONTSIZE.H2,
-                                                                    fontWeight: FONTWEIGHT.bold,
-                                                                    lineHeight: 20,
-                                                                    wordWrap: 'break-word'
-                                                                }}>
-                                                                    {listData.nama}
-                                                                </Text>
-                                                                <View style={{ flexDirection: 'row', gap: 5 }}>
-                                                                    <Text style={{
-                                                                        color: COLORS.lighter,
-                                                                        fontSize: FONTSIZE.H5,
-                                                                        fontWeight: FONTWEIGHT.normal,
-                                                                        lineHeight: 18,
-                                                                        wordWrap: 'break-word',
-                                                                        marginBottom: 10
-                                                                    }}>
-                                                                        {listData.tanggal}
-                                                                    </Text>
-                                                                    <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
-                                                                    <Text style={{
-                                                                        color: COLORS.lighter,
-                                                                        fontSize: FONTSIZE.H5,
-                                                                        fontWeight: FONTWEIGHT.normal,
-                                                                        lineHeight: 18,
-                                                                        wordWrap: 'break-word'
-                                                                    }}>
-                                                                        {listData.jam}
-                                                                    </Text>
-                                                                </View>
-                                                                <Text style={{
-                                                                    color: COLORS.lighter,
-                                                                    fontSize: FONTSIZE.H5,
-                                                                    fontWeight: FONTWEIGHT.normal,
-                                                                    lineHeight: 18,
-                                                                    wordWrap: 'break-word',
-                                                                }}>
-                                                                    {listData.isi}
-                                                                </Text>
-                                                                {listData.jmlhBalas === '' ? (
-                                                                    null
-                                                                ) : (
+                                    <BottomSheetModal
+                                        ref={bottomSheetModalRef}
+                                        snapPoints={animatedSnapPoints}
+                                        handleHeight={animatedHandleHeight}
+                                        contentHeight={animatedContentHeight}
+                                        index={0}
+                                        style={{ borderRadius: 50 }}
+                                        keyboardBlurBehavior="restore"
+                                        android_keyboardInputMode="adjust"
+                                        backdropComponent={({ style }) => (
+                                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                        )}
+                                    >
+                                        <BottomSheetView onLayout={handleContentLayout} style={{}}>
+                                            <View>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginLeft: 20 }}>
+                                                    <Ionicons name='thumbs-up-outline' size={20} color={COLORS.primary} />
+                                                    <Text style={{ color: COLORS.primary }}>{detail.disukai}</Text>
+                                                    <Text style={{ color: COLORS.primary }}>Disukai</Text>
+                                                    <TouchableOpacity onPress={() => navigation.navigate('ListSuka', { detail: detail })}>
+                                                        <Ionicons name='chevron-forward-outline' size={20} color={COLORS.primary} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                                <View style={{ marginLeft: 20, marginVertical: 20 }}>
+                                                    <Text style={{ color: COLORS.ExtraDivinder }}>Komentar({detail.jmlKomentar})</Text>
+                                                </View>
+                                                <ScrollView style={{ flex: 1 }}>
+                                                    <View style={{
+                                                        justifyContent: 'center',
+                                                        flex: 1,
+                                                        alignItems: 'center',
+                                                        //shadow ios
+                                                        shadowOffset: { width: -2, height: 4 },
+                                                        shadowColor: '#171717',
+                                                        shadowOpacity: 0.2,
+                                                    }}>
+                                                        {detail.Komentar?.map((listData) => (
+                                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5, elevation: 5 }}>
+                                                                <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
                                                                     <View>
-                                                                        {
-                                                                            (!toggleComment.toggle && toggleComment.id === listData.id) || toggleComment.id !== listData.id && listData.jmlhBalas > 0 ? (
-                                                                                <TouchableOpacity
-                                                                                    key={listData.id}
-                                                                                    onPress={() => clickBalas(listData.id, true)}>
-                                                                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
-                                                                                        <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
-                                                                                        <Text style={{
-                                                                                            color: COLORS.lighter,
-                                                                                            fontSize: FONTSIZE.H5,
-                                                                                            fontWeight: FONTWEIGHT.normal,
-                                                                                            lineHeight: 18,
-                                                                                            wordWrap: 'break-word',
-                                                                                        }}>
-                                                                                            Tampilkan {listData.jmlhBalas} Balasan
-                                                                                        </Text>
-                                                                                    </View>
-                                                                                </TouchableOpacity>
-                                                                            ) : (
-                                                                                null
-                                                                            )
-                                                                        }
-
-                                                                        {listData.id === toggleComment.id && toggleComment.toggle ? (
+                                                                        <Image source={listData.avatarKomen} />
+                                                                    </View>
+                                                                    <View style={{ marginLeft: 10 }}>
+                                                                        <Text style={{
+                                                                            fontSize: FONTSIZE.H2,
+                                                                            fontWeight: FONTWEIGHT.bold,
+                                                                            lineHeight: 20,
+                                                                            wordWrap: 'break-word'
+                                                                        }}>
+                                                                            {listData.nama}
+                                                                        </Text>
+                                                                        <View style={{ flexDirection: 'row', gap: 5 }}>
+                                                                            <Text style={{
+                                                                                color: COLORS.lighter,
+                                                                                fontSize: FONTSIZE.H5,
+                                                                                fontWeight: FONTWEIGHT.normal,
+                                                                                lineHeight: 18,
+                                                                                wordWrap: 'break-word',
+                                                                                marginBottom: 10
+                                                                            }}>
+                                                                                {listData.tanggal}
+                                                                            </Text>
+                                                                            <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
+                                                                            <Text style={{
+                                                                                color: COLORS.lighter,
+                                                                                fontSize: FONTSIZE.H5,
+                                                                                fontWeight: FONTWEIGHT.normal,
+                                                                                lineHeight: 18,
+                                                                                wordWrap: 'break-word'
+                                                                            }}>
+                                                                                {listData.jam}
+                                                                            </Text>
+                                                                        </View>
+                                                                        <Text style={{
+                                                                            color: COLORS.lighter,
+                                                                            fontSize: FONTSIZE.H5,
+                                                                            fontWeight: FONTWEIGHT.normal,
+                                                                            lineHeight: 18,
+                                                                            wordWrap: 'break-word',
+                                                                        }}>
+                                                                            {listData.isi}
+                                                                        </Text>
+                                                                        {listData.jmlhBalas === '' ? (
+                                                                            null
+                                                                        ) : (
                                                                             <View>
-                                                                                {listData.balas?.map((listKomen, index) =>
-                                                                                    <>
-                                                                                        <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
-                                                                                            <View>
-                                                                                                <Image source={listKomen.avatarBalas} />
-                                                                                            </View>
-                                                                                            <View style={{ marginLeft: 10 }}>
+                                                                                {
+                                                                                    (!toggleComment.toggle && toggleComment.id === listData.id) || toggleComment.id !== listData.id && listData.jmlhBalas > 0 ? (
+                                                                                        <TouchableOpacity
+                                                                                            key={listData.id}
+                                                                                            onPress={() => clickBalas(listData.id, true)}>
+                                                                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
+                                                                                                <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
                                                                                                 <Text style={{
-                                                                                                    fontSize: FONTSIZE.H2,
-                                                                                                    fontWeight: FONTWEIGHT.bold,
-                                                                                                    lineHeight: 20,
-                                                                                                    wordWrap: 'break-word'
-                                                                                                }}>
-                                                                                                    {listKomen.nama}
-                                                                                                </Text>
-                                                                                                <View style={{ flexDirection: 'row', gap: 5 }}>
-                                                                                                    <Text style={{
-                                                                                                        color: COLORS.lighter,
-                                                                                                        fontSize: FONTSIZE.H5,
-                                                                                                        fontWeight: FONTWEIGHT.normal,
-                                                                                                        lineHeight: 18,
-                                                                                                        wordWrap: 'break-word',
-                                                                                                        marginBottom: 10
-                                                                                                    }}>
-                                                                                                        {listKomen.tanggal}
-                                                                                                    </Text>
-                                                                                                    <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
-                                                                                                    <Text style={{
-                                                                                                        color: COLORS.lighter,
-                                                                                                        fontSize: FONTSIZE.H5,
-                                                                                                        fontWeight: FONTWEIGHT.normal,
-                                                                                                        lineHeight: 18,
-                                                                                                        wordWrap: 'break-word'
-                                                                                                    }}>
-                                                                                                        {listKomen.jam}
-                                                                                                    </Text>
-                                                                                                </View>
-                                                                                                <Text style={{
-                                                                                                    color: '#999999',
+                                                                                                    color: COLORS.lighter,
                                                                                                     fontSize: FONTSIZE.H5,
                                                                                                     fontWeight: FONTWEIGHT.normal,
                                                                                                     lineHeight: 18,
                                                                                                     wordWrap: 'break-word',
                                                                                                 }}>
-                                                                                                    {listKomen.isi}
+                                                                                                    Tampilkan {listData.jmlhBalas} Balasan
                                                                                                 </Text>
-                                                                                                {
-                                                                                                    listData.balas.length - 1 === index ? (
-                                                                                                        <TouchableOpacity
-                                                                                                            key={listKomen.id}
-                                                                                                            onPress={() => clickBalas(listData.id, false)}>
-                                                                                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
-                                                                                                                <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
-                                                                                                                <Text style={{
-                                                                                                                    color: COLORS.lighter,
-                                                                                                                    fontSize: FONTSIZE.H5,
-                                                                                                                    fontWeight: FONTWEIGHT.normal,
-                                                                                                                    lineHeight: 18,
-                                                                                                                    wordWrap: 'break-word',
-                                                                                                                }}>
-                                                                                                                    Tutup {listData.jmlhBalas} Balasan
-                                                                                                                </Text>
-                                                                                                            </View>
-                                                                                                        </TouchableOpacity>
-                                                                                                    ) : null
-                                                                                                }
                                                                                             </View>
-                                                                                            {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
-                                                                                        </View>
-                                                                                    </>
+                                                                                        </TouchableOpacity>
+                                                                                    ) : (
+                                                                                        null
+                                                                                    )
+                                                                                }
+
+                                                                                {listData.id === toggleComment.id && toggleComment.toggle ? (
+                                                                                    <View>
+                                                                                        {listData.balas?.map((listKomen, index) =>
+                                                                                            <>
+                                                                                                <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
+                                                                                                    <View>
+                                                                                                        <Image source={listKomen.avatarBalas} />
+                                                                                                    </View>
+                                                                                                    <View style={{ marginLeft: 10 }}>
+                                                                                                        <Text style={{
+                                                                                                            fontSize: FONTSIZE.H2,
+                                                                                                            fontWeight: FONTWEIGHT.bold,
+                                                                                                            lineHeight: 20,
+                                                                                                            wordWrap: 'break-word'
+                                                                                                        }}>
+                                                                                                            {listKomen.nama}
+                                                                                                        </Text>
+                                                                                                        <View style={{ flexDirection: 'row', gap: 5 }}>
+                                                                                                            <Text style={{
+                                                                                                                color: COLORS.lighter,
+                                                                                                                fontSize: FONTSIZE.H5,
+                                                                                                                fontWeight: FONTWEIGHT.normal,
+                                                                                                                lineHeight: 18,
+                                                                                                                wordWrap: 'break-word',
+                                                                                                                marginBottom: 10
+                                                                                                            }}>
+                                                                                                                {listKomen.tanggal}
+                                                                                                            </Text>
+                                                                                                            <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
+                                                                                                            <Text style={{
+                                                                                                                color: COLORS.lighter,
+                                                                                                                fontSize: FONTSIZE.H5,
+                                                                                                                fontWeight: FONTWEIGHT.normal,
+                                                                                                                lineHeight: 18,
+                                                                                                                wordWrap: 'break-word'
+                                                                                                            }}>
+                                                                                                                {listKomen.jam}
+                                                                                                            </Text>
+                                                                                                        </View>
+                                                                                                        <Text style={{
+                                                                                                            color: '#999999',
+                                                                                                            fontSize: FONTSIZE.H5,
+                                                                                                            fontWeight: FONTWEIGHT.normal,
+                                                                                                            lineHeight: 18,
+                                                                                                            wordWrap: 'break-word',
+                                                                                                        }}>
+                                                                                                            {listKomen.isi}
+                                                                                                        </Text>
+                                                                                                        {
+                                                                                                            listData.balas.length - 1 === index ? (
+                                                                                                                <TouchableOpacity
+                                                                                                                    key={listKomen.id}
+                                                                                                                    onPress={() => clickBalas(listData.id, false)}>
+                                                                                                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
+                                                                                                                        <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
+                                                                                                                        <Text style={{
+                                                                                                                            color: COLORS.lighter,
+                                                                                                                            fontSize: FONTSIZE.H5,
+                                                                                                                            fontWeight: FONTWEIGHT.normal,
+                                                                                                                            lineHeight: 18,
+                                                                                                                            wordWrap: 'break-word',
+                                                                                                                        }}>
+                                                                                                                            Tutup {listData.jmlhBalas} Balasan
+                                                                                                                        </Text>
+                                                                                                                    </View>
+                                                                                                                </TouchableOpacity>
+                                                                                                            ) : null
+                                                                                                        }
+                                                                                                    </View>
+                                                                                                    {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
+                                                                                                </View>
+                                                                                            </>
+                                                                                        )}
+                                                                                        {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
+                                                                                    </View>
+                                                                                ) : (
+                                                                                    null
                                                                                 )}
-                                                                                {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
                                                                             </View>
-                                                                        ) : (
-                                                                            null
+
                                                                         )}
                                                                     </View>
-
-                                                                )}
+                                                                </View>
                                                             </View>
-                                                        </View>
+                                                        )
+                                                        )}
                                                     </View>
-                                                )
-                                                )}
-                                            </View>
-                                            <View style={{ height: 380, justifyContent: 'flex-end' }}>
-                                                <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                                                <View style={{
-                                                    borderWidth: 1,
-                                                    width: '90%',
-                                                    marginLeft: 17,
-                                                    borderRadius: 16,
-                                                    borderColor: COLORS.ExtraDivinder,
-                                                    flexDirection: 'row',
-                                                    backgroundColor: COLORS.ExtraDivinder,
-                                                    marginTop: 10
-                                                }}
-                                                >
-                                                    <BottomSheetTextInput
-                                                        numberOfLines={4}
-                                                        maxLength={40}
-                                                        placeholder='Ketik Komentar Disini'
-                                                        style={{ padding: 10 }}
-                                                        onChangeText={setKomen}
-                                                        value={komen}
-                                                    />
-                                                    <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                                        <TouchableOpacity >
-                                                            <Ionicons name='send-sharp' size={20} color={COLORS.primary} />
-                                                        </TouchableOpacity>
+                                                </ScrollView>
+                                                <View style={{ justifyContent: 'flex-end' }}>
+                                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                                    <View style={{
+                                                        borderWidth: 1,
+                                                        width: '90%',
+                                                        marginLeft: 17,
+                                                        borderRadius: 16,
+                                                        borderColor: COLORS.ExtraDivinder,
+                                                        flexDirection: 'row',
+                                                        backgroundColor: COLORS.ExtraDivinder,
+                                                        marginTop: 10
+                                                    }}
+                                                    >
+                                                        <BottomSheetTextInput
+                                                            numberOfLines={1}
+                                                            maxLength={40}
+                                                            placeholder='Ketik Komentar Disini'
+                                                            style={{ padding: 10 }}
+                                                            onChangeText={setKomen}
+                                                            value={komen}
+                                                        />
+                                                        <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
+                                                            <TouchableOpacity >
+                                                                <Ionicons name='send-sharp' size={20} color={COLORS.primary} />
+                                                            </TouchableOpacity>
+                                                        </View>
                                                     </View>
                                                 </View>
                                             </View>
-                                        </View>
-                                    </BottomSheetView>
-                                </BottomSheetModal>
+                                        </BottomSheetView>
+                                    </BottomSheetModal>
 
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                    <Ionicons name='eye-outline' size={20} />
-                                    <Text>{detail.dilihat}</Text>
-                                    <Text>Dilihat</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                                        <Ionicons name='eye-outline' size={20} />
+                                        <Text>{detail.dilihat}</Text>
+                                        <Text>Dilihat</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                    </View>
-                </ScrollView>
-            </BottomSheetModalProvider>
-        </GestureHandlerRootView>
+                    </ScrollView>
+                </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+        </SafeAreaView>
     )
 }
 

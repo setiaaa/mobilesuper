@@ -6,7 +6,7 @@
   "icon": "./assets/superApp/logokkp.png",
   "userInterfaceStyle": "automatic",
   "splash": {
-    "image": "./assets/superApp/logokkp.png",
+    "image": "./assets/superApp/splash.png",
     "resizeMode": "contain",
     "backgroundColor": "#ffffff"
   },

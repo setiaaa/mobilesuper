@@ -38,6 +38,7 @@ export const InProgres = () => {
                         prioritas={item.prioritas}
                     />
                     }
+                    style={{ marginTop: 20 }}
                     columnWrapperStyle={{ justifyContent: 'space-between' }}
                     numColumns={2}
                     keyExtractor={item => "#" + item.id}

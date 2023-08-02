@@ -17,11 +17,13 @@ export const CardAgenda = ({ kegiatan, subAvatar, warna }) => {
                 flexDirection: 'row',
                 gap: 1,
                 marginVertical: 5,
-                //shadow
+                //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: '#171717',
                 shadowOpacity: 0.2,
                 shadowRadius: 3,
+                //shadow android
+                elevation: 5
             }}>
                 {warna === "#1868AB" ? (
                     <View style={{ width: '3%', backgroundColor: COLORS.info, height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />

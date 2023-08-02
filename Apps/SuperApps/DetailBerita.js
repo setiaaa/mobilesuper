@@ -7,8 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { Image } from 'react-native'
 import { ScrollView } from 'react-native'
-import { SafeAreaView } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const DetailBerita = ({ route }) => {
     const { item } = route.params
@@ -23,7 +23,7 @@ export const DetailBerita = ({ route }) => {
                         </View>
                     </TouchableOpacity>
                     <View style={{ position: 'relative' }}>
-                        <Image source={item.image} style={{ width: 390, height: 260 }} />
+                        <Image source={item.image} style={Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid} />
                         <View style={{ backgroundColor: COLORS.white, height: 50, position: 'absolute', width: '100%', bottom: 0, borderTopLeftRadius: 100, borderTopRightRadius: 100 }} />
                         <TouchableOpacity style={{
                             backgroundColor: COLORS.primary,
@@ -71,10 +71,12 @@ export const DetailBerita = ({ route }) => {
                             borderRadius: 8,
                             marginHorizontal: 15,
                             marginVertical: 20,
-                            //shadow
+                            //shadow ios
                             shadowOffset: { width: -2, height: 4 },
                             shadowColor: '#171717',
                             shadowOpacity: 0.2,
+                            //shadow android
+                            elevation: 5
                         }}>
                             <View style={{ height: 96, width: 357, backgroundColor: COLORS.white, borderRadius: 8, position: 'absolute', bottom: 0 }}>
                                 <Text style={{ fontWeight: 600, marginHorizontal: 20, marginTop: 20 }}>Berita Selanjutnya</Text>
@@ -86,7 +88,6 @@ export const DetailBerita = ({ route }) => {
                                 </View>
                             </View>
                         </View>
-
                     </View>
                 </View>
             </ScrollView>
@@ -101,4 +102,12 @@ const styles = StyleSheet.create({
         width: 28,
         borderRadius: 50,
     },
+    imageIos: {
+        width: 390,
+        height: 260
+    },
+    imageAndroid: {
+        width: 420,
+        height: 260
+    }
 })

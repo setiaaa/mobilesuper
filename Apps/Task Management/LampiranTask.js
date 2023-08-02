@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { CardFileTask } from '../../components/CardFileTask'
 import { CardDokumenTask } from '../../components/CardDokumenTask'
 import { useSelector } from 'react-redux'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 export const LampiranTask = () => {
@@ -20,45 +21,51 @@ export const LampiranTask = () => {
 
     return (
         <GestureHandlerRootView>
-            <BottomSheetModalProvider>
-                <ScrollView>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            borderRadius: 20,
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginLeft: 20
-                        }}>
-                            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                            </TouchableOpacity>
+            <SafeAreaView>
+                <BottomSheetModalProvider>
+                    <ScrollView>
+                        <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                            <View style={{
+                                backgroundColor: COLORS.white,
+                                borderRadius: 20,
+                                width: 28,
+                                height: 28,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginLeft: 20
+                            }}>
+                                <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                                    <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Lampiran</Text>
+                            </View>
                         </View>
-                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Lampiran</Text>
+
+                        <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
+                            <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Files</Text>
                         </View>
-                    </View>
 
-                    <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-                        <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Files</Text>
-                    </View>
+                        <View style={{ flex: 1, alignItems: 'center' }}>
+                            <CardFileTask
+                                taskDetail={taskDetail}
+                            />
+                        </View>
 
-                    <CardFileTask
-                        taskDetail={taskDetail}
-                    />
+                        <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
+                            <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Dokumen</Text>
+                        </View>
 
-                    <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-                        <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Dokumen</Text>
-                    </View>
+                        <View style={{ flex: 1, alignItems: 'center' }}>
+                            <CardDokumenTask
+                                taskDetail={taskDetail}
+                            />
+                        </View>
 
-                    <CardDokumenTask
-                        taskDetail={taskDetail}
-                    />
-
-                </ScrollView>
-            </BottomSheetModalProvider>
+                    </ScrollView>
+                </BottomSheetModalProvider>
+            </SafeAreaView>
         </GestureHandlerRootView>
     )
 }

@@ -7,7 +7,7 @@
     "icon": "./assets/logokkp.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/logokkp.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

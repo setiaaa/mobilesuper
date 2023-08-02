@@ -12,21 +12,21 @@ const ENTRIES1 = [
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
         illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/Card.png')
+        image: require('../../assets/superApp/berita.png')
     },
     {
         tanggal: 'Senin, 5 Juni 2023',
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
         illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
-        image: require('../../assets/superApp/Card.png')
+        image: require('../../assets/superApp/berita.png')
     },
     {
         tanggal: 'Senin, 5 Juni 2023',
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
         illustration: 'https://i.imgur.com/MABUbpDl.jpg',
-        image: require('../../assets/superApp/Card.png')
+        image: require('../../assets/superApp/berita.png')
     },
     {
         tanggal: 'Senin, 5 Juni 2023',
@@ -53,64 +53,64 @@ const ENTRIES1 = [
 const ENTRIES2 = [
     {
         title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
+        image: require('../../assets/superApp/prioritas.png')
     },
     {
         title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
+        image: require('../../assets/superApp/prioritas.png')
     },
     {
         title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
+        image: require('../../assets/superApp/prioritas.png')
     },
     {
         title: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
+        image: require('../../assets/superApp/prioritas.png')
     },
     {
         ttitle: 'Penangkapan ikan terukur berbasis kuota',
-        image: require('../../assets/superApp/Rectangle.png')
+        image: require('../../assets/superApp/prioritas.png')
     },
 ];
 
 const ENTRIES3 = [
     {
         title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
+        image: require('../../assets/superApp/pasar.jpeg')
     },
     {
         title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
+        image: require('../../assets/superApp/pasar.jpeg')
     },
     {
         title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
+        image: require('../../assets/superApp/pasar.jpeg')
     },
     {
         title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
+        image: require('../../assets/superApp/pasar.jpeg')
     },
     {
         title: 'Memperkuat ketahanan ekonomi untuk pertumbuhan berkualitas dan berkeadilan',
-        image: require('../../assets/superApp/Rectangle2.png')
+        image: require('../../assets/superApp/pasar.jpeg')
     },
 ];
 
 const ENTRIES4 = [
     {
-        image: require('../../assets/superApp/Photo.png'),
+        image: require('../../assets/superApp/galeri.jpeg'),
     },
     {
-        image: require('../../assets/superApp/Photo.png'),
+        image: require('../../assets/superApp/galeri.jpeg'),
     },
     {
-        image: require('../../assets/superApp/Photo.png'),
+        image: require('../../assets/superApp/galeri.jpeg'),
     },
     {
-        image: require('../../assets/superApp/Photo.png'),
+        image: require('../../assets/superApp/galeri.jpeg'),
     },
     {
-        image: require('../../assets/superApp/Photo.png'),
+        image: require('../../assets/superApp/galeri.jpeg'),
     },
 ];
 

@@ -25,6 +25,7 @@ import { Search } from '../../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTaskLists, setVariant } from '../../store/Task'
 import { useEffect } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 const item = [
@@ -252,229 +253,231 @@ export const MyTask = () => {
     }
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <BottomSheetModalProvider>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 20
-                    }}>
-                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Task Management</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: 'row', gap: 5, marginHorizontal: 15 }}>
-                    <TouchableOpacity>
-                        <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 317, justifyContent: 'center', borderRadius: 8 }}>
-                            <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text>
+            <SafeAreaView style={{ flex: 1 }}>
+                <BottomSheetModalProvider>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                        <View style={{
+                            backgroundColor: COLORS.white,
+                            borderRadius: 20,
+                            width: 28,
+                            height: 28,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginLeft: 20
+                        }}>
+                            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={bottomSheetAttach}>
-                        <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
-                            {/* <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text> */}
-                            <Ionicons name='search-outline' size={24} color={COLORS.primary} />
+                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                            <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Task Management</Text>
                         </View>
-                    </TouchableOpacity>
-                </View>
+                    </View>
 
-                <View style={{ marginHorizontal: 15, flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Task Saya</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                        <TouchableOpacity onPress={() => dispatch(setVariant("filter"))}>
-                            <View style={styles.circleList}>
-                                <Ionicons name='filter-outline' size={24} color={variant === 'filter' ? COLORS.primary : COLORS.grey} />
+                    <View style={{ flexDirection: 'row', gap: 5, marginHorizontal: 15 }}>
+                        <TouchableOpacity>
+                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 317, justifyContent: 'center', borderRadius: 8 }}>
+                                <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => dispatch(setVariant("reorder"))}>
-                            <View style={styles.circleList}>
-                                <Ionicons name='reorder-three-outline' size={24} color={variant === 'reorder' ? COLORS.primary : COLORS.grey} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
-                            <View style={styles.circleList}>
-                                <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
-                            <View style={styles.circleList}>
-                                <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
+
+                        <TouchableOpacity onPress={bottomSheetAttach}>
+                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
+                                {/* <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text> */}
+                                <Ionicons name='search-outline' size={24} color={COLORS.primary} />
                             </View>
                         </TouchableOpacity>
                     </View>
-                </View>
 
-                <View style={{ flex: 1, marginTop: 20, width: 362, marginHorizontal: 15 }}>
-                    <TopsTaks />
-                </View>
+                    <View style={{ marginHorizontal: 15, flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Task Saya</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
+                            <TouchableOpacity onPress={() => dispatch(setVariant("filter"))}>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='filter-outline' size={24} color={variant === 'filter' ? COLORS.primary : COLORS.grey} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => dispatch(setVariant("reorder"))}>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='reorder-three-outline' size={24} color={variant === 'reorder' ? COLORS.primary : COLORS.grey} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
-                <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    snapPoints={animatedSnapPoints}
-                    handleHeight={animatedHandleHeight}
-                    contentHeight={animatedContentHeight}
-                    index={0}
-                    style={{ borderRadius: 50 }}
-                    keyboardBlurBehavior="restore"
-                    android_keyboardInputMode="adjust"
-                    backdropComponent={({ style }) => (
-                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                    )}
-                >
-                    <BottomSheetView onLayout={handleContentLayout} >
-                        <View>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ width: '75%', marginHorizontal: 20, backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, }}>
-                                    <Search
-                                        placeholder={"Cari"}
-                                        iconColor={COLORS.primary}
+                    <View style={{ flex: 1, marginTop: 20, width: '90%', marginHorizontal: '5%' }}>
+                        <TopsTaks />
+                    </View>
+
+                    <BottomSheetModal
+                        ref={bottomSheetModalRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout} >
+                            <View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ width: '75%', marginHorizontal: 20, backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, }}>
+                                        <Search
+                                            placeholder={"Cari"}
+                                            iconColor={COLORS.primary}
+                                        />
+                                    </View>
+                                    <View style={{ justifyContent: 'center' }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, color: COLORS.infoDanger, fontWeight: 500 }}>Batal</Text>
+                                    </View>
+                                </View>
+
+                                <View style={{ flexDirection: 'row', gap: 5, justifyContent: 'center' }}>
+
+                                    <TouchableOpacity onPress={() => {
+                                        setBadge(1)
+                                    }}>
+                                        <View style={{
+                                            backgroundColor: badge === 1 ? COLORS.infoDangerLight : COLORS.white,
+                                            borderColor: badge === 1 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                            borderRadius: 16,
+                                            borderWidth: 1,
+                                            marginVertical: 10
+                                        }}>
+                                            <Text style={{
+                                                color: badge == 1 ? COLORS.primary : COLORS.grey,
+                                                marginVertical: 10,
+                                                marginHorizontal: 7,
+                                                fontSize: FONTSIZE.H3
+                                            }}>
+                                                Semua
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => {
+                                        setBadge(2)
+                                    }}>
+                                        <View style={{
+                                            backgroundColor: badge === 2 ? COLORS.infoDangerLight : COLORS.white,
+                                            borderColor: badge === 2 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                            borderRadius: 16,
+                                            borderWidth: 1,
+                                            marginVertical: 10
+                                        }}>
+                                            <Text style={{
+                                                color: badge == 2 ? COLORS.primary : COLORS.grey,
+                                                marginVertical: 10,
+                                                marginHorizontal: 7,
+                                                fontSize: FONTSIZE.H3
+                                            }}>
+                                                In Progres
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => {
+                                        setBadge(3)
+                                    }}>
+                                        <View style={{
+                                            backgroundColor: badge === 3 ? COLORS.infoDangerLight : COLORS.white,
+                                            borderColor: badge === 3 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                            borderRadius: 16,
+                                            borderWidth: 1,
+                                            marginVertical: 10
+                                        }}>
+                                            <Text style={{
+                                                color: badge == 3 ? COLORS.primary : COLORS.grey,
+                                                marginVertical: 10,
+                                                marginHorizontal: 7,
+                                                fontSize: FONTSIZE.H3
+                                            }}>
+                                                Pending
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => {
+                                        setBadge(4)
+                                    }}>
+                                        <View style={{
+                                            backgroundColor: badge === 4 ? COLORS.infoDangerLight : COLORS.white,
+                                            borderColor: badge === 4 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                            borderRadius: 16,
+                                            borderWidth: 1,
+                                            marginVertical: 10
+                                        }}>
+                                            <Text style={{
+                                                color: badge == 4 ? COLORS.primary : COLORS.grey,
+                                                marginVertical: 10,
+                                                marginHorizontal: 7,
+                                                fontSize: FONTSIZE.H3
+                                            }}>
+                                                Complete
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => {
+                                        setBadge(5)
+                                    }}>
+                                        <View style={{
+                                            backgroundColor: badge === 5 ? COLORS.infoDangerLight : COLORS.white,
+                                            borderColor: badge === 5 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                            borderRadius: 16,
+                                            borderWidth: 1,
+                                            marginVertical: 10
+                                        }}>
+                                            <Text style={{
+                                                color: badge == 5 ? COLORS.primary : COLORS.grey,
+                                                marginVertical: 10,
+                                                marginHorizontal: 7,
+                                                fontSize: FONTSIZE.H3
+                                            }}>
+                                                Back Log
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={{ marginHorizontal: 20, marginBottom: 40 }}>
+                                    <FlatList
+                                        data={taskLists}
+                                        renderItem={({ item }) => <CardTaskCari
+                                            kegiatan={item.kegiatan}
+                                            subAvatar={item.subAvatar}
+                                            warna={item.warna}
+                                            tanggal={item.tanggal}
+                                        />
+                                        }
                                     />
                                 </View>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, color: COLORS.infoDanger, fontWeight: 500 }}>Batal</Text>
-                                </View>
                             </View>
-
-                            <View style={{ flexDirection: 'row', gap: 5, justifyContent: 'center' }}>
-
-                                <TouchableOpacity onPress={() => {
-                                    setBadge(1)
-                                }}>
-                                    <View style={{
-                                        backgroundColor: badge === 1 ? COLORS.infoDangerLight : COLORS.white,
-                                        borderColor: badge === 1 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                        borderRadius: 16,
-                                        borderWidth: 1,
-                                        marginVertical: 10
-                                    }}>
-                                        <Text style={{
-                                            color: badge == 1 ? COLORS.primary : COLORS.grey,
-                                            marginVertical: 10,
-                                            marginHorizontal: 7,
-                                            fontSize: FONTSIZE.H3
-                                        }}>
-                                            Semua
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => {
-                                    setBadge(2)
-                                }}>
-                                    <View style={{
-                                        backgroundColor: badge === 2 ? COLORS.infoDangerLight : COLORS.white,
-                                        borderColor: badge === 2 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                        borderRadius: 16,
-                                        borderWidth: 1,
-                                        marginVertical: 10
-                                    }}>
-                                        <Text style={{
-                                            color: badge == 2 ? COLORS.primary : COLORS.grey,
-                                            marginVertical: 10,
-                                            marginHorizontal: 7,
-                                            fontSize: FONTSIZE.H3
-                                        }}>
-                                            In Progres
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => {
-                                    setBadge(3)
-                                }}>
-                                    <View style={{
-                                        backgroundColor: badge === 3 ? COLORS.infoDangerLight : COLORS.white,
-                                        borderColor: badge === 3 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                        borderRadius: 16,
-                                        borderWidth: 1,
-                                        marginVertical: 10
-                                    }}>
-                                        <Text style={{
-                                            color: badge == 3 ? COLORS.primary : COLORS.grey,
-                                            marginVertical: 10,
-                                            marginHorizontal: 7,
-                                            fontSize: FONTSIZE.H3
-                                        }}>
-                                            Pending
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => {
-                                    setBadge(4)
-                                }}>
-                                    <View style={{
-                                        backgroundColor: badge === 4 ? COLORS.infoDangerLight : COLORS.white,
-                                        borderColor: badge === 4 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                        borderRadius: 16,
-                                        borderWidth: 1,
-                                        marginVertical: 10
-                                    }}>
-                                        <Text style={{
-                                            color: badge == 4 ? COLORS.primary : COLORS.grey,
-                                            marginVertical: 10,
-                                            marginHorizontal: 7,
-                                            fontSize: FONTSIZE.H3
-                                        }}>
-                                            Complete
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => {
-                                    setBadge(5)
-                                }}>
-                                    <View style={{
-                                        backgroundColor: badge === 5 ? COLORS.infoDangerLight : COLORS.white,
-                                        borderColor: badge === 5 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                        borderRadius: 16,
-                                        borderWidth: 1,
-                                        marginVertical: 10
-                                    }}>
-                                        <Text style={{
-                                            color: badge == 5 ? COLORS.primary : COLORS.grey,
-                                            marginVertical: 10,
-                                            marginHorizontal: 7,
-                                            fontSize: FONTSIZE.H3
-                                        }}>
-                                            Back Log
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
+                        </BottomSheetView>
+                    </BottomSheetModal>
+                    <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('AddTask')}>
+                            <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                                <Ionicons name='add-outline' size={24} color={COLORS.white} />
                             </View>
-
-                            <View style={{ marginHorizontal: 20, marginBottom: 40 }}>
-                                <FlatList
-                                    data={taskLists}
-                                    renderItem={({ item }) => <CardTaskCari
-                                        kegiatan={item.kegiatan}
-                                        subAvatar={item.subAvatar}
-                                        warna={item.warna}
-                                        tanggal={item.tanggal}
-                                    />
-                                    }
-                                />
-                            </View>
-                        </View>
-                    </BottomSheetView>
-                </BottomSheetModal>
-                <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('AddTask')}>
-                        <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                            <Ionicons name='add-outline' size={24} color={COLORS.white} />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </BottomSheetModalProvider>
+                        </TouchableOpacity>
+                    </View>
+                </BottomSheetModalProvider>
+            </SafeAreaView>
         </GestureHandlerRootView>
     )
 }
