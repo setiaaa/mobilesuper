@@ -81,7 +81,7 @@ export const DetailActivity = () => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView>
+            <SafeAreaView style={{ flex: 1 }}>
                 <BottomSheetModalProvider>
                     <View>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>

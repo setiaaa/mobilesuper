@@ -50,6 +50,10 @@ const data =
             file: 'Business Agility with Scrum.pdf',
             size: '8 mb'
         },
+        {
+            file: 'Business Agility with Scrum.pdf',
+            size: '8 mb'
+        },
     ],
     jmlKomen: '3',
     komentar: [

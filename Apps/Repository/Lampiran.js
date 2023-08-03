@@ -8,23 +8,17 @@ import { FlatList } from 'react-native';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image } from 'react-native';
 
 
 const DataLampiran = ({ item }) => {
     return (
-        <View style={{ marginTop: 10, justifyContent: 'center', flex: 1, alignItems: 'center' }}>
-            <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, marginHorizontal: 20 }}>
-                    <View>
-                        <Ionicons name='document-outline' size={24} color={COLORS.lighter} />
-                    </View>
-                    <View style={{ marginLeft: 10 }}>
-                        <Text style={{ width: '100%', fontSize: FONTSIZE.H4, fontWeight: FONTWEIGHT.normal, lineHeight: 14, wordWrap: 'break-word' }}>{item.file}</Text>
-                        <Text style={{ width: '100%', color: COLORS.lighter, fontSize: 10, fontWeight: FONTWEIGHT.normal, lineHeight: 18, wordWrap: 'break-word' }}>{item.size}</Text>
-                    </View>
-                    <View style={{ alignItems: 'flex-end', flex: 1 }}>
-                        <Ionicons name='download-outline' size={24} color={COLORS.lighter} />
-                    </View>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '80%', marginVertical: 10, }}>
+                <View style={{ alignItems: 'center', marginHorizontal: 10, marginVertical: 15 }}>
+                    <Image source={require('../../assets/superApp/pdf.png')} />
+                    <Text style={{ width: '100%', fontSize: FONTSIZE.H4, fontWeight: FONTWEIGHT.normal, textAlign: 'center', marginVertical: 10 }}>{item.file}</Text>
+                    <Text style={{ width: '100%', color: COLORS.lighter, fontSize: 10, fontWeight: FONTWEIGHT.normal, textAlign: 'center' }}>{item.size}</Text>
                 </View>
             </View>
         </View>
@@ -56,12 +50,14 @@ export const Lampiran = () => {
                 </View>
             </View>
             <FlatList
+                key={'#'}
                 data={detail.lampiran}
                 renderItem={({ item }) =>
                     <DataLampiran
                         item={item} />
                 }
-                keyExtractor={items => items.id}
+                numColumns={2}
+                keyExtractor={detail => "#" + detail.lampiran}
                 style={{ marginTop: 20 }}
             />
         </SafeAreaView>
