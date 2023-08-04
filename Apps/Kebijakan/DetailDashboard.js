@@ -98,13 +98,13 @@ export default function DetailDashboard({ route }) {
 
             <View style={{ alignItems: 'center' }}>
                 <View>
+                    <Button title='Unduh File PDF' style={styles.buttonUnduh} onClick={downloadFromUrl} />
+                </View>
+                <View>
                     <Button title='Buka File PDF' textColor={'white'} style={styles.buttonBuka} onClick={() => navigation.navigate('PdfViewer', {
                         data: data
                     })}
                     />
-                </View>
-                <View>
-                    <Button title='Unduh File PDF' textColor={'white'} style={styles.buttonUnduh} onClick={downloadFromUrl} />
                 </View>
             </View>
 
@@ -135,12 +135,12 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         marginTop: 20,
         width: 350,
+        marginBottom: 20,
     },
     buttonUnduh: {
-        backgroundColor: '#d2b48c',
+        backgroundColor: '#e3efb5',
         borderRadius: 12,
         marginTop: 20,
-        marginBottom: 20,
         width: 350,
     },
     cardTop: {

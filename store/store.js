@@ -12,6 +12,7 @@ import superAppsReducer from "./SuperApps";
 import GrupKalenderReducer from "./GrupKalender";
 import Repository from "./Repository";
 import TaskReducer from "./Task";
+import KebijakanReducer from "./Kebijakan";
 
 export const store = configureStore({
   reducer: {
@@ -27,5 +28,6 @@ export const store = configureStore({
     grupKalender: GrupKalenderReducer,
     repository: Repository,
     task: TaskReducer,
+    kebijakan: KebijakanReducer
   },
 });
