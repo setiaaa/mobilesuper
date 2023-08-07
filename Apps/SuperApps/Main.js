@@ -98,19 +98,29 @@ const ENTRIES3 = [
 
 const ENTRIES4 = [
     {
+        id: 1,
         image: require('../../assets/superApp/galeri.jpeg'),
+        deskripsi: 'Menteri Sakti Wahyu Trenggono menerima kunjungan Mr. Lu Kang'
     },
     {
+        id: 2,
         image: require('../../assets/superApp/galeri.jpeg'),
+        deskripsi: 'Menteri Sakti Wahyu Trenggono menerima kunjungan Mr. Lu Kang'
     },
     {
+        id: 3,
         image: require('../../assets/superApp/galeri.jpeg'),
+        deskripsi: 'Menteri Sakti Wahyu Trenggono menerima kunjungan Mr. Lu Kang'
     },
     {
+        id: 4,
         image: require('../../assets/superApp/galeri.jpeg'),
+        deskripsi: 'Menteri Sakti Wahyu Trenggono menerima kunjungan Mr. Lu Kang'
     },
     {
+        id: 5,
         image: require('../../assets/superApp/galeri.jpeg'),
+        deskripsi: 'Menteri Sakti Wahyu Trenggono menerima kunjungan Mr. Lu Kang'
     },
 ];
 

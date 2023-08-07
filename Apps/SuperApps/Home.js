@@ -28,6 +28,7 @@ import { useSelector } from 'react-redux'
 import { CardTautan } from '../../components/CardTautan'
 import { Modal } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { CardVisiMisi } from '../../components/CardVisiMisi'
 
 
 
@@ -208,6 +209,8 @@ export const Home = () => {
                             </BottomSheetModal>
                         </View>
 
+                        <CardVisiMisi />
+
                         <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
                             <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
@@ -250,20 +253,12 @@ export const Home = () => {
                             <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                             <View style={{ alignItems: 'center', flex: 1 }}>
                                 <View style={{ backgroundColor: COLORS.white, width: '90%', height: 500, borderRadius: 10, marginTop: 100 }}>
-                                    {/* <TouchableOpacity onPress={() => setModalVisible(false)} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
-                                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 35, height: 35, justifyContent: 'center', alignItems: 'center' }}>
-                                        <Ionicons name='close-outline' size={24} color={COLORS.white} />
-                                    </View>
-                                </TouchableOpacity> */}
-                                    {/* <View style={{ width: '100%' }}>
-                                    <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
-                                        <View style={{ backgroundColor: COLORS.primary, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
-                                            <Text style={{ color: COLORS.white }}>Ok</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View> */}
-                                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
                                         <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Kerumahtanggaan</Text>
+                                        <TouchableOpacity style={{ alignItems: 'flex-end', flex: 1 }} onPress={() => { setModalVisible(false) }}>
+                                            <Ionicons name='close-outline' size={24} />
+                                        </TouchableOpacity>
                                     </View>
                                     <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20 }}>
                                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -361,33 +356,6 @@ export const Home = () => {
 
                                 </View>
                             </View>
-                            <TouchableOpacity
-                                onPress={() => { setModalVisible(false) }}
-                                style={{
-                                    position: 'absolute',
-                                    bottom: '9%',
-                                    left: '40%'
-                                }}>
-                                <View style={{
-                                    backgroundColor: COLORS.white,
-                                    height: 70,
-                                    width: 70,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    borderRadius: 50
-                                }}>
-                                    <View style={{
-                                        backgroundColor: COLORS.primary,
-                                        width: 51,
-                                        height: 51,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        borderRadius: 50
-                                    }}>
-                                        <Ionicons name='close-outline' color={COLORS.white} size={24} />
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
                         </Modal>
 
                         <View style={{ marginVertical: 20, marginLeft: 30, }}>
@@ -443,8 +411,11 @@ export const Home = () => {
                             />
                         </View>
 
-                        <View style={{ marginLeft: 30, marginBottom: 20 }}>
+                        <View style={{ marginLeft: 30, marginBottom: 20, flexDirection: 'row' }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('ListGaleri')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                            </TouchableOpacity>
                         </View>
 
                         <View style={[styles.containerr, { marginBottom: 80 }]}>
@@ -453,13 +424,13 @@ export const Home = () => {
                                 sliderWidth={screenWidth}
                                 sliderHeight={screenWidth}
                                 itemWidth={screenWidth - 60}
-                                data={galeri}
+                                data={galeri.lists.slice(0, 3)}
                                 renderItem={renderItem4}
                                 hasParallaxImages={true}
                                 onSnapToItem={setSlide4}
                             />
                             <Pagination
-                                dotsLength={galeri.length}
+                                dotsLength={galeri.lists.slice(0, 3).length}
                                 inactiveDotColor={'black'}
                                 dotStyle={styles.paginationDot}
                                 inactiveDotOpacity={0.4}

@@ -325,6 +325,13 @@ export const AddTask = () => {
                         )}
                     </View>
                 </ScrollView>
+                <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                            <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </BottomSheetModalProvider>
         </GestureHandlerRootView>
     )

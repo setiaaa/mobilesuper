@@ -10,10 +10,13 @@ const SuperAppsSlice = createSlice({
         },
         agenda: [],
         program: [],
-        galeri: [],
         mading: [],
         linimasa: [],
         ultah: [],
+        galeri: {
+            lists: [],
+            detail: {},
+        }
     },
     reducers: {
         setProfile: (state, action) => {
@@ -35,7 +38,11 @@ const SuperAppsSlice = createSlice({
 
         },
         setGaleri: (state, action) => {
-            state.galeri = action.payload;
+            state.galeri.lists = action.payload;
+
+        },
+        setDetaiGaleri: (state, action) => {
+            state.galeri.detail = action.payload;
 
         },
         setMading: (state, action) => {
@@ -50,6 +57,7 @@ const SuperAppsSlice = createSlice({
             state.ultah = action.payload;
 
         },
+
     }
 })
 

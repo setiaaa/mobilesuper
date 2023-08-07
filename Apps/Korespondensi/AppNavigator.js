@@ -108,6 +108,7 @@ import { DetailTask } from "../Task Management/DetailTask";
 import { LampiranTask } from "../Task Management/LampiranTask";
 import MainDetailTask from "../Task Management/MainDetailTask";
 import { AddTask } from "../Task Management/AddTask";
+import { ListGaleri } from "../SuperApps/ListGaleri";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -200,6 +201,13 @@ function AuthStack() {
             <Stack.Screen
               name="ListBerita"
               component={ListBerita}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ListGaleri"
+              component={ListGaleri}
               options={{
                 headerShown: false,
               }}
