@@ -13,6 +13,7 @@ import GrupKalenderReducer from "./GrupKalender";
 import Repository from "./Repository";
 import TaskReducer from "./Task";
 import KebijakanReducer from "./Kebijakan";
+import DashboardReducer from "./Dashboard";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     grupKalender: GrupKalenderReducer,
     repository: Repository,
     task: TaskReducer,
-    kebijakan: KebijakanReducer
+    kebijakan: KebijakanReducer,
+    dashboard: DashboardReducer
   },
 });

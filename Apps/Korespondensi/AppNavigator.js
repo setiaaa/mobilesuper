@@ -109,6 +109,13 @@ import { LampiranTask } from "../Task Management/LampiranTask";
 import MainDetailTask from "../Task Management/MainDetailTask";
 import { AddTask } from "../Task Management/AddTask";
 import { ListGaleri } from "../SuperApps/ListGaleri";
+import { Kepegawaian } from "../Dashboard/Kepegawaian";
+import { Demografi } from "../Dashboard/Demografi";
+import { Penilaian } from "../Dashboard/Penilaian";
+import { Pelatihan } from "../Dashboard/Pelatihan";
+import { Absensi } from "../Dashboard/Absensi";
+import { Kesejahteraan } from "../Dashboard/Kesejahteraan";
+import { Perencanaan } from "../Dashboard/Perencanaan";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -285,6 +292,13 @@ function AuthStack() {
             <Stack.Screen
               name="DetailActivity"
               component={DetailActivity}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Kepegawaian"
+              component={Kepegawaian}
               options={{
                 headerShown: false,
               }}
@@ -485,6 +499,50 @@ export const TopsTaks = () => {
   )
 }
 
+export const TopsDash = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName='Demografi'
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 13, textTransform: 'none', },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: 'auto' }
+        }}
+      >
+        <Top.Screen name='Demografi' component={Demografi}
+          options={{
+            title: 'Demografi'
+          }} />
+        <Top.Screen name='Penilaian' component={Penilaian}
+          options={{
+            title: 'Penilaian'
+          }} />
+        <Top.Screen name='Pelatihan' component={Pelatihan}
+          options={{
+            title: 'Pelatihan'
+          }} />
+        <Top.Screen name='Absensi' component={Absensi}
+          options={{
+            title: 'Absensi'
+          }}
+        />
+        <Top.Screen name='Kesejahteraan' component={Kesejahteraan}
+          options={{
+            title: 'Kesejahteraan'
+          }}
+        />
+        <Top.Screen name='Perencanaan' component={Perencanaan}
+          options={{
+            title: 'Perencanaan'
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
 
 function AuthenticatedStack() {
   const profile = useSelector((state) => state.profile.profile);

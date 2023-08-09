@@ -152,6 +152,7 @@ export const DetailActivity = () => {
                         <View style={{ marginHorizontal: 20, marginTop: 10, flexDirection: 'row', gap: 20, }}>
                             <Image source={detail.image} />
                             {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
+                            {/* divider custom */}
                             <View style={{ height: '100%', width: 2, backgroundColor: COLORS.lighter }} />
                             <View style={{ flexDirection: 'row', position: 'relative' }}>
                                 {detail.subimage?.map((data) => {

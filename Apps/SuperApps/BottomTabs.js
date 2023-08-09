@@ -134,7 +134,11 @@ function MyTabBar({ props, navigation }) {
                                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Keuangan</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('Kepegawaian')
+                                        setVisibleModal(false)
+                                    }
+                                    }>
                                         <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                                             <Ionicons name='people-circle-outline' size={24} color={COLORS.primary} />
                                         </View>
@@ -192,7 +196,7 @@ function MyTabBar({ props, navigation }) {
                     </TouchableOpacity>
                 </Modal>
             </SafeAreaView>
-        </BottomSheetModalProvider>
+        </BottomSheetModalProvider >
     )
 }
 

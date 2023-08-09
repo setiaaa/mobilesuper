@@ -23,7 +23,13 @@ const styles = StyleSheet.create({
         height: 76,
         marginLeft: 20,
         borderTopLeftRadius: 12,
-        borderBottomRightRadius: 12
+        borderBottomRightRadius: 12,
+        //shadow ios
+        shadowOffset: { width: -2, height: 4 },
+        shadowColor: COLORS.primary,
+        shadowOpacity: 0.2,
+        // shadow android
+        elevation: 1
     },
     profile: {
         color: 'black',
