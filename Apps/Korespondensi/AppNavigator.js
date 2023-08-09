@@ -902,7 +902,7 @@ function AppNavigator() {
             onPress: () => {
               getToken();
               getProfile();
-              handleUpgradeLink();
+              // handleUpgradeLink();
             },
             style: "cancel",
           },

@@ -29,6 +29,11 @@ import { CardTautan } from '../../components/CardTautan'
 import { Modal } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CardVisiMisi } from '../../components/CardVisiMisi'
+import { CardVideo } from '../../components/CardVideo'
+import YoutubePlayer from "react-native-youtube-iframe";
+import { Button } from 'react-native'
+import { useCallback } from 'react'
+
 
 
 
@@ -46,10 +51,11 @@ export const Home = () => {
     const [slide4, setSlide4] = useState()
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
+    const [modalVisibleVisiMisi, setModalVisibleVisiMisi] = useState(false);
+    const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
 
 
-    const { berita, agenda, program, galeri, profile } = useSelector(state => state.superApps)
+    const { berita, agenda, program, galeri, profile, visimisi, banner } = useSelector(state => state.superApps)
 
     const renderItem = ({ item, index }, parallaxProps) => {
         return (
@@ -142,6 +148,37 @@ export const Home = () => {
             </View>
         );
     };
+
+    const bannerKegiatan = ({ item }, parallaxProps) => {
+        return (
+            <View style={styles.items}>
+                <ParallaxImage
+                    source={item.image}
+                    containerStyle={styles.imageContainer}
+                    style={styles.images}
+                    parallaxFactor={0.4}
+                    {...parallaxProps}
+                />
+                <View style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%'
+                }}>
+                    <View style={{
+                        backgroundColor: COLORS.primary,
+                        borderBottomLeftRadius: 8,
+                        borderBottomRightRadius: 8,
+                        position: 'absolute',
+                        bottom: 0,
+                        width: '100%',
+                        height: 70,
+                        opacity: 0.5
+                    }} />
+                    <Text style={{ color: COLORS.white, marginVertical: 20, marginHorizontal: 40, textAlign: 'center' }}>{item.deskripsi}</Text>
+                </View>
+            </View >
+        );
+    };
     const bottomSheetModalRef = useRef(null);
 
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
@@ -156,12 +193,31 @@ export const Home = () => {
         bottomSheetModalRef.current?.present()
     }
     const navigation = useNavigation()
+
+    const [playing, setPlaying] = useState(false);
+
+    const onStateChange = useCallback((state) => {
+        if (state === "ended") {
+            setPlaying(false);
+            Alert.alert("video has finished playing!");
+        }
+    }, []);
+
+    const togglePlaying = useCallback(() => {
+        setPlaying((prev) => !prev);
+    }, []);
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <GestureHandlerRootView >
                 <BottomSheetModalProvider>
                     <ScrollView>
-                        <View style={{ backgroundColor: COLORS.primary, height: '6%', flexDirection: 'row', paddingTop: 20, gap: 20 }}>
+
+                        <View style={{ width: '100%', height: 170, position: 'absolute', top: 0, borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }}>
+                            <Image source={require('../../assets/superApp/headerfix.png')} style={{ width: '100%', height: '100%', borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }} />
+                        </View>
+
+                        <View style={{ height: '3.5%', flexDirection: 'row', paddingTop: 20, gap: 20 }}>
                             <View style={{ paddingLeft: 20 }}>
                                 <Ionicons name='notifications-outline' size={25} color={'white'} />
                             </View>
@@ -176,8 +232,7 @@ export const Home = () => {
                             </View>
                         </View>
 
-                        <View>
-                            <View style={{ height: '20%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
+                        <View style={{ marginTop: 30 }}>
                             <CardApps
                                 handlePressModal={handlePressModal}
                             />
@@ -209,7 +264,120 @@ export const Home = () => {
                             </BottomSheetModal>
                         </View>
 
-                        <CardVisiMisi />
+                        <View style={[styles.containerr, { marginTop: 20 }]}>
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                sliderHeight={screenWidth}
+                                itemWidth={screenWidth - 60}
+                                data={banner}
+                                renderItem={bannerKegiatan}
+                                hasParallaxImages={true}
+                            />
+                        </View>
+
+                        <View style={{ marginHorizontal: 30, marginTop: 20 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
+                        </View>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20, marginLeft: 30 }}>
+                            <CardTautan
+                                setModalVisible={setModalVisible}
+                            />
+                        </View>
+
+                        <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row', marginTop: 30 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Video</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>Selengkapnya</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <CardVideo
+                            setModalVisibleVideo={setModalVisibleVideo}
+                        />
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisibleVideo}
+                            onRequestClose={() => {
+                                setModalVisibleVideo(!modalVisibleVideo);
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ alignItems: 'center', flex: 1, display: 'flex', justifyContent: 'center' }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setModalVisibleVideo(false)
+                                    }}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '15%',
+                                        left: 20
+                                    }}>
+
+                                    <View style={{
+                                        backgroundColor: COLORS.primary,
+                                        width: 51,
+                                        height: 51,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        borderRadius: 50
+                                    }}>
+                                        <Ionicons name='close-outline' color={COLORS.white} size={24} />
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{ width: 380, height: 283 }} >
+                                    <YoutubePlayer
+                                        height={300}
+                                        play={playing}
+                                        videoId={"tV6yMXX2hPs"}
+                                        onChangeState={onStateChange}
+                                    />
+                                </View>
+                            </View>
+                        </Modal>
+
+                        <View style={{ marginTop: 15 }}>
+                            <CardVisiMisi
+                                setModalVisibleVisiMisi={setModalVisibleVisiMisi}
+                            />
+                        </View>
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisibleVisiMisi}
+                            onRequestClose={() => {
+                                setModalVisibleVisiMisi(!modalVisibleVisiMisi);
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ alignItems: 'center', flex: 1 }}>
+                                <View style={{ backgroundColor: COLORS.white, width: '90%', height: 500, borderRadius: 10, marginTop: 100 }}>
+
+                                    <TouchableOpacity style={{ marginHorizontal: 20, marginTop: 20, alignItems: 'flex-end' }} onPress={() => { setModalVisibleVisiMisi(false) }}>
+                                        <Ionicons name='close-outline' size={24} />
+                                    </TouchableOpacity>
+
+                                    <View style={styles.cardVisiMisi}>
+                                        <Text style={{ color: COLORS.white, textAlign: 'center', marginVertical: 5 }}>VISI KKP</Text>
+                                    </View>
+                                    <Text style={{ marginHorizontal: 30, fontSize: FONTSIZE.H4, marginTop: 20 }}>{visimisi.visi}</Text>
+
+                                    <View style={[styles.cardVisiMisi, { marginTop: 20 }]}>
+                                        <Text style={{ color: COLORS.white, textAlign: 'center', marginVertical: 5 }}>MISI KKP</Text>
+                                    </View>
+
+                                    {visimisi.misi.map((item) =>
+                                        <View style={{ flexDirection: 'row', gap: 10, marginLeft: 30, marginTop: 20 }}>
+                                            <View style={{ width: 10, height: 10, borderRadius: 50, backgroundColor: COLORS.primary, marginTop: 5 }} />
+                                            <Text style={{ width: 260, fontSize: FONTSIZE.H4 }}>{item.text}</Text>
+                                        </View>
+                                    )}
+
+                                </View>
+                            </View>
+                        </Modal>
 
                         <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
@@ -231,15 +399,6 @@ export const Home = () => {
                                 />
                             </View>
                             {/* <Carousel data={CarouselData} /> */}
-                        </View>
-
-                        <View style={{ marginHorizontal: 30, marginTop: 20 }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
-                        </View>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20, marginLeft: 30 }}>
-                            <CardTautan
-                                setModalVisible={setModalVisible}
-                            />
                         </View>
 
                         <Modal
@@ -466,6 +625,10 @@ const styles = StyleSheet.create({
         width: screenWidth - 60,
         height: screenWidth - 60,
     },
+    items: {
+        width: screenWidth - 60,
+        height: screenWidth - 170,
+    },
     imageContainer: {
         flex: 1,// Prevent a random Android rendering issue
         backgroundColor: 'white',
@@ -476,6 +639,10 @@ const styles = StyleSheet.create({
     image: {
         ...StyleSheet.absoluteFillObject,
         resizeMode: 'cover',
+    },
+    images: {
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'contain',
     },
     paginationDot: {
         width: 8,
@@ -502,5 +669,13 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
+    },
+    cardVisiMisi: {
+        backgroundColor: COLORS.primary,
+        width: 77,
+        height: 30,
+        marginHorizontal: 15,
+        borderTopRightRadius: 12,
+        borderBottomLeftRadius: 12
     }
 });

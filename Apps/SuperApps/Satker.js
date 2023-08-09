@@ -35,7 +35,7 @@ export const Satker = () => {
     //     setBerita(Berita);
     // }, []);
 
-    const { berita, galeri, profile, mading, linimasa, ultah } = useSelector(state => state.superApps)
+    const { berita, galeri, profile, mading, linimasa, ultah, banner } = useSelector(state => state.superApps)
 
     const renderItem = ({ item, index }, parallaxProps) => {
         return (
@@ -53,14 +53,16 @@ export const Satker = () => {
 
     const renderItem2 = ({ item, index }, parallaxProps) => {
         return (
-            <View style={[styles.item, { marginVertical: 20, }]}>
-                <ParallaxImage
-                    source={item.image2}
-                    containerStyle={styles.imageContainer}
-                    style={styles.image}
-                    parallaxFactor={0.4}
-                    {...parallaxProps}
-                />
+            <>
+                <View style={[styles.items, { marginTop: 20 }]}>
+                    <ParallaxImage
+                        source={item.image2}
+                        containerStyle={styles.imageContainer}
+                        style={styles.images}
+                        parallaxFactor={0.4}
+                        {...parallaxProps}
+                    />
+                </View>
                 <View style={{ backgroundColor: COLORS.white, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, paddingHorizontal: 20 }}>
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
                         <Image source={item.avatar} style={{ borderRadius: 50 }} />
@@ -71,7 +73,7 @@ export const Satker = () => {
                     </View>
                     <Text style={{ marginVertical: 20 }}>{item.deskripsi}</Text>
                 </View>
-            </View>
+            </>
         );
     };
 
@@ -136,12 +138,47 @@ export const Satker = () => {
         );
     };
 
+    const bannerKegiatan = ({ item }, parallaxProps) => {
+        return (
+            <View style={styles.items}>
+                <ParallaxImage
+                    source={item.image}
+                    containerStyle={styles.imageContainer}
+                    style={styles.images}
+                    parallaxFactor={0.4}
+                    {...parallaxProps}
+                />
+                <View style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%'
+                }}>
+                    <View style={{
+                        backgroundColor: COLORS.primary,
+                        borderBottomLeftRadius: 8,
+                        borderBottomRightRadius: 8,
+                        position: 'absolute',
+                        bottom: 0,
+                        width: '100%',
+                        height: 70,
+                        opacity: 0.5
+                    }} />
+                    <Text style={{ color: COLORS.white, marginVertical: 20, marginHorizontal: 40, textAlign: 'center' }}>{item.deskripsi}</Text>
+                </View>
+            </View >
+        );
+    };
+
     const navigation = useNavigation()
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
-                <View style={{ backgroundColor: COLORS.primary, flexDirection: 'row', gap: 20, paddingTop: 20, height: 120 }}>
+                <View style={{ width: '100%', height: 170, position: 'absolute', top: 0, borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }}>
+                    <Image source={require('../../assets/superApp/headerfix.png')} style={{ width: '100%', height: '100%', borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }} />
+                </View>
+
+                <View style={{ flexDirection: 'row', gap: 20, paddingTop: 20, height: 120 }}>
                     <View style={{ paddingLeft: 20 }}>
                         <Ionicons name='notifications-outline' size={25} color={COLORS.white} />
                     </View>
@@ -156,24 +193,33 @@ export const Satker = () => {
                     </View>
                 </View>
 
-                <View>
-                    <View style={{ height: '40%', backgroundColor: COLORS.primary, width: '100%', position: 'absolute' }} />
-                    <CardSatker />
-                </View>
+                <CardSatker />
 
-                <View style={[styles.containerr]}>
+                <View style={[styles.containerr, { marginTop: 20 }]}>
                     <Carousel
                         ref={carouselRef}
                         sliderWidth={screenWidth}
                         sliderHeight={screenWidth}
                         itemWidth={screenWidth - 60}
-                        data={galeri}
+                        data={banner}
+                        renderItem={bannerKegiatan}
+                        hasParallaxImages={true}
+                    />
+                </View>
+
+                <View style={[styles.containerr, { marginTop: 20 }]}>
+                    <Carousel
+                        ref={carouselRef}
+                        sliderWidth={screenWidth}
+                        sliderHeight={screenWidth}
+                        itemWidth={screenWidth - 60}
+                        data={galeri.lists.slice(0, 3)}
                         renderItem={renderItem}
                         hasParallaxImages={true}
                         onSnapToItem={setSlide}
                     />
                     <Pagination
-                        dotsLength={galeri.length}
+                        dotsLength={galeri.lists.slice(0, 3).length}
                         inactiveDotColor={'black'}
                         dotStyle={styles.paginationDot}
                         inactiveDotOpacity={0.4}
@@ -184,7 +230,27 @@ export const Satker = () => {
                     />
                 </View>
 
-                <View style={[styles.containerr]}>
+                <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <View style={styles.containerr}>
+                        <Carousel
+                            ref={carouselRef}
+                            sliderWidth={screenWidth}
+                            sliderHeight={screenWidth}
+                            itemWidth={screenWidth - 60}
+                            data={berita.lists}
+                            renderItem={renderItem3}
+                            hasParallaxImages={true}
+                        />
+                    </View>
+                </View>
+
+                <View style={[styles.containerr, { marginTop: 20 }]}>
                     <Carousel
                         ref={carouselRef}
                         sliderWidth={screenWidth}
@@ -237,26 +303,8 @@ export const Satker = () => {
                         />
                     </View>
                 </View>
-                <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <View style={styles.containerr}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={berita.lists}
-                            renderItem={renderItem3}
-                            hasParallaxImages={true}
-                        />
-                    </View>
-                </View>
-                <View style={{ marginTop: 20, marginBottom: 40 }}>
+
+                <View style={{ marginBottom: 40 }}>
                     <CardUltah
                         ultah={ultah}
                     />
@@ -284,17 +332,25 @@ const styles = StyleSheet.create({
         flex: 1,
         marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
         backgroundColor: 'white',
-        // borderRadius: 8,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
+        borderRadius: 8,
+        // borderTopLeftRadius: 8,
+        // borderTopRightRadius: 8
     },
     image: {
         ...StyleSheet.absoluteFillObject,
         resizeMode: 'cover',
     },
+    images: {
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'contain',
+    },
     item: {
         width: screenWidth - 60,
         height: screenWidth - 60,
+    },
+    items: {
+        width: screenWidth - 60,
+        height: screenWidth - 170,
     },
     cardListSatker: {
         backgroundColor: "#FFFFFF",

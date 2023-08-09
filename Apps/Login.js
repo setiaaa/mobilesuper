@@ -148,7 +148,7 @@ function Login() {
             text: "Upgrade",
             onPress: () => {
               AsyncStorage.removeItem("token");
-              handleUpgradeLink();
+              // handleUpgradeLink();
             },
             style: "cancel",
           },

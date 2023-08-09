@@ -16,7 +16,12 @@ const SuperAppsSlice = createSlice({
         galeri: {
             lists: [],
             detail: {},
-        }
+        },
+        visimisi: {
+            visi: {},
+            misi: [],
+        },
+        banner: []
     },
     reducers: {
         setProfile: (state, action) => {
@@ -57,11 +62,19 @@ const SuperAppsSlice = createSlice({
             state.ultah = action.payload;
 
         },
+        setVisiMisi: (state, action) => {
+            state.visimisi = action.payload;
+
+        },
+        setBanner: (state, action) => {
+            state.banner = action.payload;
+
+        },
 
     }
 })
 
-export const { setProfile, setBerita, setDetailBerita, setAgenda, setProgram, setGaleri, setMading, setLinimasa, setUltah } =
+export const { setProfile, setBerita, setDetailBerita, setAgenda, setProgram, setGaleri, setMading, setLinimasa, setUltah, setVisiMisi, setBanner } =
     SuperAppsSlice.actions;
 
 export default SuperAppsSlice.reducer;

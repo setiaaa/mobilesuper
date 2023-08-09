@@ -7,17 +7,17 @@ import { StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native'
 
-export const CardVisiMisi = () => {
+export const CardVisiMisi = ({ setModalVisibleVisiMisi }) => {
     return (
         <View style={styles.cardBack}>
             <View style={styles.CardMidle}>
-                <View style={styles.cardFront}>
+                <TouchableOpacity style={styles.cardFront} onPress={() => setModalVisibleVisiMisi(true)}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, flexDirection: 'row', gap: 20 }}>
                         <Ionicons name='information-circle-outline' size={24} color={COLORS.white} />
                         <Text style={{ color: COLORS.white }}>VISI & MISI</Text>
                         <Image source={require('../../assets/superApp/logoKecil.png')} />
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
     )

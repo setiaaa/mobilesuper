@@ -4,7 +4,7 @@ import { BottomTabs } from '../Korespondensi/AppNavigator'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { AVATAR } from '../../config/SuperAppps';
 import { useDispatch } from 'react-redux';
-import { setAgenda, setBerita, setGaleri, setLinimasa, setMading, setProfile, setProgram, setUltah } from '../../store/SuperApps'
+import { setAgenda, setBanner, setBerita, setGaleri, setLinimasa, setMading, setProfile, setProgram, setUltah, setVisiMisi } from '../../store/SuperApps'
 
 const ENTRIES1 = [
     {
@@ -130,7 +130,7 @@ const ENTRIES5 = [
         tanggal: '12 Juni 2023',
         deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
         image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
+        image2: require('../../assets/superApp/Photo2.jpeg'),
         avatar: require('../../assets/superApp/Avatar2.png')
     },
     {
@@ -138,7 +138,7 @@ const ENTRIES5 = [
         tanggal: '12 Juni 2023',
         deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
         image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
+        image2: require('../../assets/superApp/Photo2.jpeg'),
         avatar: require('../../assets/superApp/Avatar2.png')
     },
     {
@@ -146,7 +146,7 @@ const ENTRIES5 = [
         tanggal: '12 Juni 2023',
         deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
         image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
+        image2: require('../../assets/superApp/Photo2.jpeg'),
         avatar: require('../../assets/superApp/Avatar2.png')
     },
     {
@@ -154,7 +154,7 @@ const ENTRIES5 = [
         tanggal: '12 Juni 2023',
         deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
         image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
+        image2: require('../../assets/superApp/Photo2.jpeg'),
         avatar: require('../../assets/superApp/Avatar2.png')
     },
     {
@@ -162,7 +162,7 @@ const ENTRIES5 = [
         tanggal: '12 Juni 2023',
         deskripsi: '“Semoga Allah SWT senantiasa melimpahkan kesehatan, kebahagiaan dan kekuatan dalam menjalankan tugas negara untuk memajukan bangsa Indonesia”',
         image: require('../../assets/superApp/Photo.png'),
-        image2: require('../../assets/superApp/Photo2.png'),
+        image2: require('../../assets/superApp/Photo2.jpeg'),
         avatar: require('../../assets/superApp/Avatar2.png')
     },
 ];
@@ -254,6 +254,47 @@ const dataProfile = {
     nip: '197406261999031004'
 }
 
+const visimisi = {
+    visi: 'Terwujudnya Masyarakat Kelautan dan Perikanan yang Sejahtera dan Sumber Daya Kelautan dan Perikanan yang Berkelanjutan untuk “Mewujudkan Indonesia Maju yang Berdaulat, Mandiri dan, Berkepribadian, berlandaskan Gotong Royong”.',
+    misi: [
+        {
+            text: 'Peningkatan Kualitas Manusia, melalui peningkatan Daya Saing SDM KP dan Pengembangan Inovasi dan Riset Kelautan dan Perikanan.',
+        },
+        {
+            text: 'Struktur Ekonomi yang Produktif, Mandiri, dan Berdaya Saing, melalui peningkatan Kontribusi Ekonomi Sektor Kelautan dan Perikanan terhadap Perekonomian Nasional.',
+        },
+        {
+            text: 'Mencapai Lingkungan Hidup yang Berkelanjutan, melaluli Peningkatan Kelestarian Sumber Daya Kelautan dan Perikanan.',
+        },
+        {
+            text: 'Pengelolaan Pemerintahan yang Bersih, Efektif, dan Terpercaya, melalui Penigkatan Tata Kelola Pemerintahan di KKP.'
+        }
+    ]
+}
+
+const banner = [
+    {
+        image: require('../../assets/superApp/banner1.jpeg'),
+        deskripsi: 'KKP Siapkan Skema Kemitraan Usaha Pemindangan (24/7)'
+    },
+    {
+        image: require('../../assets/superApp/banner2.jpeg'),
+        deskripsi: 'KKP Siapkan Skema Kemitraan Usaha Pemindangan (24/7)'
+    },
+    {
+        image: require('../../assets/superApp/banner1.jpeg'),
+        deskripsi: 'KKP Siapkan Skema Kemitraan Usaha Pemindangan (24/7)'
+    },
+    {
+        image: require('../../assets/superApp/banner2.jpeg'),
+        deskripsi: 'KKP Siapkan Skema Kemitraan Usaha Pemindangan (24/7)'
+    },
+    {
+        image: require('../../assets/superApp/banner1.jpeg'),
+        deskripsi: 'KKP Siapkan Skema Kemitraan Usaha Pemindangan (24/7)'
+    },
+];
+
 export default function Main() {
 
     const dispatch = useDispatch()
@@ -267,6 +308,8 @@ export default function Main() {
         dispatch(setMading(ENTRIES5))
         dispatch(setLinimasa(dataLinimasa))
         dispatch(setUltah(dataUltah))
+        dispatch(setVisiMisi(visimisi))
+        dispatch(setBanner(banner))
     }, []);
     return (
         <BottomSheetModalProvider>
