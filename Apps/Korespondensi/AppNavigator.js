@@ -116,6 +116,11 @@ import { Pelatihan } from "../Dashboard/Pelatihan";
 import { Absensi } from "../Dashboard/Absensi";
 import { Kesejahteraan } from "../Dashboard/Kesejahteraan";
 import { Perencanaan } from "../Dashboard/Perencanaan";
+import { DetailPengmuman } from "../Dashboard/DetailPengmuman";
+import { ProduksiBudidaya } from "../Dashboard/ProduksiBudidaya";
+import { Produksi } from "../Dashboard/Produksi";
+import { TeknologiTerbaru } from "../Dashboard/TeknologiTerbaru";
+import { DetailTeknologi } from "../Dashboard/DetailTeknologi";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -299,6 +304,27 @@ function AuthStack() {
             <Stack.Screen
               name="Kepegawaian"
               component={Kepegawaian}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailPengumuman"
+              component={DetailPengmuman}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ProduksiBudidaya"
+              component={ProduksiBudidaya}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailTeknologi"
+              component={DetailTeknologi}
               options={{
                 headerShown: false,
               }}
@@ -539,6 +565,33 @@ export const TopsDash = () => {
             title: 'Perencanaan'
           }}
         />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const TopsProduksiBudidaya = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName='Produksi'
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 13, textTransform: 'none', },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: 'auto' }
+        }}
+      >
+        <Top.Screen name='Produksi' component={Produksi}
+          options={{
+            title: 'Produksi'
+          }} />
+        <Top.Screen name='TeknologiTerbaru' component={TeknologiTerbaru}
+          options={{
+            title: 'Teknologi Terbaru'
+          }} />
+
       </Top.Navigator>
     </BottomSheetModalProvider>
   )

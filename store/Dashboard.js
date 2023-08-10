@@ -10,6 +10,10 @@ const DashboardSlice = createSlice({
         pengumuman: {
             lists: [],
             detail: {}
+        },
+        teknologi: {
+            lists: [],
+            detail: {}
         }
     },
     reducers: {
@@ -19,10 +23,13 @@ const DashboardSlice = createSlice({
         setPengumuman: (state, action) => {
             state.pengumuman.lists = action.payload;
         },
+        setTeknologiList: (state, action) => {
+            state.teknologi.lists = action.payload;
+        },
     }
 })
 
-export const { setBerita, setPengumuman } =
+export const { setBerita, setPengumuman, setTeknologiList } =
     DashboardSlice.actions;
 
 export default DashboardSlice.reducer;

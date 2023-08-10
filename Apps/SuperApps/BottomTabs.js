@@ -149,7 +149,10 @@ function MyTabBar({ props, navigation }) {
 
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 10, marginTop: 30, marginHorizontal: 15, alignItems: 'flex-start' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('ProduksiBudidaya')
+                                        setVisibleModal(false)
+                                    }}>
                                         <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                                             <Ionicons name='list-outline' size={24} color={COLORS.primary} />
                                         </View>
