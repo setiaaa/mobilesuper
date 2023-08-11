@@ -14,6 +14,7 @@ import Repository from "./Repository";
 import TaskReducer from "./Task";
 import KebijakanReducer from "./Kebijakan";
 import DashboardReducer from "./Dashboard";
+import PengetahuanReducer from "./Pengetahuan";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     repository: Repository,
     task: TaskReducer,
     kebijakan: KebijakanReducer,
-    dashboard: DashboardReducer
+    dashboard: DashboardReducer,
+    pengetahuan: PengetahuanReducer
   },
 });

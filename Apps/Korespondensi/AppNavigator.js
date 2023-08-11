@@ -121,6 +121,8 @@ import { ProduksiBudidaya } from "../Dashboard/ProduksiBudidaya";
 import { Produksi } from "../Dashboard/Produksi";
 import { TeknologiTerbaru } from "../Dashboard/TeknologiTerbaru";
 import { DetailTeknologi } from "../Dashboard/DetailTeknologi";
+import { LiniMasa } from "../Pengetahuan/LiniMasa";
+import { DetailLinimasa } from "../Pengetahuan/DetailLinimasa";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -325,6 +327,20 @@ function AuthStack() {
             <Stack.Screen
               name="DetailTeknologi"
               component={DetailTeknologi}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="LiniMasa"
+              component={LiniMasa}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailLinimasa"
+              component={DetailLinimasa}
               options={{
                 headerShown: false,
               }}
