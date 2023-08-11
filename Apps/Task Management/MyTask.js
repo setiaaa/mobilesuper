@@ -26,6 +26,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setTaskLists, setVariant } from '../../store/Task'
 import { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Dropdown } from '../../components/DropDown'
+import Checkbox from 'expo-checkbox'
 
 
 const item = [
@@ -223,6 +225,11 @@ const item = [
     },
 ]
 
+const kategori = [
+    { key: 'KKP', value: 'KKP' },
+    { key: 'CK', value: 'CEK' }
+]
+
 
 export const MyTask = () => {
 
@@ -238,7 +245,9 @@ export const MyTask = () => {
     const navigation = useNavigation()
     // const [variantLocal, setVariantLocal] = useState('list')
     const bottomSheetModalRef = useRef(null);
+    const bottomSheetModalSelectRef = useRef(null);
     const [badge, setBadge] = useState(1)
+    const [isSelected, setSelection] = useState(false);
 
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
@@ -251,6 +260,16 @@ export const MyTask = () => {
     const bottomSheetAttach = () => {
         bottomSheetModalRef.current?.present()
     }
+
+    const bottomSheetAttachSelect = () => {
+        bottomSheetModalSelectRef.current?.present()
+    }
+
+    const bottomSheetSelectClose = () => {
+        if (bottomSheetModalSelectRef.current)
+            bottomSheetModalSelectRef.current?.close()
+    }
+
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -275,11 +294,121 @@ export const MyTask = () => {
                     </View>
 
                     <View style={{ flexDirection: 'row', gap: 5, marginHorizontal: 15 }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={bottomSheetAttachSelect}>
                             <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 317, justifyContent: 'center', borderRadius: 8 }}>
                                 <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text>
                             </View>
                         </TouchableOpacity>
+
+                        <BottomSheetModal
+                            ref={bottomSheetModalSelectRef}
+                            snapPoints={animatedSnapPoints}
+                            handleHeight={animatedHandleHeight}
+                            contentHeight={animatedContentHeight}
+                            index={0}
+                            style={{ borderRadius: 50 }}
+                            keyboardBlurBehavior="restore"
+                            android_keyboardInputMode="adjust"
+                            backdropComponent={({ style }) => (
+                                <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                            )}
+                        >
+                            <BottomSheetView onLayout={handleContentLayout} >
+                                <View style={{ flex: 1 }}>
+                                    <View style={{ alignItems: 'center', marginVertical: 20 }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Pilih</Text>
+                                    </View>
+
+                                    <View style={{ width: '90%', marginHorizontal: 20 }}>
+                                        <Dropdown
+                                            placeHolder={'Kategori'}
+                                            borderWidth={1}
+                                            data={kategori}
+                                            borderColor={'#D0D5DD'}
+                                        />
+                                    </View>
+
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, borderWidth: 1, borderRadius: 8, borderColor: '#D0D5DD' }}>
+                                        <View style={styles.checkboxContainer}>
+                                            <View>
+                                                <Text style={{ color: COLORS.lighter }}>Project A</Text>
+                                            </View>
+                                            <View style={{ flex: 1 }}>
+                                                <Checkbox
+                                                    value={isSelected}
+                                                    onValueChange={setSelection}
+                                                    style={styles.checkbox}
+                                                    color={isSelected === true ? COLORS.success : null}
+                                                />
+                                            </View>
+
+                                        </View>
+                                        <View style={styles.checkboxContainer}>
+                                            <View>
+                                                <Text style={{ color: COLORS.lighter }}>Project B</Text>
+                                            </View>
+                                            <View style={{ flex: 1 }}>
+                                                <Checkbox
+                                                    value={isSelected}
+                                                    onValueChange={setSelection}
+                                                    style={styles.checkbox}
+                                                    color={isSelected === true ? COLORS.success : null}
+                                                />
+                                            </View>
+
+                                        </View>
+                                        <View style={styles.checkboxContainer}>
+                                            <View>
+                                                <Text style={{ color: COLORS.lighter }}>Project C</Text>
+                                            </View>
+                                            <View style={{ flex: 1 }}>
+                                                <Checkbox
+                                                    value={isSelected}
+                                                    onValueChange={setSelection}
+                                                    style={styles.checkbox}
+                                                    color={isSelected === true ? COLORS.success : null}
+                                                />
+                                            </View>
+
+                                        </View>
+                                    </View>
+                                    <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+                                        <Dropdown
+                                            placeHolder={'Sub Kategori'}
+                                            borderWidth={1}
+                                            data={kategori}
+                                            borderColor={'#D0D5DD'}
+                                        />
+                                    </View>
+                                    <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+                                        <Dropdown
+                                            placeHolder={'Sub Sub Kategori'}
+                                            borderWidth={1}
+                                            data={kategori}
+                                            borderColor={'#D0D5DD'}
+                                        />
+                                    </View>
+
+                                    <TouchableOpacity style={{
+                                        width: '90%',
+                                        backgroundColor: COLORS.primary,
+                                        height: 34,
+                                        marginVertical: 40,
+                                        borderRadius: 6,
+                                        alignItems: 'center',
+                                        marginHorizontal: 20,
+                                        justifyContent: 'center'
+                                    }}
+                                        onPress={() => {
+                                            bottomSheetSelectClose()
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: 500 }}>Terapkan</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+                            </BottomSheetView>
+                        </BottomSheetModal>
 
                         <TouchableOpacity onPress={bottomSheetAttach}>
                             <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
@@ -490,5 +619,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    checkboxContainer: {
+        flexDirection: 'row',
+        marginVertical: 10,
+        marginHorizontal: 20
+    },
+    checkbox: {
+        alignSelf: 'flex-end',
+    },
 })
