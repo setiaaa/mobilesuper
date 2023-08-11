@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FlatList, ScrollView, View } from 'react-native'
+import { FlatList, ScrollView, TextInput, View } from 'react-native'
 import { Text } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -34,6 +34,7 @@ export const GrupKalender = () => {
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalInfoRef = useRef(null);
   const bottomSheetModalAddRef = useRef(null);
+  const bottomSheetModalAddCatRef = useRef(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
   const {
@@ -53,6 +54,20 @@ export const GrupKalender = () => {
 
   const bottomSheetAdd = () => {
     bottomSheetModalAddRef.current?.present()
+  }
+
+  const bottomSheetAddCat = () => {
+    bottomSheetModalAddCatRef.current?.present()
+  }
+
+  const bottomSheetClose = () => {
+    if (bottomSheetModalAddRef.current)
+      bottomSheetModalAddRef.current?.close()
+  }
+
+  const bottomSheetCloseCat = () => {
+    if (bottomSheetModalAddCatRef.current)
+      bottomSheetModalAddCatRef.current?.close()
   }
 
   const [kategoriField, setKategoriField] = useState('')
@@ -361,31 +376,116 @@ export const GrupKalender = () => {
                   )}
                 >
                   <BottomSheetView onLayout={handleContentLayout} >
-                    <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 40, borderRadius: 8 }}>
-                      <TouchableOpacity
-                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
-                        onPress={() => {
-                          navigation.navigate('TambahAgenda', { unread: false })
-                          // props.navigation.navigate('Home', { unread: false })
-                        }}
-                      >
-                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Agenda</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
-                      <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Task</Text>
-                      </TouchableOpacity>
-                    </View>
                     <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
                       <TouchableOpacity
                         style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
                         onPress={() => {
                           navigation.navigate('TambahGrup', { unread: false })
                           // props.navigation.navigate('Home', { unread: false })
+                          bottomSheetClose()
                         }}
                       >
                         <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Grup</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                      <TouchableOpacity
+                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                        onPress={() => {
+                          navigation.navigate('TambahAgenda', { unread: false })
+                          // props.navigation.navigate('Home', { unread: false })
+                          bottomSheetClose()
+                        }}
+                      >
+                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Agenda Acara</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                      <TouchableOpacity
+                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                        onPress={() => {
+                          bottomSheetAddCat()
+                          // props.navigation.navigate('Home', { unread: false })
+                        }}
+                      >
+                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Kategori</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                      <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Task</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                  </BottomSheetView>
+                </BottomSheetModal>
+
+                {/* add category */}
+                <BottomSheetModal
+                  ref={bottomSheetModalAddCatRef}
+                  snapPoints={animatedSnapPoints}
+                  handleHeight={animatedHandleHeight}
+                  contentHeight={animatedContentHeight}
+                  index={0}
+                  style={{ borderRadius: 50 }}
+                  keyboardBlurBehavior="restore"
+                  android_keyboardInputMode="adjust"
+                  backdropComponent={({ style }) => (
+                    <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                  )}
+                >
+                  <BottomSheetView onLayout={handleContentLayout}>
+                    <View>
+                      <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
+                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Kategori Baru</Text>
+                        <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
+                          <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
+                        </View>
+                      </View>
+                      <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                        <TextInput
+                          editable
+                          multiline
+                          numberOfLines={4}
+                          maxLength={40}
+                          placeholder='Ketikan Sesuatu'
+                          style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6 }}
+                        />
+                      </View>
+
+                      <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                        <TextInput
+                          editable
+                          multiline
+                          numberOfLines={4}
+                          maxLength={40}
+                          placeholder='Ketikan Sesuatu'
+                          style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6 }}
+                        />
+                      </View>
+
+                      <TouchableOpacity style={{
+                        marginBottom: 40,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 1,
+                        marginTop: 10,
+                        backgroundColor: COLORS.infoDanger,
+                        width: '90%',
+                        height: 50,
+                        marginHorizontal: 20,
+                        borderRadius: 6
+                      }}
+                        onPress={() => {
+                          bottomSheetCloseCat()
+                        }}
+                      >
+                        <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
                       </TouchableOpacity>
                     </View>
                   </BottomSheetView>
