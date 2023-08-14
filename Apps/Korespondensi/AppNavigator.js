@@ -123,6 +123,12 @@ import { TeknologiTerbaru } from "../Dashboard/TeknologiTerbaru";
 import { DetailTeknologi } from "../Dashboard/DetailTeknologi";
 import { LiniMasa } from "../Pengetahuan/LiniMasa";
 import { DetailLinimasa } from "../Pengetahuan/DetailLinimasa";
+import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
+import { Bankom } from "../DigitalSignature/Bankom";
+import { DokumenLain } from "../DigitalSignature/DokumenLain";
+import MainDigitalSign from "../DigitalSignature/MainDigitalSign";
+import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
+import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -345,6 +351,27 @@ function AuthStack() {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="MainDigitalSign"
+              component={MainDigitalSign}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailSertifikat"
+              component={DetailSertifikat}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="TambahSertifikat"
+              component={TambahSertifikat}
+              options={{
+                headerShown: false,
+              }}
+            />
             {/* <Stack.Screen
               name="Main"
               component={Main}
@@ -476,6 +503,17 @@ export const BottomTabsDetailTask = () => {
       <Tab.Navigator tabBar={props => <MyTabBarDetailTask {...props} />} initialRouteName='DetailTask'>
         <Tab.Screen name='DetailTask' component={DetailTask} options={{ headerShown: false }} />
         <Tab.Screen name='LampiranTask' component={LampiranTask} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const BottomTabsDigitalSign = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabDigitalSign {...props} />} initialRouteName='Bankom'>
+        <Tab.Screen name='Bankom' component={Bankom} options={{ headerShown: false }} />
+        <Tab.Screen name='DokumenLain' component={DokumenLain} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )
