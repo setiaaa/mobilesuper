@@ -60,7 +60,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='school-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pengetahuan</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, textAlign: 'center' }}>Knowlage Management</Text>
                 </View>
             </View>
 

@@ -124,7 +124,7 @@ export const Dokumen = () => {
                                     marginLeft: 20
                                 }}>
                                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                                        <Ionicons name='close-outline' size={24} color={'#800000'} />
+                                        <Ionicons name='chevron-back-outline' size={24} color={'#800000'} />
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>

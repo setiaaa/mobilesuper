@@ -299,21 +299,22 @@ export const GrupKalender = () => {
                 }}
                 markedDates={{
                   [moment(Date.now()).format('YYYY-MM-DD')]: {
-                    customStyles: {
-                      container: {
-                        backgroundColor: COLORS.primary,
-                        borderTopRightRadius: 4,
-                        borderTopLeftRadius: 8,
-                        borderBottomLeftRadius: 4,
-                        borderBottomRightRadius: 8
-                      },
-                      text: {
-                        color: COLORS.white,
-                      }
-                    }
+                    // customStyles: {
+                    //   container: {
+                    //     backgroundColor: COLORS.primary,
+                    //     borderTopRightRadius: 4,
+                    //     borderTopLeftRadius: 8,
+                    //     borderBottomLeftRadius: 4,
+                    //     borderBottomRightRadius: 8
+                    //   },
+                    //   text: {
+                    //     color: COLORS.white,
+                    //   }
+                    // }
+                    selected: true,
                   },
 
-                  ['2023-07-06']: {
+                  ['2023-08-06']: {
                     marked: 'true',
                     type: 'multi-dot',
                     dots: [
@@ -325,12 +326,13 @@ export const GrupKalender = () => {
 
                   }
                 }}
-                markingType='custom'
+                markingType='multi-dot'
                 style={{ width: '90%', marginLeft: 20, borderRadius: 8 }}
                 theme={{
                   arrowColor: COLORS.primary,
-                  // selectedDayBackgroundColor: COLORS.primary,
-                  todayTextColor: COLORS.primary,
+                  selectedDayBackgroundColor: COLORS.primary,
+                  todayTextColor: COLORS.white,
+
                 }}
               />
             </View>

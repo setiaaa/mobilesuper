@@ -20,6 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Divider } from 'react-native-paper';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function Dashboard() {
@@ -91,40 +92,41 @@ export default function Dashboard() {
     const navigation = useNavigation()
 
     return (
-        <BottomSheetModalProvider>
-            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                <View style={{
-                    backgroundColor: COLORS.white,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: 20
-                }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name='close-outline' size={24} color={COLORS.primary} />
-                    </TouchableOpacity>
+        <SafeAreaView style={{ flex: 1 }}>
+            <BottomSheetModalProvider>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 20
+                    }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Kebijakan</Text>
+                    </View>
                 </View>
-                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Kebijakan</Text>
-                </View>
-            </View>
 
-            <View style={styles.dropdown}>
-                <Text style={styles.subJudul}>Dokumen Hukum</Text>
-                <DropDownPicker
-                    open={open}
-                    value={value}
-                    items={category}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    zIndex={5000}
-                    searchable={true}
-                    searchPlaceholder='Cari Kategori'
-                    containerStyle={{ height: '30%', width: '90%', flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 18 }}
-                />
-                {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 20, gap: 10 }} onPress={handlePressModal}>
+                <View style={styles.dropdown}>
+                    <Text style={styles.subJudul}>Dokumen Hukum</Text>
+                    <DropDownPicker
+                        open={open}
+                        value={value}
+                        items={category}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        zIndex={5000}
+                        searchable={true}
+                        searchPlaceholder='Cari Kategori'
+                        containerStyle={{ height: '30%', width: '90%', flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 18 }}
+                    />
+                    {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 20, gap: 10 }} onPress={handlePressModal}>
                     <Ionicons name='filter-outline' size={25} color={'#499CD7'} />
                     <Text style={styles.judulFilter}>Pencarian lanjut</Text>
                 </TouchableOpacity>
@@ -201,98 +203,99 @@ export default function Dashboard() {
                         <Button title='Terapkan' textColor={'white'} style={styles.button} />
                     </BottomSheetView>
                 </BottomSheetModal> */}
-            </View>
-            <View style={styles.ContainerCard}>
-                <View style={{ marginRight: 20, marginTop: 20, flexDirection: 'row', gap: 10, marginBottom: 10, alignItems: 'center' }}>
-                    <View style={{ marginLeft: 20, width: '55%' }}>
-                        <Search
-                            placeholder={'Pencarian Kebijakan'}
-                            onSearch={filterData}
-                        />
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                        <TouchableOpacity>
-                            <View style={styles.circleList}>
-                                <Ionicons name='filter-outline' size={25} color={COLORS.grey} onPress={() => handleVariant('list')} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={styles.circleList}>
-                                <Ionicons name='list-outline' size={25} color={variant === 'list' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('list')} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={styles.circleList}>
-                                <Ionicons name='apps-outline' size={25} color={variant === 'card' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('card')} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
                 </View>
-                <View style={{ marginBottom: 40 }}>
-                    <Divider bold />
-                </View>
-                {
-                    lists.results?.datas.length === 0 ? (
-                        <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                            <Text>Tidak ada</Text>
+                <View style={styles.ContainerCard}>
+                    <View style={{ marginRight: 20, marginTop: 20, flexDirection: 'row', gap: 10, marginBottom: 10, alignItems: 'center' }}>
+                        <View style={{ marginLeft: 20, width: '55%' }}>
+                            <Search
+                                placeholder={'Pencarian Kebijakan'}
+                                onSearch={filterData}
+                            />
                         </View>
-                    ) : (
-                        <>
-                            {
-                                variant === 'list' ? (
-                                    <FlatList
-                                        data={dataFilter && dataFilter.length > 0 ? dataFilter : lists.results?.datas}
-                                        renderItem={({ item }) => <CardKebijakan
-                                            subjek={item.subjek}
-                                            bentuk={item.bentuk}
-                                            id_peraturan={item.id_peraturan}
-                                            item={item}
-                                            nomor={item.nomor}
-                                            tahun={item.tahun} />}
-                                        keyExtractor={item => item.id_peraturan}
-                                    />
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
+                            <TouchableOpacity>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='filter-outline' size={25} color={COLORS.grey} onPress={() => handleVariant('list')} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='list-outline' size={25} color={variant === 'list' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('list')} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='apps-outline' size={25} color={variant === 'card' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('card')} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{ marginBottom: 30 }}>
+                        <Divider bold />
+                    </View>
+                    {
+                        lists.results?.datas.length === 0 ? (
+                            <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                                <Text>Tidak ada</Text>
+                            </View>
+                        ) : (
+                            <>
+                                {
+                                    variant === 'list' ? (
+                                        <FlatList
+                                            data={dataFilter && dataFilter.length > 0 ? dataFilter : lists.results?.datas}
+                                            renderItem={({ item }) => <CardKebijakan
+                                                subjek={item.subjek}
+                                                bentuk={item.bentuk}
+                                                id_peraturan={item.id_peraturan}
+                                                item={item}
+                                                nomor={item.nomor}
+                                                tahun={item.tahun} />}
+                                            keyExtractor={item => item.id_peraturan}
+                                        />
 
-                                ) : (
-                                    <FlatList
-                                        data={dataFilter && dataFilter.length > 0 ? dataFilter : lists.results?.datas}
-                                        renderItem={({ item }) => <CardKebijakanCard
-                                            subjek={item.subjek}
-                                            bentuk={item.bentuk}
-                                            id_peraturan={item.id_peraturan}
-                                            item={item}
-                                            nomor={item.nomor}
-                                            tahun={item.tahun}
-                                            tgl_penetapan={item.tgl_penetapan}
-                                            tgl_diundangkan={item.tgl_diundangkan}
-                                            status={item.status}
-                                        />}
-                                        keyExtractor={item => item.id_peraturan}
-                                    />
-                                )
-                            }
-                            {
-                                dataFilter.length >= 1 ? (
-                                    <></>
-                                ) : (
-                                    <View style={{ marginVertical: 10, marginBottom: 30, flexDirection: 'row', justifyContent: 'flex-end', display: 'flex', gap: 20, marginRight: 30 }}>
-                                        <Text style={{ fontSize: FONTSIZE.H1, marginTop: 10 }}>{page} of {count}</Text>
-                                        <TouchableOpacity onPress={() => setPage(page === 1 ? 1 : page - 1)} disabled={lists.previous === null ? true : false}>
-                                            <Ionicons name='chevron-back-outline' size={30} color={lists.previous === null ? '#D0D5DD' : COLORS.grey} />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => setPage(page + 1)} disabled={lists.next === null ? true : false}>
-                                            <Ionicons name='chevron-forward-outline' size={30} color={lists.next === null ? '#D0D5DD' : COLORS.grey} />
-                                        </TouchableOpacity>
-                                    </View>
-                                )
-                            }
-                        </>
-                    )
-                }
+                                    ) : (
+                                        <FlatList
+                                            data={dataFilter && dataFilter.length > 0 ? dataFilter : lists.results?.datas}
+                                            renderItem={({ item }) => <CardKebijakanCard
+                                                subjek={item.subjek}
+                                                bentuk={item.bentuk}
+                                                id_peraturan={item.id_peraturan}
+                                                item={item}
+                                                nomor={item.nomor}
+                                                tahun={item.tahun}
+                                                tgl_penetapan={item.tgl_penetapan}
+                                                tgl_diundangkan={item.tgl_diundangkan}
+                                                status={item.status}
+                                            />}
+                                            keyExtractor={item => item.id_peraturan}
+                                        />
+                                    )
+                                }
+                                {
+                                    dataFilter.length >= 1 ? (
+                                        <></>
+                                    ) : (
+                                        <View style={{ marginVertical: 10, marginBottom: 30, flexDirection: 'row', justifyContent: 'flex-end', display: 'flex', gap: 20, marginRight: 30 }}>
+                                            <Text style={{ fontSize: FONTSIZE.H1, marginTop: 10 }}>{page} of {count}</Text>
+                                            <TouchableOpacity onPress={() => setPage(page === 1 ? 1 : page - 1)} disabled={lists.previous === null ? true : false}>
+                                                <Ionicons name='chevron-back-outline' size={30} color={lists.previous === null ? '#D0D5DD' : COLORS.grey} />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => setPage(page + 1)} disabled={lists.next === null ? true : false}>
+                                                <Ionicons name='chevron-forward-outline' size={30} color={lists.next === null ? '#D0D5DD' : COLORS.grey} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
+                                }
+                            </>
+                        )
+                    }
 
 
-                <StatusBar style="auto" />
-            </View>
-        </BottomSheetModalProvider>
+                    <StatusBar style="auto" />
+                </View>
+            </BottomSheetModalProvider>
+        </SafeAreaView>
     )
 }
 
@@ -307,16 +310,14 @@ const styles = StyleSheet.create({
 
     },
     ContainerCard: {
-        flex: 1,
         zIndex: -1,
         marginTop: 20,
         width: '90%',
-        height: 1,
         marginLeft: 20,
         borderRadius: 12,
         backgroundColor: COLORS.white,
         paddingTop: 10,
-        marginBottom: 20
+        height: 400
     },
     dropdown: {
         borderRadius: 12,

@@ -7,6 +7,10 @@ const RepositorySlice = createSlice({
             lists: [],
             detail: {},
         },
+        dibagikan: {
+            lists: [],
+            detail: {},
+        },
     },
     reducers: {
         setDokumentlists: (state, action) => {
@@ -17,10 +21,13 @@ const RepositorySlice = createSlice({
             state.dokumen.detail = action.payload;
 
         },
+        setDibagikanLists: (state, action) => {
+            state.dibagikan.lists = action.payload;
+        }
     }
 })
 
-export const { setDokumentlists, setDokumenDetail } =
+export const { setDokumentlists, setDokumenDetail, setDibagikanLists } =
     RepositorySlice.actions;
 
 export default RepositorySlice.reducer;

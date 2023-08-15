@@ -7,7 +7,7 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import React, { useMemo, useRef } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TextInput, TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
@@ -246,6 +246,10 @@ export const MyTask = () => {
     // const [variantLocal, setVariantLocal] = useState('list')
     const bottomSheetModalRef = useRef(null);
     const bottomSheetModalSelectRef = useRef(null);
+    const bottomSheetModalAddRef = useRef(null);
+    const bottomSheetModalAddCategoryRef = useRef(null);
+    const bottomSheetModalAddSubCategoryRef = useRef(null);
+    const bottomSheetModalAddSubSubCategoryRef = useRef(null);
     const [badge, setBadge] = useState(1)
     const [isSelected, setSelection] = useState(false);
 
@@ -268,6 +272,42 @@ export const MyTask = () => {
     const bottomSheetSelectClose = () => {
         if (bottomSheetModalSelectRef.current)
             bottomSheetModalSelectRef.current?.close()
+    }
+
+    const bottomSheetAdd = () => {
+        bottomSheetModalAddRef.current?.present()
+    }
+
+    const bottomsheetAddClose = () => {
+        if (bottomSheetModalAddRef.current)
+            bottomSheetModalAddRef.current?.close()
+    }
+
+    const bottomsheetAddCategory = () => {
+        bottomSheetModalAddCategoryRef.current?.present()
+    }
+
+    const bottomsheetAddCategoryClose = () => {
+        if (bottomSheetModalAddCategoryRef.current)
+            bottomSheetModalAddCategoryRef.current?.close()
+    }
+
+    const bottomsheetAddSubCategory = () => {
+        bottomSheetModalAddSubCategoryRef.current?.present()
+    }
+
+    const bottomsheetAddSubCategoryClose = () => {
+        if (bottomSheetModalAddSubCategoryRef.current)
+            bottomSheetModalAddSubCategoryRef.current?.close()
+    }
+
+    const bottomsheetAddSubSubCategory = () => {
+        bottomSheetModalAddSubSubCategoryRef.current?.present()
+    }
+
+    const bottomsheetAddSubSubCategoryClose = () => {
+        if (bottomSheetModalAddSubSubCategoryRef.current)
+            bottomSheetModalAddSubSubCategoryRef.current?.close()
     }
 
     return (
@@ -599,12 +639,311 @@ export const MyTask = () => {
                         </BottomSheetView>
                     </BottomSheetModal>
                     <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('AddTask')}>
+                        <TouchableOpacity onPress={bottomSheetAdd}>
                             <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                                 <Ionicons name='add-outline' size={24} color={COLORS.white} />
                             </View>
                         </TouchableOpacity>
                     </View>
+
+                    <BottomSheetModal
+                        ref={bottomSheetModalAddRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout}>
+                            <View style={{ marginBottom: 50 }}>
+                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                                    <TouchableOpacity
+                                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                                        onPress={() => {
+                                            // navigation.navigate('TambahGrup', { unread: false })
+                                            // props.navigation.navigate('Home', { unread: false })
+                                            // bottomSheetClose()
+                                            navigation.navigate('AddTask')
+                                            bottomsheetAddClose()
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Task</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                                    <TouchableOpacity
+                                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                                        onPress={() => {
+                                            bottomsheetAddCategory()
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Kategori</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                                    <TouchableOpacity
+                                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                                        onPress={() => {
+                                            bottomsheetAddSubCategory()
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Sub Kategori</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                                    <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                                        onPress={() => {
+                                            bottomsheetAddSubSubCategory()
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Sub Sub Kategori</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </BottomSheetView>
+                    </BottomSheetModal>
+
+                    {/* tambah ketegori */}
+                    <BottomSheetModal
+                        ref={bottomSheetModalAddCategoryRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout}>
+                            <View>
+                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
+                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Kategori Baru</Text>
+                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
+                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
+                                    </View>
+                                </View>
+                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                                    <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        placeholder='Nama Kategori'
+                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
+                                    />
+                                </View>
+
+                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                                    <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        placeholder='Nama Sub Kategori'
+                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
+                                    />
+                                </View>
+
+                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                                    <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        placeholder='Nama Sub Sub Kategori'
+                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
+                                    />
+                                </View>
+
+                                <TouchableOpacity style={{
+                                    marginBottom: 40,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flex: 1,
+                                    marginTop: 10,
+                                    backgroundColor: COLORS.infoDanger,
+                                    width: '90%',
+                                    height: 50,
+                                    marginHorizontal: 20,
+                                    borderRadius: 6
+                                }}
+                                    onPress={() => {
+                                        bottomsheetAddCategoryClose()
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </BottomSheetView>
+                    </BottomSheetModal>
+
+                    {/* tambah sub kategori */}
+                    <BottomSheetModal
+                        ref={bottomSheetModalAddSubCategoryRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout}>
+                            <View>
+                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
+                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Sub Kategori Baru</Text>
+                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
+                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
+                                    </View>
+                                </View>
+                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+
+                                    <Dropdown
+                                        placeHolder={'Kategori'}
+                                        borderWidth={1}
+                                        data={kategori}
+                                        borderColor={'#D0D5DD'}
+                                    />
+                                </View>
+
+                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                                    <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        placeholder='Nama Sub Kategori'
+                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
+                                    />
+                                </View>
+
+                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                                    <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        placeholder='Nama Sub Sub Kategori'
+                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
+                                    />
+                                </View>
+
+                                <TouchableOpacity style={{
+                                    marginBottom: 40,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flex: 1,
+                                    marginTop: 10,
+                                    backgroundColor: COLORS.infoDanger,
+                                    width: '90%',
+                                    height: 50,
+                                    marginHorizontal: 20,
+                                    borderRadius: 6
+                                }}
+                                    onPress={() => {
+                                        bottomsheetAddSubCategoryClose()
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </BottomSheetView>
+                    </BottomSheetModal>
+
+                    {/* tambah sub sub kategori */}
+                    <BottomSheetModal
+                        ref={bottomSheetModalAddSubSubCategoryRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout}>
+                            <View>
+                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
+                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Sub Sub Kategori Baru</Text>
+                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
+                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
+                                    </View>
+                                </View>
+                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+
+                                    <Dropdown
+                                        placeHolder={'Kategori'}
+                                        borderWidth={1}
+                                        data={kategori}
+                                        borderColor={'#D0D5DD'}
+                                    />
+                                </View>
+
+                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+
+                                    <Dropdown
+                                        placeHolder={'Sub Kategori'}
+                                        borderWidth={1}
+                                        data={kategori}
+                                        borderColor={'#D0D5DD'}
+                                    />
+                                </View>
+
+                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
+
+                                    <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        placeholder='Nama Sub Sub Kategori'
+                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
+                                    />
+                                </View>
+
+                                <TouchableOpacity style={{
+                                    marginBottom: 40,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flex: 1,
+                                    marginTop: 10,
+                                    backgroundColor: COLORS.infoDanger,
+                                    width: '90%',
+                                    height: 50,
+                                    marginHorizontal: 20,
+                                    borderRadius: 6
+                                }}
+                                    onPress={() => {
+                                        bottomsheetAddSubSubCategoryClose()
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </BottomSheetView>
+                    </BottomSheetModal>
                 </BottomSheetModalProvider>
             </SafeAreaView>
         </GestureHandlerRootView>
