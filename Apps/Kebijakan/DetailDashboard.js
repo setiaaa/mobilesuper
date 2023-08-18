@@ -8,6 +8,9 @@ import { shareAsync } from 'expo-sharing';
 import { useNavigation } from "@react-navigation/native";
 import { Button } from '../../components/Button';
 import { CollapseCard } from '../../components/CollapseCard'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { TouchableOpacity } from 'react-native';
 
 
 export default function DetailDashboard({ route }) {
@@ -35,26 +38,45 @@ export default function DetailDashboard({ route }) {
 
     return (
         <ScrollView style={styles.container}>
-            <StatusBar style="auto" />
-            <View style={styles.cardTop}>
-                <View>
-                    <Text style={styles.judul}>{data.bentuk}</Text>
-                </View>
-                <View style={{ marginLeft: 20 }}>
-                    <View style={{ marginTop: 20 }}>
-                        <Text style={styles.subJudul}>{data.subjek}</Text>
+            <SafeAreaView>
+                <StatusBar style="auto" />
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 20
+                    }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: 'row', marginVertical: 20 }}>
-                        <Text style={styles.subJudul}>Nomor {data.nomor}/{data.tahun}</Text>
-                        <View style={{ flex: 1, marginRight: 20, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 10 }}>
-                            <Text style={styles.subJudul}>Status</Text>
-                            <View style={{ backgroundColor: data.status === 'Berlaku' ? '#d9f5e5' : 'red', borderRadius: 16, height: 30, width: 70, alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={styles.subJudul}>{data.status}</Text>
+                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail</Text>
+                    </View>
+                </View>
+                <View style={styles.cardTop}>
+                    <View>
+                        <Text style={styles.judul}>{data.bentuk}</Text>
+                    </View>
+                    <View style={{ marginLeft: 20 }}>
+                        <View style={{ marginTop: 20 }}>
+                            <Text style={styles.subJudul}>{data.subjek}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', marginVertical: 20 }}>
+                            <Text style={styles.subJudul}>Nomor {data.nomor}/{data.tahun}</Text>
+                            <View style={{ flex: 1, marginRight: 20, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 10 }}>
+                                <Text style={styles.subJudul}>Status</Text>
+                                <View style={{ backgroundColor: data.status === 'Berlaku' ? '#d9f5e5' : 'red', borderRadius: 16, height: 30, width: 70, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={styles.subJudul}>{data.status}</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-                </View>
-                {/* {
+                    {/* {
                     active ? (
                         <PdfReader style={{ width: '90%', marginLeft: 20, height: 500, marginTop: 30 }}
                             source={{
@@ -66,48 +88,48 @@ export default function DetailDashboard({ route }) {
                         />
                     ) : null
                 } */}
-            </View>
-            <CollapseCard
-                teu_badan={data.teu_badan}
-                singkatan_peraturan_cat={data.singkatan_peraturan_cat}
-                tempat_penetapan={data.tempat_penetapan}
-                tgl_penetapan={data.tgl_penetapan}
-                tgl_diundangkan={data.tgl_diundangkan}
-                subjek={data.subjek}
-                sumber_peraturan={data.sumber_peraturan}
-                bahasa={data.bahasa}
-                bidanghukum={data.bidanghukum}
-            />
-            <View style={{ flexDirection: 'row', gap: 20, marginLeft: 40 }}>
-                <View style={{ marginTop: 10 }}>
-                    <Text style={styles.text}>Dilihat</Text>
-                    <View style={{ marginTop: 5, flexDirection: 'row', gap: 5, display: 'flex', alignItems: 'center' }}>
-                        <Ionicons name='eye-outline' size={15} color={'black'} />
-                        <Text style={styles.text}>{data.jumlah_view}</Text>
+                </View>
+                <CollapseCard
+                    teu_badan={data.teu_badan}
+                    singkatan_peraturan_cat={data.singkatan_peraturan_cat}
+                    tempat_penetapan={data.tempat_penetapan}
+                    tgl_penetapan={data.tgl_penetapan}
+                    tgl_diundangkan={data.tgl_diundangkan}
+                    subjek={data.subjek}
+                    sumber_peraturan={data.sumber_peraturan}
+                    bahasa={data.bahasa}
+                    bidanghukum={data.bidanghukum}
+                />
+                <View style={{ flexDirection: 'row', gap: 20, marginLeft: 40 }}>
+                    <View style={{ marginTop: 10 }}>
+                        <Text style={styles.text}>Dilihat</Text>
+                        <View style={{ marginTop: 5, flexDirection: 'row', gap: 5, display: 'flex', alignItems: 'center' }}>
+                            <Ionicons name='eye-outline' size={15} color={'black'} />
+                            <Text style={styles.text}>{data.jumlah_view}</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ marginTop: 10 }}>
+                        <Text style={styles.text}>Diunduh</Text>
+                        <View style={{ marginTop: 5, flexDirection: 'row', gap: 5, display: 'flex', alignItems: 'baseline' }}>
+                            <Ionicons name='download-outline' size={15} color={'black'} />
+                            <Text style={styles.text}>{data.jumlah_download}</Text>
+                        </View>
                     </View>
                 </View>
 
-                <View style={{ marginTop: 10 }}>
-                    <Text style={styles.text}>Diunduh</Text>
-                    <View style={{ marginTop: 5, flexDirection: 'row', gap: 5, display: 'flex', alignItems: 'baseline' }}>
-                        <Ionicons name='download-outline' size={15} color={'black'} />
-                        <Text style={styles.text}>{data.jumlah_download}</Text>
+                <View style={{ alignItems: 'center' }}>
+                    <View>
+                        <Button title='Unduh File PDF' style={styles.buttonUnduh} onClick={downloadFromUrl} />
+                    </View>
+                    <View>
+                        <Button title='Buka File PDF' textColor={'white'} style={styles.buttonBuka} onClick={() => navigation.navigate('PdfViewer', {
+                            data: data
+                        })}
+                        />
                     </View>
                 </View>
-            </View>
-
-            <View style={{ alignItems: 'center' }}>
-                <View>
-                    <Button title='Unduh File PDF' style={styles.buttonUnduh} onClick={downloadFromUrl} />
-                </View>
-                <View>
-                    <Button title='Buka File PDF' textColor={'white'} style={styles.buttonBuka} onClick={() => navigation.navigate('PdfViewer', {
-                        data: data
-                    })}
-                    />
-                </View>
-            </View>
-
+            </SafeAreaView>
         </ScrollView>
     );
 }
@@ -115,7 +137,6 @@ export default function DetailDashboard({ route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F4F7FE',
     },
     judul: {
         fontSize: 20,

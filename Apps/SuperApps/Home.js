@@ -69,8 +69,8 @@ export const Home = () => {
                 />
                 <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
                     <Text style={{ marginLeft: 10, color: COLORS.lighter, marginVertical: 10 }}>{item.tanggal}</Text>
-                    <Text style={{ marginLeft: 10, color: COLORS.lighter }}> {item.subtitle} </Text>
-                    <Text style={{ marginLeft: 10, marginVertical: 10 }}>{item.dari}</Text>
+                    <Text style={{ marginLeft: 10, fontWeight: FONTWEIGHT.bold }}>{item.dari}</Text>
+                    <Text style={{ marginLeft: 10, color: COLORS.lighter, marginVertical: 10, textAlign: 'left' }}> {item.subtitle} </Text>
                 </View>
             </View>
         );

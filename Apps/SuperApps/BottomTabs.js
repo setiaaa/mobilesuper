@@ -15,31 +15,58 @@ function MyTabBar({ props, navigation }) {
     return (
         <BottomSheetModalProvider>
             <SafeAreaView>
-                <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'center', paddingRight: 15 }}>
-                    <View style={{ flexDirection: 'row', marginVertical: 20, justifyContent: 'center', gap: 30 }}>
-                        <TouchableOpacity
-                            key={1}
-                            onPress={() => {
-                                setTabItemIndex(1)
-                                navigation.navigate('Home', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }} style={{ alignItems: 'center' }}>
-                            <Ionicons name='home' color={tabItemIndex === 1 ? COLORS.primary : COLORS.grey} size={24} />
-                            <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : COLORS.grey }}>Home</Text>
-                        </TouchableOpacity>
+                <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
+                    <TouchableOpacity
+                        key={1}
+                        onPress={() => {
+                            setTabItemIndex(1)
+                            navigation.navigate('Home', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }} style={{
+                            alignItems: 'center',
+                            backgroundColor: tabItemIndex === 1 ? COLORS.white : null,
+                            height: 65,
+                            justifyContent: 'center',
+                            width: 80,
+                            borderTopLeftRadius: tabItemIndex === 1 ? 16 : null,
+                            borderTopRightRadius: tabItemIndex === 1 ? 16 : null,
+                            //shadow ios
+                            shadowOffset: tabItemIndex === 1 ? { width: -2, height: -2 } : null,
+                            shadowColor: tabItemIndex === 1 ? COLORS.primary : null,
+                            shadowOpacity: tabItemIndex === 1 ? 0.4 : null,
+                            //shadow android
+                            elevation: tabItemIndex === 1 ? 2 : null,
+                        }}>
+                        <Ionicons name='home' color={tabItemIndex === 1 ? COLORS.primary : COLORS.grey} size={24} />
+                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : COLORS.grey }}>Home</Text>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity
-                            key={2}
-                            onPress={() => {
-                                setTabItemIndex(2)
-                                navigation.navigate('Satker', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }} style={{ alignItems: 'center' }}>
-                            <Ionicons name='business-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
-                            <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Satker</Text>
-                        </TouchableOpacity>
+                    <TouchableOpacity
+                        key={2}
+                        onPress={() => {
+                            setTabItemIndex(2)
+                            navigation.navigate('Satker', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }} style={{
+                            alignItems: 'center',
+                            backgroundColor: tabItemIndex === 2 ? COLORS.white : null,
+                            height: 65,
+                            justifyContent: 'center',
+                            width: 80,
+                            borderTopLeftRadius: tabItemIndex === 2 ? 16 : null,
+                            borderTopRightRadius: tabItemIndex === 2 ? 16 : null,
+                            //shadow ios
+                            shadowOffset: tabItemIndex === 2 ? { width: -2, height: -2 } : null,
+                            shadowColor: tabItemIndex === 2 ? COLORS.primary : null,
+                            shadowOpacity: tabItemIndex === 2 ? 0.4 : null,
+                            //shadow android
+                            elevation: tabItemIndex === 2 ? 2 : null,
+                        }}>
+                        <Ionicons name='business-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
+                        <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Satker</Text>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity
+                    {/* <TouchableOpacity
                             key={4}
                             onPress={() => {
                                 setTabItemIndex(4)
@@ -70,31 +97,85 @@ function MyTabBar({ props, navigation }) {
                                     <Ionicons name='grid-outline' color={COLORS.white} size={24} />
                                 </View>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
-                        <TouchableOpacity
-                            key={5}
-                            onPress={() => {
-                                setTabItemIndex(5)
-                                navigation.navigate('FAQ', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }} style={{ alignItems: 'center' }}>
-                            <Ionicons name='reader' color={tabItemIndex === 5 ? COLORS.primary : COLORS.grey} size={24} />
-                            <Text style={{ color: tabItemIndex === 5 ? COLORS.primary : COLORS.grey }}>FAQ</Text>
-                        </TouchableOpacity>
+                    <TouchableOpacity
+                        key={3}
+                        onPress={() => {
+                            setTabItemIndex(3)
+                            setVisibleModal(true)
+                            // navigation.navigate('FAQ', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }} style={{
+                            alignItems: 'center',
+                            backgroundColor: tabItemIndex === 3 ? COLORS.white : null,
+                            height: 65,
+                            justifyContent: 'center',
+                            width: 80,
+                            borderTopLeftRadius: tabItemIndex === 3 ? 16 : null,
+                            borderTopRightRadius: tabItemIndex === 3 ? 16 : null,
+                            //shadow ios
+                            shadowOffset: tabItemIndex === 3 ? { width: -2, height: -2 } : null,
+                            shadowColor: tabItemIndex === 3 ? COLORS.primary : null,
+                            shadowOpacity: tabItemIndex === 3 ? 0.4 : null,
+                            //shadow android
+                            elevation: tabItemIndex === 3 ? 2 : null,
+                        }}>
+                        <Ionicons name='grid-outline' color={tabItemIndex === 3 ? COLORS.primary : COLORS.grey} size={24} />
+                        <Text style={{ color: tabItemIndex === 3 ? COLORS.primary : COLORS.grey }}>Dashboard</Text>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity
-                            key={6}
-                            onPress={() => {
-                                setTabItemIndex(6)
-                                navigation.navigate('Profile', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }} style={{ alignItems: 'center' }}>
-                            <Ionicons name='person' color={tabItemIndex === 6 ? COLORS.primary : COLORS.grey} size={24} />
-                            <Text style={{ color: tabItemIndex === 6 ? COLORS.primary : COLORS.grey }}>Profile</Text>
-                        </TouchableOpacity>
-                    </View>
-                    {/* 
+                    <TouchableOpacity
+                        key={5}
+                        onPress={() => {
+                            setTabItemIndex(5)
+                            navigation.navigate('FAQ', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }} style={{
+                            alignItems: 'center',
+                            backgroundColor: tabItemIndex === 5 ? COLORS.white : null,
+                            height: 65,
+                            justifyContent: 'center',
+                            width: 80,
+                            borderTopLeftRadius: tabItemIndex === 5 ? 16 : null,
+                            borderTopRightRadius: tabItemIndex === 5 ? 16 : null,
+                            //shadow ios
+                            shadowOffset: tabItemIndex === 5 ? { width: -2, height: -2 } : null,
+                            shadowColor: tabItemIndex === 5 ? COLORS.primary : null,
+                            shadowOpacity: tabItemIndex === 5 ? 0.4 : null,
+                            //shadow android
+                            elevation: tabItemIndex === 5 ? 2 : null,
+                        }}>
+                        <Ionicons name='reader' color={tabItemIndex === 5 ? COLORS.primary : COLORS.grey} size={24} />
+                        <Text style={{ color: tabItemIndex === 5 ? COLORS.primary : COLORS.grey }}>FAQ</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        key={6}
+                        onPress={() => {
+                            setTabItemIndex(6)
+                            navigation.navigate('Profile', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }} style={{
+                            alignItems: 'center',
+                            backgroundColor: tabItemIndex === 6 ? COLORS.white : null,
+                            height: 65,
+                            justifyContent: 'center',
+                            width: 80,
+                            borderTopLeftRadius: tabItemIndex === 6 ? 16 : null,
+                            borderTopRightRadius: tabItemIndex === 6 ? 16 : null,
+                            //shadow ios
+                            shadowOffset: tabItemIndex === 6 ? { width: -2, height: -2 } : null,
+                            shadowColor: tabItemIndex === 6 ? COLORS.primary : null,
+                            shadowOpacity: tabItemIndex === 6 ? 0.4 : null,
+                            //shadow android
+                            elevation: tabItemIndex === 6 ? 2 : null,
+                        }}>
+                        <Ionicons name='person' color={tabItemIndex === 6 ? COLORS.primary : COLORS.grey} size={24} />
+                        <Text style={{ color: tabItemIndex === 6 ? COLORS.primary : COLORS.grey }}>Profile</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* 
                 
                 
                 <View style={{ flexDirection: 'row', gap: 35, marginVertical: 20, justifyContent: 'flex-end', flex: 1, marginRight: 20 }}>
@@ -102,7 +183,7 @@ function MyTabBar({ props, navigation }) {
                 
                 
             </View> */}
-                </View>
+
 
                 <Modal
                     animationType="fade"
@@ -171,7 +252,9 @@ function MyTabBar({ props, navigation }) {
                         </View>
                     </View>
                     <TouchableOpacity
-                        onPress={() => { setVisibleModal(false) }}
+                        onPress={() => {
+                            setVisibleModal(false)
+                        }}
                         style={{
                             position: 'absolute',
                             bottom: '9%',

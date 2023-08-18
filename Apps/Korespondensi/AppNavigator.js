@@ -391,14 +391,16 @@ function AuthStack() {
               name="DetailDashboard"
               component={DetailDashboard}
               options={{
-                headerTitle: ''
+                headerTitle: '',
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="PdfViewer"
               component={PdfViewer}
               options={{
-                headerTitle: ''
+                headerTitle: '',
+                headerShown: false,
               }}
             />
 
