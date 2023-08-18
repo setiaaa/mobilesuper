@@ -15,7 +15,8 @@ export const COLORS = {
     orange: '#FF8F28',
     infoDanger: '#C34647',
     infoDangerLight: '#FBDDDD',
-    ExtraDivinder: '#DBDADE'
+    ExtraDivinder: '#DBDADE',
+    secondaryLighter: '#d9d9d9'
 }
 export const FONTSIZE = {
     H1: 15,

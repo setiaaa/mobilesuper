@@ -129,6 +129,10 @@ import { DokumenLain } from "../DigitalSignature/DokumenLain";
 import MainDigitalSign from "../DigitalSignature/MainDigitalSign";
 import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
+import MainPengetahuan from "../Pengetahuan/MainPengetahuan";
+import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
+import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
+import { DetailPenilaian } from "../Pengetahuan/DetailPenilaian";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -338,8 +342,8 @@ function AuthStack() {
               }}
             />
             <Stack.Screen
-              name="LiniMasa"
-              component={LiniMasa}
+              name="MainPengetahuan"
+              component={MainPengetahuan}
               options={{
                 headerShown: false,
               }}
@@ -368,6 +372,13 @@ function AuthStack() {
             <Stack.Screen
               name="TambahSertifikat"
               component={TambahSertifikat}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailPenilain"
+              component={DetailPenilaian}
               options={{
                 headerShown: false,
               }}
@@ -516,6 +527,17 @@ export const BottomTabsDigitalSign = () => {
       <Tab.Navigator tabBar={props => <MyTabDigitalSign {...props} />} initialRouteName='Bankom'>
         <Tab.Screen name='Bankom' component={Bankom} options={{ headerShown: false }} />
         <Tab.Screen name='DokumenLain' component={DokumenLain} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const BottomTabsPengetahuan = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarPengetahuan {...props} />} initialRouteName='LiniMasa'>
+        <Tab.Screen name='LiniMasa' component={LiniMasa} options={{ headerShown: false }} />
+        <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )

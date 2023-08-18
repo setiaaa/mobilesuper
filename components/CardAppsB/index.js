@@ -55,7 +55,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('LiniMasa')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainPengetahuan')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='school-outline' size={24} color={COLORS.primary} />
                         </View>

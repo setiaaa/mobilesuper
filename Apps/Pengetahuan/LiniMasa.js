@@ -153,36 +153,33 @@ export const LiniMasa = () => {
     const { linimasa } = useSelector(state => state.pengetahuan)
     return (
         <SafeAreaView>
-            <View>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 20
-                    }}>
-                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Linimasa Pengetahuan</Text>
-                    </View>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                <View style={{
+                    backgroundColor: COLORS.white,
+                    borderRadius: 20,
+                    width: 28,
+                    height: 28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 20
+                }}>
+                    <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                    </TouchableOpacity>
                 </View>
-
-                <FlatList
-                    data={linimasa.lists}
-                    renderItem={({ item }) => <CardLiniMasa
-                        item={item}
-                    />
-                    }
-                    keyExtractor={item => item.id}
-                />
-
+                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Linimasa Pengetahuan</Text>
+                </View>
             </View>
+
+            <FlatList
+                data={linimasa.lists}
+                renderItem={({ item }) => <CardLiniMasa
+                    item={item}
+                />
+                }
+                keyExtractor={item => item.id}
+            />
         </SafeAreaView>
     )
 }
