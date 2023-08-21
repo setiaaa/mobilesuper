@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Modal, Text } from 'react-native'
 import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
@@ -12,6 +12,7 @@ import { setLiniMasa } from '../../store/Pengetahuan'
 import { FlatList } from 'react-native'
 import { Image } from 'react-native'
 import { useState } from 'react'
+import { StyleSheet } from 'react-native'
 
 const listsLinimasa = [
     {
@@ -25,7 +26,16 @@ const listsLinimasa = [
         dilihat: '45',
         judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
         deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-
+        lampiran: [
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') }
+        ],
+        tempat: 'Surakarta',
+        anggota: 'KKP',
+        kapan: '15 Agustus 2023',
+        rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
     },
     {
         avatar: require('../../assets/superApp/AvatarA.png'),
@@ -38,7 +48,16 @@ const listsLinimasa = [
         dilihat: '45',
         judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
         deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-
+        lampiran: [
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') }
+        ],
+        tempat: 'Surakarta',
+        anggota: 'KKP',
+        kapan: '15 Agustus 2023',
+        rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
     },
     {
         avatar: require('../../assets/superApp/AvatarA.png'),
@@ -51,14 +70,24 @@ const listsLinimasa = [
         dilihat: '45',
         judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
         deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-
+        lampiran: [
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') },
+            { gambar: require('../../assets/superApp/linimasa1.png') }
+        ],
+        tempat: 'Surakarta',
+        anggota: 'KKP',
+        kapan: '15 Agustus 2023',
+        rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
     }
 ]
 
 
-const CardLiniMasa = ({ item }) => {
+const CardLiniMasa = ({ item, }) => {
     const navigation = useNavigation()
     const [like, setLike] = useState(0)
+    const [visibleModal, setVisibleModal] = useState(false);
 
     const handleLike = () => {
         if (like === 0) {
@@ -83,9 +112,12 @@ const CardLiniMasa = ({ item }) => {
             //shadow android
             elevation: 2,
         }}>
-            <TouchableOpacity onPress={() => navigation.navigate('DetailLinimasa', {
-                item: item
-            })}>
+            <TouchableOpacity onPress={(e) => {
+                e.stopPropagation()
+                navigation.navigate('DetailLinimasa', {
+                    item: item
+                })
+            }}>
 
                 <View style={{ marginVertical: 20, marginHorizontal: 15 }}>
                     <View style={{ flexDirection: 'row', gap: 10 }}>
@@ -118,7 +150,11 @@ const CardLiniMasa = ({ item }) => {
                             <Text style={{ color: COLORS.warning }}>{item.jenis}</Text>
                         </View>
 
-                        <TouchableOpacity style={{ flexDirection: 'row', gap: 3, alignItems: 'center' }} onPress={handleLike}>
+                        <TouchableOpacity style={{ flexDirection: 'row', gap: 3, alignItems: 'center' }}
+                            onPress={(e) => {
+                                e.stopPropagation()
+                                handleLike()
+                            }}>
                             <Ionicons name='thumbs-up-outline' size={18} color={like !== 0 ? COLORS.primary : null} />
                             <Text style={{ color: like !== 0 ? COLORS.primary : null }}>{item.suka}</Text>
                         </TouchableOpacity>
@@ -132,12 +168,105 @@ const CardLiniMasa = ({ item }) => {
                             <Text>{item.dilihat}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}
+                            onPress={(e) => {
+                                e.stopPropagation()
+                                setVisibleModal(true)
+                            }}
+                        >
                             <Ionicons name='information-circle-outline' size={18} />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </View >
             </TouchableOpacity >
+
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={visibleModal}
+                onRequestClose={() => {
+                    setVisibleModal(!visibleModal);
+                }}
+            >
+                <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                <View style={{ alignItems: 'center', flex: 1 }}>
+                    <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 10, marginTop: '40%' }}>
+
+                        <TouchableOpacity
+                            style={{ alignItems: 'flex-end', marginHorizontal: 20, marginTop: 20 }}
+                            onPress={() => {
+                                setVisibleModal(false)
+                            }}
+                        >
+                            <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                        </TouchableOpacity>
+
+                        <View style={{
+                            backgroundColor: COLORS.primary,
+                            padding: 10,
+                            width: 179,
+                            height: 40,
+                            marginHorizontal: 20,
+                            borderTopLeftRadius: 4,
+                            borderTopRightRadius: 12,
+                            borderBottomLeftRadius: 12,
+                            borderBottomRightRadius: 4
+                        }}>
+                            <Text style={{ color: COLORS.white }}>Informasi Pengetahuan</Text>
+                        </View>
+
+                        <View>
+                            <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', marginHorizontal: 40 }}>
+                                <View style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: COLORS.primary }} />
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>Judul</Text>
+                                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[What]</Text>
+                            </View>
+
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.judul}</Text>
+                        </View>
+
+                        <View>
+                            <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', marginHorizontal: 40 }}>
+                                <View style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: COLORS.primary }} />
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>Anggota Angenda</Text>
+                                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[Who]</Text>
+                            </View>
+
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.anggota}</Text>
+                        </View>
+
+                        <View>
+                            <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', marginHorizontal: 40 }}>
+                                <View style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: COLORS.primary }} />
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>Rangkuman</Text>
+                                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[Why]</Text>
+                            </View>
+
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.rangkuman}</Text>
+                        </View>
+
+                        <View>
+                            <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', marginHorizontal: 40 }}>
+                                <View style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: COLORS.primary }} />
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>Tempat Agenda</Text>
+                                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[Where]</Text>
+                            </View>
+
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.tempat}</Text>
+                        </View>
+
+                        <View>
+                            <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', marginHorizontal: 40 }}>
+                                <View style={{ width: 10, height: 10, borderRadius: 10, backgroundColor: COLORS.primary }} />
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>Waktu Mulai</Text>
+                                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[When]</Text>
+                            </View>
+
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{item.kapan}</Text>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View >
     );
 }
@@ -176,10 +305,31 @@ export const LiniMasa = () => {
                 data={linimasa.lists}
                 renderItem={({ item }) => <CardLiniMasa
                     item={item}
+                // setVisibleModal={setVisibleModal}
                 />
                 }
                 keyExtractor={item => item.id}
             />
+
+
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    iOSBackdrop: {
+        backgroundColor: "#000000",
+        opacity: 0.3
+    },
+    androidBackdrop: {
+        backgroundColor: "#232f34",
+        opacity: 0.32
+    },
+    backdrop: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
+})

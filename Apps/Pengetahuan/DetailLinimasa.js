@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import { FlatList, TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
@@ -12,10 +12,18 @@ import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 
 
+const CardLampiran = ({ lampiran }) => {
+    return (
+        <View>
+            <Image source={lampiran} style={{ width: 174, height: 97, borderRadius: 6, marginTop: 10 }} />
+        </View>
+    )
+}
+
+
 export const DetailLinimasa = ({ route }) => {
     const navigation = useNavigation()
     const { item } = route.params
-    console.log(item)
     const [like, setLike] = useState(0)
 
     const handleLike = () => {
@@ -52,7 +60,7 @@ export const DetailLinimasa = ({ route }) => {
                             <Ionicons name='share-social-outline' size={20} color={COLORS.white} />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ backgroundColor: COLORS.white, height: '100%' }}>
+                    <View style={{ backgroundColor: COLORS.white, }}>
                         <Text style={{ paddingBottom: 20, paddingHorizontal: 25, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
 
                         <View style={{ flexDirection: 'row', gap: 10, paddingHorizontal: 25 }}>
@@ -78,24 +86,6 @@ export const DetailLinimasa = ({ route }) => {
                             }}>
                                 <Ionicons name='document-outline' size={18} color={COLORS.warning} />
                                 <Text style={{ color: COLORS.warning }}>{item.jenis}</Text>
-                            </View>
-
-                            <TouchableOpacity style={{ flexDirection: 'row', gap: 3, alignItems: 'center' }} onPress={handleLike}>
-                                <Ionicons name='thumbs-up-outline' size={18} color={like !== 0 ? COLORS.primary : null} />
-                                <Text style={{ color: like !== 0 ? COLORS.primary : null }}>{item.suka}</Text>
-                            </TouchableOpacity>
-
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
-                                <Ionicons name='chatbox-outline' size={18} />
-                                <Text>{item.komentar}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
-                                <Ionicons name='eye-outline' size={18} />
-                                <Text>{item.dilihat}</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
-                                <Ionicons name='information-circle-outline' size={18} />
                             </View>
                         </View>
 
@@ -124,13 +114,52 @@ export const DetailLinimasa = ({ route }) => {
                             </View>
                         </View> */}
 
-                        {/* <View style={{
+
+
+                        <FlatList
+                            key={'#'}
+                            data={item.lampiran}
+                            renderItem={({ item }) => <CardLampiran
+                                lampiran={item.gambar}
+                            />
+                            }
+                            style={{ marginTop: 20 }}
+                            columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15 }}
+                            numColumns={2}
+                            keyExtractor={item => "#" + item.id}
+                        />
+                        {/* divider custom */}
+                        <View style={{ height: 1, width: '90%', backgroundColor: '#DBDADE', marginTop: 20, marginHorizontal: 20 }} />
+
+                        <View style={{ flexDirection: 'row', gap: 10, marginVertical: 20, marginHorizontal: 20 }}>
+
+                            <TouchableOpacity style={{ flexDirection: 'row', gap: 3, alignItems: 'center' }} onPress={handleLike}>
+                                <Ionicons name='thumbs-up-outline' size={18} color={like !== 0 ? COLORS.primary : null} />
+                                <Text style={{ color: like !== 0 ? COLORS.primary : null }}>{item.suka}</Text>
+                            </TouchableOpacity>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                                <Ionicons name='chatbox-outline' size={18} />
+                                <Text>{item.komentar}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                                <Ionicons name='eye-outline' size={18} />
+                                <Text>{item.dilihat}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                                <Ionicons name='information-circle-outline' size={18} />
+                            </View>
+
+                        </View>
+
+                        <View style={{
                             height: 105,
                             width: 357,
                             backgroundColor: COLORS.danger,
                             borderRadius: 8,
                             marginHorizontal: 15,
-                            marginVertical: 20,
+                            marginBottom: 20,
                             //shadow ios
                             shadowOffset: { width: -2, height: 4 },
                             shadowColor: '#171717',
@@ -139,7 +168,7 @@ export const DetailLinimasa = ({ route }) => {
                             elevation: 5
                         }}>
                             <View style={{ height: 96, width: 357, backgroundColor: COLORS.white, borderRadius: 8, position: 'absolute', bottom: 0 }}>
-                                <Text style={{ fontWeight: 600, marginHorizontal: 20, marginTop: 20 }}>Berita Selanjutnya</Text>
+                                <Text style={{ fontWeight: 600, marginHorizontal: 20, marginTop: 20 }}>Selanjutnya</Text>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={{ fontSize: FONTSIZE.H4, marginHorizontal: 20, marginTop: 10, width: 300 }}>Kementrian Kelautan dan Perikanan (KKP) bersama dengan Dewan...</Text>
                                     <TouchableOpacity style={{ position: 'absolute', right: 10 }}>
@@ -147,8 +176,9 @@ export const DetailLinimasa = ({ route }) => {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                        </View> */}
+                        </View>
                     </View>
+
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -5,7 +5,6 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { COLORS, FONTSIZE } from '../../config/SuperAppps';
 import { SafeAreaView } from 'react-native';
 import { Modal } from 'react-native';
-import { Image } from 'react-native';
 
 function MyTabBar({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);
@@ -22,23 +21,43 @@ function MyTabBar({ props, navigation }) {
                             setTabItemIndex(1)
                             navigation.navigate('Home', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 1 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 1 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 1 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 1 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 1 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 1 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 1 ? 2 : null,
                         }}>
-                        <Ionicons name='home' color={tabItemIndex === 1 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : COLORS.grey }}>Home</Text>
+                        {tabItemIndex === 1 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='home' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Home</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='home' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Home</Text>
+                            </View>
+                        )}
+
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -47,23 +66,43 @@ function MyTabBar({ props, navigation }) {
                             setTabItemIndex(2)
                             navigation.navigate('Satker', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 2 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 2 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 2 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 2 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 2 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 2 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 2 ? 2 : null,
                         }}>
-                        <Ionicons name='business-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Satker</Text>
+                        {tabItemIndex === 2 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='business-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Satker</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='business-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Satker</Text>
+                            </View>
+                        )}
+
                     </TouchableOpacity>
 
                     {/* <TouchableOpacity
@@ -106,23 +145,43 @@ function MyTabBar({ props, navigation }) {
                             setVisibleModal(true)
                             // navigation.navigate('FAQ', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 3 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 3 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 3 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 3 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 3 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 3 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 3 ? 2 : null,
                         }}>
-                        <Ionicons name='grid-outline' color={tabItemIndex === 3 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 3 ? COLORS.primary : COLORS.grey }}>Dashboard</Text>
+                        {tabItemIndex === 3 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='grid-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Dashboard</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='grid-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Dashboard</Text>
+                            </View>
+                        )}
+
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -131,23 +190,42 @@ function MyTabBar({ props, navigation }) {
                             setTabItemIndex(5)
                             navigation.navigate('FAQ', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 5 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 5 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 5 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 5 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 5 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 5 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 5 ? 2 : null,
                         }}>
-                        <Ionicons name='reader' color={tabItemIndex === 5 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 5 ? COLORS.primary : COLORS.grey }}>FAQ</Text>
+                        {tabItemIndex === 5 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='reader' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>FAQ</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='reader' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>FAQ</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -156,23 +234,42 @@ function MyTabBar({ props, navigation }) {
                             setTabItemIndex(6)
                             navigation.navigate('Profile', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 6 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 6 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 6 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 6 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 6 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 6 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 6 ? 2 : null,
                         }}>
-                        <Ionicons name='person' color={tabItemIndex === 6 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 6 ? COLORS.primary : COLORS.grey }}>Profile</Text>
+                        {tabItemIndex === 6 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='person' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Profile</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='person' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Profile</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
                 </View>
                 {/* 
@@ -195,7 +292,16 @@ function MyTabBar({ props, navigation }) {
                 >
                     <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                     <View style={{ alignItems: 'center', flex: 1 }}>
-                        <View style={{ backgroundColor: COLORS.white, width: '90%', height: '28%', borderRadius: 10, marginTop: '90%' }}>
+                        <View style={{ backgroundColor: COLORS.white, width: '90%', height: '35%', borderRadius: 10, marginTop: '70%' }}>
+
+                            <TouchableOpacity
+                                style={{ alignItems: 'flex-end', marginHorizontal: 20, marginTop: 20 }}
+                                onPress={() => {
+                                    setVisibleModal(false)
+                                }}
+                            >
+                                <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity>
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 30 }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
@@ -251,7 +357,7 @@ function MyTabBar({ props, navigation }) {
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={() => {
                             setVisibleModal(false)
                         }}
@@ -279,7 +385,7 @@ function MyTabBar({ props, navigation }) {
                                 <Ionicons name='close-outline' color={COLORS.white} size={24} />
                             </View>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </Modal>
             </SafeAreaView>
         </BottomSheetModalProvider >

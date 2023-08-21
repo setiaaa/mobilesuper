@@ -1,15 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native'
+import { Dropdown } from '../../components/DropDown';
 
 
 export const DetailPenilaian = ({ route }) => {
     const { item } = route.params
     console.log(item)
+
+    const nilai = [
+        { key: 'q', value: '0.0 (Tidak Sesuai)' },
+        { key: 'w', value: '0.5 (Kegitan)' },
+        { key: 'w', value: '1.0 (infografis)' },
+        { key: 'w', value: '3.0 (video)' },
+    ]
+
+    const [Nilai, setNilai] = useState('')
+    const [tanggal, setTanggal] = useState('')
+
+    useEffect(() => {
+        var date = new Date().getDate()
+        var month = new Date().getMonth()
+        var year = new Date().getFullYear()
+        setTanggal(
+            date + '-' + month + '-' + year
+        )
+    }, [])
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
@@ -119,6 +140,40 @@ export const DetailPenilaian = ({ route }) => {
 
                         </View>
                     )}
+                </View>
+
+                <View style={{
+                    backgroundColor: COLORS.white,
+                    width: '90%',
+                    marginHorizontal: 20,
+                    paddingHorizontal: 20,
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    marginBottom: 20,
+                }}>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Nilai</Text>
+                            <Text style={{ color: COLORS.danger }}>*</Text>
+                        </View>
+
+
+                        <View style={{ width: 170 }}>
+                            <Dropdown
+                                data={nilai}
+                                placeHolder={'Nilai'}
+                                setSelected={setNilai}
+                                borderWidth={1}
+                                borderColor={COLORS.ExtraDivinder}
+                            />
+                        </View>
+
+                        <View>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, marginBottom: 5 }}>Tanggal Nilai :</Text>
+                            <Text>{tanggal}</Text>
+                        </View>
+                    </View>
+
                 </View>
 
                 <TouchableOpacity style={{

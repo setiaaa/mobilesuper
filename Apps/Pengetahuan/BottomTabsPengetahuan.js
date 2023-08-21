@@ -41,23 +41,42 @@ function MyTabBarPengetahuan({ props, navigation }) {
                             setTabItemIndex(1)
                             navigation.navigate('LiniMasa', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 1 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 1 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 1 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 1 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 1 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 1 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 1 ? 2 : null,
                         }}>
-                        <Ionicons name='school-outline' color={tabItemIndex === 1 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : COLORS.grey }}>Linimasa</Text>
+                        {tabItemIndex === 1 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='school-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Linimasa</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='school-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Linimasa</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -66,23 +85,42 @@ function MyTabBarPengetahuan({ props, navigation }) {
                             setTabItemIndex(2)
                             navigation.navigate('PenilaianPenggetahaun', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 2 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 2 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 2 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 2 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 2 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 2 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 2 ? 2 : null,
                         }}>
-                        <Ionicons name='document-text-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Penilaian</Text>
+                        {tabItemIndex === 2 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='document-text-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Penilaian</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='document-text-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Penilaian</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
                 </View>
             </BottomSheetModalProvider>

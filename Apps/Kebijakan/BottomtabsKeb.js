@@ -18,23 +18,42 @@ function MyTabBarKeb({ props, navigation }) {
                             setTabItemIndex(1)
                             navigation.navigate('Dashboard', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 1 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 1 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 1 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 1 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 1 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 1 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 1 ? 2 : null,
                         }}>
-                        <Ionicons name='list' color={tabItemIndex === 1 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : COLORS.grey }}>Kebijakan</Text>
+                        {tabItemIndex === 1 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='list' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Kebijakan</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='list' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Kebijakan</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -43,23 +62,42 @@ function MyTabBarKeb({ props, navigation }) {
                             setTabItemIndex(2)
                             navigation.navigate('Tematik', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 2 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 2 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 2 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 2 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 2 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 2 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 2 ? 2 : null,
                         }}>
-                        <Ionicons name='pencil-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Tematik</Text>
+                        {tabItemIndex === 2 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='pencil-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Tematik</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='pencil-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Tematik</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -68,23 +106,42 @@ function MyTabBarKeb({ props, navigation }) {
                             setTabItemIndex(3)
                             // navigation.navigate('Tematik', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
-                        }} style={{
-                            alignItems: 'center',
-                            backgroundColor: tabItemIndex === 3 ? COLORS.white : null,
-                            height: 65,
-                            justifyContent: 'center',
-                            width: 80,
-                            borderTopLeftRadius: tabItemIndex === 3 ? 16 : null,
-                            borderTopRightRadius: tabItemIndex === 3 ? 16 : null,
-                            //shadow ios
-                            shadowOffset: tabItemIndex === 3 ? { width: -2, height: -2 } : null,
-                            shadowColor: tabItemIndex === 3 ? COLORS.primary : null,
-                            shadowOpacity: tabItemIndex === 3 ? 0.4 : null,
-                            //shadow android
-                            elevation: tabItemIndex === 3 ? 2 : null,
                         }}>
-                        <Ionicons name='document-text-outline' color={tabItemIndex === 3 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 3 ? COLORS.primary : COLORS.grey }}>Dok.Hukum</Text>
+                        {tabItemIndex === 3 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='document-text-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Dok.Hukum</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='document-text-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Dok.Hukum</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
                 </View>
             </BottomSheetModalProvider>
