@@ -7,7 +7,6 @@ import { useNavigation } from "@react-navigation/native";
 import { COLORS } from '../../config/SuperAppps';
 import { useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Lightbox from 'react-native-lightbox';
 
 const Item = ({ image, deskripsi, onclick }) => {
     const navigation = useNavigation()

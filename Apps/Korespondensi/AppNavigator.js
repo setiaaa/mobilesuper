@@ -133,6 +133,7 @@ import MainPengetahuan from "../Pengetahuan/MainPengetahuan";
 import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
 import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import { DetailPenilaian } from "../Pengetahuan/DetailPenilaian";
+import { ListSukaLinimasa } from "../Pengetahuan/ListSukaLinimasa";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -351,6 +352,13 @@ function AuthStack() {
             <Stack.Screen
               name="DetailLinimasa"
               component={DetailLinimasa}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ListSukaLinimasa"
+              component={ListSukaLinimasa}
               options={{
                 headerShown: false,
               }}

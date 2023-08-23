@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Text } from 'react-native'
 import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -27,15 +27,140 @@ const listsLinimasa = [
         judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
         deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
         lampiran: [
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') }
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png',
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png',
+            },
+            {
+                id: 3,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png',
+            },
+            {
+                id: 4,
+                gambar: require('../../assets/superApp/Sekilas_Tentang_Program_Ekonomi_Biru_KKP_1080p.mp4'),
+                nama: 'SekilasTentangProgramEkonomiBiruKKP1080p.mp4',
+            }
         ],
         tempat: 'Surakarta',
         anggota: 'KKP',
         kapan: '15 Agustus 2023',
         rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
+        jmlKomentar: '2',
+        Komentar: [
+            {
+                id: '1',
+                avatarKomen: require('../../assets/superApp/AvatarKomen1.png'),
+                nama: 'Yani Dama Putera',
+                tanggal: '23 Januari 2023',
+                jam: '14.01',
+                isi: 'Informasi yang bermanfaat',
+                jmlhBalas: '1',
+                balas:
+                    [
+                        {
+                            idBalas: '1.1',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+                        },
+
+                        {
+                            idBalas: '1.2',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+                        }
+
+                    ],
+
+            },
+            {
+                id: '2',
+                avatarKomen: require('../../assets/superApp/AvatarKomen2.png'),
+                nama: 'Salies Apriliyanto',
+                tanggal: '22 Januari 2023',
+                jam: '14.01',
+                isi: 'Sebuah variasi dari teknik pertanyaan di atas, pertanyaan pilihan ganda merupakan cara yang bagus untuk melibatkan pembaca Anda.',
+                jmlhBalas: '1',
+                balas:
+                    [
+                        {
+
+                            idBalas: '2.1',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+
+                        }
+                    ],
+            }
+        ],
+        orangSuka: [
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+        ],
+        disukai: '324',
     },
     {
         avatar: require('../../assets/superApp/AvatarA.png'),
@@ -49,15 +174,140 @@ const listsLinimasa = [
         judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
         deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
         lampiran: [
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') }
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa2.png'),
+                nama: 'linimasa2.png'
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa2.png'),
+                nama: 'linimasa2.png'
+            },
+            {
+                id: 3,
+                gambar: require('../../assets/superApp/linimasa2.png'),
+                nama: 'linimasa2.png'
+            },
+            {
+                id: 4,
+                gambar: require('../../assets/superApp/Sekilas_Tentang_Program_Ekonomi_Biru_KKP_1080p.mp4'),
+                nama: 'SekilasTentangProgramEkonomiBiruKKP1080p.mp4'
+            }
         ],
         tempat: 'Surakarta',
         anggota: 'KKP',
         kapan: '15 Agustus 2023',
         rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
+        jmlKomentar: '2',
+        Komentar: [
+            {
+                id: '1',
+                avatarKomen: require('../../assets/superApp/AvatarKomen1.png'),
+                nama: 'Yani Dama Putera',
+                tanggal: '23 Januari 2023',
+                jam: '14.01',
+                isi: 'Informasi yang bermanfaat',
+                jmlhBalas: '1',
+                balas:
+                    [
+                        {
+                            idBalas: '1.1',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+                        },
+
+                        {
+                            idBalas: '1.2',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+                        }
+
+                    ],
+
+            },
+            {
+                id: '2',
+                avatarKomen: require('../../assets/superApp/AvatarKomen2.png'),
+                nama: 'Salies Apriliyanto',
+                tanggal: '22 Januari 2023',
+                jam: '14.01',
+                isi: 'Sebuah variasi dari teknik pertanyaan di atas, pertanyaan pilihan ganda merupakan cara yang bagus untuk melibatkan pembaca Anda.',
+                jmlhBalas: '1',
+                balas:
+                    [
+                        {
+
+                            idBalas: '2.1',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+
+                        }
+                    ],
+            }
+        ],
+        orangSuka: [
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+        ],
+        disukai: '324',
     },
     {
         avatar: require('../../assets/superApp/AvatarA.png'),
@@ -71,15 +321,140 @@ const listsLinimasa = [
         judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
         deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
         lampiran: [
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') },
-            { gambar: require('../../assets/superApp/linimasa1.png') }
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 3,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 4,
+                gambar: require('../../assets/superApp/Sekilas_Tentang_Program_Ekonomi_Biru_KKP_1080p.mp4'),
+                nama: 'SekilasTentangProgramEkonomiBiruKKP1080p.mp4'
+            }
         ],
         tempat: 'Surakarta',
         anggota: 'KKP',
         kapan: '15 Agustus 2023',
         rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
+        jmlKomentar: '2',
+        Komentar: [
+            {
+                id: '1',
+                avatarKomen: require('../../assets/superApp/AvatarKomen1.png'),
+                nama: 'Yani Dama Putera',
+                tanggal: '23 Januari 2023',
+                jam: '14.01',
+                isi: 'Informasi yang bermanfaat',
+                jmlhBalas: '1',
+                balas:
+                    [
+                        {
+                            idBalas: '1.1',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+                        },
+
+                        {
+                            idBalas: '1.2',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+                        }
+
+                    ],
+
+            },
+            {
+                id: '2',
+                avatarKomen: require('../../assets/superApp/AvatarKomen2.png'),
+                nama: 'Salies Apriliyanto',
+                tanggal: '22 Januari 2023',
+                jam: '14.01',
+                isi: 'Sebuah variasi dari teknik pertanyaan di atas, pertanyaan pilihan ganda merupakan cara yang bagus untuk melibatkan pembaca Anda.',
+                jmlhBalas: '1',
+                balas:
+                    [
+                        {
+
+                            idBalas: '2.1',
+                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
+                            nama: 'Rizky Novriansyah',
+                            tanggal: '24 Januari 2023',
+                            jam: '14.01',
+                            isi: 'Terima Kasih',
+
+                        }
+                    ],
+            }
+        ],
+        orangSuka: [
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+            {
+                avatar: AVATAR.U2,
+                nama: 'Rizky Novriansyah',
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+            },
+        ],
+        disukai: '324',
     }
 ]
 
