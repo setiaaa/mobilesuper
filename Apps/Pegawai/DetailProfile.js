@@ -1,0 +1,67 @@
+import React from 'react'
+import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
+import { CollapseCardBiodata } from '../../components/CollapseCardBiodata';
+import { CollapseCardLinimasa } from '../../components/CollapseCardLinimasa';
+import { ScrollView } from 'react-native';
+
+export const DetailProfile = ({ route }) => {
+    const { item } = route.params
+    return (
+        <SafeAreaView>
+            <ScrollView>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 20
+                    }}>
+                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Profil Pegawai</Text>
+                    </View>
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        width: 362,
+                        borderRadius: 8,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingHorizontal: 16,
+                        paddingVertical: 16,
+                        //shadow ios
+                        shadowOffset: { width: -2, height: 4 },
+                        shadowColor: '#171717',
+                        shadowOpacity: 0.2,
+                        //shadow android
+                        elevation: 2,
+
+                    }}>
+                        <Image source={item.avatar} style={{ width: 61, height: 61, borderRadius: 30 }} />
+                        <Text style={{ marginVertical: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold }}>{item.nama}</Text>
+                        <Text style={{ color: COLORS.lighter, fontSize: FONTSIZE.H4 }}>{item.unit}</Text>
+                    </View>
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <CollapseCardBiodata profile={item} />
+                    <CollapseCardLinimasa linimasa={item.dataLinimasa} />
+                </View>
+
+            </ScrollView>
+        </SafeAreaView>
+    )
+}

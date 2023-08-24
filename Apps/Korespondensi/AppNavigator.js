@@ -135,6 +135,8 @@ import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import { DetailPenilaian } from "../Pengetahuan/DetailPenilaian";
 import { ListSukaLinimasa } from "../Pengetahuan/ListSukaLinimasa";
 import { FileViewer } from "../Pengetahuan/FileViewer";
+import { ListPegawai } from "../Pegawai/ListPegawai";
+import { DetailProfile } from "../Pegawai/DetailProfile";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -367,6 +369,20 @@ function AuthStack() {
             <Stack.Screen
               name="FileViewer"
               component={FileViewer}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ListPegawai"
+              component={ListPegawai}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailProfile"
+              component={DetailProfile}
               options={{
                 headerShown: false,
               }}

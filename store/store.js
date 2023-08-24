@@ -16,6 +16,7 @@ import KebijakanReducer from "./Kebijakan";
 import DashboardReducer from "./Dashboard";
 import PengetahuanReducer from "./Pengetahuan";
 import DigitalSignReducer from "./DigitalSign";
+import PegawaiReducer from "./Pegawai";
 
 export const store = configureStore({
   reducer: {
@@ -35,5 +36,6 @@ export const store = configureStore({
     dashboard: DashboardReducer,
     pengetahuan: PengetahuanReducer,
     digitalsign: DigitalSignReducer,
+    Pegawai: PegawaiReducer
   },
 });
