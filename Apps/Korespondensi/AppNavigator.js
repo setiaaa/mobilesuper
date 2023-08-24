@@ -134,6 +134,7 @@ import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
 import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import { DetailPenilaian } from "../Pengetahuan/DetailPenilaian";
 import { ListSukaLinimasa } from "../Pengetahuan/ListSukaLinimasa";
+import { FileViewer } from "../Pengetahuan/FileViewer";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -359,6 +360,13 @@ function AuthStack() {
             <Stack.Screen
               name="ListSukaLinimasa"
               component={ListSukaLinimasa}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="FileViewer"
+              component={FileViewer}
               options={{
                 headerShown: false,
               }}

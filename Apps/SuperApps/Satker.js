@@ -188,7 +188,7 @@ export const Satker = () => {
                             <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
                         </View>
                         <View>
-                            <Image source={profile.avatar} style={{ width: 50, height: 50 }} />
+                            <Image source={profile.avatar} style={{ width: 50, height: 50, borderRadius: 8 }} />
                         </View>
                     </View>
                 </View>

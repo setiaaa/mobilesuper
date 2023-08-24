@@ -39,8 +39,8 @@ const listsLinimasa = [
             },
             {
                 id: 3,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png',
+                gambar: 'https%3A%2F%2Fcalibre-ebook.com%2Fdownloads%2Fdemos%2Fdemo.docx&wdOrigin',
+                nama: 'linimasa1.doc',
             },
             {
                 id: 4,
@@ -181,13 +181,13 @@ const listsLinimasa = [
             },
             {
                 id: 2,
-                gambar: require('../../assets/superApp/linimasa2.png'),
-                nama: 'linimasa2.png'
+                gambar: 'https%3A%2F%2Fwww.unm.edu%2F~unmvclib%2Fpowerpoint%2Fpptexamples.ppt&wdOrigin',
+                nama: 'linimasa2.ppt'
             },
             {
                 id: 3,
-                gambar: require('../../assets/superApp/linimasa2.png'),
-                nama: 'linimasa2.png'
+                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
+                nama: 'linimasa2.xls'
             },
             {
                 id: 4,
@@ -333,8 +333,8 @@ const listsLinimasa = [
             },
             {
                 id: 3,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
+                gambar: 'https://www.africau.edu/images/default/sample.pdf',
+                nama: 'linimasa1.pdf'
             },
             {
                 id: 4,
@@ -683,6 +683,7 @@ export const LiniMasa = () => {
                 // setVisibleModal={setVisibleModal}
                 />
                 }
+                style={{ marginBottom: 80 }}
                 keyExtractor={item => item.id}
             />
 

@@ -251,7 +251,20 @@ const dataUltah = [
 const dataProfile = {
     avatar: AVATAR.U3,
     nama: 'TRIAN YUNANDA, S.PI, M.SC',
-    nip: '197406261999031004'
+    nip: '197406261999031004',
+    unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
+    harikerja: '17',
+    hadir: '13',
+    terlambat: '-',
+    dinas: '4',
+    cuti: '-',
+    ipasn: '85',
+    jenisipasn: 'Tinggi',
+    kualifikasi: '60',
+    kompetensi: '100',
+    kinerja: '83,3',
+    disiplin: '100',
+    email: 'trian@kkp.com'
 }
 
 const visimisi = {
