@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { setTaskDetail } from '../../store/Task'
 import { AVATAR, COLORS } from '../../config/SuperAppps'
 import { setPenilaian } from '../../store/Pengetahuan'
+import { Host } from 'react-native-portalize'
 
 
 const datapenilaian = [
@@ -135,9 +136,11 @@ export default function MainPengetahuan() {
     }, [dispatch]);
 
     return (
-        <BottomSheetModalProvider>
-            <BottomTabsPengetahuan />
-        </BottomSheetModalProvider>
+        <Host>
+            <BottomSheetModalProvider>
+                <BottomTabsPengetahuan />
+            </BottomSheetModalProvider>
+        </Host>
     )
 }
 

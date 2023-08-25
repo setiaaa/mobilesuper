@@ -5,6 +5,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { AVATAR } from '../../config/SuperAppps';
 import { useDispatch } from 'react-redux';
 import { setAgenda, setBanner, setBerita, setGaleri, setLinimasa, setMading, setProfile, setProgram, setUltah, setVisiMisi } from '../../store/SuperApps'
+import { Host } from 'react-native-portalize';
 
 const ENTRIES1 = [
     {
@@ -325,9 +326,11 @@ export default function Main() {
         dispatch(setBanner(banner))
     }, []);
     return (
-        <BottomSheetModalProvider>
-            <BottomTabs />
-        </BottomSheetModalProvider>
+        <Host>
+            <BottomSheetModalProvider>
+                <BottomTabs />
+            </BottomSheetModalProvider>
+        </Host>
     )
 }
 

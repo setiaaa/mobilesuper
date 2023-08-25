@@ -8,6 +8,7 @@ import { store } from "./store/store";
 import { GlobalStyles } from "./constants/styles";
 // import AppNavigator from "./screen/AppNavigator";
 import AppNavigator from './Apps/Korespondensi/AppNavigator'
+import { Host } from "react-native-portalize";
 // import OneSignal from "react-native-onesignal";
 // import Constants from "expo-constants";
 
@@ -34,11 +35,13 @@ export default function App() {
   return (
     <>
       <SafeAreaProvider>
-        <PaperProvider theme={theme}>
-          <Provider store={store}>
-            <AppNavigator />
-          </Provider>
-        </PaperProvider>
+        <Host>
+          <PaperProvider theme={theme}>
+            <Provider store={store}>
+              <AppNavigator />
+            </Provider>
+          </PaperProvider>
+        </Host>
       </SafeAreaProvider>
     </>
   );

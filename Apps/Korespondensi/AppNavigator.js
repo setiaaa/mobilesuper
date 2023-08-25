@@ -137,6 +137,7 @@ import { ListSukaLinimasa } from "../Pengetahuan/ListSukaLinimasa";
 import { FileViewer } from "../Pengetahuan/FileViewer";
 import { ListPegawai } from "../Pegawai/ListPegawai";
 import { DetailProfile } from "../Pegawai/DetailProfile";
+import { Host } from "react-native-portalize";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -1152,13 +1153,14 @@ function AppNavigator() {
   );
   return (
     <>
-      <NavigationContainer>
-        <BottomSheetModalProvider>
+      <Host>
+
+        <NavigationContainer>
           {!isLoading && !isAuthenticated && <AuthStack />}
           {!isLoading && isAuthenticated && <AuthenticatedStack />}
-        </BottomSheetModalProvider>
-      </NavigationContainer>
-      {loadingOverlay}
+        </NavigationContainer>
+        {loadingOverlay}
+      </Host>
     </>
   );
 }
