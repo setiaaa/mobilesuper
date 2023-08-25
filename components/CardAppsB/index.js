@@ -76,7 +76,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('HalamanUtama')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='clipboard-outline' size={24} color={COLORS.primary} />
                         </View>

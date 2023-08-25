@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 
 
-export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWidth, borderwidthDrop, borderColorDrop, borderWidthValue, borderColorValue }) => {
+export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWidth, borderwidthDrop, borderColorDrop, borderWidthValue, borderColorValue, heightValue }) => {
     const [press, setPress] = useState(0)
     const handlePress = () => {
         if (press === 0) {
@@ -57,7 +57,7 @@ export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWi
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: borderWidthValue, borderColor: borderColorValue }}>
+                        <View style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: borderWidthValue, borderColor: borderColorValue, height: heightValue ? heightValue : 'auto' }}>
                             {data.map(kategori => {
                                 return (
                                     <TouchableOpacity onPress={() => handlePressData(kategori)} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row', gap: 10, marginVertical: 5 }}>

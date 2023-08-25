@@ -138,6 +138,7 @@ import { FileViewer } from "../Pengetahuan/FileViewer";
 import { ListPegawai } from "../Pegawai/ListPegawai";
 import { DetailProfile } from "../Pegawai/DetailProfile";
 import { Host } from "react-native-portalize";
+import { HalamanUtama } from "../Event Management/HalamanUtama";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -412,6 +413,13 @@ function AuthStack() {
             <Stack.Screen
               name="DetailPenilain"
               component={DetailPenilaian}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="HalamanUtama"
+              component={HalamanUtama}
               options={{
                 headerShown: false,
               }}
