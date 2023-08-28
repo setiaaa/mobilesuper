@@ -208,7 +208,7 @@ export const DetailLinimasa = ({ route }) => {
                         </View> */}
 
 
-
+                            {/* Lampiran */}
                             <FlatList
                                 key={'#'}
                                 data={item.lampiran}

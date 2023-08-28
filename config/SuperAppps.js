@@ -16,7 +16,9 @@ export const COLORS = {
     infoDanger: '#C34647',
     infoDangerLight: '#FBDDDD',
     ExtraDivinder: '#DBDADE',
-    secondaryLighter: '#d9d9d9'
+    secondaryLighter: '#d9d9d9',
+    lightBrown: '#D2B48C',
+    foundation: '#474747'
 }
 export const FONTSIZE = {
     H1: 15,

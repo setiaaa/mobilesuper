@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Dropdown } from '../../components/DropDown'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setEventLists } from '../../store/Event'
+import { setEventDetail, setEventLists } from '../../store/Event'
 import { useEffect } from 'react'
 import { FlatList } from 'react-native'
 import { Image } from 'react-native'
@@ -31,10 +31,46 @@ const kategories = [
 
 const listsEvent = [
     {
+        id: '1',
         judul: 'UAT Korespondensi',
         departemen: 'Sekretariat Jendral',
         pic: AVATAR.U3,
         status: 'persiapan',
+        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+        tanggal: '8 Juli 2023 - 10 Juli 2023',
+        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
+        pimpinan: 'Rizky Novriansyah',
+        peserta: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        notulen: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        absen: 'Alto Belly',
+        lampiran: [
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 3,
+                gambar: 'https://www.africau.edu/images/default/sample.pdf',
+                nama: 'linimasa1.pdf'
+            },
+            {
+                id: 4,
+                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
+                nama: 'linimasa2.xls'
+            }
+        ],
         progresEvent: [
             {
                 judul: 'UAT Korespondensi',
@@ -71,10 +107,46 @@ const listsEvent = [
 
     },
     {
+        id: '2',
         judul: 'UAT Korespondensi',
         departemen: 'Sekretariat Jendral',
         pic: AVATAR.U3,
         status: 'persiapan',
+        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+        tanggal: '8 Juli 2023 - 10 Juli 2023',
+        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
+        pimpinan: 'Rizky Novriansyah',
+        peserta: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        notulen: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        absen: 'Alto Belly',
+        lampiran: [
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 3,
+                gambar: 'https://www.africau.edu/images/default/sample.pdf',
+                nama: 'linimasa1.pdf'
+            },
+            {
+                id: 4,
+                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
+                nama: 'linimasa2.xls'
+            }
+        ],
         progresEvent: [
             {
                 judul: 'UAT Korespondensi',
@@ -111,10 +183,46 @@ const listsEvent = [
 
     },
     {
+        id: '3',
         judul: 'UAT Korespondensi',
         departemen: 'Sekretariat Jendral',
         pic: AVATAR.U3,
         status: 'persiapan',
+        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+        tanggal: '8 Juli 2023 - 10 Juli 2023',
+        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
+        pimpinan: 'Rizky Novriansyah',
+        peserta: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        notulen: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        absen: 'Alto Belly',
+        lampiran: [
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 3,
+                gambar: 'https://www.africau.edu/images/default/sample.pdf',
+                nama: 'linimasa1.pdf'
+            },
+            {
+                id: 4,
+                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
+                nama: 'linimasa2.xls'
+            }
+        ],
         progres: [
             {
                 judul: 'UAT Korespondensi',
@@ -150,10 +258,46 @@ const listsEvent = [
         ],
     },
     {
+        id: '4',
         judul: 'UAT Korespondensi',
         departemen: 'Sekretariat Jendral',
         pic: AVATAR.U3,
         status: 'persiapan',
+        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+        tanggal: '8 Juli 2023 - 10 Juli 2023',
+        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
+        pimpinan: 'Rizky Novriansyah',
+        peserta: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        notulen: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        absen: 'Alto Belly',
+        lampiran: [
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 3,
+                gambar: 'https://www.africau.edu/images/default/sample.pdf',
+                nama: 'linimasa1.pdf'
+            },
+            {
+                id: 4,
+                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
+                nama: 'linimasa2.xls'
+            }
+        ],
         progres: [
             {
                 judul: 'UAT Korespondensi',
@@ -190,10 +334,46 @@ const listsEvent = [
 
     },
     {
+        id: '5',
         judul: 'UAT Korespondensi',
         departemen: 'Sekretariat Jendral',
         pic: AVATAR.U3,
         status: 'persiapan',
+        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+        tanggal: '8 Juli 2023 - 10 Juli 2023',
+        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
+        pimpinan: 'Rizky Novriansyah',
+        peserta: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        notulen: [
+            { image: AVATAR.U2 },
+            { image: AVATAR.U2 },
+        ],
+        absen: 'Alto Belly',
+        lampiran: [
+            {
+                id: 1,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 2,
+                gambar: require('../../assets/superApp/linimasa1.png'),
+                nama: 'linimasa1.png'
+            },
+            {
+                id: 3,
+                gambar: 'https://www.africau.edu/images/default/sample.pdf',
+                nama: 'linimasa1.pdf'
+            },
+            {
+                id: 4,
+                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
+                nama: 'linimasa2.xls'
+            }
+        ],
         progres: [
             {
                 judul: 'UAT Korespondensi',
@@ -232,15 +412,28 @@ const listsEvent = [
 ]
 
 const CardListEvent = ({ item }) => {
+    const navigation = useNavigation()
+    const { event } = useSelector(state => state.event)
+    const dispatch = useDispatch()
+
+    const getDetail = (id) => {
+        const data = event.lists.find(item => item.id === id)
+        dispatch(setEventDetail(data))
+    }
     return (
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{
+        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+            <TouchableOpacity style={{
                 backgroundColor: COLORS.white,
                 width: 358,
                 padding: 20,
-                marginVertical: 10,
                 borderRadius: 8
-            }}>
+            }}
+                onPress={() => {
+                    getDetail(item.id)
+                    navigation.navigate('MainDetailEvent')
+                }
+                }
+            >
                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
@@ -269,7 +462,7 @@ const CardListEvent = ({ item }) => {
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

@@ -139,6 +139,15 @@ import { ListPegawai } from "../Pegawai/ListPegawai";
 import { DetailProfile } from "../Pegawai/DetailProfile";
 import { Host } from "react-native-portalize";
 import { HalamanUtama } from "../Event Management/HalamanUtama";
+import { DetailEvent } from "../Event Management/DetailEvent";
+import MyTabDetailEvent from "../Event Management/BottomTabsDetailEvent";
+import { AgendaEvent } from "../Event Management/AgendaEvent";
+import { MainDetailEvent } from "../Event Management/MainDetailEvent";
+import { DetailAgenda } from "../Event Management/DetailAgenda";
+import { Todo } from "../Event Management/Todo";
+import { Absen } from "../Event Management/Absen";
+import MyTabDetailAgenda from "../Event Management/BottomTabsDetailAgenda";
+import { MainDetailAgenda } from "../Event Management/MainDetailAgenda";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -424,6 +433,27 @@ function AuthStack() {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="DetailEvent"
+              component={DetailEvent}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MainDetailEvent"
+              component={MainDetailEvent}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MainDetailAgenda"
+              component={MainDetailAgenda}
+              options={{
+                headerShown: false,
+              }}
+            />
             {/* <Stack.Screen
               name="Main"
               component={Main}
@@ -579,6 +609,29 @@ export const BottomTabsPengetahuan = () => {
       <Tab.Navigator tabBar={props => <MyTabBarPengetahuan {...props} />} initialRouteName='LiniMasa'>
         <Tab.Screen name='LiniMasa' component={LiniMasa} options={{ headerShown: false }} />
         <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const BottomTabsDetailEvent = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabDetailEvent {...props} />} initialRouteName='DetailEvent'>
+        <Tab.Screen name='DetailEvent' component={DetailEvent} options={{ headerShown: false }} />
+        <Tab.Screen name='AgendaEvent' component={AgendaEvent} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const BottomTabsDetailAgenda = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabDetailAgenda {...props} />} initialRouteName='DetailAgenda'>
+        <Tab.Screen name='DetailAgenda' component={DetailAgenda} options={{ headerShown: false }} />
+        <Tab.Screen name='Todo' component={Todo} options={{ headerShown: false }} />
+        <Tab.Screen name='Absen' component={Absen} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )
