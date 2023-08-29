@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -11,6 +11,16 @@ import { FlatList } from 'react-native'
 import { Image } from 'react-native'
 import { Modal } from 'react-native'
 import { StyleSheet } from 'react-native'
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+    BottomSheetBackdrop,
+    BottomSheetView,
+    BottomSheetTextInput,
+    useBottomSheetDynamicSnapPoints
+} from '@gorhom/bottom-sheet'
+import { Search } from '../../components/Search'
+import { Portal } from 'react-native-portalize'
 
 const CardLampiran = ({ lampiran, onClick, type }) => {
     const navigation = useNavigation()
@@ -57,6 +67,33 @@ const CardLampiran = ({ lampiran, onClick, type }) => {
 }
 
 
+const CardApproval = ({ item }) => {
+    return (
+        <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+            <View>
+                <Text>{item.nama}</Text>
+                <View style={{ flexDirection: 'row', gap: 5 }}>
+                    <Text>Waktu:</Text>
+                    <Text>{item.waktu}</Text>
+                </View>
+            </View>
+            <View style={{
+                width: 100,
+                height: 24,
+                borderRadius: 30,
+                backgroundColor: item.status === 'Sepakat' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : COLORS.infoDangerLight,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <Text style={{
+                    color: item.status === 'Sepakat' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : COLORS.infoDanger
+                }}>{item.status}</Text>
+            </View>
+        </View>
+    )
+}
+
+
 export const DetailAgenda = () => {
     const navigation = useNavigation()
     const { agenda } = useSelector(state => state.event)
@@ -75,7 +112,24 @@ export const DetailAgenda = () => {
 
     const data = agenda.detail
 
-    console.log(data)
+    const bottomSheetModalRef = useRef(null);
+
+    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
+    const {
+        animatedHandleHeight,
+        animatedSnapPoints,
+        animatedContentHeight,
+        handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
+
+    const bottomSheetAttach = () => {
+        bottomSheetModalRef.current?.present()
+    }
+
+    const bottomSheetAttachClose = () => {
+        if (bottomSheetModalRef.current)
+            bottomSheetModalRef.current?.close()
+    }
     return (
         <SafeAreaView>
             <ScrollView>
@@ -196,33 +250,22 @@ export const DetailAgenda = () => {
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
                             </TouchableOpacity>
                         </View>
+
+                        {/* custom divider */}
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                        <View style={{ flexDirection: 'row', }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absensi</Text>
+                            <Text style={{ width: 156 }}>{data.absen}</Text>
+                        </View>
                     </View>
 
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Petugas Absensi</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginVertical: 10 }}>
                             <Ionicons name='people-outline' size={24} />
                             <Text>0/15</Text>
                         </View>
                         <TouchableOpacity style={{
-                            backgroundColor: COLORS.infoDanger,
-                            width: 326,
-                            height: 50,
-                            borderRadius: 8,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 10
-                        }}>
-                            <Ionicons name='document-outline' size={24} color={COLORS.white} />
-                            <Text style={{ color: COLORS.white }}>Info Approval</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lihat Notulensi</Text>
-                        <TouchableOpacity style={{
-                            backgroundColor: COLORS.infoDanger,
                             width: 326,
                             height: 50,
                             borderRadius: 8,
@@ -230,10 +273,85 @@ export const DetailAgenda = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: 10,
+                            borderWidth: 1,
+                            borderColor: COLORS.infoDangerLight
+                        }}
+                            onPress={() => {
+                                bottomSheetAttach()
+                            }}
+                        >
+                            <Ionicons name='document-outline' size={24} />
+                            <Text>Info Approval</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <Portal>
+                        <BottomSheetModalProvider>
+                            <BottomSheetModal
+                                ref={bottomSheetModalRef}
+                                snapPoints={animatedSnapPoints}
+                                handleHeight={animatedHandleHeight}
+                                contentHeight={animatedContentHeight}
+                                index={0}
+                                style={{ borderRadius: 50 }}
+                                keyboardBlurBehavior="restore"
+                                android_keyboardInputMode="adjust"
+                                backdropComponent={({ style }) => (
+                                    <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                )}
+                            >
+                                <BottomSheetView onLayout={handleContentLayout} >
+                                    <View style={{ flex: 1 }}>
+                                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20 }}>
+                                            <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
+                                                <Ionicons name='chevron-back-outline' size={24} />
+                                            </TouchableOpacity>
+                                            <View style={{ alignItems: 'center', flex: 1, marginRight: 20 }}>
+                                                <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Approval</Text>
+                                            </View>
+                                        </View>
+
+                                        <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+                                            <Search
+                                                placeholder={'Cari'}
+                                            />
+                                        </View>
+
+                                        <FlatList
+                                            data={data.approval}
+                                            renderItem={({ item }) => <CardApproval
+                                                item={item}
+                                            />
+                                            }
+                                            style={{ marginBottom: 40 }}
+                                        />
+                                    </View>
+                                </BottomSheetView>
+                            </BottomSheetModal>
+                        </BottomSheetModalProvider>
+                    </Portal>
+
+
+                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lihat Notulensi</Text>
+                        <TouchableOpacity style={{
+                            width: 326,
+                            height: 50,
+                            borderRadius: 8,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 10,
+                            borderWidth: 1,
+                            borderColor: COLORS.infoDangerLight,
                             marginTop: 10
-                        }}>
-                            <Ionicons name='document-outline' size={24} color={COLORS.white} />
-                            <Text style={{ color: COLORS.white }}>Info Approval</Text>
+                        }}
+                            onPress={() => {
+                                navigation.navigate('Notulensi', { data: data })
+                            }}
+                        >
+                            <Ionicons name='document-outline' size={24} />
+                            <Text>Lihat Notulensi</Text>
                         </TouchableOpacity>
                     </View>
 

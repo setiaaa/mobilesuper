@@ -148,6 +148,7 @@ import { Todo } from "../Event Management/Todo";
 import { Absen } from "../Event Management/Absen";
 import MyTabDetailAgenda from "../Event Management/BottomTabsDetailAgenda";
 import { MainDetailAgenda } from "../Event Management/MainDetailAgenda";
+import { Notulensi } from "../Event Management/Notulensi";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -450,6 +451,13 @@ function AuthStack() {
             <Stack.Screen
               name="MainDetailAgenda"
               component={MainDetailAgenda}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Notulensi"
+              component={Notulensi}
               options={{
                 headerShown: false,
               }}

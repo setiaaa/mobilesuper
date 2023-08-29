@@ -24,6 +24,9 @@ const listsAgenda = [
         deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
         tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
         pic: 'Rizky Novriansyah',
+        avatar: AVATAR.U2,
+        unit: 'Unit Kelompok Fungsional',
+        absen: 'Alto Belly',
         pesertaevent: [
             { image: AVATAR.U2 },
             { image: AVATAR.U2 },
@@ -58,6 +61,50 @@ const listsAgenda = [
                 nama: 'linimasa2.xls'
             }
         ],
+        approval: [
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '-',
+                status: 'Menunggu'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Tidak Sepakat'
+            },
+        ],
+        todo: [
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+        ]
     },
     {
         id: '2',
@@ -71,6 +118,9 @@ const listsAgenda = [
         deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
         tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
         pic: 'Rizky Novriansyah',
+        avatar: AVATAR.U2,
+        unit: 'Unit Kelompok Fungsional',
+        absen: 'Alto Belly',
         pesertaevent: [
             { image: AVATAR.U2 },
             { image: AVATAR.U2 },
@@ -105,6 +155,50 @@ const listsAgenda = [
                 nama: 'linimasa2.xls'
             }
         ],
+        approval: [
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '-',
+                status: 'Menunggu'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Tidak Sepakat'
+            },
+        ],
+        todo: [
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+        ]
     },
     {
         id: '2',
@@ -118,6 +212,9 @@ const listsAgenda = [
         deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
         tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
         pic: 'Rizky Novriansyah',
+        avatar: AVATAR.U2,
+        unit: 'Unit Kelompok Fungsional',
+        absen: 'Alto Belly',
         pesertaevent: [
             { image: AVATAR.U2 },
             { image: AVATAR.U2 },
@@ -152,6 +249,50 @@ const listsAgenda = [
                 nama: 'linimasa2.xls'
             }
         ],
+        approval: [
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Sepakat'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '-',
+                status: 'Menunggu'
+            },
+            {
+                nama: 'Yani Dama Putera',
+                waktu: '07.40',
+                status: 'Tidak Sepakat'
+            },
+        ],
+        todo: [
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+            {
+                judul: 'Bux Fixing Aplikasi',
+                tanggal: '22 Juli 2023',
+                agenda: 'UAT Korespondensi'
+            },
+        ]
     },
 ]
 

@@ -21,6 +21,7 @@ import {
     BottomSheetTextInput,
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
+import { Search } from '../../components/Search'
 
 const kategories = [
     { key: 'q', value: 'satu' },
@@ -616,25 +617,10 @@ export const HalamanUtama = () => {
                     </View>
                 </View>
 
-                <View style={{ flexDirection: 'row', gap: 10, marginVertical: 20, justifyContent: 'center' }}>
-                    <View style={{ width: 309, }}>
-                        <Dropdown
-                            data={kategories}
-                            placeHolder={'Pilih'}
-                            setSelected={setKategori}
-                            heightValue={200}
-                        />
-                    </View>
-                    <View style={{
-                        width: 44,
-                        height: 43,
-                        backgroundColor: COLORS.white,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 8
-                    }}>
-                        <Ionicons name='search-outline' size={24} color={COLORS.lighter} />
-                    </View>
+                <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
+                    <Search
+                        placeholder={'Cari'}
+                    />
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}>

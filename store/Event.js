@@ -12,7 +12,8 @@ const EventSlice = createSlice({
         agenda: {
             lists: [],
             detail: {}
-        }
+        },
+        absen: []
     },
     reducers: {
         setEventLists: (state, action) => {
@@ -27,10 +28,13 @@ const EventSlice = createSlice({
         setAgendaDetail: (state, action) => {
             state.agenda.detail = action.payload;
         },
+        setAbsen: (state, action) => {
+            state.absen = action.payload
+        }
     }
 })
 
-export const { setEventLists, setEventDetail, setAgendaLists, setAgendaDetail } =
+export const { setEventLists, setEventDetail, setAgendaLists, setAgendaDetail, setAbsen } =
     EventSlice.actions;
 
 export default EventSlice.reducer;

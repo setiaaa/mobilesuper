@@ -11,30 +11,94 @@ function MyTabDigitalSign({ props, navigation }) {
     return (
         <SafeAreaView>
             <BottomSheetModalProvider>
-                <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white }}>
-                    <View style={{ flexDirection: 'row', gap: 60, marginVertical: 20, justifyContent: 'space-around', display: 'flex', flex: 1 }}>
-                        <TouchableOpacity
-                            key={1}
-                            onPress={() => {
-                                setTabItemIndex(1)
-                                navigation.navigate('Bankom', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }} style={{ alignItems: 'center' }}>
-                            <Ionicons name='briefcase-outline' color={tabItemIndex === 1 ? COLORS.primary : COLORS.grey} size={24} />
-                            <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : COLORS.grey }}>Bankom</Text>
-                        </TouchableOpacity>
+                <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
+                    <TouchableOpacity
+                        key={1}
+                        onPress={() => {
+                            setTabItemIndex(1)
+                            navigation.navigate('Bankom', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }}>
+                        {tabItemIndex === 1 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
 
-                        <TouchableOpacity
-                            key={2}
-                            onPress={() => {
-                                setTabItemIndex(2)
-                                navigation.navigate('DokumenLain', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }} style={{ alignItems: 'center' }}>
-                            <Ionicons name='attach-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
-                            <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Dokumen Lain</Text>
-                        </TouchableOpacity>
-                    </View>
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='briefcase-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Bankom</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Bankom</Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        key={2}
+                        onPress={() => {
+                            setTabItemIndex(2)
+                            navigation.navigate('DokumenLain', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }}>
+                        {tabItemIndex === 2 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='attach-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary, textAlign: 'center' }}>Dokumen Lain</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='attach-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey, textAlign: 'center' }}>Dokumen Lain</Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
                 </View>
             </BottomSheetModalProvider>
         </SafeAreaView>
