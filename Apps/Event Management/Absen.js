@@ -45,6 +45,8 @@ const listAbsen = [
 ]
 
 const CardListAbsen = ({ item }) => {
+    const [user, setUser] = useState('member')
+    const [checkIn, setCheckin] = useState('')
     return (
         <View style={{
             justifyContent: 'center',
@@ -53,7 +55,6 @@ const CardListAbsen = ({ item }) => {
             <View style={
                 {
                     width: 358,
-                    height: 84,
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     marginTop: 10,
@@ -79,10 +80,40 @@ const CardListAbsen = ({ item }) => {
                     </View>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                        <Text style={{ width: 56, textAlign: 'center' }}>Waktu Check In</Text>
-                        <View style={{ width: 47, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text>{item.waktu}</Text>
-                        </View>
+                        {user === 'admin' && checkIn === '' ? (
+                            <TouchableOpacity style={{
+                                width: 97,
+                                height: 24,
+                                borderRadius: 8,
+                                backgroundColor: COLORS.foundation,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                                onPress={() => setCheckin('1')}
+                            >
+                                <Text style={{ color: COLORS.white }}>Check In</Text>
+                            </TouchableOpacity>
+                        ) : user === 'resepsionis' && checkIn === '' ? (
+                            <TouchableOpacity style={{
+                                width: 97,
+                                height: 24,
+                                borderRadius: 8,
+                                backgroundColor: COLORS.foundation,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                                onPress={() => setCheckin('1')}
+                            >
+                                <Text style={{ color: COLORS.white }}>Check In</Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', }}>
+                                <Text style={{ width: 58, textAlign: 'center' }}>Waktu Check In</Text>
+                                <View style={{ width: 47, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text>{item.waktu}</Text>
+                                </View>
+                            </View>
+                        )}
                     </View>
 
                 </View>

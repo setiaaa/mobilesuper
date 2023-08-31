@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,13 +8,24 @@ import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import { Search } from '../../components/Search'
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+    BottomSheetBackdrop,
+    BottomSheetView,
+    BottomSheetTextInput,
+    useBottomSheetDynamicSnapPoints
+} from '@gorhom/bottom-sheet'
+import { Portal } from 'react-native-portalize'
 
 
 
-const CardListTodo = ({ item }) => {
+const CardListTodo = ({ item, bottomSheetAttach }) => {
+    const [user, setUser] = useState('resepsionis')
+    const navigation = useNavigation()
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-            <View style={{
+            <TouchableOpacity style={{
                 width: 358,
                 height: 102,
                 backgroundColor: COLORS.white,
@@ -27,8 +38,24 @@ const CardListTodo = ({ item }) => {
                 shadowOpacity: 0.2,
                 //shadow android
                 elevation: 2,
-            }}>
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+            }}
+                onPress={() => {
+                    navigation.navigate('DetailTodo', { item: item })
+                }}
+            >
+                {user === 'member' || user === 'resepsionis' ? (
+                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+                ) : user === 'notulensi' || user === 'admin' ? (
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+                        <TouchableOpacity onPress={() => bottomSheetAttach()}>
+                            <Ionicons name='chevron-down-outline' size={24} />
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <></>
+                )}
                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                     <Text style={{ color: COLORS.lighter }}>Due Date :</Text>
                     <Text style={{ marginVertical: 10, color: COLORS.lighter }}>{item.tanggal}</Text>
@@ -37,7 +64,7 @@ const CardListTodo = ({ item }) => {
                     <Text style={{ color: COLORS.lighter }}>Agenda</Text>
                     <Text style={{ color: COLORS.lighter }}>{item.agenda}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -48,6 +75,27 @@ export const Todo = () => {
     const data = agenda.detail
 
     const navigation = useNavigation()
+
+    const bottomSheetModalRef = useRef(null);
+
+    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
+    const {
+        animatedHandleHeight,
+        animatedSnapPoints,
+        animatedContentHeight,
+        handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
+
+    const bottomSheetAttach = () => {
+        bottomSheetModalRef.current?.present()
+    }
+
+    const bottomSheetAttachClose = () => {
+        if (bottomSheetModalRef.current)
+            bottomSheetModalRef.current?.close()
+    }
+    const [user, setUser] = useState('admin')
+
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -111,17 +159,93 @@ export const Todo = () => {
                         <Ionicons name='menu-outline' size={24} />
                     </View>
                 </View>
+                {user === 'admin' || user === 'notulensi' ? (
+                    <TouchableOpacity style={{
+                        width: 157,
+                        backgroundColor: COLORS.infoDanger,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 8
+                    }}
+                        onPress={() => {
+                            navigation.navigate('TambahTodo', { data: data })
+                        }}>
+                        <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
+                    </TouchableOpacity>
+                ) : (
+                    null
+                )}
             </View>
 
             <FlatList
                 data={data.todo}
                 renderItem={({ item }) => <CardListTodo
                     item={item}
+                    bottomSheetAttach={bottomSheetAttach}
                 />
                 }
                 keyExtractor={item => item.id}
                 style={{ marginTop: 10 }}
             />
+
+            <Portal>
+                <BottomSheetModalProvider>
+                    <BottomSheetModal
+                        ref={bottomSheetModalRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout} >
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <TouchableOpacity style={{
+                                    width: 331,
+                                    height: 50,
+                                    backgroundColor: COLORS.foundation,
+                                    borderRadius: 8,
+                                    justifyContent: 'center',
+                                    alignItems: 'center', marginTop: 10
+                                }}>
+                                    <Text style={{ color: COLORS.white }}>Lihat</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={{
+                                    width: 331,
+                                    height: 50,
+                                    backgroundColor: COLORS.lightBrown,
+                                    borderRadius: 8,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: 10
+                                }}>
+                                    <Text style={{ color: COLORS.white }}>Ubah</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={{
+                                    width: 331,
+                                    height: 50,
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 8,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: 10,
+                                    marginBottom: 40
+                                }}>
+                                    <Text style={{ color: COLORS.white }}>Hapus</Text>
+                                </TouchableOpacity>
+
+                            </View>
+                        </BottomSheetView>
+                    </BottomSheetModal>
+                </BottomSheetModalProvider>
+            </Portal>
 
         </SafeAreaView>
     )

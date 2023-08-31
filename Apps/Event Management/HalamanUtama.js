@@ -576,6 +576,7 @@ export const HalamanUtama = () => {
     const [variant, SetVariant] = useState('hariini')
 
     const bottomSheetModalRef = useRef(null);
+    const bottomSheetModalAddRef = useRef(null);
 
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
@@ -593,6 +594,15 @@ export const HalamanUtama = () => {
     const bottomSheetAttachClose = () => {
         if (bottomSheetModalRef.current)
             bottomSheetModalRef.current?.close()
+    }
+
+    const bottomSheetAttachAdd = () => {
+        bottomSheetModalAddRef.current?.present()
+    }
+
+    const bottomSheetAttachAddClose = () => {
+        if (bottomSheetModalAddRef.current)
+            bottomSheetModalAddRef.current?.close()
     }
 
     return (
@@ -720,10 +730,80 @@ export const HalamanUtama = () => {
                     position: 'absolute',
                     bottom: 100,
                     right: 20
-                }}>
+                }}
+                    onPress={() => {
+                        navigation.navigate('TambahEvent')
+                    }}
+                >
                     <Ionicons name='add-outline' size={24} color={COLORS.white} />
                 </TouchableOpacity>
 
+                <BottomSheetModal
+                    ref={bottomSheetModalAddRef}
+                    snapPoints={animatedSnapPoints}
+                    handleHeight={animatedHandleHeight}
+                    contentHeight={animatedContentHeight}
+                    index={0}
+                    style={{ borderRadius: 50 }}
+                    keyboardBlurBehavior="restore"
+                    android_keyboardInputMode="adjust"
+                    backdropComponent={({ style }) => (
+                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                    )}
+                >
+                    <BottomSheetView onLayout={handleContentLayout} >
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <TouchableOpacity style={{
+                                width: 331,
+                                height: 50,
+                                backgroundColor: COLORS.infoDanger,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center', marginTop: 10
+                            }}
+                                onPress={() => {
+                                    navigation.navigate('TambahEvent')
+                                }}
+                            >
+                                <Text style={{ color: COLORS.white }}>Tambah Event</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={{
+                                width: 331,
+                                height: 50,
+                                backgroundColor: COLORS.infoDanger,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: 10
+                            }}
+                                onPress={() => {
+                                    navigation.navigate('TambahAgendaEvent')
+                                }}
+                            >
+                                <Text style={{ color: COLORS.white }}>Tambah Agenda</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={{
+                                width: 331,
+                                height: 50,
+                                backgroundColor: COLORS.infoDanger,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: 10,
+                                marginBottom: 40
+                            }}
+                                onPress={() => {
+                                    navigation.navigate('TambahTodo', { item: event.lists })
+                                }}
+                            >
+                                <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                    </BottomSheetView>
+                </BottomSheetModal>
 
                 <BottomSheetModal
                     ref={bottomSheetModalRef}

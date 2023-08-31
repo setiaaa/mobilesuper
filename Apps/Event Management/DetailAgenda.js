@@ -356,7 +356,7 @@ export const DetailAgenda = () => {
                     </View>
 
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
+                        <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Materi Agenda</Text>
 
                         <FlatList
                             key={'*'}

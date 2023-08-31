@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
@@ -7,9 +7,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import { ScrollView } from 'react-native';
+import { useRef } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
+import { RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
 
 export const Notulensi = ({ route }) => {
     const { data } = route.params
+    const [user, setUser] = useState('admin')
+    const richText = useRef(null);
+    const [richTextHandle, setRichTextHandle] = useState('');
 
     const navigation = useNavigation()
     return (
@@ -92,9 +98,34 @@ export const Notulensi = ({ route }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Notulensi</Text>
-                        <View style={{ width: 326, height: 330, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                            <Text>Notulensi Viewer</Text>
-                        </View>
+                        {user === 'member' ? (
+                            <View style={{ width: 326, height: 330, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                <Text>Notulensi Viewer</Text>
+                            </View>
+                        ) : user === 'notulensi' || user === 'admin' ? (
+                            <KeyboardAvoidingView style={{
+                                flex: 1,
+                                marginTop: 20,
+                                borderWidth: 1,
+                                borderRadius: 8,
+                                borderColor: COLORS.ExtraDivinder
+                            }}>
+                                <RichToolbar
+                                    editor={richText}
+                                    selectedIconTint="#873c1e"
+                                    iconTint="#312921"
+                                />
+                                <RichEditor
+                                    ref={richText}
+                                    onChange={setRichTextHandle}
+                                    placeholder="Tulis Pesan..."
+                                    androidHardwareAccelerationDisabled={true}
+                                    initialHeight={250}
+                                />
+                            </KeyboardAvoidingView>
+                        ) : (
+                            <></>
+                        )}
                     </View>
                 </View>
 

@@ -149,6 +149,10 @@ import { Absen } from "../Event Management/Absen";
 import MyTabDetailAgenda from "../Event Management/BottomTabsDetailAgenda";
 import { MainDetailAgenda } from "../Event Management/MainDetailAgenda";
 import { Notulensi } from "../Event Management/Notulensi";
+import { DetailTodo } from "../Event Management/DetailTodo";
+import { TambahEvent } from "../Event Management/TambahEvent";
+import { TambahAgendaEvent } from "../Event Management/TambahAgendaEvent";
+import { TambahTodo } from "../Event Management/TambahTodo";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -458,6 +462,34 @@ function AuthStack() {
             <Stack.Screen
               name="Notulensi"
               component={Notulensi}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailTodo"
+              component={DetailTodo}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="TambahEvent"
+              component={TambahEvent}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="TambahAgendaEvent"
+              component={TambahAgendaEvent}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="TambahTodo"
+              component={TambahTodo}
               options={{
                 headerShown: false,
               }}
