@@ -16,9 +16,11 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native';
+import ListEmpty from '../../components/ListEmpty';
 
 const dataPegawai = [
     {
+        id: 1,
         avatar: AVATAR.U3,
         nama: 'TRIAN YUNANDA, S.PI, M.SC',
         nip: '197406261999031004',
@@ -83,6 +85,7 @@ const dataPegawai = [
         ]
     },
     {
+        id: 2,
         avatar: AVATAR.U3,
         nama: 'TRIAN YUNANDA, S.PI, M.SC',
         nip: '197406261999031005',
@@ -102,6 +105,7 @@ const dataPegawai = [
         satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
     },
     {
+        id: 3,
         avatar: AVATAR.U3,
         nama: 'TRIAN YUNANDA, S.PI, M.SC',
         nip: '197406261999031006',
@@ -121,6 +125,7 @@ const dataPegawai = [
         satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
     },
     {
+        id: 4,
         avatar: AVATAR.U3,
         nama: 'TRIAN YUNANDA, S.PI, M.SC',
         nip: '197406261999031007',
@@ -140,6 +145,7 @@ const dataPegawai = [
         satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
     },
     {
+        id: 5,
         avatar: AVATAR.U3,
         nama: 'TRIAN YUNANDA, S.PI, M.SC',
         nip: '197406261999031008',
@@ -159,8 +165,9 @@ const dataPegawai = [
         satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
     },
     {
+        id: 6,
         avatar: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
+        nama: 'cekkk',
         nip: '197406261999031009',
         unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
         harikerja: '17',
@@ -179,6 +186,69 @@ const dataPegawai = [
     },
 ]
 
+const CardListPegawai = ({ item, collapse, setCollapse, navigation }) => {
+    return (
+        <View style={{
+            flexDirection: 'column', display: 'flex',
+            backgroundColor: COLORS.white,
+            width: 358,
+            padding: 20,
+            marginTop: 10,
+            borderRadius: 8,
+            marginHorizontal: 15,
+        }}>
+            <TouchableOpacity style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+                onPress={() => setCollapse({ nip: item.nip, toggle: true })}
+            >
+                <View style={{ width: 298 }}>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.nama}</Text>
+                    <Text style={{ marginTop: 5 }}>{item.nip}</Text>
+                </View>
+                {collapse.nip === item.nip && collapse.toggle === true ? (
+                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
+                        <Ionicons name='chevron-up' size={24} />
+                    </TouchableOpacity>
+                ) : (
+                    <Ionicons name='chevron-down' size={24} />
+                )}
+            </TouchableOpacity>
+
+            {collapse.nip === item.nip && collapse.toggle === true ? (
+                <View>
+
+                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
+                        <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>Unit Kerja</Text>
+                        <Text style={{ marginTop: 5 }}>{item.unit}</Text>
+
+                        <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>SATKER</Text>
+                        <Text style={{ marginTop: 5 }}>{item.satker}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{
+                        width: 320,
+                        height: 50,
+                        backgroundColor: COLORS.danger,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: 20,
+                        borderRadius: 8,
+                    }}
+                        onPress={() => navigation.navigate('DetailProfile', { item: item })}
+                    >
+                        <Text style={{ color: COLORS.white }}>Lihat Detail Pegawai</Text>
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                null
+            )}
+        </View>
+    )
+}
+
 
 export const ListPegawai = () => {
     const dispatch = useDispatch()
@@ -191,6 +261,28 @@ export const ListPegawai = () => {
     }, []);
 
     const { pegawai } = useSelector(state => state.Pegawai)
+
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(pegawai.lists)
+    }, [pegawai])
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = pegawai.lists.filter((item) => {
+                return item.nama.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(pegawai.lists)
+        }
+    }, [search])
 
     const navigation = useNavigation()
 
@@ -219,71 +311,24 @@ export const ListPegawai = () => {
                 <View style={{ width: '90%', marginVertical: 20, marginHorizontal: 20, }}>
                     <Search
                         placeholder={'Cari'}
+                        onSearch={filter}
                     />
                 </View>
 
-                {pegawai.lists.map((item) => {
-                    return (
-                        <View style={{
-                            flexDirection: 'column', display: 'flex',
-                            backgroundColor: COLORS.white,
-                            width: 358,
-                            padding: 20,
-                            marginTop: 10,
-                            borderRadius: 8,
-                            marginHorizontal: 15,
-                        }}>
-                            <TouchableOpacity style={{
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                                onPress={() => setCollapse({ nip: item.nip, toggle: true })}
-                            >
-                                <View style={{ width: 298 }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.nama}</Text>
-                                    <Text style={{ marginTop: 5 }}>{item.nip}</Text>
-                                </View>
-                                {collapse.nip === item.nip && collapse.toggle === true ? (
-                                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                                        <Ionicons name='chevron-up' size={24} />
-                                    </TouchableOpacity>
-                                ) : (
-                                    <Ionicons name='chevron-down' size={24} />
-                                )}
-                            </TouchableOpacity>
-
-                            {collapse.nip === item.nip && collapse.toggle === true ? (
-                                <View>
-
-                                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                                        <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>Unit Kerja</Text>
-                                        <Text style={{ marginTop: 5 }}>{item.unit}</Text>
-
-                                        <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>SATKER</Text>
-                                        <Text style={{ marginTop: 5 }}>{item.satker}</Text>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity style={{
-                                        width: 320,
-                                        height: 50,
-                                        backgroundColor: COLORS.danger,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        marginTop: 20,
-                                        borderRadius: 8,
-                                    }}
-                                        onPress={() => navigation.navigate('DetailProfile', { item: item })}
-                                    >
-                                        <Text style={{ color: COLORS.white }}>Lihat Detail Pegawai</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            ) : (
-                                null
-                            )}
-                        </View>
-                    )
-                })}
+                <FlatList
+                    data={filterData}
+                    renderItem={({ item }) => <CardListPegawai
+                        item={item}
+                        collapse={collapse}
+                        setCollapse={setCollapse}
+                        navigation={navigation}
+                    />
+                    }
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={() => (
+                        <ListEmpty />
+                    )}
+                />
             </ScrollView>
         </SafeAreaView>
     )

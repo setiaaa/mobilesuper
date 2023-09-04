@@ -28,11 +28,14 @@ import { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Dropdown } from '../../components/DropDown'
 import Checkbox from 'expo-checkbox'
+import ListEmpty from '../../components/ListEmpty'
 
 
 const item = [
     {
+        id: 1,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
+        status: 'in progress',
         tanggal: '22 Juli 2023',
         subAvatar: [
             { avatar: AVATAR.U2 },
@@ -56,8 +59,10 @@ const item = [
         ]
     },
     {
+        id: 2,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
         tanggal: '22 Juli 2023',
+        status: 'backlog',
         subAvatar: [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 },
@@ -80,8 +85,10 @@ const item = [
         ]
     },
     {
+        id: 3,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
         tanggal: '22 Juli 2023',
+        status: 'pending',
         subAvatar: [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 },
@@ -104,32 +111,10 @@ const item = [
         ],
     },
     {
+        id: 4,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
         tanggal: '22 Juli 2023',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
+        status: 'completed',
         subAvatar: [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 },
@@ -152,8 +137,10 @@ const item = [
         ]
     },
     {
+        id: 5,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
         tanggal: '22 Juli 2023',
+        status: 'in progress',
         subAvatar: [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 },
@@ -176,8 +163,10 @@ const item = [
         ]
     },
     {
+        id: 6,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
         tanggal: '22 Juli 2023',
+        status: 'in progress',
         subAvatar: [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 },
@@ -200,8 +189,36 @@ const item = [
         ]
     },
     {
+        id: 7,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
         tanggal: '22 Juli 2023',
+        status: 'in progress',
+        subAvatar: [
+            { avatar: AVATAR.U2 },
+            { avatar: AVATAR.U2 },
+            { avatar: AVATAR.U2 },
+            { avatar: AVATAR.U2 }
+        ],
+        warna: COLORS.infoDanger,
+        prioritas: 'High',
+        member: [
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+            {
+                avatar: AVATAR.U2,
+                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
+                nama: 'Rizky Novriansyah'
+            },
+        ]
+    },
+    {
+        id: 8,
+        kegiatan: 'Hallo guys',
+        tanggal: '22 Juli 2023',
+        status: 'in progress',
         subAvatar: [
             { avatar: AVATAR.U2 },
             { avatar: AVATAR.U2 },
@@ -265,6 +282,11 @@ export const MyTask = () => {
         bottomSheetModalRef.current?.present()
     }
 
+    const bottomSheetAttachClose = () => {
+        if (bottomSheetModalRef.current)
+            bottomSheetModalRef.current?.close()
+    }
+
     const bottomSheetAttachSelect = () => {
         bottomSheetModalSelectRef.current?.present()
     }
@@ -309,6 +331,49 @@ export const MyTask = () => {
         if (bottomSheetModalAddSubSubCategoryRef.current)
             bottomSheetModalAddSubSubCategoryRef.current?.close()
     }
+
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        if (search !== '') {
+            const status = badge == 1 ? '' : badge == 2 ? 'in progress' : badge == 3 ? 'pending' : badge == 4 ? 'completed' : 'backlog'
+            const data = taskLists.filter((item) => {
+                if (badge == 1) {
+                    return item.kegiatan.toLowerCase().includes(search.toLowerCase())
+                } else {
+                    return item.kegiatan.toLowerCase().includes(search.toLowerCase()) && item.status === status
+                }
+            })
+            setFilterData(data)
+        } else {
+            const status = badge == 1 ? '' : badge == 2 ? 'in progress' : badge == 3 ? 'pending' : badge == 4 ? 'completed' : 'backlog'
+            const data = taskLists.filter((item) => {
+                if (badge == 1) {
+                    return item
+                } else {
+                    return item.status === status
+                }
+            })
+            setFilterData(data)
+        }
+    }, [search])
+
+    useEffect(() => {
+        const status = badge == 1 ? '' : badge == 2 ? 'in progress' : badge == 3 ? 'pending' : badge == 4 ? 'completed' : 'backlog'
+        const data = taskLists.filter((item) => {
+            if (badge == 1) {
+                return item
+            } else {
+                return item.status === status
+            }
+        })
+        setFilterData(data)
+    }, [badge])
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -508,11 +573,16 @@ export const MyTask = () => {
                                         <Search
                                             placeholder={"Cari"}
                                             iconColor={COLORS.primary}
+                                            onSearch={filter}
                                         />
                                     </View>
-                                    <View style={{ justifyContent: 'center' }}>
+                                    <TouchableOpacity style={{ justifyContent: 'center' }}
+                                        onPress={() => {
+                                            bottomSheetAttachClose()
+                                        }}
+                                    >
                                         <Text style={{ fontSize: FONTSIZE.H1, color: COLORS.infoDanger, fontWeight: 500 }}>Batal</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 </View>
 
                                 <View style={{ flexDirection: 'row', gap: 5, justifyContent: 'center' }}>
@@ -625,13 +695,18 @@ export const MyTask = () => {
 
                                 <View style={{ marginHorizontal: 20, marginBottom: 40 }}>
                                     <FlatList
-                                        data={taskLists}
+                                        data={filterData}
                                         renderItem={({ item }) => <CardTaskCari
                                             kegiatan={item.kegiatan}
                                             subAvatar={item.subAvatar}
                                             warna={item.warna}
                                             tanggal={item.tanggal}
                                         />
+                                        }
+                                        style={{ minHeight: 440 }}
+                                        keyExtractor={item => item.id}
+                                        ListEmptyComponent={() =>
+                                            <ListEmpty />
                                         }
                                     />
                                 </View>

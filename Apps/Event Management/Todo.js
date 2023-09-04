@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -17,6 +17,7 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import { Portal } from 'react-native-portalize'
+import ListEmpty from '../../components/ListEmpty'
 
 
 
@@ -96,6 +97,28 @@ export const Todo = () => {
     }
     const [user, setUser] = useState('admin')
 
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(data.todo)
+    }, [data])
+
+    useEffect(() => {
+        if (search !== '') {
+            const datas = data.todo.filter((item) => {
+                return item.judul.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(datas)
+        } else {
+            setFilterData(data.todo)
+        }
+    }, [search])
+
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -120,6 +143,7 @@ export const Todo = () => {
             <View style={{ width: '90%', marginTop: 20, marginHorizontal: 20 }}>
                 <Search
                     placeholder={"Cari ToDO"}
+                    onSearch={filter}
                 />
             </View>
 
@@ -178,7 +202,7 @@ export const Todo = () => {
             </View>
 
             <FlatList
-                data={data.todo}
+                data={filterData}
                 renderItem={({ item }) => <CardListTodo
                     item={item}
                     bottomSheetAttach={bottomSheetAttach}
@@ -186,6 +210,9 @@ export const Todo = () => {
                 }
                 keyExtractor={item => item.id}
                 style={{ marginTop: 10 }}
+                ListEmptyComponent={() => (
+                    <ListEmpty />
+                )}
             />
 
             <Portal>

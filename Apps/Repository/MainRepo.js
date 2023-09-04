@@ -5,10 +5,13 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setDibagikanLists, setDokumentlists } from '../../store/Repository';
+import { Host } from 'react-native-portalize';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const data = [
     {
-        judul: 'Business Agility with Scrum',
+        id: 1,
+        judul: 'hallo guys',
         subjudul: 'Business Agility Scrum 2023 with All Employee',
         tanggal: '16 Mei 2023',
         nama: 'Rizky Novriansyah',
@@ -40,6 +43,7 @@ const data = [
         ]
     },
     {
+        id: 2,
         judul: 'Gathering Investor',
         subjudul: 'Business Agility Scrum 2023 with All Employee',
         tanggal: '16 Mei 2023',
@@ -72,6 +76,7 @@ const data = [
         ]
     },
     {
+        id: 3,
         judul: 'Business Agility with Scrum',
         subjudul: 'Business Agility Scrum 2023 with All Employee',
         tanggal: '16 Mei 2023',
@@ -104,6 +109,7 @@ const data = [
         ]
     },
     {
+        id: 4,
         judul: 'Business Agility with Scrum',
         subjudul: 'Business Agility Scrum 2023 with All Employee',
         tanggal: '16 Mei 2023',
@@ -136,6 +142,7 @@ const data = [
         ]
     },
     {
+        id: 5,
         judul: 'Business Agility with Scrum',
         subjudul: 'Business Agility Scrum 2023 with All Employee',
         tanggal: '16 Mei 2023',
@@ -168,6 +175,7 @@ const data = [
         ]
     },
     {
+        id: 6,
         judul: 'Business Agility with Scrum',
         subjudul: 'Business Agility Scrum 2023 with All Employee',
         tanggal: '16 Mei 2023',
@@ -404,9 +412,13 @@ export default function MainRepo() {
     }, []);
 
     return (
-        <BottomSheetModalProvider>
-            <BottomTabsRepo />
-        </BottomSheetModalProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Host>
+                <BottomSheetModalProvider>
+                    <BottomTabsRepo />
+                </BottomSheetModalProvider>
+            </Host>
+        </GestureHandlerRootView>
     )
 }
 

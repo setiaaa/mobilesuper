@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Portal } from 'react-native-portalize';
+import ListEmpty from '../../components/ListEmpty'
 
 const DataList = ({ item, bottomSheetAttach }) => {
     return (
@@ -113,6 +114,28 @@ export const Dokumen = () => {
 
     const { dokumen } = useSelector(state => state.repository)
 
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(dokumen.lists)
+    }, [dokumen])
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = dokumen.lists.filter((item) => {
+                return item.judul.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(dokumen.lists)
+        }
+    }, [search])
+
     return (
         <GestureHandlerRootView>
             <SafeAreaView>
@@ -137,7 +160,10 @@ export const Dokumen = () => {
                             </View>
                         </View>
                         <View style={{ width: '90%', marginLeft: 20, marginVertical: 20 }}>
-                            <Search placeholder={'Cari'} />
+                            <Search
+                                placeholder={'Cari'}
+                                onSearch={filter}
+                            />
                         </View>
                         <View style={styles.card}>
                             <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
@@ -155,8 +181,8 @@ export const Dokumen = () => {
                             <Divider bold />
                             {variant === 'list' ? (
                                 <FlatList
-                                    key={'_'}
-                                    data={dokumen.lists}
+                                    key={"_"}
+                                    data={filterData}
                                     renderItem={({ item }) => <DataList
                                         bottomSheetAttach={bottomSheetAttach}
                                         // judul={item.judul}
@@ -166,12 +192,15 @@ export const Dokumen = () => {
                                     }
                                     keyExtractor={item => "_" + item.id}
                                     style={{ height: 440 }}
+                                    ListEmptyComponent={() => (
+                                        <ListEmpty />
+                                    )}
                                 />
 
                             ) : (
                                 <FlatList
                                     key={'#'}
-                                    data={dokumen.lists}
+                                    data={filterData}
                                     renderItem={({ item }) => <DataGrid
                                         bottomSheetAttach={bottomSheetAttach}
                                         // judul={item.judul}

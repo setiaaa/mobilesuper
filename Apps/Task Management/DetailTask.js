@@ -39,6 +39,11 @@ export const DetailTask = () => {
         bottomSheetModalKomentarRef.current?.present()
     }
 
+    const bottomsheetKomentarClose = () => {
+        if (bottomSheetModalKomentarRef.current)
+            bottomSheetModalKomentarRef.current?.close()
+    }
+
     const [komen, setKomen] = useState('')
     const [toggleComment, setToggleComment] = useState({
         toggle: false,
@@ -167,7 +172,15 @@ export const DetailTask = () => {
                             </View>
 
                             <TouchableOpacity onPress={bottomSheetKomentar}>
-                                <View style={{ marginLeft: 20, backgroundColor: COLORS.primary, width: 146, height: 32, justifyContent: 'center', alignItems: 'center', borderRadius: 6 }}>
+                                <View style={{
+                                    marginHorizontal: 20,
+                                    backgroundColor: COLORS.infoDanger,
+                                    width: 351,
+                                    height: 50,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 6,
+                                }}>
                                     <Text style={{ color: COLORS.white }}>Komentar ({taskDetail[0].jmlKomentar})</Text>
                                 </View>
                             </TouchableOpacity>
@@ -189,8 +202,14 @@ export const DetailTask = () => {
                                     >
                                         <BottomSheetView onLayout={handleContentLayout} style={{}}>
                                             <View>
-                                                <View style={{ alignItems: 'center', marginVertical: 20 }}>
+                                                <View style={{ alignItems: 'center', marginVertical: 20, flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
+                                                    <TouchableOpacity onPress={() => {
+                                                        bottomsheetKomentarClose()
+                                                    }}>
+                                                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.lighter} />
+                                                    </TouchableOpacity>
                                                     <Text style={{ color: COLORS.lighter }}>Komentar</Text>
+                                                    <Ionicons name='add-outline' size={24} color={COLORS.infoDanger} />
                                                 </View>
                                                 <View style={{
                                                     justifyContent: 'center',

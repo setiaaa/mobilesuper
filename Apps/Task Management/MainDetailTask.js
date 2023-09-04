@@ -5,6 +5,8 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useDispatch } from 'react-redux'
 import { setTaskDetail } from '../../store/Task'
 import { AVATAR, COLORS } from '../../config/SuperAppps'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { Host } from 'react-native-portalize'
 
 
 const item = [
@@ -158,9 +160,13 @@ export default function MainDetailTask() {
     }, [dispatch]);
 
     return (
-        <BottomSheetModalProvider>
-            <BottomTabsDetailTask />
-        </BottomSheetModalProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Host>
+                <BottomSheetModalProvider>
+                    <BottomTabsDetailTask />
+                </BottomSheetModalProvider>
+            </Host>
+        </GestureHandlerRootView>
     )
 }
 

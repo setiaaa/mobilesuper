@@ -6,6 +6,7 @@ import { AVATAR } from '../../config/SuperAppps';
 import { useDispatch } from 'react-redux';
 import { setAgenda, setBanner, setBerita, setGaleri, setLinimasa, setMading, setProfile, setProgram, setUltah, setVisiMisi } from '../../store/SuperApps'
 import { Host } from 'react-native-portalize';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const ENTRIES1 = [
     {
@@ -326,11 +327,13 @@ export default function Main() {
         dispatch(setBanner(banner))
     }, []);
     return (
-        <Host>
-            <BottomSheetModalProvider>
-                <BottomTabs />
-            </BottomSheetModalProvider>
-        </Host>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Host>
+                <BottomSheetModalProvider>
+                    <BottomTabs />
+                </BottomSheetModalProvider>
+            </Host>
+        </GestureHandlerRootView>
     )
 }
 

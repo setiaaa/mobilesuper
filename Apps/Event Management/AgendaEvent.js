@@ -18,12 +18,13 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import { Portal } from 'react-native-portalize'
+import ListEmpty from '../../components/ListEmpty'
 
 
 const listsAgenda = [
     {
         id: '1',
-        judul: 'Bug Fixing Aplikasi',
+        judul: 'Azis Faisal',
         tanggal: '12 Juli 2023',
         jam: '08.00 - 09.00',
         ruangan: 'Ruangan 1',
@@ -954,7 +955,7 @@ const listsAgenda = [
         ]
     },
     {
-        id: '2',
+        id: '3',
         judul: 'Bug Fixing Aplikasi',
         tanggal: '12 Juli 2023',
         jam: '08.00 - 09.00',
@@ -1431,6 +1432,7 @@ const CardListDetail = ({ item, bottomSheetAttach }) => {
         const data = agenda.lists.find(item => item.id === id)
         dispatch(setAgendaDetail(data))
     }
+
     return (
         <View style={{ alignItems: 'center' }}>
             <TouchableOpacity style={{
@@ -1513,6 +1515,28 @@ export const AgendaEvent = () => {
             bottomSheetModalRef.current?.close()
     }
 
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(agenda.lists)
+    }, [agenda])
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = agenda.lists.filter((item) => {
+                return item.judul.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(agenda.lists)
+        }
+    }, [search])
+
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -1535,7 +1559,7 @@ export const AgendaEvent = () => {
             </View>
 
             <View style={{ width: 358, marginHorizontal: 15, marginVertical: 20 }}>
-                <Search placeholder={'Cari Agenda'} />
+                <Search placeholder={'Cari Agenda'} onSearch={filter} />
             </View>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
@@ -1590,13 +1614,15 @@ export const AgendaEvent = () => {
             </View>
 
             <FlatList
-                data={agenda.lists}
+                data={filterData}
                 renderItem={({ item }) => <CardListDetail
                     item={item}
                     bottomSheetAttach={bottomSheetAttach}
                 />
                 }
-                style={{ marginVertical: 10 }}
+                style={{ marginVertical: 10, height: 440 }}
+                keyExtractor={item => item.id}
+                ListEmptyComponent={() => <ListEmpty />}
             />
 
             <Portal>

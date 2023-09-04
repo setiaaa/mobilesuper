@@ -9,6 +9,38 @@ import { AVATAR } from '../../config/SuperAppps'
 
 const listsDigitalSign = [
     {
+        id: 1,
+        judul: 'Judul lagu',
+        nosertifikat: '123.xx.345.2023',
+        namapenerima: 'nama Penerima',
+        avatarpenerima: AVATAR.U2,
+        jabatanpenerima: 'jabatan penerima',
+        tanggal: '24 Januari 2023',
+        judulcourse: 'judul course',
+        keterangan: 'keterangan keterangan keterangan keterangan',
+        panandatangansatu: [
+            {
+                status: 'terima',
+                avatar: AVATAR.U2,
+                namajabatan: 'Nama Jabatan',
+                nama: 'Rizky Novriansyah',
+                tanggal: '12 Juni 2023',
+                jam: '13.05'
+            }
+        ],
+        panandatangandua: [
+            {
+                status: 'tolak',
+                avatar: AVATAR.U2,
+                namajabatan: 'Nama Jabatan',
+                nama: 'Rizky Novriansyah',
+                tanggal: '12 Juni 2023',
+                jam: '13.05'
+            }
+        ],
+    },
+    {
+        id: 2,
         judul: 'Judul Sertifikat',
         nosertifikat: '123.xx.345.2023',
         namapenerima: 'nama Penerima',
@@ -39,6 +71,7 @@ const listsDigitalSign = [
         ],
     },
     {
+        id: 3,
         judul: 'Judul Sertifikat',
         nosertifikat: '123.xx.345.2023',
         namapenerima: 'nama Penerima',
@@ -69,6 +102,7 @@ const listsDigitalSign = [
         ],
     },
     {
+        id: 4,
         judul: 'Judul Sertifikat',
         nosertifikat: '123.xx.345.2023',
         namapenerima: 'nama Penerima',
@@ -99,36 +133,7 @@ const listsDigitalSign = [
         ],
     },
     {
-        judul: 'Judul Sertifikat',
-        nosertifikat: '123.xx.345.2023',
-        namapenerima: 'nama Penerima',
-        avatarpenerima: AVATAR.U2,
-        jabatanpenerima: 'jabatan penerima',
-        tanggal: '24 Januari 2023',
-        judulcourse: 'judul course',
-        keterangan: 'keterangan keterangan keterangan keterangan',
-        panandatangansatu: [
-            {
-                status: 'terima',
-                avatar: AVATAR.U2,
-                namajabatan: 'Nama Jabatan',
-                nama: 'Rizky Novriansyah',
-                tanggal: '12 Juni 2023',
-                jam: '13.05'
-            }
-        ],
-        panandatangandua: [
-            {
-                status: 'tolak',
-                avatar: AVATAR.U2,
-                namajabatan: 'Nama Jabatan',
-                nama: 'Rizky Novriansyah',
-                tanggal: '12 Juni 2023',
-                jam: '13.05'
-            }
-        ],
-    },
-    {
+        id: 5,
         judul: 'Judul Sertifikat',
         nosertifikat: '123.xx.345.2023',
         namapenerima: 'nama Penerima',

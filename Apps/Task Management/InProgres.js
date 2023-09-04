@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { AVATAR } from '../../config/SuperAppps'
@@ -11,12 +11,20 @@ import { CardListGridTask } from '../../components/CardListGridTask'
 export const InProgres = () => {
     const { task, variant } = useSelector(state => state.task)
     const taskLists = task.lists
+    const [filterData, setFilterData] = useState([])
+
+    useEffect(() => {
+        const data = taskLists.filter((item) => {
+            return item.status === 'in progress'
+        })
+        setFilterData(data)
+    }, [taskLists])
     return (
         <>
             {variant === 'list' ? (
                 <View style={{ flex: 1, marginTop: 20 }}>
                     <FlatList
-                        data={taskLists}
+                        data={filterData}
                         renderItem={({ item }) => <CardListTask
                             kegiatan={item.kegiatan}
                             subAvatar={item.subAvatar}
@@ -29,7 +37,7 @@ export const InProgres = () => {
             ) : variant === 'grid' ? (
                 <FlatList
                     key={'#'}
-                    data={taskLists}
+                    data={filterData}
                     renderItem={({ item }) => <CardListGridTask
                         kegiatan={item.kegiatan}
                         subAvatar={item.subAvatar}

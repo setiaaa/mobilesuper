@@ -21,6 +21,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Modal } from 'react-native'
 import { Video } from 'expo-av'
 import { StyleSheet } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const CardLampiran = ({ lampiran, onClick, type }) => {
     const navigation = useNavigation()
@@ -161,160 +162,160 @@ export const DetailTodo = ({ route }) => {
 
     return (
         <SafeAreaView>
-            <ScrollView>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 20
-                    }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail ToDo</Text>
-                    </View>
-                </View>
-
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
-                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
-                        <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
-                            <View
-                                style={{
-                                    width: 80,
-                                    height: 24,
-                                    backgroundColor: COLORS.lighter,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}
-                            >
-                                <Text style={{ color: COLORS.white }}>{item.jenis}</Text>
+            <GestureHandlerRootView>
+                <BottomSheetModalProvider>
+                    <ScrollView>
+                        <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                            <View style={{
+                                backgroundColor: COLORS.white,
+                                borderRadius: 20,
+                                width: 28,
+                                height: 28,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginLeft: 20
+                            }}>
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                                <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail ToDo</Text>
                             </View>
                         </View>
 
-                        <View style={{ marginTop: 10 }}>
-                            <Text>{item.deskripsi}</Text>
-                        </View>
-
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-                            <Text>{item.tanggal}</Text>
-                        </View>
-
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
-                            <Text>{item.jam}</Text>
-                        </View>
-
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
-                            <Text style={{ width: 156 }}>{item.tempat}</Text>
-                        </View>
-
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
-                            <Text style={{ width: 156 }}>{item.pic}</Text>
-                        </View>
-
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
-                            {item.pesertaevent?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
+                            <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
+                                <View style={{ flexDirection: 'row', gap: 20 }}>
+                                    <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+                                    <View
+                                        style={{
+                                            width: 80,
+                                            height: 24,
+                                            backgroundColor: COLORS.lighter,
+                                            borderRadius: 30,
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white }}>{item.jenis}</Text>
+                                    </View>
                                 </View>
-                            )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
-                        </View>
 
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
-                            {item.pesertaagenda?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                                <View style={{ marginTop: 10 }}>
+                                    <Text>{item.deskripsi}</Text>
                                 </View>
-                            )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
-                        </View>
 
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda</Text>
-                            {item.tamuagenda?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
+                                    <Text>{item.tanggal}</Text>
                                 </View>
-                            )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
-                        </View>
 
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absensi</Text>
-                            <Text style={{ width: 156 }}>{item.absen}</Text>
-                        </View>
-                    </View>
-                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginVertical: 10 }}>
-                            <Ionicons name='people-outline' size={24} />
-                            <Text>0/15</Text>
-                        </View>
-                        <TouchableOpacity style={{
-                            width: 326,
-                            height: 50,
-                            borderRadius: 8,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 10,
-                            borderWidth: 1,
-                            borderColor: COLORS.infoDangerLight
-                        }}
-                            onPress={() => {
-                                bottomSheetAttach()
-                            }}
-                        >
-                            <Ionicons name='document-outline' size={24} />
-                            <Text>Info Approval</Text>
-                        </TouchableOpacity>
-                    </View>
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
+                                    <Text>{item.jam}</Text>
+                                </View>
 
-                    <Portal>
-                        <BottomSheetModalProvider>
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
+                                    <Text style={{ width: 156 }}>{item.tempat}</Text>
+                                </View>
+
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
+                                    <Text style={{ width: 156 }}>{item.pic}</Text>
+                                </View>
+
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
+                                    {item.pesertaevent?.map((data, index) =>
+                                        <View style={{ position: 'relative' }}>
+                                            <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                                        </View>
+                                    )}
+                                    <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                        <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                                    </TouchableOpacity>
+                                </View>
+
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
+                                    {item.pesertaagenda?.map((data, index) =>
+                                        <View style={{ position: 'relative' }}>
+                                            <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                                        </View>
+                                    )}
+                                    <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                        <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                                    </TouchableOpacity>
+                                </View>
+
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda</Text>
+                                    {item.tamuagenda?.map((data, index) =>
+                                        <View style={{ position: 'relative' }}>
+                                            <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                                        </View>
+                                    )}
+                                    <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                        <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                                    </TouchableOpacity>
+                                </View>
+
+                                {/* custom divider */}
+                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absensi</Text>
+                                    <Text style={{ width: 156 }}>{item.absen}</Text>
+                                </View>
+                            </View>
+                            <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginVertical: 10 }}>
+                                    <Ionicons name='people-outline' size={24} />
+                                    <Text>0/15</Text>
+                                </View>
+                                <TouchableOpacity style={{
+                                    width: 326,
+                                    height: 50,
+                                    borderRadius: 8,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 10,
+                                    borderWidth: 1,
+                                    borderColor: COLORS.infoDangerLight
+                                }}
+                                    onPress={() => {
+                                        bottomSheetAttach()
+                                    }}
+                                >
+                                    <Ionicons name='document-outline' size={24} />
+                                    <Text>Info Approval</Text>
+                                </TouchableOpacity>
+                            </View>
+
                             <BottomSheetModal
                                 ref={bottomSheetModalRef}
                                 snapPoints={animatedSnapPoints}
@@ -356,132 +357,128 @@ export const DetailTodo = ({ route }) => {
                                     </View>
                                 </BottomSheetView>
                             </BottomSheetModal>
-                        </BottomSheetModalProvider>
-                    </Portal>
 
 
-                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lihat Notulensi</Text>
-                        <TouchableOpacity style={{
-                            width: 326,
-                            height: 50,
-                            borderRadius: 8,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 10,
-                            borderWidth: 1,
-                            borderColor: COLORS.infoDangerLight,
-                            marginTop: 10
-                        }}
-                            onPress={() => {
-                                navigation.navigate('Notulensi', { data: item })
-                            }}
-                        >
-                            <Ionicons name='document-outline' size={24} />
-                            <Text>Lihat Notulensi</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Materi Agenda</Text>
-
-                        <FlatList
-                            key={'*'}
-                            data={item.lampiran}
-                            renderItem={({ item }) => <CardLampiran
-                                lampiran={item.gambar}
-                                type={getFileExtension(item.nama)}
-                                onClick={() => {
-                                    setVisibleModal(true)
-                                    setLampiranById(item)
+                            <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lihat Notulensi</Text>
+                                <TouchableOpacity style={{
+                                    width: 326,
+                                    height: 50,
+                                    borderRadius: 8,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 10,
+                                    borderWidth: 1,
+                                    borderColor: COLORS.infoDangerLight,
+                                    marginTop: 10
                                 }}
-                            />
-                            }
-                            style={{ marginTop: 10 }}
-                            columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                            numColumns={3}
-                            keyExtractor={item => "*" + item.id}
-                        />
-
-                        {
-                            lampiranById !== null ? (
-                                <Modal
-                                    animationType="fade"
-                                    transparent={true}
-                                    visible={visibleModal}
-                                    onRequestClose={() => {
-                                        setVisibleModal(false);
-                                        setLampiranById(null)
+                                    onPress={() => {
+                                        navigation.navigate('Notulensi', { data: item })
                                     }}
-
                                 >
-                                    <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                                    <View style={{ alignItems: 'center', flex: 1, display: 'flex', justifyContent: 'center' }}>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                setVisibleModal(false)
+                                    <Ionicons name='document-outline' size={24} />
+                                    <Text>Lihat Notulensi</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
+                                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Materi Agenda</Text>
+
+                                <FlatList
+                                    key={'*'}
+                                    data={item.lampiran}
+                                    renderItem={({ item }) => <CardLampiran
+                                        lampiran={item.gambar}
+                                        type={getFileExtension(item.nama)}
+                                        onClick={() => {
+                                            setVisibleModal(true)
+                                            setLampiranById(item)
+                                        }}
+                                    />
+                                    }
+                                    style={{ marginTop: 10 }}
+                                    columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                    numColumns={3}
+                                    keyExtractor={item => "*" + item.id}
+                                />
+
+                                {
+                                    lampiranById !== null ? (
+                                        <Modal
+                                            animationType="fade"
+                                            transparent={true}
+                                            visible={visibleModal}
+                                            onRequestClose={() => {
+                                                setVisibleModal(false);
                                                 setLampiranById(null)
                                             }}
-                                            style={{
-                                                position: 'absolute',
-                                                top: '15%',
-                                                left: 20
-                                            }}>
 
-                                            <View style={{
-                                                backgroundColor: COLORS.primary,
-                                                width: 51,
-                                                height: 51,
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                borderRadius: 50
-                                            }}>
-                                                <Ionicons name='close-outline' color={COLORS.white} size={24} />
+                                        >
+                                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                                            <View style={{ alignItems: 'center', flex: 1, display: 'flex', justifyContent: 'center' }}>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        setVisibleModal(false)
+                                                        setLampiranById(null)
+                                                    }}
+                                                    style={{
+                                                        position: 'absolute',
+                                                        top: '15%',
+                                                        left: 20
+                                                    }}>
+
+                                                    <View style={{
+                                                        backgroundColor: COLORS.primary,
+                                                        width: 51,
+                                                        height: 51,
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center',
+                                                        borderRadius: 50
+                                                    }}>
+                                                        <Ionicons name='close-outline' color={COLORS.white} size={24} />
+                                                    </View>
+                                                </TouchableOpacity>
+                                                {getFileExtension(lampiranById.nama) === 'png' || getFileExtension(lampiranById.nama) === 'jpg' || getFileExtension(lampiranById.nama) === 'jpeg' ? (
+                                                    <View>
+                                                        <Image source={lampiranById.gambar} style={{ width: 390, height: 283 }} />
+                                                    </View>
+                                                ) : getFileExtension(lampiranById.nama) === 'mp4' ? (
+                                                    <Video
+                                                        ref={video}
+                                                        style={{ width: 390, height: 283 }}
+                                                        source={lampiranById.gambar}
+                                                        useNativeControls
+                                                        resizeMode={ResizeMode.CONTAIN}
+                                                        isLooping
+                                                        onPlaybackStatusUpdate={status => setStatus(() => status)}
+                                                    />
+                                                ) : (
+                                                    <></>
+                                                )}
                                             </View>
-                                        </TouchableOpacity>
-                                        {getFileExtension(lampiranById.nama) === 'png' || getFileExtension(lampiranById.nama) === 'jpg' || getFileExtension(lampiranById.nama) === 'jpeg' ? (
-                                            <View>
-                                                <Image source={lampiranById.gambar} style={{ width: 390, height: 283 }} />
-                                            </View>
-                                        ) : getFileExtension(lampiranById.nama) === 'mp4' ? (
-                                            <Video
-                                                ref={video}
-                                                style={{ width: 390, height: 283 }}
-                                                source={lampiranById.gambar}
-                                                useNativeControls
-                                                resizeMode={ResizeMode.CONTAIN}
-                                                isLooping
-                                                onPlaybackStatusUpdate={status => setStatus(() => status)}
-                                            />
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </View>
-                                </Modal>
-                            ) : null
-                        }
-                    </View>
+                                        </Modal>
+                                    ) : null
+                                }
+                            </View>
 
-                </View>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginHorizontal: 20 }}>
-                    <TouchableOpacity style={{
-                        width: 159,
-                        height: 50,
-                        backgroundColor: COLORS.infoDanger,
-                        borderRadius: 8,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                        onPress={() => {
-                            bottomSheetAttachComment()
-                        }}
-                    >
-                        <Text style={{ color: COLORS.white }}>Komentar ({item.jmlKomen})</Text>
-                    </TouchableOpacity>
+                        </View>
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginHorizontal: 20 }}>
+                            <TouchableOpacity style={{
+                                width: 159,
+                                height: 50,
+                                backgroundColor: COLORS.infoDanger,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                                onPress={() => {
+                                    bottomSheetAttachComment()
+                                }}
+                            >
+                                <Text style={{ color: COLORS.white }}>Komentar ({item.jmlKomen})</Text>
+                            </TouchableOpacity>
 
-                    <Portal>
-                        <BottomSheetModalProvider>
                             <BottomSheetModal
                                 ref={bottomSheetModalCommetRef}
                                 snapPoints={animatedSnapPoints}
@@ -685,22 +682,22 @@ export const DetailTodo = ({ route }) => {
                                     </View>
                                 </BottomSheetView>
                             </BottomSheetModal>
-                        </BottomSheetModalProvider>
-                    </Portal>
 
-                    <TouchableOpacity style={{
-                        width: 159,
-                        height: 50,
-                        backgroundColor: COLORS.lightBrown,
-                        borderRadius: 8,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <Text style={{ color: COLORS.white }}>Ubah</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+                            <TouchableOpacity style={{
+                                width: 159,
+                                height: 50,
+                                backgroundColor: COLORS.lightBrown,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ color: COLORS.white }}>Ubah</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+        </SafeAreaView >
     )
 }
 const styles = StyleSheet.create({

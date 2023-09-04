@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
@@ -16,64 +16,63 @@ import {
 } from '@gorhom/bottom-sheet'
 import { Search } from '../../components/Search'
 import { Portal } from 'react-native-portalize';
+import ListEmpty from '../../components/ListEmpty';
 
 
 const CardPenilaian = ({ item }) => {
     const navigation = useNavigation()
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            {item.listPenilaian?.map((data) =>
-                <TouchableOpacity style={{
-                    flexDirection: 'row',
-                    width: '90%',
-                    gap: 10,
-                    marginTop: 10,
-                    backgroundColor: COLORS.white,
-                    borderRadius: 8,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingHorizontal: 20,
-                    paddingVertical: 10,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 4 },
-                    shadowColor: '#171717',
-                    shadowOpacity: 0.2,
-                    //shadow android
-                    elevation: 2,
+            <TouchableOpacity style={{
+                flexDirection: 'row',
+                width: '90%',
+                gap: 10,
+                marginTop: 10,
+                backgroundColor: COLORS.white,
+                borderRadius: 8,
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: '#171717',
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
 
-                }}
-                    onPress={() => navigation.navigate('DetailPenilain', { item: data })}
-                >
-                    <View>
-                        <Image source={data.image} style={{ width: 70, height: 50 }} />
+            }}
+                onPress={() => navigation.navigate('DetailPenilain', { item: item })}
+            >
+                <View>
+                    <Image source={item.image} style={{ width: 70, height: 50 }} />
+                </View>
+                <View style={{ width: '75%' }}>
+                    <Text>{item.judul}</Text>
+                    <View style={{ flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
+                        <Text style={{ color: COLORS.lighter }}>Tanggal: {item.tanggal}</Text>
+                        <Text style={{ color: COLORS.lighter }}>Poin:</Text>
+                        {item.point === 'Waiting' ? (
+                            <View style={{
+                                borderWidth: 1,
+                                padding: 5,
+                                borderColor: COLORS.primary,
+                                borderRadius: 16
+                            }}>
+                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}>{item.point}</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                padding: 5,
+                                backgroundColor: COLORS.success,
+                                borderRadius: 16
+                            }}>
+                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>{item.point}</Text>
+                            </View>
+                        )}
                     </View>
-                    <View style={{ width: '75%' }}>
-                        <Text>{data.judul}</Text>
-                        <View style={{ flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
-                            <Text style={{ color: COLORS.lighter }}>Tanggal: {data.tanggal}</Text>
-                            <Text style={{ color: COLORS.lighter }}>Poin:</Text>
-                            {data.point === 'Waiting' ? (
-                                <View style={{
-                                    borderWidth: 1,
-                                    padding: 5,
-                                    borderColor: COLORS.primary,
-                                    borderRadius: 16
-                                }}>
-                                    <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}>{data.point}</Text>
-                                </View>
-                            ) : (
-                                <View style={{
-                                    padding: 5,
-                                    backgroundColor: COLORS.success,
-                                    borderRadius: 16
-                                }}>
-                                    <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>{data.point}</Text>
-                                </View>
-                            )}
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            )}
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -101,6 +100,29 @@ export const PenilaianPenggetahaun = () => {
         if (bottomSheetModalRef.current)
             bottomSheetModalRef.current?.close()
     }
+
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+    useEffect(() => {
+        setFilterData(penilaian.lists.listPenilaian)
+    }, [penilaian])
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = penilaian.lists.listPenilaian.filter((item) => {
+                return item.judul.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(penilaian.lists.listPenilaian)
+        }
+    }, [search])
+
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -185,21 +207,30 @@ export const PenilaianPenggetahaun = () => {
                                     <View style={{ width: 291 }}>
                                         <Search
                                             placeholder={'Cari'}
+                                            onSearch={filter}
                                         />
                                     </View>
-                                    <Text style={{ color: COLORS.danger }}>Batal</Text>
+                                    <TouchableOpacity onPress={() => {
+                                        bottomSheetAttachClose()
+                                    }}>
+                                        <Text style={{ color: COLORS.danger }}>Batal</Text>
+                                    </TouchableOpacity>
                                 </View>
 
                                 {/* custom divider */}
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                                 <FlatList
-                                    data={penilaian.lists}
+                                    data={filterData}
                                     renderItem={({ item }) => <CardPenilaian
                                         item={item}
                                     />
                                     }
-                                    keyExtractor={item => item}
+                                    keyExtractor={item => item.id}
+                                    style={{ height: 440 }}
+                                    ListEmptyComponent={() =>
+                                        <ListEmpty />
+                                    }
                                 />
 
                             </View>
@@ -231,11 +262,7 @@ export const PenilaianPenggetahaun = () => {
                     </View>
                     <View>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>BELUM{'\n'}DITINJAU</Text>
-                        {penilaian.lists.map((item) => {
-                            return (
-                                <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{item.belumDitinjau}</Text>
-                            )
-                        })}
+                        <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.belumDitinjau}</Text>
                     </View>
                 </View>
 
@@ -261,24 +288,21 @@ export const PenilaianPenggetahaun = () => {
                     </View>
                     <View>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>TELAH{'\n'}DITINJAU</Text>
-                        {penilaian.lists?.map((item) => {
-                            return (
-                                <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{item.telahDitinjau}</Text>
-                            )
-                        })}
+                        <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.telahDitinjau}</Text>
                     </View>
                 </View>
             </View>
 
-            <FlatList
-                data={penilaian.lists}
-                renderItem={({ item }) => <CardPenilaian
-                    item={item}
+            <View style={{ marginTop: 10 }}>
+                <FlatList
+                    data={penilaian.lists.listPenilaian}
+                    renderItem={({ item }) => <CardPenilaian
+                        item={item}
+                    />
+                    }
+                    keyExtractor={item => item}
                 />
-                }
-                keyExtractor={item => item}
-                style={{ marginTop: 10 }}
-            />
+            </View>
         </SafeAreaView>
     )
 }

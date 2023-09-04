@@ -23,7 +23,7 @@ import { useMemo } from 'react'
 import { CardAppsB } from '../../components/CardAppsB'
 import { useNavigation } from "@react-navigation/native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { CardTautan } from '../../components/CardTautan'
 import { Modal } from 'react-native'
@@ -193,6 +193,10 @@ export const Home = () => {
     function handlePressModal() {
         bottomSheetModalRef.current?.present()
     }
+
+    const closeBottomSheet = () => {
+        bottomSheetModalRef.current.collapse();
+    };
     const navigation = useNavigation()
 
     const [playing, setPlaying] = useState(false);
@@ -210,33 +214,33 @@ export const Home = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <GestureHandlerRootView >
-                <ScrollView>
-                    <View style={{ width: '100%', height: 170, position: 'absolute', top: 0, borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }}>
-                        <Image source={require('../../assets/superApp/headerfix.png')} style={{ width: '100%', height: '100%', borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }} />
-                    </View>
-
-                    <View style={{ height: '3.5%', flexDirection: 'row', paddingTop: 20, gap: 20 }}>
-                        <View style={{ paddingLeft: 20 }}>
-                            <Ionicons name='notifications-outline' size={25} color={'white'} />
+            <GestureHandlerRootView>
+                <BottomSheetModalProvider>
+                    <ScrollView>
+                        <View style={{ width: '100%', height: 170, position: 'absolute', top: 0, borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }}>
+                            <Image source={require('../../assets/superApp/headerfix.png')} style={{ width: '100%', height: '100%', borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }} />
                         </View>
-                        <View style={{ justifyContent: 'flex-end', flex: 1, marginTop: 5, flexDirection: 'row', gap: 10, marginRight: '11%' }}>
-                            <View style={{}}>
-                                <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
-                                <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
+
+                        <View style={{ height: '3.5%', flexDirection: 'row', paddingTop: 20, gap: 20 }}>
+                            <View style={{ paddingLeft: 20 }}>
+                                <Ionicons name='notifications-outline' size={25} color={'white'} />
                             </View>
-                            <View>
-                                <Image source={profile.avatar} style={{ width: 50, height: 50, borderRadius: 8 }} />
+                            <View style={{ justifyContent: 'flex-end', flex: 1, marginTop: 5, flexDirection: 'row', gap: 10, marginRight: '11%' }}>
+                                <View style={{}}>
+                                    <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
+                                    <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
+                                </View>
+                                <View>
+                                    <Image source={profile.avatar} style={{ width: 50, height: 50, borderRadius: 8 }} />
+                                </View>
                             </View>
                         </View>
-                    </View>
 
-                    <View style={{ marginTop: 30 }}>
-                        <CardApps
-                            handlePressModal={handlePressModal}
-                        />
-                        <Portal>
-                            <BottomSheetModalProvider>
+                        <View style={{ marginTop: 30 }}>
+                            <CardApps
+                                handlePressModal={handlePressModal}
+                            />
+                            <Portal>
                                 <BottomSheetModal
                                     ref={bottomSheetModalRef}
                                     snapPoints={animatedSnapPoints}
@@ -250,7 +254,7 @@ export const Home = () => {
                                         <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
                                     )}
                                 >
-                                    <BottomSheetView onLayout={handleContentLayout} >
+                                    <View onLayout={handleContentLayout} >
                                         <View style={{ marginVertical: 20 }}>
                                             <View style={{ marginLeft: 30 }}>
                                                 <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>
@@ -261,348 +265,348 @@ export const Home = () => {
                                                 <CardAppsB />
                                             </View>
                                         </View>
-                                    </BottomSheetView>
+                                    </View>
                                 </BottomSheetModal>
-                            </BottomSheetModalProvider>
-                        </Portal>
-                    </View>
+                            </Portal>
+                        </View>
 
-                    <View style={[styles.containerr, { marginTop: 20 }]}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={banner}
-                            renderItem={bannerKegiatan}
-                            hasParallaxImages={true}
-                        />
-                    </View>
+                        <View style={[styles.containerr, { marginTop: 20 }]}>
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                sliderHeight={screenWidth}
+                                itemWidth={screenWidth - 60}
+                                data={banner}
+                                renderItem={bannerKegiatan}
+                                hasParallaxImages={true}
+                            />
+                        </View>
 
-                    <View style={{ marginHorizontal: 30, marginTop: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
-                    </View>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20, marginLeft: 30 }}>
-                        <CardTautan
-                            setModalVisible={setModalVisible}
-                        />
-                    </View>
+                        <View style={{ marginHorizontal: 30, marginTop: 20 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
+                        </View>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20, marginLeft: 30 }}>
+                            <CardTautan
+                                setModalVisible={setModalVisible}
+                            />
+                        </View>
 
-                    <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row', marginTop: 30 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Video</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>Selengkapnya</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <CardVideo
-                        setModalVisibleVideo={setModalVisibleVideo}
-                    />
-
-                    <Modal
-                        animationType="fade"
-                        transparent={true}
-                        visible={modalVisibleVideo}
-                        onRequestClose={() => {
-                            setModalVisibleVideo(!modalVisibleVideo);
-                        }}
-                    >
-                        <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                        <View style={{ alignItems: 'center', flex: 1, display: 'flex', justifyContent: 'center' }}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    setModalVisibleVideo(false)
-                                }}
-                                style={{
-                                    position: 'absolute',
-                                    top: '15%',
-                                    left: 20
-                                }}>
-
-                                <View style={{
-                                    backgroundColor: COLORS.primary,
-                                    width: 51,
-                                    height: 51,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    borderRadius: 50
-                                }}>
-                                    <Ionicons name='close-outline' color={COLORS.white} size={24} />
-                                </View>
+                        <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row', marginTop: 30 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Video</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>Selengkapnya</Text>
                             </TouchableOpacity>
-                            <View style={{ width: 380, height: 283 }} >
-                                <YoutubePlayer
-                                    height={300}
-                                    play={playing}
-                                    videoId={"tV6yMXX2hPs"}
-                                    onChangeState={onStateChange}
+                        </View>
+
+                        <CardVideo
+                            setModalVisibleVideo={setModalVisibleVideo}
+                        />
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisibleVideo}
+                            onRequestClose={() => {
+                                setModalVisibleVideo(!modalVisibleVideo);
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ alignItems: 'center', flex: 1, display: 'flex', justifyContent: 'center' }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setModalVisibleVideo(false)
+                                    }}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '15%',
+                                        left: 20
+                                    }}>
+
+                                    <View style={{
+                                        backgroundColor: COLORS.primary,
+                                        width: 51,
+                                        height: 51,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        borderRadius: 50
+                                    }}>
+                                        <Ionicons name='close-outline' color={COLORS.white} size={24} />
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{ width: 380, height: 283 }} >
+                                    <YoutubePlayer
+                                        height={300}
+                                        play={playing}
+                                        videoId={"tV6yMXX2hPs"}
+                                        onChangeState={onStateChange}
+                                    />
+                                </View>
+                            </View>
+                        </Modal>
+
+                        <View style={{ marginTop: 15 }}>
+                            <CardVisiMisi
+                                setModalVisibleVisiMisi={setModalVisibleVisiMisi}
+                            />
+                        </View>
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisibleVisiMisi}
+                            onRequestClose={() => {
+                                setModalVisibleVisiMisi(!modalVisibleVisiMisi);
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ alignItems: 'center', flex: 1 }}>
+                                <View style={{ backgroundColor: COLORS.white, width: '90%', height: 500, borderRadius: 10, marginTop: 100 }}>
+
+                                    <TouchableOpacity style={{ marginHorizontal: 20, marginTop: 20, alignItems: 'flex-end' }} onPress={() => { setModalVisibleVisiMisi(false) }}>
+                                        <Ionicons name='close-outline' size={24} />
+                                    </TouchableOpacity>
+
+                                    <View style={styles.cardVisiMisi}>
+                                        <Text style={{ color: COLORS.white, textAlign: 'center', marginVertical: 5 }}>VISI KKP</Text>
+                                    </View>
+                                    <Text style={{ marginHorizontal: 30, fontSize: FONTSIZE.H4, marginTop: 20 }}>{visimisi.visi}</Text>
+
+                                    <View style={[styles.cardVisiMisi, { marginTop: 20 }]}>
+                                        <Text style={{ color: COLORS.white, textAlign: 'center', marginVertical: 5 }}>MISI KKP</Text>
+                                    </View>
+
+                                    {visimisi.misi.map((item) =>
+                                        <View style={{ flexDirection: 'row', gap: 10, marginLeft: 30, marginTop: 20 }}>
+                                            <View style={{ width: 10, height: 10, borderRadius: 50, backgroundColor: COLORS.primary, marginTop: 5 }} />
+                                            <Text style={{ width: 260, fontSize: FONTSIZE.H4 }}>{item.text}</Text>
+                                        </View>
+                                    )}
+
+                                </View>
+                            </View>
+                        </Modal>
+
+                        <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View>
+                            <View style={styles.containerr}>
+                                <Carousel
+                                    ref={carouselRef}
+                                    sliderWidth={screenWidth}
+                                    sliderHeight={screenWidth}
+                                    itemWidth={screenWidth - 60}
+                                    data={berita.lists.slice(0, 3)}
+                                    renderItem={renderItem}
+                                    hasParallaxImages={true}
                                 />
                             </View>
+                            {/* <Carousel data={CarouselData} /> */}
                         </View>
-                    </Modal>
 
-                    <View style={{ marginTop: 15 }}>
-                        <CardVisiMisi
-                            setModalVisibleVisiMisi={setModalVisibleVisiMisi}
-                        />
-                    </View>
-                    <Modal
-                        animationType="fade"
-                        transparent={true}
-                        visible={modalVisibleVisiMisi}
-                        onRequestClose={() => {
-                            setModalVisibleVisiMisi(!modalVisibleVisiMisi);
-                        }}
-                    >
-                        <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                        <View style={{ alignItems: 'center', flex: 1 }}>
-                            <View style={{ backgroundColor: COLORS.white, width: '90%', height: 500, borderRadius: 10, marginTop: 100 }}>
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ alignItems: 'center', flex: 1 }}>
+                                <View style={{ backgroundColor: COLORS.white, width: '90%', height: 500, borderRadius: 10, marginTop: 100 }}>
 
-                                <TouchableOpacity style={{ marginHorizontal: 20, marginTop: 20, alignItems: 'flex-end' }} onPress={() => { setModalVisibleVisiMisi(false) }}>
-                                    <Ionicons name='close-outline' size={24} />
-                                </TouchableOpacity>
-
-                                <View style={styles.cardVisiMisi}>
-                                    <Text style={{ color: COLORS.white, textAlign: 'center', marginVertical: 5 }}>VISI KKP</Text>
-                                </View>
-                                <Text style={{ marginHorizontal: 30, fontSize: FONTSIZE.H4, marginTop: 20 }}>{visimisi.visi}</Text>
-
-                                <View style={[styles.cardVisiMisi, { marginTop: 20 }]}>
-                                    <Text style={{ color: COLORS.white, textAlign: 'center', marginVertical: 5 }}>MISI KKP</Text>
-                                </View>
-
-                                {visimisi.misi.map((item) =>
-                                    <View style={{ flexDirection: 'row', gap: 10, marginLeft: 30, marginTop: 20 }}>
-                                        <View style={{ width: 10, height: 10, borderRadius: 50, backgroundColor: COLORS.primary, marginTop: 5 }} />
-                                        <Text style={{ width: 260, fontSize: FONTSIZE.H4 }}>{item.text}</Text>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Kerumahtanggaan</Text>
+                                        <TouchableOpacity style={{ alignItems: 'flex-end', flex: 1 }} onPress={() => { setModalVisible(false) }}>
+                                            <Ionicons name='close-outline' size={24} />
+                                        </TouchableOpacity>
                                     </View>
-                                )}
+                                    <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20 }}>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/Tp1.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ fontSize: FONTSIZE.H4 }}>Semar</Text>
+                                        </View>
 
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/Tp2.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ fontSize: FONTSIZE.H4 }}>Sistolik</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/Tp3.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Bus Jemputan</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Pengawasan</Text>
+                                    </View>
+
+                                    <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20 }}>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Lapor.go.id</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>WBS KKP</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Sidak</Text>
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>JDIH</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Kinerja dan Pengembangan Pegawai</Text>
+                                    </View>
+
+                                    <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20, }}>
+                                        <View>
+                                            <View>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Emonev{'\n'} Bapennas</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Kinerjaku</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>E-Milea</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>E-Kinerja {'\n'}BKN</Text>
+                                            </View>
+                                        </View>
+
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                                            </View>
+                                            <View>
+                                                <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>SIASN{'\n'} BKN</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+
+                                </View>
                             </View>
+                        </Modal>
+
+                        <View style={{ marginVertical: 20, marginLeft: 30, }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
                         </View>
-                    </Modal>
-
-                    <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View>
                         <View style={styles.containerr}>
                             <Carousel
                                 ref={carouselRef}
                                 sliderWidth={screenWidth}
                                 sliderHeight={screenWidth}
                                 itemWidth={screenWidth - 60}
-                                data={berita.lists.slice(0, 3)}
-                                renderItem={renderItem}
+                                data={agenda}
+                                renderItem={renderItem2}
                                 hasParallaxImages={true}
+                                onSnapToItem={setSlide2}
+                            />
+                            <Pagination
+                                dotsLength={agenda.length}
+                                inactiveDotColor={'black'}
+                                dotStyle={styles.paginationDot}
+                                inactiveDotOpacity={0.4}
+                                inactiveDotScale={0.6}
+                                activeDotIndex={slide2}
+                                carouselRef={carouselRef}
+                                tappableDots={!!carouselRef}
                             />
                         </View>
-                        {/* <Carousel data={CarouselData} /> */}
-                    </View>
 
-                    <Modal
-                        animationType="fade"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => {
-                            setModalVisible(!modalVisible);
-                        }}
-                    >
-                        <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                        <View style={{ alignItems: 'center', flex: 1 }}>
-                            <View style={{ backgroundColor: COLORS.white, width: '90%', height: 500, borderRadius: 10, marginTop: 100 }}>
-
-                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Kerumahtanggaan</Text>
-                                    <TouchableOpacity style={{ alignItems: 'flex-end', flex: 1 }} onPress={() => { setModalVisible(false) }}>
-                                        <Ionicons name='close-outline' size={24} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20 }}>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image source={require('../../assets/superApp/Tp1.png')} style={{ width: 48, height: 48 }} />
-                                        <Text style={{ fontSize: FONTSIZE.H4 }}>Semar</Text>
-                                    </View>
-
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image source={require('../../assets/superApp/Tp2.png')} style={{ width: 48, height: 48 }} />
-                                        <Text style={{ fontSize: FONTSIZE.H4 }}>Sistolik</Text>
-                                    </View>
-
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image source={require('../../assets/superApp/Tp3.png')} style={{ width: 48, height: 48 }} />
-                                        <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Bus Jemputan</Text>
-                                    </View>
-                                </View>
-
-                                <View style={{ marginHorizontal: 20, marginTop: 50 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Pengawasan</Text>
-                                </View>
-
-                                <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20 }}>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Lapor.go.id</Text>
-                                    </View>
-
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>WBS KKP</Text>
-                                    </View>
-
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Sidak</Text>
-                                    </View>
-
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>JDIH</Text>
-                                    </View>
-                                </View>
-
-                                <View style={{ marginHorizontal: 20, marginTop: 50 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Kinerja dan Pengembangan Pegawai</Text>
-                                </View>
-
-                                <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20, marginTop: 20, }}>
-                                    <View>
-                                        <View>
-                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        </View>
-                                        <View>
-                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Emonev{'\n'} Bapennas</Text>
-                                        </View>
-                                    </View>
-
-                                    <View>
-                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        </View>
-                                        <View>
-                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Kinerjaku</Text>
-                                        </View>
-                                    </View>
-
-                                    <View>
-                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        </View>
-                                        <View>
-                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>E-Milea</Text>
-                                        </View>
-                                    </View>
-
-                                    <View>
-                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        </View>
-                                        <View>
-                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>E-Kinerja {'\n'}BKN</Text>
-                                        </View>
-                                    </View>
-
-                                    <View>
-                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                            <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
-                                        </View>
-                                        <View>
-                                            <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>SIASN{'\n'} BKN</Text>
-                                        </View>
-                                    </View>
-                                </View>
-
-                            </View>
+                        <View style={{ marginLeft: 30, marginBottom: 20 }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
                         </View>
-                    </Modal>
 
-                    <View style={{ marginVertical: 20, marginLeft: 30, }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Agenda Prioritas KKP Dengan 5 Kebijakan</Text>
-                    </View>
-                    <View style={styles.containerr}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={agenda}
-                            renderItem={renderItem2}
-                            hasParallaxImages={true}
-                            onSnapToItem={setSlide2}
-                        />
-                        <Pagination
-                            dotsLength={agenda.length}
-                            inactiveDotColor={'black'}
-                            dotStyle={styles.paginationDot}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
-                            activeDotIndex={slide2}
-                            carouselRef={carouselRef}
-                            tappableDots={!!carouselRef}
-                        />
-                    </View>
+                        <View style={styles.containerr}>
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                sliderHeight={screenWidth}
+                                itemWidth={screenWidth - 60}
+                                data={program}
+                                renderItem={renderItem3}
+                                hasParallaxImages={true}
+                                onSnapToItem={setSlide3}
+                            />
+                            <Pagination
+                                dotsLength={program.length}
+                                inactiveDotColor={'black'}
+                                dotStyle={styles.paginationDot}
+                                inactiveDotOpacity={0.4}
+                                inactiveDotScale={0.6}
+                                activeDotIndex={slide3}
+                                carouselRef={carouselRef}
+                                tappableDots={!!carouselRef}
+                            />
+                        </View>
 
-                    <View style={{ marginLeft: 30, marginBottom: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>7 Program Prioritas</Text>
-                    </View>
+                        <View style={{ marginLeft: 30, marginBottom: 20, flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('ListGaleri')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                    <View style={styles.containerr}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={program}
-                            renderItem={renderItem3}
-                            hasParallaxImages={true}
-                            onSnapToItem={setSlide3}
-                        />
-                        <Pagination
-                            dotsLength={program.length}
-                            inactiveDotColor={'black'}
-                            dotStyle={styles.paginationDot}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
-                            activeDotIndex={slide3}
-                            carouselRef={carouselRef}
-                            tappableDots={!!carouselRef}
-                        />
-                    </View>
-
-                    <View style={{ marginLeft: 30, marginBottom: 20, flexDirection: 'row' }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2, }}>Galeri</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('ListGaleri')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={[styles.containerr, { marginBottom: 80 }]}>
-                        <Carousel
-                            ref={carouselRef}
-                            sliderWidth={screenWidth}
-                            sliderHeight={screenWidth}
-                            itemWidth={screenWidth - 60}
-                            data={galeri.lists.slice(0, 3)}
-                            renderItem={renderItem4}
-                            hasParallaxImages={true}
-                            onSnapToItem={setSlide4}
-                        />
-                        <Pagination
-                            dotsLength={galeri.lists.slice(0, 3).length}
-                            inactiveDotColor={'black'}
-                            dotStyle={styles.paginationDot}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
-                            activeDotIndex={slide4}
-                            carouselRef={carouselRef}
-                            tappableDots={!!carouselRef}
-                        />
-                    </View>
-                </ScrollView >
+                        <View style={[styles.containerr, { marginBottom: 80 }]}>
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                sliderHeight={screenWidth}
+                                itemWidth={screenWidth - 60}
+                                data={galeri.lists.slice(0, 3)}
+                                renderItem={renderItem4}
+                                hasParallaxImages={true}
+                                onSnapToItem={setSlide4}
+                            />
+                            <Pagination
+                                dotsLength={galeri.lists.slice(0, 3).length}
+                                inactiveDotColor={'black'}
+                                dotStyle={styles.paginationDot}
+                                inactiveDotOpacity={0.4}
+                                inactiveDotScale={0.6}
+                                activeDotIndex={slide4}
+                                carouselRef={carouselRef}
+                                tappableDots={!!carouselRef}
+                            />
+                        </View>
+                    </ScrollView >
+                </BottomSheetModalProvider>
             </GestureHandlerRootView>
         </SafeAreaView>
     )

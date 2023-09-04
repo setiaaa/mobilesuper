@@ -12,6 +12,8 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useSelector } from 'react-redux'
 import Checkbox from 'expo-checkbox'
 import { useState } from 'react'
+import { useEffect } from 'react'
+import ListEmpty from '../../components/ListEmpty'
 
 
 const ListBankom = ({ judul, item }) => {
@@ -54,10 +56,32 @@ export const Bankom = () => {
     const navigation = useNavigation()
     const { digitalsign } = useSelector(state => state.digitalsign)
 
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(digitalsign.lists)
+    }, [digitalsign])
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = digitalsign.lists.filter((item) => {
+                return item.judul.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(digitalsign.lists)
+        }
+    }, [search])
+
     return (
         <GestureHandlerRootView>
             <BottomSheetModalProvider>
-                <SafeAreaView>
+                <SafeAreaView style={{ position: 'relative' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                         <View style={{
                             backgroundColor: COLORS.white,
@@ -81,26 +105,31 @@ export const Bankom = () => {
                         <Search
                             placeholder={'Cari'}
                             iconColor={COLORS.primary}
+                            onSearch={filter}
                         />
                     </View>
                     <FlatList
-                        data={digitalsign.lists}
+                        data={filterData}
                         renderItem={({ item }) => <ListBankom
                             judul={item.judul}
                             item={item}
                         />
                         }
-                        keyExtractor={item => item}
+                        keyExtractor={item => item.id}
+                        ListEmptyComponent={() =>
+                            <ListEmpty />
+                        }
+                        style={{ height: '100%' }}
                     />
-                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20, marginTop: 20 }}>
-                        <TouchableOpacity onPress={() => {
-                            navigation.navigate('TambahSertifikat')
-                        }}>
-                            <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                                <Ionicons name='add-outline' size={24} color={COLORS.white} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('TambahSertifikat')
+                    }}
+                        style={{ position: 'absolute', bottom: 300, right: 30, zIndex: 99 }}
+                    >
+                        <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                            <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                        </View>
+                    </TouchableOpacity>
                 </SafeAreaView>
             </BottomSheetModalProvider>
         </GestureHandlerRootView>

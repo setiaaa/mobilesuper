@@ -258,7 +258,7 @@ export const TambahAgendaEvent = () => {
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 17 }}>
                                     <View>
                                         <View style={{ marginTop: 10, marginBottom: 10, flexDirection: 'row' }}>
-                                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tanggal Mulai</Text>
+                                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Waktu Mulai</Text>
                                             <Text style={{ color: COLORS.danger }}>*</Text>
                                         </View>
                                         <View style={{
@@ -289,7 +289,7 @@ export const TambahAgendaEvent = () => {
 
                                     <View>
                                         <View style={{ marginTop: 10, marginBottom: 10, flexDirection: 'row' }}>
-                                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tanggal Selesai</Text>
+                                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Waktu Selesai</Text>
                                             <Text style={{ color: COLORS.danger }}>*</Text>
                                         </View>
                                         <View style={{

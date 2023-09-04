@@ -4,6 +4,9 @@ import { BottomTabsDetailRepo } from '../Korespondensi/AppNavigator'
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setDokumenDetail } from '../../store/Repository';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { Host } from 'react-native-portalize';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const data =
 {
@@ -120,6 +123,12 @@ export const MainDetailRepo = () => {
         dispatch(setDokumenDetail(data))
     }, []);
     return (
-        <BottomTabsDetailRepo />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Host>
+                <BottomSheetModalProvider>
+                    <BottomTabsDetailRepo />
+                </BottomSheetModalProvider>
+            </Host>
+        </GestureHandlerRootView>
     )
 }

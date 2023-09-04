@@ -542,22 +542,24 @@ function AuthStack() {
 
 export const BottomTabs = () => {
   return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Home'>
-        <Tab.Screen name='Home' component={Home} options={{ headerShown: false }} />
-        <Tab.Screen name='Satker' component={Satker} options={{ headerShown: false }} />
-        <Tab.Screen name='FAQ' component={FAQ} options={{ headerShown: false }} />
-        <Tab.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
-        {/* <Tab.Screen name='Tp' component={Tp} options={{ headerShown: false }} /> */}
-        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+    <Host>
+      <BottomSheetModalProvider>
+        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Home'>
+          <Tab.Screen name='Home' component={Home} options={{ headerShown: false }} />
+          <Tab.Screen name='Satker' component={Satker} options={{ headerShown: false }} />
+          <Tab.Screen name='FAQ' component={FAQ} options={{ headerShown: false }} />
+          <Tab.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
+          {/* <Tab.Screen name='Tp' component={Tp} options={{ headerShown: false }} /> */}
+          {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
         options={{
           headerShown: false,
           tabBarStyle: { display: 'none' },
           tabBarItemStyle: { display: 'none' }
         }}
       /> */}
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
+        </Tab.Navigator>
+      </BottomSheetModalProvider>
+    </Host>
   )
 }
 
@@ -1206,6 +1208,7 @@ function AppNavigator() {
       cekValidVersion(response.data.version);
     } catch (error) {
       if (error.status == null) {
+        console.log("cek", error)
         Alert.alert("Warning!", "Please check your connection");
       } else {
         handlerError(error, "Warning!", "Check Version Ios not working!");
@@ -1255,12 +1258,13 @@ function AppNavigator() {
   return (
     <>
       <Host>
-
+        {/* awas lupa */}
         <NavigationContainer>
-          {!isLoading && !isAuthenticated && <AuthStack />}
+          {/* {!isLoading && !isAuthenticated && <AuthStack />} */}
+          {<AuthStack />}
           {!isLoading && isAuthenticated && <AuthenticatedStack />}
         </NavigationContainer>
-        {loadingOverlay}
+        {/* {loadingOverlay} */}
       </Host>
     </>
   );

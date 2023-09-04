@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import { Search } from '../../components/Search'
 import { setAbsen } from '../../store/Event'
+import ListEmpty from '../../components/ListEmpty'
 
 
 const listAbsen = [
@@ -134,6 +135,28 @@ export const Absen = () => {
 
     const { absen } = useSelector(state => state.event)
 
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(absen)
+    }, [absen])
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = absen.filter((item) => {
+                return item.nama.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(absen)
+        }
+    }, [search])
+
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -158,6 +181,7 @@ export const Absen = () => {
             <View style={{ width: '90%', marginTop: 20, marginHorizontal: 20 }}>
                 <Search
                     placeholder={"Cari"}
+                    onSearch={filter}
                 />
             </View>
 
@@ -235,12 +259,15 @@ export const Absen = () => {
             </View>
 
             <FlatList
-                data={absen}
+                data={filterData}
                 renderItem={({ item }) => <CardListAbsen
                     item={item}
                 />
                 }
                 style={{ marginVertical: 20 }}
+                ListEmptyComponent={() => (
+                    <ListEmpty />
+                )}
             />
         </SafeAreaView>
     )
