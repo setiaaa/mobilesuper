@@ -398,9 +398,9 @@ export const MyTask = () => {
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: 'row', gap: 5, marginHorizontal: 15 }}>
-                        <TouchableOpacity onPress={bottomSheetAttachSelect}>
-                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 317, justifyContent: 'center', borderRadius: 8 }}>
+                    <View style={{ flexDirection: 'row', gap: 5, marginHorizontal: 15, width: '100%' }}>
+                        <TouchableOpacity onPress={bottomSheetAttachSelect} style={{ width: '80%' }}>
+                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, justifyContent: 'center', borderRadius: 8 }}>
                                 <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text>
                             </View>
                         </TouchableOpacity>
@@ -515,8 +515,8 @@ export const MyTask = () => {
                             </BottomSheetView>
                         </BottomSheetModal>
 
-                        <TouchableOpacity onPress={bottomSheetAttach}>
-                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
+                        <TouchableOpacity onPress={bottomSheetAttach} style={{ width: "11%" }}>
+                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
                                 {/* <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text> */}
                                 <Ionicons name='search-outline' size={24} color={COLORS.primary} />
                             </View>

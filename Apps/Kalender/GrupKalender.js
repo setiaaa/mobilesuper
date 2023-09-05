@@ -192,8 +192,8 @@ export const GrupKalender = () => {
   const { agenda, dropdown } = useSelector(state => state.grupKalender)
 
   return (
-    <SafeAreaView>
-      <GestureHandlerRootView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <ScrollView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>

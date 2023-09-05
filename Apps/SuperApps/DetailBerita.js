@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     imageIos: {
-        width: 390,
+        width: '100%',
         height: 260
     },
     imageAndroid: {
-        width: 420,
+        width: '100%',
         height: 260
     }
 })

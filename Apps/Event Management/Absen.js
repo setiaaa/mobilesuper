@@ -55,7 +55,7 @@ const CardListAbsen = ({ item }) => {
         }}>
             <View style={
                 {
-                    width: 358,
+                    width: '90%',
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     marginTop: 10,

@@ -95,7 +95,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                 </View>
             </View>
 
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 20, marginVertical: 20, marginLeft: 25 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20, marginVertical: 20, }}>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                     <TouchableOpacity onPress={() => navigation.navigate('ListPegawai')}>
@@ -106,23 +106,23 @@ export const CardAppsB = ({ handlePressModal }) => {
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pegawai</Text>
                 </View>
 
-                {/* <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                    <TouchableOpacity>
+                <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
+                    {/* <TouchableOpacity>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='clipboard-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Event Management</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Event Management</Text> */}
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('MainDigitalSign')}>
+                    {/* <TouchableOpacity onPress={() => navigation.navigate('MainDigitalSign')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
-                {/* </View>
+                            <Ionicons name='school-outline' size={24} color={COLORS.primary} />
+                        </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Digital Signature</Text>
-                </View> */}
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Digital Signature</Text> */}
+                </View>
             </View>
         </View>
     )

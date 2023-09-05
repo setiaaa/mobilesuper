@@ -25,7 +25,7 @@ export const CardVisiMisi = ({ setModalVisibleVisiMisi }) => {
 const styles = StyleSheet.create({
     cardBack: {
         height: 128,
-        width: 357,
+        width: '90%',
         backgroundColor: COLORS.primary,
         borderRadius: 16,
         marginHorizontal: 15,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     CardMidle: {
         height: 120,
-        width: 357,
+        width: '100%',
         backgroundColor: COLORS.white,
         borderRadius: 16,
         position: 'absolute',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     cardFront: {
         backgroundColor: COLORS.primary,
-        width: 326,
+        width: '90%',
         height: 64,
         marginHorizontal: 15,
         marginVertical: 30,

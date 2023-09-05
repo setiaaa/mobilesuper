@@ -23,6 +23,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import { Search } from '../../components/Search'
 import ListEmpty from '../../components/ListEmpty'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const kategories = [
     { key: 'q', value: 'satu' },
@@ -363,7 +364,7 @@ const CardListEvent = ({ item }) => {
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
             <TouchableOpacity style={{
                 backgroundColor: COLORS.white,
-                width: 358,
+                width: '90%',
                 padding: 20,
                 borderRadius: 8
             }}
@@ -411,7 +412,7 @@ const CardProgresEvent = ({ item, bottomSheetAttach }) => {
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View style={{
                 backgroundColor: COLORS.white,
-                width: 358,
+                width: '90%',
                 padding: 20,
                 marginBottom: 10,
                 borderRadius: 8
@@ -586,237 +587,239 @@ export const HalamanUtama = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <BottomSheetModalProvider>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 20
-                    }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                <BottomSheetModalProvider>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                        <View style={{
+                            backgroundColor: COLORS.white,
+                            borderRadius: 20,
+                            width: 28,
+                            height: 28,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginLeft: 20
+                        }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Event Management</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
+                        <Search
+                            placeholder={'Cari'}
+                            onSearch={filter}
+                        />
+                    </View>
+
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+
+                        <TouchableOpacity style={{
+                            width: 171,
+                            height: 41,
+                            borderWidth: 1,
+                            backgroundColor: variant === 'hariini' ? COLORS.infoDanger : COLORS.white,
+                            borderRadius: 30,
+                            borderColor: variant === 'hariini' ? COLORS.white : COLORS.ExtraDivinder,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                            onPress={() => SetVariant('hariini')}
+                        >
+                            <Text style={{ color: variant === 'hariini' ? COLORS.white : null }}>Event Hari Ini</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{
+                            width: 171,
+                            height: 41,
+                            borderWidth: 1,
+                            backgroundColor: variant === 'progres' ? COLORS.infoDanger : COLORS.white,
+                            borderRadius: 30,
+                            borderColor: variant === 'progres' ? COLORS.white : COLORS.ExtraDivinder,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                            onPress={() => SetVariant('progres')}
+                        >
+                            <Text style={{ color: variant === 'progres' ? COLORS.white : null }}>Progres Event</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Event Management</Text>
-                    </View>
-                </View>
-
-                <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
-                    <Search
-                        placeholder={'Cari'}
-                        onSearch={filter}
-                    />
-                </View>
-
-
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-
-                    <TouchableOpacity style={{
-                        width: 171,
-                        height: 41,
-                        borderWidth: 1,
-                        backgroundColor: variant === 'hariini' ? COLORS.infoDanger : COLORS.white,
-                        borderRadius: 30,
-                        borderColor: variant === 'hariini' ? COLORS.white : COLORS.ExtraDivinder,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                        onPress={() => SetVariant('hariini')}
-                    >
-                        <Text style={{ color: variant === 'hariini' ? COLORS.white : null }}>Event Hari Ini</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{
-                        width: 171,
-                        height: 41,
-                        borderWidth: 1,
-                        backgroundColor: variant === 'progres' ? COLORS.infoDanger : COLORS.white,
-                        borderRadius: 30,
-                        borderColor: variant === 'progres' ? COLORS.white : COLORS.ExtraDivinder,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                        onPress={() => SetVariant('progres')}
-                    >
-                        <Text style={{ color: variant === 'progres' ? COLORS.white : null }}>Progres Event</Text>
-                    </TouchableOpacity>
-                </View>
-                {variant === 'hariini' ? (
-                    <FlatList
-                        data={filterData}
-                        renderItem={({ item }) => <CardListEvent
-                            item={item}
-                        />
-                        }
-                        keyExtractor={item => item.id}
-                        style={{ height: 440 }}
-                        ListEmptyComponent={() => <ListEmpty />}
-                    />
-                ) : (
-                    <View>
-                        <View style={{ padding: 25 }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            }}>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Event</Text>
-
-                                <View style={{ flexDirection: 'row', gap: 10 }}>
-                                    <View style={{
-                                        width: 40,
-                                        height: 40,
-                                        borderRadius: 30,
-                                        backgroundColor: COLORS.white,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Ionicons name='filter-outline' size={24} />
-                                    </View>
-
-                                    <View style={{
-                                        width: 40,
-                                        height: 40,
-                                        borderRadius: 30,
-                                        backgroundColor: COLORS.white,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Ionicons name='menu-outline' size={24} />
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
+                    {variant === 'hariini' ? (
                         <FlatList
                             data={filterData}
-                            renderItem={({ item }) => <CardProgresEvent
+                            renderItem={({ item }) => <CardListEvent
                                 item={item}
-                                bottomSheetAttach={bottomSheetAttach}
                             />
                             }
                             keyExtractor={item => item.id}
                             style={{ height: 440 }}
                             ListEmptyComponent={() => <ListEmpty />}
                         />
-                    </View>
+                    ) : (
+                        <View>
+                            <View style={{ padding: 25 }}>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Event</Text>
 
-                )}
+                                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                                        <View style={{
+                                            width: 40,
+                                            height: 40,
+                                            borderRadius: 30,
+                                            backgroundColor: COLORS.white,
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <Ionicons name='filter-outline' size={24} />
+                                        </View>
 
-                <TouchableOpacity style={{
-                    width: 50,
-                    height: 50,
-                    backgroundColor: COLORS.infoDanger,
-                    borderRadius: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    bottom: 100,
-                    right: 20
-                }}
-                    onPress={() => {
-                        navigation.navigate('TambahEvent')
-                    }}
-                >
-                    <Ionicons name='add-outline' size={24} color={COLORS.white} />
-                </TouchableOpacity>
-
-                <BottomSheetModal
-                    ref={bottomSheetModalAddRef}
-                    snapPoints={animatedSnapPoints}
-                    handleHeight={animatedHandleHeight}
-                    contentHeight={animatedContentHeight}
-                    index={0}
-                    style={{ borderRadius: 50 }}
-                    keyboardBlurBehavior="restore"
-                    android_keyboardInputMode="adjust"
-                    backdropComponent={({ style }) => (
-                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                    )}
-                >
-                    <BottomSheetView onLayout={handleContentLayout} >
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity style={{
-                                width: 331,
-                                height: 50,
-                                backgroundColor: COLORS.infoDanger,
-                                borderRadius: 8,
-                                justifyContent: 'center',
-                                alignItems: 'center', marginTop: 10
-                            }}
-                                onPress={() => {
-                                    navigation.navigate('TambahEvent')
-                                }}
-                            >
-                                <Text style={{ color: COLORS.white }}>Tambah Event</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={{
-                                width: 331,
-                                height: 50,
-                                backgroundColor: COLORS.infoDanger,
-                                borderRadius: 8,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: 10
-                            }}
-                                onPress={() => {
-                                    navigation.navigate('TambahAgendaEvent')
-                                }}
-                            >
-                                <Text style={{ color: COLORS.white }}>Tambah Agenda</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={{
-                                width: 331,
-                                height: 50,
-                                backgroundColor: COLORS.infoDanger,
-                                borderRadius: 8,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: 10,
-                                marginBottom: 40
-                            }}
-                                onPress={() => {
-                                    navigation.navigate('TambahTodo', { item: event.lists })
-                                }}
-                            >
-                                <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
-                            </TouchableOpacity>
-
-                        </View>
-                    </BottomSheetView>
-                </BottomSheetModal>
-
-                <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    snapPoints={animatedSnapPoints}
-                    handleHeight={animatedHandleHeight}
-                    contentHeight={animatedContentHeight}
-                    index={0}
-                    style={{ borderRadius: 50 }}
-                    keyboardBlurBehavior="restore"
-                    android_keyboardInputMode="adjust"
-                    backdropComponent={({ style }) => (
-                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                    )}
-                >
-                    <BottomSheetView onLayout={handleContentLayout} >
-                        <FlatList
-                            data={progres}
-                            renderItem={({ item }) => <CardTodoEvent
-                                item={item}
+                                        <View style={{
+                                            width: 40,
+                                            height: 40,
+                                            borderRadius: 30,
+                                            backgroundColor: COLORS.white,
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <Ionicons name='menu-outline' size={24} />
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                            <FlatList
+                                data={filterData}
+                                renderItem={({ item }) => <CardProgresEvent
+                                    item={item}
+                                    bottomSheetAttach={bottomSheetAttach}
+                                />
+                                }
+                                keyExtractor={item => item.id}
+                                style={{ height: 440 }}
+                                ListEmptyComponent={() => <ListEmpty />}
                             />
-                            }
-                            style={{ marginBottom: 40 }}
-                        />
-                    </BottomSheetView>
-                </BottomSheetModal>
-            </BottomSheetModalProvider>
+                        </View>
+
+                    )}
+
+                    <TouchableOpacity style={{
+                        width: 50,
+                        height: 50,
+                        backgroundColor: COLORS.infoDanger,
+                        borderRadius: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        bottom: 100,
+                        right: 20
+                    }}
+                        onPress={() => {
+                            navigation.navigate('TambahEvent')
+                        }}
+                    >
+                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                    </TouchableOpacity>
+
+                    <BottomSheetModal
+                        ref={bottomSheetModalAddRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout} >
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <TouchableOpacity style={{
+                                    width: 331,
+                                    height: 50,
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 8,
+                                    justifyContent: 'center',
+                                    alignItems: 'center', marginTop: 10
+                                }}
+                                    onPress={() => {
+                                        navigation.navigate('TambahEvent')
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white }}>Tambah Event</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={{
+                                    width: 331,
+                                    height: 50,
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 8,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: 10
+                                }}
+                                    onPress={() => {
+                                        navigation.navigate('TambahAgendaEvent')
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white }}>Tambah Agenda</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={{
+                                    width: 331,
+                                    height: 50,
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 8,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: 10,
+                                    marginBottom: 40
+                                }}
+                                    onPress={() => {
+                                        navigation.navigate('TambahTodo', { item: event.lists })
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
+                                </TouchableOpacity>
+
+                            </View>
+                        </BottomSheetView>
+                    </BottomSheetModal>
+
+                    <BottomSheetModal
+                        ref={bottomSheetModalRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout} >
+                            <FlatList
+                                data={progres}
+                                renderItem={({ item }) => <CardTodoEvent
+                                    item={item}
+                                />
+                                }
+                                style={{ marginBottom: 40 }}
+                            />
+                        </BottomSheetView>
+                    </BottomSheetModal>
+                </BottomSheetModalProvider>
+            </GestureHandlerRootView>
         </SafeAreaView >
     )
 }

@@ -505,7 +505,7 @@ const CardLiniMasa = ({ item, }) => {
                         </View>
                     </View>
                     <View style={{ marginVertical: 20 }}>
-                        <Image source={item.image} style={{ width: 326, height: 160, borderRadius: 8 }} />
+                        <Image source={item.image} style={{ width: '100%', height: 160, borderRadius: 8 }} />
                     </View>
 
                     <Text style={{ textAlign: 'justify', color: COLORS.lighter, fontSize: FONTSIZE.H3 }}>{item.judul}</Text>
@@ -708,4 +708,10 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
     },
+    imageIos: {
+        width: '100%',
+    },
+    imageAndroid: {
+        width: '100%',
+    }
 })

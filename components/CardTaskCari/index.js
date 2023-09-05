@@ -19,6 +19,7 @@ export const CardTaskCari = ({ kegiatan, subAvatar, warna }) => {
                 flexDirection: 'row',
                 gap: 1,
                 marginVertical: 5,
+                justifyContent: 'space-between',
                 //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: '#171717',
@@ -65,7 +66,7 @@ export const CardTaskCari = ({ kegiatan, subAvatar, warna }) => {
                             }} />
                         )
                     })}
-                    <View style={{ marginLeft: 15 }}>
+                    <View style={{ marginLeft: 15, marginRight: 15 }}>
                         <Ionicons name='chevron-forward-outline' size={24} color={COLORS.grey} />
                     </View>
                     {/* <Image source={subAvatar} /> */}

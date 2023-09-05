@@ -266,7 +266,7 @@ export const DetailAgenda = () => {
                             <Text>0/15</Text>
                         </View>
                         <TouchableOpacity style={{
-                            width: 326,
+                            width: "100%",
                             height: 50,
                             borderRadius: 8,
                             flexDirection: 'row',
@@ -335,7 +335,7 @@ export const DetailAgenda = () => {
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lihat Notulensi</Text>
                         <TouchableOpacity style={{
-                            width: 326,
+                            width: '100%',
                             height: 50,
                             borderRadius: 8,
                             flexDirection: 'row',

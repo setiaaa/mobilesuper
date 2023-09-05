@@ -7,7 +7,7 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import React, { useMemo, useRef, useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
@@ -175,7 +175,7 @@ export const DetailTask = () => {
                                 <View style={{
                                     marginHorizontal: 20,
                                     backgroundColor: COLORS.infoDanger,
-                                    width: 351,
+                                    width: Platform.OS === 'ios' ? '90%' : '91%',
                                     height: 50,
                                     justifyContent: 'center',
                                     alignItems: 'center',

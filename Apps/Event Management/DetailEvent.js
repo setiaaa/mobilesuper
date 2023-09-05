@@ -11,6 +11,7 @@ import { FlatList } from 'react-native';
 import { Modal } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
+import { Platform } from 'react-native';
 
 const CardLampiran = ({ lampiran, onClick, type }) => {
     const navigation = useNavigation()
@@ -311,7 +312,7 @@ export const DetailEvent = () => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
                     <TouchableOpacity style={{
                         backgroundColor: COLORS.foundation,
-                        width: 358,
+                        width: Platform.OS === 'ios' ? '90%' : '91%',
                         height: 50,
                         borderRadius: 8
                     }}>

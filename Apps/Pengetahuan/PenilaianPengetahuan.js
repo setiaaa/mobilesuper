@@ -147,7 +147,7 @@ export const PenilaianPenggetahaun = () => {
             <View style={{ flexDirection: 'row', marginVertical: 20, marginHorizontal: 20, gap: 5 }}>
                 <View style={{
                     height: 54,
-                    width: 150,
+                    width: "43%",
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     justifyContent: 'center',
@@ -158,7 +158,7 @@ export const PenilaianPenggetahaun = () => {
 
                 <View style={{
                     height: 54,
-                    width: 150,
+                    width: "43%",
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     justifyContent: 'center',
@@ -169,7 +169,7 @@ export const PenilaianPenggetahaun = () => {
 
                 <TouchableOpacity style={{
                     height: 54,
-                    width: 44,
+                    width: "12%",
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     justifyContent: 'center',
@@ -204,7 +204,7 @@ export const PenilaianPenggetahaun = () => {
                                     {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
                                     <Ionicons name='chevron-back-outline' size={24} />
                                 </TouchableOpacity> */}
-                                    <View style={{ width: 291 }}>
+                                    <View style={{ width: '85%' }}>
                                         <Search
                                             placeholder={'Cari'}
                                             onSearch={filter}
@@ -242,7 +242,7 @@ export const PenilaianPenggetahaun = () => {
             <View style={{ flexDirection: 'row', marginHorizontal: 20, gap: 5 }}>
                 <View style={{
                     backgroundColor: COLORS.white,
-                    width: 175,
+                    width: "49.5%",
                     height: 100,
                     borderRadius: 16,
                     flexDirection: 'row',
@@ -268,7 +268,7 @@ export const PenilaianPenggetahaun = () => {
 
                 <View style={{
                     backgroundColor: COLORS.white,
-                    width: 175,
+                    width: "49.5%",
                     height: 100,
                     borderRadius: 16,
                     flexDirection: 'row',

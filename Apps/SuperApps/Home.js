@@ -344,7 +344,7 @@ export const Home = () => {
                             </View>
                         </Modal>
 
-                        <View style={{ marginTop: 15 }}>
+                        <View style={{ marginTop: 15, alignItems: 'center' }}>
                             <CardVisiMisi
                                 setModalVisibleVisiMisi={setModalVisibleVisiMisi}
                             />

@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native';
 import ListEmpty from '../../components/ListEmpty';
+import { Platform } from 'react-native';
 
 const dataPegawai = [
     {
@@ -191,7 +192,7 @@ const CardListPegawai = ({ item, collapse, setCollapse, navigation }) => {
         <View style={{
             flexDirection: 'column', display: 'flex',
             backgroundColor: COLORS.white,
-            width: 358,
+            width: '90%',
             padding: 20,
             marginTop: 10,
             borderRadius: 8,
@@ -204,7 +205,7 @@ const CardListPegawai = ({ item, collapse, setCollapse, navigation }) => {
             }}
                 onPress={() => setCollapse({ nip: item.nip, toggle: true })}
             >
-                <View style={{ width: 298 }}>
+                <View style={{ width: Platform.OS === 'ios' ? '92%' : '93%' }}>
                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.nama}</Text>
                     <Text style={{ marginTop: 5 }}>{item.nip}</Text>
                 </View>
@@ -229,7 +230,7 @@ const CardListPegawai = ({ item, collapse, setCollapse, navigation }) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{
-                        width: 320,
+                        width: '100%',
                         height: 50,
                         backgroundColor: COLORS.danger,
                         justifyContent: 'center',

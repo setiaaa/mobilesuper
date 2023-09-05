@@ -224,7 +224,7 @@ export const DetailLinimasa = ({ route }) => {
                                     />
                                     }
                                     style={{ marginTop: 20 }}
-                                    columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15 }}
+                                    columnWrapperStyle={{ justifyContent: 'space-evenly', }}
                                     numColumns={2}
                                     keyExtractor={item => "#" + item.id}
                                 />
@@ -552,7 +552,7 @@ export const DetailLinimasa = ({ route }) => {
 
                                 <View style={{
                                     height: 105,
-                                    width: 357,
+                                    width: '90%',
                                     backgroundColor: COLORS.danger,
                                     borderRadius: 8,
                                     marginHorizontal: 15,
@@ -564,7 +564,7 @@ export const DetailLinimasa = ({ route }) => {
                                     //shadow android
                                     elevation: 5
                                 }}>
-                                    <View style={{ height: 96, width: 357, backgroundColor: COLORS.white, borderRadius: 8, position: 'absolute', bottom: 0 }}>
+                                    <View style={{ height: 96, width: '100%', backgroundColor: COLORS.white, borderRadius: 8, position: 'absolute', bottom: 0 }}>
                                         <Text style={{ fontWeight: 600, marginHorizontal: 20, marginTop: 20 }}>Selanjutnya</Text>
                                         <View style={{ flexDirection: 'row' }}>
                                             <Text style={{ fontSize: FONTSIZE.H4, marginHorizontal: 20, marginTop: 10, width: 300 }}>Kementrian Kelautan dan Perikanan (KKP) bersama dengan Dewan...</Text>
@@ -591,12 +591,12 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     imageIos: {
-        width: 390,
+        width: '100%',
         height: 260,
         resizeMode: 'cover'
     },
     imageAndroid: {
-        width: 420,
+        width: '100%',
         height: 260,
         resizeMode: 'cover'
     },

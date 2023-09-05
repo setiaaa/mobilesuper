@@ -27,7 +27,7 @@ const CardListTodo = ({ item, bottomSheetAttach }) => {
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
             <TouchableOpacity style={{
-                width: 358,
+                width: '90%',
                 height: 102,
                 backgroundColor: COLORS.white,
                 borderRadius: 8,
