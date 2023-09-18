@@ -10,6 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const data =
 {
+    id: 1,
     judul: 'Business Agility with Scrum',
     subjudul: 'Business Agility Scrum 2023 with All Employee',
     tanggal: '16 Mei 2023',
@@ -19,22 +20,34 @@ const data =
     deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
     image: require('../../assets/superApp/AvatarDetail.png'),
     subimage: [
-        { image: require('../../assets/superApp/AvatarDetail.png') },
-        { image: require('../../assets/superApp/AvatarDetail.png') },
-        { image: require('../../assets/superApp/AvatarDetail.png') },
+        {
+            id: 1,
+            image: require('../../assets/superApp/AvatarDetail.png')
+        },
+        {
+            id: 2,
+            image: require('../../assets/superApp/AvatarDetail.png')
+        },
+        {
+            id: 3,
+            image: require('../../assets/superApp/AvatarDetail.png')
+        },
     ],
     dibagikan: [
         {
+            id: 1,
             avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
             jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
             nama: 'Rizky Novriansyahh',
         },
         {
+            id: 2,
             avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
             jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
             nama: 'Rizky Novriansyahh',
         },
         {
+            id: 3,
             avatarDibagikan: require('../../assets/superApp/AvatarDetail.png'),
             jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
             nama: 'Rizky Novriansyahh'
@@ -42,18 +55,22 @@ const data =
     ],
     lampiran: [
         {
+            id: 1,
             file: 'Business Agility with Scrum.pdf',
             size: '8 mb'
         },
         {
+            id: 2,
             file: 'Business Agility with Scrum.pdf',
             size: '8 mb'
         },
         {
+            id: 3,
             file: 'Business Agility with Scrum.pdf',
             size: '8 mb'
         },
         {
+            id: 4,
             file: 'Business Agility with Scrum.pdf',
             size: '8 mb'
         },

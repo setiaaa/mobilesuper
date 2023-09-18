@@ -12,6 +12,7 @@ import { Modal } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Platform } from 'react-native';
+import moment from 'moment';
 
 const CardLampiran = ({ lampiran, onClick, type }) => {
     const navigation = useNavigation()
@@ -19,7 +20,7 @@ const CardLampiran = ({ lampiran, onClick, type }) => {
     return (
         type === 'png' || type === 'jpg' || type === 'jpeg' ? (
             <TouchableOpacity onPress={onClick}>
-                <Image source={lampiran} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10 }} />
+                <Image source={{ uri: lampiran }} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10 }} />
             </TouchableOpacity>
         ) : type === 'mp4' ? (
             <TouchableOpacity onPress={onClick} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10, backgroundColor: COLORS.secondaryLighter, justifyContent: 'center', alignItems: 'center' }}>
@@ -66,8 +67,8 @@ export const DetailEvent = () => {
 
     const [document, setDocument] = useState([])
 
-    const getFileExtension = (lampiran) => {
-        let jenis = lampiran.split('.')
+    const getFileExtension = (type) => {
+        let jenis = type.split('.')
         jenis = jenis[jenis.length - 1]
         return jenis
     }
@@ -76,7 +77,10 @@ export const DetailEvent = () => {
 
     const { event } = useSelector(state => state.event)
 
-    const data = event.detail
+    const data = event.detailEvent
+
+    console.log(data)
+
     return (
         <SafeAreaView>
             <ScrollView>
@@ -101,11 +105,11 @@ export const DetailEvent = () => {
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
-                        <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{data.judul}</Text>
+                        <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
+                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold, width: 200 }}>{data.title}</Text>
                             <View
                                 style={{
-                                    width: 80,
+                                    width: 90,
                                     height: 24,
                                     backgroundColor: COLORS.infoLight,
                                     borderRadius: 30,
@@ -118,7 +122,7 @@ export const DetailEvent = () => {
                         </View>
 
                         <View style={{ marginTop: 10 }}>
-                            <Text>{data.deskripsi}</Text>
+                            <Text>{data.note}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -126,7 +130,8 @@ export const DetailEvent = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-                            <Text>{data.tanggal}</Text>
+                            <Text>{moment(data.start_date).format('d MMM yyy')} - </Text>
+                            <Text>{moment(data.end_date).format('d MMM yyy')}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -134,7 +139,7 @@ export const DetailEvent = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
-                            <Text style={{ width: 156 }}>{data.tempat}</Text>
+                            <Text style={{ width: 156 }}>{data.location}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -142,17 +147,16 @@ export const DetailEvent = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Pimpinan Event</Text>
-                            <Text>{data.pimpinan}</Text>
+                            <Text>{data.extra_attrs?.pic.title.name}</Text>
                         </View>
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
-                            {data.peserta?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                            {data.extra_attrs?.members?.map((data, index) =>
+                                <View key={data.id} style={{ position: 'relative' }}>
+                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                 </View>
                             )}
                             <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -162,12 +166,26 @@ export const DetailEvent = () => {
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event Eksternal</Text>
+                            {data.extra_attrs?.guest_external?.map((data, index) =>
+                                <View key={data.id} style={{ position: 'relative' }}>
+                                    {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
+                                    <Text>{data.name}</Text>
+                                </View>
+                            )}
+                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity>
+                        </View>
 
+                        {/* custom divider */}
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Notulen</Text>
-                            {data.notulen?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
+                            {data.extra_attrs?.notulen?.map((data, index) =>
+                                <View key={data.id} style={{ position: 'relative' }}>
+                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                 </View>
                             )}
                             <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -177,10 +195,16 @@ export const DetailEvent = () => {
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absensi</Text>
-                            <Text>{data.absen}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
+                            {data.extra_attrs?.presensi?.map((data, index) =>
+                                <View key={data.id} style={{ position: 'relative' }}>
+                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                </View>
+                            )}
+                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity>
                         </View>
 
                         {/* custom divider */}
@@ -190,16 +214,20 @@ export const DetailEvent = () => {
 
                         <FlatList
                             key={'*'}
-                            data={data.lampiran}
-                            renderItem={({ item }) => <CardLampiran
-                                lampiran={item.gambar}
-                                type={getFileExtension(item.nama)}
-                                onClick={() => {
-                                    setVisibleModal(true)
-                                    setLampiranById(item)
-                                }}
-                            />
+                            data={data.attachments}
+                            renderItem={({ item }) =>
+                                <View key={item.id}>
+                                    <CardLampiran
+                                        lampiran={item.file}
+                                        type={getFileExtension(item.name)}
+                                        onClick={() => {
+                                            setVisibleModal(true)
+                                            setLampiranById(item)
+                                        }}
+                                    />
+                                </View>
                             }
+                            scrollEnabled={false}
                             style={{ marginTop: 10 }}
                             columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
                             numColumns={3}
@@ -242,11 +270,11 @@ export const DetailEvent = () => {
                                                 <Ionicons name='close-outline' color={COLORS.white} size={24} />
                                             </View>
                                         </TouchableOpacity>
-                                        {getFileExtension(lampiranById.nama) === 'png' || getFileExtension(lampiranById.nama) === 'jpg' || getFileExtension(lampiranById.nama) === 'jpeg' ? (
+                                        {getFileExtension(lampiranById.name) === 'png' || getFileExtension(lampiranById.name) === 'jpg' || getFileExtension(lampiranById.name) === 'jpeg' ? (
                                             <View>
-                                                <Image source={lampiranById.gambar} style={{ width: 390, height: 283 }} />
+                                                <Image source={{ uri: lampiranById.file }} style={{ width: 390, height: 283 }} />
                                             </View>
-                                        ) : getFileExtension(lampiranById.nama) === 'mp4' ? (
+                                        ) : getFileExtension(lampiranById.name) === 'mp4' ? (
                                             <Video
                                                 ref={video}
                                                 style={{ width: 390, height: 283 }}
@@ -264,64 +292,79 @@ export const DetailEvent = () => {
                             ) : null
                         }
 
-                    </View>
-                </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
 
-                    <TouchableOpacity style={{
-                        backgroundColor: COLORS.info,
-                        width: 134,
-                        height: 50,
-                        borderRadius: 8
-                    }}>
-                        <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
-                            <Text style={{ color: COLORS.white }}>Persiapan</Text>
-                            <Ionicons name='chevron-forward-outline' size={20} color={COLORS.white} />
-                        </View>
-                    </TouchableOpacity>
 
-                    <View style={{ flexDirection: 'row', gap: 10 }}>
-
-                        <TouchableOpacity style={{
-                            backgroundColor: COLORS.lightBrown,
-                            width: 50,
-                            height: 50,
-                            borderRadius: 8
-                        }}>
-                            <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
-                                <Ionicons name='pencil-outline' size={20} color={COLORS.white} />
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={{
-                            backgroundColor: COLORS.infoDanger,
-                            width: 50,
-                            height: 50,
-                            borderRadius: 8
-                        }}>
-                            <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
-                                <Ionicons name='trash-outline' size={20} color={COLORS.white} />
-                            </View>
-                        </TouchableOpacity>
 
                     </View>
-
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
-                    <TouchableOpacity style={{
-                        backgroundColor: COLORS.foundation,
-                        width: Platform.OS === 'ios' ? '90%' : '91%',
-                        height: 50,
-                        borderRadius: 8
-                    }}>
-                        <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
-                            <Text style={{ color: COLORS.white }}>Kirim Notifikasi</Text>
-                            <Ionicons name='notifications-outline' size={20} color={COLORS.white} />
+                {
+                    data.user_role?.is_pic === true ||
+                        data.user_role?.notulensi === false &&
+                        data.user_role?.presensi === false &&
+                        data.user_role?.member === false &&
+                        data.user_role?.is_pic === false ? (
+                        <View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
+
+                                <TouchableOpacity style={{
+                                    backgroundColor: COLORS.info,
+                                    width: 134,
+                                    height: 50,
+                                    borderRadius: 8
+                                }}>
+                                    <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
+                                        <Text style={{ color: COLORS.white }}>Persiapan</Text>
+                                        <Ionicons name='chevron-forward-outline' size={20} color={COLORS.white} />
+                                    </View>
+                                </TouchableOpacity>
+
+                                <View style={{ flexDirection: 'row', gap: 10 }}>
+
+                                    <TouchableOpacity style={{
+                                        backgroundColor: COLORS.lightBrown,
+                                        width: 50,
+                                        height: 50,
+                                        borderRadius: 8
+                                    }}>
+                                        <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
+                                            <Ionicons name='pencil-outline' size={20} color={COLORS.white} />
+                                        </View>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={{
+                                        backgroundColor: COLORS.infoDanger,
+                                        width: 50,
+                                        height: 50,
+                                        borderRadius: 8
+                                    }}>
+                                        <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
+                                            <Ionicons name='trash-outline' size={20} color={COLORS.white} />
+                                        </View>
+                                    </TouchableOpacity>
+
+                                </View>
+
+                            </View>
+
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
+                                <TouchableOpacity style={{
+                                    backgroundColor: COLORS.foundation,
+                                    width: Platform.OS === 'ios' ? '90%' : '91%',
+                                    height: 50,
+                                    borderRadius: 8
+                                }}>
+                                    <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
+                                        <Text style={{ color: COLORS.white }}>Kirim Notifikasi</Text>
+                                        <Ionicons name='notifications-outline' size={20} color={COLORS.white} />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </TouchableOpacity>
-                </View>
+                    ) : (
+                        <></>
+                    )}
 
             </ScrollView>
         </SafeAreaView>

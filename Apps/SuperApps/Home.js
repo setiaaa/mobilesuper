@@ -34,9 +34,8 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import { Button } from 'react-native'
 import { useCallback } from 'react'
 import { Portal } from 'react-native-portalize'
-
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getTokenValue } from '../../service/session'
 
 const { width: screenWidth } = Dimensions.get('window');
 export const Home = () => {
@@ -47,9 +46,9 @@ export const Home = () => {
         carouselRef.current.snapToNext();
     };
 
-    const [slide2, setSlide2] = useState()
-    const [slide3, setSlide3] = useState()
-    const [slide4, setSlide4] = useState()
+    const [slide2, setSlide2] = useState(0)
+    const [slide3, setSlide3] = useState(0)
+    const [slide4, setSlide4] = useState(0)
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisibleVisiMisi, setModalVisibleVisiMisi] = useState(false);
@@ -212,8 +211,16 @@ export const Home = () => {
         setPlaying((prev) => !prev);
     }, []);
 
+    // const [token, setToken] = useState('')
+
+    // getTokenValue().then(val => {
+    //     setToken(val)
+    // })
+
+    // console.log(token)
+
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }} key={1}>
             <GestureHandlerRootView>
                 <BottomSheetModalProvider>
                     <ScrollView>
@@ -374,8 +381,8 @@ export const Home = () => {
                                         <Text style={{ color: COLORS.white, textAlign: 'center', marginVertical: 5 }}>MISI KKP</Text>
                                     </View>
 
-                                    {visimisi.misi.map((item) =>
-                                        <View style={{ flexDirection: 'row', gap: 10, marginLeft: 30, marginTop: 20 }}>
+                                    {visimisi.misi.map((item, index) =>
+                                        <View key={index} style={{ flexDirection: 'row', gap: 10, marginLeft: 30, marginTop: 20 }}>
                                             <View style={{ width: 10, height: 10, borderRadius: 50, backgroundColor: COLORS.primary, marginTop: 5 }} />
                                             <Text style={{ width: 260, fontSize: FONTSIZE.H4 }}>{item.text}</Text>
                                         </View>
@@ -539,7 +546,8 @@ export const Home = () => {
                             />
                             <Pagination
                                 dotsLength={agenda.length}
-                                inactiveDotColor={'black'}
+                                dotColor={'black'}
+                                inactiveDotColor={COLORS.grey}
                                 dotStyle={styles.paginationDot}
                                 inactiveDotOpacity={0.4}
                                 inactiveDotScale={0.6}
@@ -566,7 +574,8 @@ export const Home = () => {
                             />
                             <Pagination
                                 dotsLength={program.length}
-                                inactiveDotColor={'black'}
+                                dotColor={'black'}
+                                inactiveDotColor={COLORS.grey}
                                 dotStyle={styles.paginationDot}
                                 inactiveDotOpacity={0.4}
                                 inactiveDotScale={0.6}
@@ -596,7 +605,8 @@ export const Home = () => {
                             />
                             <Pagination
                                 dotsLength={galeri.lists.slice(0, 3).length}
-                                inactiveDotColor={'black'}
+                                dotColor={'black'}
+                                inactiveDotColor={COLORS.grey}
                                 dotStyle={styles.paginationDot}
                                 inactiveDotOpacity={0.4}
                                 inactiveDotScale={0.6}
@@ -654,7 +664,7 @@ const styles = StyleSheet.create({
         width: 8,
         height: 8,
         borderRadius: 4,
-        marginHorizontal: 8
+        marginHorizontal: 8,
     },
     galeri: {
         flex: 1, // Prevent a random Android rendering issue

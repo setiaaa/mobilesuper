@@ -10,6 +10,9 @@ import { useNavigation } from '@react-navigation/native'
 import { Search } from '../../components/Search'
 import { setAbsen } from '../../store/Event'
 import ListEmpty from '../../components/ListEmpty'
+import { getTokenValue } from '../../service/session'
+import { getlistAbsen } from '../../service/api'
+import moment from 'moment'
 
 
 const listAbsen = [
@@ -48,34 +51,39 @@ const listAbsen = [
 const CardListAbsen = ({ item }) => {
     const [user, setUser] = useState('member')
     const [checkIn, setCheckin] = useState('')
+    const navigation = useNavigation()
     return (
         <View style={{
             justifyContent: 'center',
             alignItems: 'center'
         }}>
-            <View style={
+            <TouchableOpacity style={
                 {
                     width: '90%',
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     marginTop: 10,
                     padding: 20
-                }}>
-                <Text>{item.nama}</Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+                }}
+                onPress={() => {
+                    navigation.navigate('DetailAbsen')
+                }}
+            >
+                <Text>{item.member?.nama}</Text>
+                <View style={{ marginTop: 10 }}>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                        <Text>Status</Text>
+                        <Text style={{ width: 110 }}>Status</Text>
                         <View style={{
                             width: 80,
                             height: 24,
                             borderRadius: 30,
-                            backgroundColor: item.status === 'Konfirmasi' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : null,
+                            backgroundColor: item.status === 'hadir' ? COLORS.successLight : item.status === 'waiting' ? COLORS.infoLight : null,
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
                             <Text style={{
-                                color: item.status === 'Konfirmasi' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : null,
+                                color: item.status === 'hadir' ? COLORS.success : item.status === 'waiting' ? COLORS.info : null,
                             }}>{item.status}</Text>
                         </View>
                     </View>
@@ -108,17 +116,17 @@ const CardListAbsen = ({ item }) => {
                                 <Text style={{ color: COLORS.white }}>Check In</Text>
                             </TouchableOpacity>
                         ) : (
-                            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', }}>
-                                <Text style={{ width: 58, textAlign: 'center' }}>Waktu Check In</Text>
-                                <View style={{ width: 47, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text>{item.waktu}</Text>
+                            <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
+                                <Text style={{ width: 120, }}>Waktu Check In</Text>
+                                <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format('DD MMMM YYYY HH:mm')}</Text>
                                 </View>
                             </View>
                         )}
                     </View>
 
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -126,14 +134,24 @@ const CardListAbsen = ({ item }) => {
 export const Absen = () => {
     const navigation = useNavigation()
     const [checkIn, setCheckin] = useState('')
+    const [token, setToken] = useState('')
 
+    const { absen, agenda } = useSelector(state => state.event)
+    const idagenda = agenda.detail?.id
+    const absenLists = absen.lists
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setAbsen(listAbsen))
+        getTokenValue().then(val => {
+            setToken(val)
+        })
     }, [])
 
-    const { absen } = useSelector(state => state.event)
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getlistAbsen({ token, idagenda }))
+        }
+    }, [token])
 
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
@@ -142,20 +160,20 @@ export const Absen = () => {
         setSearch(event)
     }
 
-    useEffect(() => {
-        setFilterData(absen)
-    }, [absen])
+    // useEffect(() => {
+    //     setFilterData(absen)
+    // }, [absen])
 
-    useEffect(() => {
-        if (search !== '') {
-            const data = absen.filter((item) => {
-                return item.nama.toLowerCase().includes(search.toLowerCase());
-            })
-            setFilterData(data)
-        } else {
-            setFilterData(absen)
-        }
-    }, [search])
+    // useEffect(() => {
+    //     if (search !== '') {
+    //         const data = absen.filter((item) => {
+    //             return item.nama.toLowerCase().includes(search.toLowerCase());
+    //         })
+    //         setFilterData(data)
+    //     } else {
+    //         setFilterData(absen)
+    //     }
+    // }, [search])
 
     return (
         <SafeAreaView>
@@ -181,7 +199,7 @@ export const Absen = () => {
             <View style={{ width: '90%', marginTop: 20, marginHorizontal: 20 }}>
                 <Search
                     placeholder={"Cari"}
-                    onSearch={filter}
+                // onSearch={filter}
                 />
             </View>
 
@@ -222,7 +240,7 @@ export const Absen = () => {
                     </View>
                 </View>
 
-                {checkIn === '' ? (
+                {/* {checkIn === '' ? (
 
                     <TouchableOpacity style={{
                         width: 157,
@@ -253,13 +271,13 @@ export const Absen = () => {
                     >
                         <Text style={{ color: COLORS.white }}>Sudah Check In</Text>
                     </TouchableOpacity>
-                )}
+                )} */}
 
 
             </View>
 
             <FlatList
-                data={filterData}
+                data={absenLists}
                 renderItem={({ item }) => <CardListAbsen
                     item={item}
                 />

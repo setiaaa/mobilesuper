@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text } from 'react-native'
+import React, { useEffect } from 'react'
+import { ScrollView, Text } from 'react-native'
 import { View } from 'react-native'
 import { COLORS } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 
 
-export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWidth, borderwidthDrop, borderColorDrop, borderWidthValue, borderColorValue, heightValue }) => {
+export const Dropdown = ({ data, selected, setSelected, placeHolder, borderColor, borderWidth, borderwidthDrop, borderColorDrop, borderWidthValue, borderColorValue, heightValue, handleClick }) => {
     const [press, setPress] = useState(0)
     const handlePress = () => {
         if (press === 0) {
@@ -24,7 +24,16 @@ export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWi
         setPress(0)
         setSelected(item)
         setDisplayData(item.value)
+        handleClick(item)
     }
+
+    useEffect(() => {
+        if (selected !== undefined) {
+            setPressData(selected.key)
+            setDisplayData(selected.value)
+        }
+    }, [selected])
+
     return (
         <View>
             {press === 0 ? (
@@ -35,7 +44,7 @@ export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWi
                             exiting={FadeOutUp}
                         >
                             <View style={{ marginLeft: 20, flexDirection: 'row', marginTop: 15 }}>
-                                <Text style={{ color: COLORS.lighter }}>{displayData !== '' ? displayData : placeHolder}</Text>
+                                <Text style={{ color: COLORS.lighter, width: '80%' }}>{displayData !== '' ? displayData : placeHolder}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
                                     <Ionicons name='chevron-down-outline' size={14} color={COLORS.lighter} />
                                 </View>
@@ -57,7 +66,7 @@ export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWi
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: borderWidthValue, borderColor: borderColorValue, height: heightValue ? heightValue : 'auto' }}>
+                        <ScrollView style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: borderWidthValue, borderColor: borderColorValue, height: heightValue ? heightValue : 'auto' }}>
                             {data.map(kategori => {
                                 return (
                                     <TouchableOpacity onPress={() => handlePressData(kategori)} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row', gap: 10, marginVertical: 5 }}>
@@ -66,12 +75,12 @@ export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWi
                                         ) : (
                                             <Ionicons name='radio-button-on' color={COLORS.primary} size={18} />
                                         )}
-                                        <Text style={{ color: COLORS.lighter }}>{kategori.value}</Text>
+                                        <Text style={{ width: '90%' }}>{kategori.value}</Text>
                                     </TouchableOpacity>
                                 )
                             }
                             )}
-                        </View>
+                        </ScrollView>
                     </View>
                 </Animated.View>
             )}

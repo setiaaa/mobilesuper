@@ -10,7 +10,6 @@ import { Dropdown } from '../../components/DropDown';
 
 export const DetailPenilaian = ({ route }) => {
     const { item } = route.params
-    console.log(item)
 
     const nilai = [
         { key: 'q', value: '0.0 (Tidak Sesuai)' },
@@ -68,7 +67,7 @@ export const DetailPenilaian = ({ route }) => {
 
 
                     {item.detail.map((data) =>
-                        <View style={{ marginTop: 10 }}>
+                        <View key={data.id} style={{ marginTop: 10 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text>Periode: </Text>
                                 <Text>{data.periode}</Text>

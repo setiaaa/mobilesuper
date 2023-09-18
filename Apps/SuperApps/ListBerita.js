@@ -8,7 +8,7 @@ import { COLORS } from '../../config/SuperAppps';
 import { useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Item = ({ image, tanggal, subtitle, title, item }) => {
+const Item = ({ image, tanggal, subtitle, title, item, index }) => {
     const navigation = useNavigation()
     return (
         <View style={{
@@ -62,14 +62,16 @@ export const ListBerita = () => {
                 </View>
                 <FlatList
                     data={berita.lists}
-                    renderItem={({ item }) => <Item
-                        image={item.image}
-                        tanggal={item.tanggal}
-                        subtitle={item.subtitle}
-                        title={item.title}
-                        id={item.id}
-                        item={item}
-                    />
+                    renderItem={({ item, index }) => <View key={index}>
+                        <Item
+                            image={item.image}
+                            tanggal={item.tanggal}
+                            subtitle={item.subtitle}
+                            title={item.title}
+                            id={item.id}
+                            item={item}
+                        />
+                    </View>
                     }
                     keyExtractor={item => item.id}
                 />

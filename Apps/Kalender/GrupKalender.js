@@ -98,6 +98,7 @@ export const GrupKalender = () => {
 
   const items = [
     {
+      id: 1,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -108,6 +109,7 @@ export const GrupKalender = () => {
       warna: '#1868AB'
     },
     {
+      id: 2,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -118,6 +120,7 @@ export const GrupKalender = () => {
       warna: '#1868AB'
     },
     {
+      id: 3,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -128,6 +131,7 @@ export const GrupKalender = () => {
       warna: '#EA5455'
     },
     {
+      id: 4,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -138,6 +142,7 @@ export const GrupKalender = () => {
       warna: '#EA5455'
     },
     {
+      id: 5,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -148,6 +153,7 @@ export const GrupKalender = () => {
       warna: '#F6AD1D'
     },
     {
+      id: 6,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -158,6 +164,7 @@ export const GrupKalender = () => {
       warna: '#FF8F28'
     },
     {
+      id: 7,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -168,6 +175,7 @@ export const GrupKalender = () => {
       warna: '#F6AD1D'
     },
     {
+      id: 8,
       kegiatan: 'Rapat gabungan dengan seluruh anggota',
       subAvatar: [
         { avatar: AVATAR.U2 },
@@ -339,16 +347,18 @@ export const GrupKalender = () => {
             <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 20 }}>
               <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Agenda hari ini</Text>
               <View style={{ marginVertical: 20 }}>
-                <FlatList
-                  data={agenda.lists.slice(0, 2)}
-                  renderItem={({ item }) => <CardAgenda
-                    kegiatan={item.kegiatan}
-                    subAvatar={item.subAvatar}
-                    warna={item.warna}
-                  />
-                  }
-                // keyExtractor={({ item }) => item.kegiatan}
-                />
+                {agenda.lists.slice(0, 2).map((item) => {
+                  return (
+                    <View key={item.id}>
+                      <CardAgenda
+                        kegiatan={item.kegiatan}
+                        subAvatar={item.subAvatar}
+                        warna={item.warna}
+                        id={item.id}
+                      />
+                    </View>
+                  )
+                })}
                 <View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -520,7 +530,7 @@ export const GrupKalender = () => {
                           warna={item.warna}
                         />
                         }
-                        keyExtractor={items => items}
+                        keyExtractor={item => item.id}
                       />
                     </View>
                   </BottomSheetView>

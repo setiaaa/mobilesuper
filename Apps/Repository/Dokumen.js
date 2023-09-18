@@ -26,7 +26,7 @@ import ListEmpty from '../../components/ListEmpty'
 const DataList = ({ item, bottomSheetAttach }) => {
     return (
         <BottomSheetModalProvider>
-            <View style={{ flexDirection: 'row', marginVertical: 20, }}>
+            <View key={item.id} style={{ flexDirection: 'row', marginVertical: 20, }}>
                 <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
                     <View style={styles.cardNo}>
                         <Ionicons name='document-outline' size={30} color={COLORS.primary} />
@@ -51,7 +51,7 @@ const DataList = ({ item, bottomSheetAttach }) => {
 const DataGrid = ({ item, bottomSheetAttach }) => {
 
     return (
-        <View style={{ marginVertical: 20, marginHorizontal: 25 }}>
+        <View key={item.id} style={{ marginVertical: 20, marginHorizontal: 25 }}>
             <View style={styles.cardNo}>
                 <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
                     <Ionicons name='document-outline' size={30} color={COLORS.primary} />
@@ -139,131 +139,129 @@ export const Dokumen = () => {
     return (
         <GestureHandlerRootView>
             <SafeAreaView>
-                <ScrollView>
-                    <View style={{ marginBottom: 20 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                            <View style={{
-                                backgroundColor: 'white',
-                                borderRadius: 20,
-                                width: 28,
-                                height: 28,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginLeft: 20
-                            }}>
-                                <TouchableOpacity onPress={() => navigation.goBack()}>
-                                    <Ionicons name='chevron-back-outline' size={24} color={'#800000'} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Repositori</Text>
-                            </View>
+                <View style={{ marginBottom: 20 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                        <View style={{
+                            backgroundColor: 'white',
+                            borderRadius: 20,
+                            width: 28,
+                            height: 28,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginLeft: 20
+                        }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name='chevron-back-outline' size={24} color={'#800000'} />
+                            </TouchableOpacity>
                         </View>
-                        <View style={{ width: '90%', marginLeft: 20, marginVertical: 20 }}>
-                            <Search
-                                placeholder={'Cari'}
-                                onSearch={filter}
-                            />
-                        </View>
-                        <View style={styles.card}>
-                            <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
-                                <TouchableOpacity onPress={() => handleVariant('list')}>
-                                    <View style={styles.circleList}>
-                                        <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleVariant('grid')}>
-                                    <View style={styles.circleList}>
-                                        <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <Divider bold />
-                            {variant === 'list' ? (
-                                <FlatList
-                                    key={"_"}
-                                    data={filterData}
-                                    renderItem={({ item }) => <DataList
-                                        bottomSheetAttach={bottomSheetAttach}
-                                        // judul={item.judul}
-                                        // tanggal={item.tanggal}
-                                        item={item}
-                                    />
-                                    }
-                                    keyExtractor={item => "_" + item.id}
-                                    style={{ height: 440 }}
-                                    ListEmptyComponent={() => (
-                                        <ListEmpty />
-                                    )}
-                                />
-
-                            ) : (
-                                <FlatList
-                                    key={'#'}
-                                    data={filterData}
-                                    renderItem={({ item }) => <DataGrid
-                                        bottomSheetAttach={bottomSheetAttach}
-                                        // judul={item.judul}
-                                        // tanggal={item.tanggal}
-                                        item={item}
-                                    />
-                                    }
-                                    numColumns={2}
-                                    keyExtractor={item => "#" + item.id}
-                                    style={{ height: 440 }}
-                                />
-                            )}
-                            <View style={{ marginBottom: 40 }}>
-                                <Divider bold />
-                            </View>
-                            <Portal>
-                                <BottomSheetModalProvider>
-                                    <BottomSheetModal
-                                        ref={bottomSheetModalRef}
-                                        snapPoints={animatedSnapPoints}
-                                        handleHeight={animatedHandleHeight}
-                                        contentHeight={animatedContentHeight}
-                                        index={0}
-                                        style={{ borderRadius: 50 }}
-                                        keyboardBlurBehavior="restore"
-                                        android_keyboardInputMode="adjust"
-                                        backdropComponent={({ style }) => (
-                                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                                        )}
-                                    >
-                                        <BottomSheetView onLayout={handleContentLayout} >
-                                            <View style={{ marginVertical: 20, }}>
-                                                <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                                    <Ionicons name='document-outline' size={32} color={COLORS.primary} />
-                                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>{dataM.judul}</Text>
-                                                </View>
-                                                <View style={{ marginTop: 20 }}>
-                                                    <Divider bold />
-                                                </View>
-                                                <TouchableOpacity>
-                                                    <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
-                                                        <Ionicons name='download-outline' size={32} color={'#6B7280'} />
-                                                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Download</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity onPress={() => {
-                                                    navigation.navigate('MainDetailRepo')
-                                                    bottomSheetAttachClose()
-                                                }
-                                                }>
-                                                    <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
-                                                        <Ionicons name='information-circle-outline' size={32} color={'#6B7280'} />
-                                                        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Details & activity</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </BottomSheetView>
-                                    </BottomSheetModal>
-                                </BottomSheetModalProvider>
-                            </Portal>
+                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                            <Text style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>Repositori</Text>
                         </View>
                     </View>
-                </ScrollView>
+                    <View style={{ width: '90%', marginLeft: 20, marginVertical: 20 }}>
+                        <Search
+                            placeholder={'Cari'}
+                            onSearch={filter}
+                        />
+                    </View>
+                    <View style={styles.card}>
+                        <View style={{ marginRight: 40, marginTop: 20, flexDirection: 'row', justifyContent: 'flex-end', gap: 20, marginBottom: 10 }}>
+                            <TouchableOpacity onPress={() => handleVariant('list')}>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleVariant('grid')}>
+                                <View style={styles.circleList}>
+                                    <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <Divider bold />
+                        {variant === 'list' ? (
+                            <FlatList
+                                key={"_"}
+                                data={filterData}
+                                renderItem={({ item }) => <DataList
+                                    bottomSheetAttach={bottomSheetAttach}
+                                    // judul={item.judul}
+                                    // tanggal={item.tanggal}
+                                    item={item}
+                                />
+                                }
+                                keyExtractor={item => "_" + item.id}
+                                style={{ height: 400 }}
+                                ListEmptyComponent={() => (
+                                    <ListEmpty />
+                                )}
+                            />
+
+                        ) : (
+                            <FlatList
+                                key={'#'}
+                                data={filterData}
+                                renderItem={({ item }) => <DataGrid
+                                    bottomSheetAttach={bottomSheetAttach}
+                                    // judul={item.judul}
+                                    // tanggal={item.tanggal}
+                                    item={item}
+                                />
+                                }
+                                numColumns={2}
+                                keyExtractor={item => "#" + item.id}
+                                style={{ height: 400 }}
+                            />
+                        )}
+                        <View style={{ marginBottom: 40 }}>
+                            <Divider bold />
+                        </View>
+                        <Portal>
+                            <BottomSheetModalProvider>
+                                <BottomSheetModal
+                                    ref={bottomSheetModalRef}
+                                    snapPoints={animatedSnapPoints}
+                                    handleHeight={animatedHandleHeight}
+                                    contentHeight={animatedContentHeight}
+                                    index={0}
+                                    style={{ borderRadius: 50 }}
+                                    keyboardBlurBehavior="restore"
+                                    android_keyboardInputMode="adjust"
+                                    backdropComponent={({ style }) => (
+                                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                    )}
+                                >
+                                    <BottomSheetView onLayout={handleContentLayout} >
+                                        <View style={{ marginVertical: 20, }}>
+                                            <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                                                <Ionicons name='document-outline' size={32} color={COLORS.primary} />
+                                                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>{dataM.judul}</Text>
+                                            </View>
+                                            <View style={{ marginTop: 20 }}>
+                                                <Divider bold />
+                                            </View>
+                                            <TouchableOpacity>
+                                                <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
+                                                    <Ionicons name='download-outline' size={32} color={'#6B7280'} />
+                                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Download</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => {
+                                                navigation.navigate('MainDetailRepo')
+                                                bottomSheetAttachClose()
+                                            }
+                                            }>
+                                                <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
+                                                    <Ionicons name='information-circle-outline' size={32} color={'#6B7280'} />
+                                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>Details & activity</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </BottomSheetView>
+                                </BottomSheetModal>
+                            </BottomSheetModalProvider>
+                        </Portal>
+                    </View>
+                </View>
             </SafeAreaView>
         </GestureHandlerRootView>
     )

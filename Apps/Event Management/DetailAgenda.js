@@ -1,11 +1,11 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { FlatList } from 'react-native'
 import { Image } from 'react-native'
@@ -21,42 +21,47 @@ import {
 } from '@gorhom/bottom-sheet'
 import { Search } from '../../components/Search'
 import { Portal } from 'react-native-portalize'
+import moment from 'moment'
+import { getTokenValue } from '../../service/session'
+import { getDetailNotulensi, getlistAbsen, getlistApprover, getlistNotulensi, putAbsen } from '../../service/api'
+import QRCode from 'react-native-qrcode-svg'
+import { BarCodeScanner } from 'expo-barcode-scanner'
+import ListEmpty from '../../components/ListEmpty'
 
-const CardLampiran = ({ lampiran, onClick, type }) => {
+const CardLampiran = ({ lampiran, onClick, type, id }) => {
     const navigation = useNavigation()
-    console.log(lampiran)
     return (
         type === 'png' || type === 'jpg' || type === 'jpeg' ? (
-            <TouchableOpacity onPress={onClick}>
+            <TouchableOpacity key={id} onPress={onClick}>
                 <Image source={lampiran} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10 }} />
             </TouchableOpacity>
         ) : type === 'mp4' ? (
-            <TouchableOpacity onPress={onClick} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10, backgroundColor: COLORS.secondaryLighter, justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity key={id} onPress={onClick} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10, backgroundColor: COLORS.secondaryLighter, justifyContent: 'center', alignItems: 'center' }}>
                 <Image source={require('../../assets/superApp/mp4.png')} style={{ width: 70, height: 70 }} />
             </TouchableOpacity>
         ) : type === 'doc' || type === 'docx' ? (
-            <TouchableOpacity onPress={() => navigation.navigate('FileViewer', {
+            <TouchableOpacity key={id} onPress={() => navigation.navigate('FileViewer', {
                 lampiran: lampiran,
                 type: type
             })} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10, backgroundColor: COLORS.secondaryLighter, justifyContent: 'center', alignItems: 'center' }}>
                 <Image source={require('../../assets/superApp/word.png')} style={{ width: 70, height: 70 }} />
             </TouchableOpacity>
         ) : type === 'xls' || type === 'xlsx' ? (
-            <TouchableOpacity onPress={() => navigation.navigate('FileViewer', {
+            <TouchableOpacity key={id} onPress={() => navigation.navigate('FileViewer', {
                 lampiran: lampiran,
                 type: type
             })} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10, backgroundColor: COLORS.secondaryLighter, justifyContent: 'center', alignItems: 'center' }}>
                 <Image source={require('../../assets/superApp/excel.png')} style={{ width: 70, height: 70 }} />
             </TouchableOpacity>
         ) : type === 'pdf' ? (
-            <TouchableOpacity onPress={() => navigation.navigate('FileViewer', {
+            <TouchableOpacity key={id} onPress={() => navigation.navigate('FileViewer', {
                 lampiran: lampiran,
                 type: type
             })} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10, backgroundColor: COLORS.secondaryLighter, justifyContent: 'center', alignItems: 'center' }}>
                 <Image source={require('../../assets/superApp/pdf.png')} style={{ width: 70, height: 70 }} />
             </TouchableOpacity>
         ) : type === 'ppt' || type === 'pptx' ? (
-            <TouchableOpacity onPress={() => navigation.navigate('FileViewer', {
+            <TouchableOpacity key={id} onPress={() => navigation.navigate('FileViewer', {
                 lampiran: lampiran,
                 type: type
             })} style={{ width: 97, height: 97, borderRadius: 6, marginTop: 10, backgroundColor: COLORS.secondaryLighter, justifyContent: 'center', alignItems: 'center' }}>
@@ -67,27 +72,144 @@ const CardLampiran = ({ lampiran, onClick, type }) => {
 }
 
 
-const CardApproval = ({ item }) => {
+const CardApproval = ({ item, id }) => {
     return (
-        <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+        <View key={id} style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
             <View>
-                <Text>{item.nama}</Text>
-                <View style={{ flexDirection: 'row', gap: 5 }}>
+                <Text>{item.actor.nama}</Text>
+                {/* <View style={{ flexDirection: 'row', gap: 5 }}>
                     <Text>Waktu:</Text>
                     <Text>{item.waktu}</Text>
-                </View>
+                </View> */}
             </View>
             <View style={{
                 width: 100,
                 height: 24,
                 borderRadius: 30,
-                backgroundColor: item.status === 'Sepakat' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : COLORS.infoDangerLight,
+                backgroundColor: item.status === 'sepakat' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : COLORS.infoDangerLight,
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
                 <Text style={{
-                    color: item.status === 'Sepakat' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : COLORS.infoDanger
+                    color: item.status === 'sepakat' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : COLORS.infoDanger
                 }}>{item.status}</Text>
+            </View>
+        </View>
+    )
+}
+
+const CardListAbsen = ({ item, role, setScanData, setIdAbsen, eventpic }) => {
+    const [user, setUser] = useState('member')
+    const [checkIn, setCheckin] = useState('')
+    const navigation = useNavigation()
+    return (
+        <View style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
+            <View style={
+                {
+                    backgroundColor: COLORS.white,
+                    borderRadius: 8,
+                    marginTop: 10,
+                    padding: 20,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: '#171717',
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                }}
+            // onPress={() => {
+            //     navigation.navigate('DetailAbsen')
+            // }}
+            >
+                <Text>{item.member?.nama}</Text>
+                <View style={{ marginTop: 10 }}>
+
+                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                        <Text style={{ width: 110 }}>Status</Text>
+                        <View style={{
+                            width: 80,
+                            height: 24,
+                            borderRadius: 30,
+                            backgroundColor: item.status === 'hadir' ? COLORS.successLight : item.status === 'waiting' ? COLORS.infoLight : null,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Text style={{
+                                color: item.status === 'hadir' ? COLORS.success : item.status === 'waiting' ? COLORS.info : null,
+                            }}>{item.status}</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                        {user === 'admin' && checkIn === '' ? (
+                            <TouchableOpacity style={{
+                                width: 97,
+                                height: 24,
+                                borderRadius: 8,
+                                backgroundColor: COLORS.foundation,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                                onPress={() => setCheckin('1')}
+                            >
+                                <Text style={{ color: COLORS.white }}>Check In</Text>
+                            </TouchableOpacity>
+                        ) : user === 'resepsionis' && checkIn === '' ? (
+                            <TouchableOpacity style={{
+                                width: 97,
+                                height: 24,
+                                borderRadius: 8,
+                                backgroundColor: COLORS.foundation,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                                onPress={() => setCheckin('1')}
+                            >
+                                <Text style={{ color: COLORS.white }}>Check In</Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
+                                <Text style={{ width: 120, }}>Waktu Check In</Text>
+                                <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format('DD MMMM YYYY HH:mm')}</Text>
+                                </View>
+                            </View>
+                        )}
+                    </View>
+                    {eventpic === true && item.status !== 'hadir' ||
+                        role.is_pic === true && item.status !== 'hadir' ||
+                        role.is_presensi === true && item.status !== 'hadir' ||
+                        role.is_pic === false && item.status !== 'hadir' &&
+                        role.is_notulensi === false && item.status !== 'hadir' &&
+                        role.is_presensi === false && item.status !== 'hadir' &&
+                        role.is_member === false && item.status !== 'hadir'
+                        ? (
+
+                            <TouchableOpacity style={{
+                                width: '90%',
+                                height: 50,
+                                backgroundColor: COLORS.primary,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: 20,
+                                marginHorizontal: 15
+                            }}
+                                onPress={() => {
+                                    setScanData(false)
+                                    setIdAbsen(item.id)
+                                }
+                                }
+                            >
+                                <Text style={{ color: COLORS.white }}>Scan QRCode</Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <></>
+                        )}
+                </View>
             </View>
         </View>
     )
@@ -96,21 +218,45 @@ const CardApproval = ({ item }) => {
 
 export const DetailAgenda = () => {
     const navigation = useNavigation()
-    const { agenda } = useSelector(state => state.event)
 
     const [visibleModal, setVisibleModal] = useState(false);
     const [lampiranById, setLampiranById] = useState(null)
 
-    const getFileExtension = (lampiran) => {
-        let jenis = lampiran.split('.')
+    const getFileExtension = (type) => {
+        let jenis = type.split('.')
         jenis = jenis[jenis.length - 1]
         return jenis
     }
 
     const video = useRef(null);
-    const [status, setStatus] = useState({});
 
+    const { agenda, approver, notulensi, absen, event } = useSelector(state => state.event)
     const data = agenda.detail
+    const id = agenda.detail?.notulensi?.id
+    const idagenda = agenda.detail?.id
+    const idnotu = notulensi.lists[0]?.id
+    const notu = notulensi.lists
+    // const idabsen = absen.lists[0]?.id
+    const absenLists = absen.lists
+    const [token, setToken] = useState('')
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getlistApprover({ token, id }))
+            dispatch(getlistNotulensi({ token, idagenda }))
+            dispatch(getDetailNotulensi({ token, idnotu }))
+            dispatch(getlistAbsen({ token, idagenda }))
+        }
+    }, [token])
+
 
     const bottomSheetModalRef = useRef(null);
 
@@ -130,6 +276,47 @@ export const DetailAgenda = () => {
         if (bottomSheetModalRef.current)
             bottomSheetModalRef.current?.close()
     }
+
+    const [hasPermission, setHasPermission] = useState(null)
+    const [scanData, setScanData] = useState(true)
+
+    useEffect(() => {
+        askForCameraPermission()
+    }, [])
+
+    const askForCameraPermission = () => {
+        (async () => {
+            const { label } = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(label === 'granted');
+        })()
+    }
+
+    // if (!hasPermission) {
+    //     return (
+    //         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+    //             <Text>
+    //                 please grant camera permission to app
+    //             </Text>
+    //         </View>
+    //     )
+    // }
+
+    const [idabsen, setIdAbsen] = useState('')
+
+    const handleBarCodeScanned = ({ type, data }) => {
+        setScanData(true)
+        if (data !== " ") {
+            dispatch(putAbsen({ token: token, idabsen: idabsen, status: 'hadir', is_scan: true }))
+            alert('berhasil')
+        } else {
+            dispatch(putAbsen({ token: token, idabsen: idabsen, status: 'waiting', is_scan: true }))
+            alert('gagal')
+        }
+        console.log(`data: ${data}`)
+        console.log(`type: ${type}`)
+    }
+
+
     return (
         <SafeAreaView>
             <ScrollView>
@@ -152,11 +339,11 @@ export const DetailAgenda = () => {
                     </View>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
+                <View key={data.id} style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                         <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{data.judul}</Text>
-                            <View
+                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{data.title}</Text>
+                            {/* <View
                                 style={{
                                     width: 80,
                                     height: 24,
@@ -167,11 +354,23 @@ export const DetailAgenda = () => {
                                 }}
                             >
                                 <Text style={{ color: COLORS.white }}>{data.jenis}</Text>
-                            </View>
+                            </View> */}
                         </View>
 
-                        <View style={{ marginTop: 10 }}>
-                            <Text>{data.deskripsi}</Text>
+                        <Text style={{ marginTop: 10 }}>{data.note}</Text>
+
+                        {/* custom divider */}
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                        <View style={{ flexDirection: 'row', }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>QR Code</Text>
+                            {data.qr_presensi === null ? (
+                                <Text>-</Text>
+                            ) : (
+                                <QRCode
+                                    value={data.qr_presensi?.qr_code}
+                                />
+                            )}
                         </View>
 
                         {/* custom divider */}
@@ -179,7 +378,7 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-                            <Text>{data.tanggal}</Text>
+                            <Text>{moment(data.date).format('d MMM yyy')}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -187,7 +386,10 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
-                            <Text>{data.jam}</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ marginTop: 5 }}>{moment(data.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
+                                <Text style={{ marginTop: 5 }}>{moment(data.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                            </View>
                         </View>
 
                         {/* custom divider */}
@@ -195,7 +397,7 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
-                            <Text style={{ width: 156 }}>{data.tempat}</Text>
+                            <Text style={{ width: 156 }}>{data.location}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -203,22 +405,8 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
-                            <Text style={{ width: 156 }}>{data.pic}</Text>
-                        </View>
-
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
-                            {data.pesertaevent?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
-                                </View>
-                            )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            {/* <Image source={{ uri: data.extra_attrs?.pic?.avatar_url }} style={{ width: 26, height: 26, borderRadius: 50 }} /> */}
+                            <Text>{data.extra_attrs?.pic.title.name}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -226,9 +414,9 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
-                            {data.pesertaagenda?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                            {data.extra_attrs?.members?.map((data, index) =>
+                                <View key={index} style={{ position: 'relative' }}>
+                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                 </View>
                             )}
                             <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -240,10 +428,10 @@ export const DetailAgenda = () => {
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda</Text>
-                            {data.tamuagenda?.map((data, index) =>
-                                <View style={{ position: 'relative' }}>
-                                    <Image source={data.image} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0 }} />
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Internal</Text>
+                            {data.extra_attrs?.guests?.map((data, index) =>
+                                <View key={index} style={{ position: 'relative' }}>
+                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                 </View>
                             )}
                             <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -254,17 +442,35 @@ export const DetailAgenda = () => {
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absensi</Text>
-                            <Text style={{ width: 156 }}>{data.absen}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Eksternal</Text>
+                            <View style={{ position: 'relative', flexDirection: 'column' }}>
+                                {data.extra_attrs?.guest_external?.map((data, index) =>
+                                    <Text key={index}> - {data.name} </Text>
+                                )}
+                            </View>
                         </View>
+
+                        {/* custom divider */}
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absensi </Text>
+                            {data.presensi?.map((data, index) =>
+                                <View key={index} style={{ width: 200 }}>
+                                    <Text>{data.title.name}</Text>
+                                </View>
+                            )}
+                        </View>
+
                     </View>
 
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginVertical: 10 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Status Approval</Text>
+                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginVertical: 10 }}>
                             <Ionicons name='people-outline' size={24} />
                             <Text>0/15</Text>
-                        </View>
+                        </View> */}
                         <TouchableOpacity style={{
                             width: "100%",
                             height: 50,
@@ -274,7 +480,8 @@ export const DetailAgenda = () => {
                             justifyContent: 'center',
                             gap: 10,
                             borderWidth: 1,
-                            borderColor: COLORS.infoDangerLight
+                            borderColor: COLORS.infoDangerLight,
+                            marginTop: 10
                         }}
                             onPress={() => {
                                 bottomSheetAttach()
@@ -318,11 +525,16 @@ export const DetailAgenda = () => {
                                         </View>
 
                                         <FlatList
-                                            data={data.approval}
-                                            renderItem={({ item }) => <CardApproval
-                                                item={item}
-                                            />
+                                            data={approver.lists}
+                                            renderItem={({ item }) =>
+                                                <View key={item.id}>
+                                                    <CardApproval
+                                                        item={item}
+                                                        id={item.id}
+                                                    />
+                                                </View>
                                             }
+                                            keyExtractor={item => item.id}
                                             style={{ marginBottom: 40 }}
                                         />
                                     </View>
@@ -333,7 +545,7 @@ export const DetailAgenda = () => {
 
 
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lihat Notulensi</Text>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Notulensi</Text>
                         <TouchableOpacity style={{
                             width: '100%',
                             height: 50,
@@ -342,17 +554,68 @@ export const DetailAgenda = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: 10,
-                            borderWidth: 1,
-                            borderColor: COLORS.infoDangerLight,
+                            backgroundColor: COLORS.foundation,
                             marginTop: 10
                         }}
                             onPress={() => {
                                 navigation.navigate('Notulensi', { data: data })
                             }}
                         >
-                            <Ionicons name='document-outline' size={24} />
-                            <Text>Lihat Notulensi</Text>
+                            <Ionicons name='document-outline' size={24} color={COLORS.white} />
+                            <Text style={{ color: COLORS.white }} >Lihat Notulensi</Text>
                         </TouchableOpacity>
+
+                        {event.detailEvent?.user_role?.is_pic === true ||
+                            data.user_role?.is_pic === true ||
+                            data.user_role?.is_notulensi === true ||
+                            data.user_role?.notulensi === false &&
+                            data.user_role?.presensi === false &&
+                            data.user_role?.member === false &&
+                            data.user_role?.is_pic === false ? (
+                            <View>
+                                <TouchableOpacity style={{
+                                    width: '100%',
+                                    height: 50,
+                                    borderRadius: 8,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 10,
+                                    backgroundColor: COLORS.lightBrown,
+                                    marginTop: 10
+                                }}
+                                // onPress={() => {
+                                //     navigation.navigate('Notulensi', { data: data })
+                                // }}
+                                >
+                                    <Ionicons name='pencil-outline' size={24} color={COLORS.white} />
+                                    <Text style={{ color: COLORS.white }}>Edit Notulensi</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={{
+                                    width: '100%',
+                                    height: 50,
+                                    borderRadius: 8,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 10,
+                                    backgroundColor: COLORS.infoDanger,
+                                    marginTop: 10
+                                }}
+                                // onPress={() => {
+                                //     navigation.navigate('Notulensi', { data: data })
+                                // }}
+                                >
+                                    <Ionicons name='trash-outline' size={24} color={COLORS.white} />
+                                    <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
+                                </TouchableOpacity>
+                            </View>
+                        ) : (
+                            <></>
+                        )}
+
+
                     </View>
 
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
@@ -360,16 +623,21 @@ export const DetailAgenda = () => {
 
                         <FlatList
                             key={'*'}
-                            data={data.lampiran}
-                            renderItem={({ item }) => <CardLampiran
-                                lampiran={item.gambar}
-                                type={getFileExtension(item.nama)}
-                                onClick={() => {
-                                    setVisibleModal(true)
-                                    setLampiranById(item)
-                                }}
-                            />
+                            data={data.attachments}
+                            renderItem={({ item }) =>
+                                <View key={item.id}>
+                                    <CardLampiran
+                                        lampiran={item.file}
+                                        type={getFileExtension(item.name)}
+                                        onClick={() => {
+                                            setVisibleModal(true)
+                                            setLampiranById(item)
+                                        }}
+                                        id={item.id}
+                                    />
+                                </View>
                             }
+                            scrollEnabled={false}
                             style={{ marginTop: 10 }}
                             columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
                             numColumns={3}
@@ -435,7 +703,7 @@ export const DetailAgenda = () => {
                         }
                     </View>
 
-                    <TouchableOpacity style={{
+                    {/* <TouchableOpacity style={{
                         width: '90%',
                         height: 50,
                         backgroundColor: COLORS.primary,
@@ -445,10 +713,94 @@ export const DetailAgenda = () => {
                         marginVertical: 20
                     }}>
                         <Text style={{ color: COLORS.white }}>Approve Agenda</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+
+                    {scanData === false ? (
+                        <Portal>
+
+                            <BarCodeScanner
+                                onBarCodeScanned={handleBarCodeScanned}
+                                style={{ position: 'absolute', width: '100%', height: '100%', top: 0, bottom: 0, left: 0, right: 0, zIndex: 99 }}
+                            />
+                        </Portal>
+                    ) : (
+                        null
+                    )
+                    }
 
                 </View>
+
+                <View style={{
+                    backgroundColor: COLORS.white,
+                    width: '92%',
+                    flex: 1,
+                    marginLeft: 15,
+                    padding: 15,
+                    borderRadius: 8
+                }}>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>Absensi</Text>
+                    <View style={{ marginTop: 10 }}>
+                        <Search />
+                    </View>
+                </View>
+
+                <FlatList
+                    data={absenLists}
+                    renderItem={({ item }) =>
+
+                        <CardListAbsen
+                            item={item}
+                            role={data.user_role}
+                            eventpic={event.detailEvent?.user_role?.is_pic}
+                            setScanData={setScanData}
+                            setIdAbsen={setIdAbsen}
+                        />
+                    }
+                    scrollEnabled={false}
+                    style={{ marginBottom: 10 }}
+                    ListEmptyComponent={() => (
+                        <ListEmpty />
+                    )}
+                />
+
+                {event.detailEvent?.user_role?.is_pic === true ||
+                    data.user_role?.is_pic === true ||
+                    data.user_role?.notulensi === false &&
+                    data.user_role?.presensi === false &&
+                    data.user_role?.member === false &&
+                    data.user_role?.is_pic === false
+                    ? (
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+                            <TouchableOpacity style={{
+                                backgroundColor: COLORS.foundation,
+                                width: Platform.OS === 'ios' ? '93%' : '94%',
+                                height: 50,
+                                borderRadius: 8
+                            }}>
+                                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
+                                    <Text style={{ color: COLORS.white }}>Kirim Notifikasi</Text>
+                                    <Ionicons name='notifications-outline' size={20} color={COLORS.white} />
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={{
+                                backgroundColor: COLORS.lightBrown,
+                                width: Platform.OS === 'ios' ? '93%' : '94%',
+                                height: 50,
+                                borderRadius: 8, marginTop: 10
+                            }}>
+                                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
+                                    <Text style={{ color: COLORS.white }}>Edit</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <></>
+                    )}
+
+
             </ScrollView>
+
         </SafeAreaView>
     )
 }

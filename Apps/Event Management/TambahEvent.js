@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
@@ -24,53 +24,33 @@ import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Dropdown } from '../../components/DropDown';
 import * as DocumentPicker from 'expo-document-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTokenValue } from '../../service/session';
+import { getlistKalender } from '../../service/api';
+import Addressbook from '../../components/AddressbookKKp/Addressbook';
 
-const items = [
-    {
-        id: "1",
-        nama: 'Rizky Novriansyah',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "2",
-        nama: 'Azis Faisal',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "3",
-        nama: 'Faisal Azis',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "4",
-        nama: 'Sulthan',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "5",
-        nama: 'Noor',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "6",
-        nama: 'Rizky Novriansyah',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "7",
-        nama: 'Rizky Novriansyah',
-        avatar: (AVATAR.U2)
-    },
-
-]
-
-const kategories = [
-    { key: 'q', value: 'satu' },
-    { key: 'e', value: 'dua' },
-    { key: 'r', value: 'tiga' },
-    { key: 't', value: 'empat' },
-]
-
+const CardListPeserta = ({ item }) => {
+    return (
+        <View>
+            {item.title === undefined ? (
+                null
+            ) : (
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                    <Text>-</Text>
+                    <Text style={{ width: '90%' }}>{item.title}</Text>
+                </View>
+            )}
+            {item.fullname === undefined ? (
+                null
+            ) : (
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                    <Text>-</Text>
+                    <Text style={{ width: '90%' }}>{item.fullname}</Text>
+                </View>
+            )}
+        </View>
+    )
+}
 
 export const TambahEvent = () => {
     const navigation = useNavigation()
@@ -79,6 +59,9 @@ export const TambahEvent = () => {
     const [value, onChangeValue] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
+
+    const [modal, setModal] = useState(false);
+    const [visible, setVisible] = useState(false);
     const [image, setImage] = useState(null);
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -88,7 +71,6 @@ export const TambahEvent = () => {
             aspect: [4, 3],
             quality: 1,
         })
-        console.log(result);
 
         if (!result.canceled) {
             setImage(result.assets[0].uri);
@@ -97,7 +79,7 @@ export const TambahEvent = () => {
 
     const bottomSheetModalMemberRef = useRef(null);
 
-    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
+    const initialSnapPoints = useMemo(() => ['90%', "CONTENT_HEIGHT"], [])
     const {
         animatedHandleHeight,
         animatedSnapPoints,
@@ -127,18 +109,49 @@ export const TambahEvent = () => {
     const [document, setDocument] = useState([])
     const [type, setType] = useState([])
 
+    const [pilihanPimpinanEvent, setPilihanPimpinanEvent] = useState([])
+    const [pilihanPesertaEvent, setPilihanPesertaEvent] = useState([])
+
     const pickDocument = async () => {
         let result = await DocumentPicker.getDocumentAsync({});
-        // console.log(result.uri);
-        // console.log(result);
         let tipe = result.uri.split('/')
         tipe = tipe[tipe.length - 1]
         tipe = tipe.split('.')
         tipe = tipe[tipe.length - 1]
         setDocument([...document, result])
         setType([...type, tipe])
-        console.log(document)
     };
+
+    const [token, setToken] = useState('')
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getlistKalender(token))
+        }
+    }, [token])
+
+    const { kalenderLists } = useSelector(state => state.event)
+    const [stateConfig, setStateConfig] = useState({})
+
+    const { addressbook } = useSelector(state => state.addressBookKKP)
+
+    useEffect(() => {
+        if (stateConfig.title === 'Pimpinan Event') {
+            setPilihanPimpinanEvent(addressbook.selected)
+        } else if (stateConfig.title === 'Peserta Event') {
+            setPilihanPesertaEvent(addressbook.selected)
+        }
+    }, [addressbook])
+
+    console.log(addressbook.selected)
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -166,7 +179,25 @@ export const TambahEvent = () => {
                             </View>
 
                             <View style={styles.Card}>
+
                                 <View style={{ marginTop: 20, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Group Kalender</Text>
+                                </View>
+                                <View style={{ marginHorizontal: 17 }}>
+                                    <Dropdown
+                                        data={kalenderLists}
+                                        setSelected={setKategori}
+                                        borderWidth={1}
+                                        borderColor={COLORS.ExtraDivinder}
+                                        borderwidthDrop={1}
+                                        borderColorDrop={COLORS.ExtraDivinder}
+                                        borderWidthValue={1}
+                                        borderColorValue={COLORS.ExtraDivinder}
+                                    />
+                                </View>
+
+
+                                <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul Event</Text>
                                     <Text style={{ color: COLORS.danger }}>*</Text>
                                 </View>
@@ -297,7 +328,7 @@ export const TambahEvent = () => {
                                 </Modal>
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tampat</Text>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tempat</Text>
                                     <Text style={{ color: COLORS.danger }}>*</Text>
                                 </View>
                                 <View style={{
@@ -327,11 +358,10 @@ export const TambahEvent = () => {
                                 </View>
                                 <View style={{
                                     borderWidth: 1,
-                                    width: '90%',
-                                    marginLeft: 17,
+                                    marginHorizontal: 17,
                                     borderRadius: 4,
                                     borderColor: COLORS.ExtraDivinder,
-                                    flexDirection: 'row'
+                                    flexDirection: 'row',
                                 }}
                                 >
                                     <TextInput
@@ -340,16 +370,65 @@ export const TambahEvent = () => {
                                         numberOfLines={4}
                                         maxLength={40}
                                         placeholder='Pilih member'
-                                        style={{ padding: 10 }}
-                                        onChangeText={onChangeValue}
-                                        value={value}
+                                        style={{ padding: 10, width: '80%' }}
+                                        value={pilihanPimpinanEvent[0]?.title}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                        <TouchableOpacity onPress={bottomSheetMember}>
+                                        <TouchableOpacity onPress={() => {
+                                            const config = {
+                                                title: 'Pimpinan Event',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: false
+                                                },
+                                                multiselect: false,
+                                                payload: pilihanPimpinanEvent
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}>
                                             <Ionicons name='people-outline' size={24} color={COLORS.grey} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
+                                {/* {pilihanPimpinanEvent.map((item) => {
+                                    console.log(item)
+                                    return (
+                                        <View>
+                                            <Text>{item.title}</Text>
+                                        </View>
+                                    )
+                                }
+                                )} */}
+
+                                <Modal
+                                    animationType="fade"
+                                    transparent={true}
+                                    visible={visible}
+                                    onRequestClose={() => {
+                                        setVisible(!visible);
+                                    }}
+                                >
+                                    <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                                        <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: '90%', height: 500, borderRadius: 10 }}>
+                                            {/* <TouchableOpacity onPress={() => setVisible(false)} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
+                                                <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 35, height: 35, justifyContent: 'center', alignItems: 'center' }}>
+                                                    <Ionicons name='close-outline' size={24} color={COLORS.white} />
+                                                </View>
+                                            </TouchableOpacity> */}
+                                            <View style={{ width: '100%', height: '100%', padding: 16 }}>
+                                                <Addressbook />
+
+                                                {/* <TouchableOpacity onPress={() => setVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <View style={{ backgroundColor: COLORS.primary, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                        <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                    </View>
+                                                </TouchableOpacity> */}
+                                            </View>
+                                        </View>
+                                    </View>
+                                </Modal>
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Peserta</Text>
@@ -371,15 +450,36 @@ export const TambahEvent = () => {
                                         maxLength={40}
                                         placeholder='Pilih member'
                                         style={{ padding: 10 }}
-                                        onChangeText={onChangeValue}
-                                        value={value}
+                                        value={pilihanPesertaEvent}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                        <TouchableOpacity onPress={bottomSheetMember}>
+                                        <TouchableOpacity onPress={() => {
+                                            const config = {
+                                                title: 'Peserta Event',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: true
+                                                },
+                                                multiselect: true,
+                                                payload: pilihanPesertaEvent
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}
+                                        >
                                             <Ionicons name='people-outline' size={24} color={COLORS.grey} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
+                                <FlatList
+                                    data={pilihanPesertaEvent}
+                                    renderItem={({ item }) => <CardListPeserta
+                                        item={item}
+                                    />
+                                    }
+                                    scrollEnabled={false}
+                                    keyExtractor={index => index}
+                                />
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Notulen</Text>
@@ -441,22 +541,54 @@ export const TambahEvent = () => {
                                     </View>
                                 </View>
 
-                                <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Status</Text>
+                                <View style={{ marginTop: 10, marginBottom: 10, marginHorizontal: 17, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tamu Eksternal</Text>
+                                    <View style={{ width: 50, height: 24, backgroundColor: COLORS.primary, borderRadius: 8, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                                    </View>
                                 </View>
-                                <View style={{ marginHorizontal: 17 }}>
-                                    <Dropdown
-                                        data={kategories}
-                                        setSelected={setKategori}
-                                        placeHolder={'Pilih Status'}
-                                        borderWidth={1}
-                                        borderColor={COLORS.ExtraDivinder}
-                                        borderwidthDrop={1}
-                                        borderColorDrop={COLORS.ExtraDivinder}
-                                        borderWidthValue={1}
-                                        borderColorValue={COLORS.ExtraDivinder}
-                                    />
+                                <View style={{ flexDirection: 'row', marginHorizontal: 17, gap: 15 }}>
+                                    <View style={{
+                                        borderWidth: 1,
+                                        flex: 1,
+                                        borderRadius: 4,
+                                        borderColor: COLORS.ExtraDivinder,
+                                        flexDirection: 'row',
+                                    }}
+                                    >
+                                        <TextInput
+                                            editable
+                                            multiline
+                                            numberOfLines={4}
+                                            maxLength={40}
+                                            placeholder='Ketikan sesuatu'
+                                            style={{ padding: 10 }}
+                                            onChangeText={onChangeValue}
+                                            value={value}
+                                        />
+                                    </View>
+
+                                    <View style={{
+                                        borderWidth: 1,
+                                        flex: 1,
+                                        borderRadius: 4,
+                                        borderColor: COLORS.ExtraDivinder,
+                                        flexDirection: 'row',
+                                    }}
+                                    >
+                                        <TextInput
+                                            editable
+                                            multiline
+                                            numberOfLines={4}
+                                            maxLength={40}
+                                            placeholder='Ketikan sesuatu'
+                                            style={{ padding: 10 }}
+                                            onChangeText={onChangeValue}
+                                            value={value}
+                                        />
+                                    </View>
                                 </View>
+
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Catatan</Text>
@@ -574,14 +706,14 @@ export const TambahEvent = () => {
                         <BottomSheetView onLayout={handleContentLayout}>
                             <View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ fontWeight: 500 }}>Pilih Member</Text>
+                                    <Text style={{ fontWeight: 500, marginBottom: 50 }}>Pilih Member</Text>
                                 </View>
-                                <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
+                                {/* <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
                                     <Search
                                         placeholder={'Cari'}
                                     />
-                                </View>
-                                <View>
+                                </View> */}
+                                {/* <View>
                                     <FlatList
                                         data={dataFilter}
                                         horizontal={true}
@@ -607,7 +739,10 @@ export const TambahEvent = () => {
                                         />
                                         }
                                     />
-                                </View>
+                                </View> */}
+
+                                <Addressbook />
+
                             </View>
                         </BottomSheetView>
                     </BottomSheetModal>

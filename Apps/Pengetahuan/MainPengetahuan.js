@@ -23,6 +23,7 @@ const datapenilaian =
             point: 'Waiting',
             detail: [
                 {
+                    id: 6,
                     periode: 'JULI 2023 - SEPTEMBER 2023',
                     terbuat: '16 Agustus 2023',
                     cover: require('../../assets/superApp/linimasa2.png'),
@@ -46,6 +47,7 @@ const datapenilaian =
             point: 'Waiting',
             detail: [
                 {
+                    id: 7,
                     periode: 'JULI 2023 - SEPTEMBER 2023',
                     terbuat: '16 Agustus 2023',
                     cover: require('../../assets/superApp/linimasa2.png'),
@@ -69,6 +71,7 @@ const datapenilaian =
             point: '0.5',
             detail: [
                 {
+                    id: 8,
                     periode: 'JULI 2023 - SEPTEMBER 2023',
                     terbuat: '16 Agustus 2023',
                     cover: require('../../assets/superApp/linimasa2.png'),
@@ -92,6 +95,7 @@ const datapenilaian =
             point: '0.5',
             detail: [
                 {
+                    id: 9,
                     periode: 'JULI 2023 - SEPTEMBER 2023',
                     terbuat: '16 Agustus 2023',
                     cover: require('../../assets/superApp/linimasa2.png'),
@@ -115,6 +119,7 @@ const datapenilaian =
             point: '0.5',
             detail: [
                 {
+                    id: 10,
                     periode: 'JULI 2023 - SEPTEMBER 2023',
                     terbuat: '16 Agustus 2023',
                     cover: require('../../assets/superApp/linimasa2.png'),

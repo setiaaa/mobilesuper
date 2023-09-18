@@ -27,8 +27,8 @@ export const Satker = () => {
     // const [berita, setBerita] = useState([]);
     const [selected, setSelected] = useState('');
 
-    const [slide, setSlide] = useState()
-    const [slide2, setSlide2] = useState()
+    const [slide, setSlide] = useState(0)
+    const [slide2, setSlide2] = useState(0)
 
     // useEffect(() => {
     //     setEntries(ENTRIES);
@@ -77,9 +77,9 @@ export const Satker = () => {
         );
     };
 
-    const CardLiniMasaSatker = ({ image, judul, nama, jenis }) => {
+    const CardLiniMasaSatker = ({ image, judul, nama, jenis, index }) => {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View key={index} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', marginVertical: 20, marginLeft: 30 }}>
                     <Image source={image} style={{ width: 80, height: 80 }} />
                     <View style={{ marginLeft: 10 }}>
@@ -173,7 +173,10 @@ export const Satker = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView>
+            <ScrollView
+                style={{ flexGrow: 1 }}
+                nestedScrollEnabled={true}
+            >
                 <View style={{ width: '100%', height: 170, position: 'absolute', top: 0, borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }}>
                     <Image source={require('../../assets/superApp/headerfix.png')} style={{ width: '100%', height: '100%', borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }} />
                 </View>
@@ -220,7 +223,8 @@ export const Satker = () => {
                     />
                     <Pagination
                         dotsLength={galeri.lists.slice(0, 3).length}
-                        inactiveDotColor={'black'}
+                        dotColor={'black'}
+                        inactiveDotColor={COLORS.grey}
                         dotStyle={styles.paginationDot}
                         inactiveDotOpacity={0.4}
                         inactiveDotScale={0.6}
@@ -263,7 +267,8 @@ export const Satker = () => {
                     />
                     <Pagination
                         dotsLength={mading.length}
-                        inactiveDotColor={'black'}
+                        dotColor={'black'}
+                        inactiveDotColor={COLORS.grey}
                         dotStyle={styles.paginationDot}
                         inactiveDotOpacity={0.4}
                         inactiveDotScale={0.6}
@@ -290,13 +295,15 @@ export const Satker = () => {
                     <Text style={{ marginLeft: 20, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>Linimasa Pengetahuan</Text>
                     <View style={{ marginTop: 10 }}>
                         <FlatList
+                            scrollEnabled={false}
                             data={linimasa}
-                            renderItem={({ item }) => <CardLiniMasaSatker
+                            renderItem={({ item, index }) => <CardLiniMasaSatker
                                 image={item.image}
                                 judul={item.judul}
                                 nama={item.nama}
                                 jenis={item.jenis}
                                 item={item}
+                                index={index}
                             />
                             }
                             keyExtractor={item => item.id}
@@ -363,5 +370,11 @@ const styles = StyleSheet.create({
     },
     vertical: {
         rotation: 12
-    }
+    },
+    paginationDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        marginHorizontal: 8,
+    },
 })

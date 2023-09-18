@@ -326,6 +326,7 @@ export const ListPegawai = () => {
                     />
                     }
                     keyExtractor={item => item.id}
+                    scrollEnabled={false}
                     ListEmptyComponent={() => (
                         <ListEmpty />
                     )}

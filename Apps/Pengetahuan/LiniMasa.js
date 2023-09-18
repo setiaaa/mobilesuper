@@ -16,6 +16,7 @@ import { StyleSheet } from 'react-native'
 
 const listsLinimasa = [
     {
+        id: 1,
         avatar: require('../../assets/superApp/AvatarA.png'),
         image: require('../../assets/superApp/linimasa1.png'),
         nama: 'Drs. ANTAM NOVAMBAR, S.H., M.Hum.',
@@ -163,6 +164,7 @@ const listsLinimasa = [
         disukai: '324',
     },
     {
+        id: 2,
         avatar: require('../../assets/superApp/AvatarA.png'),
         image: require('../../assets/superApp/linimasa2.png'),
         nama: 'Drs. ANTAM NOVAMBAR, S.H., M.Hum.',
@@ -310,6 +312,7 @@ const listsLinimasa = [
         disukai: '324',
     },
     {
+        id: 3,
         avatar: require('../../assets/superApp/AvatarA.png'),
         image: require('../../assets/superApp/linimasa1.png'),
         nama: 'Drs. ANTAM NOVAMBAR, S.H., M.Hum.',
@@ -678,10 +681,13 @@ export const LiniMasa = () => {
 
             <FlatList
                 data={linimasa.lists}
-                renderItem={({ item }) => <CardLiniMasa
-                    item={item}
-                // setVisibleModal={setVisibleModal}
-                />
+                renderItem={({ item }) =>
+                    <View key={item.id}>
+                        <CardLiniMasa
+                            item={item}
+                        // setVisibleModal={setVisibleModal}
+                        />
+                    </View>
                 }
                 style={{ marginBottom: 80 }}
                 keyExtractor={item => item.id}

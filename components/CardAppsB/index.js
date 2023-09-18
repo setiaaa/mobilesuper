@@ -64,7 +64,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                 </View>
             </View>
 
-            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20, marginVertical: 20 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20, }}>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>

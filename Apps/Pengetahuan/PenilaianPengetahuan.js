@@ -122,7 +122,6 @@ export const PenilaianPenggetahaun = () => {
         }
     }, [search])
 
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -220,18 +219,20 @@ export const PenilaianPenggetahaun = () => {
                                 {/* custom divider */}
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
-                                <FlatList
-                                    data={filterData}
-                                    renderItem={({ item }) => <CardPenilaian
-                                        item={item}
+                                <View style={{ marginBottom: 50 }}>
+                                    <FlatList
+                                        data={filterData}
+                                        renderItem={({ item }) =>
+                                            <CardPenilaian
+                                                item={item}
+                                            />
+                                        }
+                                        keyExtractor={item => item.id}
+                                        ListEmptyComponent={() =>
+                                            <ListEmpty />
+                                        }
                                     />
-                                    }
-                                    keyExtractor={item => item.id}
-                                    style={{ height: 440 }}
-                                    ListEmptyComponent={() =>
-                                        <ListEmpty />
-                                    }
-                                />
+                                </View>
 
                             </View>
                         </BottomSheetView>
@@ -300,7 +301,7 @@ export const PenilaianPenggetahaun = () => {
                         item={item}
                     />
                     }
-                    keyExtractor={item => item}
+                    keyExtractor={item => item.id}
                 />
             </View>
         </SafeAreaView>

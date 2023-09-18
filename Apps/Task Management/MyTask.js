@@ -38,10 +38,22 @@ const item = [
         status: 'in progress',
         tanggal: '22 Juli 2023',
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         prioritas: 'High',
@@ -64,10 +76,22 @@ const item = [
         tanggal: '22 Juli 2023',
         status: 'backlog',
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         prioritas: 'High',
@@ -90,10 +114,22 @@ const item = [
         tanggal: '22 Juli 2023',
         status: 'pending',
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         prioritas: 'High',
@@ -116,10 +152,22 @@ const item = [
         tanggal: '22 Juli 2023',
         status: 'completed',
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         prioritas: 'High',
@@ -142,10 +190,22 @@ const item = [
         tanggal: '22 Juli 2023',
         status: 'in progress',
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         prioritas: 'High',
@@ -194,10 +254,22 @@ const item = [
         tanggal: '22 Juli 2023',
         status: 'in progress',
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         prioritas: 'High',
@@ -220,10 +292,22 @@ const item = [
         tanggal: '22 Juli 2023',
         status: 'in progress',
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         prioritas: 'High',

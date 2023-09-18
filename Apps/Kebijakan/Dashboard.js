@@ -21,6 +21,7 @@ import { Divider } from 'react-native-paper';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { getTokenValue } from '../../service/session';
 
 
 export default function Dashboard() {
@@ -35,7 +36,7 @@ export default function Dashboard() {
     const [variant, setVariant] = useState('list')
     const [page, setPage] = useState(1)
     const [count, setCount] = useState()
-
+    const [token, setToken] = useState('')
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
         animatedHandleHeight,
@@ -55,10 +56,16 @@ export default function Dashboard() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getCategory())
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
 
-    }, []);
-
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getCategory(token))
+        }
+    }, [token]);
 
     const { dokumen, lists } = useSelector(state => state.kebijakan)
 

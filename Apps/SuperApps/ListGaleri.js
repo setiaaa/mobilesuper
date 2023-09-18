@@ -71,7 +71,7 @@ export const ListGaleri = () => {
                     />
                     }
                     numColumns={2}
-                    keyExtractor={item => "#" + item}
+                    keyExtractor={item => "#" + item.id}
                 />
 
             </View>

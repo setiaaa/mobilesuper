@@ -24,6 +24,9 @@ import {
 import { Search } from '../../components/Search'
 import ListEmpty from '../../components/ListEmpty'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { getEvent, getEventDetail, getEventProgress, getEventToday } from '../../service/api'
+import { getTokenValue } from '../../service/session'
+import moment from 'moment/moment'
 
 const kategories = [
     { key: 'q', value: 'satu' },
@@ -38,327 +41,18 @@ const tanggal = new Date().getDate()
 
 const tanggalSekarang = new Date(`${tahun}-${bulan}-${tanggal}`).toDateString()
 const tanggalBesok = new Date(`${tahun}-${bulan}-${tanggal + 1}`).toDateString()
-const listsEvent = [
-    {
-        id: '1',
-        judul: 'UAT Korespondensi',
-        departemen: 'Sekretariat Jendral',
-        pic: AVATAR.U3,
-        status: 'persiapan',
-        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-        tanggal: tanggalSekarang,
-        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
-        pimpinan: 'Rizky Novriansyah',
-        pic: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        jmltodo: '3',
-        progres: '30%',
-        todo: [
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-        ],
-        peserta: [
-            { image: AVATAR.U2 },
-            { image: AVATAR.U2 },
-        ],
-        notulen: [
-            { image: AVATAR.U2 },
-            { image: AVATAR.U2 },
-        ],
-        absen: 'Alto Belly',
-        lampiran: [
-            {
-                id: 1,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 2,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 3,
-                gambar: 'https://www.africau.edu/images/default/sample.pdf',
-                nama: 'linimasa1.pdf'
-            },
-            {
-                id: 4,
-                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
-                nama: 'linimasa2.xls'
-            }
-        ],
-        progresEvent: [
-            {
-                judul: 'UAT Korespondensi',
-                tanggal: '4 Juli 2023 - 10 Juli 2023',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                jmltodo: '3',
-                progres: '30%',
-                todo: [
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                ]
-            }
-        ],
 
-    },
-    {
-        id: '2',
-        judul: 'UAT Korespondensi',
-        departemen: 'Sekretariat Jendral',
-        pic: AVATAR.U3,
-        status: 'persiapan',
-        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-        tanggal: tanggalBesok,
-        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
-        pimpinan: 'Rizky Novriansyah',
-        pic: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        jmltodo: '3',
-        progres: '30%',
-        todo: [
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-        ],
-        peserta: [
-            { image: AVATAR.U2 },
-            { image: AVATAR.U2 },
-        ],
-        notulen: [
-            { image: AVATAR.U2 },
-            { image: AVATAR.U2 },
-        ],
-        absen: 'Alto Belly',
-        lampiran: [
-            {
-                id: 1,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 2,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 3,
-                gambar: 'https://www.africau.edu/images/default/sample.pdf',
-                nama: 'linimasa1.pdf'
-            },
-            {
-                id: 4,
-                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
-                nama: 'linimasa2.xls'
-            }
-        ],
-        progresEvent: [
-            {
-                judul: 'UAT Korespondensi',
-                tanggal: '4 Juli 2023 - 10 Juli 2023',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                jmltodo: '3',
-                progres: '30%',
-                todo: [
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                ]
-            }
-        ],
-
-    },
-    {
-        id: '3',
-        judul: 'UAT Korespondensi',
-        departemen: 'Sekretariat Jendral',
-        pic: AVATAR.U3,
-        status: 'persiapan',
-        deskripsi: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-        tanggal: tanggalBesok,
-        tempat: 'Hotel Tebu arcamanik kabupaten bandung jawa barat',
-        pimpinan: 'Rizky Novriansyah',
-        pic: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        jmltodo: '3',
-        progres: '30%',
-        todo: [
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-            {
-                judul: 'TODO 1',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                tanggal: '4 Juli 2023',
-                progres: '40%'
-            },
-        ],
-        peserta: [
-            { image: AVATAR.U2 },
-            { image: AVATAR.U2 },
-        ],
-        notulen: [
-            { image: AVATAR.U2 },
-            { image: AVATAR.U2 },
-        ],
-        absen: 'Alto Belly',
-        lampiran: [
-            {
-                id: 1,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 2,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 3,
-                gambar: 'https://www.africau.edu/images/default/sample.pdf',
-                nama: 'linimasa1.pdf'
-            },
-            {
-                id: 4,
-                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
-                nama: 'linimasa2.xls'
-            }
-        ],
-        progresEvent: [
-            {
-                judul: 'UAT Korespondensi',
-                tanggal: '4 Juli 2023 - 10 Juli 2023',
-                pic: AVATAR.U3,
-                nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                jmltodo: '3',
-                progres: '30%',
-                todo: [
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                    {
-                        judul: 'TODO 1',
-                        pic: AVATAR.U3,
-                        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-                        tanggal: '4 Juli 2023',
-                        progres: '40%'
-                    },
-                ]
-            }
-        ],
-
-    },
-]
-
-const CardListEvent = ({ item }) => {
+const CardListEvent = ({ token, item }) => {
     const navigation = useNavigation()
-    const { event } = useSelector(state => state.event)
+    // const { event } = useSelector(state => state.event)
     const dispatch = useDispatch()
 
     const getDetail = (id) => {
-        const data = event.lists.find(item => item.id === id)
-        dispatch(setEventDetail(data))
+        const params = { token, id }
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getEventDetail(params))
     }
+
 
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
@@ -374,24 +68,24 @@ const CardListEvent = ({ item }) => {
                 }
                 }
             >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                     <Text>Departemen:</Text>
-                    <Text style={{ marginVertical: 10 }}>{item.departemen}</Text>
+                    <Text style={{ marginVertical: 10 }}>{item.pic.title.name}</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <Text>PIC</Text>
-                        <Image source={item.pic} style={{ width: 26, height: 26, borderRadius: 30 }} />
+                        <Image source={{ uri: item.pic.avatar_url }} style={{ width: 26, height: 26, borderRadius: 30 }} />
                     </View>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <Text>Status</Text>
                         <View style={{
-                            width: 80,
+                            width: 100,
                             height: 24,
                             backgroundColor: COLORS.infoLight,
                             borderRadius: 30,
@@ -407,23 +101,41 @@ const CardListEvent = ({ item }) => {
     )
 }
 
-const CardProgresEvent = ({ item, bottomSheetAttach }) => {
+const CardProgresEvent = ({ token, item, bottomSheetAttach }) => {
+    const navigation = useNavigation()
+    // const { event } = useSelector(state => state.event)
+    const dispatch = useDispatch()
+
+    const getDetail = (id) => {
+        const params = { token, id }
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getEventDetail(params))
+    }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{
+            <TouchableOpacity style={{
                 backgroundColor: COLORS.white,
                 width: '90%',
                 padding: 20,
                 marginBottom: 10,
                 borderRadius: 8
-            }}>
+            }}
+                onPress={() => {
+                    getDetail(item.id)
+                    navigation.navigate('MainDetailEvent')
+                }
+                }
+            >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
-                    <Text>{item.jmltodo} Todo</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, width: '80%' }}>{item.title}</Text>
+                    <Text>{item.agenda_count} Todo</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ marginVertical: 10 }}>{item.tanggal}</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ marginVertical: 10 }}>{moment(item.start_date).format('d MMM yyy')} - </Text>
+                        <Text style={{ marginVertical: 10 }}>{moment(item.end_date).format('d MMM yyy')}</Text>
+                    </View>
                     <TouchableOpacity onPress={() => bottomSheetAttach(item.todo)}>
                         <Ionicons name='chevron-down-outline' size={20} />
                     </TouchableOpacity>
@@ -433,24 +145,24 @@ const CardProgresEvent = ({ item, bottomSheetAttach }) => {
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <Text>PIC</Text>
-                        <Image source={item.pic} style={{ width: 26, height: 26, borderRadius: 30 }} />
-                        <Text>{item.nama}</Text>
+                        <Image source={{ uri: item.pic.avatar_url }} style={{ width: 26, height: 26, borderRadius: 30 }} />
+                        <Text>{item.pic.nama}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <View style={{
-                            width: 42,
+                            width: 50,
                             height: 24,
                             backgroundColor: COLORS.infoDangerLight,
                             borderRadius: 30,
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <Text style={{ color: COLORS.infoDanger }}>{item.progres}</Text>
+                            <Text style={{ color: COLORS.infoDanger }}>{item.progress}%</Text>
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -500,15 +212,33 @@ export const HalamanUtama = () => {
     const navigation = useNavigation()
     const [kategori, setKategori] = useState('')
     const [progres, setProgres] = useState([])
+    const [token, setToken] = useState('')
 
     const dispatch = useDispatch()
 
+    // useEffect(() => {
+    //     dispatch(setEventLists(listsEvent))
+    // }, [])
     useEffect(() => {
-        dispatch(setEventLists(listsEvent))
+        getTokenValue().then(val => {
+            setToken(val)
+        })
     }, [])
 
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getEventToday(token))
+            dispatch(getEventProgress(token))
+        }
+    }, [token])
+
+
+
+
     const { event } = useSelector(state => state.event)
-    const progresData = event.lists
+    const list = event.lists
+    const progreslist = event.listsprogress
+
 
     const [variant, SetVariant] = useState('hariini')
 
@@ -549,40 +279,40 @@ export const HalamanUtama = () => {
         setSearch(event)
     }
 
-    useEffect(() => {
-        if (variant === 'hariini') {
-            const data = event.lists.filter((item) => {
-                return item.tanggal === tanggalSekarang
-            })
-            setFilterData(data)
-        } else {
-            const data = event.lists.filter((item) => {
-                return item.tanggal !== tanggalSekarang
-            })
-            setFilterData(data)
-        }
-    }, [variant])
+    // useEffect(() => {
+    //     if (variant === 'hariini') {
+    //         const data = event.lists.filter((item) => {
+    //             return item.tanggal === tanggalSekarang
+    //         })
+    //         setFilterData(data)
+    //     } else {
+    //         const data = event.lists.filter((item) => {
+    //             return item.tanggal !== tanggalSekarang
+    //         })
+    //         setFilterData(data)
+    //     }
+    // }, [variant])
 
-    useEffect(() => {
-        if (search !== '') {
-            const data = event.lists.filter((item) => {
-                return item.judul.toLowerCase().includes(search.toLowerCase()) && (variant === 'hariini' ? item.tanggal === tanggalSekarang : item.tanggal !== tanggalSekarang)
-            })
-            setFilterData(data)
-        } else {
-            if (variant === 'hariini') {
-                const data = event.lists.filter((item) => {
-                    return item.tanggal === tanggalSekarang
-                })
-                setFilterData(data)
-            } else {
-                const data = event.lists.filter((item) => {
-                    return item.tanggal !== tanggalSekarang
-                })
-                setFilterData(data)
-            }
-        }
-    }, [search])
+    // useEffect(() => {
+    //     if (search !== '') {
+    //         const data = event.lists.filter((item) => {
+    //             return item.judul.toLowerCase().includes(search.toLowerCase()) && (variant === 'hariini' ? item.tanggal === tanggalSekarang : item.tanggal !== tanggalSekarang)
+    //         })
+    //         setFilterData(data)
+    //     } else {
+    //         if (variant === 'hariini') {
+    //             const data = event.lists.filter((item) => {
+    //                 return item.tanggal === tanggalSekarang
+    //             })
+    //             setFilterData(data)
+    //         } else {
+    //             const data = event.lists.filter((item) => {
+    //                 return item.tanggal !== tanggalSekarang
+    //             })
+    //             setFilterData(data)
+    //         }
+    //     }
+    // }, [search])
 
 
     return (
@@ -650,8 +380,9 @@ export const HalamanUtama = () => {
                     </View>
                     {variant === 'hariini' ? (
                         <FlatList
-                            data={filterData}
+                            data={list}
                             renderItem={({ item }) => <CardListEvent
+                                token={token}
                                 item={item}
                             />
                             }
@@ -695,8 +426,9 @@ export const HalamanUtama = () => {
                                 </View>
                             </View>
                             <FlatList
-                                data={filterData}
+                                data={progreslist}
                                 renderItem={({ item }) => <CardProgresEvent
+                                    token={token}
                                     item={item}
                                     bottomSheetAttach={bottomSheetAttach}
                                 />

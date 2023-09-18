@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { COLORS } from '../../config/SuperAppps';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
 
 function MyTabBarKeb({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);

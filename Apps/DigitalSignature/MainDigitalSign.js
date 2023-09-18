@@ -20,6 +20,7 @@ const listsDigitalSign = [
         keterangan: 'keterangan keterangan keterangan keterangan',
         panandatangansatu: [
             {
+                id: 1,
                 status: 'terima',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -30,6 +31,7 @@ const listsDigitalSign = [
         ],
         panandatangandua: [
             {
+                id: 2,
                 status: 'tolak',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -51,6 +53,7 @@ const listsDigitalSign = [
         keterangan: 'keterangan keterangan keterangan keterangan',
         panandatangansatu: [
             {
+                id: 1,
                 status: 'terima',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -61,6 +64,7 @@ const listsDigitalSign = [
         ],
         panandatangandua: [
             {
+                id: 2,
                 status: 'tolak',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -82,6 +86,7 @@ const listsDigitalSign = [
         keterangan: 'keterangan keterangan keterangan keterangan',
         panandatangansatu: [
             {
+                id: 1,
                 status: 'terima',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -92,6 +97,7 @@ const listsDigitalSign = [
         ],
         panandatangandua: [
             {
+                id: 2,
                 status: 'tolak',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -113,6 +119,7 @@ const listsDigitalSign = [
         keterangan: 'keterangan keterangan keterangan keterangan',
         panandatangansatu: [
             {
+                id: 1,
                 status: 'terima',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -123,6 +130,7 @@ const listsDigitalSign = [
         ],
         panandatangandua: [
             {
+                id: 2,
                 status: 'tolak',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -144,6 +152,7 @@ const listsDigitalSign = [
         keterangan: 'keterangan keterangan keterangan keterangan',
         panandatangansatu: [
             {
+                id: 1,
                 status: 'terima',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',
@@ -154,6 +163,7 @@ const listsDigitalSign = [
         ],
         panandatangandua: [
             {
+                id: 2,
                 status: 'tolak',
                 avatar: AVATAR.U2,
                 namajabatan: 'Nama Jabatan',

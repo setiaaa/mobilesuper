@@ -112,7 +112,7 @@ export const DetailSertifikat = ({ route }) => {
                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center' }}>
                                 {item.panandatangansatu?.map((data) => {
                                     return (
-                                        <View style={{ alignItems: 'center' }}>
+                                        <View key={data.id} style={{ alignItems: 'center' }}>
                                             <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center', }}>
                                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penamdatangan 1</Text>
 
@@ -146,7 +146,7 @@ export const DetailSertifikat = ({ route }) => {
 
                                 {item.panandatangandua?.map((data) => {
                                     return (
-                                        <View style={{ alignItems: 'center' }}>
+                                        <View key={data.id} style={{ alignItems: 'center' }}>
                                             <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center' }}>
                                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penamdatangan 2</Text>
                                                 {/* <Text>{data.status}</Text> */}

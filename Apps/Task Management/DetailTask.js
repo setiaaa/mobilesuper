@@ -54,7 +54,6 @@ export const DetailTask = () => {
             toggle: temp,
             id: id
         })
-        console.log(id)
     }
 
     const { task } = useSelector(state => state.task)
@@ -117,12 +116,14 @@ export const DetailTask = () => {
                                             <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', alignItems: 'center' }}>
                                                 {taskDetail[0].subAvatar?.map((data) => {
                                                     return (
-                                                        <Image source={data.avatar} style={{
-                                                            marginLeft: -8,
-                                                            borderWidth: 2,
-                                                            borderRadius: 50,
-                                                            borderColor: COLORS.white,
-                                                        }} />
+                                                        <View key={data.id}>
+                                                            <Image source={data.avatar} style={{
+                                                                marginLeft: -8,
+                                                                borderWidth: 2,
+                                                                borderRadius: 50,
+                                                                borderColor: COLORS.white,
+                                                            }} />
+                                                        </View>
                                                     )
                                                 })}
                                             </View>
@@ -155,12 +156,17 @@ export const DetailTask = () => {
                                                         <View style={{ marginBottom: 50 }}>
                                                             <FlatList
                                                                 data={taskDetail[0].member}
-                                                                renderItem={({ item }) => <CardSuka
-                                                                    avatar={item.avatar}
-                                                                    nama={item.nama}
-                                                                    jabatan={item.jabatan}
-                                                                />
+                                                                renderItem={({ item }) =>
+                                                                    <View key={item.id}>
+                                                                        <CardSuka
+                                                                            id={item.id}
+                                                                            avatar={item.avatar}
+                                                                            nama={item.nama}
+                                                                            jabatan={item.jabatan}
+                                                                        />
+                                                                    </View>
                                                                 }
+                                                                keyExtractor={item => item.id}
                                                             />
                                                         </View>
                                                     </BottomSheetView>
@@ -221,7 +227,7 @@ export const DetailTask = () => {
                                                     shadowOpacity: 0.2,
                                                 }}>
                                                     {taskDetail[0].Komentar?.map((listData) => (
-                                                        <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5 }}>
+                                                        <View key={listData.id} style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5 }}>
                                                             <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
 
                                                                 <View>
@@ -232,7 +238,6 @@ export const DetailTask = () => {
                                                                         fontSize: FONTSIZE.H2,
                                                                         fontWeight: FONTWEIGHT.bold,
                                                                         lineHeight: 20,
-                                                                        wordWrap: 'break-word'
                                                                     }}>
                                                                         {listData.nama}
                                                                     </Text>
@@ -242,7 +247,6 @@ export const DetailTask = () => {
                                                                             fontSize: FONTSIZE.H5,
                                                                             fontWeight: FONTWEIGHT.normal,
                                                                             lineHeight: 18,
-                                                                            wordWrap: 'break-word',
                                                                             marginBottom: 10
                                                                         }}>
                                                                             {listData.tanggal}
@@ -253,7 +257,6 @@ export const DetailTask = () => {
                                                                             fontSize: FONTSIZE.H5,
                                                                             fontWeight: FONTWEIGHT.normal,
                                                                             lineHeight: 18,
-                                                                            wordWrap: 'break-word'
                                                                         }}>
                                                                             {listData.jam}
                                                                         </Text>
@@ -263,7 +266,6 @@ export const DetailTask = () => {
                                                                         fontSize: FONTSIZE.H5,
                                                                         fontWeight: FONTWEIGHT.normal,
                                                                         lineHeight: 18,
-                                                                        wordWrap: 'break-word',
                                                                     }}>
                                                                         {listData.isi}
                                                                     </Text>
@@ -283,7 +285,6 @@ export const DetailTask = () => {
                                                                                                 fontSize: FONTSIZE.H5,
                                                                                                 fontWeight: FONTWEIGHT.normal,
                                                                                                 lineHeight: 18,
-                                                                                                wordWrap: 'break-word',
                                                                                             }}>
                                                                                                 Tampilkan {listData.jmlhBalas} Balasan
                                                                                             </Text>
@@ -297,75 +298,70 @@ export const DetailTask = () => {
                                                                             {listData.id === toggleComment.id && toggleComment.toggle ? (
                                                                                 <View>
                                                                                     {listData.balas?.map((listKomen, index) =>
-                                                                                        <>
-                                                                                            <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
-                                                                                                <View>
-                                                                                                    <Image source={listKomen.avatarBalas} />
-                                                                                                </View>
-                                                                                                <View style={{ marginLeft: 10 }}>
+
+                                                                                        <View key={index} style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
+                                                                                            <View>
+                                                                                                <Image source={listKomen.avatarBalas} />
+                                                                                            </View>
+                                                                                            <View style={{ marginLeft: 10 }}>
+                                                                                                <Text style={{
+                                                                                                    fontSize: FONTSIZE.H2,
+                                                                                                    fontWeight: FONTWEIGHT.bold,
+                                                                                                    lineHeight: 20,
+                                                                                                }}>
+                                                                                                    {listKomen.nama}
+                                                                                                </Text>
+                                                                                                <View style={{ flexDirection: 'row', gap: 5 }}>
                                                                                                     <Text style={{
-                                                                                                        fontSize: FONTSIZE.H2,
-                                                                                                        fontWeight: FONTWEIGHT.bold,
-                                                                                                        lineHeight: 20,
-                                                                                                        wordWrap: 'break-word'
-                                                                                                    }}>
-                                                                                                        {listKomen.nama}
-                                                                                                    </Text>
-                                                                                                    <View style={{ flexDirection: 'row', gap: 5 }}>
-                                                                                                        <Text style={{
-                                                                                                            color: COLORS.lighter,
-                                                                                                            fontSize: FONTSIZE.H5,
-                                                                                                            fontWeight: FONTWEIGHT.normal,
-                                                                                                            lineHeight: 18,
-                                                                                                            wordWrap: 'break-word',
-                                                                                                            marginBottom: 10
-                                                                                                        }}>
-                                                                                                            {listKomen.tanggal}
-                                                                                                        </Text>
-                                                                                                        <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
-                                                                                                        <Text style={{
-                                                                                                            color: COLORS.lighter,
-                                                                                                            fontSize: FONTSIZE.H5,
-                                                                                                            fontWeight: FONTWEIGHT.normal,
-                                                                                                            lineHeight: 18,
-                                                                                                            wordWrap: 'break-word'
-                                                                                                        }}>
-                                                                                                            {listKomen.jam}
-                                                                                                        </Text>
-                                                                                                    </View>
-                                                                                                    <Text style={{
-                                                                                                        color: '#999999',
+                                                                                                        color: COLORS.lighter,
                                                                                                         fontSize: FONTSIZE.H5,
                                                                                                         fontWeight: FONTWEIGHT.normal,
                                                                                                         lineHeight: 18,
-                                                                                                        wordWrap: 'break-word',
+                                                                                                        marginBottom: 10
                                                                                                     }}>
-                                                                                                        {listKomen.isi}
+                                                                                                        {listKomen.tanggal}
                                                                                                     </Text>
-                                                                                                    {
-                                                                                                        listData.balas.length - 1 === index ? (
-                                                                                                            <TouchableOpacity
-                                                                                                                key={listKomen.id}
-                                                                                                                onPress={() => clickBalas(listData.id, false)}>
-                                                                                                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
-                                                                                                                    <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
-                                                                                                                    <Text style={{
-                                                                                                                        color: COLORS.lighter,
-                                                                                                                        fontSize: FONTSIZE.H5,
-                                                                                                                        fontWeight: FONTWEIGHT.normal,
-                                                                                                                        lineHeight: 18,
-                                                                                                                        wordWrap: 'break-word',
-                                                                                                                    }}>
-                                                                                                                        Tutup {listData.jmlhBalas} Balasan
-                                                                                                                    </Text>
-                                                                                                                </View>
-                                                                                                            </TouchableOpacity>
-                                                                                                        ) : null
-                                                                                                    }
+                                                                                                    <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
+                                                                                                    <Text style={{
+                                                                                                        color: COLORS.lighter,
+                                                                                                        fontSize: FONTSIZE.H5,
+                                                                                                        fontWeight: FONTWEIGHT.normal,
+                                                                                                        lineHeight: 18,
+                                                                                                    }}>
+                                                                                                        {listKomen.jam}
+                                                                                                    </Text>
                                                                                                 </View>
-                                                                                                {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
+                                                                                                <Text style={{
+                                                                                                    color: '#999999',
+                                                                                                    fontSize: FONTSIZE.H5,
+                                                                                                    fontWeight: FONTWEIGHT.normal,
+                                                                                                    lineHeight: 18,
+                                                                                                }}>
+                                                                                                    {listKomen.isi}
+                                                                                                </Text>
+                                                                                                {
+                                                                                                    listData.balas.length - 1 === index ? (
+                                                                                                        <TouchableOpacity
+                                                                                                            key={listKomen.id}
+                                                                                                            onPress={() => clickBalas(listData.id, false)}>
+                                                                                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
+                                                                                                                <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
+                                                                                                                <Text style={{
+                                                                                                                    color: COLORS.lighter,
+                                                                                                                    fontSize: FONTSIZE.H5,
+                                                                                                                    fontWeight: FONTWEIGHT.normal,
+                                                                                                                    lineHeight: 18,
+                                                                                                                }}>
+                                                                                                                    Tutup {listData.jmlhBalas} Balasan
+                                                                                                                </Text>
+                                                                                                            </View>
+                                                                                                        </TouchableOpacity>
+                                                                                                    ) : null
+                                                                                                }
                                                                                             </View>
-                                                                                        </>
+                                                                                            {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
+                                                                                        </View>
+
                                                                                     )}
                                                                                     {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
                                                                                 </View>

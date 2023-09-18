@@ -11,37 +11,54 @@ import { Host } from 'react-native-portalize'
 
 const item = [
     {
+        id: 1,
         kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
         tanggal: '22 Juli 2023',
         deskripsi: 'Agile adalah metode atau kerangka kerja yang memiliki prinsip “bertahap dan berulang”. Dengan begitu, proses pengembangannya dapat berjalan dengan cepat, selesai tepat waktu, dan tentunya dengan hasil yang berkualitas tinggi.',
         prioritas: 'High',
         member: [
             {
+                id: 1,
                 avatar: AVATAR.U2,
                 jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
                 nama: 'Rizky Novriansyah'
             },
             {
+                id: 2,
                 avatar: AVATAR.U2,
                 jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
                 nama: 'Rizky Novriansyah'
             },
             {
+                id: 3,
                 avatar: AVATAR.U2,
                 jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
                 nama: 'Rizky Novriansyah'
             },
             {
+                id: 4,
                 avatar: AVATAR.U2,
                 jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
                 nama: 'Rizky Novriansyah'
             },
         ],
         subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
+            {
+                id: 1,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 2,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 3,
+                avatar: AVATAR.U2
+            },
+            {
+                id: 4,
+                avatar: AVATAR.U2
+            }
         ],
         warna: COLORS.infoDanger,
         jmlKomentar: '2',
@@ -102,21 +119,25 @@ const item = [
         ],
         lampiranDokumen: [
             {
+                id: 1,
                 image: require('../../assets/superApp/pdf.png'),
                 file: 'Business Agility with Scrum',
                 size: '8 MB'
             },
             {
+                id: 2,
                 image: require('../../assets/superApp/word.png'),
                 file: 'Business Agility with Scrum',
                 size: '8 MB'
             },
             {
+                id: 3,
                 image: require('../../assets/superApp/ppt.png'),
                 file: 'Business Agility with Scrum',
                 size: '8 MB'
             },
             {
+                id: 4,
                 image: require('../../assets/superApp/excel.png'),
                 file: 'Business Agility with Scrum',
                 size: '8 MB'
@@ -124,26 +145,32 @@ const item = [
         ],
         lampiranFile: [
             {
+                id: 5,
                 image: require('../../assets/superApp/FileIkan.png'),
                 file: 'tuna.png',
             },
             {
+                id: 6,
                 image: require('../../assets/superApp/FileIkan.png'),
                 file: 'tuna.png',
             },
             {
+                id: 7,
                 image: require('../../assets/superApp/FileIkan.png'),
                 file: 'tuna.png',
             },
             {
+                id: 8,
                 image: require('../../assets/superApp/FileIkan.png'),
                 file: 'tuna.png',
             },
             {
+                id: 9,
                 image: require('../../assets/superApp/FileIkan.png'),
                 file: 'tuna.png',
             },
             {
+                id: 10,
                 image: require('../../assets/superApp/FileIkan.png'),
                 file: 'tuna.png',
             },

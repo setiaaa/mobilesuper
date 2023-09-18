@@ -21,7 +21,7 @@ const DataLampiran = ({ item }) => {
                     <Text style={{ width: '100%', color: COLORS.lighter, fontSize: 10, fontWeight: FONTWEIGHT.normal, textAlign: 'center' }}>{item.size}</Text>
                 </View>
             </View>
-        </View>
+        </View >
     )
 }
 
@@ -53,11 +53,13 @@ export const Lampiran = () => {
                 key={'#'}
                 data={detail.lampiran}
                 renderItem={({ item }) =>
-                    <DataLampiran
-                        item={item} />
+                    <View key={item.id}>
+                        <DataLampiran
+                            item={item} />
+                    </View>
                 }
                 numColumns={2}
-                keyExtractor={detail => "#" + detail.lampiran}
+                keyExtractor={item => "#" + item.id}
                 style={{ marginTop: 20 }}
             />
         </SafeAreaView>

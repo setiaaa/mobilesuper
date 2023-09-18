@@ -39,8 +39,9 @@
     "plugins": [
       [
         "expo-document-picker",
+        "expo-barcode-scanner",
         {
-          "iCloudContainerEnvironment": "Production"
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
         }
       ]
     ]

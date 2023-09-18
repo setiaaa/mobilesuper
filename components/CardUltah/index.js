@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native'
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { Divider } from 'react-native-paper';
 import { FlatList } from 'react-native';
 import { FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
-
-
 
 const CardLiniMasaSatker = ({ no, nama, unit }) => {
     return (
@@ -34,18 +32,22 @@ export const CardUltah = ({ ultah }) => {
                 <View style={{ alignItems: 'center' }}>
                     <Divider bold style={{ width: '75%', backgroundColor: '#999999' }} />
                 </View>
-                <FlatList
-                    data={ultah}
-                    renderItem={({ item }) => <CardLiniMasaSatker
-                        no={item.no}
-                        nama={item.nama}
-                        unit={item.unit}
-                        item={item}
-                    />
-                    }
-                    keyExtractor={item => item.id}
-                    style={{ height: 368 }}
-                />
+                <View style={{ height: 368 }}>
+                    <ScrollView>
+                        {
+                            ultah.map((item, index) => (
+                                <View key={index}>
+                                    <CardLiniMasaSatker
+                                        no={item.no}
+                                        nama={item.nama}
+                                        unit={item.unit}
+                                        item={item}
+                                    />
+                                </View>
+                            ))
+                        }
+                    </ScrollView>
+                </View>
             </View>
         </View>
     )

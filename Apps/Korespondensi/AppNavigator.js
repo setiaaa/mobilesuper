@@ -153,6 +153,12 @@ import { DetailTodo } from "../Event Management/DetailTodo";
 import { TambahEvent } from "../Event Management/TambahEvent";
 import { TambahAgendaEvent } from "../Event Management/TambahAgendaEvent";
 import { TambahTodo } from "../Event Management/TambahTodo";
+import { LoginToken } from "../LoginToken";
+import { DetailAbsen } from "../Event Management/DetailAbsen";
+import { ScannerBarCode } from "../Event Management/ScannerBarCode";
+import { AddressBook } from "../AddressBook";
+import { AddressBookJabatan } from "../AddressBookJabatan";
+import { AddressBookPegawai } from "../AddressBookPegawai";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -195,6 +201,13 @@ function AuthStack() {
                 headerShown: false,
               }}
             /> */}
+            <Stack.Screen
+              name="LoginToken"
+              component={LoginToken}
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen
               name="Main"
               component={Main}
@@ -494,6 +507,20 @@ function AuthStack() {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="DetailAbsen"
+              component={DetailAbsen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ScannerBarCode"
+              component={ScannerBarCode}
+              options={{
+                headerShown: false,
+              }}
+            />
             {/* <Stack.Screen
               name="Main"
               component={Main}
@@ -531,6 +558,14 @@ function AuthStack() {
               component={TermOfUse}
               options={{
                 header: toolbarBack,
+              }}
+            />
+            <Stack.Screen
+              name="AddressBook"
+              component={AddressBook}
+              options={{
+                headerTitle: '',
+                headerShown: false,
               }}
             />
           </Stack.Navigator>
@@ -806,6 +841,64 @@ export const TopsProduksiBudidaya = () => {
             title: 'Teknologi Terbaru'
           }} />
 
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const TopAddressBook = ({ config }) => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName={'AddressBookJabatan'}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 13, textTransform: 'none' },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: 'auto' }
+        }}
+      >
+        {
+          config.tabs.jabatan && config.tabs.pegawai ? (
+            <>
+              <Top.Screen name='AddressBookJabatan' component={AddressBookJabatan}
+                options={{
+                  title: 'Jabatan',
+                  tabBarItemStyle: { width: '50%' },
+                  tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 80 }
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen name='AddressBookPegawai' component={AddressBookPegawai}
+                options={{
+                  title: 'Pegawai',
+                  tabBarItemStyle: { width: '50%' },
+                  tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 50 }
+                }}
+                initialParams={{ config: config }}
+              />
+            </>
+          ) : config.tabs.jabatan ? (
+            <Top.Screen name='AddressBookJabatan' component={AddressBookJabatan}
+              options={{
+                title: 'Jabatan',
+                tabBarItemStyle: { width: '50%' },
+                tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 80 }
+              }}
+              initialParams={{ config: config }}
+            />
+          ) : config.tabs.pegawai ? (
+            <Top.Screen name='AddressBookPegawai' component={AddressBookPegawai}
+              options={{
+                title: 'Pegawai',
+                tabBarItemStyle: { width: '50%' },
+                tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 50 }
+              }}
+              initialParams={{ config: config }}
+            />
+          ) : null
+        }
       </Top.Navigator>
     </BottomSheetModalProvider>
   )

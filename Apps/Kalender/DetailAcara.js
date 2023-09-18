@@ -29,11 +29,21 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const data =
 {
     gambar: [
-        { image: require('../../assets/superApp/Cover.png') },
-        { image: require('../../assets/superApp/Cover.png') },
-        { image: require('../../assets/superApp/Cover.png') },
-        { image: require('../../assets/superApp/Cover.png') },
-        { image: require('../../assets/superApp/Cover.png') },
+        {
+            image: require('../../assets/superApp/Cover.png')
+        },
+        {
+            image: require('../../assets/superApp/Cover.png')
+        },
+        {
+            image: require('../../assets/superApp/Cover.png')
+        },
+        {
+            image: require('../../assets/superApp/Cover.png')
+        },
+        {
+            image: require('../../assets/superApp/Cover.png')
+        },
     ],
     judul: 'Fish Finger',
     nama: 'Alto Belly',
@@ -161,7 +171,6 @@ const data =
 }
 
 const renderItem = ({ item }, parallaxProps) => {
-    console.log(item.gambar)
     return (
         <View style={styles.item}>
             <ParallaxImage
@@ -179,8 +188,7 @@ const { width: screenWidth } = Dimensions.get('window');
 
 export const DetailAcara = () => {
     const [tabItemIndex, setTabItemIndex] = useState();
-    const [gambar, setGambar] = useState([])
-    const [slide, setSlide] = useState()
+    const [slide, setSlide] = useState(0)
     const [komen, setKomen] = useState('')
     const carouselRef = useRef(null);
     const navigation = useNavigation()
@@ -208,6 +216,7 @@ export const DetailAcara = () => {
     const { agenda } = useSelector(state => state.grupKalender)
 
     const detail = agenda.detail
+    const gambar = agenda.detail.gambar
 
     const [toggleComment, setToggleComment] = useState({
         toggle: false,
@@ -218,7 +227,6 @@ export const DetailAcara = () => {
             toggle: temp,
             id: id
         })
-        console.log(id)
     }
 
     return (
@@ -252,14 +260,15 @@ export const DetailAcara = () => {
                                     sliderWidth={screenWidth}
                                     sliderHeight={screenWidth}
                                     itemWidth={screenWidth - 60}
-                                    data={detail.gambar}
+                                    data={gambar}
                                     renderItem={renderItem}
                                     hasParallaxImages={true}
                                     onSnapToItem={setSlide}
                                 />
                                 <Pagination
-                                    dotsLength={detail.gambar?.length}
-                                    inactiveDotColor={'black'}
+                                    dotsLength={gambar?.length}
+                                    dotColor={'black'}
+                                    inactiveDotColor={COLORS.grey}
                                     dotStyle={styles.paginationDot}
                                     inactiveDotOpacity={0.4}
                                     inactiveDotScale={0.6}
@@ -270,14 +279,6 @@ export const DetailAcara = () => {
                                 <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail.judul}</Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', marginHorizontal: 20, gap: 20, alignItems: 'center', marginTop: 10 }}>
-                                    <View style={{ backgroundColor: '#FFD6D6', borderRadius: 30 }}>
-                                        <Text style={{ marginHorizontal: 10, marginVertical: 5, color: COLORS.infoDanger }}>{detail.nama}</Text>
-                                    </View>
-                                    <View>
-                                        <Text>{detail.tanggal}</Text>
-                                    </View>
-                                </View>
 
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
@@ -285,14 +286,16 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Member</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', }}>
-                                            {detail.member?.map((item) => {
+                                            {detail.member?.map((item, index) => {
                                                 return (
-                                                    <Image source={item.avatar} style={{
-                                                        marginLeft: -8,
-                                                        borderWidth: 2,
-                                                        borderRadius: 50,
-                                                        borderColor: COLORS.white,
-                                                    }} />
+                                                    <View key={index}>
+                                                        <Image source={item.avatar} style={{
+                                                            marginLeft: -8,
+                                                            borderWidth: 2,
+                                                            borderRadius: 50,
+                                                            borderColor: COLORS.white,
+                                                        }} />
+                                                    </View>
                                                 )
                                             })}
                                         </View>
@@ -398,7 +401,7 @@ export const DetailAcara = () => {
                                                         shadowOpacity: 0.2,
                                                     }}>
                                                         {detail.Komentar?.map((listData) => (
-                                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5, elevation: 5 }}>
+                                                            <View key={listData.id} style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5, elevation: 5 }}>
                                                                 <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
                                                                     <View>
                                                                         <Image source={listData.avatarKomen} />
@@ -408,7 +411,6 @@ export const DetailAcara = () => {
                                                                             fontSize: FONTSIZE.H2,
                                                                             fontWeight: FONTWEIGHT.bold,
                                                                             lineHeight: 20,
-                                                                            wordWrap: 'break-word'
                                                                         }}>
                                                                             {listData.nama}
                                                                         </Text>
@@ -418,7 +420,6 @@ export const DetailAcara = () => {
                                                                                 fontSize: FONTSIZE.H5,
                                                                                 fontWeight: FONTWEIGHT.normal,
                                                                                 lineHeight: 18,
-                                                                                wordWrap: 'break-word',
                                                                                 marginBottom: 10
                                                                             }}>
                                                                                 {listData.tanggal}
@@ -429,7 +430,6 @@ export const DetailAcara = () => {
                                                                                 fontSize: FONTSIZE.H5,
                                                                                 fontWeight: FONTWEIGHT.normal,
                                                                                 lineHeight: 18,
-                                                                                wordWrap: 'break-word'
                                                                             }}>
                                                                                 {listData.jam}
                                                                             </Text>
@@ -439,7 +439,6 @@ export const DetailAcara = () => {
                                                                             fontSize: FONTSIZE.H5,
                                                                             fontWeight: FONTWEIGHT.normal,
                                                                             lineHeight: 18,
-                                                                            wordWrap: 'break-word',
                                                                         }}>
                                                                             {listData.isi}
                                                                         </Text>
@@ -459,7 +458,6 @@ export const DetailAcara = () => {
                                                                                                     fontSize: FONTSIZE.H5,
                                                                                                     fontWeight: FONTWEIGHT.normal,
                                                                                                     lineHeight: 18,
-                                                                                                    wordWrap: 'break-word',
                                                                                                 }}>
                                                                                                     Tampilkan {listData.jmlhBalas} Balasan
                                                                                                 </Text>
@@ -483,7 +481,6 @@ export const DetailAcara = () => {
                                                                                                             fontSize: FONTSIZE.H2,
                                                                                                             fontWeight: FONTWEIGHT.bold,
                                                                                                             lineHeight: 20,
-                                                                                                            wordWrap: 'break-word'
                                                                                                         }}>
                                                                                                             {listKomen.nama}
                                                                                                         </Text>
@@ -493,7 +490,6 @@ export const DetailAcara = () => {
                                                                                                                 fontSize: FONTSIZE.H5,
                                                                                                                 fontWeight: FONTWEIGHT.normal,
                                                                                                                 lineHeight: 18,
-                                                                                                                wordWrap: 'break-word',
                                                                                                                 marginBottom: 10
                                                                                                             }}>
                                                                                                                 {listKomen.tanggal}
@@ -504,7 +500,6 @@ export const DetailAcara = () => {
                                                                                                                 fontSize: FONTSIZE.H5,
                                                                                                                 fontWeight: FONTWEIGHT.normal,
                                                                                                                 lineHeight: 18,
-                                                                                                                wordWrap: 'break-word'
                                                                                                             }}>
                                                                                                                 {listKomen.jam}
                                                                                                             </Text>
@@ -514,7 +509,6 @@ export const DetailAcara = () => {
                                                                                                             fontSize: FONTSIZE.H5,
                                                                                                             fontWeight: FONTWEIGHT.normal,
                                                                                                             lineHeight: 18,
-                                                                                                            wordWrap: 'break-word',
                                                                                                         }}>
                                                                                                             {listKomen.isi}
                                                                                                         </Text>
@@ -530,7 +524,6 @@ export const DetailAcara = () => {
                                                                                                                             fontSize: FONTSIZE.H5,
                                                                                                                             fontWeight: FONTWEIGHT.normal,
                                                                                                                             lineHeight: 18,
-                                                                                                                            wordWrap: 'break-word',
                                                                                                                         }}>
                                                                                                                             Tutup {listData.jmlhBalas} Balasan
                                                                                                                         </Text>

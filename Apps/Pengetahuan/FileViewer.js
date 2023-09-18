@@ -10,8 +10,6 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 export const FileViewer = ({ route }) => {
     const navigation = useNavigation()
     const { lampiran, type } = route.params
-
-    console.log(type + "hwllll")
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -36,7 +34,7 @@ export const FileViewer = ({ route }) => {
                 {type === 'ppt' || type === 'pptx' || type === 'xls' || type === 'xlsx' || type === 'doc' || type === 'docx' ? (
                     <PdfReader
                         source={{
-                            uri: 'https://view.officeapps.live.com/op/view.aspx?src=' + lampiran + '=BROWSELINK',
+                            uri: lampiran,
                         }}
                         webviewProps={{
                             startInLoadingState: true,

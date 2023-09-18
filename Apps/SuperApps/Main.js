@@ -10,6 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const ENTRIES1 = [
     {
+        id: 1,
         tanggal: 'Senin, 5 Juni 2023',
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
@@ -17,6 +18,7 @@ const ENTRIES1 = [
         image: require('../../assets/superApp/berita.png')
     },
     {
+        id: 2,
         tanggal: 'Senin, 5 Juni 2023',
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
@@ -24,6 +26,7 @@ const ENTRIES1 = [
         image: require('../../assets/superApp/berita.png')
     },
     {
+        id: 3,
         tanggal: 'Senin, 5 Juni 2023',
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
@@ -31,6 +34,7 @@ const ENTRIES1 = [
         image: require('../../assets/superApp/berita.png')
     },
     {
+        id: 4,
         tanggal: 'Senin, 5 Juni 2023',
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         title: 'KKP RESMI PUNYA LOGO BARU',
@@ -41,6 +45,7 @@ const ENTRIES1 = [
         dilihat: '219'
     },
     {
+        id: 5,
         tanggal: 'Senin, 5 Juni 2023',
         subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
         title: 'KKP RESMI PUNYA LOGO BARU',

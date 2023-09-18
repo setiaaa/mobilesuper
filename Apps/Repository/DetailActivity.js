@@ -157,7 +157,9 @@ export const DetailActivity = () => {
                         <View style={{ flexDirection: 'row', position: 'relative' }}>
                             {detail.subimage?.map((data) => {
                                 return (
-                                    <Image source={data.image} style={{ marginLeft: -7 }} />
+                                    <View key={data.id}>
+                                        <Image source={data.image} style={{ marginLeft: -7 }} />
+                                    </View>
                                 )
                             })}
                         </View>
@@ -196,7 +198,7 @@ export const DetailActivity = () => {
                                                 <Image source={detail.avatarDibagikan} />
                                                 <View style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 30 }}>
                                                     {detail.dibagikan?.map((data) => (
-                                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                                                        <View key={data.id} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                                                             <Image source={data.avatarDibagikan} />
                                                             <View>
                                                                 <Text style={{ color: COLORS.lighter }}>{data.jabatan}</Text>

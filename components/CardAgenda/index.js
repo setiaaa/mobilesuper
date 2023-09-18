@@ -6,10 +6,10 @@ import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-export const CardAgenda = ({ kegiatan, subAvatar, warna }) => {
+export const CardAgenda = ({ kegiatan, subAvatar, warna, id }) => {
     const navigation = useNavigation()
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('DetailAcara')}>
+        <TouchableOpacity key={id} onPress={() => navigation.navigate('DetailAcara')}>
             <View style={{
                 width: '100%',
                 backgroundColor: COLORS.white,
@@ -45,14 +45,16 @@ export const CardAgenda = ({ kegiatan, subAvatar, warna }) => {
                     <Text style={{ fontSize: FONTSIZE.H4, fontWeight: FONTWEIGHT.normal }}>{kegiatan}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', alignItems: 'center' }}>
-                    {subAvatar.map((data) => {
+                    {subAvatar.map((data, index) => {
                         return (
-                            <Image source={require('../../assets/superApp/AvatarDetail.png')} style={{
-                                marginLeft: -8,
-                                borderWidth: 2,
-                                borderRadius: 50,
-                                borderColor: COLORS.white,
-                            }} />
+                            <View key={index}>
+                                <Image source={require('../../assets/superApp/AvatarDetail.png')} style={{
+                                    marginLeft: -8,
+                                    borderWidth: 2,
+                                    borderRadius: 50,
+                                    borderColor: COLORS.white,
+                                }} />
+                            </View>
                         )
                     })}
                     {/* <Image source={subAvatar} /> */}

@@ -27,6 +27,7 @@ export const CardFileTask = ({ taskDetail }) => {
                     file={item.file}
                 />
                 }
+                scrollEnabled={false}
                 numColumns={3}
                 keyExtractor={item => "*" + item.id}
             />
