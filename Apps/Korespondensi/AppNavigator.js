@@ -848,20 +848,39 @@ export const TopsProduksiBudidaya = () => {
 
 export const TopAddressBook = ({ config }) => {
   return (
-    <BottomSheetModalProvider>
-      <Top.Navigator initialRouteName={'AddressBookJabatan'}
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: '#C34647',
-          tabBarInactiveTintColor: 'black',
-          tabBarLabelStyle: { fontSize: 13, textTransform: 'none' },
-          tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: 'auto' }
-        }}
-      >
-        {
-          config.tabs.jabatan && config.tabs.pegawai ? (
-            <>
+    <Host>
+      <BottomSheetModalProvider>
+        <Top.Navigator initialRouteName={'AddressBookJabatan'}
+          screenOptions={{
+            tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+            tabBarActiveTintColor: '#C34647',
+            tabBarInactiveTintColor: 'black',
+            tabBarLabelStyle: { fontSize: 13, textTransform: 'none' },
+            tabBarScrollEnabled: true,
+            tabBarItemStyle: { width: 'auto' }
+          }}
+        >
+          {
+            config.tabs.jabatan && config.tabs.pegawai ? (
+              <>
+                <Top.Screen name='AddressBookJabatan' component={AddressBookJabatan}
+                  options={{
+                    title: 'Jabatan',
+                    tabBarItemStyle: { width: '50%' },
+                    tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 80 }
+                  }}
+                  initialParams={{ config: config }}
+                />
+                <Top.Screen name='AddressBookPegawai' component={AddressBookPegawai}
+                  options={{
+                    title: 'Pegawai',
+                    tabBarItemStyle: { width: '50%' },
+                    tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 50 }
+                  }}
+                  initialParams={{ config: config }}
+                />
+              </>
+            ) : config.tabs.jabatan ? (
               <Top.Screen name='AddressBookJabatan' component={AddressBookJabatan}
                 options={{
                   title: 'Jabatan',
@@ -870,6 +889,7 @@ export const TopAddressBook = ({ config }) => {
                 }}
                 initialParams={{ config: config }}
               />
+            ) : config.tabs.pegawai ? (
               <Top.Screen name='AddressBookPegawai' component={AddressBookPegawai}
                 options={{
                   title: 'Pegawai',
@@ -878,29 +898,11 @@ export const TopAddressBook = ({ config }) => {
                 }}
                 initialParams={{ config: config }}
               />
-            </>
-          ) : config.tabs.jabatan ? (
-            <Top.Screen name='AddressBookJabatan' component={AddressBookJabatan}
-              options={{
-                title: 'Jabatan',
-                tabBarItemStyle: { width: '50%' },
-                tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 80 }
-              }}
-              initialParams={{ config: config }}
-            />
-          ) : config.tabs.pegawai ? (
-            <Top.Screen name='AddressBookPegawai' component={AddressBookPegawai}
-              options={{
-                title: 'Pegawai',
-                tabBarItemStyle: { width: '50%' },
-                tabBarLabelStyle: { width: 200, fontSize: 13, textTransform: 'none', paddingLeft: 50 }
-              }}
-              initialParams={{ config: config }}
-            />
-          ) : null
-        }
-      </Top.Navigator>
-    </BottomSheetModalProvider>
+            ) : null
+          }
+        </Top.Navigator>
+      </BottomSheetModalProvider>
+    </Host>
   )
 }
 

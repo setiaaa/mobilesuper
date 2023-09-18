@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import { COLORS } from '../config/SuperAppps'
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTokenValue } from '../service/session'
 import { getDivision, getDivisionTree, getEmployee } from '../service/api'
@@ -19,6 +19,34 @@ import {
     BottomSheetTextInput,
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet';
+import { FlatList } from 'react-native'
+import { Portal } from 'react-native-portalize'
+
+
+const CardListPilih = ({ item }) => {
+    return (
+        <View>
+            {item.title === undefined ? (
+                null
+            ) : (
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                    <Text>-</Text>
+                    <Text style={{ width: '85%' }}>{item.title}</Text>
+                    <Ionicons name='trash-outline' size={24} />
+                </View>
+            )}
+            {item.fullname === undefined ? (
+                null
+            ) : (
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                    <Text>-</Text>
+                    <Text style={{ width: '85%' }}>{item.fullname}</Text>
+                    <Ionicons name='trash-outline' size={24} />
+                </View>
+            )}
+        </View>
+    )
+}
 
 
 export const AddressBook = ({ route }) => {
@@ -67,59 +95,54 @@ export const AddressBook = ({ route }) => {
         bottomSheetMember()
     }, [])
 
+    console.log(addressbook.selected)
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <GestureHandlerRootView>
-                <BottomSheetModalProvider>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20, paddingHorizontal: 20 }}>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            borderRadius: 20,
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20, paddingHorizontal: 20 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                        <TouchableOpacity onPress={() => {
+                            navigation.goBack()
                         }}>
-                            <TouchableOpacity onPress={() => {
-                                navigation.goBack()
-                            }}>
-                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                            </TouchableOpacity>
-
-
-                        </View>
-                        <View style={{ flex: 1, alignItems: 'center', }}>
-                            <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>AddressBook</Text>
-                        </View>
-
-                        <TouchableOpacity style={{
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                            onPress={() => {
-                                navigation.goBack()
-                            }}
-                        >
-                            <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                         </TouchableOpacity>
+
+
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'center', }}>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>AddressBook</Text>
                     </View>
 
-                    <View style={{ height: '83%' }}>
-                        <TopAddressBook config={config} />
-                    </View>
-                    {/* <View style={{ position: 'absolute', bottom: 50, left: 0, right: 0, width: '100%' }}>
+                    <TouchableOpacity style={{
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                        onPress={() => {
+                            navigation.goBack()
+                        }}
+                    >
+                        <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ height: '83%' }}>
+                    <TopAddressBook config={config} />
+                </View>
+                {/* <View style={{ position: 'absolute', bottom: 50, left: 0, right: 0, width: '100%' }}>
                         <Text>selected {addressbook.selected.length}</Text>
                     </View> */}
-                    {/* 
-                    <TouchableOpacity onPress={() => {
-                        bottomSheetMember()
-                    }}>
-                        <Text>KONTOL</Text>
-                    </TouchableOpacity> */}
 
+                <BottomSheetModalProvider>
                     <BottomSheetModal
                         ref={bottomSheetModalMemberRef}
                         snapPoints={animatedSnapPoints}
@@ -132,42 +155,20 @@ export const AddressBook = ({ route }) => {
                     >
                         <BottomSheetView onLayout={handleContentLayout}>
                             <View>
-                                <View style={{ marginHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ marginHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                                     <Text style={{ fontWeight: 500, marginBottom: 50 }}>Daftar ({addressbook.selected.length} Pilihan)</Text>
                                     <Text>Hapus Semua</Text>
                                 </View>
-                                {/* <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
-                                    <Search
-                                        placeholder={'Cari'}
-                                    />
-                                </View> */}
-                                {/* <View>
-                                    <FlatList
-                                        data={dataFilter}
-                                        horizontal={true}
-                                        renderItem={({ item }) => <CardPilihMember
-                                            nama={item.nama}
-                                            avatar={item.avatar}
-                                            id={item.id}
-                                            handleClickItem={handleClickItem}
-                                            filter={true}
-                                        />
-                                        }
-                                    />
-                                </View>
                                 <View>
                                     <FlatList
-                                        data={items}
-                                        renderItem={({ item }) => <CardPilihMember
-                                            nama={item.nama}
-                                            avatar={item.avatar}
-                                            id={item.id}
-                                            handleClickItem={handleClickItem}
-                                            filter={false}
+                                        data={addressbook.selected}
+                                        renderItem={({ item }) => <CardListPilih
+                                            item={item}
                                         />
                                         }
+                                        keyExtractor={item => item.id}
                                     />
-                                </View> */}
+                                </View>
 
                             </View>
                         </BottomSheetView>
