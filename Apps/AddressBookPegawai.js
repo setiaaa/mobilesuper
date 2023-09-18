@@ -74,6 +74,7 @@ export const AddressBookPegawai = ({ route }) => {
                     config={config}
                 />
                 }
+                style={{ marginBottom: 40 }}
                 keyExtractor={item => item.nip}
             />
         </View>

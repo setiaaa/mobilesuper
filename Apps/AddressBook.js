@@ -23,16 +23,31 @@ import { FlatList } from 'react-native'
 import { Portal } from 'react-native-portalize'
 
 
-const CardListPilih = ({ item }) => {
+const CardListPilih = ({ item, addressbook }) => {
+    const dispatch = useDispatch()
+    const deleteItem = (id, state) => {
+        let data;
+        if (state === "jabatan") {
+            data = addressbook.selected.filter(data => data.id !== id)
+            dispatch(setAddressbookSelected(data))
+        } else {
+            data = addressbook.selected.filter(data => data.nip !== id)
+            dispatch(setAddressbookSelected(data))
+        }
+    }
     return (
         <View>
             {item.title === undefined ? (
                 null
             ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginHorizontal: '5%', gap: 10 }}>
                     <Text>-</Text>
                     <Text style={{ width: '85%' }}>{item.title}</Text>
-                    <Ionicons name='trash-outline' size={24} />
+                    <TouchableOpacity onPress={() => {
+                        deleteItem(item.id, 'jabatan')
+                    }}>
+                        <Ionicons name='trash-outline' size={24} />
+                    </TouchableOpacity>
                 </View>
             )}
             {item.fullname === undefined ? (
@@ -41,7 +56,12 @@ const CardListPilih = ({ item }) => {
                 <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
                     <Text>-</Text>
                     <Text style={{ width: '85%' }}>{item.fullname}</Text>
-                    <Ionicons name='trash-outline' size={24} />
+                    <TouchableOpacity onPress={() => {
+                        deleteItem(item.nip, 'pegawai')
+                    }}>
+
+                        <Ionicons name='trash-outline' size={24} />
+                    </TouchableOpacity>
                 </View>
             )}
         </View>
@@ -91,11 +111,9 @@ export const AddressBook = ({ route }) => {
         bottomSheetModalMemberRef.current?.present()
     }
 
-    useEffect(() => {
-        bottomSheetMember()
-    }, [])
-
-    console.log(addressbook.selected)
+    // useEffect(() => {
+    //     bottomSheetMember()
+    // }, [])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -135,12 +153,20 @@ export const AddressBook = ({ route }) => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ height: '83%' }}>
+                <View style={{ height: '80%' }}>
                     <TopAddressBook config={config} />
                 </View>
                 {/* <View style={{ position: 'absolute', bottom: 50, left: 0, right: 0, width: '100%' }}>
                         <Text>selected {addressbook.selected.length}</Text>
                     </View> */}
+
+                <TouchableOpacity onPress={() => {
+                    bottomSheetMember()
+                }}
+                    style={{ justifyContent: 'center', alignItems: 'center', width: '90%', height: 50, backgroundColor: COLORS.primary, marginHorizontal: 20, borderRadius: 8 }}
+                >
+                    <Text style={{ color: COLORS.white }}>Lihat PIlihan</Text>
+                </TouchableOpacity>
 
                 <BottomSheetModalProvider>
                     <BottomSheetModal
@@ -149,21 +175,30 @@ export const AddressBook = ({ route }) => {
                         handleHeight={animatedHandleHeight}
                         contentHeight={animatedContentHeight}
                         index={0}
-                        style={{ borderRadius: 50 }}
+                        style={{ borderRadius: 50, }}
                         keyboardBlurBehavior="restore"
                         android_keyboardInputMode="adjust"
                     >
                         <BottomSheetView onLayout={handleContentLayout}>
                             <View>
-                                <View style={{ marginHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
+                                <View style={{ marginHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontWeight: 500, marginBottom: 50 }}>Daftar ({addressbook.selected.length} Pilihan)</Text>
-                                    <Text>Hapus Semua</Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            dispatch(setAddressbookSelected([]))
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.infoDanger }}>
+                                            Hapus Semua
+                                        </Text>
+                                    </TouchableOpacity>
                                 </View>
                                 <View>
                                     <FlatList
                                         data={addressbook.selected}
                                         renderItem={({ item }) => <CardListPilih
                                             item={item}
+                                            addressbook={addressbook}
                                         />
                                         }
                                         keyExtractor={item => item.id}
