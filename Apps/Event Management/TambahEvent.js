@@ -28,8 +28,61 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTokenValue } from '../../service/session';
 import { getlistKalender } from '../../service/api';
 import Addressbook from '../../components/AddressbookKKp/Addressbook';
+import { setAddressbookSelected } from '../../store/AddressbookKKP';
 
-const CardListPeserta = ({ item }) => {
+
+// const Input = () => {
+//     return (
+//         <View style={{ marginHorizontal: 17, marginTop: 10, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+//             <View style={{ width: '90%' }}>
+//                 <TextInput
+//                     editable
+//                     multiline
+//                     numberOfLines={4}
+//                     maxLength={40}
+//                     placeholder='Ketikan sesuatu'
+//                     style={{
+//                         padding: 10,
+//                         borderWidth: 1,
+//                         flex: 1,
+//                         borderRadius: 4,
+//                         borderColor: COLORS.ExtraDivinder,
+//                     }}
+//                 />
+//                 <TextInput
+//                     editable
+//                     multiline
+//                     numberOfLines={4}
+//                     maxLength={40}
+//                     placeholder='Ketikan sesuatu'
+//                     style={{
+//                         padding: 10,
+//                         borderWidth: 1,
+//                         flex: 1,
+//                         borderRadius: 4,
+//                         borderColor: COLORS.ExtraDivinder,
+//                         marginTop: 10
+//                     }}
+//                 />
+//             </View>
+//             <Ionicons name='remove-circle-outline' size={24} />
+//         </View>
+//     )
+
+// };
+
+const CardListPeserta = ({ item, addressbook }) => {
+    const dispatch = useDispatch()
+    const deleteItem = (id, state) => {
+        let data;
+        if (state === "jabatan") {
+            data = addressbook.selected.filter(data => data.id !== id)
+            dispatch(setAddressbookSelected(data))
+        } else {
+            data = addressbook.selected.filter(data => data.nip !== id)
+            dispatch(setAddressbookSelected(data))
+        }
+    }
     return (
         <View>
             {item.title === undefined ? (
@@ -37,7 +90,12 @@ const CardListPeserta = ({ item }) => {
             ) : (
                 <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
                     <Text>-</Text>
-                    <Text style={{ width: '90%' }}>{item.title}</Text>
+                    <Text style={{ width: '80%' }}>{item.title}</Text>
+                    <TouchableOpacity onPress={() => {
+                        deleteItem(item.id, 'jabatan')
+                    }}>
+                        <Ionicons name='trash-outline' size={24} />
+                    </TouchableOpacity>
                 </View>
             )}
             {item.fullname === undefined ? (
@@ -45,7 +103,12 @@ const CardListPeserta = ({ item }) => {
             ) : (
                 <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
                     <Text>-</Text>
-                    <Text style={{ width: '90%' }}>{item.fullname}</Text>
+                    <Text style={{ width: '80%' }}>{item.fullname}</Text>
+                    <TouchableOpacity onPress={() => {
+                        deleteItem(item.nip, 'pegawai')
+                    }}>
+                        <Ionicons name='trash-outline' size={24} />
+                    </TouchableOpacity>
                 </View>
             )}
         </View>
@@ -111,6 +174,8 @@ export const TambahEvent = () => {
 
     const [pilihanPimpinanEvent, setPilihanPimpinanEvent] = useState([])
     const [pilihanPesertaEvent, setPilihanPesertaEvent] = useState([])
+    const [pilihanNotulenEvent, setPilihanNotulenEvent] = useState([])
+    const [pilihanPetugasAbsenEvent, setPilihanPetugasAbsenEvent] = useState([])
 
     const pickDocument = async () => {
         let result = await DocumentPicker.getDocumentAsync({});
@@ -148,10 +213,20 @@ export const TambahEvent = () => {
             setPilihanPimpinanEvent(addressbook.selected)
         } else if (stateConfig.title === 'Peserta Event') {
             setPilihanPesertaEvent(addressbook.selected)
+        } else if (stateConfig.title === 'Notulen Event') {
+            setPilihanNotulenEvent(addressbook.selected)
+        } else if (stateConfig.title === 'Petugas Absen Event') {
+            setPilihanPetugasAbsenEvent(addressbook.selected)
         }
     }, [addressbook])
 
     console.log(addressbook.selected)
+    const [count, setCount] = useState(0)
+    const [inputList, setInputList] = useState([]);
+
+    // const onAddBtnClick = event => {
+    //     setInputList(inputList.concat(<Input key={inputList.length} />));
+    // };
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -391,15 +466,6 @@ export const TambahEvent = () => {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                                {/* {pilihanPimpinanEvent.map((item) => {
-                                    console.log(item)
-                                    return (
-                                        <View>
-                                            <Text>{item.title}</Text>
-                                        </View>
-                                    )
-                                }
-                                )} */}
 
                                 <Modal
                                     animationType="fade"
@@ -475,6 +541,7 @@ export const TambahEvent = () => {
                                     data={pilihanPesertaEvent}
                                     renderItem={({ item }) => <CardListPeserta
                                         item={item}
+                                        addressbook={addressbook}
                                     />
                                     }
                                     scrollEnabled={false}
@@ -505,11 +572,33 @@ export const TambahEvent = () => {
                                         value={value}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                        <TouchableOpacity onPress={bottomSheetMember}>
+                                        <TouchableOpacity onPress={() => {
+                                            const config = {
+                                                title: 'Notulen Event',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: true
+                                                },
+                                                multiselect: true,
+                                                payload: pilihanNotulenEvent
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}>
                                             <Ionicons name='people-outline' size={24} color={COLORS.grey} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
+                                <FlatList
+                                    data={pilihanNotulenEvent}
+                                    renderItem={({ item }) => <CardListPeserta
+                                        item={item}
+                                        addressbook={addressbook}
+                                    />
+                                    }
+                                    scrollEnabled={false}
+                                    keyExtractor={index => index}
+                                />
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Petugas Absen</Text>
@@ -535,59 +624,33 @@ export const TambahEvent = () => {
                                         value={value}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                        <TouchableOpacity onPress={bottomSheetMember}>
+                                        <TouchableOpacity onPress={() => {
+                                            const config = {
+                                                title: 'Petugas Absen Event',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: true
+                                                },
+                                                multiselect: true,
+                                                payload: pilihanPetugasAbsenEvent
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}>
                                             <Ionicons name='people-outline' size={24} color={COLORS.grey} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-
-                                <View style={{ marginTop: 10, marginBottom: 10, marginHorizontal: 17, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tamu Eksternal</Text>
-                                    <View style={{ width: 50, height: 24, backgroundColor: COLORS.primary, borderRadius: 8, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
-                                    </View>
-                                </View>
-                                <View style={{ flexDirection: 'row', marginHorizontal: 17, gap: 15 }}>
-                                    <View style={{
-                                        borderWidth: 1,
-                                        flex: 1,
-                                        borderRadius: 4,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        flexDirection: 'row',
-                                    }}
-                                    >
-                                        <TextInput
-                                            editable
-                                            multiline
-                                            numberOfLines={4}
-                                            maxLength={40}
-                                            placeholder='Ketikan sesuatu'
-                                            style={{ padding: 10 }}
-                                            onChangeText={onChangeValue}
-                                            value={value}
-                                        />
-                                    </View>
-
-                                    <View style={{
-                                        borderWidth: 1,
-                                        flex: 1,
-                                        borderRadius: 4,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        flexDirection: 'row',
-                                    }}
-                                    >
-                                        <TextInput
-                                            editable
-                                            multiline
-                                            numberOfLines={4}
-                                            maxLength={40}
-                                            placeholder='Ketikan sesuatu'
-                                            style={{ padding: 10 }}
-                                            onChangeText={onChangeValue}
-                                            value={value}
-                                        />
-                                    </View>
-                                </View>
+                                <FlatList
+                                    data={pilihanPetugasAbsenEvent}
+                                    renderItem={({ item }) => <CardListPeserta
+                                        item={item}
+                                        addressbook={addressbook}
+                                    />
+                                    }
+                                    scrollEnabled={false}
+                                    keyExtractor={index => index}
+                                />
 
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
@@ -617,6 +680,126 @@ export const TambahEvent = () => {
                                         />
                                     </KeyboardAvoidingView>
                                 </View>
+
+                                <View style={{ marginTop: 10, marginBottom: 10, marginHorizontal: 17, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tamu Eksternal</Text>
+                                    <TouchableOpacity style={{ width: 50, height: 24, backgroundColor: COLORS.primary, borderRadius: 8, alignItems: 'center', justifyContent: 'center' }}
+                                        onPress={() => {
+                                            bottomSheetMember()
+                                        }}
+                                    >
+                                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ marginHorizontal: 17 }}>
+                                    <View style={{
+                                        borderWidth: 1,
+                                        flex: 1,
+                                        borderRadius: 4,
+                                        borderColor: COLORS.ExtraDivinder,
+                                        flexDirection: 'row',
+                                    }}
+                                    >
+                                        <TextInput
+                                            editable
+                                            multiline
+                                            numberOfLines={4}
+                                            maxLength={40}
+                                            placeholder='Nama Tamu'
+                                            style={{ padding: 10 }}
+                                            onChangeText={onChangeValue}
+                                            value={value}
+                                        />
+                                    </View>
+
+                                    <View style={{
+                                        borderWidth: 1,
+                                        flex: 1,
+                                        borderRadius: 4,
+                                        borderColor: COLORS.ExtraDivinder,
+                                        flexDirection: 'row',
+                                        marginTop: 10
+                                    }}
+                                    >
+                                        <TextInput
+                                            editable
+                                            multiline
+                                            numberOfLines={4}
+                                            maxLength={40}
+                                            placeholder='Email Tamu'
+                                            style={{ padding: 10 }}
+                                            onChangeText={onChangeValue}
+                                            value={value}
+                                        />
+                                    </View>
+                                </View>
+                                {/* {inputList} */}
+                                <BottomSheetModal
+                                    ref={bottomSheetModalMemberRef}
+                                    snapPoints={animatedSnapPoints}
+                                    handleHeight={animatedHandleHeight}
+                                    contentHeight={animatedContentHeight}
+                                    index={0}
+                                    style={{ borderRadius: 50 }}
+                                    keyboardBlurBehavior="restore"
+                                    android_keyboardInputMode="adjust"
+                                    backdropComponent={({ style }) => (
+                                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                    )}
+                                >
+                                    <BottomSheetView onLayout={handleContentLayout}>
+                                        <View>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                <Text style={{ fontWeight: 500, marginBottom: 50 }}>Tambah Tamu Eksternal</Text>
+                                            </View>
+
+                                            <View style={{ marginHorizontal: 17 }}>
+                                                <View style={{
+                                                    borderWidth: 1,
+                                                    flex: 1,
+                                                    borderRadius: 4,
+                                                    borderColor: COLORS.ExtraDivinder,
+                                                    flexDirection: 'row',
+                                                }}
+                                                >
+                                                    <TextInput
+                                                        editable
+                                                        multiline
+                                                        numberOfLines={4}
+                                                        maxLength={40}
+                                                        placeholder='Nama Tamu'
+                                                        style={{ padding: 10 }}
+                                                        onChangeText={onChangeValue}
+                                                        value={value}
+                                                    />
+                                                </View>
+
+                                                <View style={{
+                                                    borderWidth: 1,
+                                                    flex: 1,
+                                                    borderRadius: 4,
+                                                    borderColor: COLORS.ExtraDivinder,
+                                                    flexDirection: 'row',
+                                                    marginTop: 10
+                                                }}
+                                                >
+                                                    <TextInput
+                                                        editable
+                                                        multiline
+                                                        numberOfLines={4}
+                                                        maxLength={40}
+                                                        placeholder='Email Tamu'
+                                                        style={{ padding: 10 }}
+                                                        onChangeText={onChangeValue}
+                                                        value={value}
+                                                    />
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </BottomSheetView>
+                                </BottomSheetModal>
+
+
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Lampiran</Text>
                                 </View>
@@ -689,63 +872,6 @@ export const TambahEvent = () => {
                         </View>
                     </TouchableOpacity>
 
-
-                    <BottomSheetModal
-                        ref={bottomSheetModalMemberRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ fontWeight: 500, marginBottom: 50 }}>Pilih Member</Text>
-                                </View>
-                                {/* <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
-                                    <Search
-                                        placeholder={'Cari'}
-                                    />
-                                </View> */}
-                                {/* <View>
-                                    <FlatList
-                                        data={dataFilter}
-                                        horizontal={true}
-                                        renderItem={({ item }) => <CardPilihMember
-                                            nama={item.nama}
-                                            avatar={item.avatar}
-                                            id={item.id}
-                                            handleClickItem={handleClickItem}
-                                            filter={true}
-                                        />
-                                        }
-                                    />
-                                </View>
-                                <View>
-                                    <FlatList
-                                        data={items}
-                                        renderItem={({ item }) => <CardPilihMember
-                                            nama={item.nama}
-                                            avatar={item.avatar}
-                                            id={item.id}
-                                            handleClickItem={handleClickItem}
-                                            filter={false}
-                                        />
-                                        }
-                                    />
-                                </View> */}
-
-                                <Addressbook />
-
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
 
                     {value === '' ? (
                         <Modal
