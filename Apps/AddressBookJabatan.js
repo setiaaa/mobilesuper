@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTokenValue } from '../service/session'
