@@ -40,6 +40,6 @@ export const store = configureStore({
     digitalsign: DigitalSignReducer,
     Pegawai: PegawaiReducer,
     event: EventReducer,
-    addressBookKKP: AddressbookKKP
+    addressBookKKP: AddressbookKKP,
   },
 });
