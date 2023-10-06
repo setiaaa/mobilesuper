@@ -113,7 +113,7 @@ export const ListGaleri = () => {
           data={galeri.lists}
           renderItem={({ item }) => (
             <Item
-              image={item.main_images.image}
+              image={item.main_images?.image}
               // deskripsi={item.main_images.title}
               onclick={() => {
                 setVisibleModal(true);
@@ -176,7 +176,7 @@ export const ListGaleri = () => {
           </TouchableOpacity>
           <View>
             <Image
-              source={!galeriById ? {} : { uri: galeriById.main_images.image }}
+              source={!galeriById ? {} : { uri: galeriById.main_images?.image }}
               style={{ width: 390, height: 283 }}
             />
           </View>

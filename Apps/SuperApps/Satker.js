@@ -77,8 +77,9 @@ export const Satker = () => {
 
 
     const { benner, gallery, berita, pesan, ultah, linimasa } = useSelector(state => state.satker)
+    const { profile } = useSelector((state) => state.superApps);
 
-    console.log(linimasa)
+    console.log(profile.satuan_kerja_nama)
 
     const renderItem = ({ item, index }, parallaxProps) => {
         return (
@@ -229,18 +230,24 @@ export const Satker = () => {
                     <View style={{ paddingLeft: 20 }}>
                         <Ionicons name='notifications-outline' size={25} color={COLORS.white} />
                     </View>
-                    {/* <View style={{ justifyContent: 'flex-end', flex: 1, marginTop: 5, flexDirection: 'row', gap: 10, marginRight: '11%' }}>
+                    <View style={{ justifyContent: 'flex-end', flex: 1, marginTop: 5, flexDirection: 'row', gap: 10, marginRight: '11%' }}>
                         <View style={{}}>
                             <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
                             <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
                         </View>
                         <View>
-                            <Image source={profile.avatar} style={{ width: 50, height: 50, borderRadius: 8 }} />
+                            <Image source={{
+                                uri:
+                                    "https://apigw.kubekkp.coofis.com/" +
+                                    "bridge/" +
+                                    profile.avatar,
+                            }}
+                                style={{ width: 50, height: 50, borderRadius: 8 }} />
                         </View>
-                    </View> */}
+                    </View>
                 </View>
 
-                <CardSatker />
+                <CardSatker profile={profile} />
 
                 <View style={[styles.containerr, { marginTop: 20 }]}>
                     <Carousel

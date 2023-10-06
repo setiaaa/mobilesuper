@@ -1,112 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-<<<<<<< HEAD
 import { getDetailNotulensi, getDetailTodo, getDivision, getDivisionTree, getEmployee, getEvent, getEventAgenda, getEventAgendaDetail, getEventDetail, getEventProgress, getEventToday, getlistAbsen, getlistApprover, getlistKalender, getlistNotulensi, getlistTodo, postAttachment, postEvent, postKomenTodo, postSubAgenda, postTodo, putAbsen, readyToApprove, updateEvent, updateStatus, updateSubAgenda, updateTodo } from "../service/api";
 
-
-
 const EventSlice = createSlice({
-    name: 'Task',
-    initialState: {
-        event: {
-            lists: [],
-            listsprogress: [],
-            detailEvent: {},
-        },
-        agenda: {
-            lists: [],
-            detail: {}
-        },
-        approver: {
-            lists: []
-        },
-        notulensi: {
-            lists: [],
-            detail: {}
-        },
-        todo: {
-            lists: [],
-            detail: {}
-        },
-        absen: {
-            lists: [],
-            detail: {},
-            checkin: {}
-        },
-        kalenderLists: [],
-        attachment: [],
-        status: '',
-        statusEvent: {}
-    },
-    reducers: {
-        setEventLists: (state, action) => {
-            state.event.lists = action.payload;
-        },
-        setEventListsToday: (state, action) => {
-            state.event.lists = action.payload;
-        },
-        setEventListsProgress: (state, action) => {
-            state.event.listsprogress = action.payload;
-        },
-        setEventDetail: (state, action) => {
-            state.event.detailEvent = action.payload;
-        },
-        setAgendaLists: (state, action) => {
-            state.agenda.lists = action.payload;
-        },
-        setAgendaDetail: (state, action) => {
-            state.agenda.detail = action.payload;
-        },
-        setApproversiLists: (state, action) => {
-            state.approver.lists = action.payload;
-        },
-        setNotulensiLists: (state, action) => {
-            state.notulensi.lists = action.payload;
-        },
-        setNotulensDetail: (state, action) => {
-            state.notulensi.detail = action.payload;
-        },
-        setTodoLists: (state, action) => {
-            state.todo.lists = action.payload;
-        },
-        setTodoDetail: (state, action) => {
-            state.todo.detail = action.payload;
-        },
-        setAbsenlists: (state, action) => {
-            state.absen.lists = action.payload
-        },
-        setkalenderlists: (state, action) => {
-            state.kalenderLists = action.payload
-        },
-        setAttachment: (state, action) => {
-            state.attachment = action.payload
-        },
-        setStatus: (state, action) => {
-            state.status = action.payload
-        },
-=======
-import {
-  getDetailNotulensi,
-  getDetailTodo,
-  getDivision,
-  getDivisionTree,
-  getEmployee,
-  getEvent,
-  getEventAgenda,
-  getEventAgendaDetail,
-  getEventDetail,
-  getEventProgress,
-  getEventToday,
-  getlistAbsen,
-  getlistApprover,
-  getlistKalender,
-  getlistNotulensi,
-  getlistTodo,
-  postKomenTodo,
-  putAbsen,
-} from "../service/api";
-
-const EventSlice = createSlice({
-  name: "Task",
+  name: 'Task',
   initialState: {
     event: {
       lists: [],
@@ -115,26 +11,28 @@ const EventSlice = createSlice({
     },
     agenda: {
       lists: [],
-      detail: {},
->>>>>>> 97230e3a96eda0ed1c12fb17cdc08db2c5d5a06e
+      detail: {}
     },
     approver: {
-      lists: [],
+      lists: []
     },
     notulensi: {
       lists: [],
-      detail: {},
+      detail: {}
     },
     todo: {
       lists: [],
-      detail: {},
+      detail: {}
     },
     absen: {
       lists: [],
       detail: {},
-      checkin: {},
+      checkin: {}
     },
     kalenderLists: [],
+    attachment: [],
+    status: '',
+    statusEvent: {}
   },
   reducers: {
     setEventLists: (state, action) => {
@@ -171,10 +69,16 @@ const EventSlice = createSlice({
       state.todo.detail = action.payload;
     },
     setAbsenlists: (state, action) => {
-      state.absen.lists = action.payload;
+      state.absen.lists = action.payload
     },
     setkalenderlists: (state, action) => {
-      state.kalenderLists = action.payload;
+      state.kalenderLists = action.payload
+    },
+    setAttachment: (state, action) => {
+      state.attachment = action.payload
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload
     },
   },
   extraReducers(builder) {
@@ -240,107 +144,76 @@ const EventSlice = createSlice({
         const index = newDetailTodo.comments.findIndex((item) => {
           return item.id === parent_id;
         });
-
-<<<<<<< HEAD
-                if (parent_id === '') {
-                    newDetailTodo.comments.push(newComment);
-                } else {
-                    newDetailTodo.comments[index].children.push(newComment)
-                }
-                state.todo.detail = newDetailTodo;
-            })
-            .addCase(postAttachment.fulfilled, (state, action) => {
-                console.log('berhasi')
-                state.attachment = [...state.attachment, action.payload]
-            })
-            .addCase(postAttachment.rejected, (state, action) => {
-                console.log('gagal')
-            })
-            .addCase(postEvent.rejected, (state, action) => {
-                console.log(action.payload)
-                state.status = 'error'
-            })
-            .addCase(postEvent.fulfilled, (state, action) => {
-                state.status = 'berhasil'
-            })
-            .addCase(updateStatus.fulfilled, (state, action) => {
-                state.statusEvent = action.payload;
-            })
-            .addCase(updateEvent.rejected, (state, action) => {
-                console.log(action.payload)
-                state.status = 'error'
-            })
-            .addCase(updateEvent.fulfilled, (state, action) => {
-                state.status = 'berhasil'
-            })
-            .addCase(postSubAgenda.rejected, (state, action) => {
-                console.log(action.payload, 'error')
-                state.status = 'error'
-            })
-            .addCase(postSubAgenda.fulfilled, (state, action) => {
-                state.status = 'berhasil'
-            })
-            .addCase(updateSubAgenda.rejected, (state, action) => {
-                console.log(action.payload)
-                state.status = 'error'
-            })
-            .addCase(updateSubAgenda.fulfilled, (state, action) => {
-                state.status = 'berhasil'
-            })
-            .addCase(readyToApprove.rejected, (state, action) => {
-                console.log(action.payload)
-                state.status = 'error'
-            })
-            .addCase(readyToApprove.fulfilled, (state, action) => {
-                state.status = 'berhasil'
-            })
-            .addCase(postTodo.rejected, (state, action) => {
-                console.log(action.payload)
-                state.status = 'error'
-            })
-            .addCase(postTodo.fulfilled, (state, action) => {
-                console.log(action.payload)
-                state.status = 'berhasil'
-            })
-            .addCase(updateTodo.rejected, (state, action) => {
-                console.log(action.payload)
-                state.status = 'error'
-            })
-            .addCase(updateTodo.fulfilled, (state, action) => {
-                console.log(action.payload)
-                state.status = 'berhasil'
-            })
-    }
-})
-
-export const {
-    setEventLists,
-    setEventDetail,
-    setAgendaLists,
-    setAgendaDetail,
-    setAbsenlists,
-    setEventListsToday,
-    setEventListsProgress,
-    setApproversiLists,
-    setNotulensiLists,
-    setNotulensDetail,
-    setTodoLists,
-    setTodoDetail,
-    setkalenderlists,
-    setAttachment,
-    setStatus
-} =
-    EventSlice.actions;
-=======
-        if (parent_id === "") {
+        if (parent_id === '') {
           newDetailTodo.comments.push(newComment);
         } else {
-          newDetailTodo.comments[index].children.push(newComment);
+          newDetailTodo.comments[index].children.push(newComment)
         }
         state.todo.detail = newDetailTodo;
-      });
-  },
-});
+      })
+      .addCase(postAttachment.fulfilled, (state, action) => {
+        console.log('berhasi')
+        state.attachment = [...state.attachment, action.payload]
+      })
+      .addCase(postAttachment.rejected, (state, action) => {
+        console.log('gagal')
+      })
+      .addCase(postEvent.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(postEvent.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(updateStatus.fulfilled, (state, action) => {
+        state.statusEvent = action.payload;
+      })
+      .addCase(updateEvent.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(updateEvent.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(postSubAgenda.rejected, (state, action) => {
+        console.log(action.payload, 'error')
+        state.status = 'error'
+      })
+      .addCase(postSubAgenda.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(updateSubAgenda.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(updateSubAgenda.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(readyToApprove.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(readyToApprove.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(postTodo.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(postTodo.fulfilled, (state, action) => {
+        console.log(action.payload)
+        state.status = 'berhasil'
+      })
+      .addCase(updateTodo.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(updateTodo.fulfilled, (state, action) => {
+        console.log(action.payload)
+        state.status = 'berhasil'
+      })
+  }
+})
 
 export const {
   setEventLists,
@@ -356,7 +229,8 @@ export const {
   setTodoLists,
   setTodoDetail,
   setkalenderlists,
-} = EventSlice.actions;
->>>>>>> 97230e3a96eda0ed1c12fb17cdc08db2c5d5a06e
-
+  setAttachment,
+  setStatus
+} =
+  EventSlice.actions;
 export default EventSlice.reducer;

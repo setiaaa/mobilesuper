@@ -15,6 +15,23 @@ const galeri = BASE_URL + "bridge/home/gallery/";
 const berita = BASE_URL + "bridge/home/news/?page=1";
 const detailBerita = BASE_URL + "bridge/home/news/";
 
+
+//Login
+export const Login = createAsyncThunk(
+    "auth/Login",
+    async ({ username, password }) => {
+        const payload = {
+            "username": username,
+            "password": password
+        }
+        console.log(payload)
+        const respon = await axios.post(`https://auth.kubekkp.coofis.com/mobile/login/`,
+            payload
+        );
+        return respon?.data;
+    }
+);
+
 // kebijakan
 export const getCategory = createAsyncThunk(
     "kebijakan/getCategory",

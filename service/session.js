@@ -36,3 +36,11 @@ export const setTokenValue = async (value) => {
         console.log(e)
     }
 }
+
+export const removeTokenValue = async (value) => {
+    try {
+        await AsyncStorage.removeItem('token')
+    } catch (e) {
+        console.log(e)
+    }
+}

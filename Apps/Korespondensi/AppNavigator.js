@@ -200,6 +200,7 @@ function AuthStack() {
           component={LoginToken}
           options={{
             headerShown: false,
+            gestureEnabled: false
           }}
         />
         <Stack.Screen
@@ -207,6 +208,7 @@ function AuthStack() {
           component={Main}
           options={{
             headerShown: false,
+            gestureEnabled: false
           }}
         />
         <Stack.Screen
