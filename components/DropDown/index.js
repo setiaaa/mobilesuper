@@ -8,7 +8,22 @@ import { useState } from 'react';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 
 
-export const Dropdown = ({ data, selected, setSelected, placeHolder, borderColor, borderWidth, borderwidthDrop, borderColorDrop, borderWidthValue, borderColorValue, heightValue, handleClick }) => {
+export const Dropdown = ({
+    data,
+    selected,
+    setSelected,
+    placeHolder,
+    borderColor,
+    borderWidth,
+    borderwidthDrop,
+    borderColorDrop,
+    borderWidthValue,
+    borderColorValue,
+    heightValue,
+    handleClick,
+    backgroundColor,
+    textColor
+}) => {
     const [press, setPress] = useState(0)
     const handlePress = () => {
         if (press === 0) {
@@ -24,7 +39,9 @@ export const Dropdown = ({ data, selected, setSelected, placeHolder, borderColor
         setPress(0)
         setSelected(item)
         setDisplayData(item.value)
-        handleClick(item)
+        if (handleClick) {
+            handleClick(item)
+        }
     }
 
     useEffect(() => {
@@ -37,16 +54,16 @@ export const Dropdown = ({ data, selected, setSelected, placeHolder, borderColor
     return (
         <View>
             {press === 0 ? (
-                <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8, borderColor: borderColor, borderWidth: borderWidth }}>
+                <View style={{ backgroundColor: backgroundColor, width: '100%', height: 43, borderRadius: 8, borderColor: borderColor, borderWidth: borderWidth }}>
                     <TouchableOpacity onPress={handlePress}>
                         <Animated.View
                             entering={FadeInUp}
                             exiting={FadeOutUp}
                         >
                             <View style={{ marginLeft: 20, flexDirection: 'row', marginTop: 15 }}>
-                                <Text style={{ color: COLORS.lighter, width: '80%' }}>{displayData !== '' ? displayData : placeHolder}</Text>
+                                <Text style={{ color: textColor, width: '80%' }}>{displayData !== '' ? displayData : placeHolder}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                                    <Ionicons name='chevron-down-outline' size={14} color={COLORS.lighter} />
+                                    <Ionicons name='chevron-down-outline' size={14} color={textColor} />
                                 </View>
                             </View>
                         </Animated.View>
@@ -58,11 +75,11 @@ export const Dropdown = ({ data, selected, setSelected, placeHolder, borderColor
                     exiting={FadeOutUp}
                 >
                     <View>
-                        <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8, borderWidth: borderwidthDrop, borderColor: borderColorDrop }}>
+                        <View style={{ backgroundColor: backgroundColor, width: '100%', height: 43, borderRadius: 8, borderWidth: borderwidthDrop, borderColor: borderColorDrop }}>
                             <TouchableOpacity onPress={handlePress} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row' }}>
-                                <Text style={{ color: COLORS.lighter }}>{displayData !== '' ? displayData : placeHolder}</Text>
+                                <Text style={{ color: textColor }}>{displayData !== '' ? displayData : placeHolder}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                                    <Ionicons name='chevron-up-outline' size={14} color={COLORS.lighter} />
+                                    <Ionicons name='chevron-up-outline' size={14} color={textColor} />
                                 </View>
                             </TouchableOpacity>
                         </View>

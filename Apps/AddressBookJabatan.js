@@ -109,7 +109,7 @@ export const AddressBookJabatan = ({ route }) => {
                                     ]))
                                 } else {
                                     dispatch(setAddressbookSelected([node]))
-                                    navigation.navigate('TambahEvent')
+                                    navigation.goBack()
                                 }
 
                             }

@@ -14,40 +14,6 @@ import { getTokenValue } from '../../service/session'
 import { getlistAbsen } from '../../service/api'
 import moment from 'moment'
 
-
-const listAbsen = [
-    {
-        nama: 'Yani Dama Putera',
-        status: 'Menunggu',
-        waktu: '-',
-
-    },
-    {
-        nama: 'Yani Dama Putera',
-        status: 'Konfirmasi',
-        waktu: '7.30',
-
-    },
-    {
-        nama: 'Yani Dama Putera',
-        status: 'Konfirmasi',
-        waktu: '7.30',
-
-    },
-    {
-        nama: 'Yani Dama Putera',
-        status: 'Konfirmasi',
-        waktu: '7.30',
-
-    },
-    {
-        nama: 'Yani Dama Putera',
-        status: 'Konfirmasi',
-        waktu: '7.30',
-
-    },
-]
-
 const CardListAbsen = ({ item }) => {
     const [user, setUser] = useState('member')
     const [checkIn, setCheckin] = useState('')
@@ -57,16 +23,13 @@ const CardListAbsen = ({ item }) => {
             justifyContent: 'center',
             alignItems: 'center'
         }}>
-            <TouchableOpacity style={
+            <View style={
                 {
                     width: '90%',
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     marginTop: 10,
                     padding: 20
-                }}
-                onPress={() => {
-                    navigation.navigate('DetailAbsen')
                 }}
             >
                 <Text>{item.member?.nama}</Text>
@@ -126,7 +89,7 @@ const CardListAbsen = ({ item }) => {
                     </View>
 
                 </View>
-            </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -196,14 +159,14 @@ export const Absen = () => {
                 </View>
             </View>
 
-            <View style={{ width: '90%', marginTop: 20, marginHorizontal: 20 }}>
+            {/* <View style={{ width: '90%', marginTop: 20, marginHorizontal: 20 }}>
                 <Search
                     placeholder={"Cari"}
                 // onSearch={filter}
                 />
-            </View>
+            </View> */}
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginTop: 20 }}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginTop: 20 }}>
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                     <View style={{
                         width: 40,
@@ -238,9 +201,9 @@ export const Absen = () => {
                     }}>
                         <Ionicons name='menu-outline' size={24} />
                     </View>
-                </View>
+                </View> */}
 
-                {/* {checkIn === '' ? (
+            {/* {checkIn === '' ? (
 
                     <TouchableOpacity style={{
                         width: 157,
@@ -274,7 +237,7 @@ export const Absen = () => {
                 )} */}
 
 
-            </View>
+            {/* </View> */}
 
             <FlatList
                 data={absenLists}

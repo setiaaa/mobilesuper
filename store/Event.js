@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailNotulensi, getDetailTodo, getDivision, getDivisionTree, getEmployee, getEvent, getEventAgenda, getEventAgendaDetail, getEventDetail, getEventProgress, getEventToday, getlistAbsen, getlistApprover, getlistKalender, getlistNotulensi, getlistTodo, postKomenTodo, putAbsen } from "../service/api";
+import { getDetailNotulensi, getDetailTodo, getDivision, getDivisionTree, getEmployee, getEvent, getEventAgenda, getEventAgendaDetail, getEventDetail, getEventProgress, getEventToday, getlistAbsen, getlistApprover, getlistKalender, getlistNotulensi, getlistTodo, postAttachment, postEvent, postKomenTodo, postSubAgenda, postTodo, putAbsen, readyToApprove, updateEvent, updateStatus, updateSubAgenda, updateTodo } from "../service/api";
 
 
 
@@ -32,7 +32,9 @@ const EventSlice = createSlice({
             checkin: {}
         },
         kalenderLists: [],
-
+        attachment: [],
+        status: '',
+        statusEvent: {}
     },
     reducers: {
         setEventLists: (state, action) => {
@@ -73,6 +75,12 @@ const EventSlice = createSlice({
         },
         setkalenderlists: (state, action) => {
             state.kalenderLists = action.payload
+        },
+        setAttachment: (state, action) => {
+            state.attachment = action.payload
+        },
+        setStatus: (state, action) => {
+            state.status = action.payload
         },
     },
     extraReducers(builder) {
@@ -146,6 +154,67 @@ const EventSlice = createSlice({
                 }
                 state.todo.detail = newDetailTodo;
             })
+            .addCase(postAttachment.fulfilled, (state, action) => {
+                console.log('berhasi')
+                state.attachment = [...state.attachment, action.payload]
+            })
+            .addCase(postAttachment.rejected, (state, action) => {
+                console.log('gagal')
+            })
+            .addCase(postEvent.rejected, (state, action) => {
+                console.log(action.payload)
+                state.status = 'error'
+            })
+            .addCase(postEvent.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+            })
+            .addCase(updateStatus.fulfilled, (state, action) => {
+                state.statusEvent = action.payload;
+            })
+            .addCase(updateEvent.rejected, (state, action) => {
+                console.log(action.payload)
+                state.status = 'error'
+            })
+            .addCase(updateEvent.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+            })
+            .addCase(postSubAgenda.rejected, (state, action) => {
+                console.log(action.payload, 'error')
+                state.status = 'error'
+            })
+            .addCase(postSubAgenda.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+            })
+            .addCase(updateSubAgenda.rejected, (state, action) => {
+                console.log(action.payload)
+                state.status = 'error'
+            })
+            .addCase(updateSubAgenda.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+            })
+            .addCase(readyToApprove.rejected, (state, action) => {
+                console.log(action.payload)
+                state.status = 'error'
+            })
+            .addCase(readyToApprove.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+            })
+            .addCase(postTodo.rejected, (state, action) => {
+                console.log(action.payload)
+                state.status = 'error'
+            })
+            .addCase(postTodo.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.status = 'berhasil'
+            })
+            .addCase(updateTodo.rejected, (state, action) => {
+                console.log(action.payload)
+                state.status = 'error'
+            })
+            .addCase(updateTodo.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.status = 'berhasil'
+            })
     }
 })
 
@@ -163,6 +232,8 @@ export const {
     setTodoLists,
     setTodoDetail,
     setkalenderlists,
+    setAttachment,
+    setStatus
 } =
     EventSlice.actions;
 

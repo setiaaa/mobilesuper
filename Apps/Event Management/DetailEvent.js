@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -10,13 +10,15 @@ import { Video } from 'expo-av';
 import { FlatList } from 'react-native';
 import { Modal } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Platform } from 'react-native';
 import moment from 'moment';
+import { Dropdown } from '../../components/DropDown';
+import { deleteEvent, updateStatus } from '../../service/api';
+import { getTokenValue } from '../../service/session';
 
 const CardLampiran = ({ lampiran, onClick, type }) => {
     const navigation = useNavigation()
-    console.log(lampiran)
     return (
         type === 'png' || type === 'jpg' || type === 'jpeg' ? (
             <TouchableOpacity onPress={onClick}>
@@ -61,9 +63,17 @@ const CardLampiran = ({ lampiran, onClick, type }) => {
 
 export const DetailEvent = () => {
     const navigation = useNavigation()
-
+    const dispatch = useDispatch()
+    const [kategori, setKategori] = useState('')
     const [visibleModal, setVisibleModal] = useState(false);
     const [lampiranById, setLampiranById] = useState(null)
+    const [token, setToken] = useState('')
+
+    const statusEvent = [
+        { key: 'siap', value: 'persiapan' },
+        { key: 'pel', value: 'pelaksanaan' },
+        { key: 'pas', value: 'pasca' }
+    ]
 
     const [document, setDocument] = useState([])
 
@@ -72,14 +82,19 @@ export const DetailEvent = () => {
         jenis = jenis[jenis.length - 1]
         return jenis
     }
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
     const video = useRef(null);
     const [status, setStatus] = useState({});
 
     const { event } = useSelector(state => state.event)
 
     const data = event.detailEvent
-
-    console.log(data)
 
     return (
         <SafeAreaView>
@@ -99,7 +114,7 @@ export const DetailEvent = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail Event</Text>
+                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail Agenda Rapat</Text>
                     </View>
                 </View>
 
@@ -146,66 +161,72 @@ export const DetailEvent = () => {
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                         <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Pimpinan Event</Text>
-                            <Text>{data.extra_attrs?.pic.title.name}</Text>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Pimpinan Agenda Rapat</Text>
+                            <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
                         </View>
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat</Text>
                             {data.extra_attrs?.members?.map((data, index) =>
                                 <View key={data.id} style={{ position: 'relative' }}>
                                     <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                 </View>
                             )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event Eksternal</Text>
-                            {data.extra_attrs?.guest_external?.map((data, index) =>
-                                <View key={data.id} style={{ position: 'relative' }}>
-                                    {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                                    <Text>{data.name}</Text>
-                                </View>
-                            )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat Eksternal</Text>
+                            <View>
+                                {data.extra_attrs?.guest_external?.map((data, index) =>
+                                    <View key={data.id} style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
+                                        <Text>-</Text>
+                                        {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
+                                        <Text style={{ width: 150 }}>{data.name}</Text>
+                                    </View>
+                                )}
+                            </View>
+                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Notulen</Text>
                             {data.extra_attrs?.notulen?.map((data, index) =>
                                 <View key={data.id} style={{ position: 'relative' }}>
-                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                    {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
+                                    <Text>{data.nama}</Text>
                                 </View>
                             )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Event</Text>
-                            {data.extra_attrs?.presensi?.map((data, index) =>
-                                <View key={data.id} style={{ position: 'relative' }}>
-                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absen</Text>
+                            {data.extra_attrs?.presensi?.map((item) =>
+                                <View>
+                                    <Text>{item.nama}</Text>
                                 </View>
                             )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
+
+
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
@@ -301,14 +322,14 @@ export const DetailEvent = () => {
 
                 {
                     data.user_role?.is_pic === true ||
-                        data.user_role?.notulensi === false &&
-                        data.user_role?.presensi === false &&
-                        data.user_role?.member === false &&
+                        data.user_role?.is_notulensi === false &&
+                        data.user_role?.is_presensi === false &&
+                        data.user_role?.is_member === false &&
                         data.user_role?.is_pic === false ? (
                         <View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
 
-                                <TouchableOpacity style={{
+                                {/* <TouchableOpacity style={{
                                     backgroundColor: COLORS.info,
                                     width: 134,
                                     height: 50,
@@ -318,7 +339,26 @@ export const DetailEvent = () => {
                                         <Text style={{ color: COLORS.white }}>Persiapan</Text>
                                         <Ionicons name='chevron-forward-outline' size={20} color={COLORS.white} />
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
+                                <View style={{ width: '50%' }}>
+                                    <Dropdown
+                                        data={statusEvent}
+                                        setSelected={setKategori}
+                                        handleClick={(item) => {
+                                            dispatch(updateStatus({ token: token, id: data.id, status: item.value }))
+                                        }}
+                                        borderWidth={1}
+                                        borderColor={COLORS.ExtraDivinder}
+                                        borderwidthDrop={1}
+                                        borderColorDrop={COLORS.ExtraDivinder}
+                                        borderWidthValue={1}
+                                        borderColorValue={COLORS.ExtraDivinder}
+                                        placeHolder={data.status}
+                                        backgroundColor={COLORS.info}
+                                        textColor={COLORS.white}
+                                    />
+                                </View>
+
 
                                 <View style={{ flexDirection: 'row', gap: 10 }}>
 
@@ -327,7 +367,11 @@ export const DetailEvent = () => {
                                         width: 50,
                                         height: 50,
                                         borderRadius: 8
-                                    }}>
+                                    }}
+                                        onPress={() => {
+                                            navigation.navigate('EditEvent')
+                                        }}
+                                    >
                                         <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
                                             <Ionicons name='pencil-outline' size={20} color={COLORS.white} />
                                         </View>
@@ -338,7 +382,18 @@ export const DetailEvent = () => {
                                         width: 50,
                                         height: 50,
                                         borderRadius: 8
-                                    }}>
+                                    }}
+                                        onPress={() => {
+                                            const datas = {
+                                                token: token,
+                                                id: data.id
+                                            }
+                                            dispatch(deleteEvent(datas))
+                                            setTimeout(() => {
+                                                navigation.navigate('HalamanUtama')
+                                            }, 3000)
+                                        }}
+                                    >
                                         <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
                                             <Ionicons name='trash-outline' size={20} color={COLORS.white} />
                                         </View>

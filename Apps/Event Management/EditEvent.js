@@ -26,7 +26,7 @@ import { Dropdown } from '../../components/DropDown';
 import * as DocumentPicker from 'expo-document-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenValue } from '../../service/session';
-import { getEventProgress, getEventToday, getlistKalender, postAttachment, postEvent } from '../../service/api';
+import { getEventProgress, getEventToday, getlistKalender, postAttachment, postEvent, updateEvent } from '../../service/api';
 import Addressbook from '../../components/AddressbookKKp/Addressbook';
 import { setAddressbookSelected } from '../../store/AddressbookKKP';
 import { setAttachment, setStatus } from '../../store/Event';
@@ -77,7 +77,10 @@ const CardListPeserta = ({ item, addressbook }) => {
     const deleteItem = (id, state) => {
         let data;
         if (state === "jabatan") {
-            data = addressbook.selected.filter(data => data.id !== id)
+            data = addressbook.selected.filter(data => {
+                let nip = data.nip || data.officer.official.split('/')[1]
+                return nip !== id
+            })
             dispatch(setAddressbookSelected(data))
         } else {
             data = addressbook.selected.filter(data => data.nip !== id)
@@ -85,38 +88,37 @@ const CardListPeserta = ({ item, addressbook }) => {
         }
     }
     return (
-        <View>
-            {item.title === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '80%' }}>{item.title}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.id, 'jabatan')
-                    }}>
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
-            {item.fullname === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '80%' }}>{item.fullname}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.nip, 'pegawai')
-                    }}>
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
+        <View key={item.nip || item.id}>
+            {
+                item.code !== undefined || (item.title !== undefined && item.title.name !== '') ? (
+                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                        <Text>-</Text>
+                        <Text style={{ width: '80%' }}>{item.title.name !== undefined ? item.title.name : item.title}</Text>
+                        <TouchableOpacity onPress={() => {
+                            deleteItem(item.nip || item.officer.official.split('/')[1], 'jabatan')
+                        }}>
+                            <Ionicons name='trash-outline' size={24} />
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                        <Text>-</Text>
+                        <Text style={{ width: '80%' }}>{item.nama || item.fullname}</Text>
+                        <TouchableOpacity onPress={() => {
+                            deleteItem(item.nip, 'pegawai')
+                        }}>
+                            <Ionicons name='trash-outline' size={24} />
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
         </View>
     )
 }
 
-export const TambahEvent = () => {
+export const EditEvent = () => {
+    const { kalenderLists, attachment, status, event } = useSelector(state => state.event)
+    const data = event.detailEvent
     const navigation = useNavigation()
     const richText = useRef(null);
     const [richTextHandle, setRichTextHandle] = useState('');
@@ -200,6 +202,17 @@ export const TambahEvent = () => {
             dispatch(getlistKalender(token))
         }
         dispatch(setAttachment([]))
+        setJudul(data.title)
+        setTanggalMulai(moment(data.start_date).format('YYYY-MM-DD'))
+        setTanggalSelsai(moment(data.end_date).format('YYYY-MM-DD'))
+        setTempat(data.location)
+        setPilihanPimpinanEvent([data.pic])
+        setPilihanPesertaEvent(data.members)
+        setPilihanNotulenEvent(data.extra_attrs?.notulen)
+        setPilihanPetugasAbsenEvent(data.extra_attrs.presensi)
+        setNote(data.note)
+        setTamu(data.extra_attrs.guest_external ? data.extra_attrs.guest_external : [])
+        setDocument(data.attachments)
     }, [token])
 
     // const convertFileToObject = async (result) => {
@@ -225,7 +238,6 @@ export const TambahEvent = () => {
         tipe = tipe[tipe.length - 1]
         setDocument([...document, result])
         setType([...type, tipe])
-        console.log(result)
         const data = {
             token: token,
             result: result
@@ -234,7 +246,6 @@ export const TambahEvent = () => {
     };
 
 
-    const { kalenderLists, attachment, status } = useSelector(state => state.event)
     const [stateConfig, setStateConfig] = useState({})
 
     const { addressbook } = useSelector(state => state.addressBookKKP)
@@ -251,12 +262,12 @@ export const TambahEvent = () => {
         }
     }, [addressbook])
 
-    useEffect(() => {
-        if (status === 'berhasil') {
-            dispatch(getEventToday(token))
-            dispatch(getEventProgress(token))
-        }
-    }, [status])
+    // useEffect(() => {
+    //     if (status === 'berhasil') {
+    //         dispatch(getEventToday(token))
+    //         dispatch(getEventProgress(token))
+    //     }
+    // }, [status])
 
 
     // const onAddBtnClick = event => {
@@ -292,9 +303,11 @@ export const TambahEvent = () => {
         })
 
         const idAtt = []
-        attachment?.map(item => {
-            idAtt.push(item.id)
-        })
+        if (attachment.length > 0) {
+            attachment?.map(item => {
+                idAtt.push(item.id)
+            })
+        }
 
         const payload = {
             calendar_id: kategori.key === undefined ? '' : kategori.key,
@@ -303,20 +316,20 @@ export const TambahEvent = () => {
             start_date: TanggalMulai,
             end_date: TanggalSelesai,
             location: Tempat,
-            pic_objid: pilihanPimpinanEvent[0]?.code,
+            pic_objid: pilihanPimpinanEvent[0]?.code ? pilihanPimpinanEvent[0]?.code : pilihanPimpinanEvent[0]?.title.objid,
             notulen_list: pilihNotulen,
             members_list: pilihPeserta,
             presensi_list: pilihAbsen,
             status: 'persiapan',
             id_attachment: idAtt
         }
-        const data = {
+        const datas = {
             token: token,
-            payload: payload
+            payload: payload,
+            id: data.id
         }
-        dispatch(postEvent(data))
+        dispatch(updateEvent(datas))
     }
-
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView>
@@ -338,7 +351,7 @@ export const TambahEvent = () => {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Tambah Event</Text>
+                                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Edit Event</Text>
                                 </View>
                             </View>
 
@@ -357,6 +370,7 @@ export const TambahEvent = () => {
                                         borderColorDrop={COLORS.ExtraDivinder}
                                         borderWidthValue={1}
                                         borderColorValue={COLORS.ExtraDivinder}
+                                        placeHolder={data.calendar?.name}
                                     />
                                 </View>
 
@@ -479,7 +493,7 @@ export const TambahEvent = () => {
                                                     minuteInterval={30}
                                                     style={{ borderRadius: 10 }}
                                                     onSelectedChange={date => {
-                                                        const [year, month, day] = date.split('/').map(Number)
+                                                        const [year, month, day] = date.split('/')?.map(Number)
                                                         const formattedDate = new Date(year, month - 1, day)
                                                         if (modalVisiblePicker === 'mulai') {
                                                             setTanggalMulai(moment(formattedDate).format('YYYY-MM-DD'))
@@ -543,7 +557,7 @@ export const TambahEvent = () => {
                                         maxLength={40}
                                         placeholder='Pilih member'
                                         style={{ padding: 10, width: '80%' }}
-                                        value={pilihanPimpinanEvent[0]?.title}
+                                        value={pilihanPimpinanEvent[0]?.title.name || pilihanPimpinanEvent[0]?.title}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
                                         <TouchableOpacity onPress={() => {
@@ -774,10 +788,9 @@ export const TambahEvent = () => {
                                         <TextInput
                                             editable
                                             multiline
-                                            numberOfLines={4}
-                                            maxLength={40}
+                                            numberOfLines={3}
                                             placeholder='Ketikan Sesuatu'
-                                            style={{ padding: 10, height: 150 }}
+                                            style={{ padding: 10, }}
                                             onChangeText={setNote}
                                             value={Note}
                                         />
@@ -822,7 +835,7 @@ export const TambahEvent = () => {
                                 </View>
 
                                 <View>
-                                    {Tamu.map((item, index) => {
+                                    {Tamu?.map((item, index) => {
                                         return (
                                             <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 17, gap: 10 }}>
                                                 <View style={{

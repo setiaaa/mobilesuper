@@ -5,6 +5,9 @@ const BASE_URL = "https://apigw.kubekkp.coofis.com/"
 const kebijakan = BASE_URL + 'policy/'
 const kalender = BASE_URL + 'calendar/'
 const addressbook = BASE_URL + 'bridge/'
+const pegawai = BASE_URL + 'bridge/'
+const SATKER = BASE_URL + 'bridge/'
+const Linimasa = BASE_URL + 'mp/'
 
 
 // kebijakan
@@ -100,6 +103,85 @@ export const putAbsen = createAsyncThunk("calendar/putAbsen", async (data) => {
     return respon?.data.result
 })
 
+export const postAttachment = createAsyncThunk("calendar/postAttachment", async (data) => {
+    let formData = new FormData()
+    formData.append('file', data.result)
+    const respon = await axios.post(`${kalender}attachment/create/`, formData, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const postEvent = createAsyncThunk("calendar/postEvent", async (data) => {
+    const respon = await axios.post(`${kalender}event/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const updateStatus = createAsyncThunk("calendar/updateStatus", async (data) => {
+    const respon = await axios.put(`${kalender}event/${data.id}/status/`, { status: data.status }, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const updateEvent = createAsyncThunk("calendar/updateEvent", async (data) => {
+    const respon = await axios.put(`${kalender}event/${data.id}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const deleteEvent = createAsyncThunk("calendar/deleteEvent", async (data) => {
+    const respon = await axios.delete(`${kalender}event/${data.id}/destroy/`, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const postSubAgenda = createAsyncThunk("calendar/postSubAgenda", async (data) => {
+    const respon = await axios.post(`${kalender}event/agenda/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon
+})
+
+export const updateSubAgenda = createAsyncThunk("calendar/updateSubAgenda", async (data) => {
+    const respon = await axios.put(`${kalender}event/agenda/${data.id}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const deleteSubAgenda = createAsyncThunk("calendar/deleteSubAgenda", async (data) => {
+    const respon = await axios.delete(`${kalender}event/agenda/${data.id}/destroy/`, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const postNotulensi = createAsyncThunk("calendar/postNotulensi", async (data) => {
+    let formData = new FormData()
+    formData.append('agenda_id', data.agenda_id)
+    formData.append('pdf', data.pdf, data.pdf.name)
+    const respon = await axios.post(`${kalender}event/agenda/notulensi/create/`, formData, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const deleteNotulensi = createAsyncThunk("calendar/deleteNotulensi", async (data) => {
+    const respon = await axios.delete(`${kalender}event/agenda/notulensi/${data.id}/destroy/`, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const readyToApprove = createAsyncThunk("calendar/readyToApprove", async (data) => {
+    const body = {
+        body: 'approve'
+    }
+    const respon = await axios.patch(`${kalender}event/agenda/notulensi/${data.id}/ready/`, JSON.stringify(body), { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const postTodo = createAsyncThunk("calendar/postTodo", async (data) => {
+    const respon = await axios.post(`${kalender}event/agenda/notulensi/task/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon
+})
+
+export const updateTodo = createAsyncThunk("calendar/updateTodo", async (data) => {
+    const respon = await axios.put(`${kalender}event/agenda/notulensi/task/${data.id}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const deleteTodo = createAsyncThunk("calendar/deleteTodo", async ({ token, id }) => {
+    const respon = await axios.delete(`${kalender}event/agenda/notulensi/task/${id}/destroy/`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+
 //Kalender
 export const getlistKalender = createAsyncThunk("calendar/getlistKalender", async (token) => {
     const respon = await axios.get(`${kalender}calendar/?limit=10`, { headers: { Authorization: token } })
@@ -136,5 +218,47 @@ export const getEmployee = createAsyncThunk("calendar/getEmployee", async (token
 })
 export const getDivisionTree = createAsyncThunk("calendar/getDivisionTree", async ({ token, id }) => {
     const respon = await axios.get(`${addressbook}addressbook/tree/${id}/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+//pegawai
+export const getPegawai = createAsyncThunk("calendar/getPegawai", async (token) => {
+    const respon = await axios.get(`${pegawai}profile/all/?limit=10`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getDetailPegawai = createAsyncThunk("calendar/getDetailPegawai", async ({ token, nip }) => {
+    const respon = await axios.get(`${pegawai}profile/${nip}`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+//satker
+export const getBennerSatker = createAsyncThunk("bridge/getBennerSatker", async (token) => {
+    const respon = await axios.get(`${SATKER}satker/benner/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getGallerySatker = createAsyncThunk("bridge/getGallerySatker", async (token) => {
+    const respon = await axios.get(`${SATKER}satker/gallery/?page=1`, { headers: { Authorization: token } })
+    return respon?.data
+})
+
+export const getSatkerNews = createAsyncThunk("bridge/getSatkerNews", async (token) => {
+    const respon = await axios.get(`${SATKER}satker/news/?page=1`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getPesan = createAsyncThunk("bridge/getPesan", async (token) => {
+    const respon = await axios.get(`${SATKER}satker/pesan/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getUltah = createAsyncThunk("bridge/getUltah", async (token) => {
+    const respon = await axios.get(`${SATKER}satker/birthday/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getSatkerLinimasa = createAsyncThunk("mp/getSatkerLinimasa", async (token) => {
+    const respon = await axios.get(`${Linimasa}linimasa/?limit=6&type=satker`, { headers: { Authorization: token } })
     return respon?.data.results
 })

@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { Dropdown } from '../../components/DropDown'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -60,7 +60,8 @@ const CardListEvent = ({ token, item }) => {
                 backgroundColor: COLORS.white,
                 width: '90%',
                 padding: 20,
-                borderRadius: 8
+                borderRadius: 8,
+                marginTop: 20
             }}
                 onPress={() => {
                     getDetail(item.id)
@@ -72,7 +73,7 @@ const CardListEvent = ({ token, item }) => {
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                     <Text>Departemen:</Text>
-                    <Text style={{ marginVertical: 10 }}>{item.pic.title.name}</Text>
+                    <Text style={{ marginVertical: 10, width: 200 }}>{item.pic.title.name}</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -136,9 +137,9 @@ const CardProgresEvent = ({ token, item, bottomSheetAttach }) => {
                         <Text style={{ marginVertical: 10 }}>{moment(item.start_date).format('d MMM yyy')} - </Text>
                         <Text style={{ marginVertical: 10 }}>{moment(item.end_date).format('d MMM yyy')}</Text>
                     </View>
-                    <TouchableOpacity onPress={() => bottomSheetAttach(item.todo)}>
+                    {/* <TouchableOpacity onPress={() => bottomSheetAttach(item.todo)}>
                         <Ionicons name='chevron-down-outline' size={20} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -146,7 +147,7 @@ const CardProgresEvent = ({ token, item, bottomSheetAttach }) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <Text>PIC</Text>
                         <Image source={{ uri: item.pic.avatar_url }} style={{ width: 26, height: 26, borderRadius: 30 }} />
-                        <Text>{item.pic.nama}</Text>
+                        <Text style={{ width: 150 }}>{item.pic.nama}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
@@ -215,6 +216,7 @@ export const HalamanUtama = () => {
     const [token, setToken] = useState('')
 
     const dispatch = useDispatch()
+    const isFocused = useIsFocused()
 
     // useEffect(() => {
     //     dispatch(setEventLists(listsEvent))
@@ -226,14 +228,11 @@ export const HalamanUtama = () => {
     }, [])
 
     useEffect(() => {
-        if (token !== '') {
+        if (token !== '' && isFocused) {
             dispatch(getEventToday(token))
             dispatch(getEventProgress(token))
         }
     }, [token])
-
-
-
 
     const { event } = useSelector(state => state.event)
     const list = event.lists
@@ -334,19 +333,19 @@ export const HalamanUtama = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Event Management</Text>
+                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Agenda Rapat</Text>
                         </View>
                     </View>
 
-                    <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
+                    {/* <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
                         <Search
                             placeholder={'Cari'}
                             onSearch={filter}
                         />
-                    </View>
+                    </View> */}
 
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, marginTop: 40 }}>
 
                         <TouchableOpacity style={{
                             width: 171,
@@ -360,7 +359,7 @@ export const HalamanUtama = () => {
                         }}
                             onPress={() => SetVariant('hariini')}
                         >
-                            <Text style={{ color: variant === 'hariini' ? COLORS.white : null }}>Event Hari Ini</Text>
+                            <Text style={{ color: variant === 'hariini' ? COLORS.white : null }}>Agenda Rapat Hari Ini</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={{
@@ -375,7 +374,7 @@ export const HalamanUtama = () => {
                         }}
                             onPress={() => SetVariant('progres')}
                         >
-                            <Text style={{ color: variant === 'progres' ? COLORS.white : null }}>Progres Event</Text>
+                            <Text style={{ color: variant === 'progres' ? COLORS.white : null }}>Progres Agenda Rapat</Text>
                         </TouchableOpacity>
                     </View>
                     {variant === 'hariini' ? (
@@ -401,7 +400,7 @@ export const HalamanUtama = () => {
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Event</Text>
 
                                     <View style={{ flexDirection: 'row', gap: 10 }}>
-                                        <View style={{
+                                        {/* <View style={{
                                             width: 40,
                                             height: 40,
                                             borderRadius: 30,
@@ -421,7 +420,7 @@ export const HalamanUtama = () => {
                                             alignItems: 'center'
                                         }}>
                                             <Ionicons name='menu-outline' size={24} />
-                                        </View>
+                                        </View> */}
                                     </View>
                                 </View>
                             </View>

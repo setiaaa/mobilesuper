@@ -27,7 +27,7 @@ import { Dropdown } from '../../components/DropDown';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import PdfReader from 'rn-pdf-reader-js-improved';
-import { postTodo } from '../../service/api';
+import { postTodo, updateTodo } from '../../service/api';
 import { setStatus } from '../../store/Event';
 import { getTokenValue } from '../../service/session';
 
@@ -43,7 +43,7 @@ const PengingatData = [
     { key: '5 hari', value: '5 Hari' },
 ]
 
-export const TambahTodo = () => {
+export const EditTodo = () => {
     const navigation = useNavigation()
     const richText = useRef(null);
     const [richTextHandle, setRichTextHandle] = useState('');
@@ -56,12 +56,16 @@ export const TambahTodo = () => {
     const [PenanggungJawab, setPenanggungJawab] = useState('')
     const [pilihanPenanggungJawab, setPilihanPenanggungJawab] = useState({})
     const [description, setDescription] = useState('')
+    const [pic, setPic] = useState({})
+    const [prioritasPlace, setPrioritasPlace] = useState({})
+    const [pengingatPlace, setPengingatPlace] = useState({})
 
     const dispatch = useDispatch()
 
-    const { agenda, notulensi, status } = useSelector(state => state.event)
+    const { agenda, notulensi, status, todo } = useSelector(state => state.event)
     const data = agenda.detail
     const notu = notulensi.lists
+    const detail = todo.detail
 
     const [token, setToken] = useState('')
 
@@ -75,32 +79,48 @@ export const TambahTodo = () => {
         let pic = []
         data.extra_attrs.members.map(item => {
             pic.push({
-                key: item.is_employee ? item.nip : item.title.objid,
-                value: item.is_employee ? item.nama : item.title.name
+                key: item.is_employee ? item.nip : item.title?.objid,
+                value: item.is_employee ? item.nama : item.title?.name
             })
         })
         pic.push({
-            key: data.extra_attrs.pic.is_employee ? data.extra_attrs.pic.nip : data.extra_attrs.pic.title.objid,
-            value: data.extra_attrs.pic.is_employee ? data.extra_attrs.pic.nama : data.extra_attrs.pic.title.name
+            key: data.extra_attrs?.pic.is_employee ? data.extra_attrs?.pic.nip : data.extra_attrs.pic?.title.objid,
+            value: data.extra_attrs?.pic.is_employee ? data.extra_attrs?.pic.nama : data.extra_attrs.pic?.title.name
         })
         setPenanggungJawab(pic)
+        onChangeValue(detail.name)
+        setDueDate(detail.due_date)
+        setDescription(detail.description)
+        setPic({
+            key: detail.pic?.title.objid,
+            value: detail.pic?.title.name
+        })
+        setPrioritasPlace({
+            key: detail.priority,
+            value: detail.priority === 'normal' ? 'Normal' : detail.priority === 'high' ? 'High' : 'Low'
+        })
+        setPengingatPlace({
+            key: detail.reminder,
+            value: detail.reminder === '1 hari' ? '1 Hari' : detail.reminder === '3 hari' ? '3 Hari' : '5 Hari'
+        })
     }, [])
 
     const HandleSubmit = () => {
         const payload = {
             notulensi_id: notu[0].id,
             name: value,
-            pic_objid: pilihanPenanggungJawab.key,
+            pic_objid: pic.key,
             due_date: dueDate,
             description: description,
-            priority: prioritas.key,
-            reminder: pengingat.key
+            priority: prioritasPlace.key,
+            reminder: pengingatPlace.key
         }
         const data = {
             token: token,
+            id: detail.id,
             payload: payload
         }
-        dispatch(postTodo(data))
+        dispatch(updateTodo(data))
     }
 
 
@@ -125,7 +145,7 @@ export const TambahTodo = () => {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>ToDo Baru</Text>
+                                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Edit ToDo</Text>
                                 </View>
                             </View>
 
@@ -162,8 +182,9 @@ export const TambahTodo = () => {
                                 <View style={{ marginHorizontal: 17 }}>
                                     <Dropdown
                                         data={PenanggungJawab}
-                                        setSelected={setPilihanPenanggungJawab}
-                                        placeHolder={'Pilih Status'}
+                                        setSelected={setPic}
+                                        selected={pic}
+                                        placeHolder={'Pilih Penanggung Jawab'}
                                         borderWidth={1}
                                         borderColor={COLORS.ExtraDivinder}
                                         borderwidthDrop={1}
@@ -180,7 +201,8 @@ export const TambahTodo = () => {
                                 <View style={{ marginHorizontal: 17 }}>
                                     <Dropdown
                                         data={PrioritasData}
-                                        setSelected={setPrioritas}
+                                        setSelected={setPrioritasPlace}
+                                        selected={prioritasPlace}
                                         placeHolder={'Pilih Status'}
                                         borderWidth={1}
                                         borderColor={COLORS.ExtraDivinder}
@@ -198,7 +220,8 @@ export const TambahTodo = () => {
                                 <View style={{ marginHorizontal: 17 }}>
                                     <Dropdown
                                         data={PengingatData}
-                                        setSelected={setPengingat}
+                                        setSelected={setPengingatPlace}
+                                        selected={pengingatPlace}
                                         placeHolder={'Pilih Status'}
                                         borderWidth={1}
                                         borderColor={COLORS.ExtraDivinder}
@@ -320,7 +343,7 @@ export const TambahTodo = () => {
                             {/* <View style={{ width: '90%', height: '50%', marginHorizontal: 20 }}>
                                 <PdfReader
                                     source={{
-                                        uri: notu[0].pdf,
+                                        uri: notu[0]?.pdf,
                                     }}
                                     webviewProps={{
                                         startInLoadingState: true,
