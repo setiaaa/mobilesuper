@@ -8,471 +8,42 @@ import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { setLiniMasa } from '../../store/Pengetahuan'
+import { setLiniMasa, setRefresh } from '../../store/Pengetahuan'
 import { FlatList } from 'react-native'
 import { Image } from 'react-native'
 import { useState } from 'react'
 import { StyleSheet } from 'react-native'
-
-const listsLinimasa = [
-    {
-        id: 1,
-        avatar: require('../../assets/superApp/AvatarA.png'),
-        image: require('../../assets/superApp/linimasa1.png'),
-        nama: 'Drs. ANTAM NOVAMBAR, S.H., M.Hum.',
-        tanggal: '12 Juni 2023',
-        jenis: 'Penelitian',
-        suka: '324',
-        komentar: '12',
-        dilihat: '45',
-        judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-        lampiran: [
-            {
-                id: 1,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png',
-            },
-            {
-                id: 2,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png',
-            },
-            {
-                id: 3,
-                gambar: 'https%3A%2F%2Fcalibre-ebook.com%2Fdownloads%2Fdemos%2Fdemo.docx&wdOrigin',
-                nama: 'linimasa1.doc',
-            },
-            {
-                id: 4,
-                gambar: require('../../assets/superApp/Sekilas_Tentang_Program_Ekonomi_Biru_KKP_1080p.mp4'),
-                nama: 'SekilasTentangProgramEkonomiBiruKKP1080p.mp4',
-            }
-        ],
-        tempat: 'Surakarta',
-        anggota: 'KKP',
-        kapan: '15 Agustus 2023',
-        rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
-        jmlKomentar: '2',
-        Komentar: [
-            {
-                id: '1',
-                avatarKomen: require('../../assets/superApp/AvatarKomen1.png'),
-                nama: 'Yani Dama Putera',
-                tanggal: '23 Januari 2023',
-                jam: '14.01',
-                isi: 'Informasi yang bermanfaat',
-                jmlhBalas: '1',
-                balas:
-                    [
-                        {
-                            idBalas: '1.1',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-                        },
-
-                        {
-                            idBalas: '1.2',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-                        }
-
-                    ],
-
-            },
-            {
-                id: '2',
-                avatarKomen: require('../../assets/superApp/AvatarKomen2.png'),
-                nama: 'Salies Apriliyanto',
-                tanggal: '22 Januari 2023',
-                jam: '14.01',
-                isi: 'Sebuah variasi dari teknik pertanyaan di atas, pertanyaan pilihan ganda merupakan cara yang bagus untuk melibatkan pembaca Anda.',
-                jmlhBalas: '1',
-                balas:
-                    [
-                        {
-
-                            idBalas: '2.1',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-
-                        }
-                    ],
-            }
-        ],
-        orangSuka: [
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-        ],
-        disukai: '324',
-    },
-    {
-        id: 2,
-        avatar: require('../../assets/superApp/AvatarA.png'),
-        image: require('../../assets/superApp/linimasa2.png'),
-        nama: 'Drs. ANTAM NOVAMBAR, S.H., M.Hum.',
-        tanggal: '12 Juni 2023',
-        jenis: 'Penelitian',
-        suka: '324',
-        komentar: '12',
-        dilihat: '45',
-        judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-        lampiran: [
-            {
-                id: 1,
-                gambar: require('../../assets/superApp/linimasa2.png'),
-                nama: 'linimasa2.png'
-            },
-            {
-                id: 2,
-                gambar: 'https%3A%2F%2Fwww.unm.edu%2F~unmvclib%2Fpowerpoint%2Fpptexamples.ppt&wdOrigin',
-                nama: 'linimasa2.ppt'
-            },
-            {
-                id: 3,
-                gambar: 'https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F1%2F4%2FE%2F14EDED28-6C58-4055-A65C-23B4DA81C4DE%2FFinancial%2520Sample.xlsx&wdOrigin',
-                nama: 'linimasa2.xls'
-            },
-            {
-                id: 4,
-                gambar: require('../../assets/superApp/Sekilas_Tentang_Program_Ekonomi_Biru_KKP_1080p.mp4'),
-                nama: 'SekilasTentangProgramEkonomiBiruKKP1080p.mp4'
-            }
-        ],
-        tempat: 'Surakarta',
-        anggota: 'KKP',
-        kapan: '15 Agustus 2023',
-        rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
-        jmlKomentar: '2',
-        Komentar: [
-            {
-                id: '1',
-                avatarKomen: require('../../assets/superApp/AvatarKomen1.png'),
-                nama: 'Yani Dama Putera',
-                tanggal: '23 Januari 2023',
-                jam: '14.01',
-                isi: 'Informasi yang bermanfaat',
-                jmlhBalas: '1',
-                balas:
-                    [
-                        {
-                            idBalas: '1.1',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-                        },
-
-                        {
-                            idBalas: '1.2',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-                        }
-
-                    ],
-
-            },
-            {
-                id: '2',
-                avatarKomen: require('../../assets/superApp/AvatarKomen2.png'),
-                nama: 'Salies Apriliyanto',
-                tanggal: '22 Januari 2023',
-                jam: '14.01',
-                isi: 'Sebuah variasi dari teknik pertanyaan di atas, pertanyaan pilihan ganda merupakan cara yang bagus untuk melibatkan pembaca Anda.',
-                jmlhBalas: '1',
-                balas:
-                    [
-                        {
-
-                            idBalas: '2.1',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-
-                        }
-                    ],
-            }
-        ],
-        orangSuka: [
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-        ],
-        disukai: '324',
-    },
-    {
-        id: 3,
-        avatar: require('../../assets/superApp/AvatarA.png'),
-        image: require('../../assets/superApp/linimasa1.png'),
-        nama: 'Drs. ANTAM NOVAMBAR, S.H., M.Hum.',
-        tanggal: '12 Juni 2023',
-        jenis: 'Penelitian',
-        suka: '324',
-        komentar: '12',
-        dilihat: '45',
-        judul: 'Judul Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-        deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-        lampiran: [
-            {
-                id: 1,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 2,
-                gambar: require('../../assets/superApp/linimasa1.png'),
-                nama: 'linimasa1.png'
-            },
-            {
-                id: 3,
-                gambar: 'https://www.africau.edu/images/default/sample.pdf',
-                nama: 'linimasa1.pdf'
-            },
-            {
-                id: 4,
-                gambar: require('../../assets/superApp/Sekilas_Tentang_Program_Ekonomi_Biru_KKP_1080p.mp4'),
-                nama: 'SekilasTentangProgramEkonomiBiruKKP1080p.mp4'
-            }
-        ],
-        tempat: 'Surakarta',
-        anggota: 'KKP',
-        kapan: '15 Agustus 2023',
-        rangkuman: 'SURAKARTA, (15/8) - Kementerian Kelautan dan Perikanan (KKP) berhasil melakukan pendampingan usaha bagi 1.628 Usaha Mikro Kecil (UMK) di seluruh Indonesia.',
-        jmlKomentar: '2',
-        Komentar: [
-            {
-                id: '1',
-                avatarKomen: require('../../assets/superApp/AvatarKomen1.png'),
-                nama: 'Yani Dama Putera',
-                tanggal: '23 Januari 2023',
-                jam: '14.01',
-                isi: 'Informasi yang bermanfaat',
-                jmlhBalas: '1',
-                balas:
-                    [
-                        {
-                            idBalas: '1.1',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-                        },
-
-                        {
-                            idBalas: '1.2',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-                        }
-
-                    ],
-
-            },
-            {
-                id: '2',
-                avatarKomen: require('../../assets/superApp/AvatarKomen2.png'),
-                nama: 'Salies Apriliyanto',
-                tanggal: '22 Januari 2023',
-                jam: '14.01',
-                isi: 'Sebuah variasi dari teknik pertanyaan di atas, pertanyaan pilihan ganda merupakan cara yang bagus untuk melibatkan pembaca Anda.',
-                jmlhBalas: '1',
-                balas:
-                    [
-                        {
-
-                            idBalas: '2.1',
-                            avatarBalas: require('../../assets/superApp/AvatarDetail.png'),
-                            nama: 'Rizky Novriansyah',
-                            tanggal: '24 Januari 2023',
-                            jam: '14.01',
-                            isi: 'Terima Kasih',
-
-                        }
-                    ],
-            }
-        ],
-        orangSuka: [
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-            {
-                avatar: AVATAR.U2,
-                nama: 'Rizky Novriansyah',
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-            },
-        ],
-        disukai: '324',
-    }
-]
+import { getDetailLinimasa, getLinimasa, getViewLinimasa, patchLike, patchUnlike } from '../../service/api'
+import { getTokenValue } from '../../service/session'
+import moment from 'moment'
+import { ScrollView } from 'react-native'
 
 
-const CardLiniMasa = ({ item, }) => {
+
+const CardLiniMasa = ({ item, token }) => {
     const navigation = useNavigation()
     const [like, setLike] = useState(0)
     const [visibleModal, setVisibleModal] = useState(false);
+    const [visibleModalView, setVisibleModalView] = useState(false);
+    const dispatch = useDispatch()
 
     const handleLike = () => {
-        if (like === 0) {
-            setLike(1)
-        } else {
-            setLike(0)
+        const data = {
+            token: token,
+            id: item.id
         }
+        if (item.liked == false) {
+            dispatch(patchLike(data))
+        } else {
+            dispatch(patchUnlike(data))
+        }
+    }
+
+    const getDetail = (id) => {
+        const params = { token, id }
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getDetailLinimasa(params))
+        dispatch(getViewLinimasa(params))
     }
 
     return (
@@ -492,40 +63,44 @@ const CardLiniMasa = ({ item, }) => {
         }}>
             <TouchableOpacity onPress={(e) => {
                 e.stopPropagation()
-                navigation.navigate('DetailLinimasa', {
-                    item: item
-                })
+                getDetail(item.id)
+                navigation.navigate('DetailLinimasa')
             }}>
-
                 <View style={{ marginVertical: 20, marginHorizontal: 15 }}>
                     <View style={{ flexDirection: 'row', gap: 10 }}>
                         <View>
-                            <Image source={item.avatar} style={{ borderRadius: 50 }} />
+                            <Image source={{ uri: item.avatar_url }} style={{ borderRadius: 50, width: 50, height: 50 }} />
                         </View>
                         <View>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.nama}</Text>
-                            <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{item.tanggal}</Text>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.creator.name}</Text>
+                            <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(item.published_date, "DD MMMM YYYY HH:mm:ss").format("DD MMMM YYYY")}</Text>
                         </View>
                     </View>
                     <View style={{ marginVertical: 20 }}>
-                        <Image source={item.image} style={{ width: '100%', height: 160, borderRadius: 8 }} />
+                        <Image source={{ uri: item.cover }} style={{ width: '100%', height: 160, borderRadius: 8 }} />
                     </View>
 
-                    <Text style={{ textAlign: 'justify', color: COLORS.lighter, fontSize: FONTSIZE.H3 }}>{item.judul}</Text>
+                    <Text style={{ textAlign: 'justify', color: COLORS.lighter, fontSize: FONTSIZE.H3 }}>{item.title}</Text>
 
                     <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center', marginTop: 10 }}>
                         <View style={{
-                            backgroundColor: COLORS.warningLight,
-                            width: 100,
+                            backgroundColor: item.category === 'Video / Jurnal' ? COLORS.successLight : item.category === 'Infografis' ? COLORS.warningLight : COLORS.infoLight,
                             height: 30,
+                            width: 120,
                             borderRadius: 30,
                             justifyContent: 'center',
                             alignItems: 'center',
                             flexDirection: 'row',
                             gap: 5
                         }}>
-                            <Ionicons name='document-outline' size={18} color={COLORS.warning} />
-                            <Text style={{ color: COLORS.warning }}>{item.jenis}</Text>
+                            {item.category === 'Infografis' ? (
+                                <Ionicons name='document-outline' color={'#F6AD1D'} style={{ marginTop: 2 }} />
+                            ) : item.category === 'Kegiatan' ? (
+                                <Ionicons name='analytics-outline' color={'#1868AB'} style={{ marginTop: 3 }} />
+                            ) : (
+                                <Ionicons name='videocam-outline' color={'#11C15B'} style={{ marginTop: 2 }} />
+                            )}
+                            <Text style={{ color: item.category === 'Infografis' ? COLORS.warning : item.category === 'Kegiatan' ? COLORS.info : COLORS.success }}>{item.category}</Text>
                         </View>
 
                         <TouchableOpacity style={{ flexDirection: 'row', gap: 3, alignItems: 'center' }}
@@ -533,18 +108,23 @@ const CardLiniMasa = ({ item, }) => {
                                 e.stopPropagation()
                                 handleLike()
                             }}>
-                            <Ionicons name='thumbs-up-outline' size={18} color={like !== 0 ? COLORS.primary : null} />
-                            <Text style={{ color: like !== 0 ? COLORS.primary : null }}>{item.suka}</Text>
+                            <Ionicons name='thumbs-up-outline' size={18} color={item.liked == true ? COLORS.primary : null} />
+                            <Text style={{ color: item.liked == true ? COLORS.primary : null }}>{item.likes_count}</Text>
                         </TouchableOpacity>
 
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
                             <Ionicons name='chatbox-outline' size={18} />
-                            <Text>{item.komentar}</Text>
+                            <Text>{item.comment_count}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}
+                            onPress={(e) => {
+                                e.stopPropagation()
+                                setVisibleModalView(true)
+                            }}
+                        >
                             <Ionicons name='eye-outline' size={18} />
-                            <Text>{item.dilihat}</Text>
-                        </View>
+                            <Text>{item.views_count}</Text>
+                        </TouchableOpacity>
 
                         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}
                             onPress={(e) => {
@@ -600,7 +180,7 @@ const CardLiniMasa = ({ item, }) => {
                                 <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[What]</Text>
                             </View>
 
-                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.judul}</Text>
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.title}</Text>
                         </View>
 
                         <View>
@@ -620,7 +200,7 @@ const CardLiniMasa = ({ item, }) => {
                                 <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[Why]</Text>
                             </View>
 
-                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.rangkuman}</Text>
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.summary}</Text>
                         </View>
 
                         <View>
@@ -645,6 +225,70 @@ const CardLiniMasa = ({ item, }) => {
                     </View>
                 </View>
             </Modal>
+
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={visibleModalView}
+                onRequestClose={() => {
+                    setVisibleModalView(!visibleModalView);
+                }}
+            >
+                <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                <View style={{ alignItems: 'center', flex: 1 }}>
+                    <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 10, marginTop: '40%' }}>
+
+                        <View style={{
+                            marginTop: 20,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginHorizontal: 20
+                        }}>
+
+                            <View>
+                                <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>Dilihat Oleh</Text>
+                            </View>
+
+                            <TouchableOpacity
+                                style={{}}
+                                onPress={() => {
+                                    setVisibleModalView(false)
+                                }}
+                            >
+                                <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity>
+
+                        </View>
+                        {/* custom divider */}
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ height: 1, width: '90%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        </View>
+
+                        <ScrollView style={{ marginBottom: 40 }}>
+                            {item.view_list.map(data => {
+                                return (
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        gap: 10,
+                                        marginHorizontal: 20,
+                                        marginTop: 20,
+                                    }}>
+                                        <Image source={{ uri: data.avatar_url }} style={{ width: 50, height: 50, borderRadius: 30 }} />
+                                        <Text>{data.name}</Text>
+                                    </View>
+                                )
+                            })}
+                        </ScrollView>
+
+
+
+
+
+                    </View>
+                </View>
+            </Modal>
         </View >
     );
 }
@@ -653,11 +297,29 @@ export const LiniMasa = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(setLiniMasa(listsLinimasa))
-    }, []);
+    const [token, setToken] = useState('')
 
-    const { linimasa } = useSelector(state => state.pengetahuan)
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getLinimasa(token))
+        }
+    }, [token])
+
+    const { linimasa, refresh } = useSelector(state => state.pengetahuan)
+
+
+    useEffect(() => {
+        if (refresh) {
+            dispatch(getLinimasa(token))
+            dispatch(setRefresh(false))
+        }
+    }, [refresh])
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -685,6 +347,7 @@ export const LiniMasa = () => {
                     <View key={item.id}>
                         <CardLiniMasa
                             item={item}
+                            token={token}
                         // setVisibleModal={setVisibleModal}
                         />
                     </View>

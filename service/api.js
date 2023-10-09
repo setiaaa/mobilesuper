@@ -463,3 +463,39 @@ export const getDetailBerita = createAsyncThunk(
         return respon?.data.results;
     }
 );
+
+//mp
+export const getLinimasa = createAsyncThunk("mp/getLinimasa", async (token) => {
+    const respon = await axios.get(`${Linimasa}linimasa/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const patchLike = createAsyncThunk("mp/patchLike", async ({ token, id }) => {
+    const respon = await axios.patch(`${Linimasa}linimasa/${id}/like/`, undefined, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const patchUnlike = createAsyncThunk("mp/patchUnlike", async ({ token, id }) => {
+    const respon = await axios.patch(`${Linimasa}linimasa/${id}/unlike/`, undefined, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getDetailLinimasa = createAsyncThunk("mp/getDetailLinimasa", async ({ token, id }) => {
+    const respon = await axios.get(`${Linimasa}linimasa/${id}`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const getViewLinimasa = createAsyncThunk("mp/getViewLinimasa", async ({ token, id }) => {
+    const respon = await axios.get(`${Linimasa}linimasa/${id}/view/list/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const postComment = createAsyncThunk("mp/postComment", async (data, setRefresh = undefined) => {
+    const respon = await axios.post(`${Linimasa}linimasa/comment/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const getListsLike = createAsyncThunk("mp/getListsLike", async ({ token, id }) => {
+    const respon = await axios.get(`${Linimasa}linimasa/${id}/like/list/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
