@@ -6,10 +6,10 @@ import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-export const CardListTask = ({ tanggal, kegiatan }) => {
+export const CardListTask = ({ id, title, duedate }) => {
     const navigation = useNavigation()
     return (
-        <TouchableOpacity onPress={() => { navigation.navigate('MainDetailTask') }}>
+        <TouchableOpacity onPress={() => { navigation.navigate('MainDetailTask', { id: id }) }} key={id}>
             <View
                 style={{
                     width: '100%',
@@ -24,10 +24,11 @@ export const CardListTask = ({ tanggal, kegiatan }) => {
                     shadowRadius: 3,
                 }}>
                 <View style={{ marginVertical: 10, marginLeft: 10 }}>
-                    <Text>{kegiatan}</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>{title}</Text>
                 </View>
-                <View style={{ marginBottom: 10, marginLeft: 10 }}>
-                    <Text>Due Date: {tanggal}</Text>
+                <View style={{ marginBottom: 10, marginLeft: 10, display: 'flex', flexDirection: 'row', gap: 2 }}>
+                    <Text>Target Tanggal: </Text>
+                    <Text style={{ color: COLORS.danger }}>{duedate}</Text>
                 </View>
 
             </View>

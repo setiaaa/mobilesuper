@@ -98,15 +98,18 @@ import { TambahAgenda } from "../Kalender/TambahAgenda";
 import { DetailAcara } from "../Kalender/DetailAcara";
 import { ListSuka } from "../Kalender/ListSuka";
 import { MyTask } from "../Task Management/MyTask";
-import { InProgres } from "../Task Management/InProgres";
-import { Pending } from "../Task Management/Pending";
-import { BackLog } from "../Task Management/BackLog";
+import { InProgres } from "../Task Management/Task/InProgres";
+import { Pending } from "../Task Management/Task/Pending";
+import { BackLog } from "../Task Management/Task/BackLog";
+import { HariIni } from "../Task Management/Dashboard/HariIni";
+import { MingguIni } from "../Task Management/Dashboard/MingguIni";
+import { Terlewat } from "../Task Management/Dashboard/Terlewat";
 import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
-import { Complete } from "../Task Management/Complete";
-import MyTabBarDetailTask from "../Task Management/BottmTabsDetailTask";
-import { DetailTask } from "../Task Management/DetailTask";
-import { LampiranTask } from "../Task Management/LampiranTask";
-import MainDetailTask from "../Task Management/MainDetailTask";
+import { Complete } from "../Task Management/Task/Complete";
+import MyTabBarDetailTask from "../Task Management/DetailTask/BottmTabsDetailTask";
+import { DetailTask } from "../Task Management/DetailTask/DetailTask";
+import { LampiranTask } from "../Task Management/DetailTask/LampiranTask";
+import MainDetailTask from "../Task Management/DetailTask/MainDetailTask";
 import { AddTask } from "../Task Management/AddTask";
 import { ListGaleri } from "../SuperApps/ListGaleri";
 import { Kepegawaian } from "../Dashboard/Kepegawaian";
@@ -763,10 +766,10 @@ export const TopsTP = () => {
   )
 }
 
-export const TopsTaks = () => {
+export const TopsTask = () => {
   return (
     <BottomSheetModalProvider>
-      <Top.Navigator initialRouteName='Inprogres'
+      <Top.Navigator initialRouteName={'InProgres'}
         screenOptions={{
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: '#C34647',
@@ -774,9 +777,14 @@ export const TopsTaks = () => {
           tabBarLabelStyle: { fontSize: 12, textTransform: 'none', fontWeight: FONTWEIGHT.bold },
         }}
       >
+        <Top.Screen name='BackLog' component={BackLog}
+          options={{
+            title: 'Back Log'
+          }}
+        />
         <Top.Screen name='Inprogres' component={InProgres}
           options={{
-            title: 'In Progres',
+            title: 'In Progress',
           }} />
         <Top.Screen name='Pending' component={Pending}
           options={{
@@ -786,9 +794,66 @@ export const TopsTaks = () => {
           options={{
             title: 'Complete'
           }} />
-        <Top.Screen name='BackLog' component={BackLog}
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const TopsTaskDashboard = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName={'HariIni'}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none', fontWeight: FONTWEIGHT.bold },
+        }}
+      >
+        <Top.Screen name='HariIni' component={HariIni}
           options={{
-            title: 'Back Log'
+            title: 'Hari Ini',
+          }} />
+        <Top.Screen name='MingguIni' component={MingguIni}
+          options={{
+            title: 'Minggu Ini'
+          }} />
+        <Top.Screen name='Terlewat' component={Terlewat}
+          options={{
+            title: 'Terlewat'
+          }} />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+
+export const TopsTaskKorespondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName={'Arsip'}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none', fontWeight: FONTWEIGHT.bold },
+        }}
+      >
+        <Top.Screen name='Arsip' component={InProgres}
+          options={{
+            title: 'Arsip',
+          }} />
+        <Top.Screen name='Terlewat' component={Pending}
+          options={{
+            title: 'Terlewat'
+          }} />
+        <Top.Screen name='HariIni' component={Complete}
+          options={{
+            title: 'Hari Ini'
+          }} />
+        <Top.Screen name='MingguDepan' component={BackLog}
+          options={{
+            title: 'Minggu Depan'
           }}
         />
       </Top.Navigator>
