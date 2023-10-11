@@ -1,18 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailLinimasa, getLinimasa, getListsLike, getViewLinimasa, patchLike, patchUnlike, postComment } from "../service/api";
+import { getDetailLinimasa, getDetailPegawai, getDetailPenilaian, getLinimasa, getListPenilaian, getListsLike, getNilai, getViewLinimasa, patchLike, patchUnlike, postComment, putTakeDown } from "../service/api";
 
 const PengetahuanSlice = createSlice({
     name: 'Pengetahuan',
     initialState: {
         refresh: false,
+        error: '',
         linimasa: {
             lists: [],
             detail: {},
             listsLike: []
         },
         penilaian: {
-            lists: []
+            lists: [],
+            detail: null
         },
+        nilai: [],
         komen: []
     },
     reducers: {
@@ -53,6 +56,23 @@ const PengetahuanSlice = createSlice({
             })
             .addCase(patchUnlike.fulfilled, (state, action) => {
                 state.refresh = true
+            })
+            .addCase(getListPenilaian.fulfilled, (state, action) => {
+                state.penilaian.lists = action.payload;
+            })
+            .addCase(getDetailPenilaian.fulfilled, (state, action) => {
+                state.penilaian.detail = action.payload;
+            })
+            .addCase(getNilai.fulfilled, (state, action) => {
+                state.nilai = action.payload;
+            })
+            .addCase(putTakeDown.fulfilled, (state, action) => {
+                state.error = false
+                console.log('berhasil')
+            })
+            .addCase(putTakeDown.rejected, (state, action) => {
+                state.error = true
+                console.log('gagal')
             })
     }
 })

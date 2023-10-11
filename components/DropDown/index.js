@@ -61,7 +61,7 @@ export const Dropdown = ({
                             exiting={FadeOutUp}
                         >
                             <View style={{ marginLeft: 20, flexDirection: 'row', marginTop: 15 }}>
-                                <Text style={{ color: textColor, width: '80%' }}>{displayData !== '' ? displayData : placeHolder}</Text>
+                                <Text style={{ color: textColor, width: '70%' }}>{displayData !== '' ? displayData : placeHolder}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
                                     <Ionicons name='chevron-down-outline' size={14} color={textColor} />
                                 </View>

@@ -499,3 +499,35 @@ export const getListsLike = createAsyncThunk("mp/getListsLike", async ({ token, 
     const respon = await axios.get(`${Linimasa}linimasa/${id}/like/list/`, { headers: { Authorization: token } })
     return respon?.data.results
 })
+
+//Penilian
+export const getListPenilaian = createAsyncThunk("mp/getListPenilaian", async (data) => {
+    const respon = await axios.get(`${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}`, { headers: { Authorization: data.token } })
+    return respon?.data.results
+})
+
+export const getDetailPenilaian = createAsyncThunk("mp/getDetailPenilaian", async ({ token, id }) => {
+    const respon = await axios.get(`${Linimasa}admin/evaluation/${id}`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const getNilai = createAsyncThunk("mp/getNilai", async ({ token }) => {
+    const respon = await axios.get(`${Linimasa}admin/category/?limit=10&type=penilai`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const putAddApprove = createAsyncThunk("mp/putAddApprove", async ({ token, id, body }) => {
+    const respon = await axios.put(`${Linimasa}admin/evaluation/${id}/score/`, body, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const putCancelApprove = createAsyncThunk("mp/putCancelApprove", async ({ token, id, body }) => {
+    const respon = await axios.put(`${Linimasa}admin/evaluation/${id}/score/cancel/`, body, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const putTakeDown = createAsyncThunk("mp/putTakeDown", async ({ token, id }) => {
+    // const respon = await axios.put(`${Linimasa}admin/evaluation/${id}/cancel/`, { headers: { Authorization: token } })
+    const respon = await fetch(`${Linimasa}admin/evaluation/${id}/cancel/`, { method: 'put', headers: { Authorization: token } })
+    return respon?.data
+})
