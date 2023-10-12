@@ -166,6 +166,7 @@ import { EditEvent } from "../Event Management/EditEvent";
 import { TambahSubAgenda } from "../Event Management/TambahSubAgenda";
 import { EditSubAgenda } from "../Event Management/EditSubAgenda";
 import { EditTodo } from "../Event Management/EditTodo";
+import { AddCategory } from "../Task Management/AddCategory";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -320,6 +321,13 @@ function AuthStack() {
         <Stack.Screen
           name="AddTask"
           component={AddTask}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="AddCategory"
+          component={AddCategory}
           options={{
             headerShown: false,
           }}

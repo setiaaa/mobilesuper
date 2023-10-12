@@ -83,20 +83,27 @@ export const Dropdown = ({
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <ScrollView style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: borderWidthValue, borderColor: borderColorValue, height: heightValue ? heightValue : 'auto' }}>
-                            {data.map(kategori => {
-                                return (
-                                    <TouchableOpacity onPress={() => handlePressData(kategori)} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row', gap: 10, marginVertical: 5 }}>
-                                        {pressData !== kategori.key ? (
-                                            <Ionicons name='radio-button-off' color={COLORS.primary} size={18} />
-                                        ) : (
-                                            <Ionicons name='radio-button-on' color={COLORS.primary} size={18} />
-                                        )}
-                                        <Text style={{ width: '90%' }}>{kategori.value}</Text>
-                                    </TouchableOpacity>
+                        <ScrollView style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: data.length > 0 ? borderWidthValue : 0, borderColor: data.length > 0 ? borderColorValue : null, height: heightValue ? heightValue : 'auto' }}>
+                            {
+                                data.length > 0 ? (
+                                    data.map(kategori => {
+                                        return (
+                                            <TouchableOpacity onPress={() => handlePressData(kategori)} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row', gap: 10, marginVertical: 5 }}>
+                                                {pressData !== kategori.key ? (
+                                                    <Ionicons name='radio-button-off' color={COLORS.primary} size={18} />
+                                                ) : (
+                                                    <Ionicons name='radio-button-on' color={COLORS.primary} size={18} />
+                                                )}
+                                                <Text style={{ width: '90%' }}>{kategori.value}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                ) : (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text>Tidak Ada Data</Text>
+                                    </View>
                                 )
                             }
-                            )}
                         </ScrollView>
                     </View>
                 </Animated.View>

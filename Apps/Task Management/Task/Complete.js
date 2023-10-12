@@ -61,10 +61,6 @@ export const Complete = () => {
                         }
                     />
                 </View>
-            ) : variant === 'filter' ? (
-                <Text>filter</Text>
-            ) : variant === 'reorder' ? (
-                <Text>reorder</Text>
             ) : (
                 null
             )}

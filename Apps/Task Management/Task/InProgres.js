@@ -60,10 +60,6 @@ export const InProgres = () => {
                         }
                     />
                 </View>
-            ) : variant === 'filter' ? (
-                <Text>filter</Text>
-            ) : variant === 'reorder' ? (
-                <Text>reorder</Text>
             ) : (
                 null
             )}

@@ -5,320 +5,25 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import React, { useMemo, useRef } from 'react'
-import { TextInput, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons';
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet } from 'react-native'
 import { useState } from 'react'
 import { TopsTask, TopsTaskDashboard, TopsTaskKorespondensi } from '../Korespondensi/AppNavigator'
 import { Search } from '../../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
-import { setTaskLists, setVariant } from '../../store/Task'
+import { setRefresh, setVariant } from '../../store/Task'
 import { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Dropdown } from '../../components/DropDown'
 import { getListDashboardTM, getListTaskTM, getTreeTM } from '../../service/api'
 import { getTokenValue } from '../../service/session'
 import { FilterTask } from './FilterTask'
-
-const item = [
-    {
-        id: 1,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        status: 'in progress',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 2,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'backlog',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 3,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'pending',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ],
-    },
-    {
-        id: 4,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'completed',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 5,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 6,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 7,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 8,
-        kegiatan: 'Hallo guys',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-]
 
 const tipe = [
     { key: '1', value: 'Dashboard' },
@@ -339,22 +44,17 @@ export const MyTask = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(setTaskLists(item))
         dispatch(getListDashboardTM({ token: token }))
         dispatch(getTreeTM({ token: token }))
     }, [token]);
 
-    const { task, variant, treeView, list } = useSelector(state => state.task)
+    const { refresh, variant, treeView, list } = useSelector(state => state.task)
     const taskLists = list.data
 
     const navigation = useNavigation()
-    // const [variantLocal, setVariantLocal] = useState('list')
     const bottomSheetModalRef = useRef(null);
     const bottomSheetModalSelectRef = useRef(null);
     const bottomSheetModalAddRef = useRef(null);
-    const bottomSheetModalAddCategoryRef = useRef(null);
-    const bottomSheetModalAddSubCategoryRef = useRef(null);
-    const bottomSheetModalAddSubSubCategoryRef = useRef(null);
 
     const initialSnapPoints = useMemo(() => ["50%", "90%"], [])
     const initialSnapPointsTambah = useMemo(() => ["CONTENT_HEIGHT"], [])
@@ -392,33 +92,6 @@ export const MyTask = () => {
             bottomSheetModalAddRef.current?.close()
     }
 
-    const bottomsheetAddCategory = () => {
-        bottomSheetModalAddCategoryRef.current?.present()
-    }
-
-    const bottomsheetAddCategoryClose = () => {
-        if (bottomSheetModalAddCategoryRef.current)
-            bottomSheetModalAddCategoryRef.current?.close()
-    }
-
-    const bottomsheetAddSubCategory = () => {
-        bottomSheetModalAddSubCategoryRef.current?.present()
-    }
-
-    const bottomsheetAddSubCategoryClose = () => {
-        if (bottomSheetModalAddSubCategoryRef.current)
-            bottomSheetModalAddSubCategoryRef.current?.close()
-    }
-
-    const bottomsheetAddSubSubCategory = () => {
-        bottomSheetModalAddSubSubCategoryRef.current?.present()
-    }
-
-    const bottomsheetAddSubSubCategoryClose = () => {
-        if (bottomSheetModalAddSubSubCategoryRef.current)
-            bottomSheetModalAddSubSubCategoryRef.current?.close()
-    }
-
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
 
@@ -453,7 +126,7 @@ export const MyTask = () => {
                     }
                 }
             })
-            setChoiceKategori(arrKategori.length > 0 ? arrKategori[0] : '')
+            // setChoiceKategori(arrKategori.length > 0 ? arrKategori[0] : '')
             setDataKategori(arrKategori)
         }
     }, [choiceTipe])
@@ -467,7 +140,7 @@ export const MyTask = () => {
                 value: item.name
             })
         })
-        setChoiceList(arrList.length > 0 ? arrList[0] : '')
+        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
         setDataList(arrList)
     }, [choiceKategori])
 
@@ -525,6 +198,15 @@ export const MyTask = () => {
         setFilterData(data)
     }, [choiceFilter, list.type])
 
+    useEffect(() => {
+        if (refresh) {
+            console.log('main')
+            dispatch(getTreeTM({ token: token }))
+            dispatch(setRefresh(false))
+        }
+    }, [refresh])
+
+
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -579,12 +261,13 @@ export const MyTask = () => {
                                             placeHolder={'Tipe'}
                                             borderWidth={1}
                                             data={tipe}
-                                            borderColor={'#D0D5DD'}
-                                            selected={choiceTipe}
+                                            // selected={choiceTipe}
                                             setSelected={setChoiceTipe}
-                                            handleClick={(item) => {
-                                                // console.log(item.value)
-                                            }}
+                                            borderColor={COLORS.ExtraDivinder}
+                                            borderwidthDrop={1}
+                                            borderColorDrop={COLORS.ExtraDivinder}
+                                            borderWidthValue={1}
+                                            borderColorValue={COLORS.ExtraDivinder}
                                         />
                                     </View>
 
@@ -596,9 +279,13 @@ export const MyTask = () => {
                                                         placeHolder={'Kategori'}
                                                         borderWidth={1}
                                                         data={dataKategori}
-                                                        selected={choiceKategori}
+                                                        // selected={choiceKategori}
                                                         setSelected={setChoiceKategori}
-                                                        borderColor={'#D0D5DD'}
+                                                        borderColor={COLORS.ExtraDivinder}
+                                                        borderwidthDrop={1}
+                                                        borderColorDrop={COLORS.ExtraDivinder}
+                                                        borderWidthValue={1}
+                                                        borderColorValue={COLORS.ExtraDivinder}
                                                     />
                                                 </View>
 
@@ -607,9 +294,13 @@ export const MyTask = () => {
                                                         placeHolder={'List'}
                                                         borderWidth={1}
                                                         data={dataList}
-                                                        selected={choiceList}
+                                                        // selected={choiceList}
                                                         setSelected={setChoiceList}
-                                                        borderColor={'#D0D5DD'}
+                                                        borderColor={COLORS.ExtraDivinder}
+                                                        borderwidthDrop={1}
+                                                        borderColorDrop={COLORS.ExtraDivinder}
+                                                        borderWidthValue={1}
+                                                        borderColorValue={COLORS.ExtraDivinder}
                                                     />
                                                 </View>
                                             </>
@@ -658,16 +349,6 @@ export const MyTask = () => {
                         </View>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                            <TouchableOpacity onPress={() => dispatch(setVariant("filter"))}>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='filter-outline' size={24} color={variant === 'filter' ? COLORS.primary : COLORS.grey} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => dispatch(setVariant("reorder"))}>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='reorder-three-outline' size={24} color={variant === 'reorder' ? COLORS.primary : COLORS.grey} />
-                                </View>
-                            </TouchableOpacity>
                             <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
                                 <View style={styles.circleList}>
                                     <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
@@ -761,10 +442,11 @@ export const MyTask = () => {
                                     <TouchableOpacity
                                         style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
                                         onPress={() => {
-                                            bottomsheetAddCategory()
+                                            navigation.navigate('AddCategory')
+                                            bottomsheetAddClose()
                                         }}
                                     >
-                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Kategori</Text>
+                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Project</Text>
                                     </TouchableOpacity>
                                 </View>
 
@@ -773,250 +455,13 @@ export const MyTask = () => {
                                     <TouchableOpacity
                                         style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
                                         onPress={() => {
-                                            // navigation.navigate('TambahGrup', { unread: false })
-                                            // props.navigation.navigate('Home', { unread: false })
-                                            // bottomSheetClose()
-                                            navigation.navigate('AddTask')
+                                            navigation.navigate('AddTask', { id_project: choiceKategori.key, id_list: choiceList.key })
                                             bottomsheetAddClose()
                                         }}
                                     >
                                         <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Task</Text>
                                     </TouchableOpacity>
                                 </View>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-
-                    {/* tambah ketegori */}
-                    <BottomSheetModal
-                        ref={bottomSheetModalAddCategoryRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Kategori Baru</Text>
-                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
-                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
-                                    </View>
-                                </View>
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <TouchableOpacity style={{
-                                    marginBottom: 40,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                    marginTop: 10,
-                                    backgroundColor: COLORS.infoDanger,
-                                    width: '90%',
-                                    height: 50,
-                                    marginHorizontal: 20,
-                                    borderRadius: 6
-                                }}
-                                    onPress={() => {
-                                        bottomsheetAddCategoryClose()
-                                    }}
-                                >
-                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-
-                    {/* tambah sub kategori */}
-                    <BottomSheetModal
-                        ref={bottomSheetModalAddSubCategoryRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Sub Kategori Baru</Text>
-                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
-                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
-                                    </View>
-                                </View>
-                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-
-                                    {/* <Dropdown
-                                        placeHolder={'Kategori'}
-                                        borderWidth={1}
-                                        data={kategori}
-                                        borderColor={'#D0D5DD'}
-                                    /> */}
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <TouchableOpacity style={{
-                                    marginBottom: 40,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                    marginTop: 10,
-                                    backgroundColor: COLORS.infoDanger,
-                                    width: '90%',
-                                    height: 50,
-                                    marginHorizontal: 20,
-                                    borderRadius: 6
-                                }}
-                                    onPress={() => {
-                                        bottomsheetAddSubCategoryClose()
-                                    }}
-                                >
-                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-
-                    {/* tambah sub sub kategori */}
-                    <BottomSheetModal
-                        ref={bottomSheetModalAddSubSubCategoryRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Sub Sub Kategori Baru</Text>
-                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
-                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
-                                    </View>
-                                </View>
-                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-
-                                    {/* <Dropdown
-                                        placeHolder={'Kategori'}
-                                        borderWidth={1}
-                                        data={kategori}
-                                        borderColor={'#D0D5DD'}
-                                    /> */}
-                                </View>
-
-                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-
-                                    {/* <Dropdown
-                                        placeHolder={'Sub Kategori'}
-                                        borderWidth={1}
-                                        data={kategori}
-                                        borderColor={'#D0D5DD'}
-                                    /> */}
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <TouchableOpacity style={{
-                                    marginBottom: 40,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                    marginTop: 10,
-                                    backgroundColor: COLORS.infoDanger,
-                                    width: '90%',
-                                    height: 50,
-                                    marginHorizontal: 20,
-                                    borderRadius: 6
-                                }}
-                                    onPress={() => {
-                                        bottomsheetAddSubSubCategoryClose()
-                                    }}
-                                >
-                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
-                                </TouchableOpacity>
                             </View>
                         </BottomSheetView>
                     </BottomSheetModal>

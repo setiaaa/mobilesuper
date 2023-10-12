@@ -1,14 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailTaskTM, getListDashboardTM, getListTaskTM, getTreeTM, postCommentTM } from "../service/api";
+import { getDetailTaskTM, getListDashboardTM, getListTaskTM, getTreeTM, postCategoryTM, postCommentTM } from "../service/api";
 
 const TaskSlice = createSlice({
     name: 'Task',
     initialState: {
         treeView: [],
-        task: {
-            lists: [],
-            detail: null,
-        },
         list: {
             id: '1',
             name: 'Dashboard',
@@ -17,27 +13,22 @@ const TaskSlice = createSlice({
             detail: null
         },
         variant: 'list',
-        addTask: {},
         refresh: false,
+        status: ''
     },
     reducers: {
-        setTaskLists: (state, action) => {
-            state.task.lists = action.payload;
-        },
-        setTaskDetail: (state, action) => {
-            state.task.detail = action.payload;
-
-        },
         setVariant: (state, action) => {
             state.variant = action.payload;
-
         },
         setAddTask: (state, action) => {
             state.addTask = action.payload;
         },
         setRefresh: (state, action) => {
             state.refresh = action.payload
-        }
+        },
+        setStatus: (state, action) => {
+            state.status = action.payload
+        },
     },
     extraReducers(builder) {
         builder
@@ -75,10 +66,17 @@ const TaskSlice = createSlice({
             .addCase(postCommentTM.fulfilled, (state, action) => {
                 state.refresh = true
             })
+            .addCase(postCategoryTM.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+                state.refresh = true
+            })
+            .addCase(postCategoryTM.rejected, (state, action) => {
+                state.status = 'error'
+            })
     }
 })
 
-export const { setTaskLists, setTaskDetail, setVariant, setAddTask, setRefresh } =
+export const { setVariant, setAddTask, setRefresh, setStatus } =
     TaskSlice.actions;
 
 export default TaskSlice.reducer;

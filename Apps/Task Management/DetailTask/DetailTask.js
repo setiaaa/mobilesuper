@@ -79,7 +79,7 @@ export const DetailTask = () => {
 
     useEffect(() => {
         if (refresh) {
-            console.log('masukkkkkkk')
+            console.log('detail')
             dispatch(getDetailTaskTM({ token: token, id_task: taskDetail.id }))
             dispatch(setRefresh(false))
         }

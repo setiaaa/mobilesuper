@@ -530,6 +530,11 @@ export const postCommentTM = createAsyncThunk("taskmanagement/postCommentTM", as
     return respon?.data
 })
 
+export const postCategoryTM = createAsyncThunk("calendar/postCategoryTM", async (data) => {
+    const respon = await axios.post(`${taskManagement}project/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
 //Penilian
 export const getListPenilaian = createAsyncThunk("mp/getListPenilaian", async (data) => {
     const respon = await axios.get(`${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}`, { headers: { Authorization: data.token } })

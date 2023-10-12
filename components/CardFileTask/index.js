@@ -9,6 +9,7 @@ import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { ResizeMode } from 'expo-av'
 import { StyleSheet } from 'react-native'
+import ListEmpty from '../../components/ListEmpty'
 
 const CardLampiran = ({ lampiran, onClick, type, id }) => {
     const navigation = useNavigation()
@@ -85,6 +86,9 @@ export const CardFileTask = ({ taskDetail }) => {
                 columnWrapperStyle={{ gap: 16 }}
                 numColumns={2}
                 keyExtractor={item => item.id}
+                ListEmptyComponent={() =>
+                    <ListEmpty />
+                }
             />
 
             {
