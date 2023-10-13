@@ -531,3 +531,40 @@ export const putTakeDown = createAsyncThunk("mp/putTakeDown", async ({ token, id
     const respon = await fetch(`${Linimasa}admin/evaluation/${id}/cancel/`, { method: 'put', headers: { Authorization: token } })
     return respon?.data
 })
+
+//agenda bersama
+export const getListGrup = createAsyncThunk("calendar/getListGrup", async (token) => {
+    const respon = await axios.get(`${kalender}calendar/?limit=10`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getListAcara = createAsyncThunk("calendar/getListAcara", async ({ token, id }) => {
+    const respon = await axios.get(`${kalender}calendar/${id}/event/`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const getListAgendaAcara = createAsyncThunk("calendar/getListAgendaAcara", async ({ token, id }) => {
+    const respon = await axios.get(`${kalender}calendar/agenda/?calendar_id=${id}`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const getDetailAcara = createAsyncThunk("calendar/getDetailAcara", async ({ token, id }) => {
+    const respon = await axios.get(`${kalender}calendar/event/${id}/retrieve/`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const getDetailAgendaAcara = createAsyncThunk(
+    "calendar/getDetailAgendaAcara",
+    async ({ token, id }) => {
+        const respon = await axios.get(`${kalender}event/${id}/retrieve/`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
+);
+
+export const getListSubAgenda = createAsyncThunk("calendar/getListSubAgenda", async ({ token, id }) => {
+    console.log(id)
+    const respon = await axios.get(`${kalender}event/${id}/agenda/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})

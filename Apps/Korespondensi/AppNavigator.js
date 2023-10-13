@@ -163,6 +163,7 @@ import { EditEvent } from "../Event Management/EditEvent";
 import { TambahSubAgenda } from "../Event Management/TambahSubAgenda";
 import { EditSubAgenda } from "../Event Management/EditSubAgenda";
 import { EditTodo } from "../Event Management/EditTodo";
+import { DetailAcaraAgenda } from "../Kalender/DetailAcaraAgenda";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -296,6 +297,13 @@ function AuthStack() {
         <Stack.Screen
           name="DetailAcara"
           component={DetailAcara}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailAcaraAgenda"
+          component={DetailAcaraAgenda}
           options={{
             headerShown: false,
           }}
