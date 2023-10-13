@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list';
-import { Calendar } from 'react-native-calendars';
+import { Calendar, modeToNum } from 'react-native-big-calendar';
 import moment from 'moment';
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { CardAgenda } from '../../components/CardAgenda';
@@ -27,6 +27,10 @@ import { setAgenda } from '../../store/GrupKalender';
 import { setKategori } from '../../store/GrupKalender';
 import { setSubKategori } from '../../store/GrupKalender';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { getTokenValue } from '../../service/session';
+import { getListAcara, getListAgendaAcara, getListGrup } from '../../service/api';
+import { TouchableHighlight } from 'react-native';
+import dayjs from 'dayjs';
 
 export const GrupKalender = () => {
   const navigation = useNavigation()
@@ -35,6 +39,9 @@ export const GrupKalender = () => {
   const bottomSheetModalInfoRef = useRef(null);
   const bottomSheetModalAddRef = useRef(null);
   const bottomSheetModalAddCatRef = useRef(null);
+  const bottomsheetModalGrupRef = useRef(null)
+  const [token, setToken] = useState('')
+  const [kegiatan, setKegiatan] = useState('')
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
   const {
@@ -70,134 +77,107 @@ export const GrupKalender = () => {
       bottomSheetModalAddCatRef.current?.close()
   }
 
+  const bottomSheetGrup = () => {
+    bottomsheetModalGrupRef.current?.present()
+  }
+
+  const bottomSheetCloseGrup = () => {
+    if (bottomsheetModalGrupRef.current)
+      bottomsheetModalGrupRef.current?.close()
+  }
+
   const [kategoriField, setKategoriField] = useState('')
   const [subkategoriField, setSubKategoriField] = useState('')
 
-  const kategori = [
-    { key: 'KKP', value: 'KKP' },
-    { key: 'CK', value: 'CEK' }
-  ]
-
-
-  const subKategori = {
-    'KKP': [
-      {
-        key: '1',
-        value: 'Kalender Direksi'
-      },
-      {
-        key: '2',
-        value: 'Kalender Grup'
-      }
-    ],
-    'CK': [
-      { key: '3', value: 'cek' },
-      { key: '4', value: 'halo' }
-    ]
-  }
-
-  const items = [
-    {
-      id: 1,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#1868AB'
-    },
-    {
-      id: 2,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#1868AB'
-    },
-    {
-      id: 3,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#EA5455'
-    },
-    {
-      id: 4,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#EA5455'
-    },
-    {
-      id: 5,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#F6AD1D'
-    },
-    {
-      id: 6,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#FF8F28'
-    },
-    {
-      id: 7,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#F6AD1D'
-    },
-    {
-      id: 8,
-      kegiatan: 'Rapat gabungan dengan seluruh anggota',
-      subAvatar: [
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 },
-        { avatar: AVATAR.U2 }
-      ],
-      warna: '#11C15B'
-    }
-  ]
-
   const [current, setCurrent] = useState()
+  const [events, setEvents] = useState([])
 
   const dispatch = useDispatch()
+  useEffect(() => {
+    getTokenValue().then(val => {
+      setToken(val)
+    })
+  }, [])
 
   useEffect(() => {
-    dispatch(setAgenda(items))
-    dispatch(setKategori(kategori))
-    dispatch(setSubKategori(subKategori))
-  }, []);
+    if (token !== '') {
+      dispatch(getListGrup(token))
+    }
+  }, [token])
 
-  const { agenda, dropdown } = useSelector(state => state.grupKalender)
+
+  const { agenda, acara } = useSelector(state => state.grupKalender)
+
+  const stringToColor = (string) => {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+
+    return color;
+  }
+
+  useEffect(() => {
+    let newArr = []
+    if (acara.lists?.length > 0) {
+      acara.lists?.map(child => {
+        const startDate = dayjs(child.start_date).format('YYYY-MM-DD')
+        const endDate = dayjs(child.end_date).format('YYYY-MM-DD')
+        let obj = {
+          title: child.name || child.title,
+          start: dayjs(startDate).set("hour", 10).set("minute", 0).toDate(),
+          end: dayjs(endDate).set("hour", 10).set("minute", 0).toDate(),
+          color: {
+            backgroundColor: stringToColor(child.pic.title.name)
+          }
+        }
+        newArr.push(obj)
+      })
+      setEvents(newArr)
+    } else setEvents([])
+  }, [acara])
+
+
+  const datagrup = () => {
+    let arr = []
+    agenda.lists.map(item => {
+      arr.push({
+        key: item.id,
+        value: item.name
+      })
+    })
+    return arr
+  }
+
+  const today = new Date()
+  const [date, setDate] = useState(today)
+
+  const _onPrevDate = () => {
+    setDate(
+      dayjs(date)
+        .add(dayjs(date).date() * -1, 'day')
+        .toDate(),
+    )
+  }
+
+  const _onNextDate = () => {
+    setDate(dayjs(date).add(modeToNum('month', date), 'day').toDate())
+  }
+
+  const _onToday = () => {
+    setDate(today)
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -225,22 +205,90 @@ export const GrupKalender = () => {
 
             <View style={{ flexDirection: 'row', marginVertical: 20, gap: 10, zIndex: 1 }}>
               <View style={{ width: '75%', marginLeft: 20 }}>
-                <Dropdown
-                  data={dropdown.kategori}
-                  setSelected={setKategoriField}
-                  placeHolder={'Pilih Kategori'}
-                />
-                {kategoriField !== '' ? (
-                  <View style={{ marginTop: 20 }}>
-                    <Dropdown
-                      data={dropdown.subKategori[kategoriField.key]}
-                      setSelected={setSubKategoriField}
-                      placeHolder={'Pilih SubKategori'}
-                    />
-                  </View>
-                ) : (
-                  <></>
-                )}
+                <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', justifyContent: 'center', borderRadius: 8, height: 45, paddingLeft: 20 }}
+                  onPress={() => {
+                    bottomSheetGrup()
+                  }}
+                >
+                  <Text>Pilih Grup</Text>
+                </TouchableOpacity>
+                <BottomSheetModal
+                  ref={bottomsheetModalGrupRef}
+                  snapPoints={animatedSnapPoints}
+                  handleHeight={animatedHandleHeight}
+                  contentHeight={animatedContentHeight}
+                  index={0}
+                  style={{ borderRadius: 50 }}
+                  keyboardBlurBehavior="restore"
+                  android_keyboardInputMode="adjust"
+                  backdropComponent={({ style }) => (
+                    <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                  )}
+                >
+                  <BottomSheetView onLayout={handleContentLayout}>
+                    <View style={{ marginVertical: 20, marginLeft: 20 }}>
+                      <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Pilih Grup</Text>
+                    </View>
+                    <View style={{ width: '90%', marginLeft: 20, marginBottom: 20 }}>
+                      <Dropdown
+                        data={datagrup()}
+                        setSelected={setKategoriField}
+                        placeHolder={'Pilih Kategori'}
+                        borderWidth={1}
+                        borderWidthValue={1}
+                        borderwidthDrop={1}
+                        borderColor={COLORS.ExtraDivinder}
+                        borderColorDrop={COLORS.ExtraDivinder}
+                        borderColorValue={COLORS.ExtraDivinder}
+                      />
+                      {kategoriField !== '' ? (
+                        <>
+                          <View style={{ marginVertical: 20, flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}
+                              onPress={() => {
+                                dispatch(getListAcara({ token: token, id: kategoriField.key }))
+                                setKegiatan('acara kalender')
+                                bottomSheetCloseGrup()
+                              }}
+                            >
+                              <Ionicons name='calendar' size={24} color={COLORS.grey} />
+                              <Text>Acara Kalender</Text>
+                            </TouchableOpacity>
+                            <Ionicons name='add-outline' size={24} color={COLORS.primary} />
+                          </View>
+
+                          <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}
+                            onPress={() => {
+                              dispatch(getListAgendaAcara({ token: token, id: kategoriField.key }))
+                              setKegiatan('acara agenda')
+                              bottomSheetCloseGrup()
+                            }}
+                          >
+                            <Ionicons name='calendar-outline' size={24} color={COLORS.grey} />
+                            <Text>Acara agenda Rapat</Text>
+                          </TouchableOpacity>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+
+                    </View>
+                    {/* {kategoriField !== '' ? (
+                      <View style={{ marginTop: 20 }}>
+                        <Dropdown
+                          data={dropdown.subKategori[kategoriField.key]}
+                          setSelected={setSubKategoriField}
+                          placeHolder={'Pilih SubKategori'}
+                        />
+                      </View>
+                    ) : (
+                      <></>
+                    )} */}
+
+
+
+                  </BottomSheetView>
+                </BottomSheetModal>
               </View>
               <View style={{ backgroundColor: 'white', width: '11%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, height: 45 }}>
                 <TouchableOpacity onPress={bottomSheetinfo}>
@@ -293,68 +341,69 @@ export const GrupKalender = () => {
               </View>
             </View>
 
+            <View style={{
+              marginLeft: 20,
+              marginBottom: 20,
+            }}>
+              <Text style={{
+                fontSize: FONTSIZE.Judul,
+                fontWeight: FONTWEIGHT.bold,
+              }}
+              >{kategoriField !== '' ? kategoriField.value : null}</Text>
+            </View>
+
             <View>
-              <TouchableOpacity onPress={() => setCurrent(moment(Date.now()).format('YYYY-MM-DD'))} style={{ position: 'absolute', marginTop: 15, right: 90, zIndex: 1 }}>
-                <Ionicons name='calendar-outline' size={20} color={COLORS.primary} />
-              </TouchableOpacity>
-              <Calendar
-                current={current}
-                key={current}
-                onDayPress={day => {
-                  setSelected(day.dateString);
-                  console.log(day.dateString)
-                  setCurrent(day.dateString);
-                }}
-                markedDates={{
-                  [moment(Date.now()).format('YYYY-MM-DD')]: {
-                    // customStyles: {
-                    //   container: {
-                    //     backgroundColor: COLORS.primary,
-                    //     borderTopRightRadius: 4,
-                    //     borderTopLeftRadius: 8,
-                    //     borderBottomLeftRadius: 4,
-                    //     borderBottomRightRadius: 8
-                    //   },
-                    //   text: {
-                    //     color: COLORS.white,
-                    //   }
-                    // }
-                    selected: true,
-                  },
+              <View style={{ width: '90%', marginHorizontal: 20, backgroundColor: COLORS.white, padding: 10, borderRadius: 8 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20, alignItems: 'center' }}>
+                  <TouchableOpacity onPress={() => {
+                    _onPrevDate()
+                  }}>
+                    <Ionicons name='chevron-back' size={24} color={COLORS.primary} />
+                  </TouchableOpacity>
 
-                  ['2023-08-06']: {
-                    marked: 'true',
-                    type: 'multi-dot',
-                    dots: [
-                      { color: 'red' },
-                      { color: 'blue' },
-                      { color: 'green' },
-                      { color: 'orange' }
-                    ],
+                  <Text style={{
+                    fontSize: FONTSIZE.Judul,
+                    fontWeight: FONTWEIGHT.bold
+                  }}>{dayjs(date).format('MMMM YYYY')}</Text>
 
-                  }
-                }}
-                markingType='multi-dot'
-                style={{ width: '90%', marginLeft: 20, borderRadius: 8 }}
-                theme={{
-                  arrowColor: COLORS.primary,
-                  selectedDayBackgroundColor: COLORS.primary,
-                  todayTextColor: COLORS.white,
+                  <TouchableOpacity onPress={() => {
+                    _onToday()
+                  }}>
+                    <Ionicons name='calendar' size={24} color={COLORS.primary} />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => {
+                    _onNextDate()
+                  }}>
+                    <Ionicons name='chevron-forward' size={24} color={COLORS.primary} />
+                  </TouchableOpacity>
+                </View>
+                <Calendar
+                  events={events}
+                  height={500}
+                  mode='month'
+                  date={date}
+                  eventCellStyle={(x) => x.color}
+                />
+              </View>
 
-                }}
-              />
             </View>
             <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 20 }}>
-              <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Agenda hari ini</Text>
+              {kegiatan === 'acara kalender' ? (
+                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Acara Kalender</Text>
+              ) : kegiatan === 'acara agenda' ? (
+                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Acara Agenda Rapat</Text>
+              ) : (
+                <></>
+              )}
               <View style={{ marginVertical: 20 }}>
-                {agenda.lists.slice(0, 2).map((item) => {
+                {acara.lists.slice(0, 2).map((item) => {
                   return (
                     <View key={item.id}>
                       <CardAgenda
-                        kegiatan={item.kegiatan}
-                        subAvatar={item.subAvatar}
-                        warna={item.warna}
-                        id={item.id}
+                        item={item}
+                        stringToColor={stringToColor}
+                        token={token}
+                        kegiatan={kegiatan}
                       />
                     </View>
                   )
@@ -519,17 +568,17 @@ export const GrupKalender = () => {
                 >
                   <BottomSheetView onLayout={handleContentLayout} >
                     <View style={{ marginVertical: 20, marginLeft: 20 }}>
-                      <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Agenda hari ini</Text>
+                      <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Acara Kalender</Text>
                     </View>
                     <View style={{ marginHorizontal: 20, marginBottom: 40 }}>
                       <FlatList
-                        data={agenda.lists}
+                        data={acara.lists}
                         renderItem={({ item }) => <CardAgenda
-                          kegiatan={item.kegiatan}
-                          subAvatar={item.subAvatar}
-                          warna={item.warna}
+                          item={item}
+                          stringToColor={stringToColor}
                         />
                         }
+                        style={{ height: 500 }}
                         keyExtractor={item => item.id}
                       />
                     </View>

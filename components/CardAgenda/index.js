@@ -5,11 +5,36 @@ import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import moment from 'moment'
+import { useDispatch } from 'react-redux'
+import { getDetailAcara, getDetailAgendaAcara, getListSubAgenda } from '../../service/api'
 
-export const CardAgenda = ({ kegiatan, subAvatar, warna, id }) => {
+export const CardAgenda = ({ item, stringToColor, token, kegiatan }) => {
     const navigation = useNavigation()
+
+    const dispatch = useDispatch();
+
+    const getDetail = (id) => {
+        const params = { token, id };
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getDetailAcara(params))
+        if (kegiatan === 'acara kalender') {
+        } else {
+            dispatch(getDetailAgendaAcara(params))
+            dispatch(getListSubAgenda(params))
+        }
+    };
     return (
-        <TouchableOpacity key={id} onPress={() => navigation.navigate('DetailAcara')}>
+        <TouchableOpacity key={item.id}
+            onPress={() => {
+                getDetail(item.id)
+                if (kegiatan === 'acara kalender') {
+                    navigation.navigate('DetailAcara')
+                } else {
+                    navigation.navigate('DetailAcaraAgenda')
+                }
+            }
+            }>
             <View style={{
                 width: '100%',
                 backgroundColor: COLORS.white,
@@ -25,39 +50,31 @@ export const CardAgenda = ({ kegiatan, subAvatar, warna, id }) => {
                 //shadow android
                 elevation: 5
             }}>
-                {warna === "#1868AB" ? (
-                    <View style={{ width: '3%', backgroundColor: COLORS.info, height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
-                ) : warna === "#EA5455" ? (
-                    <View style={{ width: '3%', backgroundColor: '#EA5455', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
 
-                ) : warna === "#F6AD1D" ? (
-                    <View style={{ width: '3%', backgroundColor: '#F6AD1D', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
+                <View style={{ width: '3%', backgroundColor: stringToColor(item.pic.title.name), height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
 
-                ) : warna === "#FF8F28" ? (
-                    <View style={{ width: '3%', backgroundColor: '#FF8F28', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
-
-                ) : warna === "#11C15B" ? (
-                    <View style={{ width: '3%', backgroundColor: '#11C15B', height: 58, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
-                ) : (
-                    <></>
-                )}
-                <View style={{ alignItems: 'center', justifyContent: 'center', marginHorizontal: 20 }}>
-                    <Text style={{ fontSize: FONTSIZE.H4, fontWeight: FONTWEIGHT.normal }}>{kegiatan}</Text>
+                <View style={{ justifyContent: 'center', marginHorizontal: 20, width: 250 }}>
+                    <Text>{item.name || item.title}</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 5 }}>
+                        <Text style={{ color: COLORS.lighter }}>{moment(item.start_date).format('YYYY-MM-DD')} - </Text>
+                        <Text style={{ color: COLORS.lighter }}>{moment(item.end_date).format('YYYY-MM-DD')}</Text>
+                    </View>
                 </View>
                 <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', alignItems: 'center' }}>
-                    {subAvatar.map((data, index) => {
-                        return (
-                            <View key={index}>
-                                <Image source={require('../../assets/superApp/AvatarDetail.png')} style={{
-                                    marginLeft: -8,
-                                    borderWidth: 2,
-                                    borderRadius: 50,
-                                    borderColor: COLORS.white,
-                                }} />
-                            </View>
-                        )
-                    })}
-                    {/* <Image source={subAvatar} /> */}
+                    {/* {subAvatar.map((data, index) => {
+                        return ( */}
+                    <View>
+                        <Image source={{ uri: item.pic.avatar_url }} style={{
+                            marginLeft: -8,
+                            borderWidth: 2,
+                            borderRadius: 50,
+                            borderColor: COLORS.white,
+                            width: 40,
+                            height: 40
+                        }} />
+                    </View>
+                    {/* )
+                     })} */}
                 </View>
             </View>
         </TouchableOpacity>
