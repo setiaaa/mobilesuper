@@ -525,14 +525,34 @@ export const getDetailTaskTM = createAsyncThunk("taskmanagement/getDetailTaskTM"
     return respon?.data.result
 })
 
+export const getDetailProjectTM = createAsyncThunk("taskmanagement/getDetailProjectTM", async ({ token, id_project, type = '' }) => {
+    const respon = await axios.get(`${taskManagement}project/${id_project}/retrieve/`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.result,
+        type: type
+    }
+})
+
 export const postCommentTM = createAsyncThunk("taskmanagement/postCommentTM", async (data, setRefresh = undefined) => {
     const respon = await axios.post(`${taskManagement}comment/create/`, data.payload, { headers: { Authorization: data.token } })
     return respon?.data
 })
 
-export const postCategoryTM = createAsyncThunk("calendar/postCategoryTM", async (data) => {
+export const postCategoryTM = createAsyncThunk("taskmanagement/postCategoryTM", async (data) => {
     const respon = await axios.post(`${taskManagement}project/create/`, data.payload, { headers: { Authorization: data.token } })
     return respon?.data
+})
+
+export const postTaskTM = createAsyncThunk("taskmanagement/postTaskTM", async (data) => {
+    const respon = await axios.post(`${taskManagement}task/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const postAttachmentTM = createAsyncThunk("taskmanagement/postAttachmentTM", async (data) => {
+    let formData = new FormData()
+    formData.append('file', data.result)
+    const respon = await axios.post(`${taskManagement}attachment/create/`, formData, { headers: { Authorization: data.token } })
+    return respon?.data.result
 })
 
 //Penilian

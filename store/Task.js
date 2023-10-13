@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailTaskTM, getListDashboardTM, getListTaskTM, getTreeTM, postCategoryTM, postCommentTM } from "../service/api";
+import { getDetailProjectTM, getDetailTaskTM, getListDashboardTM, getListTaskTM, getTreeTM, postAttachmentTM, postCategoryTM, postCommentTM, postTaskTM } from "../service/api";
 
 const TaskSlice = createSlice({
     name: 'Task',
@@ -12,6 +12,8 @@ const TaskSlice = createSlice({
             data: [],
             detail: null
         },
+        attachment: [],
+        detailProject: null,
         variant: 'list',
         refresh: false,
         status: ''
@@ -71,6 +73,30 @@ const TaskSlice = createSlice({
                 state.refresh = true
             })
             .addCase(postCategoryTM.rejected, (state, action) => {
+                state.status = 'error'
+            })
+            .addCase(getDetailProjectTM.fulfilled, (state, action) => {
+                const data = action.payload.data
+                const type = action.payload.type
+                if (type !== '') {
+                    const newDataList = {
+                        ...state.list,
+                        id: data.id,
+                        name: data.nama,
+                        type: 'Detail Project',
+                    }
+                    state.list = newDataList;
+                }
+                state.detailProject = data
+            })
+            .addCase(postAttachmentTM.fulfilled, (state, action) => {
+                state.attachment = [...state.attachment, action.payload]
+            })
+            .addCase(postTaskTM.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+                state.refresh = true
+            })
+            .addCase(postTaskTM.rejected, (state, action) => {
                 state.status = 'error'
             })
     }
