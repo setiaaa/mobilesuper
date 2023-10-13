@@ -8,18 +8,17 @@ import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
 
 
-export const CardTaskCari = ({ kegiatan, subAvatar, warna }) => {
+export const CardTaskCari = ({ index, title, members, warna }) => {
     const navigation = useNavigation()
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('MainDetailTask')}>
+        <TouchableOpacity onPress={() => navigation.navigate('MainDetailTask', { id: index })}>
             <View style={{
                 width: '100%',
                 backgroundColor: COLORS.white,
                 borderRadius: 8,
                 flexDirection: 'row',
-                gap: 1,
+                gap: 20,
                 marginVertical: 5,
-                justifyContent: 'space-between',
                 //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: '#171717',
@@ -44,25 +43,28 @@ export const CardTaskCari = ({ kegiatan, subAvatar, warna }) => {
                 ) : (
                     <></>
                 )}
-                <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
+                <View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row', flex: 1 }}>
                     <Text
                         ellipsizeMode='tail'
                         numberOfLines={1}
                         style={{
-                            fontSize: FONTSIZE.H4,
-                            fontWeight: FONTWEIGHT.normal,
-                            width: 200
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: FONTSIZE.H2
                         }}
-                    >{kegiatan}</Text>
+                    >
+                        {title}
+                    </Text>
                 </View>
-                <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', alignItems: 'center' }}>
-                    {subAvatar.map((data) => {
+                <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    {members.map((data, index) => {
                         return (
-                            <Image source={data.avatar} style={{
-                                marginLeft: -8,
+                            <Image source={{ uri: data.avatar_url }} style={{
+                                marginLeft: index === 0 ? 0 : -8,
                                 borderWidth: 2,
                                 borderRadius: 50,
                                 borderColor: COLORS.white,
+                                width: 30,
+                                height: 30
                             }} />
                         )
                     })}

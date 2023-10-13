@@ -6,49 +6,52 @@ import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-export const CardListGridTask = ({ tanggal, kegiatan, prioritas, subAvatar }) => {
+export const CardListGridTask = ({ id, title, duedate, priority, members }) => {
     const navigation = useNavigation()
     return (
-        <TouchableOpacity onPress={() => { navigation.navigate('MainDetailTask') }}>
+        <TouchableOpacity onPress={() => { navigation.navigate('MainDetailTask', { id: id }) }}>
             <View
                 style={{
-                    width: '100%',
+                    width: 174,
+                    flex: 1,
+                    height: 150,
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
-                    gap: 1,
+                    padding: 16,
                     marginVertical: 5,
                     //shadow
                     shadowOffset: { width: -2, height: 4 },
                     shadowColor: '#171717',
                     shadowOpacity: 0.2,
                     shadowRadius: 3,
-                    width: 177,
-
+                    display: 'flex',
+                    justifyContent: 'space-between'
                 }}>
-                <View style={{ marginVertical: 10, marginLeft: 10 }}>
-                    <Text>{kegiatan}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, flex: 1 }} numberOfLines={2}>{title}</Text>
                 </View>
-                <View style={{ marginBottom: 10, marginLeft: 10 }}>
-                    <Text>Due Date: {tanggal}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text>{duedate}</Text>
                 </View>
-                <View style={{ marginBottom: 10, marginLeft: 10, flexDirection: 'row', alignItems: 'center' }}>
-                    <Text>Prioritas: </Text>
-                    <View style={{ backgroundColor: COLORS.infoDangerLight, borderRadius: 30 }}>
-                        <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary, marginHorizontal: 8, marginVertical: 4 }}>{prioritas}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ backgroundColor: priority === 'high' ? COLORS.infoDangerLight : priority === 'normal' ? COLORS.successLight : COLORS.infoLight, borderRadius: 30, padding: 4 }}>
+                        <Text style={{ fontSize: FONTSIZE.H4, color: priority === 'high' ? COLORS.infoDanger : priority === 'normal' ? COLORS.success : COLORS.info, textTransform: 'capitalize' }}>{priority}</Text>
                     </View>
                 </View>
-                <View style={{ marginBottom: 10, marginLeft: 10, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                    <Text>Member: </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                     <View style={{ flexDirection: 'row', position: 'relative', display: 'flex', alignItems: 'center', }}>
-                        {subAvatar.map((data) => {
+                        {members.map((data, index) => {
                             return (
-                                <Image source={data.avatar} style={{
-                                    marginLeft: -8,
-                                    borderWidth: 2,
-                                    borderRadius: 50,
-                                    borderColor: COLORS.white,
-                                }}
-                                />
+                                <View key={data.nip}>
+                                    <Image source={{ uri: data.avatar_url }} style={{
+                                        marginLeft: index === 0 ? 0 : -8,
+                                        borderWidth: 2,
+                                        borderRadius: 50,
+                                        borderColor: COLORS.white,
+                                        width: 30,
+                                        height: 30
+                                    }} />
+                                </View>
                             )
                         })}
                     </View>

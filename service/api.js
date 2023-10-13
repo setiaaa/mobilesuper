@@ -14,6 +14,7 @@ const banner = BASE_URL + "bridge/home/benner/";
 const galeri = BASE_URL + "bridge/home/gallery/";
 const berita = BASE_URL + "bridge/home/news/?page=1";
 const detailBerita = BASE_URL + "bridge/home/news/";
+const taskManagement = BASE_URL + "calendar/";
 
 
 //Login
@@ -498,6 +499,40 @@ export const postComment = createAsyncThunk("mp/postComment", async (data, setRe
 export const getListsLike = createAsyncThunk("mp/getListsLike", async ({ token, id }) => {
     const respon = await axios.get(`${Linimasa}linimasa/${id}/like/list/`, { headers: { Authorization: token } })
     return respon?.data.results
+})
+
+//TASK MANAGEMENT
+export const getTreeTM = createAsyncThunk("taskmanagement/getTreeTM", async ({ token }) => {
+    const respon = await axios.get(`${taskManagement}project/tree/`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const getListDashboardTM = createAsyncThunk("taskmanagement/getListDashboardTM", async ({ token }) => {
+    const respon = await axios.get(`${taskManagement}dashboard/list/`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const getListTaskTM = createAsyncThunk("taskmanagement/getListTaskTM", async ({ token, id_list, type }) => {
+    const respon = await axios.get(`${taskManagement}list-task/${id_list}/retrieve/`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.result,
+        type: type
+    }
+})
+
+export const getDetailTaskTM = createAsyncThunk("taskmanagement/getDetailTaskTM", async ({ token, id_task }) => {
+    const respon = await axios.get(`${taskManagement}task/${id_task}/retrieve/`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const postCommentTM = createAsyncThunk("taskmanagement/postCommentTM", async (data, setRefresh = undefined) => {
+    const respon = await axios.post(`${taskManagement}comment/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const postCategoryTM = createAsyncThunk("calendar/postCategoryTM", async (data) => {
+    const respon = await axios.post(`${taskManagement}project/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
 })
 
 //Penilian
