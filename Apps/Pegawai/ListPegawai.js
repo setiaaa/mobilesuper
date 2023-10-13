@@ -18,176 +18,20 @@ import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native';
 import ListEmpty from '../../components/ListEmpty';
 import { Platform } from 'react-native';
+import { getTokenValue } from '../../service/session';
+import { getDetailPegawai, getPegawai } from '../../service/api';
 
-const dataPegawai = [
-    {
-        id: 1,
-        avatar: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        nip: '197406261999031004',
-        unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
-        harikerja: '17',
-        hadir: '13',
-        terlambat: '-',
-        dinas: '4',
-        cuti: '-',
-        ipasn: '85',
-        jenisipasn: 'Tinggi',
-        kualifikasi: '60',
-        kompetensi: '100',
-        kinerja: '83,3',
-        disiplin: '100',
-        email: 'trian@kkp.com',
-        satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal',
-        dataLinimasa: [
-            {
-                id: '1',
-                image: require('../../assets/superApp/ikan.png'),
-                judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-                nama: 'Rizky Novriansyah',
-                jenis: 'Penelitian',
 
-            },
-            {
-                id: '2',
-                image: require('../../assets/superApp/ikan.png'),
-                judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-                nama: 'Rizky Novriansyah',
-                jenis: 'Kegiatan',
-            },
-            {
-                id: '3',
-                image: require('../../assets/superApp/ikan.png'),
-                judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-                nama: 'Rizky Novriansyah',
-                jenis: 'Infografis',
-            },
-            {
-                id: '4',
-                image: require('../../assets/superApp/ikan.png'),
-                judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-                nama: 'Rizky Novriansyah',
-                jenis: 'Penelitian',
-            },
-            {
-                id: '5',
-                image: require('../../assets/superApp/ikan.png'),
-                judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-                nama: 'Rizky Novriansyah',
-                jenis: 'Penelitian',
-            },
-            {
-                id: '6',
-                image: require('../../assets/superApp/ikan.png'),
-                judul: 'Blog Pertama dari Penulis Sepenuh Hati untuk Pembaca',
-                nama: 'Rizky Novriansyah',
-                jenis: 'Penelitian',
-            }
-        ]
-    },
-    {
-        id: 2,
-        avatar: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        nip: '197406261999031005',
-        unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
-        harikerja: '17',
-        hadir: '13',
-        terlambat: '-',
-        dinas: '4',
-        cuti: '-',
-        ipasn: '85',
-        jenisipasn: 'Tinggi',
-        kualifikasi: '60',
-        kompetensi: '100',
-        kinerja: '83,3',
-        disiplin: '100',
-        email: 'trian@kkp.com',
-        satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
-    },
-    {
-        id: 3,
-        avatar: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        nip: '197406261999031006',
-        unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
-        harikerja: '17',
-        hadir: '13',
-        terlambat: '-',
-        dinas: '4',
-        cuti: '-',
-        ipasn: '85',
-        jenisipasn: 'Tinggi',
-        kualifikasi: '60',
-        kompetensi: '100',
-        kinerja: '83,3',
-        disiplin: '100',
-        email: 'trian@kkp.com',
-        satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
-    },
-    {
-        id: 4,
-        avatar: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        nip: '197406261999031007',
-        unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
-        harikerja: '17',
-        hadir: '13',
-        terlambat: '-',
-        dinas: '4',
-        cuti: '-',
-        ipasn: '85',
-        jenisipasn: 'Tinggi',
-        kualifikasi: '60',
-        kompetensi: '100',
-        kinerja: '83,3',
-        disiplin: '100',
-        email: 'trian@kkp.com',
-        satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
-    },
-    {
-        id: 5,
-        avatar: AVATAR.U3,
-        nama: 'TRIAN YUNANDA, S.PI, M.SC',
-        nip: '197406261999031008',
-        unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
-        harikerja: '17',
-        hadir: '13',
-        terlambat: '-',
-        dinas: '4',
-        cuti: '-',
-        ipasn: '85',
-        jenisipasn: 'Tinggi',
-        kualifikasi: '60',
-        kompetensi: '100',
-        kinerja: '83,3',
-        disiplin: '100',
-        email: 'trian@kkp.com',
-        satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
-    },
-    {
-        id: 6,
-        avatar: AVATAR.U3,
-        nama: 'cekkk',
-        nip: '197406261999031009',
-        unit: 'Unit Pusat Pendidikan Kelautan dan Perikanan',
-        harikerja: '17',
-        hadir: '13',
-        terlambat: '-',
-        dinas: '4',
-        cuti: '-',
-        ipasn: '85',
-        jenisipasn: 'Tinggi',
-        kualifikasi: '60',
-        kompetensi: '100',
-        kinerja: '83,3',
-        disiplin: '100',
-        email: 'trian@kkp.com',
-        satker: 'Kepala Biro Sumber Daya Manusia Aparatur Dan Organisasi, Sektretariat Jenderal'
-    },
-]
 
-const CardListPegawai = ({ item, collapse, setCollapse, navigation }) => {
+const CardListPegawai = ({ item, collapse, setCollapse, token }) => {
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
+
+    const getDetail = (nip) => {
+        const params = { token, nip }
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getDetailPegawai(params))
+    }
     return (
         <View style={{
             flexDirection: 'column', display: 'flex',
@@ -223,10 +67,10 @@ const CardListPegawai = ({ item, collapse, setCollapse, navigation }) => {
 
                     <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
                         <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>Unit Kerja</Text>
-                        <Text style={{ marginTop: 5 }}>{item.unit}</Text>
+                        <Text style={{ marginTop: 5 }}>{item.nama_jabatan}</Text>
 
                         <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>SATKER</Text>
-                        <Text style={{ marginTop: 5 }}>{item.satker}</Text>
+                        <Text style={{ marginTop: 5 }}>{item.unit_kerja}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{
@@ -238,7 +82,10 @@ const CardListPegawai = ({ item, collapse, setCollapse, navigation }) => {
                         marginTop: 20,
                         borderRadius: 8,
                     }}
-                        onPress={() => navigation.navigate('DetailProfile', { item: item })}
+                        onPress={() => {
+                            getDetail(item.nip)
+                            navigation.navigate('DetailProfile')
+                        }}
                     >
                         <Text style={{ color: COLORS.white }}>Lihat Detail Pegawai</Text>
                     </TouchableOpacity>
@@ -257,33 +104,45 @@ export const ListPegawai = () => {
         nip: '',
         toggle: false
     })
-    useEffect(() => {
-        dispatch(setPegawai(dataPegawai))
-    }, []);
-
-    const { pegawai } = useSelector(state => state.Pegawai)
+    // useEffect(() => {
+    //     dispatch(setPegawai(dataPegawai))
+    // }, []);
+    const [token, setToken] = useState('')
 
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
 
-    const filter = (event) => {
-        setSearch(event)
-    }
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
 
     useEffect(() => {
-        setFilterData(pegawai.lists)
-    }, [pegawai])
-
-    useEffect(() => {
-        if (search !== '') {
-            const data = pegawai.lists.filter((item) => {
-                return item.nama.toLowerCase().includes(search.toLowerCase());
-            })
-            setFilterData(data)
-        } else {
-            setFilterData(pegawai.lists)
+        if (token !== '') {
+            dispatch(getPegawai(token))
         }
-    }, [search])
+    }, [token])
+
+    const { pegawai } = useSelector(state => state.Pegawai)
+    // const filter = (event) => {
+    //     setSearch(event)
+    // }
+
+    // useEffect(() => {
+    //     setFilterData(pegawai.lists)
+    // }, [pegawai])
+
+    // useEffect(() => {
+    //     if (search !== '') {
+    //         const data = pegawai.lists.filter((item) => {
+    //             return item.nama.toLowerCase().includes(search.toLowerCase());
+    //         })
+    //         setFilterData(data)
+    //     } else {
+    //         setFilterData(pegawai.lists)
+    //     }
+    // }, [search])
 
     const navigation = useNavigation()
 
@@ -312,17 +171,18 @@ export const ListPegawai = () => {
                 <View style={{ width: '90%', marginVertical: 20, marginHorizontal: 20, }}>
                     <Search
                         placeholder={'Cari'}
-                        onSearch={filter}
+                    // onSearch={filter}
                     />
                 </View>
 
                 <FlatList
-                    data={filterData}
+                    data={pegawai.lists}
                     renderItem={({ item }) => <CardListPegawai
                         item={item}
                         collapse={collapse}
                         setCollapse={setCollapse}
                         navigation={navigation}
+                        token={token}
                     />
                     }
                     keyExtractor={item => item.id}

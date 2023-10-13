@@ -4,12 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
-export const CardSatker = () => {
+export const CardSatker = ({ profile }) => {
     const navigation = useNavigation()
     return (
         <View style={styles.card}>
             <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text style={{ textAlign: 'center', color: COLORS.primary, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>DIREKTORAT JENDRAL PERIKANAN TANGKAP</Text>
+                <Text style={{ textAlign: 'center', color: COLORS.primary, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{profile.satuan_kerja_nama}</Text>
             </View>
         </View>
     )

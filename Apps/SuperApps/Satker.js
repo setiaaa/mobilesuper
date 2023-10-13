@@ -13,8 +13,28 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { CardUltah } from '../../components/CardUltah';
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { getTokenValue } from '../../service/session';
+import { getBennerSatker, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah } from '../../service/api';
+
+const BannerSetjen = [
+    {
+        image: require('../../assets/superApp/setjen_1.jpg'),
+        title: 'Pelantikan CPNS menjadi PNS di Lingkup Sekretariat Jenderal',
+        additional_title: 'Kementerian Kelautan dan Perikanan melantik 10 Kepala Pelabuhan Perikanan pada Jumat '
+    },
+    {
+        image: require('../../assets/superApp/setjen_2.jpg'),
+        title: 'Sekjen KKP, Antam Novambar melantik Dewan Pengawas BLU LPMUKP',
+        additional_title: 'Sekretaris Jenderal KKP, Antam Novambar melantik Dewan Pengawas untuk Badan Layanan Umum Lembaga Pengelola Modal Usaha Kelautan dan Perikanan (BLU LPMUKP) di Kantor Pusat KKP'
+    },
+    {
+        image: require('../../assets/superApp/setjen_3.jpg'),
+        title: 'Sosialisasi Zona Integritas dan Penandatanganan Pakta Integritas Petugas Pelayanan Terpadu Satu Pintu Kementerian Kelautan dan Perikanan (PTSP KKP)',
+        additional_title: 'Pada hari Selasa (20/8) telah dilaksanakan Sosialisasi Zona Integritas dan Penandatanganan Pakta Integritas Petugas Pelayanan Terpadu Satu Pintu Kementerian Kelautan dan Perikanan (PTSP KKP)'
+    }
+]
 
 
 
@@ -29,19 +49,43 @@ export const Satker = () => {
 
     const [slide, setSlide] = useState(0)
     const [slide2, setSlide2] = useState(0)
+    const [token, setToken] = useState('')
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getBennerSatker(token))
+            dispatch(getGallerySatker(token))
+            dispatch(getSatkerNews(token))
+            dispatch(getPesan(token))
+            dispatch(getUltah(token))
+            dispatch(getSatkerLinimasa(token))
+        }
+    }, [token])
 
     // useEffect(() => {
     //     setEntries(ENTRIES);
     //     setBerita(Berita);
     // }, []);
 
-    const { berita, galeri, profile, mading, linimasa, ultah, banner } = useSelector(state => state.superApps)
+
+    const { benner, gallery, berita, pesan, ultah, linimasa } = useSelector(state => state.satker)
+    const { profile } = useSelector((state) => state.superApps);
+
+    console.log(profile.satuan_kerja_nama)
 
     const renderItem = ({ item, index }, parallaxProps) => {
         return (
             <View style={[styles.item, { marginVertical: 20 }]}>
                 <ParallaxImage
-                    source={item.image}
+                    source={{ uri: item.main_images.image }}
                     containerStyle={styles.imageContainer}
                     style={styles.image}
                     parallaxFactor={0.4}
@@ -52,11 +96,12 @@ export const Satker = () => {
     };
 
     const renderItem2 = ({ item, index }, parallaxProps) => {
+        const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
         return (
             <>
                 <View style={[styles.items, { marginTop: 20 }]}>
                     <ParallaxImage
-                        source={item.image2}
+                        source={{ uri: item.image }}
                         containerStyle={styles.imageContainer}
                         style={styles.images}
                         parallaxFactor={0.4}
@@ -65,51 +110,53 @@ export const Satker = () => {
                 </View>
                 <View style={{ backgroundColor: COLORS.white, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, paddingHorizontal: 20 }}>
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                        <Image source={item.avatar} style={{ borderRadius: 50 }} />
+                        <Image source={{ uri: BASE_URL + item.avatar }} style={{ borderRadius: 50, width: 60, height: 60 }} />
                         <View>
                             <Text style={{ marginLeft: 10, marginVertical: 10, fontSize: 12, fontWeight: 600, color: '#1868AB' }}>{item.nama}</Text>
-                            <Text style={{ marginLeft: 8, color: COLORS.lighter }}> {item.tanggal} </Text>
+                            <Text style={{ marginLeft: 8, color: COLORS.lighter }}> {item.created_at} </Text>
                         </View>
                     </View>
-                    <Text style={{ marginVertical: 20 }}>{item.deskripsi}</Text>
+                    <Text style={{ marginVertical: 20 }}>{item.content}</Text>
                 </View>
             </>
         );
     };
 
-    const CardLiniMasaSatker = ({ image, judul, nama, jenis, index }) => {
+    const CardLiniMasaSatker = ({ image, judul, nama, jenis, index, item }) => {
         return (
-            <View key={index} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', marginVertical: 20, marginLeft: 30 }}>
-                    <Image source={image} style={{ width: 80, height: 80 }} />
+            <View key={index} style={{ flex: 1, justifyContent: 'center', marginHorizontal: 20 }}>
+                <View style={{ flexDirection: 'row', marginVertical: 20 }}>
+                    <Image source={{ uri: item.cover }} style={{ width: 80, height: 80 }} />
                     <View style={{ marginLeft: 10 }}>
-                        <View style={{ width: '90%' }}>
-                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{judul}</Text>
+                        <View style={{ width: '88%' }}>
+                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
                             <View style={{
                                 flexDirection: 'row',
                                 gap: 5,
-                                backgroundColor: jenis === 'Penelitian' ? COLORS.warningLight : jenis === 'Kegiatan' ? COLORS.infoLight : COLORS.successLight,
+                                backgroundColor: item.category === 'Video / Jurnal' ? COLORS.successLight : item.category === 'Infografis' ? COLORS.warningLight : COLORS.infoLight,
                                 borderRadius: 30,
                                 height: 30,
-                                width: 90,
+                                width: 110,
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
 
-                                {jenis === 'Penelitian' ? (
+                                {item.category === 'Infografis' ? (
                                     <Ionicons name='document-outline' color={'#F6AD1D'} style={{ marginTop: 2 }} />
-                                ) : jenis === 'Kegiatan' ? (
+                                ) : item.category === 'Kegiatan' ? (
                                     <Ionicons name='analytics-outline' color={'#1868AB'} style={{ marginTop: 3 }} />
                                 ) : (
                                     <Ionicons name='videocam-outline' color={'#11C15B'} style={{ marginTop: 2 }} />
                                 )}
-                                <Text style={{ color: jenis === 'Penelitian' ? COLORS.warning : jenis === 'Kegiatan' ? COLORS.info : COLORS.success }}>{jenis}</Text>
+                                <Text style={{ color: item.category === 'Infografis' ? COLORS.warning : item.category === 'Kegiatan' ? COLORS.info : COLORS.success }}>{item.category}</Text>
                             </View>
 
                             {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
-                            <Text style={{ fontSize: 11, color: COLORS.lighter }}>| {nama}</Text>
+                            {/* custom divider */}
+                            <View style={{ height: '100%', width: 1, backgroundColor: '#DBDADE' }} />
+                            <Text style={{ fontSize: 11, color: COLORS.lighter, width: 100 }}>{item.creator.name}</Text>
 
                         </View>
                     </View>
@@ -123,16 +170,14 @@ export const Satker = () => {
         return (
             <View style={styles.item}>
                 <ParallaxImage
-                    source={item.image}
+                    source={{ uri: item.image }}
                     containerStyle={styles.imageContainer}
                     style={styles.image}
                     parallaxFactor={0.4}
                     {...parallaxProps}
                 />
                 <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
-                    <Text style={{ marginLeft: 10, color: '#6B7280', marginVertical: 10 }}>{item.tanggal}</Text>
-                    <Text style={{ marginLeft: 10, color: '#6B7280' }}> {item.subtitle} </Text>
-                    <Text style={{ marginLeft: 10, color: '#111827', marginVertical: 10 }}>{item.dari}</Text>
+                    <Text style={{ marginLeft: 10, color: '#6B7280', marginVertical: 10 }}>{item.title}</Text>
                 </View>
             </View>
         );
@@ -163,7 +208,7 @@ export const Satker = () => {
                         height: 70,
                         opacity: 0.5
                     }} />
-                    <Text style={{ color: COLORS.white, marginVertical: 20, marginHorizontal: 40, textAlign: 'center' }}>{item.deskripsi}</Text>
+                    <Text numberOfLines={2} style={{ color: COLORS.white, marginVertical: 20, marginHorizontal: 40, textAlign: 'center' }}>{item.title}</Text>
                 </View>
             </View >
         );
@@ -191,12 +236,18 @@ export const Satker = () => {
                             <Text style={{ color: COLORS.white, textAlign: 'right', fontSize: FONTSIZE.H3 }}>{profile.nip}</Text>
                         </View>
                         <View>
-                            <Image source={profile.avatar} style={{ width: 50, height: 50, borderRadius: 8 }} />
+                            <Image source={{
+                                uri:
+                                    "https://apigw.kubekkp.coofis.com/" +
+                                    "bridge/" +
+                                    profile.avatar,
+                            }}
+                                style={{ width: 50, height: 50, borderRadius: 8 }} />
                         </View>
                     </View>
                 </View>
 
-                <CardSatker />
+                <CardSatker profile={profile} />
 
                 <View style={[styles.containerr, { marginTop: 20 }]}>
                     <Carousel
@@ -204,7 +255,7 @@ export const Satker = () => {
                         sliderWidth={screenWidth}
                         sliderHeight={screenWidth}
                         itemWidth={screenWidth - 60}
-                        data={banner}
+                        data={benner.length === 0 ? BannerSetjen : benner}
                         renderItem={bannerKegiatan}
                         hasParallaxImages={true}
                     />
@@ -216,13 +267,13 @@ export const Satker = () => {
                         sliderWidth={screenWidth}
                         sliderHeight={screenWidth}
                         itemWidth={screenWidth - 60}
-                        data={galeri.lists.slice(0, 3)}
+                        data={gallery.results?.slice(0, 3)}
                         renderItem={renderItem}
                         hasParallaxImages={true}
                         onSnapToItem={setSlide}
                     />
                     <Pagination
-                        dotsLength={galeri.lists.slice(0, 3).length}
+                        dotsLength={gallery.results?.slice(0, 3).length}
                         dotColor={'black'}
                         inactiveDotColor={COLORS.grey}
                         dotStyle={styles.paginationDot}
@@ -254,19 +305,19 @@ export const Satker = () => {
                     </View>
                 </View>
 
-                <View style={[styles.containerr, { marginTop: 20 }]}>
+                <View style={[styles.containerr, { marginVertical: 20 }]}>
                     <Carousel
                         ref={carouselRef}
                         sliderWidth={screenWidth}
                         sliderHeight={screenWidth}
                         itemWidth={screenWidth - 60}
-                        data={mading}
+                        data={pesan}
                         renderItem={renderItem2}
                         hasParallaxImages={true}
                         onSnapToItem={setSlide2}
                     />
                     <Pagination
-                        dotsLength={mading.length}
+                        dotsLength={pesan.length}
                         dotColor={'black'}
                         inactiveDotColor={COLORS.grey}
                         dotStyle={styles.paginationDot}
@@ -298,10 +349,6 @@ export const Satker = () => {
                             scrollEnabled={false}
                             data={linimasa}
                             renderItem={({ item, index }) => <CardLiniMasaSatker
-                                image={item.image}
-                                judul={item.judul}
-                                nama={item.nama}
-                                jenis={item.jenis}
                                 item={item}
                                 index={index}
                             />

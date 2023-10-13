@@ -3,8 +3,8 @@ import { Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-n
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import { FlatList } from 'react-native';
 import {
     BottomSheetModal,
@@ -17,10 +17,21 @@ import {
 import { Search } from '../../components/Search'
 import { Portal } from 'react-native-portalize';
 import ListEmpty from '../../components/ListEmpty';
+import { Dropdown } from '../../components/DropDown';
+import { getTokenValue } from '../../service/session';
+import { getDetailLinimasa, getDetailPenilaian, getListPenilaian, getNilai } from '../../service/api';
+import moment from 'moment';
 
 
-const CardPenilaian = ({ item }) => {
+const CardPenilaian = ({ item, token }) => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
+    const getDetail = (id) => {
+        console.log(token)
+        // const data = { token: token, id: id }
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getDetailLinimasa({ token, id }))
+    }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity style={{
@@ -42,24 +53,28 @@ const CardPenilaian = ({ item }) => {
                 elevation: 2,
 
             }}
-                onPress={() => navigation.navigate('DetailPenilain', { item: item })}
+                onPress={() => {
+                    dispatch(getDetailPenilaian({ token: token, id: item.id }))
+                    dispatch(getNilai({ token: token }))
+                    navigation.navigate('DetailPenilain')
+                }}
             >
                 <View>
-                    <Image source={item.image} style={{ width: 70, height: 50 }} />
+                    <Image source={{ uri: item.cover }} style={{ width: 70, height: 50 }} />
                 </View>
                 <View style={{ width: '75%' }}>
-                    <Text>{item.judul}</Text>
+                    <Text>{item.title}</Text>
                     <View style={{ flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
-                        <Text style={{ color: COLORS.lighter }}>Tanggal: {item.tanggal}</Text>
+                        <Text style={{ color: COLORS.lighter }}>Tanggal: {moment(item.published_date, 'HH:mm:ss').format('DD MMM YYYY')}</Text>
                         <Text style={{ color: COLORS.lighter }}>Poin:</Text>
-                        {item.point === 'Waiting' ? (
+                        {item.is_scored !== true ? (
                             <View style={{
                                 borderWidth: 1,
                                 padding: 5,
                                 borderColor: COLORS.primary,
                                 borderRadius: 16
                             }}>
-                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}>{item.point}</Text>
+                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}>Waiting</Text>
                             </View>
                         ) : (
                             <View style={{
@@ -67,7 +82,7 @@ const CardPenilaian = ({ item }) => {
                                 backgroundColor: COLORS.success,
                                 borderRadius: 16
                             }}>
-                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>{item.point}</Text>
+                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>{item.score}</Text>
                             </View>
                         )}
                     </View>
@@ -77,9 +92,32 @@ const CardPenilaian = ({ item }) => {
     );
 }
 
+const dataKuartal = [
+    {
+        key: '1',
+        value: 'TW1'
+    },
+    {
+        key: '2',
+        value: 'TW2'
+    },
+    {
+        key: '3',
+        value: 'TW3'
+    },
+    {
+        key: '4',
+        value: 'TW4'
+    },
+]
+
 export const PenilaianPenggetahaun = () => {
     const navigation = useNavigation()
-    const { penilaian } = useSelector(state => state.pengetahuan)
+    const [quarter, setQuarter] = useState()
+    // const [kuartal, setKuartal] = useState(dataKuartal)
+    const [listYear, setListYear] = useState()
+    const [token, setToken] = useState('')
+    const isFocused = useIsFocused()
 
     const bottomSheetModalRef = useRef(null);
 
@@ -122,6 +160,59 @@ export const PenilaianPenggetahaun = () => {
         }
     }, [search])
 
+    const [year, setYear] = useState({ key: new Date().getFullYear(), value: new Date().getFullYear() })
+
+    const month = new Date().getMonth() + 1
+
+    useEffect(() => {
+        let q = ''
+        if (1 <= month && month <= 3) {
+            q = '1'
+        } else if (4 <= month && month <= 6) {
+            q = '2'
+        } else if (7 <= month && month <= 9) {
+            q = '3'
+        } else {
+            q = '4'
+        }
+        setQuarter({
+            key: q,
+            value: q == 1 ? 'TW1' : q == 2 ? 'TW2' : q == 3 ? 'TW3' : 'TW4'
+        })
+
+        let thn = []
+        for (let i = 2023; i <= year; i++) {
+            thn.push({
+                key: i,
+                value: i
+            })
+        }
+
+        setListYear(thn)
+    }, [])
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (token !== '' && isFocused) {
+            let data = {
+                token: token,
+                tahun: year.value,
+                TW: quarter.key
+            }
+            // dispatch(getDivision(token))
+            dispatch(getListPenilaian(data))
+            // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+        }
+    }, [token, quarter, year, isFocused])
+
+    const { penilaian } = useSelector(state => state.pengetahuan)
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -145,29 +236,31 @@ export const PenilaianPenggetahaun = () => {
 
             <View style={{ flexDirection: 'row', marginVertical: 20, marginHorizontal: 20, gap: 5 }}>
                 <View style={{
-                    height: 54,
-                    width: "43%",
-                    backgroundColor: COLORS.white,
-                    borderRadius: 8,
-                    justifyContent: 'center',
-                    paddingLeft: 10
+                    width: '43%',
                 }}>
-                    <Text style={{ color: COLORS.lighter }}>Pilih Tahun</Text>
+                    <Dropdown
+                        data={listYear}
+                        placeHolder={'Pilih Tahun'}
+                        backgroundColor={COLORS.white}
+                        selected={year}
+                        setSelected={setYear}
+                    />
                 </View>
 
                 <View style={{
-                    height: 54,
                     width: "43%",
-                    backgroundColor: COLORS.white,
-                    borderRadius: 8,
-                    justifyContent: 'center',
-                    paddingLeft: 10
                 }}>
-                    <Text style={{ color: COLORS.lighter }}>Pilih Kuartal</Text>
+                    <Dropdown
+                        data={dataKuartal}
+                        placeHolder={'Pilih Kuartal'}
+                        backgroundColor={COLORS.white}
+                        selected={quarter}
+                        setSelected={setQuarter}
+                    />
                 </View>
 
                 <TouchableOpacity style={{
-                    height: 54,
+                    height: 43,
                     width: "12%",
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
@@ -296,11 +389,13 @@ export const PenilaianPenggetahaun = () => {
 
             <View style={{ marginTop: 10 }}>
                 <FlatList
-                    data={penilaian.lists.listPenilaian}
+                    data={penilaian.lists}
                     renderItem={({ item }) => <CardPenilaian
                         item={item}
+                        token={token}
                     />
                     }
+                    style={{ height: 400 }}
                     keyExtractor={item => item.id}
                 />
             </View>

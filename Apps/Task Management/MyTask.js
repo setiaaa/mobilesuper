@@ -1,366 +1,69 @@
 import {
     BottomSheetModal,
     BottomSheetModalProvider,
-    BottomSheetBackdrop,
     BottomSheetView,
-    BottomSheetTextInput,
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import React, { useMemo, useRef } from 'react'
-import { TextInput, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
-import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons';
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet } from 'react-native'
 import { useState } from 'react'
-import { TopsTaks } from '../Korespondensi/AppNavigator'
-import { FlatList } from 'react-native'
-import { CardListTask } from '../../components/CardListTask'
-import { CardTaskCari } from '../../components/CardTaskCari'
+import { TopsTask, TopsTaskDashboard, TopsTaskKorespondensi } from '../Korespondensi/AppNavigator'
 import { Search } from '../../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
-import { setTaskLists, setVariant } from '../../store/Task'
+import { setRefresh, setVariant } from '../../store/Task'
 import { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Dropdown } from '../../components/DropDown'
-import Checkbox from 'expo-checkbox'
-import ListEmpty from '../../components/ListEmpty'
+import { getListDashboardTM, getListTaskTM, getTreeTM } from '../../service/api'
+import { getTokenValue } from '../../service/session'
+import { FilterTask } from './FilterTask'
 
-
-const item = [
-    {
-        id: 1,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        status: 'in progress',
-        tanggal: '22 Juli 2023',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 2,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'backlog',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 3,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'pending',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ],
-    },
-    {
-        id: 4,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'completed',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 5,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 6,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 },
-            { avatar: AVATAR.U2 }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 7,
-        kegiatan: 'Membuat laporan Kenaikan Gaji Berkala (KGB)',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
-    {
-        id: 8,
-        kegiatan: 'Hallo guys',
-        tanggal: '22 Juli 2023',
-        status: 'in progress',
-        subAvatar: [
-            {
-                id: 1,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 2,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 3,
-                avatar: AVATAR.U2
-            },
-            {
-                id: 4,
-                avatar: AVATAR.U2
-            }
-        ],
-        warna: COLORS.infoDanger,
-        prioritas: 'High',
-        member: [
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-            {
-                avatar: AVATAR.U2,
-                jabatan: 'Kepala Badan Riset dan Sumber Daya Manusia Kelautan dan Perikanan',
-                nama: 'Rizky Novriansyah'
-            },
-        ]
-    },
+const tipe = [
+    { key: '1', value: 'Dashboard' },
+    { key: '2', value: 'Korespondensi' },
+    { key: '3', value: 'Agenda Rapat' },
+    { key: '4', value: 'Task Untuk Saya' },
+    { key: '5', value: 'Task Dari Saya' },
 ]
-
-const kategori = [
-    { key: 'KKP', value: 'KKP' },
-    { key: 'CK', value: 'CEK' }
-]
-
 
 export const MyTask = () => {
-
     const dispatch = useDispatch()
+    const [token, setToken] = useState("");
 
     useEffect(() => {
-        dispatch(setTaskLists(item))
+        getTokenValue().then((val) => {
+            setToken(val);
+        });
     }, []);
 
-    const { task, variant } = useSelector(state => state.task)
-    const taskLists = task.lists
+    useEffect(() => {
+        dispatch(getListDashboardTM({ token: token }))
+        dispatch(getTreeTM({ token: token }))
+    }, [token]);
+
+    const { refresh, variant, treeView, list } = useSelector(state => state.task)
+    const taskLists = list.data
 
     const navigation = useNavigation()
-    // const [variantLocal, setVariantLocal] = useState('list')
     const bottomSheetModalRef = useRef(null);
     const bottomSheetModalSelectRef = useRef(null);
     const bottomSheetModalAddRef = useRef(null);
-    const bottomSheetModalAddCategoryRef = useRef(null);
-    const bottomSheetModalAddSubCategoryRef = useRef(null);
-    const bottomSheetModalAddSubSubCategoryRef = useRef(null);
-    const [badge, setBadge] = useState(1)
-    const [isSelected, setSelection] = useState(false);
 
-    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
+    const initialSnapPoints = useMemo(() => ["50%", "90%"], [])
+    const initialSnapPointsTambah = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
         animatedHandleHeight,
         animatedSnapPoints,
         animatedContentHeight,
         handleContentLayout,
-    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
+    } = useBottomSheetDynamicSnapPoints(initialSnapPointsTambah)
 
     const bottomSheetAttach = () => {
         bottomSheetModalRef.current?.present()
@@ -389,75 +92,120 @@ export const MyTask = () => {
             bottomSheetModalAddRef.current?.close()
     }
 
-    const bottomsheetAddCategory = () => {
-        bottomSheetModalAddCategoryRef.current?.present()
-    }
-
-    const bottomsheetAddCategoryClose = () => {
-        if (bottomSheetModalAddCategoryRef.current)
-            bottomSheetModalAddCategoryRef.current?.close()
-    }
-
-    const bottomsheetAddSubCategory = () => {
-        bottomSheetModalAddSubCategoryRef.current?.present()
-    }
-
-    const bottomsheetAddSubCategoryClose = () => {
-        if (bottomSheetModalAddSubCategoryRef.current)
-            bottomSheetModalAddSubCategoryRef.current?.close()
-    }
-
-    const bottomsheetAddSubSubCategory = () => {
-        bottomSheetModalAddSubSubCategoryRef.current?.present()
-    }
-
-    const bottomsheetAddSubSubCategoryClose = () => {
-        if (bottomSheetModalAddSubSubCategoryRef.current)
-            bottomSheetModalAddSubSubCategoryRef.current?.close()
-    }
-
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
+
+    const [choiceTipe, setChoiceTipe] = useState({ key: '1', value: 'Dashboard' })
+    const [choiceKategori, setChoiceKategori] = useState('')
+    const [choiceList, setChoiceList] = useState('')
+    const [dataKategori, setDataKategori] = useState([])
+    const [dataList, setDataList] = useState([])
+
+    const [choiceFilter, setChoiceFilter] = useState('semua')
+
+    useEffect(() => {
+        if (choiceTipe.key !== '1' || choiceTipe.key !== '2') {
+            let arrKategori = []
+            treeView.map(item => {
+                if (choiceTipe.key === '3' && item.kategori === 'event') {
+                    arrKategori.push({
+                        key: item.id,
+                        value: item.name
+                    })
+                } else {
+                    if (choiceTipe.key === '4' && item.kategori === 'task' && !item.my_project) {
+                        arrKategori.push({
+                            key: item.id,
+                            value: item.name
+                        })
+                    } else if (choiceTipe.key === '5' && item.kategori === 'task' && item.my_project) {
+                        arrKategori.push({
+                            key: item.id,
+                            value: item.name
+                        })
+                    }
+                }
+            })
+            // setChoiceKategori(arrKategori.length > 0 ? arrKategori[0] : '')
+            setDataKategori(arrKategori)
+        }
+    }, [choiceTipe])
+
+    useEffect(() => {
+        let arrList = []
+        const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+        treeView[index]?.list_tasks?.map(item => {
+            arrList.push({
+                key: item.id,
+                value: item.name
+            })
+        })
+        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
+        setDataList(arrList)
+    }, [choiceKategori])
+
+    const handleChoiceSubmit = () => {
+        if (choiceTipe.value === 'Dashboard') {
+            dispatch(getListDashboardTM({ token: token }))
+        } else if (choiceTipe.value === 'Korespondensi') {
+
+        } else {
+            dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
+        }
+        setChoiceFilter('semua')
+    }
 
     const filter = (event) => {
         setSearch(event)
     }
 
-    useEffect(() => {
-        if (search !== '') {
-            const status = badge == 1 ? '' : badge == 2 ? 'in progress' : badge == 3 ? 'pending' : badge == 4 ? 'completed' : 'backlog'
-            const data = taskLists.filter((item) => {
-                if (badge == 1) {
-                    return item.kegiatan.toLowerCase().includes(search.toLowerCase())
-                } else {
-                    return item.kegiatan.toLowerCase().includes(search.toLowerCase()) && item.status === status
-                }
-            })
-            setFilterData(data)
-        } else {
-            const status = badge == 1 ? '' : badge == 2 ? 'in progress' : badge == 3 ? 'pending' : badge == 4 ? 'completed' : 'backlog'
-            const data = taskLists.filter((item) => {
-                if (badge == 1) {
-                    return item
-                } else {
-                    return item.status === status
-                }
-            })
-            setFilterData(data)
-        }
-    }, [search])
+    // useEffect(() => {
+    //     if (search !== '') {
+    //         const status = choiceFilter == 1 ? '' : choiceFilter == 2 ? 'in progress' : choiceFilter == 3 ? 'pending' : choiceFilter == 4 ? 'completed' : 'backlog'
+    //         const data = taskLists.filter((item) => {
+    //             if (choiceFilter == 1) {
+    //                 return item.kegiatan.toLowerCase().includes(search.toLowerCase())
+    //             } else {
+    //                 return item.kegiatan.toLowerCase().includes(search.toLowerCase()) && item.status === status
+    //             }
+    //         })
+    //         setFilterData(data)
+    //     } else {
+    //         const status = choiceFilter == 1 ? '' : choiceFilter == 2 ? 'in progress' : choiceFilter == 3 ? 'pending' : choiceFilter == 4 ? 'completed' : 'backlog'
+    //         const data = taskLists.filter((item) => {
+    //             if (choiceFilter == 1) {
+    //                 return item
+    //             } else {
+    //                 return item.status === status
+    //             }
+    //         })
+    //         setFilterData(data)
+    //     }
+    // }, [search])
 
     useEffect(() => {
-        const status = badge == 1 ? '' : badge == 2 ? 'in progress' : badge == 3 ? 'pending' : badge == 4 ? 'completed' : 'backlog'
         const data = taskLists.filter((item) => {
-            if (badge == 1) {
+            if (choiceFilter === 'semua') {
                 return item
             } else {
-                return item.status === status
+                if (list.type === 'Dashboard') {
+                    return item.deadline_status === choiceFilter
+                } else {
+                    return item.status === choiceFilter
+                }
             }
         })
         setFilterData(data)
-    }, [badge])
+    }, [choiceFilter, list.type])
+
+    useEffect(() => {
+        if (refresh) {
+            console.log('main')
+            dispatch(getTreeTM({ token: token }))
+            dispatch(setRefresh(false))
+        }
+    }, [refresh])
+
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -491,7 +239,7 @@ export const MyTask = () => {
 
                         <BottomSheetModal
                             ref={bottomSheetModalSelectRef}
-                            snapPoints={animatedSnapPoints}
+                            snapPoints={initialSnapPoints}
                             handleHeight={animatedHandleHeight}
                             contentHeight={animatedContentHeight}
                             index={0}
@@ -510,73 +258,54 @@ export const MyTask = () => {
 
                                     <View style={{ width: '90%', marginHorizontal: 20 }}>
                                         <Dropdown
-                                            placeHolder={'Kategori'}
+                                            placeHolder={'Tipe'}
                                             borderWidth={1}
-                                            data={kategori}
-                                            borderColor={'#D0D5DD'}
+                                            data={tipe}
+                                            // selected={choiceTipe}
+                                            setSelected={setChoiceTipe}
+                                            borderColor={COLORS.ExtraDivinder}
+                                            borderwidthDrop={1}
+                                            borderColorDrop={COLORS.ExtraDivinder}
+                                            borderWidthValue={1}
+                                            borderColorValue={COLORS.ExtraDivinder}
                                         />
                                     </View>
 
-                                    <View style={{ marginHorizontal: 20, marginTop: 20, borderWidth: 1, borderRadius: 8, borderColor: '#D0D5DD' }}>
-                                        <View style={styles.checkboxContainer}>
-                                            <View>
-                                                <Text style={{ color: COLORS.lighter }}>Project A</Text>
-                                            </View>
-                                            <View style={{ flex: 1 }}>
-                                                <Checkbox
-                                                    value={isSelected}
-                                                    onValueChange={setSelection}
-                                                    style={styles.checkbox}
-                                                    color={isSelected === true ? COLORS.success : null}
-                                                />
-                                            </View>
+                                    {
+                                        choiceTipe.key === '3' || choiceTipe.key === '4' || choiceTipe.key === '5' ? (
+                                            <>
+                                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+                                                    <Dropdown
+                                                        placeHolder={'Kategori'}
+                                                        borderWidth={1}
+                                                        data={dataKategori}
+                                                        // selected={choiceKategori}
+                                                        setSelected={setChoiceKategori}
+                                                        borderColor={COLORS.ExtraDivinder}
+                                                        borderwidthDrop={1}
+                                                        borderColorDrop={COLORS.ExtraDivinder}
+                                                        borderWidthValue={1}
+                                                        borderColorValue={COLORS.ExtraDivinder}
+                                                    />
+                                                </View>
 
-                                        </View>
-                                        <View style={styles.checkboxContainer}>
-                                            <View>
-                                                <Text style={{ color: COLORS.lighter }}>Project B</Text>
-                                            </View>
-                                            <View style={{ flex: 1 }}>
-                                                <Checkbox
-                                                    value={isSelected}
-                                                    onValueChange={setSelection}
-                                                    style={styles.checkbox}
-                                                    color={isSelected === true ? COLORS.success : null}
-                                                />
-                                            </View>
-
-                                        </View>
-                                        <View style={styles.checkboxContainer}>
-                                            <View>
-                                                <Text style={{ color: COLORS.lighter }}>Project C</Text>
-                                            </View>
-                                            <View style={{ flex: 1 }}>
-                                                <Checkbox
-                                                    value={isSelected}
-                                                    onValueChange={setSelection}
-                                                    style={styles.checkbox}
-                                                    color={isSelected === true ? COLORS.success : null}
-                                                />
-                                            </View>
-
-                                        </View>
-                                    </View>
-                                    <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-                                        <Dropdown
-                                            placeHolder={'Sub Kategori'}
-                                            borderWidth={1}
-                                            data={kategori}
-                                            borderColor={'#D0D5DD'}
-                                        />
-                                    </View>
-                                    <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-                                        <Dropdown
-                                            placeHolder={'Sub Sub Kategori'}
-                                            borderWidth={1}
-                                            data={kategori}
-                                            borderColor={'#D0D5DD'}
-                                        />
-                                    </View>
+                                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+                                                    <Dropdown
+                                                        placeHolder={'List'}
+                                                        borderWidth={1}
+                                                        data={dataList}
+                                                        // selected={choiceList}
+                                                        setSelected={setChoiceList}
+                                                        borderColor={COLORS.ExtraDivinder}
+                                                        borderwidthDrop={1}
+                                                        borderColorDrop={COLORS.ExtraDivinder}
+                                                        borderWidthValue={1}
+                                                        borderColorValue={COLORS.ExtraDivinder}
+                                                    />
+                                                </View>
+                                            </>
+                                        ) : null
+                                    }
 
                                     <TouchableOpacity style={{
                                         width: '90%',
@@ -590,6 +319,7 @@ export const MyTask = () => {
                                     }}
                                         onPress={() => {
                                             bottomSheetSelectClose()
+                                            handleChoiceSubmit()
                                         }}
                                     >
                                         <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: 500 }}>Terapkan</Text>
@@ -608,18 +338,17 @@ export const MyTask = () => {
                     </View>
 
                     <View style={{ marginHorizontal: 15, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Task Saya</Text>
+                        <View style={{ flexDirection: 'column', gap: 4, flex: 1 }}>
+                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>{list.type}</Text>
+                            {
+                                list.type === 'Dashboard' || list.type === 'Korespondensi' ? null :
+                                    (
+                                        <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
+                                    )
+                            }
+                        </View>
+
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                            <TouchableOpacity onPress={() => dispatch(setVariant("filter"))}>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='filter-outline' size={24} color={variant === 'filter' ? COLORS.primary : COLORS.grey} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => dispatch(setVariant("reorder"))}>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='reorder-three-outline' size={24} color={variant === 'reorder' ? COLORS.primary : COLORS.grey} />
-                                </View>
-                            </TouchableOpacity>
                             <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
                                 <View style={styles.circleList}>
                                     <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
@@ -634,7 +363,15 @@ export const MyTask = () => {
                     </View>
 
                     <View style={{ flex: 1, marginTop: 20, width: '90%', marginHorizontal: '5%' }}>
-                        <TopsTaks />
+                        {
+                            list.type === 'Dashboard' ? (
+                                <TopsTaskDashboard />
+                            ) : list.type === 'Korespondensi' ? (
+                                <TopsTaskKorespondensi />
+                            ) : (
+                                <TopsTask />
+                            )
+                        }
                     </View>
 
                     <BottomSheetModal
@@ -651,9 +388,9 @@ export const MyTask = () => {
                         )}
                     >
                         <BottomSheetView onLayout={handleContentLayout} >
-                            <View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: '75%', marginHorizontal: 20, backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, }}>
+                            <View style={{ marginHorizontal: 20 }}>
+                                <View style={{ flexDirection: 'row', gap: 16 }}>
+                                    <View style={{ flex: 1, backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, }}>
                                         <Search
                                             placeholder={"Cari"}
                                             iconColor={COLORS.primary}
@@ -669,141 +406,22 @@ export const MyTask = () => {
                                     </TouchableOpacity>
                                 </View>
 
-                                <View style={{ flexDirection: 'row', gap: 5, justifyContent: 'center' }}>
-
-                                    <TouchableOpacity onPress={() => {
-                                        setBadge(1)
-                                    }}>
-                                        <View style={{
-                                            backgroundColor: badge === 1 ? COLORS.infoDangerLight : COLORS.white,
-                                            borderColor: badge === 1 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                            borderRadius: 16,
-                                            borderWidth: 1,
-                                            marginVertical: 10
-                                        }}>
-                                            <Text style={{
-                                                color: badge == 1 ? COLORS.primary : COLORS.grey,
-                                                marginVertical: 10,
-                                                marginHorizontal: 7,
-                                                fontSize: FONTSIZE.H3
-                                            }}>
-                                                Semua
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity onPress={() => {
-                                        setBadge(2)
-                                    }}>
-                                        <View style={{
-                                            backgroundColor: badge === 2 ? COLORS.infoDangerLight : COLORS.white,
-                                            borderColor: badge === 2 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                            borderRadius: 16,
-                                            borderWidth: 1,
-                                            marginVertical: 10
-                                        }}>
-                                            <Text style={{
-                                                color: badge == 2 ? COLORS.primary : COLORS.grey,
-                                                marginVertical: 10,
-                                                marginHorizontal: 7,
-                                                fontSize: FONTSIZE.H3
-                                            }}>
-                                                In Progres
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity onPress={() => {
-                                        setBadge(3)
-                                    }}>
-                                        <View style={{
-                                            backgroundColor: badge === 3 ? COLORS.infoDangerLight : COLORS.white,
-                                            borderColor: badge === 3 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                            borderRadius: 16,
-                                            borderWidth: 1,
-                                            marginVertical: 10
-                                        }}>
-                                            <Text style={{
-                                                color: badge == 3 ? COLORS.primary : COLORS.grey,
-                                                marginVertical: 10,
-                                                marginHorizontal: 7,
-                                                fontSize: FONTSIZE.H3
-                                            }}>
-                                                Pending
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity onPress={() => {
-                                        setBadge(4)
-                                    }}>
-                                        <View style={{
-                                            backgroundColor: badge === 4 ? COLORS.infoDangerLight : COLORS.white,
-                                            borderColor: badge === 4 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                            borderRadius: 16,
-                                            borderWidth: 1,
-                                            marginVertical: 10
-                                        }}>
-                                            <Text style={{
-                                                color: badge == 4 ? COLORS.primary : COLORS.grey,
-                                                marginVertical: 10,
-                                                marginHorizontal: 7,
-                                                fontSize: FONTSIZE.H3
-                                            }}>
-                                                Complete
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity onPress={() => {
-                                        setBadge(5)
-                                    }}>
-                                        <View style={{
-                                            backgroundColor: badge === 5 ? COLORS.infoDangerLight : COLORS.white,
-                                            borderColor: badge === 5 ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                            borderRadius: 16,
-                                            borderWidth: 1,
-                                            marginVertical: 10
-                                        }}>
-                                            <Text style={{
-                                                color: badge == 5 ? COLORS.primary : COLORS.grey,
-                                                marginVertical: 10,
-                                                marginHorizontal: 7,
-                                                fontSize: FONTSIZE.H3
-                                            }}>
-                                                Back Log
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View style={{ marginHorizontal: 20, marginBottom: 40 }}>
-                                    <FlatList
-                                        data={filterData}
-                                        renderItem={({ item }) => <CardTaskCari
-                                            kegiatan={item.kegiatan}
-                                            subAvatar={item.subAvatar}
-                                            warna={item.warna}
-                                            tanggal={item.tanggal}
-                                        />
-                                        }
-                                        style={{ minHeight: 440 }}
-                                        keyExtractor={item => item.id}
-                                        ListEmptyComponent={() =>
-                                            <ListEmpty />
-                                        }
-                                    />
-                                </View>
+                                <FilterTask choiceFilter={choiceFilter} setChoiceFilter={setChoiceFilter} filterData={filterData} type={list.type} />
                             </View>
                         </BottomSheetView>
                     </BottomSheetModal>
-                    <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                        <TouchableOpacity onPress={bottomSheetAdd}>
-                            <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                                <Ionicons name='add-outline' size={24} color={COLORS.white} />
+
+                    {
+                        list.type === 'Task Dari Saya' ? (
+                            <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
+                                <TouchableOpacity onPress={bottomSheetAdd}>
+                                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
-                        </TouchableOpacity>
-                    </View>
+                        ) : null
+                    }
 
                     <BottomSheetModal
                         ref={bottomSheetModalAddRef}
@@ -824,282 +442,26 @@ export const MyTask = () => {
                                     <TouchableOpacity
                                         style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
                                         onPress={() => {
-                                            // navigation.navigate('TambahGrup', { unread: false })
-                                            // props.navigation.navigate('Home', { unread: false })
-                                            // bottomSheetClose()
-                                            navigation.navigate('AddTask')
+                                            navigation.navigate('AddCategory')
+                                            bottomsheetAddClose()
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Project</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                { }
+                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
+                                    <TouchableOpacity
+                                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+                                        onPress={() => {
+                                            navigation.navigate('AddTask', { id_project: choiceKategori.key, id_list: choiceList.key })
                                             bottomsheetAddClose()
                                         }}
                                     >
                                         <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Task</Text>
                                     </TouchableOpacity>
                                 </View>
-
-                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
-                                    <TouchableOpacity
-                                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
-                                        onPress={() => {
-                                            bottomsheetAddCategory()
-                                        }}
-                                    >
-                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Kategori</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
-                                    <TouchableOpacity
-                                        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
-                                        onPress={() => {
-                                            bottomsheetAddSubCategory()
-                                        }}
-                                    >
-                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Sub Kategori</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View style={{ marginHorizontal: 20, backgroundColor: COLORS.infoDanger, height: 60, marginTop: 10, borderRadius: 8 }}>
-                                    <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
-                                        onPress={() => {
-                                            bottomsheetAddSubSubCategory()
-                                        }}
-                                    >
-                                        <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Tambah Sub Sub Kategori</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-
-                    {/* tambah ketegori */}
-                    <BottomSheetModal
-                        ref={bottomSheetModalAddCategoryRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Kategori Baru</Text>
-                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
-                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
-                                    </View>
-                                </View>
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <TouchableOpacity style={{
-                                    marginBottom: 40,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                    marginTop: 10,
-                                    backgroundColor: COLORS.infoDanger,
-                                    width: '90%',
-                                    height: 50,
-                                    marginHorizontal: 20,
-                                    borderRadius: 6
-                                }}
-                                    onPress={() => {
-                                        bottomsheetAddCategoryClose()
-                                    }}
-                                >
-                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-
-                    {/* tambah sub kategori */}
-                    <BottomSheetModal
-                        ref={bottomSheetModalAddSubCategoryRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Sub Kategori Baru</Text>
-                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
-                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
-                                    </View>
-                                </View>
-                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-
-                                    <Dropdown
-                                        placeHolder={'Kategori'}
-                                        borderWidth={1}
-                                        data={kategori}
-                                        borderColor={'#D0D5DD'}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <TouchableOpacity style={{
-                                    marginBottom: 40,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                    marginTop: 10,
-                                    backgroundColor: COLORS.infoDanger,
-                                    width: '90%',
-                                    height: 50,
-                                    marginHorizontal: 20,
-                                    borderRadius: 6
-                                }}
-                                    onPress={() => {
-                                        bottomsheetAddSubCategoryClose()
-                                    }}
-                                >
-                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-
-                    {/* tambah sub sub kategori */}
-                    <BottomSheetModal
-                        ref={bottomSheetModalAddSubSubCategoryRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: 20, marginTop: 20 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Sub Sub Kategori Baru</Text>
-                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1 }}>
-                                        <Text style={{ color: COLORS.infoDanger }}>Reset</Text>
-                                    </View>
-                                </View>
-                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-
-                                    <Dropdown
-                                        placeHolder={'Kategori'}
-                                        borderWidth={1}
-                                        data={kategori}
-                                        borderColor={'#D0D5DD'}
-                                    />
-                                </View>
-
-                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
-
-                                    <Dropdown
-                                        placeHolder={'Sub Kategori'}
-                                        borderWidth={1}
-                                        data={kategori}
-                                        borderColor={'#D0D5DD'}
-                                    />
-                                </View>
-
-                                <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
-
-                                    <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={4}
-                                        maxLength={40}
-                                        placeholder='Nama Sub Sub Kategori'
-                                        style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
-                                    />
-                                </View>
-
-                                <TouchableOpacity style={{
-                                    marginBottom: 40,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                    marginTop: 10,
-                                    backgroundColor: COLORS.infoDanger,
-                                    width: '90%',
-                                    height: 50,
-                                    marginHorizontal: 20,
-                                    borderRadius: 6
-                                }}
-                                    onPress={() => {
-                                        bottomsheetAddSubSubCategoryClose()
-                                    }}
-                                >
-                                    <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Simpan</Text>
-                                </TouchableOpacity>
                             </View>
                         </BottomSheetView>
                     </BottomSheetModal>

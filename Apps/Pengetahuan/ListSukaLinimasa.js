@@ -7,13 +7,17 @@ import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { CardSuka } from '../../components/CardSuka'
 import { FlatList } from 'react-native'
+import { useSelector } from 'react-redux'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
-export const ListSukaLinimasa = ({ route }) => {
+export const ListSukaLinimasa = () => {
+    const { linimasa } = useSelector(state => state.pengetahuan)
+    const item = linimasa.listsLike
     const navigation = useNavigation()
-    const { item } = route.params
+    console.log(item)
     return (
-        <View>
+        <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: COLORS.white,
@@ -30,19 +34,17 @@ export const ListSukaLinimasa = ({ route }) => {
                 </View>
             </View>
             <View style={{ marginLeft: 20, marginTop: 20 }}>
-                <Text style={{ opacity: 0.5 }}>Disukai ({item.disukai})</Text>
+                <Text style={{ opacity: 0.5 }}>Disukai ({item.length})</Text>
             </View>
             <View>
                 <FlatList
-                    data={item.orangSuka}
+                    data={item}
                     renderItem={({ item }) => <CardSuka
-                        avatar={item.avatar}
-                        nama={item.nama}
-                        jabatan={item.jabatan}
+                        item={item}
                     />
                     }
                 />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }

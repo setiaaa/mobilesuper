@@ -26,9 +26,10 @@ import { Dropdown } from '../../components/DropDown';
 import * as DocumentPicker from 'expo-document-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenValue } from '../../service/session';
-import { getlistKalender } from '../../service/api';
+import { getEventProgress, getEventToday, getlistKalender, postAttachment, postEvent } from '../../service/api';
 import Addressbook from '../../components/AddressbookKKp/Addressbook';
 import { setAddressbookSelected } from '../../store/AddressbookKKP';
+import { setAttachment, setStatus } from '../../store/Event';
 
 
 // const Input = () => {
@@ -120,8 +121,14 @@ export const TambahEvent = () => {
     const richText = useRef(null);
     const [richTextHandle, setRichTextHandle] = useState('');
     const [value, onChangeValue] = useState('');
+    const [Judul, setJudul] = useState('');
+    const [TanggalMulai, setTanggalMulai] = useState('');
+    const [TanggalSelesai, setTanggalSelsai] = useState('');
+    const [Tempat, setTempat] = useState('');
+    const [Note, setNote] = useState('')
+    const [Tamu, setTamu] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
-    const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
+    const [modalVisiblePicker, setModalVisiblePicker] = useState('');
 
     const [modal, setModal] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -177,15 +184,6 @@ export const TambahEvent = () => {
     const [pilihanNotulenEvent, setPilihanNotulenEvent] = useState([])
     const [pilihanPetugasAbsenEvent, setPilihanPetugasAbsenEvent] = useState([])
 
-    const pickDocument = async () => {
-        let result = await DocumentPicker.getDocumentAsync({});
-        let tipe = result.uri.split('/')
-        tipe = tipe[tipe.length - 1]
-        tipe = tipe.split('.')
-        tipe = tipe[tipe.length - 1]
-        setDocument([...document, result])
-        setType([...type, tipe])
-    };
 
     const [token, setToken] = useState('')
 
@@ -201,9 +199,42 @@ export const TambahEvent = () => {
         if (token !== '') {
             dispatch(getlistKalender(token))
         }
+        dispatch(setAttachment([]))
     }, [token])
 
-    const { kalenderLists } = useSelector(state => state.event)
+    // const convertFileToObject = async (result) => {
+    //     try {
+    //         const filePath = result.uri
+    //         const fileData = await fetch(filePath)
+    //         const blob = await fileData.blob()
+
+    //         const newFile = new File([blob], result.name, { type: result.mimetype })
+
+    //         return newFile
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
+
+    const pickDocument = async () => {
+        let result = await DocumentPicker.getDocumentAsync({});
+        // const file = convertFileToObject(result)
+        let tipe = result.uri.split('/')
+        tipe = tipe[tipe.length - 1]
+        tipe = tipe.split('.')
+        tipe = tipe[tipe.length - 1]
+        setDocument([...document, result])
+        setType([...type, tipe])
+        console.log(result)
+        const data = {
+            token: token,
+            result: result
+        }
+        dispatch(postAttachment(data))
+    };
+
+
+    const { kalenderLists, attachment, status } = useSelector(state => state.event)
     const [stateConfig, setStateConfig] = useState({})
 
     const { addressbook } = useSelector(state => state.addressBookKKP)
@@ -220,13 +251,71 @@ export const TambahEvent = () => {
         }
     }, [addressbook])
 
-    console.log(addressbook.selected)
-    const [count, setCount] = useState(0)
-    const [inputList, setInputList] = useState([]);
+    useEffect(() => {
+        if (status === 'berhasil') {
+            dispatch(getEventToday(token))
+            dispatch(getEventProgress(token))
+        }
+    }, [status])
+
 
     // const onAddBtnClick = event => {
     //     setInputList(inputList.concat(<Input key={inputList.length} />));
     // };
+
+    const handleSubmit = () => {
+        const pilihNotulen = []
+        pilihanNotulenEvent?.map(item => {
+            if (item?.code) {
+                pilihNotulen.push(item?.code)
+            } else {
+                pilihNotulen.push(item.nip)
+            }
+        })
+
+        const pilihPeserta = []
+        pilihanPesertaEvent?.map(item => {
+            if (item?.code) {
+                pilihPeserta.push(item?.code)
+            } else {
+                pilihPeserta.push(item.nip)
+            }
+        })
+
+        const pilihAbsen = []
+        pilihanPetugasAbsenEvent?.map(item => {
+            if (item?.code) {
+                pilihAbsen.push(item?.code)
+            } else {
+                pilihAbsen.push(item.nip)
+            }
+        })
+
+        const idAtt = []
+        attachment?.map(item => {
+            idAtt.push(item.id)
+        })
+
+        const payload = {
+            calendar_id: kategori.key === undefined ? '' : kategori.key,
+            title: Judul,
+            note: Note,
+            start_date: TanggalMulai,
+            end_date: TanggalSelesai,
+            location: Tempat,
+            pic_objid: pilihanPimpinanEvent[0]?.code,
+            notulen_list: pilihNotulen,
+            members_list: pilihPeserta,
+            presensi_list: pilihAbsen,
+            status: 'persiapan',
+            id_attachment: idAtt
+        }
+        const data = {
+            token: token,
+            payload: payload
+        }
+        dispatch(postEvent(data))
+    }
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -291,8 +380,8 @@ export const TambahEvent = () => {
                                         maxLength={40}
                                         placeholder='Masukan Judul'
                                         style={{ padding: 10 }}
-                                        onChangeText={onChangeValue}
-                                        value={value}
+                                        onChangeText={setJudul}
+                                        value={Judul}
                                     />
                                 </View>
 
@@ -317,11 +406,10 @@ export const TambahEvent = () => {
                                                 maxLength={40}
                                                 placeholder='Mulai'
                                                 style={{ padding: 10 }}
-                                                onChangeText={onChangeValue}
-                                                value={value}
+                                                value={TanggalMulai}
                                             />
                                             <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                                <TouchableOpacity onPress={() => setModalVisiblePicker(true)}>
+                                                <TouchableOpacity onPress={() => setModalVisiblePicker('mulai')}>
                                                     <Ionicons name='calendar-outline' size={24} color={COLORS.grey} />
                                                 </TouchableOpacity>
                                             </View>
@@ -348,11 +436,10 @@ export const TambahEvent = () => {
                                                 maxLength={40}
                                                 placeholder='Selesai'
                                                 style={{ padding: 10 }}
-                                                onChangeText={onChangeValue}
-                                                value={value}
+                                                value={TanggalSelesai}
                                             />
                                             <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                                <TouchableOpacity onPress={() => setModalVisiblePicker(true)}>
+                                                <TouchableOpacity onPress={() => setModalVisiblePicker('selesai')}>
                                                     <Ionicons name='calendar-outline' size={24} color={COLORS.grey} />
                                                 </TouchableOpacity>
                                             </View>
@@ -363,7 +450,7 @@ export const TambahEvent = () => {
                                 <Modal
                                     animationType="fade"
                                     transparent={true}
-                                    visible={modalVisiblePicker}
+                                    visible={modalVisiblePicker === 'mulai' || modalVisiblePicker === 'selesai' ? true : false}
                                     onRequestClose={() => {
                                         setModalVisiblePicker(!modalVisiblePicker);
                                     }}
@@ -371,7 +458,7 @@ export const TambahEvent = () => {
                                     <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                                     <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                                         <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: '90%', height: 500, borderRadius: 10 }}>
-                                            <TouchableOpacity onPress={() => setModalVisiblePicker(false)} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
+                                            <TouchableOpacity onPress={() => setModalVisiblePicker('')} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
                                                 <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 35, height: 35, justifyContent: 'center', alignItems: 'center' }}>
                                                     <Ionicons name='close-outline' size={24} color={COLORS.white} />
                                                 </View>
@@ -391,8 +478,18 @@ export const TambahEvent = () => {
                                                     mode="calendar"
                                                     minuteInterval={30}
                                                     style={{ borderRadius: 10 }}
+                                                    onSelectedChange={date => {
+                                                        const [year, month, day] = date.split('/').map(Number)
+                                                        const formattedDate = new Date(year, month - 1, day)
+                                                        if (modalVisiblePicker === 'mulai') {
+                                                            setTanggalMulai(moment(formattedDate).format('YYYY-MM-DD'))
+                                                        } else if (modalVisiblePicker === 'selesai') {
+                                                            setTanggalSelsai(moment(formattedDate).format('YYYY-MM-DD'))
+                                                        }
+                                                    }
+                                                    }
                                                 />
-                                                <TouchableOpacity onPress={() => setModalVisiblePicker(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                <TouchableOpacity onPress={() => setModalVisiblePicker('')} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
                                                     <View style={{ backgroundColor: COLORS.primary, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
                                                         <Text style={{ color: COLORS.white }}>Ok</Text>
                                                     </View>
@@ -422,8 +519,8 @@ export const TambahEvent = () => {
                                         maxLength={40}
                                         placeholder='Ketikan sesuatu'
                                         style={{ padding: 10 }}
-                                        onChangeText={onChangeValue}
-                                        value={value}
+                                        onChangeText={setTempat}
+                                        value={Tempat}
                                     />
                                 </View>
 
@@ -568,8 +665,6 @@ export const TambahEvent = () => {
                                         maxLength={40}
                                         placeholder='Pilih member'
                                         style={{ padding: 10 }}
-                                        onChangeText={onChangeValue}
-                                        value={value}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
                                         <TouchableOpacity onPress={() => {
@@ -620,8 +715,6 @@ export const TambahEvent = () => {
                                         maxLength={40}
                                         placeholder='Pilih member'
                                         style={{ padding: 10 }}
-                                        onChangeText={onChangeValue}
-                                        value={value}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
                                         <TouchableOpacity onPress={() => {
@@ -671,33 +764,42 @@ export const TambahEvent = () => {
                                             selectedIconTint="#873c1e"
                                             iconTint="#312921"
                                         /> */}
-                                        <RichEditor
+                                        {/* <RichEditor
                                             ref={richText}
                                             onChange={setRichTextHandle}
                                             placeholder="Tulis Pesan..."
                                             androidHardwareAccelerationDisabled={true}
                                             initialHeight={250}
+                                        /> */}
+                                        <TextInput
+                                            editable
+                                            multiline
+                                            numberOfLines={4}
+                                            maxLength={40}
+                                            placeholder='Ketikan Sesuatu'
+                                            style={{ padding: 10, height: 150 }}
+                                            onChangeText={setNote}
+                                            value={Note}
                                         />
                                     </KeyboardAvoidingView>
                                 </View>
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginHorizontal: 17, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tamu Eksternal</Text>
-                                    <TouchableOpacity style={{ width: 50, height: 24, backgroundColor: COLORS.primary, borderRadius: 8, alignItems: 'center', justifyContent: 'center' }}
-                                        onPress={() => {
-                                            bottomSheetMember()
-                                        }}
-                                    >
-                                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
-                                    </TouchableOpacity>
+                                    {/* <TouchableOpacity style={{ width: 50, height: 24, backgroundColor: COLORS.primary, borderRadius: 8, alignItems: 'center', justifyContent: 'center' }}
+                                            onPress={() => {
+                                                bottomSheetMember()
+                                            }}
+                                        >
+                                            <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                                        </TouchableOpacity> */}
                                 </View>
-                                <View style={{ marginHorizontal: 17 }}>
+                                <View style={{ marginHorizontal: 17, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                                     <View style={{
                                         borderWidth: 1,
                                         flex: 1,
                                         borderRadius: 4,
                                         borderColor: COLORS.ExtraDivinder,
-                                        flexDirection: 'row',
                                     }}
                                     >
                                         <TextInput
@@ -711,28 +813,47 @@ export const TambahEvent = () => {
                                             value={value}
                                         />
                                     </View>
-
-                                    <View style={{
-                                        borderWidth: 1,
-                                        flex: 1,
-                                        borderRadius: 4,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        flexDirection: 'row',
-                                        marginTop: 10
-                                    }}
-                                    >
-                                        <TextInput
-                                            editable
-                                            multiline
-                                            numberOfLines={4}
-                                            maxLength={40}
-                                            placeholder='Email Tamu'
-                                            style={{ padding: 10 }}
-                                            onChangeText={onChangeValue}
-                                            value={value}
-                                        />
-                                    </View>
+                                    <TouchableOpacity onPress={() => {
+                                        setTamu(prev => [...prev, value])
+                                        onChangeValue('')
+                                    }}>
+                                        <Ionicons name='send-outline' size={24} color={COLORS.infoDanger} />
+                                    </TouchableOpacity>
                                 </View>
+
+                                <View>
+                                    {Tamu.map((item, index) => {
+                                        return (
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 17, gap: 10 }}>
+                                                <View style={{
+
+                                                    marginTop: 10,
+                                                    backgroundColor: COLORS.white,
+                                                    borderRadius: 8,
+                                                    //shadow ios
+                                                    shadowOffset: { width: -2, height: 4 },
+                                                    shadowColor: '#171717',
+                                                    shadowOpacity: 0.2,
+                                                    //shadow android
+                                                    elevation: 2,
+                                                    padding: 10,
+                                                    width: '89%'
+                                                }}>
+                                                    <Text>{item}</Text>
+                                                </View>
+                                                <TouchableOpacity style={{ borderWidth: 1, borderColor: COLORS.infoDanger, borderRadius: 2 }}
+                                                    onPress={() => {
+                                                        const newArr = Tamu.filter((item, i) => i != index)
+                                                        setTamu(newArr)
+                                                    }}
+                                                >
+                                                    <Ionicons name='remove-sharp' size={20} color={COLORS.infoDanger} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        )
+                                    })}
+                                </View>
+
                                 {/* {inputList} */}
                                 <BottomSheetModal
                                     ref={bottomSheetModalMemberRef}
@@ -864,7 +985,10 @@ export const TambahEvent = () => {
                         </Pressable>
 
                     </ScrollView>
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                    <TouchableOpacity onPress={() => {
+                        // setModalVisible(true)
+                        handleSubmit()
+                    }}>
                         <View style={{ position: 'absolute', right: 30, bottom: 100 }}>
                             <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                                 <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
@@ -873,65 +997,56 @@ export const TambahEvent = () => {
                     </TouchableOpacity>
 
 
-                    {value === '' ? (
-                        <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={modalVisible}
-                            onRequestClose={() => {
-                                setModalVisible(!modalVisible);
-                            }}
-                        >
-                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                                <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
-                                    <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 5, paddingRight: '80%' }}>
-                                        <Ionicons name='close-outline' size={24} />
-                                    </TouchableOpacity>
-                                    <View style={{ marginBottom: 40 }}>
-                                        <Image source={require('../../assets/superApp/alertGagal.png')} />
-                                        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                            <Text >Terjadi Kesalahan!</Text>
-                                        </View>
-                                        <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
-                                            <View style={{ backgroundColor: COLORS.danger, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
-                                                <Text style={{ color: COLORS.white }}>Ok</Text>
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={status === '' ? false : true}
+                        onRequestClose={() => {
+                            dispatch(setStatus(''))
+                        }}
+                    >
+                        <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                            <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
+                                <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 5, paddingRight: '80%' }}>
+                                    <Ionicons name='close-outline' size={24} />
+                                </TouchableOpacity>
+                                {
+                                    status === 'berhasil' ? (
+                                        <>
+                                            <View style={{ marginBottom: 40 }}>
+                                                <Image source={require('../../assets/superApp/alertBerhasil.png')} />
+                                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                                    <Text >Berhasil Ditambahkan!</Text>
+                                                </View>
+                                                <TouchableOpacity onPress={() => {
+                                                    dispatch(setStatus(''))
+                                                    navigation.navigate('HalamanUtama')
+                                                }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                        <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                    </View>
+                                                </TouchableOpacity>
                                             </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
-                    ) : (
-                        <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={modalVisible}
-                            onRequestClose={() => {
-                                setModalVisible(!modalVisible);
-                            }}
-                        >
-                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                                <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
-                                    <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 5, paddingRight: '80%' }}>
-                                        <Ionicons name='close-outline' size={24} />
-                                    </TouchableOpacity>
-                                    <View style={{ marginBottom: 40 }}>
-                                        <Image source={require('../../assets/superApp/alertBerhasil.png')} />
-                                        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                            <Text >Berhasil Ditambahkan!</Text>
-                                        </View>
-                                        <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
-                                            <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
-                                                <Text style={{ color: COLORS.white }}>Ok</Text>
+                                        </>
+                                    ) : (
+                                        <View style={{ marginBottom: 40 }}>
+                                            <Image source={require('../../assets/superApp/alertGagal.png')} />
+                                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                                <Text >Terjadi Kesalahan!</Text>
                                             </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
+                                            <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                <View style={{ backgroundColor: COLORS.danger, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
+                                }
                             </View>
-                        </Modal>
-                    )}
+                        </View>
+                    </Modal>
+
                 </BottomSheetModalProvider>
             </SafeAreaView>
         </GestureHandlerRootView>

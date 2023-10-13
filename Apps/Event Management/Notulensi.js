@@ -91,7 +91,7 @@ export const Notulensi = () => {
     const { width } = useWindowDimensions();
 
     const source = {
-        html: notu[0].content
+        html: notu[0]?.content
     };
 
 
@@ -107,6 +107,8 @@ export const Notulensi = () => {
     const video = useRef(null);
 
     const navigation = useNavigation()
+
+    console.log(notu)
     return (
         <SafeAreaView>
             <ScrollView>
@@ -187,15 +189,15 @@ export const Notulensi = () => {
                             <Text>{data.deskripsi}</Text>
                         </View> */}
 
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 20 }}>Lampiran</Text>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 20 }}>Notulensi</Text>
                         <FlatList
                             key={'*'}
-                            data={data.attachments}
+                            data={notu}
                             renderItem={({ item }) =>
                                 <View key={item.id}>
                                     <CardLampiran
-                                        lampiran={item.file}
-                                        type={getFileExtension(item.name)}
+                                        lampiran={item.pdf}
+                                        type={getFileExtension(item.pdf)}
                                         onClick={() => {
                                             setVisibleModal(true)
                                             setLampiranById(item)
@@ -271,12 +273,12 @@ export const Notulensi = () => {
                     </View>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                {/* <View style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Notulensi</Text>
                         {user === 'member' ? (
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                {/* <Text>{notu[0].content}</Text> */}
+                                <Text>{notu[0].content}</Text>
                                 <RenderHTML
                                     source={source}
                                     contentWidth={width}
@@ -307,7 +309,7 @@ export const Notulensi = () => {
                             <></>
                         )}
                     </View>
-                </View>
+                </View> */}
 
                 {/* <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 5, marginTop: 20 }}>
                     <TouchableOpacity style={{

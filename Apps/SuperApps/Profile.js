@@ -5,16 +5,22 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Collapse } from 'accordion-collapse-react-native'
 import { CollapseCardBiodata } from '../../components/CollapseCardBiodata'
 import { ScrollView } from 'react-native'
 import { CollapseCardLinimasa } from '../../components/CollapseCardLinimasa'
+import { removeTokenValue } from '../../service/session'
+import { setLogout } from '../../store/LoginAuth'
 
 
 export const Profile = () => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
     const { profile, linimasa } = useSelector(state => state.superApps)
+    const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
+
+    console.log(profile)
     return (
         <SafeAreaView>
             <ScrollView>
@@ -54,9 +60,9 @@ export const Profile = () => {
                         elevation: 2,
 
                     }}>
-                        <Image source={profile.avatar} style={{ width: 61, height: 61, borderRadius: 30 }} />
+                        <Image source={{ uri: BASE_URL + profile.avatar }} style={{ width: 61, height: 61, borderRadius: 30 }} />
                         <Text style={{ marginVertical: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold }}>{profile.nama}</Text>
-                        <Text style={{ color: COLORS.lighter, fontSize: FONTSIZE.H4 }}>{profile.unit}</Text>
+                        <Text style={{ color: COLORS.lighter, fontSize: FONTSIZE.H4 }}>{profile.unit_kerja}</Text>
                     </View>
                 </View>
 
@@ -80,27 +86,27 @@ export const Profile = () => {
                         <View style={{ paddingBottom: 20 }}>
                             <View style={{ flexDirection: 'row', marginTop: 20 }}>
                                 <Text style={{ width: 126, }}>Jumlah hari kerja</Text>
-                                <Text>{profile.harikerja}</Text>
+                                <Text>{profile.working_day}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Text style={{ width: 126, }}>Jumlah hadir</Text>
-                                <Text>{profile.hadir}</Text>
+                                <Text>{profile.present_day}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Text style={{ width: 126, }}>Terlambat</Text>
-                                <Text>{profile.terlambat}</Text>
+                                <Text>{profile.late_day}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Text style={{ width: 126, }}>Dinas</Text>
-                                <Text>{profile.dinas}</Text>
+                                <Text>{profile.outstation_day}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Text style={{ width: 126, }}>Cuti</Text>
-                                <Text>{profile.cuti}</Text>
+                                <Text>-</Text>
                             </View>
                         </View>
                     </View>
@@ -122,34 +128,34 @@ export const Profile = () => {
 
                         <View style={{ paddingBottom: 20 }}>
                             <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                                <Text style={{ width: 91, fontSize: 30, fontWeight: FONTWEIGHT.bold }}>{profile.ipasn}</Text>
-                                <View style={{ backgroundColor: '#CED06C', width: 50, height: 18, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text>{profile.jenisipasn}</Text>
+                                <Text style={{ width: 91, fontSize: 30, fontWeight: FONTWEIGHT.bold }}>{profile.ipasn_nilai}</Text>
+                                <View style={{ backgroundColor: '#CED06C', width: 60, height: 18, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text>Tinggi</Text>
                                 </View>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
                                 <Text style={{ width: 85, }}>Kualifikasi</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: '#FF9900', borderRadius: 30 }} />
-                                <Text>{profile.kualifikasi}</Text>
+                                <Text>{profile.ipasn_kualifikasi}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
                                 <Text style={{ width: 85, }}>Kompetensi</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: COLORS.success, borderRadius: 30 }} />
-                                <Text>{profile.kompetensi}</Text>
+                                <Text>{profile.ipasn_kompetensi}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
                                 <Text style={{ width: 85, }}>Kinerja</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: '#CED06C', borderRadius: 30 }} />
-                                <Text>{profile.kinerja}</Text>
+                                <Text>{profile.ipasn_kinerja}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
                                 <Text style={{ width: 85, }}>Disiplin</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: COLORS.success, borderRadius: 30 }} />
-                                <Text>{profile.disiplin}</Text>
+                                <Text>{profile.ipasn_disiplin}</Text>
                             </View>
                         </View>
                     </View>
@@ -158,7 +164,27 @@ export const Profile = () => {
 
                 <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
                     <CollapseCardBiodata profile={profile} />
-                    <CollapseCardLinimasa linimasa={linimasa} />
+                    {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
+                </View>
+
+                <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: COLORS.primary,
+                            width: '90%',
+                            height: 50,
+                            borderRadius: 8,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                        onPress={() => {
+                            removeTokenValue()
+                            dispatch(setLogout())
+                            navigation.navigate('LoginToken')
+                        }}
+                    >
+                        <Text style={{ color: COLORS.white }}>Logout</Text>
+                    </TouchableOpacity>
                 </View>
 
             </ScrollView>

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps';
 import {
     BottomSheetModal,
     BottomSheetModalProvider,

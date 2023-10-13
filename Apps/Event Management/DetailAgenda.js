@@ -23,10 +23,12 @@ import { Search } from '../../components/Search'
 import { Portal } from 'react-native-portalize'
 import moment from 'moment'
 import { getTokenValue } from '../../service/session'
-import { getDetailNotulensi, getlistAbsen, getlistApprover, getlistNotulensi, putAbsen } from '../../service/api'
+import { deleteNotulensi, getDetailNotulensi, getlistAbsen, getlistApprover, getlistNotulensi, postNotulensi, putAbsen, readyToApprove } from '../../service/api'
 import QRCode from 'react-native-qrcode-svg'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import ListEmpty from '../../components/ListEmpty'
+import * as DocumentPicker from 'expo-document-picker';
+import { Pressable } from 'react-native'
 
 const CardLampiran = ({ lampiran, onClick, type, id }) => {
     const navigation = useNavigation()
@@ -221,6 +223,7 @@ export const DetailAgenda = () => {
 
     const [visibleModal, setVisibleModal] = useState(false);
     const [lampiranById, setLampiranById] = useState(null)
+    const [modalVisible, setModalVisible] = useState(false);
 
     const getFileExtension = (type) => {
         let jenis = type.split('.')
@@ -291,16 +294,6 @@ export const DetailAgenda = () => {
         })()
     }
 
-    // if (!hasPermission) {
-    //     return (
-    //         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-    //             <Text>
-    //                 please grant camera permission to app
-    //             </Text>
-    //         </View>
-    //     )
-    // }
-
     const [idabsen, setIdAbsen] = useState('')
 
     const handleBarCodeScanned = ({ type, data }) => {
@@ -314,6 +307,43 @@ export const DetailAgenda = () => {
         }
         console.log(`data: ${data}`)
         console.log(`type: ${type}`)
+    }
+
+    const [document, setDocument] = useState(null)
+    const [type, setType] = useState(null)
+
+    const pickDocument = async () => {
+        let result = await DocumentPicker.getDocumentAsync({});
+        // const file = convertFileToObject(result)
+        let tipe = result.uri.split('/')
+        tipe = tipe[tipe.length - 1]
+        tipe = tipe.split('.')
+        tipe = tipe[tipe.length - 1]
+        setDocument(result)
+        setType(tipe)
+        console.log(result)
+        const data = {
+            token: token,
+            result: result
+        }
+    };
+
+    const handleSubmitNotulensi = () => {
+        const item = {
+            token: token,
+            agenda_id: data.id,
+            pdf: document
+        }
+        dispatch(postNotulensi(item))
+    }
+
+    const handleDelete = () => {
+        const item = {
+            token: token,
+            agenda_id: data.id,
+            id: notu[0].id
+        }
+        dispatch(deleteNotulensi(item))
     }
 
 
@@ -378,7 +408,7 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-                            <Text>{moment(data.date).format('d MMM yyy')}</Text>
+                            <Text>{moment(data.date).format('DD MMM YYYY')}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -406,7 +436,7 @@ export const DetailAgenda = () => {
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
                             {/* <Image source={{ uri: data.extra_attrs?.pic?.avatar_url }} style={{ width: 26, height: 26, borderRadius: 50 }} /> */}
-                            <Text>{data.extra_attrs?.pic.title.name}</Text>
+                            <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
                         </View>
 
                         {/* custom divider */}
@@ -419,9 +449,9 @@ export const DetailAgenda = () => {
                                     <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                 </View>
                             )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
 
                         {/* custom divider */}
@@ -434,9 +464,9 @@ export const DetailAgenda = () => {
                                     <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                 </View>
                             )}
-                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
 
                         {/* custom divider */}
@@ -446,22 +476,14 @@ export const DetailAgenda = () => {
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Eksternal</Text>
                             <View style={{ position: 'relative', flexDirection: 'column' }}>
                                 {data.extra_attrs?.guest_external?.map((data, index) =>
-                                    <Text key={index}> - {data.name} </Text>
+                                    <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
+                                        <Text>-</Text>
+                                        <Text style={{ width: 150 }}>{data.name}</Text>
+                                    </View>
                                 )}
                             </View>
                         </View>
 
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absensi </Text>
-                            {data.presensi?.map((data, index) =>
-                                <View key={index} style={{ width: 200 }}>
-                                    <Text>{data.title.name}</Text>
-                                </View>
-                            )}
-                        </View>
 
                     </View>
 
@@ -518,11 +540,11 @@ export const DetailAgenda = () => {
                                             </View>
                                         </View>
 
-                                        <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+                                        {/* <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
                                             <Search
                                                 placeholder={'Cari'}
                                             />
-                                        </View>
+                                        </View> */}
 
                                         <FlatList
                                             data={approver.lists}
@@ -546,74 +568,177 @@ export const DetailAgenda = () => {
 
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Notulensi</Text>
-                        <TouchableOpacity style={{
-                            width: '100%',
-                            height: 50,
-                            borderRadius: 8,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 10,
-                            backgroundColor: COLORS.foundation,
-                            marginTop: 10
-                        }}
-                            onPress={() => {
-                                navigation.navigate('Notulensi', { data: data })
+
+                        {data.user_role?.is_pic === true && !notu[0]?.ready_to_approve && notu.length !== 0 ? (
+                            <TouchableOpacity style={{
+                                width: '100%',
+                                height: 50,
+                                borderRadius: 8,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: 10,
+                                backgroundColor: COLORS.primary,
+                                marginTop: 10
                             }}
-                        >
-                            <Ionicons name='document-outline' size={24} color={COLORS.white} />
-                            <Text style={{ color: COLORS.white }} >Lihat Notulensi</Text>
-                        </TouchableOpacity>
-
-                        {event.detailEvent?.user_role?.is_pic === true ||
-                            data.user_role?.is_pic === true ||
-                            data.user_role?.is_notulensi === true ||
-                            data.user_role?.notulensi === false &&
-                            data.user_role?.presensi === false &&
-                            data.user_role?.member === false &&
-                            data.user_role?.is_pic === false ? (
-                            <View>
-                                <TouchableOpacity style={{
-                                    width: '100%',
-                                    height: 50,
-                                    borderRadius: 8,
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: 10,
-                                    backgroundColor: COLORS.lightBrown,
-                                    marginTop: 10
+                                onPress={() => {
+                                    const data = {
+                                        token: token,
+                                        id: notu[0].id
+                                    }
+                                    dispatch(readyToApprove(data))
                                 }}
-                                // onPress={() => {
-                                //     navigation.navigate('Notulensi', { data: data })
-                                // }}
-                                >
-                                    <Ionicons name='pencil-outline' size={24} color={COLORS.white} />
-                                    <Text style={{ color: COLORS.white }}>Edit Notulensi</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity style={{
-                                    width: '100%',
-                                    height: 50,
-                                    borderRadius: 8,
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: 10,
-                                    backgroundColor: COLORS.infoDanger,
-                                    marginTop: 10
-                                }}
-                                // onPress={() => {
-                                //     navigation.navigate('Notulensi', { data: data })
-                                // }}
-                                >
-                                    <Ionicons name='trash-outline' size={24} color={COLORS.white} />
-                                    <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
-                                </TouchableOpacity>
-                            </View>
+                            >
+                                <Text style={{ color: COLORS.white }} >Ready To Approve</Text>
+                            </TouchableOpacity>
                         ) : (
                             <></>
                         )}
+
+                        {notu.length === 0 ? (
+                            <TouchableOpacity style={{
+                                width: '100%',
+                                height: 50,
+                                borderRadius: 8,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: 10,
+                                backgroundColor: COLORS.lightBrown,
+                                marginTop: 10
+                            }}
+                                onPress={() => {
+                                    setModalVisible(true)
+                                }}
+                            >
+                                <Text style={{ color: COLORS.white }}>Unggah Notulensi </Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <>
+                                {event.detailEvent?.user_role?.is_pic === true ||
+                                    data.user_role?.is_pic === true ||
+                                    data.user_role?.is_notulensi === true ||
+                                    data.user_role?.is_notulensi === false &&
+                                    data.user_role?.is_presensi === false &&
+                                    data.user_role?.is_member === false &&
+                                    data.user_role?.is_pic === false ? (
+                                    <View>
+                                        <TouchableOpacity style={{
+                                            width: '100%',
+                                            height: 50,
+                                            borderRadius: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: 10,
+                                            backgroundColor: COLORS.foundation,
+                                            marginTop: 10
+                                        }}
+                                            onPress={() => {
+                                                navigation.navigate('Notulensi', { data: data })
+                                            }}
+                                        >
+                                            <Ionicons name='document-outline' size={24} color={COLORS.white} />
+                                            <Text style={{ color: COLORS.white }} >Lihat Notulensi</Text>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity style={{
+                                            width: '100%',
+                                            height: 50,
+                                            borderRadius: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: 10,
+                                            backgroundColor: COLORS.infoDanger,
+                                            marginTop: 10
+                                        }}
+                                            onPress={() => {
+                                                handleDelete()
+                                            }}
+                                        >
+                                            <Ionicons name='trash-outline' size={24} color={COLORS.white} />
+                                            <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                ) : (
+                                    <></>
+                                )}
+                            </>
+                        )}
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(false)
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                                <View style={{ backgroundColor: COLORS.white, width: '90%', height: '80%', borderRadius: 8, padding: 20 }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <TouchableOpacity onPress={() => setModalVisible(false)}>
+                                            <Ionicons name='close-outline' size={24} />
+                                        </TouchableOpacity>
+                                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Unggah Notulensi</Text>
+                                    </View>
+                                    {/* custom divider */}
+                                    <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginTop: 10 }} />
+                                    <Text style={{ marginVertical: 20, color: COLORS.lighter }}>Unggah File Notulensi</Text>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                        <Pressable style={{
+                                            borderWidth: 1,
+                                            width: '90%',
+                                            borderRadius: 4,
+                                            borderColor: COLORS.ExtraDivinder,
+                                            height: 250,
+                                            marginBottom: 20,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            gap: 5,
+                                        }}
+                                            onPress={pickDocument}
+                                        >
+                                            <View style={{ marginBottom: 10 }}>
+                                                <Ionicons name='md-cloud-upload-outline' size={30} color={'#66656C'} />
+                                            </View>
+                                            <Text style={{ color: '#66656C' }}>Klik Untuk Unggah</Text>
+                                        </Pressable>
+                                        <View style={{ marginVertical: 10 }}>
+                                            <Text style={{ color: COLORS.lighter }}>*) Hanya file pdf yang akan diterima dan ukuran file maks 10 MB</Text>
+                                        </View>
+                                    </View>
+
+                                    {document !== null &&
+                                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginVertical: 10, flexWrap: 'wrap', gap: 10 }}>
+                                            <View style={{ width: 97, height: 97, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 8, borderColor: COLORS.ExtraDivinder }}>
+                                                <Image source={require('../../assets/superApp/pdf.png')} />
+                                            </View>
+                                        </View>
+                                    }
+                                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+                                        <TouchableOpacity style={{
+                                            width: '100%',
+                                            height: 50,
+                                            width: 100,
+                                            borderRadius: 8,
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: 10,
+                                            backgroundColor: COLORS.primary,
+                                            marginTop: 10
+                                        }}
+                                            onPress={() => {
+                                                handleSubmitNotulensi()
+                                                setModalVisible(false)
+                                            }}
+                                        >
+                                            <Text style={{ color: COLORS.white }}>Unggah</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
 
 
                     </View>
@@ -739,9 +864,9 @@ export const DetailAgenda = () => {
                     borderRadius: 8
                 }}>
                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>Absensi</Text>
-                    <View style={{ marginTop: 10 }}>
+                    {/* <View style={{ marginTop: 10 }}>
                         <Search />
-                    </View>
+                    </View> */}
                 </View>
 
                 <FlatList
@@ -763,7 +888,7 @@ export const DetailAgenda = () => {
                     )}
                 />
 
-                {event.detailEvent?.user_role?.is_pic === true ||
+                {/* {event.detailEvent?.user_role?.is_pic === true ||
                     data.user_role?.is_pic === true ||
                     data.user_role?.notulensi === false &&
                     data.user_role?.presensi === false &&
@@ -796,7 +921,7 @@ export const DetailAgenda = () => {
                         </View>
                     ) : (
                         <></>
-                    )}
+                    )} */}
 
 
             </ScrollView>

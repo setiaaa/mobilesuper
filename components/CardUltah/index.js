@@ -4,17 +4,20 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { Divider } from 'react-native-paper';
 import { FlatList } from 'react-native';
-import { FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import moment from 'moment';
+import 'moment/locale/id'
+moment.locale('id')
 
-const CardLiniMasaSatker = ({ no, nama, unit }) => {
+const CardLiniMasaSatker = ({ no, nama, nama_jabatan }) => {
     return (
         <View style={{ flexDirection: 'row', marginVertical: 20, }}>
             <View style={styles.cardNo}>
-                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{no}.</Text>
+                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{no + 1}.</Text>
             </View>
             <View style={{ marginLeft: 20, flex: 1, justifyContent: 'center' }}>
-                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{nama}</Text>
-                <Text>{unit}</Text>
+                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{nama}</Text>
+                <Text style={{ color: COLORS.white }}>{nama_jabatan}</Text>
             </View>
         </View>
     )
@@ -26,11 +29,13 @@ export const CardUltah = ({ ultah }) => {
         <View style={styles.card}>
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, justifyContent: 'center', flex: 1, marginVertical: 20 }}>
-                    <Image source={require('../../assets/superApp/cake_24.png')} />
-                    <Text style={{ textAlign: 'center', color: '#474747', fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H1, paddingTop: 10 }}>Selamat Ulang Tahun Bulan Juni</Text>
+                    <View style={{ backgroundColor: COLORS.white, width: 50, height: 50, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image source={require('../../assets/superApp/cake_24.png')} />
+                    </View>
+                    <Text style={{ textAlign: 'center', color: COLORS.white, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H1 }}>Selamat Ulang Tahun Bulan {moment(ultah.date_birth).format('MMMM')}</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
-                    <Divider bold style={{ width: '75%', backgroundColor: '#999999' }} />
+                    <Divider bold style={{ width: '75%', backgroundColor: COLORS.white }} />
                 </View>
                 <View style={{ height: 368 }}>
                     <ScrollView>
@@ -38,10 +43,9 @@ export const CardUltah = ({ ultah }) => {
                             ultah.map((item, index) => (
                                 <View key={index}>
                                     <CardLiniMasaSatker
-                                        no={item.no}
+                                        no={index}
                                         nama={item.nama}
-                                        unit={item.unit}
-                                        item={item}
+                                        nama_jabatan={item.nama_jabatan}
                                     />
                                 </View>
                             ))
@@ -55,7 +59,7 @@ export const CardUltah = ({ ultah }) => {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: "#EEF5D3",
+        backgroundColor: COLORS.info,
         flexDirection: "column",
         width: '90%',
         marginLeft: 20,

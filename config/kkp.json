@@ -3,7 +3,7 @@
   "slug": "superapps-kkp",
   "version": "0.0.1",
   "orientation": "portrait",
-  "icon": "./assets/icon.png",
+  "icon": "./assets/superApp/kkplogo.png",
   "userInterfaceStyle": "automatic",
   "splash": {
     "image": "./assets/superApp/splash.png",
@@ -22,7 +22,7 @@
   "android": {
     "versionCode": 138,
     "adaptiveIcon": {
-      "foregroundImage": "./assets/icon.png",
+      "foregroundImage": "./assets/superApp/kkplogo.png",
       "backgroundColor": "#FFFFFF"
     },
     "package": "com.kubekkp.portal"

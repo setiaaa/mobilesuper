@@ -25,12 +25,22 @@ import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Dropdown } from '../../components/DropDown';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import PdfReader from 'rn-pdf-reader-js-improved';
+import { postTodo } from '../../service/api';
+import { setStatus } from '../../store/Event';
+import { getTokenValue } from '../../service/session';
 
-const kategories = [
-    { key: 'q', value: 'satu' },
-    { key: 'e', value: 'dua' },
-    { key: 'r', value: 'tiga' },
-    { key: 't', value: 'empat' },
+const PrioritasData = [
+    { key: 'high', value: 'High' },
+    { key: 'normal', value: 'Normal' },
+    { key: 'low', value: 'Low' },
+]
+
+const PengingatData = [
+    { key: '1 hari', value: '1 Hari' },
+    { key: '3 hari', value: '3 Hari' },
+    { key: '5 hari', value: '5 Hari' },
 ]
 
 export const TambahTodo = () => {
@@ -38,12 +48,62 @@ export const TambahTodo = () => {
     const richText = useRef(null);
     const [richTextHandle, setRichTextHandle] = useState('');
     const [value, onChangeValue] = useState('');
+    const [dueDate, setDueDate] = useState(moment(new Date()).format('DD/MM/YYYY'))
     const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
     const [kategori, setKategori] = useState('')
+    const [prioritas, setPrioritas] = useState('')
+    const [pengingat, setPengingat] = useState('')
+    const [PenanggungJawab, setPenanggungJawab] = useState('')
+    const [pilihanPenanggungJawab, setPilihanPenanggungJawab] = useState({})
+    const [description, setDescription] = useState('')
 
-    const { agenda } = useSelector(state => state.event)
+    const dispatch = useDispatch()
+
+    const { agenda, notulensi, status } = useSelector(state => state.event)
     const data = agenda.detail
-    console.log(data)
+    const notu = notulensi.lists
+
+    const [token, setToken] = useState('')
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        let pic = []
+        data.extra_attrs.members.map(item => {
+            pic.push({
+                key: item.is_employee ? item.nip : item.title.objid,
+                value: item.is_employee ? item.nama : item.title.name
+            })
+        })
+        pic.push({
+            key: data.extra_attrs.pic.is_employee ? data.extra_attrs.pic.nip : data.extra_attrs.pic.title.objid,
+            value: data.extra_attrs.pic.is_employee ? data.extra_attrs.pic.nama : data.extra_attrs.pic.title.name
+        })
+        setPenanggungJawab(pic)
+    }, [])
+
+    const HandleSubmit = () => {
+        const payload = {
+            notulensi_id: notu[0].id,
+            name: value,
+            pic_objid: pilihanPenanggungJawab.key,
+            due_date: dueDate,
+            description: description,
+            priority: prioritas.key,
+            reminder: pengingat.key
+        }
+        const data = {
+            token: token,
+            payload: payload
+        }
+        dispatch(postTodo(data))
+    }
+
+
     return (
         <GestureHandlerRootView>
             <SafeAreaView>
@@ -70,41 +130,8 @@ export const TambahTodo = () => {
                             </View>
 
                             <View style={styles.Card}>
-                                <View style={{ marginTop: 20, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Event</Text>
-                                </View>
-                                <View style={{ marginHorizontal: 17 }}>
-                                    <Dropdown
-                                        data={kategories}
-                                        setSelected={setKategori}
-                                        placeHolder={'Pilih Status'}
-                                        borderWidth={1}
-                                        borderColor={COLORS.ExtraDivinder}
-                                        borderwidthDrop={1}
-                                        borderColorDrop={COLORS.ExtraDivinder}
-                                        borderWidthValue={1}
-                                        borderColorValue={COLORS.ExtraDivinder}
-                                    />
-                                </View>
 
                                 <View style={{ marginTop: 20, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Agenda</Text>
-                                </View>
-                                <View style={{ marginHorizontal: 17 }}>
-                                    <Dropdown
-                                        data={kategories}
-                                        setSelected={setKategori}
-                                        placeHolder={'Pilih Status'}
-                                        borderWidth={1}
-                                        borderColor={COLORS.ExtraDivinder}
-                                        borderwidthDrop={1}
-                                        borderColorDrop={COLORS.ExtraDivinder}
-                                        borderWidthValue={1}
-                                        borderColorValue={COLORS.ExtraDivinder}
-                                    />
-                                </View>
-
-                                <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul ToDo</Text>
                                     <Text style={{ color: COLORS.danger }}>*</Text>
                                 </View>
@@ -128,22 +155,62 @@ export const TambahTodo = () => {
                                     />
                                 </View>
 
-                                <View style={{ marginTop: 10, marginBottom: 5, marginLeft: 17, flexDirection: 'row' }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>PIC</Text>
+                                <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Penanggung Jawab</Text>
                                     <Text style={{ color: COLORS.danger }}>*</Text>
                                 </View>
+                                <View style={{ marginHorizontal: 17 }}>
+                                    <Dropdown
+                                        data={PenanggungJawab}
+                                        setSelected={setPilihanPenanggungJawab}
+                                        placeHolder={'Pilih Status'}
+                                        borderWidth={1}
+                                        borderColor={COLORS.ExtraDivinder}
+                                        borderwidthDrop={1}
+                                        borderColorDrop={COLORS.ExtraDivinder}
+                                        borderWidthValue={1}
+                                        borderColorValue={COLORS.ExtraDivinder}
+                                    />
+                                </View>
 
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 17, gap: 10 }}>
-                                    <Image source={data.avatar} />
-                                    <View style={{ width: 250 }}>
-                                        <Text style={{ color: COLORS.info }}>{data.pic}</Text>
-                                        <Text style={{ color: COLORS.lighter }}>{data.unit}</Text>
-                                    </View>
-                                    <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                                <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Prioritas</Text>
+                                    <Text style={{ color: COLORS.danger }}>*</Text>
+                                </View>
+                                <View style={{ marginHorizontal: 17 }}>
+                                    <Dropdown
+                                        data={PrioritasData}
+                                        setSelected={setPrioritas}
+                                        placeHolder={'Pilih Status'}
+                                        borderWidth={1}
+                                        borderColor={COLORS.ExtraDivinder}
+                                        borderwidthDrop={1}
+                                        borderColorDrop={COLORS.ExtraDivinder}
+                                        borderWidthValue={1}
+                                        borderColorValue={COLORS.ExtraDivinder}
+                                    />
+                                </View>
+
+                                <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Pengingat</Text>
+                                    <Text style={{ color: COLORS.danger }}>*</Text>
+                                </View>
+                                <View style={{ marginHorizontal: 17 }}>
+                                    <Dropdown
+                                        data={PengingatData}
+                                        setSelected={setPengingat}
+                                        placeHolder={'Pilih Status'}
+                                        borderWidth={1}
+                                        borderColor={COLORS.ExtraDivinder}
+                                        borderwidthDrop={1}
+                                        borderColorDrop={COLORS.ExtraDivinder}
+                                        borderWidthValue={1}
+                                        borderColorValue={COLORS.ExtraDivinder}
+                                    />
                                 </View>
 
                                 <View style={{ marginTop: 10, marginBottom: 10, flexDirection: 'row', marginHorizontal: 17 }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Due Date</Text>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tenggat Waktu</Text>
                                     <Text style={{ color: COLORS.danger }}>*</Text>
                                 </View>
                                 <View style={{
@@ -162,8 +229,7 @@ export const TambahTodo = () => {
                                         maxLength={40}
                                         placeholder='Masukan Tanggal'
                                         style={{ padding: 10 }}
-                                        onChangeText={onChangeValue}
-                                        value={value}
+                                        value={dueDate}
                                     />
                                     <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
                                         <TouchableOpacity onPress={() => setModalVisiblePicker(true)}>
@@ -204,6 +270,12 @@ export const TambahTodo = () => {
                                                     mode="calendar"
                                                     minuteInterval={30}
                                                     style={{ borderRadius: 10 }}
+                                                    onSelectedChange={date => {
+                                                        const [year, month, day] = date.split('/').map(Number)
+                                                        const formattedDate = new Date(year, month - 1, day)
+                                                        setDueDate(moment(formattedDate).format('YYYY-MM-DD'))
+                                                    }
+                                                    }
                                                 />
                                                 <TouchableOpacity onPress={() => setModalVisiblePicker(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
                                                     <View style={{ backgroundColor: COLORS.primary, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
@@ -217,7 +289,8 @@ export const TambahTodo = () => {
 
 
                                 <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Komentar</Text>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Detail Tugas</Text>
+                                    <Text style={{ color: COLORS.danger }}>*</Text>
                                 </View>
                                 <View style={{
                                     borderWidth: 1,
@@ -230,31 +303,91 @@ export const TambahTodo = () => {
                                 }}
                                 >
                                     <KeyboardAvoidingView style={{ flex: 1 }}>
-                                        {/* <RichToolbar
-                                            editor={richText}
-                                            selectedIconTint="#873c1e"
-                                            iconTint="#312921"
-                                        /> */}
-                                        <RichEditor
-                                            ref={richText}
-                                            onChange={setRichTextHandle}
-                                            placeholder="Tulis Pesan..."
-                                            androidHardwareAccelerationDisabled={true}
-                                            initialHeight={150}
+                                        <TextInput
+                                            editable
+                                            multiline
+                                            numberOfLines={4}
+                                            maxLength={40}
+                                            placeholder='Ketikan Sesuatu'
+                                            style={{ padding: 10, height: 150 }}
+                                            onChangeText={setDescription}
+                                            value={description}
                                         />
                                     </KeyboardAvoidingView>
                                 </View>
 
                             </View>
+                            {/* <View style={{ width: '90%', height: '50%', marginHorizontal: 20 }}>
+                                <PdfReader
+                                    source={{
+                                        uri: notu[0].pdf,
+                                    }}
+                                    webviewProps={{
+                                        startInLoadingState: true,
+                                    }}
+                                />
+                            </View> */}
                         </Pressable>
                     </ScrollView>
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                    <TouchableOpacity onPress={() => HandleSubmit()}>
                         <View style={{ position: 'absolute', right: 30, bottom: 100 }}>
                             <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                                 <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
                             </View>
                         </View>
                     </TouchableOpacity>
+
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={status === '' ? false : true}
+                        onRequestClose={() => {
+                            dispatch(setStatus(''))
+                        }}
+                    >
+                        <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                            <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
+                                <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 5, paddingRight: '80%' }}>
+                                    <Ionicons name='close-outline' size={24} />
+                                </TouchableOpacity>
+                                {
+                                    status === 'berhasil' ? (
+                                        <>
+                                            <View style={{ marginBottom: 40 }}>
+                                                <Image source={require('../../assets/superApp/alertBerhasil.png')} />
+                                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                                    <Text >Berhasil Ditambahkan!</Text>
+                                                </View>
+                                                <TouchableOpacity onPress={() => {
+                                                    dispatch(setStatus(''))
+                                                    navigation.navigate('HalamanUtama')
+                                                }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                        <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </>
+                                    ) : (
+                                        <View style={{ marginBottom: 40 }}>
+                                            <Image source={require('../../assets/superApp/alertGagal.png')} />
+                                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                                <Text >Terjadi Kesalahan!</Text>
+                                            </View>
+                                            <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                <View style={{ backgroundColor: COLORS.danger, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
+                                }
+                            </View>
+                        </View>
+                    </Modal>
+
+
                 </BottomSheetModalProvider>
             </SafeAreaView>
         </GestureHandlerRootView>

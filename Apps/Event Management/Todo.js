@@ -19,11 +19,11 @@ import {
 import { Portal } from 'react-native-portalize'
 import ListEmpty from '../../components/ListEmpty'
 import { getTokenValue } from '../../service/session'
-import { getDetailTodo, getlistTodo } from '../../service/api'
+import { deleteTodo, getDetailTodo, getlistTodo } from '../../service/api'
 
 
 
-const CardListTodo = ({ token, item, bottomSheetAttach, role, eventpic }) => {
+const CardListTodo = ({ token, item, bottomSheetAttach, role, setIdEdit }) => {
     const [user, setUser] = useState('resepsionis')
     const navigation = useNavigation()
     const dispatch = useDispatch()
@@ -52,23 +52,24 @@ const CardListTodo = ({ token, item, bottomSheetAttach, role, eventpic }) => {
                     navigation.navigate('DetailTodo', { item: item })
                 }}
             >
-                {eventpic === true && item.status !== 'hadir' ||
-                    role.is_pic === true && item.status !== 'hadir' ||
-                    role.is_pic === false && item.status !== 'hadir' &&
-                    role.is_notulensi === false && item.status !== 'hadir' &&
-                    role.is_presensi === false && item.status !== 'hadir' &&
-                    role.is_member === false && item.status !== 'hadir' ? (
+                {role.is_pic === true ||
+                    role.is_notulensi === true ||
+                    role.is_pic === false &&
+                    role.is_notulensi === false &&
+                    role.is_presensi === false &&
+                    role.is_member === false ? (
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, width: 250 }}>{item.project?.name}</Text>
-                        <TouchableOpacity onPress={() => bottomSheetAttach()}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, width: 250 }}>{item.name}</Text>
+                        <TouchableOpacity onPress={() => {
+                            bottomSheetAttach()
+                            setIdEdit(item.id)
+                        }}>
                             <Ionicons name='chevron-forward-outline' size={24} />
                         </TouchableOpacity>
                     </View>
                 ) : (
-
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.project?.name}</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.name}</Text>
                 )}
-
 
                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                     <Text style={{ color: COLORS.lighter }}>Due Date :</Text>
@@ -90,6 +91,7 @@ export const Todo = () => {
     const data = todo.lists
 
     const [token, setToken] = useState('')
+    const [idEdit, setIdEdit] = useState('')
 
     const dispatch = useDispatch()
 
@@ -172,14 +174,14 @@ export const Todo = () => {
                 </View>
             </View>
 
-            <View style={{ width: '90%', marginTop: 20, marginHorizontal: 20 }}>
+            {/* <View style={{ width: '90%', marginTop: 20, marginHorizontal: 20 }}>
                 <Search
                     placeholder={"Cari ToDO"}
                 // onSearch={filter}
                 />
-            </View>
+            </View> */}
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginTop: 20 }}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginTop: 20 }}>
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                     <View style={{
                         width: 40,
@@ -215,6 +217,24 @@ export const Todo = () => {
                         <Ionicons name='menu-outline' size={24} />
                     </View>
                 </View>
+            </View> */}
+
+            <View style={{ alignItems: 'flex-end', marginHorizontal: 20 }}>
+                <TouchableOpacity style={{
+                    width: 157,
+                    height: 40,
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 8,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 20,
+                }}
+                    onPress={() => {
+                        navigation.navigate("TambahTodo")
+                    }}
+                >
+                    <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
+                </TouchableOpacity>
             </View>
 
             <FlatList
@@ -222,9 +242,9 @@ export const Todo = () => {
                 renderItem={({ item }) => <CardListTodo
                     token={token}
                     item={item}
-                    role={data.user_role}
-                    eventpic={event.detailEvent?.user_role?.is_pic}
+                    role={event.detailEvent?.user_role}
                     bottomSheetAttach={bottomSheetAttach}
+                    setIdEdit={setIdEdit}
                 />
                 }
                 keyExtractor={item => item.id}
@@ -260,7 +280,12 @@ export const Todo = () => {
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginTop: 10
-                                }}>
+                                }}
+                                    onPress={() => {
+                                        dispatch(getDetailTodo({ token: token, id: idEdit }))
+                                        navigation.navigate('EditTodo')
+                                    }}
+                                >
                                     <Text style={{ color: COLORS.white }}>Ubah</Text>
                                 </TouchableOpacity>
 
@@ -273,7 +298,12 @@ export const Todo = () => {
                                     alignItems: 'center',
                                     marginTop: 10,
                                     marginBottom: 30
-                                }}>
+                                }}
+                                    onPress={() => {
+                                        dispatch(deleteTodo({ token: token, id: idEdit }))
+                                        bottomSheetAttachClose()
+                                    }}
+                                >
                                     <Text style={{ color: COLORS.white }}>Hapus</Text>
                                 </TouchableOpacity>
 

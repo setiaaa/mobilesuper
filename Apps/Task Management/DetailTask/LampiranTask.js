@@ -6,18 +6,18 @@ import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, FONTWEIGHT } from '../../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
-import { CardFileTask } from '../../components/CardFileTask'
-import { CardDokumenTask } from '../../components/CardDokumenTask'
+import { CardFileTask } from '../../../components/CardFileTask'
+import { CardDokumenTask } from '../../../components/CardDokumenTask'
 import { useSelector } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 export const LampiranTask = () => {
     const navigation = useNavigation()
-    const { task } = useSelector(state => state.task)
-    const taskDetail = task.detail
+    const { list } = useSelector(state => state.task)
+    const taskDetail = list.detail
 
     return (
         <GestureHandlerRootView>
@@ -44,7 +44,7 @@ export const LampiranTask = () => {
                         </View>
 
                         <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-                            <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Files</Text>
+                            <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
                         </View>
 
                         <View style={{ flex: 1, alignItems: 'center' }}>
@@ -52,17 +52,6 @@ export const LampiranTask = () => {
                                 taskDetail={taskDetail}
                             />
                         </View>
-
-                        <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-                            <Text style={{ color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>Dokumen</Text>
-                        </View>
-
-                        <View style={{ flex: 1, alignItems: 'center' }}>
-                            <CardDokumenTask
-                                taskDetail={taskDetail}
-                            />
-                        </View>
-
                     </ScrollView>
                 </BottomSheetModalProvider>
             </SafeAreaView>

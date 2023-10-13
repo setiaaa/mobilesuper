@@ -19,14 +19,14 @@ import {
 } from '@gorhom/bottom-sheet'
 import { Portal } from 'react-native-portalize'
 import ListEmpty from '../../components/ListEmpty'
-import { getEventAgenda, getEventAgendaDetail } from '../../service/api'
+import { deleteSubAgenda, getEventAgenda, getEventAgendaDetail } from '../../service/api'
 import { getTokenValue } from '../../service/session'
 import moment from 'moment'
 
 
 
 
-const CardListDetail = ({ token, item, bottomSheetAttach }) => {
+const CardListDetail = ({ token, item, bottomSheetAttach, setIdEdit }) => {
     const navigation = useNavigation()
     const [user, setUser] = useState('resepsionis')
     // const { agenda } = useSelector(state => state.event)
@@ -64,12 +64,15 @@ const CardListDetail = ({ token, item, bottomSheetAttach }) => {
                     {
                         event.detailEvent.user_role.is_pic === true ||
                             item.user_role?.is_pic === true ||
-                            item.user_role?.notulensi === false &&
-                            item.user_role?.presensi === false &&
-                            item.user_role?.member === false &&
+                            item.user_role?.is_notulensi === false &&
+                            item.user_role?.is_presensi === false &&
+                            item.user_role?.is_member === false &&
                             item.user_role?.is_pic === false
                             ? (
-                                <TouchableOpacity onPress={() => bottomSheetAttach()}>
+                                <TouchableOpacity onPress={() => {
+                                    bottomSheetAttach()
+                                    setIdEdit(item.id)
+                                }}>
                                     <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
                                 </TouchableOpacity>
                             ) : (
@@ -106,6 +109,8 @@ const CardListDetail = ({ token, item, bottomSheetAttach }) => {
 export const AgendaEvent = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
+
+    const [idEdit, setIdEdit] = useState('')
 
     const bottomSheetModalRef = useRef(null);
 
@@ -164,8 +169,6 @@ export const AgendaEvent = () => {
     //     }
     // }, [search])
 
-    console.log(event.detailEvent.user_role.is_pic)
-
     return (
         <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -187,11 +190,11 @@ export const AgendaEvent = () => {
                 </View>
             </View>
 
-            <View style={{ width: 358, marginHorizontal: 15, marginVertical: 20 }}>
+            {/* <View style={{ width: 358, marginHorizontal: 15, marginVertical: 20 }}>
                 <Search placeholder={'Cari Agenda'} onSearch={filter} />
-            </View>
+            </View> */}
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                     <View style={{
                         width: 40,
@@ -227,6 +230,23 @@ export const AgendaEvent = () => {
                         <Ionicons name='menu-outline' size={24} />
                     </View>
                 </View>
+            </View> */}
+            <View style={{ alignItems: 'flex-end', marginHorizontal: 20 }}>
+                <TouchableOpacity style={{
+                    width: 157,
+                    height: 40,
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 8,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 20,
+                }}
+                    onPress={() => {
+                        navigation.navigate("TambahSubAgenda")
+                    }}
+                >
+                    <Text style={{ color: COLORS.white }}>Tambah Sub Agenda</Text>
+                </TouchableOpacity>
             </View>
 
             <FlatList
@@ -235,6 +255,7 @@ export const AgendaEvent = () => {
                     token={token}
                     item={item}
                     bottomSheetAttach={bottomSheetAttach}
+                    setIdEdit={setIdEdit}
                 />
                 }
                 style={{ marginVertical: 10, height: 440 }}
@@ -268,7 +289,13 @@ export const AgendaEvent = () => {
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginTop: 10
-                                }}>
+                                }}
+                                    onPress={() => {
+                                        const params = { token: token, id: idEdit }
+                                        dispatch(getEventAgendaDetail(params))
+                                        navigation.navigate('EditSubAgenda')
+                                    }}
+                                >
                                     <Text style={{ color: COLORS.white }}>Ubah</Text>
                                 </TouchableOpacity>
 
@@ -281,7 +308,13 @@ export const AgendaEvent = () => {
                                     alignItems: 'center',
                                     marginTop: 10,
                                     marginBottom: 30
-                                }}>
+                                }}
+                                    onPress={() => {
+                                        const data = { token: token, id: idEdit }
+                                        dispatch(deleteSubAgenda(data))
+                                        bottomSheetAttachClose()
+                                    }}
+                                >
                                     <Text style={{ color: COLORS.white }}>Hapus</Text>
                                 </TouchableOpacity>
 

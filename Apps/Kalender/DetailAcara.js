@@ -24,6 +24,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAgendaDetail } from '../../store/GrupKalender'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import moment from 'moment'
 
 
 const data =
@@ -208,14 +209,9 @@ export const DetailAcara = () => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        // setGambar(data)
-        dispatch(setAgendaDetail(data))
-    }, []);
+    const { agenda, acara } = useSelector(state => state.grupKalender)
 
-    const { agenda } = useSelector(state => state.grupKalender)
-
-    const detail = agenda.detail
+    const detail = acara.detail
     const gambar = agenda.detail.gambar
 
     const [toggleComment, setToggleComment] = useState({
@@ -228,6 +224,8 @@ export const DetailAcara = () => {
             id: id
         })
     }
+
+    console.log(detail)
 
     return (
         <SafeAreaView>
@@ -255,45 +253,100 @@ export const DetailAcara = () => {
 
                         <View style={styles.container}>
                             <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20 }}>
-                                <Carousel
-                                    ref={carouselRef}
-                                    sliderWidth={screenWidth}
-                                    sliderHeight={screenWidth}
-                                    itemWidth={screenWidth - 60}
-                                    data={gambar}
-                                    renderItem={renderItem}
-                                    hasParallaxImages={true}
-                                    onSnapToItem={setSlide}
-                                />
-                                <Pagination
-                                    dotsLength={gambar?.length}
-                                    dotColor={'black'}
-                                    inactiveDotColor={COLORS.grey}
-                                    dotStyle={styles.paginationDot}
-                                    inactiveDotOpacity={0.4}
-                                    inactiveDotScale={0.6}
-                                    activeDotIndex={slide}
-                                    carouselRef={carouselRef}
-                                    tappableDots={!!carouselRef}
-                                />
-                                <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail.judul}</Text>
+
+                                <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail.name}</Text>
+                                </View>
+
+                                <View style={{
+                                    marginHorizontal: 20,
+                                    marginTop: 10,
+                                    flexDirection: 'row',
+                                    gap: 10
+                                }}>
+                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
+                                    <Text>{moment(detail.created_at, 'DD MMMM YYYY HH:mm:ss').format('YYYY MMMM DD')}</Text>
                                 </View>
 
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                         <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Member</Text>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', }}>
-                                            {detail.member?.map((item, index) => {
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detail.location}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                </View>
+
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Mulai</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{moment(detail.start_date).format('YYYY MMMM DD')}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                </View>
+
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{moment(detail.end_date).format('YYYY MMMM DD')}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                </View>
+
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            {detail.pic?.map((item, index) => {
                                                 return (
-                                                    <View key={index}>
-                                                        <Image source={item.avatar} style={{
+                                                    <View key={index} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                                                        <Image source={{ uri: item.avatar_url }} style={{
                                                             marginLeft: -8,
                                                             borderWidth: 2,
                                                             borderRadius: 50,
                                                             borderColor: COLORS.white,
+                                                            width: 30,
+                                                            height: 30
+                                                        }} />
+                                                        <Text>{item.nama}</Text>
+                                                    </View>
+                                                )
+                                            })}
+                                        </View>
+                                    </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                </View>
+
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Anggota</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', }}>
+                                            {detail.members?.map((item, index) => {
+                                                return (
+                                                    <View key={index}>
+                                                        <Image source={{ uri: item.avatar_url }} style={{
+                                                            marginLeft: -8,
+                                                            borderWidth: 2,
+                                                            borderRadius: 50,
+                                                            borderColor: COLORS.white,
+                                                            width: 30,
+                                                            height: 30
                                                         }} />
                                                     </View>
                                                 )
@@ -306,22 +359,10 @@ export const DetailAcara = () => {
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                         <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
-                                        </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.lokasi}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                                </View>
-
-                                <View>
-                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.busana}</Text>
+                                            <Text>{detail.dresscode == null ? '-' : detail.dresscode}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -333,264 +374,60 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pengingat</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.pengingat}</Text>
+                                            <Text>{detail.reminder}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
 
                                 <View>
-                                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                                        <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
-                                            <Text style={{ textAlign: 'justify' }}>{detail.deskripsi}</Text>
+                                    <View style={{ marginHorizontal: 20, marginVertical: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Catatan</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detail.catatan == null ? '-' : detail.catatan}</Text>
                                         </View>
                                     </View>
-                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
 
-                                <View style={{ marginHorizontal: 20, marginVertical: 20, flexDirection: 'row', gap: 20 }}>
-                                    <TouchableOpacity onPress={() => { setTabItemIndex(1) }}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                            <Ionicons name='thumbs-up-outline' size={20} color={tabItemIndex === 1 ? COLORS.primary : null} />
-                                            <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>{detail.disukai}</Text>
-                                            <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : null }}>Disukai</Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity onPress={bottomSheetAttach}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                            <Ionicons name='chatbox-ellipses-outline' size={20} />
-                                            <Text>Komentar</Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <BottomSheetModal
-                                        ref={bottomSheetModalRef}
-                                        snapPoints={animatedSnapPoints}
-                                        handleHeight={animatedHandleHeight}
-                                        contentHeight={animatedContentHeight}
-                                        index={0}
-                                        style={{ borderRadius: 50 }}
-                                        keyboardBlurBehavior="restore"
-                                        android_keyboardInputMode="adjust"
-                                        backdropComponent={({ style }) => (
-                                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                                        )}
-                                    >
-                                        <BottomSheetView onLayout={handleContentLayout} style={{}}>
-                                            <View>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginLeft: 20 }}>
-                                                    <Ionicons name='thumbs-up-outline' size={20} color={COLORS.primary} />
-                                                    <Text style={{ color: COLORS.primary }}>{detail.disukai}</Text>
-                                                    <Text style={{ color: COLORS.primary }}>Disukai</Text>
-                                                    <TouchableOpacity onPress={() => navigation.navigate('ListSuka', { detail: detail })}>
-                                                        <Ionicons name='chevron-forward-outline' size={20} color={COLORS.primary} />
-                                                    </TouchableOpacity>
-                                                </View>
-                                                <View style={{ marginLeft: 20, marginVertical: 20 }}>
-                                                    <Text style={{ color: COLORS.ExtraDivinder }}>Komentar({detail.jmlKomentar})</Text>
-                                                </View>
-                                                <ScrollView style={{ flex: 1 }}>
-                                                    <View style={{
-                                                        justifyContent: 'center',
-                                                        flex: 1,
-                                                        alignItems: 'center',
-                                                        //shadow ios
-                                                        shadowOffset: { width: -2, height: 4 },
-                                                        shadowColor: '#171717',
-                                                        shadowOpacity: 0.2,
-                                                    }}>
-                                                        {detail.Komentar?.map((listData) => (
-                                                            <View key={listData.id} style={{ backgroundColor: COLORS.white, borderRadius: 10, width: '90%', marginVertical: 5, elevation: 5 }}>
-                                                                <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
-                                                                    <View>
-                                                                        <Image source={listData.avatarKomen} />
-                                                                    </View>
-                                                                    <View style={{ marginLeft: 10 }}>
-                                                                        <Text style={{
-                                                                            fontSize: FONTSIZE.H2,
-                                                                            fontWeight: FONTWEIGHT.bold,
-                                                                            lineHeight: 20,
-                                                                        }}>
-                                                                            {listData.nama}
-                                                                        </Text>
-                                                                        <View style={{ flexDirection: 'row', gap: 5 }}>
-                                                                            <Text style={{
-                                                                                color: COLORS.lighter,
-                                                                                fontSize: FONTSIZE.H5,
-                                                                                fontWeight: FONTWEIGHT.normal,
-                                                                                lineHeight: 18,
-                                                                                marginBottom: 10
-                                                                            }}>
-                                                                                {listData.tanggal}
-                                                                            </Text>
-                                                                            <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
-                                                                            <Text style={{
-                                                                                color: COLORS.lighter,
-                                                                                fontSize: FONTSIZE.H5,
-                                                                                fontWeight: FONTWEIGHT.normal,
-                                                                                lineHeight: 18,
-                                                                            }}>
-                                                                                {listData.jam}
-                                                                            </Text>
-                                                                        </View>
-                                                                        <Text style={{
-                                                                            color: COLORS.lighter,
-                                                                            fontSize: FONTSIZE.H5,
-                                                                            fontWeight: FONTWEIGHT.normal,
-                                                                            lineHeight: 18,
-                                                                        }}>
-                                                                            {listData.isi}
-                                                                        </Text>
-                                                                        {listData.jmlhBalas === '' ? (
-                                                                            null
-                                                                        ) : (
-                                                                            <View>
-                                                                                {
-                                                                                    (!toggleComment.toggle && toggleComment.id === listData.id) || toggleComment.id !== listData.id && listData.jmlhBalas > 0 ? (
-                                                                                        <TouchableOpacity
-                                                                                            key={listData.id}
-                                                                                            onPress={() => clickBalas(listData.id, true)}>
-                                                                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
-                                                                                                <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
-                                                                                                <Text style={{
-                                                                                                    color: COLORS.lighter,
-                                                                                                    fontSize: FONTSIZE.H5,
-                                                                                                    fontWeight: FONTWEIGHT.normal,
-                                                                                                    lineHeight: 18,
-                                                                                                }}>
-                                                                                                    Tampilkan {listData.jmlhBalas} Balasan
-                                                                                                </Text>
-                                                                                            </View>
-                                                                                        </TouchableOpacity>
-                                                                                    ) : (
-                                                                                        null
-                                                                                    )
-                                                                                }
-
-                                                                                {listData.id === toggleComment.id && toggleComment.toggle ? (
-                                                                                    <View>
-                                                                                        {listData.balas?.map((listKomen, index) =>
-                                                                                            <>
-                                                                                                <View style={{ flexDirection: 'row', marginVertical: 10, marginHorizontal: 20 }}>
-                                                                                                    <View>
-                                                                                                        <Image source={listKomen.avatarBalas} />
-                                                                                                    </View>
-                                                                                                    <View style={{ marginLeft: 10 }}>
-                                                                                                        <Text style={{
-                                                                                                            fontSize: FONTSIZE.H2,
-                                                                                                            fontWeight: FONTWEIGHT.bold,
-                                                                                                            lineHeight: 20,
-                                                                                                        }}>
-                                                                                                            {listKomen.nama}
-                                                                                                        </Text>
-                                                                                                        <View style={{ flexDirection: 'row', gap: 5 }}>
-                                                                                                            <Text style={{
-                                                                                                                color: COLORS.lighter,
-                                                                                                                fontSize: FONTSIZE.H5,
-                                                                                                                fontWeight: FONTWEIGHT.normal,
-                                                                                                                lineHeight: 18,
-                                                                                                                marginBottom: 10
-                                                                                                            }}>
-                                                                                                                {listKomen.tanggal}
-                                                                                                            </Text>
-                                                                                                            <View style={{ height: '70%', width: 1, backgroundColor: '#DBDADE' }} />
-                                                                                                            <Text style={{
-                                                                                                                color: COLORS.lighter,
-                                                                                                                fontSize: FONTSIZE.H5,
-                                                                                                                fontWeight: FONTWEIGHT.normal,
-                                                                                                                lineHeight: 18,
-                                                                                                            }}>
-                                                                                                                {listKomen.jam}
-                                                                                                            </Text>
-                                                                                                        </View>
-                                                                                                        <Text style={{
-                                                                                                            color: '#999999',
-                                                                                                            fontSize: FONTSIZE.H5,
-                                                                                                            fontWeight: FONTWEIGHT.normal,
-                                                                                                            lineHeight: 18,
-                                                                                                        }}>
-                                                                                                            {listKomen.isi}
-                                                                                                        </Text>
-                                                                                                        {
-                                                                                                            listData.balas.length - 1 === index ? (
-                                                                                                                <TouchableOpacity
-                                                                                                                    key={listKomen.id}
-                                                                                                                    onPress={() => clickBalas(listData.id, false)}>
-                                                                                                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
-                                                                                                                        <View style={{ height: 1, width: 20, backgroundColor: '#DBDADE' }} />
-                                                                                                                        <Text style={{
-                                                                                                                            color: COLORS.lighter,
-                                                                                                                            fontSize: FONTSIZE.H5,
-                                                                                                                            fontWeight: FONTWEIGHT.normal,
-                                                                                                                            lineHeight: 18,
-                                                                                                                        }}>
-                                                                                                                            Tutup {listData.jmlhBalas} Balasan
-                                                                                                                        </Text>
-                                                                                                                    </View>
-                                                                                                                </TouchableOpacity>
-                                                                                                            ) : null
-                                                                                                        }
-                                                                                                    </View>
-                                                                                                    {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
-                                                                                                </View>
-                                                                                            </>
-                                                                                        )}
-                                                                                        {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
-                                                                                    </View>
-                                                                                ) : (
-                                                                                    null
-                                                                                )}
-                                                                            </View>
-
-                                                                        )}
-                                                                    </View>
-                                                                </View>
-                                                            </View>
-                                                        )
-                                                        )}
-                                                    </View>
-                                                </ScrollView>
-                                                <View style={{ justifyContent: 'flex-end' }}>
-                                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                                                    <View style={{
-                                                        borderWidth: 1,
-                                                        width: '90%',
-                                                        marginLeft: 17,
-                                                        borderRadius: 16,
-                                                        borderColor: COLORS.ExtraDivinder,
-                                                        flexDirection: 'row',
-                                                        backgroundColor: COLORS.ExtraDivinder,
-                                                        marginTop: 10
-                                                    }}
-                                                    >
-                                                        <BottomSheetTextInput
-                                                            numberOfLines={1}
-                                                            maxLength={40}
-                                                            placeholder='Ketik Komentar Disini'
-                                                            style={{ padding: 10 }}
-                                                            onChangeText={setKomen}
-                                                            value={komen}
-                                                        />
-                                                        <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                                            <TouchableOpacity >
-                                                                <Ionicons name='send-sharp' size={20} color={COLORS.primary} />
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        </BottomSheetView>
-                                    </BottomSheetModal>
-
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                        <Ionicons name='eye-outline' size={20} />
-                                        <Text>{detail.dilihat}</Text>
-                                        <Text>Dilihat</Text>
-                                    </View>
-                                </View>
                             </View>
                         </View>
+                        <TouchableOpacity
+                            onPress={() => {
+
+                            }}
+                            style={{
+                                backgroundColor: COLORS.primary,
+                                width: '90%',
+                                marginHorizontal: 20,
+                                marginVertical: 20,
+                                padding: 15,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Text style={{ color: COLORS.white }}>Hapus</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => {
+
+                            }}
+                            style={{
+                                borderColor: COLORS.primary,
+                                width: '90%',
+                                marginHorizontal: 20,
+                                padding: 15,
+                                borderRadius: 8,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 1
+                            }}
+                        >
+                            <Text>Edit</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>

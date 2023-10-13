@@ -28,7 +28,10 @@ const CardListPilih = ({ item, addressbook }) => {
     const deleteItem = (id, state) => {
         let data;
         if (state === "jabatan") {
-            data = addressbook.selected.filter(data => data.id !== id)
+            data = addressbook.selected.filter(data => {
+                let nip = data.nip || data.officer.official.split('/')[1]
+                return nip !== id
+            })
             dispatch(setAddressbookSelected(data))
         } else {
             data = addressbook.selected.filter(data => data.nip !== id)
@@ -37,33 +40,29 @@ const CardListPilih = ({ item, addressbook }) => {
     }
     return (
         <View>
-            {item.title === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '85%' }}>{item.title}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.id, 'jabatan')
-                    }}>
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
-            {item.fullname === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '85%' }}>{item.fullname}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.nip, 'pegawai')
-                    }}>
-
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
+            {
+                item.code !== undefined || (item.title !== undefined && item.title.name !== '') ? (
+                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                        <Text>-</Text>
+                        <Text style={{ width: '80%' }}>{item.title.name !== undefined ? item.title.name : item.title}</Text>
+                        <TouchableOpacity onPress={() => {
+                            deleteItem(item.nip || item.officer.official.split('/')[1], 'jabatan')
+                        }}>
+                            <Ionicons name='trash-outline' size={24} />
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                        <Text>-</Text>
+                        <Text style={{ width: '80%' }}>{item.nama || item.fullname}</Text>
+                        <TouchableOpacity onPress={() => {
+                            deleteItem(item.nip, 'pegawai')
+                        }}>
+                            <Ionicons name='trash-outline' size={24} />
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
         </View>
     )
 }

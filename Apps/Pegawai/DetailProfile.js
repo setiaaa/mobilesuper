@@ -8,9 +8,15 @@ import { Image } from 'react-native';
 import { CollapseCardBiodata } from '../../components/CollapseCardBiodata';
 import { CollapseCardLinimasa } from '../../components/CollapseCardLinimasa';
 import { ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
 
-export const DetailProfile = ({ route }) => {
-    const { item } = route.params
+export const DetailProfile = () => {
+    const { pegawai } = useSelector(state => state.Pegawai)
+    const item = pegawai.detail
+    console.log(pegawai.detail)
+
+    const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
+
     return (
         <SafeAreaView>
             <ScrollView>
@@ -50,15 +56,15 @@ export const DetailProfile = ({ route }) => {
                         elevation: 2,
 
                     }}>
-                        <Image source={item.avatar} style={{ width: 61, height: 61, borderRadius: 30 }} />
+                        <Image source={{ uri: BASE_URL + item.avatar }} style={{ width: 61, height: 61, borderRadius: 30 }} />
                         <Text style={{ marginVertical: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold }}>{item.nama}</Text>
-                        <Text style={{ color: COLORS.lighter, fontSize: FONTSIZE.H4 }}>{item.unit}</Text>
+                        <Text style={{ color: COLORS.lighter, fontSize: FONTSIZE.H4 }}>{item.satuan_kerja_nama}</Text>
                     </View>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <CollapseCardBiodata profile={item} />
-                    <CollapseCardLinimasa linimasa={item.dataLinimasa} />
+                    {/* <CollapseCardLinimasa linimasa={item.dataLinimasa} /> */}
                 </View>
 
             </ScrollView>

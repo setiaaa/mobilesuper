@@ -235,7 +235,7 @@ export const DetailTodo = () => {
 
                                 <View style={{ flexDirection: 'row', }}>
                                     <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Todo</Text>
-                                    <Text>{detail.name}</Text>
+                                    <Text style={{ width: 150 }}>{detail.name}</Text>
                                 </View>
 
                                 {/* custom divider */}

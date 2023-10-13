@@ -19,6 +19,8 @@ import DigitalSignReducer from "./DigitalSign";
 import PegawaiReducer from "./Pegawai";
 import EventReducer from "./Event";
 import AddressbookKKP from "./AddressbookKKP";
+import Satker from "./Satker";
+import LoginAuth from "./LoginAuth";
 
 export const store = configureStore({
   reducer: {
@@ -40,6 +42,8 @@ export const store = configureStore({
     digitalsign: DigitalSignReducer,
     Pegawai: PegawaiReducer,
     event: EventReducer,
-    addressBookKKP: AddressbookKKP
+    addressBookKKP: AddressbookKKP,
+    satker: Satker,
+    login: LoginAuth
   },
 });

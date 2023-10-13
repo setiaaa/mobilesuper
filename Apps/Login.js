@@ -506,10 +506,10 @@ function Login() {
 
           <View style={[styles.login, { height: '100%' }]}>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 100 }}>
-              <Image
+              {/* <Image
                 source={require('../assets/superApp/logokkp.png')}
                 style={styles.backgroundImage}
-              />
+              /> */}
             </View>
             <View style={{}}>
               {loadingOverlay}
