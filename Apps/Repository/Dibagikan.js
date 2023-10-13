@@ -6,7 +6,7 @@ import {
     BottomSheetTextInput,
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState, useEffect } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -18,9 +18,20 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleSheet } from 'react-native'
 import { Divider } from 'react-native-paper'
 import { FlatList } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getDetailsSharedDocuments, getSharedDocuments } from '../../service/api'
+import { getTokenValue } from '../../service/session'
+import moment from 'moment/moment'
 
-const DataList = ({ item, bottomSheetAttach }) => {
+
+const DataList = ({ token, item, bottomSheetAttach }) => {
+    const dispatch = useDispatch();
+
+    const getDetailRepo = (id) => {
+        const params = { token ,id };
+        dispatch(getDetailsSharedDocuments(params));
+    }
+
     return (
         <BottomSheetModalProvider>
             <View style={{ flexDirection: 'row', marginVertical: 20, }}>
@@ -31,9 +42,15 @@ const DataList = ({ item, bottomSheetAttach }) => {
                 </TouchableOpacity>
                 <View style={{ marginLeft: 20, flex: 1, justifyContent: 'center' }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
-                            <Text style={{ fontSize: 13, fontWeight: FONTWEIGHT.normal, marginBottom: 10 }}>{item.judul}</Text>
-                            <Text style={{ fontSize: 11, fontWeight: FONTWEIGHT.normal, marginBottom: 10, color: COLORS.lighter }}>{item.tanggal}</Text>
+                        <TouchableOpacity onPress={() => {
+                            bottomSheetAttach(item)
+                            getDetailRepo(item.id)    
+                        }}>
+                            <Text style={{ fontSize: 13, fontWeight: FONTWEIGHT.normal, marginBottom: 10 }}>{item.title}</Text>
+                            <Text style={{ fontSize: 11, fontWeight: FONTWEIGHT.normal, marginBottom: 10, color: COLORS.lighter }}>
+                                {/* {item.sent_date_at} */}
+                                {moment(item.sent_date_at).format('DD MMM yyy')}
+                            </Text>
                         </TouchableOpacity>
                         <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
                             <Ionicons name='ellipsis-vertical-outline' size={24} color={COLORS.grey} />
@@ -83,6 +100,24 @@ const DataGrid = ({ item, bottomSheetAttach }) => {
 export const Dibagikan = () => {
     const [variant, setVariant] = useState('list')
     const [dataM, setDataM] = useState([])
+    const [token, setToken] = useState('')
+
+    const dispatch = useDispatch()
+
+    // useEffect(() => {
+    //     dispatch(setEventLists(listsEvent))
+    // }, [])
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (token !== '') {
+            dispatch(getSharedDocuments(token))
+        }
+    }, [token])
 
     const handleVariant = (cekVariant) => {
         setVariant(cekVariant)
@@ -105,6 +140,8 @@ export const Dibagikan = () => {
     }
 
     const { dibagikan } = useSelector(state => state.repository)
+
+    console.log(dibagikan.lists)
     return (
         <GestureHandlerRootView>
             <BottomSheetModalProvider>
@@ -156,6 +193,7 @@ export const Dibagikan = () => {
                                         // judul={item.judul}
                                         // tanggal={item.tanggal}
                                         item={item}
+                                        token={token}
                                     />
                                     }
                                     keyExtractor={item => "_" + item.id}
@@ -198,7 +236,7 @@ export const Dibagikan = () => {
                                     <View style={{ marginVertical: 20, }}>
                                         <View style={{ marginLeft: 30, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                                             <Ionicons name='document-outline' size={32} color={COLORS.primary} />
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>{dataM.judul}</Text>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.normal }}>{dataM.title}</Text>
                                         </View>
                                         <View style={{ marginTop: 20 }}>
                                             <Divider bold />

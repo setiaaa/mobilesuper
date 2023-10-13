@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getSharedDocuments, getDetailsSharedDocuments } from "../service/api";
 
 const RepositorySlice = createSlice({
     name: 'Repository',
@@ -24,6 +25,15 @@ const RepositorySlice = createSlice({
         setDibagikanLists: (state, action) => {
             state.dibagikan.lists = action.payload;
         }
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(getSharedDocuments.fulfilled, (state, action) => {
+                state.dibagikan.lists = action.payload;
+            })
+            .addCase(getDetailsSharedDocuments.fulfilled, (state, action) => {
+                state.dibagikan.detail = action.payload;
+            })
     }
 })
 

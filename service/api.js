@@ -5,6 +5,7 @@ const BASE_URL = "https://apigw.kubekkp.coofis.com/"
 const kebijakan = BASE_URL + 'policy/'
 const kalender = BASE_URL + 'calendar/'
 const addressbook = BASE_URL + 'bridge/'
+const repository = BASE_URL + 'repository/'
 
 
 // kebijakan
@@ -137,4 +138,14 @@ export const getEmployee = createAsyncThunk("calendar/getEmployee", async (token
 export const getDivisionTree = createAsyncThunk("calendar/getDivisionTree", async ({ token, id }) => {
     const respon = await axios.get(`${addressbook}addressbook/tree/${id}/`, { headers: { Authorization: token } })
     return respon?.data.results
+})
+
+//repository
+export const getSharedDocuments = createAsyncThunk("repository/getSharedDocuments", async (token) => {
+    const respon = await axios.get(`${repository}shared-documents/`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+export const getDetailsSharedDocuments = createAsyncThunk("repository/getDetailsSharedDocuments", async ({token, id}) => {
+    const respon = await axios.get(`${repository}${id}/document-detail/`, { headers: { Authorization: token } })
+    return respon?.data.result
 })
