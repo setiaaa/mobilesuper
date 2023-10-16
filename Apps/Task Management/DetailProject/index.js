@@ -15,6 +15,7 @@ import { CardItemMember } from '../../../components/CardItemMember'
 
 export const DetailProject = () => {
     const { detailProject } = useSelector(state => state.task)
+    const { profile } = useSelector(state => state.superApps)
     const navigation = useNavigation()
     const bottomSheetModalMemberRef = useRef(null);
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
@@ -174,6 +175,40 @@ export const DetailProject = () => {
                         </View>
                     </View>
                 </View>
+
+                {
+                    profile.nip === detailProject.creator.nip || profile.nip === detailProject.pic[0].nip ? (
+                        <View style={{ marginVertical: 20, flexDirection: 'column', gap: 10 }}>
+                            <TouchableOpacity>
+                                <View style={{
+                                    marginHorizontal: 20,
+                                    backgroundColor: COLORS.lightBrown,
+                                    width: Platform.OS === 'ios' ? '90%' : '91%',
+                                    height: 50,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 6,
+                                }}>
+                                    <Text style={{ color: COLORS.white }}>Ubah</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity>
+                                <View style={{
+                                    marginHorizontal: 20,
+                                    backgroundColor: COLORS.infoDanger,
+                                    width: Platform.OS === 'ios' ? '90%' : '91%',
+                                    height: 50,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 6,
+                                }}>
+                                    <Text style={{ color: COLORS.white }}>Hapus</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    ) : null
+                }
                 <Portal>
                     <BottomSheetModalProvider>
                         <BottomSheetModal

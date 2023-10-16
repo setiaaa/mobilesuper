@@ -548,6 +548,11 @@ export const postTaskTM = createAsyncThunk("taskmanagement/postTaskTM", async (d
     return respon?.data
 })
 
+export const editTaskTM = createAsyncThunk("taskmanagement/editTaskTM", async (data) => {
+    const respon = await axios.put(`${taskManagement}task/${data.id_task}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
 export const postAttachmentTM = createAsyncThunk("taskmanagement/postAttachmentTM", async (data) => {
     let formData = new FormData()
     formData.append('file', data.result)
@@ -629,7 +634,7 @@ export const getSharedDocuments = createAsyncThunk("repository/getSharedDocument
     const respon = await axios.get(`${repository}shared-documents/`, { headers: { Authorization: token } })
     return respon?.data.result
 })
-export const getDetailsSharedDocuments = createAsyncThunk("repository/getDetailsSharedDocuments", async ({token, id}) => {
+export const getDetailsSharedDocuments = createAsyncThunk("repository/getDetailsSharedDocuments", async ({ token, id }) => {
     const respon = await axios.get(`${repository}${id}/document-detail/`, { headers: { Authorization: token } })
     return respon?.data.result
 })

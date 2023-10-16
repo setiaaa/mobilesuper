@@ -44,6 +44,7 @@
     "expo-local-authentication": "~13.3.0",
     "expo-print": "~12.2.1",
     "expo-sharing": "~11.2.2",
+    "expo-shimmer-placeholder": "^3.0.0",
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
     "expo-updates": "~0.16.4",

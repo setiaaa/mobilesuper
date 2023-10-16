@@ -25,6 +25,8 @@ import { getDetailProjectTM, getListDashboardTM, getListTaskTM, getTreeTM } from
 import { getTokenValue } from '../../service/session'
 import { FilterTask } from './FilterTask'
 import { DetailProject } from './DetailProject'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const tipe = [
     { key: '1', value: 'Dashboard' },
@@ -37,6 +39,7 @@ const tipe = [
 export const MyTask = () => {
     const dispatch = useDispatch()
     const [token, setToken] = useState("");
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     useEffect(() => {
         getTokenValue().then((val) => {
@@ -49,7 +52,7 @@ export const MyTask = () => {
         dispatch(getTreeTM({ token: token }))
     }, [token]);
 
-    const { refresh, variant, treeView, list } = useSelector(state => state.task)
+    const { refresh, variant, treeView, list, loading } = useSelector(state => state.task)
     const taskLists = list.data
 
     const navigation = useNavigation()
@@ -204,12 +207,12 @@ export const MyTask = () => {
     }, [choiceFilter, list.type])
 
     useEffect(() => {
-        if (refresh) {
-            console.log('main')
+        if (refresh === 'tree') {
             dispatch(getTreeTM({ token: token }))
+        } else if (refresh === 'list_task') {
             dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
-            dispatch(setRefresh(false))
         }
+        dispatch(setRefresh(null))
     }, [refresh])
 
     return (
@@ -344,12 +347,23 @@ export const MyTask = () => {
 
                     <View style={{ marginHorizontal: 15, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'column', gap: 4, flex: 1 }}>
-                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>{list.type}</Text>
                             {
-                                list.type === 'Dashboard' || list.type === 'Korespondensi' ? null :
-                                    (
-                                        <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
-                                    )
+                                loading ? (
+                                    <>
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>{list.type}</Text>
+                                        {
+                                            list.type === 'Dashboard' || list.type === 'Korespondensi' ? null :
+                                                (
+                                                    <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
+                                                )
+                                        }
+                                    </>
+                                )
                             }
                         </View>
 
