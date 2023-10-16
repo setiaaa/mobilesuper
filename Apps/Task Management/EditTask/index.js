@@ -23,6 +23,7 @@ import { Pressable } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker';
 import { Search } from '../../../components/Search'
 import Checkbox from 'expo-checkbox'
+import { Loading } from '../../../components/Loading'
 
 const dataPrioritas = [
     {
@@ -58,7 +59,7 @@ export const EditTask = ({ route }) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const { id_project, id_list, id } = route.params
-    const { status, treeView, detailProject, attachment, list } = useSelector(state => state.task)
+    const { status, treeView, detailProject, attachment, list, loading } = useSelector(state => state.task)
     const [token, setToken] = useState('')
     const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
     const [modalVisibleMember, setModalVisibleMember] = useState(false);
@@ -216,6 +217,11 @@ export const EditTask = ({ route }) => {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
+                {
+                    loading ? (
+                        <Loading />
+                    ) : null
+                }
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
                         backgroundColor: COLORS.white,
@@ -464,15 +470,16 @@ export const EditTask = ({ route }) => {
 
                     </View>
                 </ScrollView>
+
+                <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
+                    <TouchableOpacity onPress={() => handleSubmit()}>
+                        <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                            <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </SafeAreaView>
 
-            <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                <TouchableOpacity onPress={() => handleSubmit()}>
-                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                        <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
-                    </View>
-                </TouchableOpacity>
-            </View>
 
             <Modal
                 animationType="fade"

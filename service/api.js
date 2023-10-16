@@ -543,6 +543,11 @@ export const postCategoryTM = createAsyncThunk("taskmanagement/postCategoryTM", 
     return respon?.data
 })
 
+export const editCategoryTM = createAsyncThunk("taskmanagement/editCategoryTM", async (data) => {
+    const respon = await axios.put(`${taskManagement}project/${data.id_project}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
 export const postTaskTM = createAsyncThunk("taskmanagement/postTaskTM", async (data) => {
     const respon = await axios.post(`${taskManagement}task/create/`, data.payload, { headers: { Authorization: data.token } })
     return respon?.data
@@ -550,6 +555,11 @@ export const postTaskTM = createAsyncThunk("taskmanagement/postTaskTM", async (d
 
 export const editTaskTM = createAsyncThunk("taskmanagement/editTaskTM", async (data) => {
     const respon = await axios.put(`${taskManagement}task/${data.id_task}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const updateStatusTaskTM = createAsyncThunk("taskmanagement/updateStatusTaskTM", async (data) => {
+    const respon = await axios.put(`${taskManagement}card/${data.id_task}/update/`, data.payload, { headers: { Authorization: data.token } })
     return respon?.data
 })
 

@@ -179,7 +179,7 @@ export const DetailProject = () => {
                 {
                     profile.nip === detailProject.creator.nip || profile.nip === detailProject.pic[0].nip ? (
                         <View style={{ marginVertical: 20, flexDirection: 'column', gap: 10 }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('EditCategory', { id: detailProject.id })}>
                                 <View style={{
                                     marginHorizontal: 20,
                                     backgroundColor: COLORS.lightBrown,

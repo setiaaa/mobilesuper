@@ -19,7 +19,7 @@ import { Portal } from 'react-native-portalize'
 import moment from 'moment/moment'
 import { CardItemMember } from '../../../components/CardItemMember'
 import { setRefresh } from '../../../store/Pengetahuan'
-import { getDetailTaskTM, postCommentTM } from '../../../service/api'
+import { getDetailTaskTM, postCommentTM, updateStatusTaskTM } from '../../../service/api'
 import { KeyboardAvoidingView } from 'react-native'
 import { getTokenValue } from '../../../service/session'
 import { Dropdown } from '../../../components/DropDown'
@@ -117,8 +117,16 @@ export const DetailTask = () => {
     }, [taskDetail])
 
     useEffect(() => {
-        if (status !== '' || status.key !== taskDetail?.status) {
-            alert(status)
+        if (typeof (status) !== 'string' && status.key !== taskDetail?.status) {
+            const payload = {
+                status: status.key
+            }
+            const data = {
+                token: token,
+                payload: payload,
+                id_task: taskDetail.id
+            }
+            dispatch(updateStatusTaskTM(data))
         }
     }, [status])
 

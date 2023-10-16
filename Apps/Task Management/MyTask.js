@@ -211,6 +211,10 @@ export const MyTask = () => {
             dispatch(getTreeTM({ token: token }))
         } else if (refresh === 'list_task') {
             dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
+        } else if (refresh === 'detail_project') {
+            console.log('refresh detail project')
+            dispatch(getTreeTM({ token: token }))
+            dispatch(getDetailProjectTM({ token: token, id_project: choiceKategori.key, type: 'Detail Project' }))
         }
         dispatch(setRefresh(null))
     }, [refresh])

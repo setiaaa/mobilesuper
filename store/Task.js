@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { editTaskTM, getDetailProjectTM, getDetailTaskTM, getListDashboardTM, getListTaskTM, getTreeTM, postAttachmentTM, postCategoryTM, postCommentTM, postTaskTM } from "../service/api";
+import { editCategoryTM, editTaskTM, getDetailProjectTM, getDetailTaskTM, getListDashboardTM, getListTaskTM, getTreeTM, postAttachmentTM, postCategoryTM, postCommentTM, postTaskTM, updateStatusTaskTM } from "../service/api";
 
 const TaskSlice = createSlice({
     name: 'Task',
@@ -97,6 +97,18 @@ const TaskSlice = createSlice({
                 state.status = 'error'
                 state.loading = false
             })
+            .addCase(editCategoryTM.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+                state.refresh = 'detail_project'
+                state.loading = false
+            })
+            .addCase(editCategoryTM.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(editCategoryTM.rejected, (state, action) => {
+                state.status = 'error'
+                state.loading = false
+            })
             .addCase(getDetailProjectTM.fulfilled, (state, action) => {
                 const data = action.payload.data
                 const type = action.payload.type
@@ -144,6 +156,18 @@ const TaskSlice = createSlice({
                 state.loading = true
             })
             .addCase(editTaskTM.rejected, (state, action) => {
+                state.status = 'error'
+                state.loading = false
+            })
+            .addCase(updateStatusTaskTM.fulfilled, (state, action) => {
+                state.status = 'berhasil'
+                state.refresh = 'list_task'
+                state.loading = false
+            })
+            .addCase(updateStatusTaskTM.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(updateStatusTaskTM.rejected, (state, action) => {
                 state.status = 'error'
                 state.loading = false
             })

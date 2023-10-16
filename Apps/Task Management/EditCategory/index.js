@@ -15,22 +15,23 @@ import { Modal } from 'react-native'
 import { Image } from 'react-native'
 import { setStatus } from '../../../store/Task'
 import { getTokenValue } from '../../../service/session'
-import { postCategoryTM } from '../../../service/api'
+import { editCategoryTM, getDetailProjectTM, postCategoryTM } from '../../../service/api'
 import { Loading } from '../../../components/Loading'
 
-export const AddCategory = () => {
+export const EditCategory = ({ route }) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
+    const { id } = route.params
     const [stateConfig, setStateConfig] = useState({})
     const { addressbook } = useSelector(state => state.addressBookKKP)
-    const { status, loading } = useSelector(state => state.task)
+    const { status, detailProject, loading } = useSelector(state => state.task)
     const [token, setToken] = useState('')
     const [dataKategori, setDataKategori] = useState({
         namaProject: '',
         deskripsi: '',
-        pic: [],
-        member: []
     })
+    const [pilihanPIC, setPilihanPIC] = useState([])
+    const [pilihanMember, setPilihanMember] = useState([])
 
     const handleInputKategori = (key, value) => {
         setDataKategori({
@@ -41,9 +42,9 @@ export const AddCategory = () => {
 
     useEffect(() => {
         if (stateConfig.title === 'PIC') {
-            handleInputKategori('pic', addressbook.selected)
+            setPilihanPIC(addressbook.selected)
         } else if (stateConfig.title === 'Member') {
-            handleInputKategori('member', addressbook.selected)
+            setPilihanMember(addressbook.selected)
         }
     }, [addressbook])
 
@@ -53,9 +54,25 @@ export const AddCategory = () => {
         })
     }, [])
 
+    useEffect(() => {
+        dispatch(getDetailProjectTM({ token: token, id_project: id, type: '' }))
+    }, [token])
+
+    useEffect(() => {
+        if (detailProject !== null) {
+            setDataKategori({
+                namaProject: detailProject.name,
+                deskripsi: detailProject.description,
+            })
+            setPilihanPIC(detailProject.pic)
+            setPilihanMember(detailProject.members)
+        }
+    }, [token])
+
+
     const handleSubmit = () => {
         const pic = []
-        dataKategori.pic?.map(item => {
+        pilihanPIC?.map(item => {
             if (item?.code) {
                 pic.push(item?.code)
             } else {
@@ -64,7 +81,7 @@ export const AddCategory = () => {
         })
 
         const member = []
-        dataKategori?.member.map(item => {
+        pilihanMember.map(item => {
             if (item?.code) {
                 member.push(item?.code)
             } else {
@@ -80,9 +97,10 @@ export const AddCategory = () => {
         }
         const data = {
             token: token,
-            payload: payload
+            payload: payload,
+            id_project: detailProject.id
         }
-        dispatch(postCategoryTM(data))
+        dispatch(editCategoryTM(data))
     }
 
     return (
@@ -108,7 +126,7 @@ export const AddCategory = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Tambah Project</Text>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Ubah Project</Text>
                     </View>
                 </View>
 
@@ -180,7 +198,7 @@ export const AddCategory = () => {
                                             pegawai: true
                                         },
                                         multiselect: false,
-                                        payload: dataKategori.pic
+                                        payload: pilihanPIC
                                     }
                                     setStateConfig(config)
                                     navigation.navigate("AddressBook", { config: config });
@@ -197,10 +215,12 @@ export const AddCategory = () => {
                             </TouchableOpacity>
 
                             <FlatList
-                                data={dataKategori.pic}
+                                data={pilihanPIC}
                                 renderItem={({ item }) => <CardListPeserta
                                     item={item}
-                                    addressbook={addressbook}
+                                    addressbook={pilihanPIC}
+                                    persetaSubAgenda={true}
+                                    setPilihanPeserta={setPilihanPIC}
                                 />
                                 }
                                 scrollEnabled={false}
@@ -230,7 +250,7 @@ export const AddCategory = () => {
                                             pegawai: true
                                         },
                                         multiselect: true,
-                                        payload: dataKategori.member
+                                        payload: pilihanMember
                                     }
                                     setStateConfig(config)
                                     navigation.navigate("AddressBook", { config: config });
@@ -247,10 +267,12 @@ export const AddCategory = () => {
                             </TouchableOpacity>
 
                             <FlatList
-                                data={dataKategori.member}
+                                data={pilihanMember}
                                 renderItem={({ item }) => <CardListPeserta
                                     item={item}
-                                    addressbook={addressbook}
+                                    addressbook={pilihanMember}
+                                    persetaSubAgenda={true}
+                                    setPilihanPeserta={setPilihanMember}
                                 />
                                 }
                                 scrollEnabled={false}
@@ -260,15 +282,15 @@ export const AddCategory = () => {
                     </View>
                 </ScrollView>
 
-                <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
+                <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 1 }}>
                     <TouchableOpacity onPress={() => handleSubmit()}>
                         <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                             <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
                         </View>
                     </TouchableOpacity>
                 </View>
-            </SafeAreaView>
 
+            </SafeAreaView>
 
             <Modal
                 animationType="fade"
