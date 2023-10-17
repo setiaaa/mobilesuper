@@ -9,9 +9,11 @@ import { CollapseCardBiodata } from '../../components/CollapseCardBiodata';
 import { CollapseCardLinimasa } from '../../components/CollapseCardLinimasa';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 export const DetailProfile = () => {
     const { pegawai } = useSelector(state => state.Pegawai)
+    const navigation = useNavigation()
     const item = pegawai.detail
     console.log(pegawai.detail)
 

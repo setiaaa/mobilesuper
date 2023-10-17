@@ -30,7 +30,7 @@ import moment from 'moment'
 
 const { width: screenWidth } = Dimensions.get('window');
 
-export const DetailAcara = () => {
+export const DetailGrup = () => {
     const [tabItemIndex, setTabItemIndex] = useState();
     const [slide, setSlide] = useState(0)
     const [komen, setKomen] = useState('')
@@ -52,7 +52,7 @@ export const DetailAcara = () => {
 
     const dispatch = useDispatch()
 
-    const { agenda, acara } = useSelector(state => state.grupKalender)
+    const { agenda, acara, detailGrup } = useSelector(state => state.grupKalender)
 
     const detail = acara.detail
     const gambar = agenda.detail.gambar
@@ -68,7 +68,7 @@ export const DetailAcara = () => {
         })
     }
 
-    console.log(detail)
+    console.log(detailGrup)
 
     return (
         <SafeAreaView>
@@ -98,7 +98,7 @@ export const DetailAcara = () => {
                             <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20 }}>
 
                                 <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail.name}</Text>
+                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detailGrup.name}</Text>
                                 </View>
 
                                 <View style={{
@@ -107,45 +107,18 @@ export const DetailAcara = () => {
                                     flexDirection: 'row',
                                     gap: 10
                                 }}>
-                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
-                                    <Text>{moment(detail.created_at, 'DD MMMM YYYY HH:mm:ss').format('YYYY MMMM DD')}</Text>
+                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat oleh :</Text>
+                                    <Text>{detailGrup.creator.nama}</Text>
                                 </View>
 
-                                <View>
-                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
-                                        </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.location}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                                </View>
-
-                                <View>
-                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Mulai</Text>
-                                        </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail.start_date).format('YYYY MMMM DD')}</Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                                </View>
-
-                                <View>
-                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
-                                        </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail.end_date).format('YYYY MMMM DD')}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                <View style={{
+                                    marginHorizontal: 20,
+                                    marginTop: 10,
+                                    flexDirection: 'row',
+                                    gap: 10
+                                }}>
+                                    <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pada :</Text>
+                                    <Text>{moment(detailGrup.created_at, 'HH:mm:ss').format('YYYY MMMM DD')}</Text>
                                 </View>
 
                                 <View>
@@ -154,7 +127,7 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            {detail.pic?.map((item, index) => {
+                                            {detailGrup.pic?.map((item, index) => {
                                                 return (
                                                     <View key={index} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                                                         <Image source={{ uri: item.avatar_url }} style={{
@@ -177,10 +150,46 @@ export const DetailAcara = () => {
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                         <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Anggota</Text>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detailGrup.extra_attributes.ketentuan_busana == null ? '-' : detailGrup.extra_attributes.ketentuan_busana}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                </View>
+
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Perlengkapan</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detailGrup.extra_attributes.perlengkapan == null ? '-' : detailGrup.extra_attributes.perlengkapan}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                </View>
+
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Atribut Lainnya</Text>
+                                        </View>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Text>{detailGrup.extra_attributes.atribut == null ? '-' : detailGrup.extra_attributes.atribut}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
+                                </View>
+
+                                <View>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
+                                        <View style={{ width: '50%' }}>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Grup Editor</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', }}>
-                                            {detail.members?.map((item, index) => {
+                                            {detailGrup.editors?.map((item, index) => {
                                                 return (
                                                     <View key={index}>
                                                         <Image source={{ uri: item.avatar_url }} style={{
@@ -202,36 +211,26 @@ export const DetailAcara = () => {
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
                                         <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
+                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Anggota</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.dresscode == null ? '-' : detail.dresscode}</Text>
+                                        <View style={{ flexDirection: 'row', }}>
+                                            {detailGrup.members?.map((item, index) => {
+                                                return (
+                                                    <View key={index}>
+                                                        <Image source={{ uri: item.avatar_url }} style={{
+                                                            marginLeft: -8,
+                                                            borderWidth: 2,
+                                                            borderRadius: 50,
+                                                            borderColor: COLORS.white,
+                                                            width: 30,
+                                                            height: 30
+                                                        }} />
+                                                    </View>
+                                                )
+                                            })}
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                                </View>
-
-                                <View>
-                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pengingat</Text>
-                                        </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.reminder}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
-                                </View>
-
-                                <View>
-                                    <View style={{ marginHorizontal: 20, marginVertical: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
-                                            <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Catatan</Text>
-                                        </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.catatan == null ? '-' : detail.catatan}</Text>
-                                        </View>
-                                    </View>
                                 </View>
 
                             </View>

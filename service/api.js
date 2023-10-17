@@ -15,6 +15,7 @@ const galeri = BASE_URL + "bridge/home/gallery/";
 const berita = BASE_URL + "bridge/home/news/?page=1";
 const detailBerita = BASE_URL + "bridge/home/news/";
 const taskManagement = BASE_URL + "calendar/";
+const INFOGRAFIS = BASE_URL + "bridge/";
 
 
 //Login
@@ -601,5 +602,36 @@ export const getDetailAgendaAcara = createAsyncThunk(
 export const getListSubAgenda = createAsyncThunk("calendar/getListSubAgenda", async ({ token, id }) => {
     console.log(id)
     const respon = await axios.get(`${kalender}event/${id}/agenda/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
+    console.log(data.payload)
+    const respon = await axios.post(`${kalender}calendar/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const getDetailGrup = createAsyncThunk("calendar/getDetailGrup", async ({ token, id }) => {
+    console.log(id)
+    const respon = await axios.get(`${kalender}calendar/${id}`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+
+//Dashboard
+export const getKesejahteraan = createAsyncThunk("bridge/getKesejahteraan", async ({ token, value }) => {
+    console.log(token + value)
+    const respon = await axios.get(`${INFOGRAFIS}infografis/?source=${value}&limit=5`, { headers: { Authorization: token } })
+    return respon?.data
+})
+
+export const getPerencanaan = createAsyncThunk("bridge/getPerencanaan", async ({ token, value }) => {
+    console.log(token + value)
+    const respon = await axios.get(`${INFOGRAFIS}infografis/?source=${value}&limit=5`, { headers: { Authorization: token } })
+    return respon?.data
+})
+
+export const getTeknologi = createAsyncThunk("bridge/getTeknologi", async (token) => {
+    const respon = await axios.get(`${INFOGRAFIS}teknologi-terkini/`, { headers: { Authorization: token } })
     return respon?.data.results
 })
