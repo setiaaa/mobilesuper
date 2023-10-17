@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailAcara, getDetailAgendaAcara, getListAcara, getListAgendaAcara, getListGrup, getListSubAgenda } from "../service/api";
+import { getDetailAcara, getDetailAgendaAcara, getDetailGrup, getListAcara, getListAgendaAcara, getListGrup, getListSubAgenda, postGrup } from "../service/api";
 
 const GrupKalenderSlice = createSlice({
   name: "GrupKalender",
@@ -21,6 +21,8 @@ const GrupKalenderSlice = createSlice({
       detail: {},
       listsSub: []
     },
+    detailGrup: {},
+    status: '',
 
   },
   reducers: {
@@ -35,6 +37,9 @@ const GrupKalenderSlice = createSlice({
     },
     setSubKategori: (state, action) => {
       state.dropdown.subKategori = action.payload;
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload
     },
   },
   extraReducers(builder) {
@@ -57,10 +62,21 @@ const GrupKalenderSlice = createSlice({
       .addCase(getListSubAgenda.fulfilled, (state, action) => {
         state.agendaAcara.listsSub = action.payload;
       })
+      .addCase(postGrup.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(postGrup.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(getDetailGrup.fulfilled, (state, action) => {
+        console.log('berhasil')
+        state.detailGrup = action.payload;
+      })
   }
 });
 
-export const { setAgenda, setAgendaDetail, setKategori, setSubKategori } =
+export const { setAgenda, setAgendaDetail, setKategori, setSubKategori, setStatus } =
   GrupKalenderSlice.actions;
 
 export default GrupKalenderSlice.reducer;

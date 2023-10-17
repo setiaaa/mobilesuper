@@ -167,11 +167,11 @@ export const Kepegawaian = () => {
                         </View>
                     </View>
 
-                    <View style={{ height: '22%' }}>
+                    <View style={{ height: '100%' }}>
                         <TopsDash />
                     </View>
 
-                    <ScrollView style={{ flex: 1 }}>
+                    {/* <ScrollView style={{ flex: 1 }}>
 
                         <View>
                             <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
@@ -196,16 +196,16 @@ export const Kepegawaian = () => {
                             </View>
                         </View>
 
-                        {/* <View>
+                        <View>
                             <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>Pengumuman</Text>
                                 <TouchableOpacity onPress={() => navigation.navigate('DetailPengumuman')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View> */}
+                        </View>
 
-                        {/* <View style={{ width: '87%', backgroundColor: COLORS.white, marginLeft: 30, borderRadius: 16 }}>
+                        <View style={{ width: '87%', backgroundColor: COLORS.white, marginLeft: 30, borderRadius: 16 }}>
                             {pengumuman.lists.slice(0, 5).map((item) =>
                                 <View style={{ marginHorizontal: 20 }}>
                                     <View style={{ marginTop: 10 }}>
@@ -217,9 +217,9 @@ export const Kepegawaian = () => {
                                     <View style={{ height: 1, width: '100%', backgroundColor: COLORS.lighter, opacity: 0.5, marginBottom: 10 }} />
                                 </View>
                             )}
-                        </View> */}
+                        </View>
 
-                    </ScrollView>
+                    </ScrollView> */}
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>
         </SafeAreaView>

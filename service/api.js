@@ -15,6 +15,7 @@ const galeri = BASE_URL + "bridge/home/gallery/";
 const berita = BASE_URL + "bridge/home/news/?page=1";
 const detailBerita = BASE_URL + "bridge/home/news/";
 const taskManagement = BASE_URL + "calendar/";
+const INFOGRAFIS = BASE_URL + "bridge/";
 
 
 //Login
@@ -526,14 +527,49 @@ export const getDetailTaskTM = createAsyncThunk("taskmanagement/getDetailTaskTM"
     return respon?.data.result
 })
 
+export const getDetailProjectTM = createAsyncThunk("taskmanagement/getDetailProjectTM", async ({ token, id_project, type = '' }) => {
+    const respon = await axios.get(`${taskManagement}project/${id_project}/retrieve/`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.result,
+        type: type
+    }
+})
+
 export const postCommentTM = createAsyncThunk("taskmanagement/postCommentTM", async (data, setRefresh = undefined) => {
     const respon = await axios.post(`${taskManagement}comment/create/`, data.payload, { headers: { Authorization: data.token } })
     return respon?.data
 })
 
-export const postCategoryTM = createAsyncThunk("calendar/postCategoryTM", async (data) => {
+export const postCategoryTM = createAsyncThunk("taskmanagement/postCategoryTM", async (data) => {
     const respon = await axios.post(`${taskManagement}project/create/`, data.payload, { headers: { Authorization: data.token } })
     return respon?.data
+})
+
+export const editCategoryTM = createAsyncThunk("taskmanagement/editCategoryTM", async (data) => {
+    const respon = await axios.put(`${taskManagement}project/${data.id_project}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const postTaskTM = createAsyncThunk("taskmanagement/postTaskTM", async (data) => {
+    const respon = await axios.post(`${taskManagement}task/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const editTaskTM = createAsyncThunk("taskmanagement/editTaskTM", async (data) => {
+    const respon = await axios.put(`${taskManagement}task/${data.id_task}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const updateStatusTaskTM = createAsyncThunk("taskmanagement/updateStatusTaskTM", async (data) => {
+    const respon = await axios.put(`${taskManagement}card/${data.id_task}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const postAttachmentTM = createAsyncThunk("taskmanagement/postAttachmentTM", async (data) => {
+    let formData = new FormData()
+    formData.append('file', data.result)
+    const respon = await axios.post(`${taskManagement}attachment/create/`, formData, { headers: { Authorization: data.token } })
+    return respon?.data.result
 })
 
 //Penilian
@@ -605,12 +641,42 @@ export const getListSubAgenda = createAsyncThunk("calendar/getListSubAgenda", as
     return respon?.data.results
 })
 
+export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
+    console.log(data.payload)
+    const respon = await axios.post(`${kalender}calendar/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const getDetailGrup = createAsyncThunk("calendar/getDetailGrup", async ({ token, id }) => {
+    console.log(id)
+    const respon = await axios.get(`${kalender}calendar/${id}`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+
+//Dashboard
+export const getKesejahteraan = createAsyncThunk("bridge/getKesejahteraan", async ({ token, value }) => {
+    console.log(token + value)
+    const respon = await axios.get(`${INFOGRAFIS}infografis/?source=${value}&limit=5`, { headers: { Authorization: token } })
+    return respon?.data
+})
+
+export const getPerencanaan = createAsyncThunk("bridge/getPerencanaan", async ({ token, value }) => {
+    console.log(token + value)
+    const respon = await axios.get(`${INFOGRAFIS}infografis/?source=${value}&limit=5`, { headers: { Authorization: token } })
+    return respon?.data
+})
+
+export const getTeknologi = createAsyncThunk("bridge/getTeknologi", async (token) => {
+    const respon = await axios.get(`${INFOGRAFIS}teknologi-terkini/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
 //repository
 export const getSharedDocuments = createAsyncThunk("repository/getSharedDocuments", async (token) => {
     const respon = await axios.get(`${repository}shared-documents/`, { headers: { Authorization: token } })
     return respon?.data.result
 })
-export const getDetailsSharedDocuments = createAsyncThunk("repository/getDetailsSharedDocuments", async ({token, id}) => {
+export const getDetailsSharedDocuments = createAsyncThunk("repository/getDetailsSharedDocuments", async ({ token, id }) => {
     const respon = await axios.get(`${repository}${id}/document-detail/`, { headers: { Authorization: token } })
     return respon?.data.result
 })

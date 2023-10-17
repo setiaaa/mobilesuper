@@ -173,6 +173,14 @@ import { EditSubAgenda } from "../Event Management/EditSubAgenda";
 import { EditTodo } from "../Event Management/EditTodo";
 import { DetailAcaraAgenda } from "../Kalender/DetailAcaraAgenda";
 import { AddCategory } from "../Task Management/AddCategory";
+import { Penangkapan } from "../Dashboard/Penangkapan";
+import { Keuangan } from "../Dashboard/Keuangan";
+import { APBN } from "../Dashboard/APBN";
+import { PNBP } from "../Dashboard/PNPB";
+import { IKU } from "../Dashboard/IKU";
+import { DetailGrup } from "../Kalender/DetailGrup";
+import { EditTask } from "../Task Management/EditTask";
+import { EditCategory } from "../Task Management/EditCategory";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -297,6 +305,13 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="DetailGrup"
+          component={DetailGrup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="TambahAgenda"
           component={TambahAgenda}
           options={{
@@ -339,8 +354,22 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="EditTask"
+          component={EditTask}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="AddCategory"
           component={AddCategory}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditCategory"
+          component={EditCategory}
           options={{
             headerShown: false,
           }}
@@ -586,6 +615,20 @@ function AuthStack() {
         <Stack.Screen
           name="EditTodo"
           component={EditTodo}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Penangkapan"
+          component={Penangkapan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Keuangan"
+          component={Keuangan}
           options={{
             headerShown: false,
           }}
@@ -970,6 +1013,37 @@ export const TopsProduksiBudidaya = () => {
         <Top.Screen name='TeknologiTerbaru' component={TeknologiTerbaru}
           options={{
             title: 'Teknologi Terbaru'
+          }} />
+
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const TopsKeuanganKinerja = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName='APBN'
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 13, textTransform: 'none', },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: 'auto' }
+        }}
+      >
+        <Top.Screen name='APBN' component={APBN}
+          options={{
+            title: 'APBN'
+          }} />
+        <Top.Screen name='PNBP' component={PNBP}
+          options={{
+            title: 'PNBP'
+          }} />
+        <Top.Screen name='IKU' component={IKU}
+          options={{
+            title: 'IKU'
           }} />
 
       </Top.Navigator>

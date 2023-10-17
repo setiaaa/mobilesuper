@@ -30,7 +30,6 @@ export const CardListTask = ({ id, title, duedate }) => {
                     <Text>Target Tanggal: </Text>
                     <Text style={{ color: COLORS.danger }}>{duedate}</Text>
                 </View>
-
             </View>
         </TouchableOpacity>
     )
