@@ -174,6 +174,8 @@ import { APBN } from "../Dashboard/APBN";
 import { PNBP } from "../Dashboard/PNPB";
 import { IKU } from "../Dashboard/IKU";
 import { DetailGrup } from "../Kalender/DetailGrup";
+import { EditTask } from "../Task Management/EditTask";
+import { EditCategory } from "../Task Management/EditCategory";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -347,8 +349,22 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="EditTask"
+          component={EditTask}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="AddCategory"
           component={AddCategory}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditCategory"
+          component={EditCategory}
           options={{
             headerShown: false,
           }}

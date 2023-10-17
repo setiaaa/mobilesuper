@@ -21,9 +21,12 @@ import { setRefresh, setVariant } from '../../store/Task'
 import { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Dropdown } from '../../components/DropDown'
-import { getListDashboardTM, getListTaskTM, getTreeTM } from '../../service/api'
+import { getDetailProjectTM, getListDashboardTM, getListTaskTM, getTreeTM } from '../../service/api'
 import { getTokenValue } from '../../service/session'
 import { FilterTask } from './FilterTask'
+import { DetailProject } from './DetailProject'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const tipe = [
     { key: '1', value: 'Dashboard' },
@@ -36,6 +39,7 @@ const tipe = [
 export const MyTask = () => {
     const dispatch = useDispatch()
     const [token, setToken] = useState("");
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     useEffect(() => {
         getTokenValue().then((val) => {
@@ -48,7 +52,7 @@ export const MyTask = () => {
         dispatch(getTreeTM({ token: token }))
     }, [token]);
 
-    const { refresh, variant, treeView, list } = useSelector(state => state.task)
+    const { refresh, variant, treeView, list, loading } = useSelector(state => state.task)
     const taskLists = list.data
 
     const navigation = useNavigation()
@@ -150,7 +154,11 @@ export const MyTask = () => {
         } else if (choiceTipe.value === 'Korespondensi') {
 
         } else {
-            dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
+            if (choiceList === '' && choiceKategori !== '') {
+                dispatch(getDetailProjectTM({ token: token, id_project: choiceKategori.key, type: 'Detail Project' }))
+            } else {
+                dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
+            }
         }
         setChoiceFilter('semua')
     }
@@ -199,13 +207,17 @@ export const MyTask = () => {
     }, [choiceFilter, list.type])
 
     useEffect(() => {
-        if (refresh) {
-            console.log('main')
+        if (refresh === 'tree') {
             dispatch(getTreeTM({ token: token }))
-            dispatch(setRefresh(false))
+        } else if (refresh === 'list_task') {
+            dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
+        } else if (refresh === 'detail_project') {
+            console.log('refresh detail project')
+            dispatch(getTreeTM({ token: token }))
+            dispatch(getDetailProjectTM({ token: token, id_project: choiceKategori.key, type: 'Detail Project' }))
         }
+        dispatch(setRefresh(null))
     }, [refresh])
-
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -258,7 +270,7 @@ export const MyTask = () => {
 
                                     <View style={{ width: '90%', marginHorizontal: 20 }}>
                                         <Dropdown
-                                            placeHolder={'Tipe'}
+                                            placeHolder={'Pilih Tipe'}
                                             borderWidth={1}
                                             data={tipe}
                                             // selected={choiceTipe}
@@ -276,7 +288,7 @@ export const MyTask = () => {
                                             <>
                                                 <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
                                                     <Dropdown
-                                                        placeHolder={'Kategori'}
+                                                        placeHolder={'Pilih Kategori'}
                                                         borderWidth={1}
                                                         data={dataKategori}
                                                         // selected={choiceKategori}
@@ -291,7 +303,7 @@ export const MyTask = () => {
 
                                                 <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
                                                     <Dropdown
-                                                        placeHolder={'List'}
+                                                        placeHolder={'Pilih List'}
                                                         borderWidth={1}
                                                         data={dataList}
                                                         // selected={choiceList}
@@ -339,40 +351,73 @@ export const MyTask = () => {
 
                     <View style={{ marginHorizontal: 15, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'column', gap: 4, flex: 1 }}>
-                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>{list.type}</Text>
                             {
-                                list.type === 'Dashboard' || list.type === 'Korespondensi' ? null :
-                                    (
-                                        <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
-                                    )
+                                loading ? (
+                                    <>
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>{list.type}</Text>
+                                        {
+                                            list.type === 'Dashboard' || list.type === 'Korespondensi' ? null :
+                                                (
+                                                    <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
+                                                )
+                                        }
+                                    </>
+                                )
                             }
                         </View>
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                            <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                    <View style={{ flex: 1, marginTop: 20, width: '90%', marginHorizontal: '5%' }}>
                         {
-                            list.type === 'Dashboard' ? (
-                                <TopsTaskDashboard />
-                            ) : list.type === 'Korespondensi' ? (
-                                <TopsTaskKorespondensi />
-                            ) : (
-                                <TopsTask />
-                            )
+                            list.type !== 'Detail Project' ? (
+                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
+                                    <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
+                                        <View style={styles.circleList}>
+                                            <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
+                                        <View style={styles.circleList}>
+                                            <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            ) : null
                         }
                     </View>
+
+                    {
+                        list.type !== 'Detail Project' ? (
+                            <View style={{ flex: 1, marginTop: 20, width: '90%', marginHorizontal: '5%' }}>
+                                {
+                                    list.type === 'Dashboard' ? (
+                                        <TopsTaskDashboard />
+                                    ) : list.type === 'Korespondensi' ? (
+                                        <TopsTaskKorespondensi />
+                                    ) : (
+                                        <TopsTask />
+                                    )
+                                }
+                            </View>
+                        ) : (
+                            <DetailProject />
+                        )
+                    }
+
+                    {
+                        list.type === 'Task Dari Saya' ? (
+                            <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
+                                <TouchableOpacity onPress={bottomSheetAdd}>
+                                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        ) : null
+                    }
 
                     <BottomSheetModal
                         ref={bottomSheetModalRef}
@@ -410,18 +455,6 @@ export const MyTask = () => {
                             </View>
                         </BottomSheetView>
                     </BottomSheetModal>
-
-                    {
-                        list.type === 'Task Dari Saya' ? (
-                            <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                                <TouchableOpacity onPress={bottomSheetAdd}>
-                                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                                        <Ionicons name='add-outline' size={24} color={COLORS.white} />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        ) : null
-                    }
 
                     <BottomSheetModal
                         ref={bottomSheetModalAddRef}

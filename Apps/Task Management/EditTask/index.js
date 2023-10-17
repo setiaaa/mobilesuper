@@ -15,7 +15,7 @@ import { Modal } from 'react-native'
 import { Image } from 'react-native'
 import { setStatus } from '../../../store/Task'
 import { getTokenValue } from '../../../service/session'
-import { getDetailProjectTM, postAttachmentTM, postCategoryTM, postTaskTM } from '../../../service/api'
+import { editTaskTM, getDetailProjectTM, getDetailTaskTM, postAttachmentTM, postCategoryTM, postTaskTM } from '../../../service/api'
 import DatePicker from 'react-native-modern-datepicker'
 import moment from 'moment'
 import { Dropdown } from '../../../components/DropDown'
@@ -55,11 +55,11 @@ const dataPengingat = [
     },
 ]
 
-export const AddTask = ({ route }) => {
+export const EditTask = ({ route }) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
-    const { id_project, id_list } = route.params
-    const { status, treeView, detailProject, attachment, loading } = useSelector(state => state.task)
+    const { id_project, id_list, id } = route.params
+    const { status, treeView, detailProject, attachment, list, loading } = useSelector(state => state.task)
     const [token, setToken] = useState('')
     const [modalVisiblePicker, setModalVisiblePicker] = useState(false);
     const [modalVisibleMember, setModalVisibleMember] = useState(false);
@@ -71,11 +71,11 @@ export const AddTask = ({ route }) => {
         deskripsi: '',
     })
     const [document, setDocument] = useState([])
-    const [type, setType] = useState()
     const [prioritas, setPrioritas] = useState('')
     const [pengingat, setPengingat] = useState('')
     const [targetTanggal, setTargetTanggal] = useState('')
     const [memberIsChecked, setMemberIsChecked] = useState([]);
+    const [type, setType] = useState()
 
     const handleInputTask = (key, value) => {
         setDataTask({
@@ -90,8 +90,21 @@ export const AddTask = ({ route }) => {
         })
     }, [])
 
+    const transformCapitalize = (title) => {
+        const titleCase = title
+            .toLowerCase()
+            .split(' ')
+            .map(word => {
+                return word.charAt(0).toUpperCase() + word.slice(1)
+            })
+            .join(' ')
+
+        return titleCase
+    }
+
     useEffect(() => {
-        if (id_list !== undefined || id_project !== undefined) {
+        if (id_list !== undefined && id_project !== undefined && id !== undefined) {
+            dispatch(getDetailTaskTM({ token: token, id_task: id }))
             dispatch(getDetailProjectTM({ token: token, id_project: id_project }))
 
             let project_name = ''
@@ -108,11 +121,25 @@ export const AddTask = ({ route }) => {
                 }
             })
 
-            setDataTask({
-                ...dataTask,
-                project: project_name,
-                list: list_name
-            })
+            if (list.detail !== null) {
+                setDataTask({
+                    ...dataTask,
+                    project: project_name,
+                    list: list_name,
+                    judulTask: list.detail.title,
+                    deskripsi: list.detail.description,
+                })
+                setPrioritas({
+                    key: list.detail.priority,
+                    value: transformCapitalize(list.detail.priority)
+                })
+                setPengingat({
+                    key: list.detail.reminder,
+                    value: transformCapitalize(list.detail.reminder)
+                })
+                setTargetTanggal(moment(list.detail.due_date).format('YYYY-MM-DD'))
+                setMemberIsChecked(list.detail.members)
+            }
         }
     }, [token])
 
@@ -153,9 +180,10 @@ export const AddTask = ({ route }) => {
         }
         const data = {
             token: token,
-            payload: payload
+            payload: payload,
+            id_task: id
         }
-        dispatch(postTaskTM(data))
+        dispatch(editTaskTM(data))
     }
 
     const pickDocument = async () => {
@@ -209,7 +237,7 @@ export const AddTask = ({ route }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Tambah Tugas</Text>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Ubah Tugas</Text>
                     </View>
                 </View>
 
@@ -325,6 +353,7 @@ export const AddTask = ({ route }) => {
                                 placeHolder={'Pilih prioritas'}
                                 borderWidth={1}
                                 data={dataPrioritas}
+                                selected={prioritas}
                                 setSelected={setPrioritas}
                                 borderColor={COLORS.ExtraDivinder}
                                 borderwidthDrop={1}
@@ -343,6 +372,7 @@ export const AddTask = ({ route }) => {
                                 placeHolder={'Pilih pengingat'}
                                 borderWidth={1}
                                 data={dataPengingat}
+                                selected={pengingat}
                                 setSelected={setPengingat}
                                 borderColor={COLORS.ExtraDivinder}
                                 borderwidthDrop={1}
@@ -471,7 +501,7 @@ export const AddTask = ({ route }) => {
                                     <View style={{ marginBottom: 40 }}>
                                         <Image source={require('../../../assets/superApp/alertBerhasil.png')} />
                                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                            <Text >Berhasil Ditambahkan!</Text>
+                                            <Text >Berhasil Diubah!</Text>
                                         </View>
                                         <TouchableOpacity onPress={() => {
                                             dispatch(setStatus(''))
