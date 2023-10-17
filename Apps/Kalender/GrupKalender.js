@@ -254,7 +254,12 @@ export const GrupKalender = () => {
                               <Ionicons name='calendar' size={24} color={COLORS.grey} />
                               <Text>Acara Kalender</Text>
                             </TouchableOpacity>
-                            <Ionicons name='add-outline' size={24} color={COLORS.primary} />
+                            <TouchableOpacity onPress={() => {
+                              dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
+                              navigation.navigate('TambahAgenda')
+                            }}>
+                              <Ionicons name='add-outline' size={24} color={COLORS.primary} />
+                            </TouchableOpacity>
                           </View>
 
                           <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}
@@ -357,7 +362,7 @@ export const GrupKalender = () => {
                 dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
                 navigation.navigate('DetailGrup')
               }}>
-                <Text style={{ color: COLORS.info, }}>Lihat Detail</Text>
+                <Text style={{ color: COLORS.info, }}>{kategoriField !== '' ? 'Lihat Detail' : null}</Text>
               </TouchableOpacity>
             </View>
 
@@ -424,14 +429,16 @@ export const GrupKalender = () => {
                     <Text style={{ color: COLORS.info, }}>Selengkapnya</Text>
                   </TouchableOpacity>
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
-                    <TouchableOpacity onPress={bottomSheetAdd}>
+                    <TouchableOpacity onPress={() => {
+                      navigation.navigate('TambahGrup', { unread: false })
+                    }}>
                       <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                         <Ionicons name='add-outline' size={24} color={COLORS.white} />
                       </View>
                     </TouchableOpacity>
                   </View>
                 </View>
-                {/* add agenda */}
+                {/* add agenda
                 <BottomSheetModal
                   ref={bottomSheetModalAddRef}
                   snapPoints={animatedSnapPoints}
@@ -491,7 +498,7 @@ export const GrupKalender = () => {
                     </View>
 
                   </BottomSheetView>
-                </BottomSheetModal>
+                </BottomSheetModal> */}
 
                 {/* add category */}
                 <BottomSheetModal

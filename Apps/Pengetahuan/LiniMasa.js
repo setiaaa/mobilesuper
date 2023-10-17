@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Text } from 'react-native'
 import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { AVATAR, COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -73,7 +73,7 @@ const CardLiniMasa = ({ item, token }) => {
                         </View>
                         <View>
                             <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.creator.name}</Text>
-                            <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(item.published_date, "DD MMMM YYYY HH:mm:ss").format("DD MMMM YYYY")}</Text>
+                            <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(item.published_date, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
                         </View>
                     </View>
                     <View style={{ marginVertical: 20 }}>

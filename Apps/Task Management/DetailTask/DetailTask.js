@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps'
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import { Image } from 'react-native'
@@ -196,7 +196,7 @@ export const DetailTask = () => {
                                             <View style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                     <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter, width: '40%' }}>Target Tanggal</Text>
-                                                    <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter, flex: 1 }}>: {moment(taskDetail.due_date).format('DD MMMM YYYY')}</Text>
+                                                    <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter, flex: 1 }}>: {moment(taskDetail.due_date).format(DATETIME.LONG_DATE)}</Text>
                                                 </View>
 
                                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>

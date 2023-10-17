@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux'
@@ -176,7 +176,7 @@ const CardListAbsen = ({ item, role, setScanData, setIdAbsen, eventpic }) => {
                             <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 120, }}>Waktu Check In</Text>
                                 <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format('DD MMMM YYYY HH:mm')}</Text>
+                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
                                 </View>
                             </View>
                         )}

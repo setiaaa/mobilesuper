@@ -10,7 +10,7 @@ import { TouchableOpacity } from 'react-native'
 import { getKesejahteraan, getPerencanaan } from '../../service/api'
 import { FlatList } from 'react-native'
 import moment from 'moment'
-import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import RenderHTML from 'react-native-render-html'
 import { useWindowDimensions } from 'react-native'
@@ -105,7 +105,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
                     console.log(item)
                 }}
             >
-                <Text>{moment(item.created_date).format("DD MMMM YYYY")}</Text>
+                <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
                 <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
             </TouchableOpacity>
             {/* )} */}
@@ -183,7 +183,7 @@ export const Perencanaan = () => {
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>{detailContent.title}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 5 }}>
                             <Ionicons name='time-outline' size={20} color={COLORS.grey} />
-                            {/* <Text>{moment(detailContent.created_date).format("DD MMMM YYYY")}</Text> */}
+                            {/* <Text>{moment(detailContent.created_date).format(DATETIME.LONG_DATE)}</Text> */}
                             <Text>{formatDate(detailContent.created_date)}</Text>
                         </View>
                         {/* custom divider */}

@@ -12,7 +12,7 @@ import { View } from 'react-native'
 import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { AVATAR, COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel'
 import { StyleSheet } from 'react-native'
@@ -35,7 +35,7 @@ const CardSubAgenda = ({ item }) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ flexDirection: 'row', gap: 30 }}>
                     <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: FONTSIZE.H3 }}>{moment(item.date).format('DD MMMM YYYY')}</Text>
+                        <Text style={{ fontSize: FONTSIZE.H3 }}>{moment(item.date).format(DATETIME.LONG_DATE)}</Text>
                         <Text style={{ fontSize: FONTSIZE.H4 }}>{item.start_time.substr(0, 5)} - {item.end_time.substr(0, 5)}</Text>
                     </View>
                     <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>{item.title}</Text>
@@ -96,7 +96,7 @@ export const DetailAcaraAgenda = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
-                                    <Text>{moment(detail?.created_at, 'HH:mm:ss').format('DD MMMM YYYY')}</Text>
+                                    <Text>{moment(detail?.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
                                 </View>
 
                                 <View>
@@ -117,7 +117,7 @@ export const DetailAcaraAgenda = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Mulai</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail?.start_date).format('DD MMMM YYYY HH:mm')}</Text>
+                                            <Text>{moment(detail?.start_date).format(DATETIME.LONG_DATETIME)}</Text>
                                         </View>
                                     </View>
 
@@ -130,7 +130,7 @@ export const DetailAcaraAgenda = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail?.end_date).format('DD MMMM YYYY HH:mm')}</Text>
+                                            <Text>{moment(detail?.end_date).format(LONG_DATETIME)}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />

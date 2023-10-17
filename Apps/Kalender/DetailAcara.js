@@ -12,7 +12,7 @@ import { View } from 'react-native'
 import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { AVATAR, COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel'
 import { StyleSheet } from 'react-native'
@@ -90,7 +90,7 @@ export const DetailAcara = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Acara</Text>
+                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Agenda</Text>
                             </View>
                         </View>
 
@@ -108,7 +108,7 @@ export const DetailAcara = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
-                                    <Text>{moment(detail.created_at, 'DD MMMM YYYY HH:mm:ss').format('YYYY MMMM DD')}</Text>
+                                    <Text>{moment(detail.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
                                 </View>
 
                                 <View>
@@ -129,7 +129,7 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Mulai</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail.start_date).format('YYYY MMMM DD')}</Text>
+                                            <Text>{moment(detail.start_date).format(DATETIME.LONG_DATETIME)}</Text>
                                         </View>
                                     </View>
 
@@ -142,7 +142,7 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail.end_date).format('YYYY MMMM DD')}</Text>
+                                            <Text>{moment(detail.end_date).format(DATETIME.LONG_DATETIME)}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -229,7 +229,7 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Catatan</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.catatan == null ? '-' : detail.catatan}</Text>
+                                            <Text>{detail.extra_attributes.catatan == null ? '-' : detail.extra_attributes.catatan}</Text>
                                         </View>
                                     </View>
                                 </View>

@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
@@ -82,7 +82,7 @@ const CardListAbsen = ({ item }) => {
                             <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 120, }}>Waktu Check In</Text>
                                 <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format('DD MMMM YYYY HH:mm')}</Text>
+                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
                                 </View>
                             </View>
                         )}

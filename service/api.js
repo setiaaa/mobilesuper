@@ -647,6 +647,12 @@ export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
     return respon?.data
 })
 
+export const postAgendaAcara = createAsyncThunk("calendar/postAgendaAcara", async (data) => {
+    console.log(data.payload)
+    const respon = await axios.post(`${kalender}calendar/event/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
 export const getDetailGrup = createAsyncThunk("calendar/getDetailGrup", async ({ token, id }) => {
     console.log(id)
     const respon = await axios.get(`${kalender}calendar/${id}`, { headers: { Authorization: token } })

@@ -12,7 +12,7 @@ import { View } from 'react-native'
 import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { AVATAR, COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel'
 import { StyleSheet } from 'react-native'
@@ -118,7 +118,7 @@ export const DetailGrup = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pada :</Text>
-                                    <Text>{moment(detailGrup.created_at, 'HH:mm:ss').format('YYYY MMMM DD')}</Text>
+                                    <Text>{moment(detailGrup.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
                                 </View>
 
                                 <View>

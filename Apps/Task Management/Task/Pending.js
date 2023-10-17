@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
-import { AVATAR } from '../../../config/SuperAppps'
+import { AVATAR, DATETIME } from '../../../config/SuperAppps'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../../components/CardListTask'
 import { useSelector } from 'react-redux'
@@ -65,7 +65,7 @@ export const Pending = () => {
                                     renderItem={({ item }) => <CardListTask
                                         id={item.id}
                                         title={item.title}
-                                        duedate={moment(item.due_date).format('DD MMMM YYYY')}
+                                        duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
                                     />
                                     }
                                     ListEmptyComponent={() =>
@@ -92,7 +92,7 @@ export const Pending = () => {
                                 renderItem={({ item }) => <CardListGridTask
                                     id={item.id}
                                     title={item.title}
-                                    duedate={moment(item.due_date).format('DD MMMM YYYY')}
+                                    duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
                                     priority={item.priority}
                                     members={item.members}
                                 />

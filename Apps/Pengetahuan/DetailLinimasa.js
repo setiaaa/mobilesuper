@@ -6,7 +6,7 @@ import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
@@ -390,7 +390,7 @@ export const DetailLinimasa = () => {
                                     </View>
                                     <View>
                                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>{detail.creator?.name}</Text>
-                                        <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(detail.published_date, "DD MMMM YYYY HH:mm:ss").format("DD MMMM YYYY")}</Text>
+                                        <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(detail.published_date, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
                                     </View>
                                 </View>
 
@@ -721,7 +721,7 @@ export const DetailLinimasa = () => {
                                                     <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[When]</Text>
                                                 </View>
 
-                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{moment(detail.start_date_agenda, "DD MMMM YYYY HH:mm:ss").format("DD MMMM YYYY")}</Text>
+                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{moment(detail.start_date_agenda, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
                                             </View>
                                         </View>
                                     </View>
