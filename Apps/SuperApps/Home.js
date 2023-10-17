@@ -55,6 +55,9 @@ import {
   getGaleri,
   getBerita,
 } from "../../service/api";
+import { bannerKegiatan } from "../../components/BannerKegiatan";
+import { BeritaHome } from "../../components/BeritaHome";
+import { GaleriHome } from "../../components/GaleriHome";
 
 const { width: screenWidth } = Dimensions.get("window");
 export const Home = () => {
@@ -108,169 +111,8 @@ export const Home = () => {
   const { berita, agenda, program, galeri, profile, visimisi, banner } =
     useSelector((state) => state.superApps);
 
-  const renderItem = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: item.image }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            backgroundColor: "white",
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: 10,
-              marginVertical: 20,
-              fontWeight: FONTWEIGHT.bold,
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
-  const renderItem2 = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={item.image}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: 10,
-              marginVertical: 50,
-              textAlign: "center",
-              fontSize: 13,
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
-  const renderItem3 = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={item.image}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: 10,
-              marginVertical: 50,
-              textAlign: "center",
-              fontSize: 13,
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  const renderItem4 = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: item.main_images.image }}
-          containerStyle={styles.galeri}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        {/* <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
-                    <Text style={{
-                        marginLeft: 10, color: '#111827',
-                        marginVertical: 50,
-                        textAlign: 'center',
-                        fontSize: 13,
-                        fontWeight: 400
-                    }}>
-                        {item.title}
-                    </Text>
-                </View> */}
-      </View>
-    );
-  };
-
-  const bannerKegiatan = ({ item }, parallaxProps) => {
-    return (
-      <View style={styles.items}>
-        <ParallaxImage
-          source={{ uri: item.image }}
-          containerStyle={styles.imageContainer}
-          style={styles.images}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            width: "100%",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: COLORS.primary,
-              borderBottomLeftRadius: 8,
-              borderBottomRightRadius: 8,
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: 70,
-              opacity: 0.5,
-            }}
-          />
-          <Text
-            style={{
-              color: COLORS.white,
-              marginVertical: 20,
-              marginHorizontal: 40,
-              textAlign: "center",
-            }}
-          >
-            {item.description}
-          </Text>
-        </View>
-      </View>
-    );
-  };
   const bottomSheetModalRef = useRef(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -562,109 +404,6 @@ export const Home = () => {
               </View>
             </Modal>
 
-            <View style={{ marginTop: 15, alignItems: "center" }}>
-              <CardVisiMisi setModalVisibleVisiMisi={setModalVisibleVisiMisi} />
-            </View>
-            <Modal
-              animationType="fade"
-              transparent={true}
-              visible={modalVisibleVisiMisi}
-              onRequestClose={() => {
-                setModalVisibleVisiMisi(!modalVisibleVisiMisi);
-              }}
-            >
-              <TouchableOpacity
-                style={[
-                  Platform.OS === "ios"
-                    ? styles.iOSBackdrop
-                    : styles.androidBackdrop,
-                  styles.backdrop,
-                ]}
-              />
-              <View style={{ alignItems: "center", flex: 1 }}>
-                <View
-                  style={{
-                    backgroundColor: COLORS.white,
-                    width: "90%",
-                    height: 500,
-                    borderRadius: 10,
-                    marginTop: 100,
-                  }}
-                >
-                  <TouchableOpacity
-                    style={{
-                      marginHorizontal: 20,
-                      marginTop: 20,
-                      alignItems: "flex-end",
-                    }}
-                    onPress={() => {
-                      setModalVisibleVisiMisi(false);
-                    }}
-                  >
-                    <Ionicons name="close-outline" size={24} />
-                  </TouchableOpacity>
-
-                  <View style={styles.cardVisiMisi}>
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        textAlign: "center",
-                        marginVertical: 5,
-                      }}
-                    >
-                      VISI KKP
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      marginHorizontal: 30,
-                      fontSize: FONTSIZE.H4,
-                      marginTop: 20,
-                    }}
-                  >
-                    {visimisi.visi}
-                  </Text>
-
-                  <View style={[styles.cardVisiMisi, { marginTop: 20 }]}>
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        textAlign: "center",
-                        marginVertical: 5,
-                      }}
-                    >
-                      MISI KKP
-                    </Text>
-                  </View>
-
-                  {visimisi.misi.map((item, index) => (
-                    <View
-                      key={index}
-                      style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        marginLeft: 30,
-                        marginTop: 20,
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: 10,
-                          height: 10,
-                          borderRadius: 50,
-                          backgroundColor: COLORS.primary,
-                          marginTop: 5,
-                        }}
-                      />
-                      <Text style={{ width: 260, fontSize: FONTSIZE.H4 }}>
-                        {item.text}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              </View>
-            </Modal>
-
             <View
               style={{
                 marginVertical: 20,
@@ -702,7 +441,7 @@ export const Home = () => {
                   sliderHeight={screenWidth}
                   itemWidth={screenWidth - 60}
                   data={berita.lists.slice(0, 3)}
-                  renderItem={renderItem}
+                  renderItem={BeritaHome}
                   hasParallaxImages={true}
                 />
               </View>
@@ -987,71 +726,8 @@ export const Home = () => {
               </View>
             </Modal>
 
-            <View style={{ marginVertical: 20, marginLeft: 30 }}>
-              <Text
-                style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
-              >
-                Agenda Prioritas KKP Dengan 5 Kebijakan
-              </Text>
-            </View>
-            <View style={styles.containerr}>
-              <Carousel
-                ref={carouselRef}
-                sliderWidth={screenWidth}
-                sliderHeight={screenWidth}
-                itemWidth={screenWidth - 60}
-                data={agenda}
-                renderItem={renderItem2}
-                hasParallaxImages={true}
-                onSnapToItem={setSlide2}
-              />
-              <Pagination
-                dotsLength={agenda.length}
-                dotColor={"black"}
-                inactiveDotColor={COLORS.grey}
-                dotStyle={styles.paginationDot}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.6}
-                activeDotIndex={slide2}
-                carouselRef={carouselRef}
-                tappableDots={!!carouselRef}
-              />
-            </View>
-
-            <View style={{ marginLeft: 30, marginBottom: 20 }}>
-              <Text
-                style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
-              >
-                7 Program Prioritas
-              </Text>
-            </View>
-
-            <View style={styles.containerr}>
-              <Carousel
-                ref={carouselRef}
-                sliderWidth={screenWidth}
-                sliderHeight={screenWidth}
-                itemWidth={screenWidth - 60}
-                data={program}
-                renderItem={renderItem3}
-                hasParallaxImages={true}
-                onSnapToItem={setSlide3}
-              />
-              <Pagination
-                dotsLength={program.length}
-                dotColor={"black"}
-                inactiveDotColor={COLORS.grey}
-                dotStyle={styles.paginationDot}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.6}
-                activeDotIndex={slide3}
-                carouselRef={carouselRef}
-                tappableDots={!!carouselRef}
-              />
-            </View>
-
             <View
-              style={{ marginLeft: 30, marginBottom: 20, flexDirection: "row" }}
+              style={{ marginLeft: 30, marginVertical: 20, flexDirection: "row" }}
             >
               <Text
                 style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
@@ -1082,7 +758,7 @@ export const Home = () => {
                 sliderHeight={screenWidth}
                 itemWidth={screenWidth - 60}
                 data={galeri.lists.slice(0, 3)}
-                renderItem={renderItem4}
+                renderItem={GaleriHome}
                 hasParallaxImages={true}
                 onSnapToItem={setSlide4}
               />

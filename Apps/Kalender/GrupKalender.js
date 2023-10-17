@@ -290,8 +290,6 @@ export const GrupKalender = () => {
                       <></>
                     )} */}
 
-
-
                   </BottomSheetView>
                 </BottomSheetModal>
               </View>

@@ -27,25 +27,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import moment from 'moment'
 import { getTokenValue } from '../../service/session'
 import { getListSubAgenda } from '../../service/api'
+import ListEmpty from '../../components/ListEmpty'
+import { CardSubAgendaGrup } from '../../components/CardSubAgendaGrup'
 
 
-const CardSubAgenda = ({ item }) => {
-    return (
-        <View style={{ marginTop: 20 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', gap: 30 }}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: FONTSIZE.H3 }}>{moment(item.date).format(DATETIME.LONG_DATE)}</Text>
-                        <Text style={{ fontSize: FONTSIZE.H4 }}>{item.start_time.substr(0, 5)} - {item.end_time.substr(0, 5)}</Text>
-                    </View>
-                    <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>{item.title}</Text>
-                </View>
-                <Text>{item.location}</Text>
-            </View>
-            <View style={{ height: 1, width: '100%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10 }} />
-        </View>
-    )
-}
+
 
 
 
@@ -130,7 +116,7 @@ export const DetailAcaraAgenda = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail?.end_date).format(LONG_DATETIME)}</Text>
+                                            <Text>{moment(detail?.end_date).format(DATETIME.LONG_DATETIME)}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -193,12 +179,15 @@ export const DetailAcaraAgenda = () => {
 
                                     <FlatList
                                         data={agendaAcara.listsSub}
-                                        renderItem={({ item }) => <CardSubAgenda
+                                        renderItem={({ item }) => <CardSubAgendaGrup
                                             item={item}
                                         />
                                         }
                                         style={{ height: 150 }}
                                         keyExtractor={item => item.id}
+                                        ListEmptyComponent={() =>
+                                            <ListEmpty />
+                                        }
                                     />
                                 </View>
                             </View>

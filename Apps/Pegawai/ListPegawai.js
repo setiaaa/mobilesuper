@@ -20,82 +20,11 @@ import ListEmpty from '../../components/ListEmpty';
 import { Platform } from 'react-native';
 import { getTokenValue } from '../../service/session';
 import { getDetailPegawai, getPegawai } from '../../service/api';
+import { CardListPegawai } from '../../components/CardListPegawai';
 
 
 
-const CardListPegawai = ({ item, collapse, setCollapse, token }) => {
-    const dispatch = useDispatch()
-    const navigation = useNavigation()
 
-    const getDetail = (nip) => {
-        const params = { token, nip }
-        // const data = event.listsprogress.find(item => item.id === id)
-        dispatch(getDetailPegawai(params))
-    }
-    return (
-        <View style={{
-            flexDirection: 'column', display: 'flex',
-            backgroundColor: COLORS.white,
-            width: '90%',
-            padding: 20,
-            marginTop: 10,
-            borderRadius: 8,
-            marginHorizontal: 15,
-        }}>
-            <TouchableOpacity style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-                onPress={() => setCollapse({ nip: item.nip, toggle: true })}
-            >
-                <View style={{ width: Platform.OS === 'ios' ? '92%' : '93%' }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.nama}</Text>
-                    <Text style={{ marginTop: 5 }}>{item.nip}</Text>
-                </View>
-                {collapse.nip === item.nip && collapse.toggle === true ? (
-                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                        <Ionicons name='chevron-up' size={24} />
-                    </TouchableOpacity>
-                ) : (
-                    <Ionicons name='chevron-down' size={24} />
-                )}
-            </TouchableOpacity>
-
-            {collapse.nip === item.nip && collapse.toggle === true ? (
-                <View>
-
-                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                        <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>Unit Kerja</Text>
-                        <Text style={{ marginTop: 5 }}>{item.nama_jabatan}</Text>
-
-                        <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>SATKER</Text>
-                        <Text style={{ marginTop: 5 }}>{item.unit_kerja}</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{
-                        width: '100%',
-                        height: 50,
-                        backgroundColor: COLORS.danger,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: 20,
-                        borderRadius: 8,
-                    }}
-                        onPress={() => {
-                            getDetail(item.nip)
-                            navigation.navigate('DetailProfile')
-                        }}
-                    >
-                        <Text style={{ color: COLORS.white }}>Lihat Detail Pegawai</Text>
-                    </TouchableOpacity>
-                </View>
-            ) : (
-                null
-            )}
-        </View>
-    )
-}
 
 
 export const ListPegawai = () => {

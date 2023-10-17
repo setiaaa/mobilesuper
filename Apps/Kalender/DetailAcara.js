@@ -229,7 +229,7 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Catatan</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail.extra_attributes.catatan == null ? '-' : detail.extra_attributes.catatan}</Text>
+                                            <Text>{detail.extra_attributes?.catatan == null ? '-' : detail.extra_attributes.catatan}</Text>
                                         </View>
                                     </View>
                                 </View>

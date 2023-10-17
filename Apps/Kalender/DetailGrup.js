@@ -108,7 +108,7 @@ export const DetailGrup = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat oleh :</Text>
-                                    <Text>{detailGrup.creator.nama}</Text>
+                                    <Text>{detailGrup.creator?.nama}</Text>
                                 </View>
 
                                 <View style={{

@@ -30,60 +30,10 @@ import { setStatus } from '../../store/GrupKalender';
 import Checkbox from 'expo-checkbox';
 import { postAgendaAcara } from '../../service/api';
 import { useEffect } from 'react';
+import { ModalSubmit } from '../../components/ModalSubmit';
+import { CardListDataPeserta } from '../../components/CardListDataPeserta';
 
-const CardListPeserta = ({ item, addressbook, persetaSubAgenda = false, setPilihanPeserta }) => {
-    console.log(item)
-    const dispatch = useDispatch()
-    const deleteItem = (id, state) => {
-        let data;
-        let datas = persetaSubAgenda ? addressbook : addressbook.selected
-        if (state === "jabatan") {
-            data = datas.filter(data => {
-                let nip = data.nip || data.officer.official?.split('/')[1]
-                return nip !== id
-            })
-            if (persetaSubAgenda) {
-                setPilihanPeserta(data)
-            } else {
-                dispatch(setAddressbookSelected(data))
-            }
-        } else {
-            data = datas.filter(data => data.nip !== id)
-            if (persetaSubAgenda) {
-                setPilihanPeserta(data)
-            } else {
-                dispatch(setAddressbookSelected(data))
-            }
-        }
-    }
-    return (
-        <View key={item.nip || item.id}>
-            {
-                item.code !== undefined || (item.title !== undefined && item.title.name !== '') ? (
-                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                        <Text>-</Text>
-                        <Text style={{ width: '80%' }}>{item.nama !== undefined ? item.nama : item.title}</Text>
-                        <TouchableOpacity onPress={() => {
-                            deleteItem(item.nip || item.officer.official?.split('/')[1], 'jabatan')
-                        }}>
-                            <Ionicons name='trash-outline' size={24} />
-                        </TouchableOpacity>
-                    </View>
-                ) : (
-                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                        <Text>-</Text>
-                        <Text style={{ width: '80%' }}>{item.nama || item.fullname}</Text>
-                        <TouchableOpacity onPress={() => {
-                            deleteItem(item.nip, 'pegawai')
-                        }}>
-                            <Ionicons name='trash-outline' size={24} />
-                        </TouchableOpacity>
-                    </View>
-                )
-            }
-        </View>
-    )
-}
+
 
 export const TambahAgenda = () => {
     const navigation = useNavigation()
@@ -442,7 +392,7 @@ export const TambahAgenda = () => {
                                 </TouchableOpacity>
                                 <FlatList
                                     data={memberIsChecked}
-                                    renderItem={({ item }) => <CardListPeserta
+                                    renderItem={({ item }) => <CardListDataPeserta
                                         item={item}
                                         addressbook={memberIsChecked}
                                         persetaSubAgenda={true}
@@ -684,8 +634,8 @@ export const TambahAgenda = () => {
                                 </View>
                             </BottomSheetView>
                         </BottomSheetModal> */}
-
-                        <Modal
+                        <ModalSubmit />
+                        {/* <Modal
                             animationType="fade"
                             transparent={true}
                             visible={status === '' ? false : true}
@@ -733,7 +683,7 @@ export const TambahAgenda = () => {
                                     }
                                 </View>
                             </View>
-                        </Modal>
+                        </Modal> */}
                     </ScrollView>
                 </BottomSheetModalProvider>
             </SafeAreaView>
