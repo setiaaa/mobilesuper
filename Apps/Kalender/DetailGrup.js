@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setAgendaDetail } from '../../store/GrupKalender'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import moment from 'moment'
+import { getDetailGrup } from '../../service/api'
+import { getTokenValue } from '../../service/session'
 
 
 
@@ -35,6 +37,7 @@ export const DetailGrup = () => {
     const [slide, setSlide] = useState(0)
     const [komen, setKomen] = useState('')
     const carouselRef = useRef(null);
+    const [token, setToken] = useState('')
     const navigation = useNavigation()
 
     const bottomSheetModalRef = useRef(null);
@@ -68,7 +71,14 @@ export const DetailGrup = () => {
         })
     }
 
-    console.log(detailGrup)
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    const dibuat = detailGrup.created_at?.split(' ')
+    const tanggalPada = dibuat[0] + ' ' + dibuat[1] + ' ' + dibuat[2]
 
     return (
         <SafeAreaView>
@@ -90,7 +100,7 @@ export const DetailGrup = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Acara</Text>
+                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Grup</Text>
                             </View>
                         </View>
 
@@ -118,7 +128,8 @@ export const DetailGrup = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pada :</Text>
-                                    <Text>{moment(detailGrup.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
+
+                                    <Text>{tanggalPada}</Text>
                                 </View>
 
                                 <View>
@@ -153,7 +164,7 @@ export const DetailGrup = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detailGrup.extra_attributes.ketentuan_busana == null ? '-' : detailGrup.extra_attributes.ketentuan_busana}</Text>
+                                            <Text>{detailGrup?.extra_attributes?.ketentuan_busana == null ? '-' : detailGrup?.extra_attributes?.ketentuan_busana}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -165,7 +176,7 @@ export const DetailGrup = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Perlengkapan</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detailGrup.extra_attributes.perlengkapan == null ? '-' : detailGrup.extra_attributes.perlengkapan}</Text>
+                                            <Text>{detailGrup?.extra_attributes?.perlengkapan == null ? '-' : detailGrup?.extra_attributes?.perlengkapan}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -177,7 +188,7 @@ export const DetailGrup = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Atribut Lainnya</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detailGrup.extra_attributes.atribut == null ? '-' : detailGrup.extra_attributes.atribut}</Text>
+                                            <Text>{detailGrup?.extra_attributes?.atribut == null ? '-' : detailGrup?.extra_attributes?.atribut}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -255,7 +266,8 @@ export const DetailGrup = () => {
 
                         <TouchableOpacity
                             onPress={() => {
-
+                                dispatch(getDetailGrup({ token: token, id: detailGrup.id }))
+                                navigation.navigate('EditGrup')
                             }}
                             style={{
                                 borderColor: COLORS.primary,

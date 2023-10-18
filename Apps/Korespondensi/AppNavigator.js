@@ -181,6 +181,7 @@ import { IKU } from "../Dashboard/IKU";
 import { DetailGrup } from "../Kalender/DetailGrup";
 import { EditTask } from "../Task Management/EditTask";
 import { EditCategory } from "../Task Management/EditCategory";
+import { EditGrup } from "../Kalender/EditGrup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -300,6 +301,13 @@ function AuthStack() {
         <Stack.Screen
           name="TambahGrup"
           component={TambahGrup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditGrup"
+          component={EditGrup}
           options={{
             headerShown: false,
           }}

@@ -659,6 +659,11 @@ export const getDetailGrup = createAsyncThunk("calendar/getDetailGrup", async ({
     return respon?.data.result
 })
 
+export const putEditGrup = createAsyncThunk("calendar/putEditGrup", async (data) => {
+    const respon = await axios.put(`${kalender}calendar/${data.id}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
 
 //Dashboard
 export const getKesejahteraan = createAsyncThunk("bridge/getKesejahteraan", async ({ token, value }) => {

@@ -68,7 +68,38 @@ export const DetailAcara = () => {
         })
     }
 
-    console.log(detail)
+    const convertDate = (tanggal) => {
+        const parts = tanggal.split(' ');
+
+        const months = {
+            'January': 0,
+            'February': 1,
+            'March': 2,
+            'April': 3,
+            'May': 4,
+            'June': 5,
+            'July': 6,
+            'August': 7,
+            'September': 8,
+            'October': 9,
+            'November': 10,
+            'December': 11
+        };
+
+        const day = parseInt(parts[0]);
+        const month = months[parts[1]];
+        const year = parseInt(parts[2]);
+        const time = parts[3].split(':');
+        const hour = parseInt(time[0]);
+        const minute = parseInt(time[1]);
+        const second = parseInt(time[2]);
+
+        const date = new Date(year, month, day, hour, minute, second);
+        const formatedDate = moment(date).format(DATETIME.LONG_DATE)
+
+        return formatedDate
+
+    }
 
     return (
         <SafeAreaView>
@@ -108,7 +139,7 @@ export const DetailAcara = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
-                                    <Text>{moment(detail.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
+                                    <Text>{convertDate(detail.created_at)}</Text>
                                 </View>
 
                                 <View>
@@ -129,7 +160,7 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Mulai</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail.start_date).format(DATETIME.LONG_DATETIME)}</Text>
+                                            <Text>{moment(detail?.start_date).format(DATETIME.LONG_DATETIME)}</Text>
                                         </View>
                                     </View>
 
@@ -142,7 +173,7 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail.end_date).format(DATETIME.LONG_DATETIME)}</Text>
+                                            <Text>{moment(detail?.end_date).format(DATETIME.LONG_DATETIME)}</Text>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -154,21 +185,23 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
                                         </View>
                                         <View style={{ justifyContent: 'center' }}>
-                                            {detail.pic?.map((item, index) => {
-                                                return (
-                                                    <View key={index} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                                                        <Image source={{ uri: item.avatar_url }} style={{
-                                                            marginLeft: -8,
-                                                            borderWidth: 2,
-                                                            borderRadius: 50,
-                                                            borderColor: COLORS.white,
-                                                            width: 30,
-                                                            height: 30
-                                                        }} />
-                                                        <Text>{item.nama}</Text>
-                                                    </View>
-                                                )
-                                            })}
+                                            {detail && Array.isArray(detail.pic) ? (
+                                                detail?.pic?.map((item, index) => {
+                                                    return (
+                                                        <View key={index} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                                                            <Image source={{ uri: item.avatar_url }} style={{
+                                                                marginLeft: -8,
+                                                                borderWidth: 2,
+                                                                borderRadius: 50,
+                                                                borderColor: COLORS.white,
+                                                                width: 30,
+                                                                height: 30
+                                                            }} />
+                                                            <Text>{item.nama}</Text>
+                                                        </View>
+                                                    )
+                                                })
+                                            ) : null}
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -180,20 +213,22 @@ export const DetailAcara = () => {
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Anggota</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', }}>
-                                            {detail.members?.map((item, index) => {
-                                                return (
-                                                    <View key={index}>
-                                                        <Image source={{ uri: item.avatar_url }} style={{
-                                                            marginLeft: -8,
-                                                            borderWidth: 2,
-                                                            borderRadius: 50,
-                                                            borderColor: COLORS.white,
-                                                            width: 30,
-                                                            height: 30
-                                                        }} />
-                                                    </View>
-                                                )
-                                            })}
+                                            {detail && Array.isArray(detail.members) ? (
+                                                detail?.members?.map((item, index) => {
+                                                    return (
+                                                        <View key={index}>
+                                                            <Image source={{ uri: item.avatar_url }} style={{
+                                                                marginLeft: -8,
+                                                                borderWidth: 2,
+                                                                borderRadius: 50,
+                                                                borderColor: COLORS.white,
+                                                                width: 30,
+                                                                height: 30
+                                                            }} />
+                                                        </View>
+                                                    )
+                                                })
+                                            ) : null}
                                         </View>
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />

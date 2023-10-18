@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailAcara, getDetailAgendaAcara, getDetailGrup, getListAcara, getListAgendaAcara, getListGrup, getListSubAgenda, postAgendaAcara, postGrup } from "../service/api";
+import { getDetailAcara, getDetailAgendaAcara, getDetailGrup, getListAcara, getListAgendaAcara, getListGrup, getListSubAgenda, postAgendaAcara, postGrup, putEditGrup } from "../service/api";
 
 const GrupKalenderSlice = createSlice({
   name: "GrupKalender",
@@ -77,6 +77,13 @@ const GrupKalenderSlice = createSlice({
         state.status = 'berhasil'
       })
       .addCase(postAgendaAcara.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(putEditGrup.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(putEditGrup.rejected, (state, action) => {
         console.log(action.payload)
         state.status = 'error'
       })

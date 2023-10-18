@@ -1,6 +1,7 @@
 import { Text } from "react-native"
 import { View } from "react-native"
-import { DATETIME, FONTSIZE } from "../../config/SuperAppps"
+import { COLORS, DATETIME, FONTSIZE } from "../../config/SuperAppps"
+import moment from "moment"
 
 export const CardSubAgendaGrup = ({ item }) => {
     return (
