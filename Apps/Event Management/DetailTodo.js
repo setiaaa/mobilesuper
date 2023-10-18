@@ -72,31 +72,31 @@ const CardLampiran = ({ lampiran, onClick, type }) => {
     )
 }
 
-const CardApproval = ({ item }) => {
-    return (
-        <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
-            <View>
-                <Text>{item.nama}</Text>
-                <View style={{ flexDirection: 'row', gap: 5 }}>
-                    <Text>Waktu:</Text>
-                    <Text>{item.waktu}</Text>
-                </View>
-            </View>
-            <View style={{
-                width: 100,
-                height: 24,
-                borderRadius: 30,
-                backgroundColor: item.status === 'Sepakat' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : COLORS.infoDangerLight,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <Text style={{
-                    color: item.status === 'Sepakat' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : COLORS.infoDanger
-                }}>{item.status}</Text>
-            </View>
-        </View>
-    )
-}
+// const CardApproval = ({ item }) => {
+//     return (
+//         <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+//             <View>
+//                 <Text>{item.nama}</Text>
+//                 <View style={{ flexDirection: 'row', gap: 5 }}>
+//                     <Text>Waktu:</Text>
+//                     <Text>{item.waktu}</Text>
+//                 </View>
+//             </View>
+//             <View style={{
+//                 width: 100,
+//                 height: 24,
+//                 borderRadius: 30,
+//                 backgroundColor: item.status === 'Sepakat' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : COLORS.infoDangerLight,
+//                 justifyContent: 'center',
+//                 alignItems: 'center'
+//             }}>
+//                 <Text style={{
+//                     color: item.status === 'Sepakat' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : COLORS.infoDanger
+//                 }}>{item.status}</Text>
+//             </View>
+//         </View>
+//     )
+// }
 
 
 export const DetailTodo = () => {
@@ -518,10 +518,8 @@ export const DetailTodo = () => {
                                 )
                                 )}
                             </View>
+
                         </ScrollView>
-
-
-
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>

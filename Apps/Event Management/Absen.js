@@ -82,7 +82,7 @@ const CardListAbsen = ({ item }) => {
                             <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 120, }}>Waktu Check In</Text>
                                 <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
+                                    <Text>{moment(item.updated_at, 'HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
                                 </View>
                             </View>
                         )}
