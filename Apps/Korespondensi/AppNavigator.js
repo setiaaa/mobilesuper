@@ -131,6 +131,10 @@ import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
 import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
 import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
 import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
+import { RangkumanIKU } from "../Pengetahuan/RangkumanIKU";
+import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
+import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
+import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
@@ -848,7 +852,7 @@ function AuthStack() {
           name="DetailDokumenSPPD"
           component={DetailDokumenSPPD}
           options={{
-            headerTitle: '',
+            headerTitle: "",
             headerShown: false,
           }}
         />
@@ -1063,6 +1067,35 @@ export const BottomTabsPengetahuan = () => {
         <Tab.Screen name='PostinganSaya' component={PostinganSaya} options={{ headerShown: false }} />
         <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
         <Tab.Screen name='LaporanPengetahuan' component={LaporanPengetahuan} options={{ headerShown: false }} />
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarPengetahuan {...props} />}
+        initialRouteName="LiniMasa"
+      >
+        <Tab.Screen
+          name="LiniMasa"
+          component={LiniMasa}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="PostinganSaya"
+          component={PostinganSaya}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="RangkumanIKU"
+          component={RangkumanIKU}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="LaporanPengetahuan"
+          component={LaporanPengetahuan}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="PenilaianPenggetahaun"
+          component={PenilaianPenggetahaun}
+          options={{ headerShown: false }}
+        />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   );
@@ -1136,8 +1169,8 @@ export const BottomTabsSPPD = () => {
         />
       </Tab.Navigator>
     </BottomSheetModalProvider>
-  );
-};
+  )
+}
 
 export const BottomTabsOutgoingKorespondensi = () => {
   return (
@@ -1168,34 +1201,8 @@ export const BottomTabsOutgoingKorespondensi = () => {
         />
       </Tab.Navigator>
     </BottomSheetModalProvider>
-  );
-};
-export const BottomTabsCuti = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabCuti {...props} />}
-        initialRouteName="PersonalCuti"
-      >
-        <Tab.Screen
-          name="PersonalCuti"
-          component={PersonalCuti}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="PersetujuanCuti"
-          component={PersetujanCuti}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenCuti"
-          component={DokumenCuti}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
+  )
+}
 
 export const TopsTP = () => {
   return (
@@ -2523,8 +2530,8 @@ function AppNavigator() {
       Alert.alert(
         "Warning!",
         "You are using an old version of the " +
-        app_name +
-        ". Do you want to upgrade?",
+          app_name +
+          ". Do you want to upgrade?",
         [
           {
             text: "Upgrade",

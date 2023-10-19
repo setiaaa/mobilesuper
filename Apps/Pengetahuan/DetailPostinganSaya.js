@@ -361,7 +361,7 @@ export const DetailPostinganSaya = () => {
                     fontWeight: 400,
                     width: 280,
                     marginTop: 10,
-                    marginRight: 20
+                    marginRight: 20,
                   }}
                 >
                   KementBlog Kedua dari Penulis Sepenuh Hati Untuk Pembaca
