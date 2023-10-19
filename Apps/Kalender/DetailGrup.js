@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setAgendaDetail } from '../../store/GrupKalender'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import moment from 'moment'
-import { getDetailGrup } from '../../service/api'
+import { deleteGrup, getDetailGrup } from '../../service/api'
 import { getTokenValue } from '../../service/session'
 
 
@@ -77,8 +77,37 @@ export const DetailGrup = () => {
         })
     }, [])
 
-    const dibuat = detailGrup.created_at?.split(' ')
-    const tanggalPada = dibuat[0] + ' ' + dibuat[1] + ' ' + dibuat[2]
+    const convertDate = (tanggal) => {
+        const parts = tanggal?.split(' ');
+
+        const months = {
+            'January': 0,
+            'February': 1,
+            'March': 2,
+            'April': 3,
+            'May': 4,
+            'June': 5,
+            'July': 6,
+            'August': 7,
+            'September': 8,
+            'October': 9,
+            'November': 10,
+            'December': 11
+        };
+
+        const day = parseInt(parts[0]);
+        const month = months[parts[1]];
+        const year = parseInt(parts[2]);
+        const time = parts[3].split(':');
+        const hour = parseInt(time[0]);
+        const minute = parseInt(time[1]);
+        const second = parseInt(time[2]);
+
+        const date = new Date(year, month, day, hour, minute, second);
+        const formatedDate = moment(date).format(DATETIME.LONG_DATE)
+
+        return formatedDate
+    }
 
     return (
         <SafeAreaView>
@@ -129,7 +158,7 @@ export const DetailGrup = () => {
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pada :</Text>
 
-                                    <Text>{tanggalPada}</Text>
+                                    <Text>{detailGrup?.created_at === undefined ? '' : convertDate(detailGrup?.created_at)}</Text>
                                 </View>
 
                                 <View>
@@ -248,7 +277,12 @@ export const DetailGrup = () => {
                         </View>
                         <TouchableOpacity
                             onPress={() => {
-
+                                let data = {
+                                    token: token,
+                                    id: detailGrup.id
+                                }
+                                dispatch(deleteGrup(data))
+                                navigation.navigate('GrupKalender')
                             }}
                             style={{
                                 backgroundColor: COLORS.primary,

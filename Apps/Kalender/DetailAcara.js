@@ -25,17 +25,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setAgendaDetail } from '../../store/GrupKalender'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import moment from 'moment'
+import { deleteAgendaGrup, getDetailGrup } from '../../service/api'
+import { getTokenValue } from '../../service/session'
 
 
 
 const { width: screenWidth } = Dimensions.get('window');
 
-export const DetailAcara = () => {
+export const DetailAcara = ({ route }) => {
+    const { idKategori } = route.params
     const [tabItemIndex, setTabItemIndex] = useState();
     const [slide, setSlide] = useState(0)
     const [komen, setKomen] = useState('')
     const carouselRef = useRef(null);
     const navigation = useNavigation()
+    const [token, setToken] = useState('')
 
     const bottomSheetModalRef = useRef(null);
     const initialSnapPoints = useMemo(() => ["95%"], [])
@@ -49,6 +53,12 @@ export const DetailAcara = () => {
     const bottomSheetAttach = () => {
         bottomSheetModalRef.current?.present()
     }
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    })
 
     const dispatch = useDispatch()
 
@@ -69,7 +79,7 @@ export const DetailAcara = () => {
     }
 
     const convertDate = (tanggal) => {
-        const parts = tanggal.split(' ');
+        const parts = tanggal?.split(' ');
 
         const months = {
             'January': 0,
@@ -98,7 +108,6 @@ export const DetailAcara = () => {
         const formatedDate = moment(date).format(DATETIME.LONG_DATE)
 
         return formatedDate
-
     }
 
     return (
@@ -139,7 +148,7 @@ export const DetailAcara = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
-                                    <Text>{convertDate(detail.created_at)}</Text>
+                                    <Text>{detail?.created_at === undefined ? '' : convertDate(detail?.created_at)}</Text>
                                 </View>
 
                                 <View>
@@ -273,7 +282,12 @@ export const DetailAcara = () => {
                         </View>
                         <TouchableOpacity
                             onPress={() => {
-
+                                let data = {
+                                    token: token,
+                                    id: detail.id
+                                }
+                                dispatch(deleteAgendaGrup(data))
+                                navigation.navigate('GrupKalender')
                             }}
                             style={{
                                 backgroundColor: COLORS.primary,
@@ -291,7 +305,8 @@ export const DetailAcara = () => {
 
                         <TouchableOpacity
                             onPress={() => {
-
+                                dispatch(getDetailGrup({ token: token, id: detail.id }))
+                                navigation.navigate('EditAgendaGrup', { idKategori: idKategori })
                             }}
                             style={{
                                 borderColor: COLORS.primary,

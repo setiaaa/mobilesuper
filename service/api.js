@@ -664,6 +664,22 @@ export const putEditGrup = createAsyncThunk("calendar/putEditGrup", async (data)
     return respon?.data.result
 })
 
+export const putEditAgendaGrup = createAsyncThunk("calendar/putEditAgendaGrup", async (data) => {
+    console.log(data)
+    const respon = await axios.put(`${kalender}calendar/event/${data.id}/update/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+export const deleteAgendaGrup = createAsyncThunk("calendar/deleteAgendaGrup", async (data) => {
+    console.log(data)
+    const respon = await axios.delete(`${kalender}calendar/event/${data.id}/destroy/`, { headers: { Authorization: data.token } })
+    return respon
+})
+export const deleteGrup = createAsyncThunk("calendar/deleteGrup", async (data) => {
+    console.log(data)
+    const respon = await axios.delete(`${kalender}calendar/${data.id}/destroy/`, { headers: { Authorization: data.token } })
+    return respon
+})
+
 
 //Dashboard
 export const getKesejahteraan = createAsyncThunk("bridge/getKesejahteraan", async ({ token, value }) => {

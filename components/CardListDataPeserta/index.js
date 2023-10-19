@@ -6,7 +6,6 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 
 export const CardListDataPeserta = ({ item, addressbook, persetaSubAgenda = false, setPilihanPeserta }) => {
-    console.log(item)
     const dispatch = useDispatch()
     const deleteItem = (id, state) => {
         let data;

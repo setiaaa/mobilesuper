@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailAcara, getDetailAgendaAcara, getDetailGrup, getListAcara, getListAgendaAcara, getListGrup, getListSubAgenda, postAgendaAcara, postGrup, putEditGrup } from "../service/api";
+import { deleteAgendaGrup, deleteGrup, getDetailAcara, getDetailAgendaAcara, getDetailGrup, getListAcara, getListAgendaAcara, getListGrup, getListSubAgenda, postAgendaAcara, postGrup, putEditAgendaGrup, putEditGrup } from "../service/api";
 
 const GrupKalenderSlice = createSlice({
   name: "GrupKalender",
@@ -85,6 +85,30 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(putEditGrup.rejected, (state, action) => {
         console.log(action.payload)
+        state.status = 'error'
+      })
+      .addCase(putEditAgendaGrup.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(putEditAgendaGrup.rejected, (state, action) => {
+        console.log(action.payload)
+        console.log('error')
+        state.status = 'error'
+      })
+      .addCase(deleteAgendaGrup.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(deleteAgendaGrup.rejected, (state, action) => {
+        console.log(action.payload)
+        console.log('error')
+        state.status = 'error'
+      })
+      .addCase(deleteGrup.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+      })
+      .addCase(deleteGrup.rejected, (state, action) => {
+        console.log(action.payload)
+        console.log('error')
         state.status = 'error'
       })
   }

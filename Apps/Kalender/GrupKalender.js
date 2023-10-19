@@ -416,6 +416,7 @@ export const GrupKalender = () => {
                         stringToColor={stringToColor}
                         token={token}
                         kegiatan={kegiatan}
+                        idKategori={kategoriField.key}
                       />
                     </View>
                   )
@@ -590,6 +591,7 @@ export const GrupKalender = () => {
                         renderItem={({ item }) => <CardAgenda
                           item={item}
                           stringToColor={stringToColor}
+                          idKategori={kategoriField.key}
                         />
                         }
                         style={{ height: 500 }}

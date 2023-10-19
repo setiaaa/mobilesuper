@@ -182,6 +182,7 @@ import { DetailGrup } from "../Kalender/DetailGrup";
 import { EditTask } from "../Task Management/EditTask";
 import { EditCategory } from "../Task Management/EditCategory";
 import { EditGrup } from "../Kalender/EditGrup";
+import { EditAgendaGrup } from "../Kalender/EditAgendaGrup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -308,6 +309,13 @@ function AuthStack() {
         <Stack.Screen
           name="EditGrup"
           component={EditGrup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditAgendaGrup"
+          component={EditAgendaGrup}
           options={{
             headerShown: false,
           }}
