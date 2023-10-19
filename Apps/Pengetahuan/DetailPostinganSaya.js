@@ -7,10 +7,20 @@ import {
   ScrollView,
   useWindowDimensions,
 } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import RenderHTML from "react-native-render-html";
 import { useDispatch, useSelector } from "react-redux";
 import RenderHTML from "react-native-render-html";
 
@@ -19,19 +29,21 @@ export const DetailPostinganSaya = () => {
 
   const { postinganSaya } = useSelector((state) => state.pengetahuan);
 
-  const detail = postinganSaya?.detail;
+  const detail = postinganSaya.detail;
   const source = {
-    html: detail?.content,
+    html: detail.content,
   };
   const { width } = useWindowDimensions();
 
-  console.log(postinganSaya?.detail);
+  console.log(postinganSaya.detail);
 
   return (
     < >
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Image
+            source={{ uri: detail.cover }}
+            style={{ width: "100%", height: 260 }}
             source={{ uri: detail.cover }}
             style={{ width: "100%", height: 260 }}
           />
@@ -133,6 +145,14 @@ export const DetailPostinganSaya = () => {
               }}
             >
               {detail.title}
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: FONTWEIGHT.bold,
+                color: COLORS.foundation,
+              }}
+            >
+              {detail.title}
             </Text>
             <View
               style={{
@@ -143,16 +163,17 @@ export const DetailPostinganSaya = () => {
             >
               <Image
                 source={{ uri: detail.creator_avatar }}
+                source={{ uri: detail.creator_avatar }}
                 style={{ width: 36, height: 36, borderRadius: 18 }}
               />
               <View style={{ marginLeft: 10 }}>
                 <Text style={{ fontSize: 12, fontWeight: 600 }}>
-                  {detail?.creator?.name}
+                  {detail.creator.name}
                 </Text>
                 <Text
                   style={{ fontSize: 10, fontWeight: 400, color: COLORS.grey }}
                 >
-                  {detail?.published_date}
+                  {detail.published_date}
                 </Text>
               </View>
             </View>
@@ -199,13 +220,26 @@ export const DetailPostinganSaya = () => {
                     marginRight: 20,
                   }}
                 >
-                  {detail?.summary}
+                  {detail.summary}
                 </Text>
               </View>
             ) : (
               ""
             )}
             <View style={{ marginTop: 30 }}>
+              {/* <Text style={{ textAlign: "justify" }}>
+                KUPANG (27/7) Kementrian Kelautan dan Perikanan melalui
+                Direktorat Jenderal Perikanan Tangkap menggulirkan sejumlah
+                bantuan sarana penangkapan ikan untuk nelayan Kupang, Nusa
+                Tenggara Timur. Bantuan ini merupakan salah satu upaya KKP untuk
+                mendongkrak perekonomian nelayan.{"\n"}
+                {"\n"}
+                Plt Direktur Jenderal Perikanan Tangkap Agus Suherman mengatakan
+                bantuan tersebut berupa 20 unit mesin kapal perikanan serta 272
+                paket alat penangkapan ikan jenis jaring insang (gillnet
+                monofilamen) sebanyak 260 paket dan rawai dasar sebanyak 12
+                paket.
+              </Text> */}
               <RenderHTML source={source} contentWidth={width} />
             </View>
             <View
@@ -302,7 +336,7 @@ export const DetailPostinganSaya = () => {
                     fontSize: 13,
                   }}
                 >
-                  Suka
+                  {detail.likes_count}
                 </Text>
               </View>
               <View
@@ -318,7 +352,7 @@ export const DetailPostinganSaya = () => {
                   color={COLORS.grey}
                 />
                 <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  Komen
+                  {detail.comment_count}
                 </Text>
               </View>
               <TouchableOpacity>
@@ -381,6 +415,7 @@ export const DetailPostinganSaya = () => {
                     fontWeight: 400,
                     width: 280,
                     marginTop: 10,
+                    marginRight: 20,
                     marginRight: 20,
                   }}
                 >

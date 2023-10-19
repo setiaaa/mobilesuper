@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -56,382 +57,341 @@ export const JumlahPostingan = () => {
 
   // console.log(postinganSayaJumlah);
 
-  const FirstRoute = () => (
-    <View style={{ marginTop: 10 }}>
-      <Text
-        style={{
-          backgroundColor: "#F0F0F0",
-          fontSize: 13,
-          fontWeight: 600,
-          textAlign: "center",
-          borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
-        }}
-      >
-        JUMLAH
-      </Text>
+const FirstRoute = () => (
+  <View style={{ marginTop: 10 }}>
+    <Text
+      style={{
+        backgroundColor: "#F0F0F0",
+        fontSize: 13,
+        fontWeight: 600,
+        textAlign: "center",
+        borderRadius: 4,
+        padding: 5
+      }}
+    >
+      JUMLAH
+    </Text>
+    <View
+      style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+    >
       <View
         style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
         }}
       >
-        <View
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
+        <Text
           style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[0]
-              : "-"}
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.disukai.like_list[0]
-              : "-"}
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.dilihat.avg_views_list[0]
-              : "-"}
-          </Text>
-        </View>
+          0
+        </Text>
       </View>
-    </View>
-  );
-  const SecondRoute = () => (
-    <View style={{ marginTop: 10 }}>
-      <Text
-        style={{
-          backgroundColor: "#F0F0F0",
-          fontSize: 13,
-          fontWeight: 600,
-          textAlign: "center",
-          borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
-        }}
-      >
-        JUMLAH
-      </Text>
       <View
         style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
         }}
       >
-        <View
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
+        <Text
           style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[1]
-              : "-"}
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.disukai.like_list[1]
-              : "-"}
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.dilihat.avg_views_list[1]
-              : "-"}
-          </Text>
-        </View>
+          0
+        </Text>
       </View>
-    </View>
-  );
-  const ThirdRoute = () => (
-    <View style={{ marginTop: 10 }}>
-      <Text
-        style={{
-          backgroundColor: "#F0F0F0",
-          fontSize: 13,
-          fontWeight: 600,
-          textAlign: "center",
-          borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
-        }}
-      >
-        JUMLAH
-      </Text>
       <View
         style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
         }}
       >
-        <View
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
+        <Text
           style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[2]
-              : "-"}
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.disukai.like_list[2]
-              : "-"}
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.dilihat.avg_views_list[2]
-              : "-"}
-          </Text>
-        </View>
+          0
+        </Text>
       </View>
     </View>
-  );
-  const FourthRoute = () => (
-    <View style={{ marginTop: 10 }}>
-      <Text
-        style={{
-          backgroundColor: "#F0F0F0",
-          fontSize: 13,
-          fontWeight: 600,
-          textAlign: "center",
-          borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
-        }}
-      >
-        JUMLAH
-      </Text>
+  </View>
+);
+
+const SecondRoute = () => (
+  <View style={{ marginTop: 10 }}>
+    <Text
+      style={{
+        backgroundColor: "#F0F0F0",
+        fontSize: 13,
+        fontWeight: 600,
+        textAlign: "center",
+        borderRadius: 4,
+        padding: 5
+      }}
+    >
+      JUMLAH
+    </Text>
+    <View
+      style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+    >
       <View
         style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
         }}
       >
-        <View
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
+        <Text
           style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[3]
-              : "-"}
-          </Text>
-        </View>
-        <View
+          0
+        </Text>
+      </View>
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
+        <Text
           style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah.disukai.like_list[3]
-              : "-"}
-          </Text>
-        </View>
-        <View
+          0
+        </Text>
+      </View>
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
+        <Text
           style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah.dilihat.avg_views_list[3]
-              : "-"}
-          </Text>
-        </View>
+          0
+        </Text>
       </View>
     </View>
-  );
+  </View>
+);
+
+const ThirdRoute = () => (
+  <View style={{ marginTop: 10 }}>
+    <Text
+      style={{
+        backgroundColor: "#F0F0F0",
+        fontSize: 13,
+        fontWeight: 600,
+        textAlign: "center",
+        borderRadius: 4,
+        padding: 5
+      }}
+    >
+      JUMLAH
+    </Text>
+    <View
+      style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+    >
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
+          }}
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
+          }}
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
+          }}
+        >
+          0
+        </Text>
+      </View>
+    </View>
+  </View>
+);
+
+const FourthRoute = () => (
+  <View style={{ marginTop: 10 }}>
+    <Text
+      style={{
+        backgroundColor: "#F0F0F0",
+        fontSize: 13,
+        fontWeight: 600,
+        textAlign: "center",
+        borderRadius: 4,
+        padding: 5
+      }}
+    >
+      JUMLAH
+    </Text>
+    <View
+      style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+    >
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
+          }}
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
+          }}
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={{
+          width: "30%",
+          height: 64,
+          alignItems: "center",
+          alignContent: "center",
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 700,
+            color: "#11C15B",
+            marginTop: 10,
+          }}
+        >
+          0
+        </Text>
+      </View>
+    </View>
+  </View>
+);
 
   const renderTabBar = (props) => (
     <TabBar
@@ -544,9 +504,18 @@ export const JumlahPostingan = () => {
     fourth: FourthRoute,
   });
 
-  const renderSceneLoad = SceneMap({
-    firt: FirstRouteLoad,
-  });
+// export const JumlahPostingan = () => {
+//   const navigation = useNavigation();
+
+//   const layout = useWindowDimensions();
+
+//   const [index, setIndex] = React.useState(0);
+//   const [routes] = React.useState([
+//     { key: "first", title: "1" },
+//     { key: "second", title: "2" },
+//     { key: "third", title: "3" },
+//     { key: "fourth", title: "4" },
+//   ]);
 
   return (
     < >
@@ -622,9 +591,9 @@ export const JumlahPostingan = () => {
             </Text>
           </View>
           {Object.keys(postinganSayaJumlah.dilihat).length !== 0 &&
-            Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
-            Object.keys(postinganSayaJumlah.draft).length !== 0 &&
-            Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
+          Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
+          Object.keys(postinganSayaJumlah.draft).length !== 0 &&
+          Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
             <TabView
               navigationState={{ index, routes }}
               renderScene={renderScene}
@@ -773,4 +742,5 @@ export const JumlahPostingan = () => {
       </View>
     </ >
   );
+};
 };
