@@ -159,7 +159,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
             key={3}
             onPress={() => {
               setTabItemIndex(3);
-              navigation.navigate("PenilaianPenggetahaun", { unread: false });
+              navigation.navigate("RangkumanIKU", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
@@ -192,7 +192,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   color={COLORS.primary}
                   size={24}
                 />
-                <Text style={{ color: COLORS.primary }}>Penilaian</Text>
+                <Text style={{ color: COLORS.primary }}>RangkumanIKU</Text>
               </View>
             ) : (
               <View
@@ -208,7 +208,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   color={COLORS.grey}
                   size={24}
                 />
-                <Text style={{ color: COLORS.grey }}>Penilaian</Text>
+                <Text style={{ color: COLORS.grey }}>RangkumanIKU</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -267,6 +267,64 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   size={24}
                 />
                 <Text style={{ color: COLORS.grey }}>Laporan</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            key={5}
+            onPress={() => {
+              setTabItemIndex(5);
+              navigation.navigate("PenilaianPenggetahaun", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 5 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: 65,
+                  justifyContent: "center",
+                  width: 80,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="document-text-outline"
+                  color={COLORS.primary}
+                  size={24}
+                />
+                <Text style={{ color: COLORS.primary }}>Penilaian</Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: 65,
+                  justifyContent: "center",
+                  width: 80,
+                }}
+              >
+                <Ionicons
+                  name="document-text-outline"
+                  color={COLORS.grey}
+                  size={24}
+                />
+                <Text style={{ color: COLORS.grey }}>Penilaian</Text>
               </View>
             )}
           </TouchableOpacity>
