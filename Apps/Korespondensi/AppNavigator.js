@@ -130,11 +130,9 @@ import { PostinganSaya } from "../Pengetahuan/PostinganSaya";
 import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
 import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
 import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
-import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
 import { RangkumanIKU } from "../Pengetahuan/RangkumanIKU";
 import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
 import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
-import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
@@ -554,6 +552,13 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="ListPostinganPegawai"
+          component={ListPostinganPegawai}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="FileViewer"
           component={FileViewer}
           options={{
@@ -852,7 +857,7 @@ function AuthStack() {
           name="DetailDokumenSPPD"
           component={DetailDokumenSPPD}
           options={{
-            headerTitle: "",
+            headerTitle: '',
             headerShown: false,
           }}
         />
@@ -1062,11 +1067,6 @@ export const BottomTabsDigitalSign = () => {
 export const BottomTabsPengetahuan = () => {
   return (
     <BottomSheetModalProvider>
-      <Tab.Navigator tabBar={props => <MyTabBarPengetahuan {...props} />} initialRouteName='LiniMasa'>
-        <Tab.Screen name='LiniMasa' component={LiniMasa} options={{ headerShown: false }} />
-        <Tab.Screen name='PostinganSaya' component={PostinganSaya} options={{ headerShown: false }} />
-        <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
-        <Tab.Screen name='LaporanPengetahuan' component={LaporanPengetahuan} options={{ headerShown: false }} />
       <Tab.Navigator
         tabBar={(props) => <MyTabBarPengetahuan {...props} />}
         initialRouteName="LiniMasa"
@@ -1087,13 +1087,13 @@ export const BottomTabsPengetahuan = () => {
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="LaporanPengetahuan"
-          component={LaporanPengetahuan}
+          name="PenilaianPenggetahaun"
+          component={PenilaianPenggetahaun}
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="PenilaianPenggetahaun"
-          component={PenilaianPenggetahaun}
+          name="LaporanPengetahuan"
+          component={LaporanPengetahuan}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
@@ -2530,8 +2530,8 @@ function AppNavigator() {
       Alert.alert(
         "Warning!",
         "You are using an old version of the " +
-          app_name +
-          ". Do you want to upgrade?",
+        app_name +
+        ". Do you want to upgrade?",
         [
           {
             text: "Upgrade",
