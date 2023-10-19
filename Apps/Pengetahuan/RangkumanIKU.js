@@ -66,6 +66,8 @@ export const RangkumanIKU = () => {
     setSwitchView(false);
   };
 
+  const [search, setSearch] = useState('')
+
   const initialSnapPoints = useMemo(() => ["50%", "90%"], []);
   const initialSnapPointsTambah = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
