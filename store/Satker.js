@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getBennerSatker, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah } from "../service/api";
+import { getBennerSatker, getDetailSatkerNews, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah } from "../service/api";
 
 const SatkerSlice = createSlice({
     name: 'Satker',
@@ -27,6 +27,9 @@ const SatkerSlice = createSlice({
             })
             .addCase(getSatkerNews.fulfilled, (state, action) => {
                 state.berita.lists = action.payload;
+            })
+            .addCase(getDetailSatkerNews.fulfilled, (state, action) => {
+                state.berita.detail = action.payload;
             })
             .addCase(getPesan.fulfilled, (state, action) => {
                 state.pesan = action.payload;

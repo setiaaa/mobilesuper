@@ -354,6 +354,11 @@ export const getSatkerNews = createAsyncThunk("bridge/getSatkerNews", async (tok
     return respon?.data.results
 })
 
+export const getDetailSatkerNews = createAsyncThunk("bridge/getDetailSatkerNews", async (data) => {
+    const respon = await axios.get(`${SATKER}satker/news/${data.id}/`, { headers: { Authorization: data.token } })
+    return respon?.data.results
+})
+
 export const getPesan = createAsyncThunk("bridge/getPesan", async (token) => {
     const respon = await axios.get(`${SATKER}satker/pesan/`, { headers: { Authorization: token } })
     return respon?.data.results

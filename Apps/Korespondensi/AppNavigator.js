@@ -183,6 +183,8 @@ import { EditTask } from "../Task Management/EditTask";
 import { EditCategory } from "../Task Management/EditCategory";
 import { EditGrup } from "../Kalender/EditGrup";
 import { EditAgendaGrup } from "../Kalender/EditAgendaGrup";
+import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
+import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -274,6 +276,20 @@ function AuthStack() {
         <Stack.Screen
           name="ListBerita"
           component={ListBerita}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ListBeritaSatker"
+          component={ListBeritaSatker}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailBeritaSatker"
+          component={DetailBeritaSatker}
           options={{
             headerShown: false,
           }}
@@ -1260,6 +1276,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="ListBerita"
             component={ListBerita}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListBeritaSatker"
+            component={ListBeritaSatker}
             options={{
               headerShown: false,
             }}
