@@ -1,20 +1,39 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import RenderHTML from "react-native-render-html";
 
 export const DetailPostinganSaya = () => {
   const navigation = useNavigation();
+
+  const { postinganSaya } = useSelector((state) => state.pengetahuan);
+
+  const detail = postinganSaya.detail;
+  const source = {
+    html: detail.content,
+  };
+  const { width } = useWindowDimensions();
+
+  console.log(postinganSaya.detail);
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Image
-            source={require("../../assets/superApp/detailPostinganSaya.png")}
-            style={{ width: "100%" }}
+            source={{ uri: detail.cover }}
+            style={{ width: "100%", height: 260 }}
           />
           <View
             style={{
@@ -106,9 +125,14 @@ export const DetailPostinganSaya = () => {
             </View>
           </View>
           <View style={{ marginTop: 15 }}>
-            <Text style={{ fontSize: 15, fontWeight: 600 }}>
-              Dongkrak Perekonomian Nelayan Kupang, KKP Gulirkan Bantuan Sarana
-              penangkapan Ikan
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: FONTWEIGHT.bold,
+                color: COLORS.foundation,
+              }}
+            >
+              {detail.title}
             </Text>
             <View
               style={{
@@ -118,17 +142,17 @@ export const DetailPostinganSaya = () => {
               }}
             >
               <Image
-                source={require("../../assets/superApp/AvatarA.png")}
+                source={{ uri: detail.creator_avatar }}
                 style={{ width: 36, height: 36, borderRadius: 18 }}
               />
               <View style={{ marginLeft: 10 }}>
                 <Text style={{ fontSize: 12, fontWeight: 600 }}>
-                  DRS. ANTAM NOVAMBAR, S.H, M.HUM.
+                  {detail.creator.name}
                 </Text>
                 <Text
                   style={{ fontSize: 10, fontWeight: 400, color: COLORS.grey }}
                 >
-                  12 Juni 2023
+                  {detail.published_date}
                 </Text>
               </View>
             </View>
@@ -156,32 +180,33 @@ export const DetailPostinganSaya = () => {
                 Penelitian
               </Text>
             </View>
-            <View style={{ marginTop: 20, flexDirection: "row" }}>
-              <View
-                style={{
-                  backgroundColor: COLORS.danger,
-                  width: 4,
-                  height: 40,
-                  marginRight: 10,
-                }}
-              />
-              <Text
-                style={{
-                  color: COLORS.info,
-                  fontSize: 12,
-                  fontWeight: 600,
-                  textAlign: "justify",
-                  marginRight: 20,
-                }}
-              >
-                Isi Paragraf ini adalah Rangkuman. Terbuat dari ikan atau
-                potongan daging ikan putih, yang kemudian dilapisi tepung roti
-                lalu digoreng dan dapat juga dikemas menjadi olahan makanan
-                beku.
-              </Text>
-            </View>
+            {detail?.summary ? (
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <View
+                  style={{
+                    backgroundColor: COLORS.danger,
+                    width: 4,
+                    height: 40,
+                    marginRight: 10,
+                  }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.info,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    textAlign: "justify",
+                    marginRight: 20,
+                  }}
+                >
+                  {detail.summary}
+                </Text>
+              </View>
+            ) : (
+              ""
+            )}
             <View style={{ marginTop: 30 }}>
-              <Text style={{ textAlign: "justify" }}>
+              {/* <Text style={{ textAlign: "justify" }}>
                 KUPANG (27/7) Kementrian Kelautan dan Perikanan melalui
                 Direktorat Jenderal Perikanan Tangkap menggulirkan sejumlah
                 bantuan sarana penangkapan ikan untuk nelayan Kupang, Nusa
@@ -193,7 +218,8 @@ export const DetailPostinganSaya = () => {
                 paket alat penangkapan ikan jenis jaring insang (gillnet
                 monofilamen) sebanyak 260 paket dan rawai dasar sebanyak 12
                 paket.
-              </Text>
+              </Text> */}
+              <RenderHTML source={source} contentWidth={width} />
             </View>
             <View
               style={{
@@ -276,7 +302,7 @@ export const DetailPostinganSaya = () => {
                     marginStart: 5,
                   }}
                 >
-                  324
+                  {detail.likes_count}
                 </Text>
               </View>
               <View
@@ -291,7 +317,9 @@ export const DetailPostinganSaya = () => {
                   size={18}
                   color={COLORS.grey}
                 />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>81</Text>
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {detail.comment_count}
+                </Text>
               </View>
               <View
                 style={{
@@ -301,7 +329,9 @@ export const DetailPostinganSaya = () => {
                 }}
               >
                 <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>436</Text>
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {detail.views_count}
+                </Text>
               </View>
               <TouchableOpacity
                 style={{
@@ -348,7 +378,7 @@ export const DetailPostinganSaya = () => {
                     fontWeight: 400,
                     width: 280,
                     marginTop: 10,
-                    marginRight: 20
+                    marginRight: 20,
                   }}
                 >
                   KementBlog Kedua dari Penulis Sepenuh Hati Untuk Pembaca
