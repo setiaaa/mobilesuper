@@ -126,6 +126,11 @@ import { TeknologiTerbaru } from "../Dashboard/TeknologiTerbaru";
 import { DetailTeknologi } from "../Dashboard/DetailTeknologi";
 import { LiniMasa } from "../Pengetahuan/LiniMasa";
 import { DetailLinimasa } from "../Pengetahuan/DetailLinimasa";
+import { PostinganSaya } from "../Pengetahuan/PostinganSaya";
+import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
+import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
+import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
+import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
 import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
@@ -406,6 +411,27 @@ function AuthStack() {
         <Stack.Screen
           name="ListSukaLinimasa"
           component={ListSukaLinimasa}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="JumlahPostingan"
+          component={JumlahPostingan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="PostinganBaru"
+          component={PostinganBaru}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailPostinganSaya"
+          component={DetailPostinganSaya}
           options={{
             headerShown: false,
           }}
@@ -726,7 +752,9 @@ export const BottomTabsPengetahuan = () => {
     <BottomSheetModalProvider>
       <Tab.Navigator tabBar={props => <MyTabBarPengetahuan {...props} />} initialRouteName='LiniMasa'>
         <Tab.Screen name='LiniMasa' component={LiniMasa} options={{ headerShown: false }} />
+        <Tab.Screen name='PostinganSaya' component={PostinganSaya} options={{ headerShown: false }} />
         <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
+        <Tab.Screen name='LaporanPengetahuan' component={LaporanPengetahuan} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )

@@ -501,6 +501,7 @@ export const getListsLike = createAsyncThunk("mp/getListsLike", async ({ token, 
     return respon?.data.results
 })
 
+
 //TASK MANAGEMENT
 export const getTreeTM = createAsyncThunk("taskmanagement/getTreeTM", async ({ token }) => {
     const respon = await axios.get(`${taskManagement}project/tree/`, { headers: { Authorization: token } })
@@ -613,3 +614,14 @@ export const getDetailsSharedDocuments = createAsyncThunk("repository/getDetails
     const respon = await axios.get(`${repository}${id}/document-detail/`, { headers: { Authorization: token } })
     return respon?.data.result
 })
+
+//postingan saya
+// export const getMyPostList = createAsyncThunk("mp/mypost", async (token) => {
+//     const respon = await axios.get(`${Linimasa}mypost/`, { headers: { Authorization: token } })
+//     return respon?.data.results
+// })
+
+// export const postMyArticle = createAsyncThunk("mp/", async (data, setRefresh = undefined) => {
+//     const respon = await axios.post(`${Linimasa}linimasa/comment/`, data.payload, { headers: { Authorization: data.token } })
+//     return respon?.data
+// })
