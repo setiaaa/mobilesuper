@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import {
   View,
@@ -18,7 +18,6 @@ import {
   FONTWEIGHT,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
-import { getTokenValue } from "../../service/session";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Search } from "../../components/Search";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +34,7 @@ import { setRefresh } from "../../store/Pengetahuan";
 import { Loading } from "../../components/Loading";
 import { ActivityIndicator } from "react-native";
 
-const CardPostinganSaya = ({ item, token }) => {
+const CardPostinganSaya = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -55,7 +54,6 @@ const CardPostinganSaya = ({ item, token }) => {
         }}
       >
         <View
-          key={item.id}
           style={{
             backgroundColor: "#FFFFFF",
             shadowOffset: { width: -2, height: 4 },
@@ -243,6 +241,228 @@ const CardPostinganSaya = ({ item, token }) => {
           </View>
         </View>
       </TouchableOpacity>
+
+      <View
+        style={{
+          backgroundColor: "#FFFFFF",
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          elevation: 2,
+          borderRadius: 8,
+          height: 130,
+          flexDirection: "row",
+          padding: 10,
+          marginVertical: 5,
+        }}
+      >
+        <View style={{ justifyContent: "center" }}>
+          <Image
+            source={require("../../assets/superApp/Cover.png")}
+            style={{ height: 38, width: 70 }}
+          />
+        </View>
+        <View style={{ marginStart: 10 }}>
+          <Text
+            style={{
+              width: 270,
+              fontSize: 13,
+              textAlign: "justify",
+              marginBottom: 5,
+            }}
+          >
+            Dongkrak Perekonomian Nelayan Kupang, KKP Gulirkan...
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginVertical: 15,
+            }}
+          >
+            <Text style={{ color: "#6B7280", fontSize: 13 }}>
+              Tanggal : 22 Juli 2023
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}>
+                Poin :
+              </Text>
+              <View
+                style={{
+                  backgroundColor: COLORS.success,
+                  borderRadius: 8,
+                  width: 30,
+                }}
+              >
+                <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                  0.5
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: COLORS.primary,
+                  borderRadius: 8,
+                  width: 33,
+                  height: 26,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons name="thumbs-up-outline" size={18} color="#FFFFFF" />
+              </TouchableOpacity>
+              <Text
+                style={{ fontSize: 13, color: COLORS.primary, marginStart: 5 }}
+              >
+                324
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons
+                name="chatbox-ellipses-outline"
+                size={18}
+                color={COLORS.grey}
+              />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>81</Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>436</Text>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <View
+                style={{
+                  backgroundColor: COLORS.successLight,
+                  borderRadius: 20,
+                  width: 79,
+                  height: 24,
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ color: COLORS.success, textAlign: "center" }}>
+                  Publish
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View
+        style={{
+          backgroundColor: "#FFFFFF",
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          elevation: 2,
+          borderRadius: 8,
+          height: 130,
+          flexDirection: "row",
+          padding: 10,
+          marginVertical: 5,
+        }}
+      >
+        <View style={{ justifyContent: "center" }}>
+          <Image
+            source={require("../../assets/superApp/Cover.png")}
+            style={{ height: 38, width: 70 }}
+          />
+        </View>
+        <View style={{ marginStart: 10 }}>
+          <Text
+            style={{
+              width: 270,
+              fontSize: 13,
+              textAlign: "justify",
+              marginBottom: 5,
+            }}
+          >
+            Dongkrak Perekonomian Nelayan Kupang, KKP Gulirkan...
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginVertical: 15,
+            }}
+          >
+            <Text style={{ color: "#6B7280", fontSize: 13 }}>
+              Tanggal : 22 Juli 2023
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}>
+                Poin :
+              </Text>
+              <View
+                style={{
+                  backgroundColor: COLORS.success,
+                  borderRadius: 8,
+                  width: 30,
+                }}
+              >
+                <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                  0.5
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: COLORS.primary,
+                  borderRadius: 8,
+                  width: 33,
+                  height: 26,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons name="thumbs-up-outline" size={18} color="#FFFFFF" />
+              </TouchableOpacity>
+              <Text
+                style={{ fontSize: 13, color: COLORS.primary, marginStart: 5 }}
+              >
+                324
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons
+                name="chatbox-ellipses-outline"
+                size={18}
+                color={COLORS.grey}
+              />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>81</Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>436</Text>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <View
+                style={{
+                  backgroundColor: "#E0E0E0",
+                  borderRadius: 20,
+                  width: 79,
+                  height: 24,
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                  Draft
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -306,9 +526,10 @@ export const PostinganSaya = () => {
       <View
         style={{
           flexDirection: "row",
-          alignItems: "center",
+          alignItems: "flex-end",
           backgroundColor: COLORS.primary,
           height: 80,
+          paddingBottom: 20,
         }}
       >
         <View
@@ -402,33 +623,22 @@ export const PostinganSaya = () => {
         </View>
       </View>
 
-      <FlatList
-        data={filterData}
-        renderItem={({ item }) => (
-          <View key={item.id}>
-            <CardPostinganSaya
-              item={item}
-              token={token}
-            />
-          </View>
-        )}
-        ListFooterComponent={() =>
-          loading === true ? (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 24,
-              }}
-            >
-              <ActivityIndicator size="large" color={COLORS.primary} />
-            </View>
-          ) : null
-        }
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <ListEmpty />}
-        onEndReached={loadMore}
-      />
-    </>
+      <CardPostinganSaya />
+
+      {/* <FlatList
+                data={linimasa.lists}
+                renderItem={({ item }) =>
+                    <View key={item.id}>
+                        <CardLiniMasa
+                            item={item}
+                            token={token}
+                        // setVisibleModal={setVisibleModal}
+                        />
+                    </View>
+                }
+                style={{ marginBottom: 80 }}
+                keyExtractor={item => item.id}
+            /> */}
+    </SafeAreaView>
   );
 };

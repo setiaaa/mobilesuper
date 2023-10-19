@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -11,51 +10,7 @@ import { } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TabBar } from "react-native-tab-view";
-import { useDispatch, useSelector } from "react-redux";
-import { getTokenValue } from "../../service/session";
-import {
-  getMyPostCount,
-  getMyPostLike,
-  getMyPostPoint,
-  getMyPostView,
-} from "../../service/api";
-
-export const JumlahPostingan = () => {
-  const navigation = useNavigation();
-
-  const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: "1" },
-    { key: "second", title: "2" },
-    { key: "third", title: "3" },
-    { key: "fourth", title: "4" },
-  ]);
-
-  const [token, setToken] = useState("");
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getTokenValue().then((val) => {
-      setToken(val);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (token !== "") {
-      dispatch(getMyPostView(token));
-      dispatch(getMyPostPoint(token));
-      dispatch(getMyPostLike(token));
-      dispatch(getMyPostCount(token));
-    }
-  }, [token]);
-
-  const { postinganSayaJumlah } = useSelector((state) => state.pengetahuan);
-
-  // console.log(postinganSayaJumlah);
+import { TabBar } from 'react-native-tab-view';
 
 const FirstRoute = () => (
   <View style={{ marginTop: 10 }}>
@@ -66,7 +21,6 @@ const FirstRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
-        padding: 5
       }}
     >
       JUMLAH
@@ -150,7 +104,6 @@ const SecondRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
-        padding: 5
       }}
     >
       JUMLAH
@@ -234,7 +187,6 @@ const ThirdRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
-        padding: 5
       }}
     >
       JUMLAH
@@ -318,7 +270,6 @@ const FourthRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
-        padding: 5
       }}
     >
       JUMLAH
@@ -393,129 +344,35 @@ const FourthRoute = () => (
   </View>
 );
 
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      indicatorStyle={{ backgroundColor: COLORS.danger }}
-      style={{
-        backgroundColor: "#FFFFFF",
-        shadowOffset: { width: -2, height: 2 },
-        shadowColor: COLORS.primary,
-        shadowOpacity: 0.2,
-        elevation: 2,
-      }}
-      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 13 }}
-    />
-  );
+const renderTabBar = props => (
+  <TabBar
+    {...props}
+    indicatorStyle={{ backgroundColor: COLORS.danger, }}
+    style={{ backgroundColor: '#FFFFFF', shadowOffset: { width: -2, height: 2 }, shadowColor: COLORS.primary, shadowOpacity: 0.2, elevation: 2, }}
+    labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 1 }}
+  />
+);
 
-  const FirstRouteLoad = () => (
-    <View style={{ marginTop: 10 }}>
-      <Text
-        style={{
-          backgroundColor: "#F0F0F0",
-          fontSize: 13,
-          fontWeight: 600,
-          textAlign: "center",
-          borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
-        }}
-      >
-        JUMLAH
-      </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
-        }}
-      >
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            ...
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            ...
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            height: 64,
-            alignItems: "center",
-            alignContent: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#11C15B",
-              marginTop: 10,
-            }}
-          >
-            ...
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
 
-  const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    third: ThirdRoute,
-    fourth: FourthRoute,
-  });
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute,
+  third: ThirdRoute,
+  fourth: FourthRoute,
+});
 
-// export const JumlahPostingan = () => {
-//   const navigation = useNavigation();
+export const JumlahPostingan = () => {
+  const navigation = useNavigation();
 
-//   const layout = useWindowDimensions();
+  const layout = useWindowDimensions();
 
-//   const [index, setIndex] = React.useState(0);
-//   const [routes] = React.useState([
-//     { key: "first", title: "1" },
-//     { key: "second", title: "2" },
-//     { key: "third", title: "3" },
-//     { key: "fourth", title: "4" },
-//   ]);
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "Pertama" },
+    { key: "second", title: "Kedua" },
+    { key: "third", title: "Ketiga" },
+    { key: "fourth", title: "Keempat" },
+  ]);
 
   return (
     < >
@@ -558,7 +415,7 @@ const FourthRoute = () => (
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: 230,
+            height: 182,
             padding: 16,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
@@ -590,35 +447,19 @@ const FourthRoute = () => (
               Triwulan
             </Text>
           </View>
-          {Object.keys(postinganSayaJumlah.dilihat).length !== 0 &&
-          Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
-          Object.keys(postinganSayaJumlah.draft).length !== 0 &&
-          Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
-            <TabView
-              navigationState={{ index, routes }}
-              renderScene={renderScene}
-              onIndexChange={setIndex}
-              initialLayout={{ width: layout.width }}
-              renderTabBar={renderTabBar}
-            />
-          ) : (
-            <View
-              style={{
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text>Loading...</Text>
-            </View>
-          )}
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+            renderTabBar={renderTabBar}
+          />
         </View>
         <View
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: 210,
+            height: 175,
             padding: 16,
             marginTop: 10,
             //shadow ios
@@ -698,9 +539,7 @@ const FourthRoute = () => (
                     color: "#6B7280",
                   }}
                 >
-                  {postinganSayaJumlah
-                    ? postinganSayaJumlah?.draft.article_draft_count
-                    : 0}
+                  0
                 </Text>
               </View>
             </View>
@@ -731,9 +570,7 @@ const FourthRoute = () => (
                     color: "#6B7280",
                   }}
                 >
-                  {postinganSayaJumlah
-                    ? postinganSayaJumlah?.draft.article_publish_count
-                    : 0}
+                  0
                 </Text>
               </View>
             </View>
@@ -743,4 +580,4 @@ const FourthRoute = () => (
     </ >
   );
 };
-};
+;
