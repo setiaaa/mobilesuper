@@ -130,7 +130,14 @@ import { PostinganSaya } from "../Pengetahuan/PostinganSaya";
 import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
 import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
 import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
+<<<<<<< HEAD
 import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
+=======
+import { RangkumanIKU } from "../Pengetahuan/RangkumanIKU";
+import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
+import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
+import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
+>>>>>>> af8d4e282b99290fa5056fbf9cd74cd66103e333
 import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
@@ -139,7 +146,6 @@ import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
 import MainPengetahuan from "../Pengetahuan/MainPengetahuan";
 import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
-import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import { DetailPenilaian } from "../Pengetahuan/DetailPenilaian";
 import { ListSukaLinimasa } from "../Pengetahuan/ListSukaLinimasa";
 import { FileViewer } from "../Pengetahuan/FileViewer";
@@ -173,6 +179,14 @@ import { EditSubAgenda } from "../Event Management/EditSubAgenda";
 import { EditTodo } from "../Event Management/EditTodo";
 import { DetailAcaraAgenda } from "../Kalender/DetailAcaraAgenda";
 import { AddCategory } from "../Task Management/AddCategory";
+import { Penangkapan } from "../Dashboard/Penangkapan";
+import { Keuangan } from "../Dashboard/Keuangan";
+import { APBN } from "../Dashboard/APBN";
+import { PNBP } from "../Dashboard/PNPB";
+import { IKU } from "../Dashboard/IKU";
+import { DetailGrup } from "../Kalender/DetailGrup";
+import { EditTask } from "../Task Management/EditTask";
+import { EditCategory } from "../Task Management/EditCategory";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -297,6 +311,13 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="DetailGrup"
+          component={DetailGrup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="TambahAgenda"
           component={TambahAgenda}
           options={{
@@ -339,8 +360,22 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="EditTask"
+          component={EditTask}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="AddCategory"
           component={AddCategory}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditCategory"
+          component={EditCategory}
           options={{
             headerShown: false,
           }}
@@ -437,6 +472,16 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+<<<<<<< HEAD
+=======
+          name="ListPostinganPegawai"
+          component={ListPostinganPegawai}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+>>>>>>> af8d4e282b99290fa5056fbf9cd74cd66103e333
           name="FileViewer"
           component={FileViewer}
           options={{
@@ -586,6 +631,20 @@ function AuthStack() {
         <Stack.Screen
           name="EditTodo"
           component={EditTodo}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Penangkapan"
+          component={Penangkapan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Keuangan"
+          component={Keuangan}
           options={{
             headerShown: false,
           }}
@@ -753,6 +812,11 @@ export const BottomTabsPengetahuan = () => {
       <Tab.Navigator tabBar={props => <MyTabBarPengetahuan {...props} />} initialRouteName='LiniMasa'>
         <Tab.Screen name='LiniMasa' component={LiniMasa} options={{ headerShown: false }} />
         <Tab.Screen name='PostinganSaya' component={PostinganSaya} options={{ headerShown: false }} />
+<<<<<<< HEAD
+=======
+        <Tab.Screen name='RangkumanIKU' component={RangkumanIKU} options={{ headerShown: false }} />
+        <Tab.Screen name='LaporanPengetahuan' component={LaporanPengetahuan} options={{ headerShown: false }} />
+>>>>>>> af8d4e282b99290fa5056fbf9cd74cd66103e333
         <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
         <Tab.Screen name='LaporanPengetahuan' component={LaporanPengetahuan} options={{ headerShown: false }} />
       </Tab.Navigator>
@@ -970,6 +1034,37 @@ export const TopsProduksiBudidaya = () => {
         <Top.Screen name='TeknologiTerbaru' component={TeknologiTerbaru}
           options={{
             title: 'Teknologi Terbaru'
+          }} />
+
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const TopsKeuanganKinerja = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator initialRouteName='APBN'
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: '#C34647',
+          tabBarInactiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 13, textTransform: 'none', },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: 'auto' }
+        }}
+      >
+        <Top.Screen name='APBN' component={APBN}
+          options={{
+            title: 'APBN'
+          }} />
+        <Top.Screen name='PNBP' component={PNBP}
+          options={{
+            title: 'PNBP'
+          }} />
+        <Top.Screen name='IKU' component={IKU}
+          options={{
+            title: 'IKU'
           }} />
 
       </Top.Navigator>

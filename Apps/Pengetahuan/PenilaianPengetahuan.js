@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from 'react-native';
@@ -21,6 +21,7 @@ import { Dropdown } from '../../components/DropDown';
 import { getTokenValue } from '../../service/session';
 import { getDetailLinimasa, getDetailPenilaian, getListPenilaian, getNilai } from '../../service/api';
 import moment from 'moment';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const CardPenilaian = ({ item, token }) => {

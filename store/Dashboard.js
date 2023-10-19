@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getKesejahteraan, getPerencanaan, getTeknologi } from "../service/api";
 
 const DashboardSlice = createSlice({
     name: 'Dashboard',
@@ -14,6 +15,12 @@ const DashboardSlice = createSlice({
         teknologi: {
             lists: [],
             detail: {}
+        },
+        kesejahteraan: {
+            lists: []
+        },
+        perencanaan: {
+            lists: []
         }
     },
     reducers: {
@@ -26,6 +33,18 @@ const DashboardSlice = createSlice({
         setTeknologiList: (state, action) => {
             state.teknologi.lists = action.payload;
         },
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(getKesejahteraan.fulfilled, (state, action) => {
+                state.kesejahteraan.lists = action.payload;
+            })
+            .addCase(getPerencanaan.fulfilled, (state, action) => {
+                state.perencanaan.lists = action.payload;
+            })
+            .addCase(getTeknologi.fulfilled, (state, action) => {
+                state.teknologi.lists = action.payload;
+            })
     }
 })
 

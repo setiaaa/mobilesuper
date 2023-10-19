@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Modal, TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { Text } from 'react-native'
@@ -23,47 +23,55 @@ import { useNavigation } from '@react-navigation/native'
 import { FlatList } from 'react-native'
 import { CardPilihMember } from '../../components/CardPilihMember'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAddressbookSelected } from '../../store/AddressbookKKP'
+import { postGrup } from '../../service/api'
+import { setStatus } from '../../store/GrupKalender'
+import { getTokenValue } from '../../service/session'
 
-
-const items = [
-    {
-        id: "1",
-        nama: 'Rizky Novriansyah',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "2",
-        nama: 'Azis Faisal',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "3",
-        nama: 'Faisal Azis',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "4",
-        nama: 'Sulthan',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "5",
-        nama: 'Noor',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "6",
-        nama: 'Rizky Novriansyah',
-        avatar: (AVATAR.U2)
-    },
-    {
-        id: "7",
-        nama: 'Rizky Novriansyah',
-        avatar: (AVATAR.U2)
-    },
-
-]
-
+const CardListPeserta = ({ item, addressbook }) => {
+    const dispatch = useDispatch()
+    const deleteItem = (id, state) => {
+        let data;
+        if (state === "jabatan") {
+            data = addressbook.selected.filter(data => data.id !== id)
+            dispatch(setAddressbookSelected(data))
+        } else {
+            data = addressbook.selected.filter(data => data.nip !== id)
+            dispatch(setAddressbookSelected(data))
+        }
+    }
+    return (
+        <View>
+            {item.title === undefined ? (
+                null
+            ) : (
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                    <Text>-</Text>
+                    <Text style={{ width: '80%' }}>{item.title}</Text>
+                    <TouchableOpacity onPress={() => {
+                        deleteItem(item.id, 'jabatan')
+                    }}>
+                        <Ionicons name='trash-outline' size={24} />
+                    </TouchableOpacity>
+                </View>
+            )}
+            {item.fullname === undefined ? (
+                null
+            ) : (
+                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                    <Text>-</Text>
+                    <Text style={{ width: '80%' }}>{item.fullname}</Text>
+                    <TouchableOpacity onPress={() => {
+                        deleteItem(item.nip, 'pegawai')
+                    }}>
+                        <Ionicons name='trash-outline' size={24} />
+                    </TouchableOpacity>
+                </View>
+            )}
+        </View>
+    )
+}
 
 export const TambahGrup = () => {
     const bottomSheetModalMemberRef = useRef(null);
@@ -95,7 +103,162 @@ export const TambahGrup = () => {
     }
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [value, onChangeValue] = useState('');
+    const [namaGrup, setNamaGrup] = useState('');
+    const [busana, setBusana] = useState('');
+    const [perlengkapan, setPerlengkapan] = useState('');
+    const [atribut, setAtribut] = useState('');
+
+    const [pilihanPimpinanGrup, setPilihanPimpinanGrup] = useState([])
+    const [pilihanEditorGrup, setPilihanEditorGrup] = useState([])
+    const [pilihanAnggotaGrup, setPilihanAnggotaGrup] = useState([])
+    const [stateConfig, setStateConfig] = useState({})
+    const [token, setToken] = useState('')
+    const dispatch = useDispatch()
+
+    const { addressbook } = useSelector(state => state.addressBookKKP)
+    const { status } = useSelector(state => state.grupKalender)
+
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (stateConfig.title === 'Pimpinan Grup') {
+            setPilihanPimpinanGrup(addressbook.selected)
+        } else if (stateConfig.title === 'Editor Grup') {
+            setPilihanEditorGrup(addressbook.selected)
+        } else if (stateConfig.title === 'Peserta Grup') {
+            setPilihanAnggotaGrup(addressbook.selected)
+        }
+    }, [addressbook])
+
+    useEffect(() => {
+        handleStateAddressBook()
+    }, [addressbook])
+
+    const handleStateAddressBook = () => {
+        if (stateConfig.title === 'Pimpinan Grup') {
+            let pilihan_pic = []
+
+            const editor = pilihanEditorGrup
+            const member = pilihanAnggotaGrup
+            let sameName = ''
+            let sameNameMember = ''
+
+            if (addressbook.selected.length) {
+                for (let i = 0; i < addressbook.selected.length; i++) {
+                    const filterEditor = editor.filter(x => x.title === addressbook.selected[i].title)
+                    const filterMember = member.filter(x => x.title === addressbook.selected[i].title)
+                    if (filterEditor.length < 1 && filterMember.length < 1) {
+                        pilihan_pic.push(addressbook.selected[i])
+                    } else if (filterEditor.length > 0) {
+                        sameName = addressbook.selected[i].title
+                    } else if (filterMember.length > 0) {
+                        sameNameMember = addressbook.selected[i].title
+                    }
+                }
+            }
+            setPilihanPimpinanGrup(pilihan_pic)
+            if (sameName !== '') {
+                alert(`Mohon maaf, ${sameName} sudah menjadi grup editor`)
+            } else if (sameNameMember !== '') {
+                alert(`Mohon maaf, ${sameNameMember} sudah menjadi grup anggota`)
+            }
+        } else if (stateConfig.title === 'Editor Grup') {
+            let pilihan_editor = []
+
+            const pic = pilihanPimpinanGrup
+            const member = pilihanAnggotaGrup
+            let sameNamePIC = ''
+            let sameNameMember = ''
+
+            if (addressbook.selected.length) {
+                for (let i = 0; i < addressbook.selected.length; i++) {
+                    const filterPic = pic.filter(x => x.title === addressbook.selected[i].title)
+                    const filterMember = member.filter(x => x.title === addressbook.selected[i].title)
+                    if (filterPic.length < 1 && filterMember.length < 1) {
+                        pilihan_editor.push(addressbook.selected[i])
+                    } else if (filterPic.length > 0) {
+                        sameNamePIC = addressbook.selected[i].title
+                    } else if (filterMember.length > 0) {
+                        sameNameMember = addressbook.selected[i].title
+                    }
+                }
+            }
+            setPilihanEditorGrup(pilihan_editor)
+            if (sameNamePIC !== '') {
+                alert(`Mohon maaf, ${sameNamePIC} sudah menjadi PIC`)
+            } else if (sameNameMember !== '') {
+                alert(`Mohon maaf, ${sameNameMember} sudah menjadi Member`)
+            }
+        } else if (stateConfig.title === 'Peserta Grup') {
+            let pilihan_anggota = [];
+
+            const editor = pilihanEditorGrup
+            const pic = pilihanPimpinanGrup
+            let sameNameEditor = ''
+            let sameNamePIC = ''
+            if (addressbook.selected.length) {
+                for (let i = 0; i < addressbook.selected.length; i++) {
+                    const filterEditor = editor.filter(x => x.title === addressbook.selected[i].title)
+                    const filterPic = pic.filter(x => x.title === addressbook.selected[i].title)
+                    if (filterEditor.length < 1 && filterPic.length < 1) {
+                        pilihan_anggota.push(addressbook.selected[i])
+                    } else if (filterEditor.length > 0) {
+                        sameNameEditor = addressbook.selected[i].title
+                    } else if (filterPic.length > 0) {
+                        sameNamePIC = addressbook.selected[i].title
+                    }
+                }
+            }
+            setPilihanAnggotaGrup(pilihan_anggota)
+            if (sameNameEditor !== '') {
+                alert(`Mohon maaf, ${sameNameEditor} sudah menjadi grup editor`)
+            } else if (sameNamePIC !== '') {
+                alert(`Mohon maaf, ${sameNamePIC} sudah menjadi PIC`)
+            }
+        }
+    }
+
+    const handleSubmit = () => {
+        const pilihEditor = []
+        pilihanEditorGrup?.map(item => {
+            if (item?.code) {
+                pilihEditor.push(item?.code)
+            } else {
+                pilihEditor.push(item.nip)
+            }
+        })
+
+        const pilihAnggota = []
+        pilihanAnggotaGrup?.map(item => {
+            if (item?.code) {
+                pilihAnggota.push(item?.code)
+            } else {
+                pilihAnggota.push(item.nip)
+            }
+        })
+
+        const payload = {
+            name: namaGrup,
+            description: '',
+            editors_list: pilihEditor,
+            members_list: pilihAnggota,
+            pic_objid: pilihanPimpinanGrup[0].code,
+            extra_attributes: {
+                ketentuan_busana: busana,
+                perlengkapan: perlengkapan,
+                atribut: atribut
+            }
+        }
+        const data = {
+            token: token,
+            payload: payload
+        }
+        dispatch(postGrup(data))
+    }
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -139,17 +302,17 @@ export const TambahGrup = () => {
                                     multiline
                                     numberOfLines={4}
                                     maxLength={40}
-                                    placeholder='Dirjen 4'
+                                    placeholder='Masukan Nama Grup'
                                     style={{ padding: 10 }}
-                                    onChangeText={onChangeValue}
-                                    value={value}
+                                    onChangeText={setNamaGrup}
+                                    value={namaGrup}
                                 />
                             </View>
                             <View style={{ marginTop: 10, marginLeft: 17, backgroundColor: COLORS.primary, width: '90%', height: 30, justifyContent: 'center', borderRadius: 4 }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, color: COLORS.white, marginLeft: 4 }}>Akses Kontrol</Text>
                             </View>
                             <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Grup Admin</Text>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>PIC</Text>
                                 <Text style={{ color: COLORS.danger }}>*</Text>
                             </View>
                             <View style={{
@@ -168,18 +331,32 @@ export const TambahGrup = () => {
                                     maxLength={40}
                                     placeholder='Pilih member'
                                     style={{ padding: 10 }}
-                                    onChangeText={onChangeValue}
-                                    value={value}
+                                    value={pilihanPimpinanGrup[0]?.title}
                                 />
                                 <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                    <TouchableOpacity onPress={bottomSheetMember}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            const config = {
+                                                title: 'Pimpinan Grup',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: false
+                                                },
+                                                multiselect: false,
+                                                payload: pilihanPimpinanGrup
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}
+                                    >
                                         <Ionicons name='people-outline' size={24} color={COLORS.grey} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
 
-                            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17 }}>
+                            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Grup Editor</Text>
+                                <Text style={{ color: COLORS.danger }}>*</Text>
                             </View>
                             <View style={{
                                 borderWidth: 1,
@@ -197,47 +374,41 @@ export const TambahGrup = () => {
                                     maxLength={40}
                                     placeholder='Pilih member'
                                     style={{ padding: 10 }}
-                                    onChangeText={onChangeValue}
-                                    value={value}
                                 />
                                 <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                    <TouchableOpacity onPress={bottomSheetMember}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            const config = {
+                                                title: 'Editor Grup',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: false
+                                                },
+                                                multiselect: true,
+                                                payload: pilihanEditorGrup
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}
+                                    >
                                         <Ionicons name='people-outline' size={24} color={COLORS.grey} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
-
-                            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17 }}>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Grup Penulis</Text>
-                            </View>
-                            <View style={{
-                                borderWidth: 1,
-                                width: '90%',
-                                marginLeft: 17,
-                                borderRadius: 4,
-                                borderColor: COLORS.ExtraDivinder,
-                                flexDirection: 'row'
-                            }}
-                            >
-                                <TextInput
-                                    editable
-                                    multiline
-                                    numberOfLines={4}
-                                    maxLength={40}
-                                    placeholder='Pilih member'
-                                    style={{ padding: 10 }}
-                                    onChangeText={onChangeValue}
-                                    value={value}
+                            <FlatList
+                                data={pilihanEditorGrup}
+                                renderItem={({ item }) => <CardListPeserta
+                                    item={item}
+                                    addressbook={addressbook}
                                 />
-                                <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                    <TouchableOpacity onPress={bottomSheetMember}>
-                                        <Ionicons name='people-outline' size={24} color={COLORS.grey} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                                }
+                                scrollEnabled={false}
+                                keyExtractor={index => index}
+                            />
 
-                            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17 }}>
+                            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Grup Anggota</Text>
+                                <Text style={{ color: COLORS.danger }}>*</Text>
                             </View>
                             <View style={{
                                 borderWidth: 1,
@@ -255,15 +426,37 @@ export const TambahGrup = () => {
                                     maxLength={40}
                                     placeholder='Pilih member'
                                     style={{ padding: 10 }}
-                                    onChangeText={onChangeValue}
-                                    value={value}
                                 />
                                 <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
-                                    <TouchableOpacity onPress={bottomSheetMember}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            const config = {
+                                                title: 'Peserta Grup',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: false
+                                                },
+                                                multiselect: true,
+                                                payload: pilihanAnggotaGrup
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}
+                                    >
                                         <Ionicons name='people-outline' size={24} color={COLORS.grey} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
+                            <FlatList
+                                data={pilihanAnggotaGrup}
+                                renderItem={({ item }) => <CardListPeserta
+                                    item={item}
+                                    addressbook={addressbook}
+                                />
+                                }
+                                scrollEnabled={false}
+                                keyExtractor={index => index}
+                            />
 
                             <View style={{ marginTop: 10, marginLeft: 17, backgroundColor: COLORS.primary, width: '90%', height: 30, justifyContent: 'center', borderRadius: 4 }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, color: COLORS.white, marginLeft: 4 }}>Parameter</Text>
@@ -271,7 +464,54 @@ export const TambahGrup = () => {
 
                             <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Ketentuan Busana</Text>
-                                <Text style={{ color: COLORS.danger }}>*</Text>
+                            </View>
+                            <View style={{
+                                borderWidth: 1,
+                                width: '90%',
+                                marginLeft: 17,
+                                borderRadius: 4,
+                                borderColor: COLORS.ExtraDivinder,
+                                flexDirection: 'row'
+                            }}
+                            >
+                                <TextInput
+                                    editable
+                                    multiline
+                                    numberOfLines={4}
+                                    maxLength={40}
+                                    placeholder='Ketikan sesuatu'
+                                    style={{ padding: 10 }}
+                                    onChangeText={setBusana}
+                                    value={busana}
+                                />
+                            </View>
+
+                            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Perlengkapan</Text>
+                            </View>
+                            <View style={{
+                                borderWidth: 1,
+                                width: '90%',
+                                marginLeft: 17,
+                                borderRadius: 4,
+                                borderColor: COLORS.ExtraDivinder,
+                                flexDirection: 'row'
+                            }}
+                            >
+                                <TextInput
+                                    editable
+                                    multiline
+                                    numberOfLines={4}
+                                    maxLength={40}
+                                    placeholder='Ketikan sesuatu'
+                                    style={{ padding: 10 }}
+                                    onChangeText={setPerlengkapan}
+                                    value={perlengkapan}
+                                />
+                            </View>
+
+                            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Atribut Lainnya</Text>
                             </View>
                             <View style={{
                                 borderWidth: 1,
@@ -290,13 +530,14 @@ export const TambahGrup = () => {
                                     maxLength={40}
                                     placeholder='Ketikan sesuatu'
                                     style={{ padding: 10 }}
-                                    onChangeText={onChangeValue}
-                                    value={value}
+                                    onChangeText={setAtribut}
+                                    value={atribut}
                                 />
                             </View>
+
                         </View>
 
-                        <BottomSheetModal
+                        {/* <BottomSheetModal
                             ref={bottomSheetModalMemberRef}
                             snapPoints={animatedSnapPoints}
                             handleHeight={animatedHandleHeight}
@@ -348,9 +589,9 @@ export const TambahGrup = () => {
                                     </View>
                                 </View>
                             </BottomSheetView>
-                        </BottomSheetModal>
+                        </BottomSheetModal> */}
 
-                        <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        <TouchableOpacity onPress={() => handleSubmit()}>
                             <View style={{ alignItems: 'flex-end', marginRight: 40 }}>
                                 <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                                     <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
@@ -358,7 +599,57 @@ export const TambahGrup = () => {
                             </View>
                         </TouchableOpacity>
 
-                        {value === '' ? (
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={status === '' ? false : true}
+                            onRequestClose={() => {
+                                dispatch(setStatus(''))
+                            }}
+                        >
+                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                                <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
+                                    <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 5, paddingRight: '80%' }}>
+                                        <Ionicons name='close-outline' size={24} />
+                                    </TouchableOpacity>
+                                    {
+                                        status === 'berhasil' ? (
+                                            <>
+                                                <View style={{ marginBottom: 40 }}>
+                                                    <Image source={require('../../assets/superApp/alertBerhasil.png')} />
+                                                    <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                                        <Text >Berhasil Ditambahkan!</Text>
+                                                    </View>
+                                                    <TouchableOpacity onPress={() => {
+                                                        dispatch(setStatus(''))
+                                                        navigation.navigate('GrupKalender')
+                                                    }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                        <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                            <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </>
+                                        ) : (
+                                            <View style={{ marginBottom: 40 }}>
+                                                <Image source={require('../../assets/superApp/alertGagal.png')} />
+                                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                                    <Text >Terjadi Kesalahan!</Text>
+                                                </View>
+                                                <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <View style={{ backgroundColor: COLORS.danger, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                        <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            </View>
+                                        )
+                                    }
+                                </View>
+                            </View>
+                        </Modal>
+
+                        {/* {namaGrup === '' ? (
                             <Modal
                                 animationType="fade"
                                 transparent={true}
@@ -416,7 +707,7 @@ export const TambahGrup = () => {
                                     </View>
                                 </View>
                             </Modal>
-                        )}
+                        )} */}
                     </ScrollView>
                 </BottomSheetModalProvider>
             </SafeAreaView>

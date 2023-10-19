@@ -313,12 +313,15 @@ function MyTabBar({ props, navigation }) {
                                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Perencanaan</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('Keuangan')
+                                        setVisibleModal(false)
+                                    }}>
                                         <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                                             <Ionicons name='document-outline' size={24} color={COLORS.primary} />
                                         </View>
                                     </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Keuangan</Text>
+                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Keuangan & Kinerja</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                                     <TouchableOpacity onPress={() => {
@@ -347,7 +350,11 @@ function MyTabBar({ props, navigation }) {
                                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Produksi{'\n'}Budidaya</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('Penangkapan')
+                                        setVisibleModal(false)
+                                    }
+                                    }>
                                         <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                                             <Ionicons name='list-outline' size={24} color={COLORS.primary} />
                                         </View>

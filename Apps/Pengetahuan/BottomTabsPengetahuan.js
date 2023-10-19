@@ -127,7 +127,11 @@ function MyTabBarPengetahuan({ props, navigation }) {
                         key={3}
                         onPress={() => {
                             setTabItemIndex(3)
+<<<<<<< HEAD
                             navigation.navigate('PenilaianPenggetahaun', { unread: false })
+=======
+                            navigation.navigate('RangkumanIKU', { unread: false })
+>>>>>>> af8d4e282b99290fa5056fbf9cd74cd66103e333
                             // props.navigation.navigate('Home', { unread: false })
                         }}>
                         {tabItemIndex === 3 ? (
@@ -151,6 +155,97 @@ function MyTabBarPengetahuan({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
+<<<<<<< HEAD
+=======
+                                <Ionicons name='document-text-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary, textAlign: "center" }}>Rangkuman IKU</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='document-text-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey, textAlign: "center" }}>Rangkuman IKU</Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        key={4}
+                        onPress={() => {
+                            setTabItemIndex(4)
+                            navigation.navigate('LaporanPengetahuan', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }}>
+                        {tabItemIndex === 4 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='chatbubbles-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Laporan</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='chatbubbles-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Laporan</Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        key={5}
+                        onPress={() => {
+                            setTabItemIndex(5)
+                            navigation.navigate('PenilaianPenggetahaun', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }}>
+                        {tabItemIndex === 5 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+>>>>>>> af8d4e282b99290fa5056fbf9cd74cd66103e333
                                 <Ionicons name='document-text-outline' color={COLORS.primary} size={24} />
                                 <Text style={{ color: COLORS.primary }}>Penilaian</Text>
                             </View>

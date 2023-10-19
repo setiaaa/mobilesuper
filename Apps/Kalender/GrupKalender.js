@@ -28,7 +28,7 @@ import { setKategori } from '../../store/GrupKalender';
 import { setSubKategori } from '../../store/GrupKalender';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
-import { getListAcara, getListAgendaAcara, getListGrup } from '../../service/api';
+import { getDetailGrup, getListAcara, getListAgendaAcara, getListGrup } from '../../service/api';
 import { TouchableHighlight } from 'react-native';
 import dayjs from 'dayjs';
 
@@ -342,14 +342,23 @@ export const GrupKalender = () => {
             </View>
 
             <View style={{
-              marginLeft: 20,
+              marginHorizontal: 20,
               marginBottom: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between'
             }}>
               <Text style={{
                 fontSize: FONTSIZE.Judul,
                 fontWeight: FONTWEIGHT.bold,
               }}
               >{kategoriField !== '' ? kategoriField.value : null}</Text>
+              <TouchableOpacity onPress={() => {
+                dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
+                navigation.navigate('DetailGrup')
+              }}>
+                <Text style={{ color: COLORS.info, }}>Lihat Detail</Text>
+              </TouchableOpacity>
             </View>
 
             <View>

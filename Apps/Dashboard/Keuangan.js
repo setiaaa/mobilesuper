@@ -6,13 +6,31 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { COLORS } from '../../config/SuperAppps';
 import { StyleSheet } from 'react-native';
-import { TopsProduksiBudidaya } from '../Korespondensi/AppNavigator';
+import { TopsKeuanganKinerja } from '../Korespondensi/AppNavigator';
 import { useDispatch } from 'react-redux';
 import { setTeknologiList } from '../../store/Dashboard';
 import { useNavigation } from '@react-navigation/native';
 
+const teknologi = [
+    {
+        image: require('../../assets/superApp/teknologi.png'),
+        imagedetail: require('../../assets/superApp/teknologi2.png'),
+        deskripsi: 'Larangan Pengeluaran Ikan Arwana dan Ikan Botia'
+    },
+    {
+        image: require('../../assets/superApp/teknologi.png'),
+        deskripsi: 'Pengelolaan Kesehatan Ikan dan Lingkungan Tambak Budidaya Udang Intensif'
+    },
+    {
+        image: require('../../assets/superApp/teknologi.png'),
+        imagedetail: require('../../assets/superApp/teknologi2.png'),
+        deskripsi: 'Penyakit Undang'
+    },
+]
 
-export const ProduksiBudidaya = () => {
+
+export const Keuangan = () => {
+    const dispatch = useDispatch()
     const navigation = useNavigation()
 
     return (
@@ -24,12 +42,12 @@ export const ProduksiBudidaya = () => {
                     </View>
                 </TouchableOpacity>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 40 }}>
-                    <Text style={{ color: 'white', fontSize: 15, fontWeight: 600 }}>Produksi Budidaya</Text>
+                    <Text style={{ color: 'white', fontSize: 15, fontWeight: 600 }}>Keuangan & Kinerja</Text>
                 </View>
             </View>
 
             <View style={{ flex: 1 }}>
-                <TopsProduksiBudidaya />
+                <TopsKeuanganKinerja />
             </View>
         </SafeAreaView>
     )

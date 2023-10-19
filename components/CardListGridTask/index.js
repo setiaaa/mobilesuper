@@ -56,7 +56,6 @@ export const CardListGridTask = ({ id, title, duedate, priority, members }) => {
                         })}
                     </View>
                 </View>
-
             </View>
         </TouchableOpacity>
     )
