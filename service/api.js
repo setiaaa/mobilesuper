@@ -31,14 +31,6 @@ const SUMMARY_ACCUMULATION = BASE_URL + "mp/admin/summary/accumulation/";
 const SUMMARY_REVIEW = BASE_URL + "mp/admin/summary/review/";
 const SUMMARY_BAD_USER = BASE_URL + "mp/admin/summary/bad-user/";
 
-const GET_LIST_CATEGORY = BASE_URL + "mp/admin/category/?limit=10";
-const GET_LIST_COMPETENCE = BASE_URL + "mp/admin/competence/?limit=199";
-
-const GET_LIST_UNIT_KERJA = BASE_URL + "mp/admin/iku/unitkerja-choice/";
-const GET_LIST_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
-const GET_LIST_POSTINGAN_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
-const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
-
 const Cuti = "https://cuti.kubekkp.coofis.com/api/"
 
 //Login
@@ -73,169 +65,169 @@ export const getCategory = createAsyncThunk(
 );
 
 export const getCategoryId = createAsyncThunk(
-    "kebijakan/getCategoryId",
-    async (id) => {
-        const respon = await axios.get(`${kebijakan}category/${id}/`, {
-            headers: { Authorization: "cf50a5b6-d640-49df-a45d-29f3e7ca1f1c" },
-        });
-        return respon?.data;
-    }
+  "kebijakan/getCategoryId",
+  async (id) => {
+    const respon = await axios.get(`${kebijakan}category/${id}/`, {
+      headers: { Authorization: "cf50a5b6-d640-49df-a45d-29f3e7ca1f1c" },
+    });
+    return respon?.data;
+  }
 );
 
 export const getCategoryIdPage = async (id, page) => {
-    console.log(id, page);
-    try {
-        const respon = await axios.get(`${kebijakan}category/${id}/?page=${page}`, {
-            headers: { Authorization: "cf50a5b6-d640-49df-a45d-29f3e7ca1f1c" },
-        });
-        return respon.data;
-    } catch (error) {
-        return error;
-    }
+  console.log(id, page);
+  try {
+    const respon = await axios.get(`${kebijakan}category/${id}/?page=${page}`, {
+      headers: { Authorization: "cf50a5b6-d640-49df-a45d-29f3e7ca1f1c" },
+    });
+    return respon.data;
+  } catch (error) {
+    return error;
+  }
 };
 
 // event
 export const getEvent = createAsyncThunk("calendar/getEvent", async (token) => {
-    const respon = await axios.get(`${kalender}event/?limit=9999`, {
-        headers: { Authorization: token },
-    });
-    return respon?.data.results;
+  const respon = await axios.get(`${kalender}event/?limit=9999`, {
+    headers: { Authorization: token },
+  });
+  return respon?.data.results;
 });
 
 export const getEventToday = createAsyncThunk(
-    "calendar/getEventToday",
-    async (token) => {
-        const respon = await axios.get(`${kalender}event/today/?limit=9999`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "calendar/getEventToday",
+  async (token) => {
+    const respon = await axios.get(`${kalender}event/today/?limit=9999`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 
 export const getEventProgress = createAsyncThunk(
-    "calendar/getEventProgress",
-    async (token) => {
-        const respon = await axios.get(`${kalender}event/progress/?limit=9999`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "calendar/getEventProgress",
+  async (token) => {
+    const respon = await axios.get(`${kalender}event/progress/?limit=9999`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 
 export const getEventDetail = createAsyncThunk(
-    "calendar/getEventDetail",
-    async ({ token, id }) => {
-        const respon = await axios.get(`${kalender}event/${id}/retrieve/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.result;
-    }
+  "calendar/getEventDetail",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${kalender}event/${id}/retrieve/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
 );
 
 export const getEventAgenda = createAsyncThunk(
-    "calendar/getEventAgenda",
-    async (data) => {
-        const respon = await axios.get(`${kalender}event/${data.id}/agenda/`, {
-            headers: { Authorization: data.token },
-        });
-        return respon?.data.results;
-    }
+  "calendar/getEventAgenda",
+  async (data) => {
+    const respon = await axios.get(`${kalender}event/${data.id}/agenda/`, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data.results;
+  }
 );
 
 export const getEventAgendaDetail = createAsyncThunk(
-    "calendar/getEventAgendaDetail",
-    async ({ token, id }) => {
-        const respon = await axios.get(`${kalender}event/agenda/${id}/retrieve/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.result;
-    }
+  "calendar/getEventAgendaDetail",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${kalender}event/agenda/${id}/retrieve/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
 );
 
 export const getlistApprover = createAsyncThunk(
-    "calendar/getlistApprover",
-    async ({ token, id }) => {
-        const respon = await axios.get(
-            `${kalender}event/agenda/notulensi/${id}/approver/`,
-            { headers: { Authorization: token } }
-        );
-        return respon?.data.results;
-    }
+  "calendar/getlistApprover",
+  async ({ token, id }) => {
+    const respon = await axios.get(
+      `${kalender}event/agenda/notulensi/${id}/approver/`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
 );
 
 export const getlistNotulensi = createAsyncThunk(
-    "calendar/getlistNotulensi",
-    async ({ token, idagenda }) => {
-        const respon = await axios.get(
-            `${kalender}event/agenda/${idagenda}/notulensi/`,
-            { headers: { Authorization: token } }
-        );
-        return respon?.data.results;
-    }
+  "calendar/getlistNotulensi",
+  async ({ token, idagenda }) => {
+    const respon = await axios.get(
+      `${kalender}event/agenda/${idagenda}/notulensi/`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
 );
 
 export const getDetailNotulensi = createAsyncThunk(
-    "calendar/getDetailNotulensi",
-    async ({ token, idnotu }) => {
-        const respon = await axios.get(
-            `${kalender}event/agenda/notulensi/${idnotu}/retrieve/`,
-            { headers: { Authorization: token } }
-        );
-        return respon?.data.result;
-    }
+  "calendar/getDetailNotulensi",
+  async ({ token, idnotu }) => {
+    const respon = await axios.get(
+      `${kalender}event/agenda/notulensi/${idnotu}/retrieve/`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.result;
+  }
 );
 
 export const getlistTodo = createAsyncThunk(
-    "calendar/getlistTodo",
-    async ({ token, id }) => {
-        const respon = await axios.get(
-            `${kalender}event/agenda/notulensi/${id}/task/?name=`,
-            { headers: { Authorization: token } }
-        );
-        return respon?.data.results;
-    }
+  "calendar/getlistTodo",
+  async ({ token, id }) => {
+    const respon = await axios.get(
+      `${kalender}event/agenda/notulensi/${id}/task/?name=`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
 );
 
 export const getDetailTodo = createAsyncThunk(
-    "calendar/getDetailTodo",
-    async ({ token, id }) => {
-        const respon = await axios.get(
-            `${kalender}event/agenda/notulensi/task/${id}/retrieve/`,
-            { headers: { Authorization: token } }
-        );
-        return respon?.data.result;
-    }
+  "calendar/getDetailTodo",
+  async ({ token, id }) => {
+    const respon = await axios.get(
+      `${kalender}event/agenda/notulensi/task/${id}/retrieve/`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.result;
+  }
 );
 
 export const getlistAbsen = createAsyncThunk(
-    "calendar/getlistAbsen",
-    async ({ token, idagenda }) => {
-        const respon = await axios.get(
-            `${kalender}event/agenda/${idagenda}/presensi/?user=`,
-            { headers: { Authorization: token } }
-        );
-        return respon?.data.results;
-    }
+  "calendar/getlistAbsen",
+  async ({ token, idagenda }) => {
+    const respon = await axios.get(
+      `${kalender}event/agenda/${idagenda}/presensi/?user=`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
 );
 
 export const getDetailAbsen = createAsyncThunk(
-    "calendar/getDetailAbsen",
-    async ({ token, idabsen }) => {
-        const respon = await axios.get(
-            `${kalender}event/agenda/presensi/${idabsen}/retrieve/`,
-            { headers: { Authorization: token } }
-        );
-        return respon?.data.results;
-    }
+  "calendar/getDetailAbsen",
+  async ({ token, idabsen }) => {
+    const respon = await axios.get(
+      `${kalender}event/agenda/presensi/${idabsen}/retrieve/`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
 );
 
 export const putAbsen = createAsyncThunk("calendar/putAbsen", async (data) => {
-    const respon = await axios.put(
-        `${kalender}event/agenda/presensi/${data.idabsen}/update/`,
-        { status: data.status, is_scan: data.is_scan },
-        { headers: { Authorization: data.token } }
-    );
-    return respon?.data.result;
+  const respon = await axios.put(
+    `${kalender}event/agenda/presensi/${data.idabsen}/update/`,
+    { status: data.status, is_scan: data.is_scan },
+    { headers: { Authorization: data.token } }
+  );
+  return respon?.data.result;
 });
 
 export const postAttachment = createAsyncThunk(
@@ -404,38 +396,38 @@ export const deleteTodo = createAsyncThunk(
 
 //Kalender
 export const getlistKalender = createAsyncThunk(
-    "calendar/getlistKalender",
-    async (token) => {
-        const respon = await axios.get(`${kalender}calendar/?limit=10`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "calendar/getlistKalender",
+  async (token) => {
+    const respon = await axios.get(`${kalender}calendar/?limit=10`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 
 //komentar
 export const postKomenTodo = createAsyncThunk(
-    "calendar/postKomenTodo",
-    async (data) => {
-        const respon = await axios.post(
-            `${kalender}event/agenda/notulensi/task/comment/create/`,
-            {
-                task_id: data.task_id,
-                parent_id: data.parent_id,
-                message: data.message,
-            },
-            {
-                headers: {
-                    Authorization: data.token,
-                },
-            }
-        );
-        return {
-            newComment: respon?.data.result,
-            detailTodo: data.detailTodo,
-            parent_id: data.parent_id,
-        };
-    }
+  "calendar/postKomenTodo",
+  async (data) => {
+    const respon = await axios.post(
+      `${kalender}event/agenda/notulensi/task/comment/create/`,
+      {
+        task_id: data.task_id,
+        parent_id: data.parent_id,
+        message: data.message,
+      },
+      {
+        headers: {
+          Authorization: data.token,
+        },
+      }
+    );
+    return {
+      newComment: respon?.data.result,
+      detailTodo: data.detailTodo,
+      parent_id: data.parent_id,
+    };
+  }
 );
 
 //pegawai
@@ -528,31 +520,31 @@ export const getSatkerLinimasa = createAsyncThunk(
     }
 );
 export const getDivision = createAsyncThunk(
-    "calendar/getDivision",
-    async (token) => {
-        const respon = await axios.get(`${addressbook}addressbook/division/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "calendar/getDivision",
+  async (token) => {
+    const respon = await axios.get(`${addressbook}addressbook/division/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 export const getEmployee = createAsyncThunk(
-    "calendar/getEmployee",
-    async (token) => {
-        const respon = await axios.get(`${addressbook}addressbook/employee/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "calendar/getEmployee",
+  async (token) => {
+    const respon = await axios.get(`${addressbook}addressbook/employee/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 export const getDivisionTree = createAsyncThunk(
-    "calendar/getDivisionTree",
-    async ({ token, id }) => {
-        const respon = await axios.get(`${addressbook}addressbook/tree/${id}/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "calendar/getDivisionTree",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${addressbook}addressbook/tree/${id}/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 
 // repository
@@ -614,34 +606,34 @@ export const getDocumentTamplate = createAsyncThunk(
 );
 
 export const getDetailDocument = createAsyncThunk(
-    "repository/getDetailDocument",
-    async ({ token, id }) => {
-        const respon = await axios.get(`${repository}${id}/document-detail/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.result;
-    }
+  "repository/getDetailDocument",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${repository}${id}/document-detail/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
 );
 
 //profile me
 
 export const getProfileMe = createAsyncThunk(
-    "profile/getProfileMe",
-    async (token) => {
-        const respon = await axios.get(`${profile}me/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "profile/getProfileMe",
+  async (token) => {
+    const respon = await axios.get(`${profile}me/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 
 //banner
 
 export const getBanner = createAsyncThunk("banner/getBanner", async (token) => {
-    const respon = await axios.get(`${banner}`, {
-        headers: { Authorization: token },
-    });
-    return respon?.data.results;
+  const respon = await axios.get(`${banner}`, {
+    headers: { Authorization: token },
+  });
+  return respon?.data.results;
 });
 
 //galeri
@@ -669,13 +661,13 @@ export const getBerita = createAsyncThunk(
 );
 
 export const getDetailBerita = createAsyncThunk(
-    "berita/getDetailBerita",
-    async ({ token, id }) => {
-        const respon = await axios.get(`${detailBerita}${id}/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
+  "berita/getDetailBerita",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${detailBerita}${id}/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
 );
 
 //mp
@@ -1023,25 +1015,20 @@ export const getDetailAcara = createAsyncThunk(
 );
 
 export const getDetailAgendaAcara = createAsyncThunk(
-    "calendar/getDetailAgendaAcara",
-    async ({ token, id }) => {
-        const respon = await axios.get(`${kalender}event/${id}/retrieve/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.result;
-    }
+  "calendar/getDetailAgendaAcara",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${kalender}event/${id}/retrieve/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
 );
 
-export const getListSubAgenda = createAsyncThunk(
-    "calendar/getListSubAgenda",
-    async ({ token, id }) => {
-        console.log(id);
-        const respon = await axios.get(`${kalender}event/${id}/agenda/`, {
-            headers: { Authorization: token },
-        });
-        return respon?.data.results;
-    }
-);
+export const getListSubAgenda = createAsyncThunk("calendar/getListSubAgenda", async ({ token, id }) => {
+    console.log(id)
+    const respon = await axios.get(`${kalender}event/${id}/agenda/`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
 
 export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
     console.log(data.payload);

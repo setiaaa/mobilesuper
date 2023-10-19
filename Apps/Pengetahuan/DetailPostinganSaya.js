@@ -1,9 +1,18 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import RenderHTML from "react-native-render-html";
 
 export const DetailPostinganSaya = () => {
   const navigation = useNavigation();
@@ -23,8 +32,8 @@ export const DetailPostinganSaya = () => {
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Image
-            source={require("../../assets/superApp/detailPostinganSaya.png")}
-            style={{ width: "100%" }}
+            source={{ uri: detail.cover }}
+            style={{ width: "100%", height: 260 }}
           />
           <View
             style={{
@@ -116,9 +125,14 @@ export const DetailPostinganSaya = () => {
             </View>
           </View>
           <View style={{ marginTop: 15 }}>
-            <Text style={{ fontSize: 15, fontWeight: 600 }}>
-              Dongkrak Perekonomian Nelayan Kupang, KKP Gulirkan Bantuan Sarana
-              penangkapan Ikan
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: FONTWEIGHT.bold,
+                color: COLORS.foundation,
+              }}
+            >
+              {detail.title}
             </Text>
             <View
               style={{
@@ -128,7 +142,7 @@ export const DetailPostinganSaya = () => {
               }}
             >
               <Image
-                source={require("../../assets/superApp/AvatarA.png")}
+                source={{ uri: detail.creator_avatar }}
                 style={{ width: 36, height: 36, borderRadius: 18 }}
               />
               <View style={{ marginLeft: 10 }}>
@@ -288,7 +302,7 @@ export const DetailPostinganSaya = () => {
                     fontSize: 13,
                   }}
                 >
-                  {detail?.likes_count}
+                  Suka
                 </Text>
               </View>
               <View
@@ -304,22 +318,25 @@ export const DetailPostinganSaya = () => {
                   color={COLORS.grey}
                 />
                 <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {detail?.comment_count}
+                  Komen
                 </Text>
               </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginLeft: 10,
-                }}
-              >
-                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {detail?.views_count}
-                </Text>
-              </View>
-              <TouchableOpacity
+              <TouchableOpacity>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginLeft: 10,
+                  }}
+                >
+                  <Ionicons name="information-circle-outline" size={18} color={COLORS.grey} />
+                  <Text style={{ fontSize: 13, marginStart: 5 }}>
+                    Info
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
+              {/* <TouchableOpacity
                 style={{
                   borderRadius: 8,
                   width: 100,
