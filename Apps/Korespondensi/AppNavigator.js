@@ -130,7 +130,10 @@ import { PostinganSaya } from "../Pengetahuan/PostinganSaya";
 import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
 import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
 import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
+import { RangkumanIKU } from "../Pengetahuan/RangkumanIKU";
+import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
 import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
+import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
@@ -139,7 +142,6 @@ import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
 import MainPengetahuan from "../Pengetahuan/MainPengetahuan";
 import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
-import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import { DetailPenilaian } from "../Pengetahuan/DetailPenilaian";
 import { ListSukaLinimasa } from "../Pengetahuan/ListSukaLinimasa";
 import { FileViewer } from "../Pengetahuan/FileViewer";
@@ -461,6 +463,13 @@ function AuthStack() {
         <Stack.Screen
           name="DetailPostinganSaya"
           component={DetailPostinganSaya}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ListPostinganPegawai"
+          component={ListPostinganPegawai}
           options={{
             headerShown: false,
           }}
@@ -796,8 +805,9 @@ export const BottomTabsPengetahuan = () => {
       <Tab.Navigator tabBar={props => <MyTabBarPengetahuan {...props} />} initialRouteName='LiniMasa'>
         <Tab.Screen name='LiniMasa' component={LiniMasa} options={{ headerShown: false }} />
         <Tab.Screen name='PostinganSaya' component={PostinganSaya} options={{ headerShown: false }} />
-        <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
+        <Tab.Screen name='RangkumanIKU' component={RangkumanIKU} options={{ headerShown: false }} />
         <Tab.Screen name='LaporanPengetahuan' component={LaporanPengetahuan} options={{ headerShown: false }} />
+        <Tab.Screen name='PenilaianPenggetahaun' component={PenilaianPenggetahaun} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )

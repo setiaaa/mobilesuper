@@ -349,7 +349,7 @@ const renderTabBar = props => (
     {...props}
     indicatorStyle={{ backgroundColor: COLORS.danger, }}
     style={{ backgroundColor: '#FFFFFF', shadowOffset: { width: -2, height: 2 }, shadowColor: COLORS.primary, shadowOpacity: 0.2, elevation: 2, }}
-    labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 1 }}
+    labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 13 }}
   />
 );
 
