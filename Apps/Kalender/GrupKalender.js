@@ -425,7 +425,7 @@ export const GrupKalender = () => {
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <TouchableOpacity style={{ marginVertical: 10 }} onPress={bottomSheetAttach}>
-                    <Text style={{ color: COLORS.info, }}>Selengkapnya</Text>
+                    <Text style={{ color: COLORS.info, }}>{acara.lists.length === 0 ? null : 'Selengkapnya'}</Text>
                   </TouchableOpacity>
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
                     <TouchableOpacity onPress={() => {
