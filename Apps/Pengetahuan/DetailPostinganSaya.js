@@ -19,13 +19,13 @@ export const DetailPostinganSaya = () => {
 
   const { postinganSaya } = useSelector((state) => state.pengetahuan);
 
-  const detail = postinganSaya.detail;
+  const detail = postinganSaya?.detail;
   const source = {
-    html: detail.content,
+    html: detail?.content,
   };
   const { width } = useWindowDimensions();
 
-  console.log(postinganSaya.detail);
+  console.log(postinganSaya?.detail);
 
   return (
     <SafeAreaView>
@@ -147,12 +147,12 @@ export const DetailPostinganSaya = () => {
               />
               <View style={{ marginLeft: 10 }}>
                 <Text style={{ fontSize: 12, fontWeight: 600 }}>
-                  {detail.creator.name}
+                  {detail?.creator?.name}
                 </Text>
                 <Text
                   style={{ fontSize: 10, fontWeight: 400, color: COLORS.grey }}
                 >
-                  {detail.published_date}
+                  {detail?.published_date}
                 </Text>
               </View>
             </View>
@@ -199,26 +199,13 @@ export const DetailPostinganSaya = () => {
                     marginRight: 20,
                   }}
                 >
-                  {detail.summary}
+                  {detail?.summary}
                 </Text>
               </View>
             ) : (
               ""
             )}
             <View style={{ marginTop: 30 }}>
-              {/* <Text style={{ textAlign: "justify" }}>
-                KUPANG (27/7) Kementrian Kelautan dan Perikanan melalui
-                Direktorat Jenderal Perikanan Tangkap menggulirkan sejumlah
-                bantuan sarana penangkapan ikan untuk nelayan Kupang, Nusa
-                Tenggara Timur. Bantuan ini merupakan salah satu upaya KKP untuk
-                mendongkrak perekonomian nelayan.{"\n"}
-                {"\n"}
-                Plt Direktur Jenderal Perikanan Tangkap Agus Suherman mengatakan
-                bantuan tersebut berupa 20 unit mesin kapal perikanan serta 272
-                paket alat penangkapan ikan jenis jaring insang (gillnet
-                monofilamen) sebanyak 260 paket dan rawai dasar sebanyak 12
-                paket.
-              </Text> */}
               <RenderHTML source={source} contentWidth={width} />
             </View>
             <View
@@ -302,7 +289,7 @@ export const DetailPostinganSaya = () => {
                     marginStart: 5,
                   }}
                 >
-                  {detail.likes_count}
+                  {detail?.likes_count}
                 </Text>
               </View>
               <View
@@ -318,7 +305,7 @@ export const DetailPostinganSaya = () => {
                   color={COLORS.grey}
                 />
                 <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {detail.comment_count}
+                  {detail?.comment_count}
                 </Text>
               </View>
               <View
@@ -330,7 +317,7 @@ export const DetailPostinganSaya = () => {
               >
                 <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
                 <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {detail.views_count}
+                  {detail?.views_count}
                 </Text>
               </View>
               <TouchableOpacity

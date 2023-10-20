@@ -1106,6 +1106,46 @@ export const getSummaryBadUser = createAsyncThunk(
     return respon?.data.result;
   }
 );
+
+export const getSummaryGraph = createAsyncThunk(
+  "mp/admin/summary/graph/",
+  async (data) => {
+    const respon = await axios.get(
+      `${SUMMARY_GRAPH}?year=${data.year}&quarter=${data.quarter}`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const getSummaryAccumulation = createAsyncThunk(
+  "mp/admin/summary/accumulation/",
+  async (data) => {
+    const respon = await axios.get(
+      `${SUMMARY_ACCUMULATION}?year=${data.year}&quarter=${data.quarter}`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const getSummaryReview = createAsyncThunk(
+  "mp/admin/summary/review/",
+  async (data) => {
+    const respon = await axios.get(
+      `${SUMMARY_REVIEW}?year=${data.year}&quarter=${data.quarter}`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
+  }
+);
+
 // export const postMyArticle = createAsyncThunk("mp/", async (data, setRefresh = undefined) => {
 //     const respon = await axios.post(`${Linimasa}linimasa/comment/`, data.payload, { headers: { Authorization: data.token } })
 //     return respon?.data

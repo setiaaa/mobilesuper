@@ -437,7 +437,7 @@ export const JumlahPostingan = () => {
         shadowOpacity: 0.2,
         elevation: 2,
       }}
-      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 93 }}
+      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 9 }}
     />
   );
 

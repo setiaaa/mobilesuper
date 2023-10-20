@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  screenWidth,
+  Dimensions,
 } from "react-native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,7 +15,18 @@ import { Dropdown } from "../../components/DropDown";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
-import { getSummaryBadUser, getSummaryTotalPost } from "../../service/api";
+import {
+  getSummaryAccumulation,
+  getSummaryBadUser,
+  getSummaryGraph,
+  getSummaryReview,
+  getSummaryTotalPost,
+} from "../../service/api";
+import { StackedBarChart, ProgressChart } from "react-native-chart-kit";
+import PieChart from "react-native-pie-chart";
+import { StatusBar } from "expo-status-bar";
+import * as Progress from "react-native-progress";
+import ProgressCircle from "react-native-progress-circle";
 
 export const LaporanPengetahuan = () => {
   const navigation = useNavigation();
@@ -61,6 +74,9 @@ export const LaporanPengetahuan = () => {
       };
       dispatch(getSummaryTotalPost(param));
       dispatch(getSummaryBadUser(paramBad));
+      dispatch(getSummaryGraph(param));
+      dispatch(getSummaryAccumulation(param));
+      dispatch(getSummaryReview(param));
     }
   }, [token, year, quarter]);
 
@@ -68,11 +84,34 @@ export const LaporanPengetahuan = () => {
 
   const totalPost = summary?.total_post.total_post_per_quarter;
   const badUser = summary?.bad_user;
+  const graph = summary?.graph;
+  const accumulation = summary?.accumulation;
+  const review = summary?.review;
 
-  // console.log(badUser);
+  const widthAndHeight = 200;
+  const dataPie = [
+    accumulation?.Kegiatan?.total,
+    accumulation["Video_/_Jurnal"]?.total,
+    accumulation?.Infografis?.total,
+    accumulation?.Tidak_Sesuai?.total,
+  ];
+
+  const handleDataPie = [1];
+
+  const sliceColor = [
+    COLORS.info,
+    COLORS.success,
+    COLORS.warning,
+    COLORS.infoDanger,
+  ];
+
+  const sliceColorHandle = [COLORS.grey];
+
+  console.log(review);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar />
       <ScrollView>
         <View
           style={{
@@ -112,10 +151,11 @@ export const LaporanPengetahuan = () => {
         </View>
         <View
           style={{
+            display: "flex",
             flexDirection: "row",
+            justifyContent: "space-between",
             marginVertical: 20,
             marginHorizontal: 20,
-            gap: 5,
           }}
         >
           <View style={styles.dropdown}>
@@ -158,7 +198,13 @@ export const LaporanPengetahuan = () => {
           <Text style={{ fontSize: 14, fontWeight: 600 }}>
             Jumlah Postingan pada Triwulan Ke-{quarter.key} Tahun {year.value}
           </Text>
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "flex-start",
+            }}
+          >
             <View
               style={{
                 justifyContent: "center",
@@ -300,9 +346,7 @@ export const LaporanPengetahuan = () => {
               elevation: 2,
             }}
           >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View
                 style={{
                   backgroundColor: "#F0F0F0",
@@ -346,9 +390,7 @@ export const LaporanPengetahuan = () => {
               elevation: 2,
             }}
           >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View
                 style={{
                   backgroundColor: "#F0F0F0",
@@ -425,6 +467,764 @@ export const LaporanPengetahuan = () => {
             </View>
           </View>
         </View>
+
+        <View
+          style={{
+            width: "90%",
+            alignSelf: "center",
+            backgroundColor: COLORS.white,
+            borderRadius: 16,
+            padding: 20,
+            marginBottom: 10,
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}
+        >
+          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+            Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
+          </Text>
+          {Object.keys(summary.graph).length !== 0 &&
+          Object.keys(summary.total_post).length !== 0 &&
+          Object.keys(summary.bad_user).length !== 0 ? (
+            <StackedBarChart
+              data={{
+                labels: [
+                  graph?.month_list[0],
+                  graph?.month_list[1],
+                  graph?.month_list[2],
+                  graph?.month_list[3],
+                  graph?.month_list[4],
+                  graph?.month_list[5],
+                  graph?.month_list[6],
+                  graph?.month_list[7],
+                  graph?.month_list[8],
+                  graph?.month_list[9],
+                  graph?.month_list[10],
+                  graph?.month_list[11],
+                ],
+                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                data: [
+                  [
+                    graph?.article_unreviewed_count[0],
+                    graph?.article_unreviewed_count[0] +
+                      graph?.article_reviewed_count[0],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[1],
+                    graph?.article_unreviewed_count[1] +
+                      graph?.article_reviewed_count[1],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[2],
+                    graph?.article_unreviewed_count[2] +
+                      graph?.article_reviewed_count[2],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[3],
+                    graph?.article_unreviewed_count[3] +
+                      graph?.article_reviewed_count[3],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[4],
+                    graph?.article_unreviewed_count[4] +
+                      graph?.article_reviewed_count[4],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[5],
+                    graph?.article_unreviewed_count[5] +
+                      graph?.article_reviewed_count[5],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[6],
+                    graph?.article_unreviewed_count[6] +
+                      graph?.article_reviewed_count[6],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[7],
+                    graph?.article_unreviewed_count[7] +
+                      graph?.article_reviewed_count[7],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[8],
+                    graph?.article_unreviewed_count[8] +
+                      graph?.article_reviewed_count[8],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[9],
+                    graph?.article_unreviewed_count[9] +
+                      graph?.article_reviewed_count[9],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[10],
+                    graph?.article_unreviewed_count[10] +
+                      graph?.article_reviewed_count[10],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[11],
+                    graph?.article_unreviewed_count[11] +
+                      graph?.article_reviewed_count[11],
+                  ],
+                ],
+                barColors: [COLORS.primary, COLORS.warning],
+              }}
+              hideLegend
+              yAxisLabel=""
+              yAxisSuffix=""
+              yAxisInterval={2}
+              width={380}
+              // width={Dimensions.get("window").width}
+              height={350}
+              chartConfig={{
+                backgroundGradientFrom: "#F0F0F0",
+                backgroundGradientFromOpacity: 0,
+                backgroundGradientTo: COLORS.white,
+                backgroundGradientToOpacity: 1,
+                color: () => "black",
+                barPercentage: 0.2,
+                propsForBackgroundLines: {
+                  x1: 60,
+                },
+                propsForVerticalLabels: {
+                  rotation: 90,
+                  // rotate: -90,
+                  // letterSpacing: 3,
+                  dy: 10,
+                  // dx: 20,
+                },
+              }}
+              withHorizontalLabels={false}
+              style={{ marginHorizontal: -55 }}
+            />
+          ) : (
+            <StackedBarChart
+              data={{
+                labels: [
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                ],
+                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                data: [],
+                barColors: [COLORS.primary, COLORS.warning],
+              }}
+              hideLegend
+              yAxisLabel=""
+              yAxisSuffix=""
+              yAxisInterval={2}
+              width={380}
+              // width={Dimensions.get("window").width}
+              height={350}
+              chartConfig={{
+                backgroundGradientFrom: "#F0F0F0",
+                backgroundGradientFromOpacity: 0,
+                backgroundGradientTo: COLORS.white,
+                backgroundGradientToOpacity: 1,
+                color: () => "black",
+                barPercentage: 0.2,
+                propsForBackgroundLines: {
+                  x1: 60,
+                },
+                propsForVerticalLabels: {
+                  rotation: 90,
+                  // rotate: -90,
+                  // letterSpacing: 3,
+                  dy: 10,
+                  // dx: 20,
+                },
+              }}
+              withHorizontalLabels={false}
+              style={{ marginHorizontal: -55 }}
+            />
+          )}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 10,
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <View
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 6,
+                  backgroundColor: COLORS.warning,
+                }}
+              />
+              <Text style={{ fontSize: 12, fontWeight: 400 }}>
+                Posting Masuk
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <View
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 6,
+                  backgroundColor: COLORS.primary,
+                }}
+              />
+              <Text style={{ fontSize: 12, fontWeight: 400 }}>
+                Jumlah Posting belum dinilai
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              height: 2,
+              backgroundColor: COLORS.grey,
+              marginVertical: 20,
+            }}
+          />
+          <View style={{ alignItems: "center", marginBottom: 10 }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: 400,
+                width: "50%",
+                textAlign: "center",
+              }}
+            >
+              Jumlah yang belum dinilai triwulan {quarter.key} Tahun
+              {" " + year.value}
+            </Text>
+            <Text
+              style={{
+                fontSize: 28,
+                fontWeight: 600,
+                color: COLORS.primary,
+                marginVertical: 10,
+              }}
+            >
+              {totalPost?.post_waiting}
+            </Text>
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLORS.primary,
+                width: 226,
+                height: 32,
+                borderRadius: 8,
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 500,
+                  textAlign: "center",
+                  color: COLORS.white,
+                }}
+              >
+                Nilai Sekarang
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View
+          style={{
+            width: "90%",
+            alignSelf: "center",
+            backgroundColor: COLORS.white,
+            borderRadius: 16,
+            padding: 20,
+            marginVertical: 10,
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}
+        >
+          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+            Postingan Masuk Triwulan Ke-{quarter.key}
+            {" " + year.value}
+          </Text>
+          {dataPie.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+          ) !== 0 ? (
+            <PieChart
+              widthAndHeight={widthAndHeight}
+              series={dataPie}
+              sliceColor={sliceColor}
+              coverRadius={0.75}
+              coverFill={"#FFF"}
+              style={{ alignSelf: "center", marginVertical: 20 }}
+            />
+          ) : (
+            <PieChart
+              widthAndHeight={widthAndHeight}
+              series={handleDataPie}
+              sliceColor={sliceColorHandle}
+              coverRadius={0.75}
+              coverFill={"#FFF"}
+              style={{ alignSelf: "center", marginVertical: 20 }}
+            />
+          )}
+
+          <View style={{ marginBottom: 20, alignItems: "center" }}>
+            <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
+              {accumulation?.total_article_all}
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: 400,
+                width: "50%",
+                textAlign: "center",
+              }}
+            >
+              Jumlah seluruh postingan masuk di triwulan Ke-{quarter.key} Tahun
+              {" " + year.value}
+            </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              borderRadius: 16,
+              padding: 20,
+              borderWidth: 1,
+              borderColor: COLORS.grey,
+            }}
+          >
+            <View style={{ flexDirection: "row", gap: 16 }}>
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ marginBottom: 20, alignItems: "flex-start" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: 10,
+                      gap: 8,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: COLORS.infoLight,
+                        width: 34,
+                        height: 34,
+                        borderRadius: 6,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="pulse-outline"
+                        size={22}
+                        color={COLORS.info}
+                      />
+                    </View>
+                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                      Kegiatan
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                  >
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation?.Kegiatan.total
+                      : "-"}
+                  </Text>
+                  <Progress.Bar
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation?.Kegiatan.percent / 100
+                        : 0
+                    }
+                    width={130}
+                    color={COLORS.info}
+                  />
+                </View>
+
+                <View style={{ marginBottom: 10 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginBottom: 10,
+                      gap: 8,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: COLORS.successLight,
+                        width: 34,
+                        height: 34,
+                        borderRadius: 6,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="videocam-outline"
+                        size={22}
+                        color={COLORS.success}
+                      />
+                    </View>
+                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                      Video/Jurnal
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                  >
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation["Video_/_Jurnal"].total
+                      : "-"}
+                  </Text>
+                  <Progress.Bar
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation["Video_/_Jurnal"].percent / 100
+                        : 0
+                    }
+                    width={130}
+                    color={COLORS.success}
+                  />
+                </View>
+              </View>
+
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ marginBottom: 20, alignItems: "flex-start" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: COLORS.warningLight,
+                        width: 34,
+                        height: 34,
+                        borderRadius: 6,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="clipboard-outline"
+                        size={22}
+                        color={COLORS.warning}
+                      />
+                    </View>
+                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                      Infografis
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                  >
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation?.Infografis.total
+                      : "-"}
+                  </Text>
+                  <Progress.Bar
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation?.Infografis.percent / 100
+                        : 0
+                    }
+                    width={130}
+                    color={COLORS.warning}
+                  />
+                </View>
+
+                <View style={{ marginBottom: 10 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: COLORS.infoDangerLight,
+                        width: 34,
+                        height: 34,
+                        borderRadius: 6,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="search-outline"
+                        size={22}
+                        color={COLORS.infoDanger}
+                      />
+                    </View>
+                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                      Tidak Sesuai
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                  >
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation?.Tidak_Sesuai.total
+                      : "-"}
+                  </Text>
+                  <Progress.Bar
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation?.Tidak_Sesuai.percent / 100
+                        : 0
+                    }
+                    width={130}
+                    color={COLORS.infoDanger}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View
+          style={{
+            width: "90%",
+            alignSelf: "center",
+            backgroundColor: COLORS.white,
+            borderRadius: 16,
+            padding: 20,
+            marginVertical: 10,
+            marginBottom: 20,
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}
+        >
+          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>
+            Post Sudah Dinilai
+          </Text>
+          <Text
+            style={{
+              fontSize: 12,
+              fontWeight: 400,
+              marginBottom: 10,
+              color: COLORS.grey,
+            }}
+          >
+            Dari Keseluruhan Post Triwulan Kedua Tahun 2023
+          </Text>
+          <View style={{ alignSelf: "center", marginVertical: 20 }}>
+            <ProgressCircle
+              percent={review?.percent_article_reviewed}
+              radius={100}
+              borderWidth={15}
+              color={COLORS.success}
+              shadowColor="#999"
+              bgColor="#fff"
+            >
+              <Text style={{ fontSize: 18 }}>
+                {review?.percent_article_reviewed}%
+              </Text>
+            </ProgressCircle>
+          </View>
+          <View style={{ marginVertical: 10, alignItems: "center" }}>
+            <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
+              {review?.total_article_reviewed}
+            </Text>
+          </View>
+          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+            {"*) Yang belum dinilai :"}
+          </Text>
+          <View style={{ flexDirection: "row", gap: 50 }}>
+            <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 10,
+                  gap: 10,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.infoLight,
+                    width: 34,
+                    height: 34,
+                    borderRadius: 6,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="pulse-outline"
+                    size={22}
+                    color={COLORS.info}
+                  />
+                </View>
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                    Kegiatan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 400,
+                      color: COLORS.grey,
+                    }}
+                  >
+                    {review?.total_article_unreview?.Kegiatan}
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.successLight,
+                    width: 34,
+                    height: 34,
+                    borderRadius: 6,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="videocam-outline"
+                    size={22}
+                    color={COLORS.success}
+                  />
+                </View>
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                    Video/Jurnal
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 400,
+                      color: COLORS.grey,
+                    }}
+                  >
+                    {Object.keys(review).length !== 0
+                      ? review?.total_article_unreview["Video_/_Jurnal"]
+                      : "-"}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 10,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.warningLight,
+                    width: 34,
+                    height: 34,
+                    borderRadius: 6,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="clipboard-outline"
+                    size={22}
+                    color={COLORS.warning}
+                  />
+                </View>
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                    Infografis
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 400,
+                      color: COLORS.grey,
+                    }}
+                  >
+                    {review?.total_article_unreview?.Infografis}
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.infoDangerLight,
+                    width: 34,
+                    height: 34,
+                    borderRadius: 6,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="search-outline"
+                    size={22}
+                    color={COLORS.infoDanger}
+                  />
+                </View>
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                    Tidak Sesuai
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 400,
+                      color: COLORS.grey,
+                    }}
+                  >
+                    {review?.total_article_unreview?.Tidak_Sesuai}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -432,7 +1232,7 @@ export const LaporanPengetahuan = () => {
 
 const styles = StyleSheet.create({
   dropdown: {
-    width: "50%",
+    width: "48%",
     //shadow ios
     shadowOffset: { width: -2, height: 4 },
     shadowColor: "#171717",

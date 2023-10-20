@@ -192,7 +192,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   color={COLORS.primary}
                   size={24}
                 />
-                <Text style={{ color: COLORS.primary }}>RangkumanIKU</Text>
+                <Text style={{ color: COLORS.primary, textAlign: "center" }}>
+                  Rangkuman IKU
+                </Text>
               </View>
             ) : (
               <View
@@ -208,7 +210,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   color={COLORS.grey}
                   size={24}
                 />
-                <Text style={{ color: COLORS.grey }}>RangkumanIKU</Text>
+                <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                  Rangkuman IKU
+                </Text>
               </View>
             )}
           </TouchableOpacity>

@@ -11,10 +11,12 @@ import {
   getMyPostLike,
   getMyPostList,
   getMyPostPoint,
-  getMyPostPost,
   getMyPostView,
   getNilai,
+  getSummaryAccumulation,
   getSummaryBadUser,
+  getSummaryGraph,
+  getSummaryReview,
   getSummaryTotalPost,
   getViewLinimasa,
   patchLike,
@@ -46,6 +48,9 @@ const PengetahuanSlice = createSlice({
     summary: {
       total_post: {},
       bad_user: {},
+      graph: {},
+      accumulation: {},
+      review: {},
     },
     penilaian: {
       lists: [],
@@ -139,6 +144,15 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryBadUser.fulfilled, (state, action) => {
         state.summary.bad_user = action.payload;
+      })
+      .addCase(getSummaryGraph.fulfilled, (state, action) => {
+        state.summary.graph = action.payload;
+      })
+      .addCase(getSummaryAccumulation.fulfilled, (state, action) => {
+        state.summary.accumulation = action.payload;
+      })
+      .addCase(getSummaryReview.fulfilled, (state, action) => {
+        state.summary.review = action.payload;
       });
   },
 });
