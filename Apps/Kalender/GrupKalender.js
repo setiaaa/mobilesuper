@@ -31,6 +31,9 @@ import { getTokenValue } from '../../service/session';
 import { getDetailGrup, getListAcara, getListAgendaAcara, getListGrup } from '../../service/api';
 import { TouchableHighlight } from 'react-native';
 import dayjs from 'dayjs';
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder';
+import { LinearGradient } from 'expo-linear-gradient';
+import { ShimmerCardAgenda } from '../../components/CardAgenda/ShimmerCardAgenda';
 
 export const GrupKalender = () => {
   const navigation = useNavigation()
@@ -42,6 +45,7 @@ export const GrupKalender = () => {
   const bottomsheetModalGrupRef = useRef(null)
   const [token, setToken] = useState('')
   const [kegiatan, setKegiatan] = useState('')
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
   const {
@@ -106,7 +110,8 @@ export const GrupKalender = () => {
   }, [token])
 
 
-  const { agenda, acara } = useSelector(state => state.grupKalender)
+  const { agenda, acara, loading } = useSelector(state => state.grupKalender)
+  // const [loading, setLoading] = useState(true)
 
   const stringToColor = (string) => {
     let hash = 0;
@@ -351,11 +356,19 @@ export const GrupKalender = () => {
               alignItems: 'center',
               justifyContent: 'space-between'
             }}>
-              <Text style={{
-                fontSize: FONTSIZE.Judul,
-                fontWeight: FONTWEIGHT.bold,
-              }}
-              >{kategoriField !== '' ? kategoriField.value : null}</Text>
+              {
+                loading ? (
+                  <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                ) : (
+                  <Text style={{
+                    fontSize: FONTSIZE.Judul,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                  >
+                    {kategoriField !== '' ? kategoriField.value : null}
+                  </Text>
+                )
+              }
               <TouchableOpacity onPress={() => {
                 dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
                 navigation.navigate('DetailGrup')
@@ -399,6 +412,8 @@ export const GrupKalender = () => {
               </View>
 
             </View>
+
+
             <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 20 }}>
               {kegiatan === 'acara kalender' ? (
                 <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Acara Kalender</Text>
@@ -408,25 +423,36 @@ export const GrupKalender = () => {
                 <></>
               )}
               <View style={{ marginVertical: 20 }}>
-                {acara.lists.slice(0, 2).map((item) => {
-                  return (
-                    <View key={item.id}>
-                      <CardAgenda
-                        item={item}
-                        stringToColor={stringToColor}
-                        token={token}
-                        kegiatan={kegiatan}
-                        idKategori={kategoriField.key}
-                      />
-                    </View>
-                  )
-                })}
+                {loading ? (
+                  <>
+                    <ShimmerCardAgenda />
+                    <ShimmerCardAgenda />
+                  </>
+                ) : (
+                  <>
+                    {acara.lists.slice(0, 2).map((item) => {
+                      return (
+                        <View key={item.id}>
+                          <CardAgenda
+                            item={item}
+                            stringToColor={stringToColor}
+                            token={token}
+                            kegiatan={kegiatan}
+                            idKategori={kategoriField.key}
+                          />
+                        </View>
+                      )
+                    })}
+                    <TouchableOpacity style={{ marginVertical: 10 }} onPress={bottomSheetAttach}>
+                      <Text style={{ color: COLORS.info, }}>{acara.lists.length === 0 ? null : 'Selengkapnya'}</Text>
+                    </TouchableOpacity>
+                  </>
+
+                )}
+
                 <View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                  <TouchableOpacity style={{ marginVertical: 10 }} onPress={bottomSheetAttach}>
-                    <Text style={{ color: COLORS.info, }}>{acara.lists.length === 0 ? null : 'Selengkapnya'}</Text>
-                  </TouchableOpacity>
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
                     <TouchableOpacity onPress={() => {
                       navigation.navigate('TambahGrup', { unread: false })
