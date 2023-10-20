@@ -61,7 +61,6 @@ export const DetailBeritaSatker = () => {
 
     const baseStyles = {};
 
-    console.log('ang' + detail);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
