@@ -8,6 +8,16 @@ import { Ionicons } from "@expo/vector-icons";
 export const DetailPostinganSaya = () => {
   const navigation = useNavigation();
 
+  const { postinganSaya } = useSelector((state) => state.pengetahuan);
+
+  const detail = postinganSaya?.detail;
+  const source = {
+    html: detail?.content,
+  };
+  const { width } = useWindowDimensions();
+
+  console.log(postinganSaya?.detail);
+
   return (
     < >
       <ScrollView>
@@ -123,12 +133,12 @@ export const DetailPostinganSaya = () => {
               />
               <View style={{ marginLeft: 10 }}>
                 <Text style={{ fontSize: 12, fontWeight: 600 }}>
-                  DRS. ANTAM NOVAMBAR, S.H, M.HUM.
+                  {detail?.creator?.name}
                 </Text>
                 <Text
                   style={{ fontSize: 10, fontWeight: 400, color: COLORS.grey }}
                 >
-                  12 Juni 2023
+                  {detail?.published_date}
                 </Text>
               </View>
             </View>
@@ -156,44 +166,33 @@ export const DetailPostinganSaya = () => {
                 Penelitian
               </Text>
             </View>
-            <View style={{ marginTop: 20, flexDirection: "row" }}>
-              <View
-                style={{
-                  backgroundColor: COLORS.danger,
-                  width: 4,
-                  height: 40,
-                  marginRight: 10,
-                }}
-              />
-              <Text
-                style={{
-                  color: COLORS.info,
-                  fontSize: 12,
-                  fontWeight: 600,
-                  textAlign: "justify",
-                  marginRight: 20,
-                }}
-              >
-                Isi Paragraf ini adalah Rangkuman. Terbuat dari ikan atau
-                potongan daging ikan putih, yang kemudian dilapisi tepung roti
-                lalu digoreng dan dapat juga dikemas menjadi olahan makanan
-                beku.
-              </Text>
-            </View>
+            {detail?.summary ? (
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <View
+                  style={{
+                    backgroundColor: COLORS.danger,
+                    width: 4,
+                    height: 40,
+                    marginRight: 10,
+                  }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.info,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    textAlign: "justify",
+                    marginRight: 20,
+                  }}
+                >
+                  {detail?.summary}
+                </Text>
+              </View>
+            ) : (
+              ""
+            )}
             <View style={{ marginTop: 30 }}>
-              <Text style={{ textAlign: "justify" }}>
-                KUPANG (27/7) Kementrian Kelautan dan Perikanan melalui
-                Direktorat Jenderal Perikanan Tangkap menggulirkan sejumlah
-                bantuan sarana penangkapan ikan untuk nelayan Kupang, Nusa
-                Tenggara Timur. Bantuan ini merupakan salah satu upaya KKP untuk
-                mendongkrak perekonomian nelayan.{"\n"}
-                {"\n"}
-                Plt Direktur Jenderal Perikanan Tangkap Agus Suherman mengatakan
-                bantuan tersebut berupa 20 unit mesin kapal perikanan serta 272
-                paket alat penangkapan ikan jenis jaring insang (gillnet
-                monofilamen) sebanyak 260 paket dan rawai dasar sebanyak 12
-                paket.
-              </Text>
+              <RenderHTML source={source} contentWidth={width} />
             </View>
             <View
               style={{
@@ -289,7 +288,7 @@ export const DetailPostinganSaya = () => {
                     fontSize: 13,
                   }}
                 >
-                  324
+                  {detail?.likes_count}
                 </Text>
               </View>
               <View
@@ -304,7 +303,9 @@ export const DetailPostinganSaya = () => {
                   size={18}
                   color={COLORS.grey}
                 />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>81</Text>
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {detail?.comment_count}
+                </Text>
               </View>
               <View
                 style={{
@@ -314,7 +315,9 @@ export const DetailPostinganSaya = () => {
                 }}
               >
                 <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>436</Text>
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {detail?.views_count}
+                </Text>
               </View>
               <TouchableOpacity
                 style={{

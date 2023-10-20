@@ -344,15 +344,107 @@ const FourthRoute = () => (
   </View>
 );
 
-const renderTabBar = props => (
-  <TabBar
-    {...props}
-    indicatorStyle={{ backgroundColor: COLORS.danger, }}
-    style={{ backgroundColor: '#FFFFFF', shadowOffset: { width: -2, height: 2 }, shadowColor: COLORS.primary, shadowOpacity: 0.2, elevation: 2, }}
-    labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 1 }}
-  />
-);
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: COLORS.danger }}
+      style={{
+        backgroundColor: "#FFFFFF",
+        shadowOffset: { width: -2, height: 2 },
+        shadowColor: COLORS.primary,
+        shadowOpacity: 0.2,
+        elevation: 2,
+      }}
+      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 9 }}
+    />
+  );
 
+  const FirstRouteLoad = () => (
+    <View style={{ marginTop: 10 }}>
+      <Text
+        style={{
+          backgroundColor: "#F0F0F0",
+          fontSize: 13,
+          fontWeight: 600,
+          textAlign: "center",
+          borderRadius: 4,
+        }}
+      >
+        JUMLAH
+      </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 10,
+          justifyContent: "center",
+        }}
+      >
+        <View
+          style={{
+            width: "30%",
+            height: 64,
+            alignItems: "center",
+            alignContent: "center",
+            padding: 10,
+          }}
+        >
+          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 700,
+              color: "#11C15B",
+              marginTop: 10,
+            }}
+          >
+            ...
+          </Text>
+        </View>
+        <View
+          style={{
+            width: "30%",
+            height: 64,
+            alignItems: "center",
+            alignContent: "center",
+            padding: 10,
+          }}
+        >
+          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 700,
+              color: "#11C15B",
+              marginTop: 10,
+            }}
+          >
+            ...
+          </Text>
+        </View>
+        <View
+          style={{
+            width: "30%",
+            height: 64,
+            alignItems: "center",
+            alignContent: "center",
+            padding: 10,
+          }}
+        >
+          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 700,
+              color: "#11C15B",
+              marginTop: 10,
+            }}
+          >
+            ...
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
 
 const renderScene = SceneMap({
   first: FirstRoute,
