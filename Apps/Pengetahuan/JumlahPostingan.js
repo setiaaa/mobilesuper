@@ -404,7 +404,7 @@ const FourthRoute = () => (
         shadowOpacity: 0.2,
         elevation: 2,
       }}
-      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 13 }}
+      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 9 }}
     />
   );
 
@@ -417,8 +417,6 @@ const FourthRoute = () => (
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
         }}
       >
         JUMLAH
@@ -743,4 +741,4 @@ const FourthRoute = () => (
     </ >
   );
 };
-};
+

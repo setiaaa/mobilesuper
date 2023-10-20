@@ -11,10 +11,12 @@ import {
   getMyPostLike,
   getMyPostList,
   getMyPostPoint,
-  getMyPostPost,
   getMyPostView,
   getNilai,
+  getSummaryAccumulation,
   getSummaryBadUser,
+  getSummaryGraph,
+  getSummaryReview,
   getSummaryTotalPost,
   getViewLinimasa,
   patchLike,
@@ -256,103 +258,15 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryBadUser.fulfilled, (state, action) => {
         state.summary.bad_user = action.payload;
-        state.loading = false;
-      })
-      .addCase(getSummaryBadUser.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getSummaryBadUser.rejected, (state, action) => {
-        state.loading = false;
       })
       .addCase(getSummaryGraph.fulfilled, (state, action) => {
         state.summary.graph = action.payload;
-        state.loading = false;
-      })
-      .addCase(getSummaryGraph.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getSummaryGraph.rejected, (state, action) => {
-        state.loading = false;
       })
       .addCase(getSummaryAccumulation.fulfilled, (state, action) => {
         state.summary.accumulation = action.payload;
-        state.loading = false;
-      })
-      .addCase(getSummaryAccumulation.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getSummaryAccumulation.rejected, (state, action) => {
-        state.loading = false;
       })
       .addCase(getSummaryReview.fulfilled, (state, action) => {
         state.summary.review = action.payload;
-        state.loading = false;
-      })
-      .addCase(getSummaryReview.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getSummaryReview.rejected, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getListCategory.fulfilled, (state, action) => {
-        state.kategori.lists = action.payload;
-        state.loading = false;
-      })
-      .addCase(getListCategory.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getListCategory.rejected, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getListCompetence.fulfilled, (state, action) => {
-        state.kompetensi.lists = action.payload;
-        state.loading = false;
-      })
-      .addCase(getListCompetence.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getListCompetence.rejected, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getListUnitKerja.fulfilled, (state, action) => {
-        state.unitKerja.lists = action.payload;
-        state.loading = false;
-      })
-      .addCase(getListUnitKerja.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getListUnitKerja.rejected, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getListPegawai.fulfilled, (state, action) => {
-        state.pegawai.lists = action.payload;
-        state.loading = false;
-      })
-      .addCase(getListPegawai.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getListPegawai.rejected, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getListPostPegawai.fulfilled, (state, action) => {
-        state.postinganPegawai.lists = action.payload;
-        state.loading = false;
-      })
-      .addCase(getListPostPegawai.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getListPostPegawai.rejected, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getListPegawaiExport.fulfilled, (state, action) => {
-        state.exportPegawai.lists = action.payload;
-        state.loading = false;
-      })
-      .addCase(getListPegawaiExport.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getListPegawaiExport.rejected, (state, action) => {
-        state.loading = false;
       });
   },
 });
