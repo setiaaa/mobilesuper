@@ -113,10 +113,9 @@ export const RangkumanIKU = () => {
       <View
         style={{
           flexDirection: "row",
-          alignItems: "flex-end",
+          alignItems: "center",
           backgroundColor: COLORS.primary,
           height: 80,
-          paddingBottom: 20,
         }}
       >
         <View
