@@ -419,7 +419,7 @@ export const JumlahPostingan = () => {
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: 200,
+            height: 230,
             padding: 16,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
