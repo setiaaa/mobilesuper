@@ -96,6 +96,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   width: "90%",
+                  paddingRight: 10
                 }}
               >
                 <Text
