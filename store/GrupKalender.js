@@ -42,6 +42,9 @@ const GrupKalenderSlice = createSlice({
     setStatus: (state, action) => {
       state.status = action.payload
     },
+    setAcara: (state, action) => {
+      state.acara.lists = action.payload
+    }
   },
   extraReducers(builder) {
     builder
@@ -186,7 +189,7 @@ const GrupKalenderSlice = createSlice({
   }
 });
 
-export const { setAgenda, setAgendaDetail, setKategori, setSubKategori, setStatus } =
+export const { setAgenda, setAgendaDetail, setKategori, setSubKategori, setStatus, setAcara } =
   GrupKalenderSlice.actions;
 
 export default GrupKalenderSlice.reducer;

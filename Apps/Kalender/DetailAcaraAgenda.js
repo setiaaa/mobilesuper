@@ -29,18 +29,15 @@ import { getTokenValue } from '../../service/session'
 import { getListSubAgenda } from '../../service/api'
 import ListEmpty from '../../components/ListEmpty'
 import { CardSubAgendaGrup } from '../../components/CardSubAgendaGrup'
-
-
-
-
-
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 export const DetailAcaraAgenda = () => {
     const navigation = useNavigation()
     const [token, setToken] = useState('')
 
-
-    const { acara, agendaAcara } = useSelector(state => state.grupKalender)
+    const { acara, agendaAcara, loading } = useSelector(state => state.grupKalender)
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const detail = acara.detail
     const dispatch = useDispatch()
 
@@ -71,9 +68,15 @@ export const DetailAcaraAgenda = () => {
                         <View style={styles.container}>
                             <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20 }}>
 
-                                <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail?.title}</Text>
-                                </View>
+                                {loading ? (
+                                    <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    </View>
+                                ) : (
+                                    <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail?.title}</Text>
+                                    </View>
+                                )}
 
                                 <View style={{
                                     marginHorizontal: 20,
@@ -82,7 +85,11 @@ export const DetailAcaraAgenda = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
-                                    <Text>{moment(detail?.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{moment(detail?.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
+                                    )}
                                 </View>
 
                                 <View>
@@ -90,9 +97,13 @@ export const DetailAcaraAgenda = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail?.location}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{detail?.location}</Text>
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -102,9 +113,13 @@ export const DetailAcaraAgenda = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Mulai</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail?.start_date).format(DATETIME.LONG_DATETIME)}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{moment(detail?.start_date).format(DATETIME.LONG_DATETIME)}</Text>
+                                            </View>
+                                        )}
                                     </View>
 
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -115,9 +130,13 @@ export const DetailAcaraAgenda = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail?.end_date).format(DATETIME.LONG_DATETIME)}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{moment(detail?.end_date).format(DATETIME.LONG_DATETIME)}</Text>
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -127,19 +146,23 @@ export const DetailAcaraAgenda = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                                                <Image source={{ uri: detail.pic?.avatar_url }} style={{
-                                                    marginLeft: -8,
-                                                    borderWidth: 2,
-                                                    borderRadius: 50,
-                                                    borderColor: COLORS.white,
-                                                    width: 30,
-                                                    height: 30
-                                                }} />
-                                                <Text>{detail.pic?.nama}</Text>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                                                    <Image source={{ uri: detail.pic?.avatar_url }} style={{
+                                                        marginLeft: -8,
+                                                        borderWidth: 2,
+                                                        borderRadius: 50,
+                                                        borderColor: COLORS.white,
+                                                        width: 30,
+                                                        height: 30
+                                                    }} />
+                                                    <Text>{detail.pic?.nama}</Text>
+                                                </View>
                                             </View>
-                                        </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -149,22 +172,26 @@ export const DetailAcaraAgenda = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Anggota</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', }}>
-                                            {detail.members?.map((item, index) => {
-                                                return (
-                                                    <View key={index}>
-                                                        <Image source={{ uri: item.avatar_url }} style={{
-                                                            marginLeft: -8,
-                                                            borderWidth: 2,
-                                                            borderRadius: 50,
-                                                            borderColor: COLORS.white,
-                                                            width: 30,
-                                                            height: 30
-                                                        }} />
-                                                    </View>
-                                                )
-                                            })}
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ flexDirection: 'row', }}>
+                                                {detail.members?.map((item, index) => {
+                                                    return (
+                                                        <View key={index}>
+                                                            <Image source={{ uri: item.avatar_url }} style={{
+                                                                marginLeft: -8,
+                                                                borderWidth: 2,
+                                                                borderRadius: 50,
+                                                                borderColor: COLORS.white,
+                                                                width: 30,
+                                                                height: 30
+                                                            }} />
+                                                        </View>
+                                                    )
+                                                })}
+                                            </View>
+                                        )}
                                     </View>
                                 </View>
 
@@ -181,9 +208,10 @@ export const DetailAcaraAgenda = () => {
                                         data={agendaAcara.listsSub}
                                         renderItem={({ item }) => <CardSubAgendaGrup
                                             item={item}
+                                            loading={loading}
                                         />
                                         }
-                                        style={{ height: 150 }}
+                                        style={{ height: 250 }}
                                         keyExtractor={item => item.id}
                                         ListEmptyComponent={() =>
                                             <ListEmpty />
@@ -193,7 +221,7 @@ export const DetailAcaraAgenda = () => {
                             </View>
 
                         </View>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             onPress={() => {
 
                             }}
@@ -227,7 +255,7 @@ export const DetailAcaraAgenda = () => {
                             }}
                         >
                             <Text>Edit</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>

@@ -27,6 +27,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import moment from 'moment'
 import { deleteGrup, getDetailGrup } from '../../service/api'
 import { getTokenValue } from '../../service/session'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 
@@ -55,7 +57,8 @@ export const DetailGrup = () => {
 
     const dispatch = useDispatch()
 
-    const { agenda, acara, detailGrup } = useSelector(state => state.grupKalender)
+    const { agenda, acara, detailGrup, loading } = useSelector(state => state.grupKalender)
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     const detail = acara.detail
     const gambar = agenda.detail.gambar
@@ -136,9 +139,19 @@ export const DetailGrup = () => {
                         <View style={styles.container}>
                             <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20 }}>
 
-                                <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detailGrup.name}</Text>
-                                </View>
+                                {
+                                    loading ? (
+                                        <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        </View>
+                                    ) : (
+
+                                        <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detailGrup.name}</Text>
+                                        </View>
+                                    )
+                                }
+
 
                                 <View style={{
                                     marginHorizontal: 20,
@@ -147,7 +160,11 @@ export const DetailGrup = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat oleh :</Text>
-                                    <Text>{detailGrup.creator?.nama}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{detailGrup.creator?.nama}</Text>
+                                    )}
                                 </View>
 
                                 <View style={{
@@ -157,8 +174,11 @@ export const DetailGrup = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Pada :</Text>
-
-                                    <Text>{detailGrup?.created_at === undefined ? '' : convertDate(detailGrup?.created_at)}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{detailGrup?.created_at === undefined ? '' : convertDate(detailGrup?.created_at)}</Text>
+                                    )}
                                 </View>
 
                                 <View>
@@ -166,23 +186,27 @@ export const DetailGrup = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            {detailGrup.pic?.map((item, index) => {
-                                                return (
-                                                    <View key={index} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                                                        <Image source={{ uri: item.avatar_url }} style={{
-                                                            marginLeft: -8,
-                                                            borderWidth: 2,
-                                                            borderRadius: 50,
-                                                            borderColor: COLORS.white,
-                                                            width: 30,
-                                                            height: 30
-                                                        }} />
-                                                        <Text>{item.nama}</Text>
-                                                    </View>
-                                                )
-                                            })}
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                {detailGrup.pic?.map((item, index) => {
+                                                    return (
+                                                        <View key={index} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                                                            <Image source={{ uri: item.avatar_url }} style={{
+                                                                marginLeft: -8,
+                                                                borderWidth: 2,
+                                                                borderRadius: 50,
+                                                                borderColor: COLORS.white,
+                                                                width: 30,
+                                                                height: 30
+                                                            }} />
+                                                            <Text>{item.nama}</Text>
+                                                        </View>
+                                                    )
+                                                })}
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -192,9 +216,13 @@ export const DetailGrup = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Ketentuan Busana</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detailGrup?.extra_attributes?.ketentuan_busana == null ? '-' : detailGrup?.extra_attributes?.ketentuan_busana}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{detailGrup?.extra_attributes?.ketentuan_busana == null ? '-' : detailGrup?.extra_attributes?.ketentuan_busana}</Text>
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -204,9 +232,13 @@ export const DetailGrup = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Perlengkapan</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detailGrup?.extra_attributes?.perlengkapan == null ? '-' : detailGrup?.extra_attributes?.perlengkapan}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{detailGrup?.extra_attributes?.perlengkapan == null ? '-' : detailGrup?.extra_attributes?.perlengkapan}</Text>
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -216,9 +248,14 @@ export const DetailGrup = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Atribut Lainnya</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detailGrup?.extra_attributes?.atribut == null ? '-' : detailGrup?.extra_attributes?.atribut}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{detailGrup?.extra_attributes?.atribut == null ? '-' : detailGrup?.extra_attributes?.atribut}</Text>
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -228,22 +265,26 @@ export const DetailGrup = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Grup Editor</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', }}>
-                                            {detailGrup.editors?.map((item, index) => {
-                                                return (
-                                                    <View key={index}>
-                                                        <Image source={{ uri: item.avatar_url }} style={{
-                                                            marginLeft: -8,
-                                                            borderWidth: 2,
-                                                            borderRadius: 50,
-                                                            borderColor: COLORS.white,
-                                                            width: 30,
-                                                            height: 30
-                                                        }} />
-                                                    </View>
-                                                )
-                                            })}
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ flexDirection: 'row', }}>
+                                                {detailGrup.editors?.map((item, index) => {
+                                                    return (
+                                                        <View key={index}>
+                                                            <Image source={{ uri: item.avatar_url }} style={{
+                                                                marginLeft: -8,
+                                                                borderWidth: 2,
+                                                                borderRadius: 50,
+                                                                borderColor: COLORS.white,
+                                                                width: 30,
+                                                                height: 30
+                                                            }} />
+                                                        </View>
+                                                    )
+                                                })}
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
@@ -253,22 +294,26 @@ export const DetailGrup = () => {
                                         <View style={{ width: '50%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Anggota</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', }}>
-                                            {detailGrup.members?.map((item, index) => {
-                                                return (
-                                                    <View key={index}>
-                                                        <Image source={{ uri: item.avatar_url }} style={{
-                                                            marginLeft: -8,
-                                                            borderWidth: 2,
-                                                            borderRadius: 50,
-                                                            borderColor: COLORS.white,
-                                                            width: 30,
-                                                            height: 30
-                                                        }} />
-                                                    </View>
-                                                )
-                                            })}
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ flexDirection: 'row', }}>
+                                                {detailGrup.members?.map((item, index) => {
+                                                    return (
+                                                        <View key={index}>
+                                                            <Image source={{ uri: item.avatar_url }} style={{
+                                                                marginLeft: -8,
+                                                                borderWidth: 2,
+                                                                borderRadius: 50,
+                                                                borderColor: COLORS.white,
+                                                                width: 30,
+                                                                height: 30
+                                                            }} />
+                                                        </View>
+                                                    )
+                                                })}
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>

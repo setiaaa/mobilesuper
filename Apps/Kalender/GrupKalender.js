@@ -23,7 +23,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Dropdown } from '../../components/DropDown';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAgenda } from '../../store/GrupKalender';
+import { setAcara, setAgenda } from '../../store/GrupKalender';
 import { setKategori } from '../../store/GrupKalender';
 import { setSubKategori } from '../../store/GrupKalender';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -107,11 +107,11 @@ export const GrupKalender = () => {
     if (token !== '') {
       dispatch(getListGrup(token))
     }
+    dispatch(setAcara([]))
   }, [token])
 
 
   const { agenda, acara, loading } = useSelector(state => state.grupKalender)
-  // const [loading, setLoading] = useState(true)
 
   const stringToColor = (string) => {
     let hash = 0;
@@ -369,12 +369,17 @@ export const GrupKalender = () => {
                   </Text>
                 )
               }
-              <TouchableOpacity onPress={() => {
-                dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
-                navigation.navigate('DetailGrup')
-              }}>
-                <Text style={{ color: COLORS.info, }}>{kategoriField !== '' ? 'Lihat Detail' : null}</Text>
-              </TouchableOpacity>
+
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                <TouchableOpacity onPress={() => {
+                  dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
+                  navigation.navigate('DetailGrup')
+                }}>
+                  <Text style={{ color: COLORS.info, }}>{kategoriField !== '' ? 'Lihat Detail' : null}</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <View>
