@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  Linking,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
@@ -469,7 +470,7 @@ export const Home = () => {
                   style={{
                     backgroundColor: COLORS.white,
                     width: "90%",
-                    height: 500,
+                    height: 550,
                     borderRadius: 10,
                     marginTop: 100,
                   }}
@@ -502,42 +503,22 @@ export const Home = () => {
                       marginTop: 20,
                     }}
                   >
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://halo-bupbj.com/')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/Tp1.png")}
+                        source={require("../../assets/superApp/BUPBJ.png")}
                         style={{ width: 48, height: 48 }}
                       />
-                      <Text style={{ fontSize: FONTSIZE.H4 }}>Semar</Text>
-                    </View>
+                      <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
+                    </TouchableOpacity>
 
-                    <View
-                      style={{ justifyContent: "center", alignItems: "center" }}
-                    >
-                      <Image
-                        source={require("../../assets/superApp/Tp2.png")}
-                        style={{ width: 48, height: 48 }}
-                      />
-                      <Text style={{ fontSize: FONTSIZE.H4 }}>Sistolik</Text>
-                    </View>
-
-                    <View
-                      style={{ justifyContent: "center", alignItems: "center" }}
-                    >
-                      <Image
-                        source={require("../../assets/superApp/Tp3.png")}
-                        style={{ width: 48, height: 48 }}
-                      />
-                      <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
-                      >
-                        Bus Jemputan
-                      </Text>
-                    </View>
                   </View>
 
-                  <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+                  <View style={{ marginHorizontal: 20, marginTop: 40 }}>
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
                       Pengawasan
                     </Text>
@@ -551,11 +532,14 @@ export const Home = () => {
                       marginTop: 20,
                     }}
                   >
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://www.lapor.go.id/')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/lapor.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -563,13 +547,16 @@ export const Home = () => {
                       >
                         Lapor.go.id
                       </Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://wbs.kkp.go.id/registration')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/wbs.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -577,13 +564,16 @@ export const Home = () => {
                       >
                         WBS KKP
                       </Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://sidak.kkp.go.id/login')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/sidak.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -591,13 +581,16 @@ export const Home = () => {
                       >
                         Sidak
                       </Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://jdih.kkp.go.id/')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/JDIH.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -605,7 +598,7 @@ export const Home = () => {
                       >
                         JDIH
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   </View>
 
                   <View style={{ marginHorizontal: 20, marginTop: 50 }}>
@@ -622,10 +615,14 @@ export const Home = () => {
                       marginTop: 20,
                     }}
                   >
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://e-monev.bappenas.go.id/fe/')
+                      }}
+                    >
                       <View>
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/monev.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -636,9 +633,13 @@ export const Home = () => {
                           Emonev{"\n"} Bapennas
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://www.kinerjaku.kkp.go.id/')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -646,7 +647,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/kinerjaku.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -657,9 +658,13 @@ export const Home = () => {
                           Kinerjaku
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://elearning.kkp.go.id/')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -667,7 +672,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/milea.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -678,9 +683,13 @@ export const Home = () => {
                           E-Milea
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://kinerja.bkn.go.id/login')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -688,7 +697,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/kinerjabkn.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -699,9 +708,13 @@ export const Home = () => {
                           E-Kinerja {"\n"}BKN
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://siasn.bkn.go.id/')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -709,7 +722,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/SIASN.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -720,7 +733,36 @@ export const Home = () => {
                           SIASN{"\n"} BKN
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      marginHorizontal: 20,
+                      marginTop: 20,
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://mysapk.bkn.go.id/')
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={require("../../assets/superApp/mysapk.png")}
+                          style={{ width: 48, height: 48 }}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        >
+                          My SAPK
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
