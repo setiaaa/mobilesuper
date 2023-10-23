@@ -49,6 +49,7 @@ const CardPostinganSaya = () => {
                 fontSize: 13,
                 textAlign: "justify",
                 marginBottom: 5,
+                maxWidth: 250
               }}
             >
               Dongkrak Perekonomian Nelayan Kupang, KKP Gulirkan...
@@ -171,6 +172,7 @@ const CardPostinganSaya = () => {
               fontSize: 13,
               textAlign: "justify",
               marginBottom: 5,
+              maxWidth: 250
             }}
           >
             Dongkrak Perekonomian Nelayan Kupang, KKP Gulirkan...
@@ -282,6 +284,7 @@ const CardPostinganSaya = () => {
               fontSize: 13,
               textAlign: "justify",
               marginBottom: 5,
+              maxWidth: 250
             }}
           >
             Dongkrak Perekonomian Nelayan Kupang, KKP Gulirkan...
@@ -377,10 +380,9 @@ export const PostinganSaya = () => {
       <View
         style={{
           flexDirection: "row",
-          alignItems: "flex-end",
+          alignItems: "center",
           backgroundColor: COLORS.primary,
           height: 80,
-          paddingBottom: 20,
         }}
       >
         <View
