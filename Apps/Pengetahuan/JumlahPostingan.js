@@ -21,6 +21,7 @@ const FirstRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
+        padding: 5
       }}
     >
       JUMLAH
@@ -104,6 +105,7 @@ const SecondRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
+        padding: 5
       }}
     >
       JUMLAH
@@ -187,6 +189,7 @@ const ThirdRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
+        padding: 5
       }}
     >
       JUMLAH
@@ -270,6 +273,7 @@ const FourthRoute = () => (
         fontWeight: 600,
         textAlign: "center",
         borderRadius: 4,
+        padding: 5
       }}
     >
       JUMLAH
@@ -368,10 +372,10 @@ export const JumlahPostingan = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Pertama" },
-    { key: "second", title: "Kedua" },
-    { key: "third", title: "Ketiga" },
-    { key: "fourth", title: "Keempat" },
+    { key: "first", title: "1" },
+    { key: "second", title: "2" },
+    { key: "third", title: "3" },
+    { key: "fourth", title: "4" },
   ]);
 
   return (
@@ -415,7 +419,7 @@ export const JumlahPostingan = () => {
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: 182,
+            height: 200,
             padding: 16,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
@@ -425,7 +429,7 @@ export const JumlahPostingan = () => {
             elevation: 2,
           }}
         >
-          <View style={{ backgroundColor: COLORS.primary, borderRadius: 8 }}>
+          <View style={{ backgroundColor: COLORS.primary, borderRadius: 8, padding: 10 }}>
             <Text style={{ color: "#FFFFFF", textAlign: "center", fontSize: 13, fontWeight: 600}}>Triwulan</Text>
           </View>
           <TabView
@@ -440,7 +444,7 @@ export const JumlahPostingan = () => {
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: 175,
+            height: 210,
             padding: 16,
             marginTop: 10,
             //shadow ios
@@ -482,6 +486,7 @@ export const JumlahPostingan = () => {
               textAlign: "center",
               borderRadius: 4,
               marginTop: 10,
+              padding: 5
             }}
           >
             JUMLAH
