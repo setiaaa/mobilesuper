@@ -17,6 +17,8 @@ import { Dropdown } from '../../components/DropDown';
 import { deleteEvent, updateStatus } from '../../service/api';
 import { getTokenValue } from '../../service/session';
 import { CardLampiran } from '../../components/CardLampiran';
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const DetailEvent = () => {
   const navigation = useNavigation()
@@ -25,6 +27,7 @@ export const DetailEvent = () => {
   const [visibleModal, setVisibleModal] = useState(false);
   const [lampiranById, setLampiranById] = useState(null)
   const [token, setToken] = useState('')
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
   const statusEvent = [
     { key: 'siap', value: 'persiapan' },
@@ -49,7 +52,7 @@ export const DetailEvent = () => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
 
-  const { event } = useSelector((state) => state.event);
+  const { event, loading } = useSelector((state) => state.event);
 
   const data = event.detailEvent;
 
@@ -78,19 +81,29 @@ export const DetailEvent = () => {
         <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
           <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
             <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-              <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold, width: 200 }}>{data.title}</Text>
-              <View
-                style={{
-                  width: 90,
-                  height: 24,
-                  backgroundColor: COLORS.infoLight,
-                  borderRadius: 30,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Text style={{ color: COLORS.info }}>{data.status}</Text>
-              </View>
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={200} height={20} />
+              )
+                : (
+                  <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold, width: 200 }}>{data.title}</Text>
+                )}
+
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                <View
+                  style={{
+                    width: 90,
+                    height: 24,
+                    backgroundColor: COLORS.infoLight,
+                    borderRadius: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Text style={{ color: COLORS.info }}>{data.status}</Text>
+                </View>
+              )}
             </View>
 
             <View style={{ marginTop: 10 }}>
@@ -102,8 +115,14 @@ export const DetailEvent = () => {
 
             <View style={{ flexDirection: 'row', }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-              <Text>{moment(data.start_date).format('d MMM yyy')} - </Text>
-              <Text>{moment(data.end_date).format('d MMM yyy')}</Text>
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                <>
+                  <Text>{moment(data.start_date).format('d MMM yyy')} - </Text>
+                  <Text>{moment(data.end_date).format('d MMM yyy')}</Text>
+                </>
+              )}
             </View>
 
             {/* custom divider */}
@@ -111,7 +130,11 @@ export const DetailEvent = () => {
 
             <View style={{ flexDirection: 'row', }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
-              <Text style={{ width: 156 }}>{data.location}</Text>
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                <Text style={{ width: 156 }}>{data.location}</Text>
+              )}
             </View>
 
             {/* custom divider */}
@@ -119,17 +142,25 @@ export const DetailEvent = () => {
 
             <View style={{ flexDirection: 'row', }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Pimpinan Agenda Rapat</Text>
-              <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
+              )}
             </View>
 
             {/* custom divider */}
             <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat</Text>
-              {data.extra_attrs?.members?.map((data, index) =>
-                <View key={data.id} style={{ position: 'relative' }}>
-                  <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                </View>
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                data.extra_attrs?.members?.map((data, index) =>
+                  <View key={data.id} style={{ position: 'relative' }}>
+                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                  </View>
+                )
               )}
               {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
@@ -141,12 +172,16 @@ export const DetailEvent = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat Eksternal</Text>
               <View>
-                {data.extra_attrs?.guest_external?.map((data, index) =>
-                  <View key={data.id} style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
-                    <Text>-</Text>
-                    {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                    <Text style={{ width: 150 }}>{data.name}</Text>
-                  </View>
+                {loading ? (
+                  <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                ) : (
+                  data.extra_attrs?.guest_external?.map((data, index) =>
+                    <View key={data.id} style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
+                      <Text>-</Text>
+                      {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
+                      <Text style={{ width: 150 }}>{data.name}</Text>
+                    </View>
+                  )
                 )}
               </View>
               {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -158,11 +193,15 @@ export const DetailEvent = () => {
             <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Notulen</Text>
-              {data.extra_attrs?.notulen?.map((data, index) =>
-                <View key={data.id} style={{ position: 'relative' }}>
-                  {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                  <Text>{data.nama}</Text>
-                </View>
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                data.extra_attrs?.notulen?.map((data, index) =>
+                  <View key={data.id} style={{ position: 'relative' }}>
+                    {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
+                    <Text>{data.nama}</Text>
+                  </View>
+                )
               )}
               {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
@@ -173,10 +212,14 @@ export const DetailEvent = () => {
             <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absen</Text>
-              {data.extra_attrs?.presensi?.map((item) =>
-                <View>
-                  <Text>{item.nama}</Text>
-                </View>
+              {loading ? (
+                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+              ) : (
+                data.extra_attrs?.presensi?.map((item) =>
+                  <View>
+                    <Text>{item.nama}</Text>
+                  </View>
+                )
               )}
               {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
@@ -189,28 +232,31 @@ export const DetailEvent = () => {
             <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
-
-            <FlatList
-              key={'*'}
-              data={data.attachments}
-              renderItem={({ item }) =>
-                <View key={item.id}>
-                  <CardLampiran
-                    lampiran={item.file}
-                    type={getFileExtension(item.name)}
-                    onClick={() => {
-                      setVisibleModal(true)
-                      setLampiranById(item)
-                    }}
-                  />
-                </View>
-              }
-              scrollEnabled={false}
-              style={{ marginTop: 10 }}
-              columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-              numColumns={3}
-              keyExtractor={item => "*" + item.id}
-            />
+            {loading ? (
+              <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
+            ) : (
+              <FlatList
+                key={'*'}
+                data={data.attachments}
+                renderItem={({ item }) =>
+                  <View key={item.id}>
+                    <CardLampiran
+                      lampiran={item.file}
+                      type={getFileExtension(item.name)}
+                      onClick={() => {
+                        setVisibleModal(true)
+                        setLampiranById(item)
+                      }}
+                    />
+                  </View>
+                }
+                scrollEnabled={false}
+                style={{ marginTop: 10 }}
+                columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                numColumns={3}
+                keyExtractor={item => "*" + item.id}
+              />
+            )}
 
             {
               lampiranById !== null ? (

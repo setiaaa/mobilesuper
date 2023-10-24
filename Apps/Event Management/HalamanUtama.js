@@ -34,6 +34,8 @@ import { getTokenValue } from "../../service/session";
 import moment from "moment/moment";
 import { CardListEvent } from '../../components/CardListEvent'
 import { CardProgresEvent } from '../../components/CardProgresEvent'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -116,7 +118,7 @@ export const HalamanUtama = () => {
   const [kategori, setKategori] = useState("");
   const [progres, setProgres] = useState([]);
   const [token, setToken] = useState("");
-
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
   const dispatch = useDispatch()
   const isFocused = useIsFocused()
 
@@ -136,9 +138,10 @@ export const HalamanUtama = () => {
     }
   }, [token])
 
-  const { event } = useSelector(state => state.event)
+  const { event, loading } = useSelector(state => state.event)
   const list = event.lists
   const progreslist = event.listsprogress
+  // const [loading, setLoading] = useState(true)
 
 
   const [variant, SetVariant] = useState('hariini')
@@ -240,6 +243,7 @@ export const HalamanUtama = () => {
               renderItem={({ item }) => <CardListEvent
                 token={token}
                 item={item}
+                loading={loading}
               />
               }
               keyExtractor={item => item.id}
@@ -287,6 +291,7 @@ export const HalamanUtama = () => {
                   token={token}
                   item={item}
                   bottomSheetAttach={bottomSheetAttach}
+                  loading={loading}
                 />
                 }
                 keyExtractor={item => item.id}

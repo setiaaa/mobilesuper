@@ -27,7 +27,7 @@ import { CardListTodo } from '../../components/CardListTodoEvent'
 
 
 export const Todo = () => {
-    const { agenda, todo, event } = useSelector(state => state.event)
+    const { agenda, todo, event, loading } = useSelector(state => state.event)
     const id = agenda.detail?.notulensi?.id
     const data = todo.lists
 
@@ -186,6 +186,7 @@ export const Todo = () => {
                     role={event.detailEvent?.user_role}
                     bottomSheetAttach={bottomSheetAttach}
                     setIdEdit={setIdEdit}
+                    loading={loading}
                 />
                 }
                 keyExtractor={item => item.id}

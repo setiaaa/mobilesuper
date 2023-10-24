@@ -32,7 +32,8 @@ const EventSlice = createSlice({
     kalenderLists: [],
     attachment: [],
     status: '',
-    statusEvent: {}
+    statusEvent: {},
+    loading: false
   },
   reducers: {
     setEventLists: (state, action) => {
@@ -85,39 +86,124 @@ const EventSlice = createSlice({
     builder
       .addCase(getEvent.fulfilled, (state, action) => {
         state.event.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getEvent.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getEvent.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getEventToday.fulfilled, (state, action) => {
         state.event.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getEventToday.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getEventToday.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getEventProgress.fulfilled, (state, action) => {
         state.event.listsprogress = action.payload;
+        state.loading = false
+      })
+      .addCase(getEventProgress.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getEventProgress.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getEventDetail.fulfilled, (state, action) => {
         state.event.detailEvent = action.payload;
+        state.loading = false
+      })
+      .addCase(getEventDetail.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getEventDetail.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getEventAgenda.fulfilled, (state, action) => {
         state.agenda.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getEventAgenda.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getEventAgenda.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getEventAgendaDetail.fulfilled, (state, action) => {
         state.agenda.detail = action.payload;
+        state.loading = false
+      })
+      .addCase(getEventAgendaDetail.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getEventAgendaDetail.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getlistApprover.fulfilled, (state, action) => {
         state.approver.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getlistApprover.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getlistApprover.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getlistNotulensi.fulfilled, (state, action) => {
         state.notulensi.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getlistNotulensi.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getlistNotulensi.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getDetailNotulensi.fulfilled, (state, action) => {
         state.notulensi.detail = action.payload;
+        state.loading = false
+      })
+      .addCase(getDetailNotulensi.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getDetailNotulensi.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getlistTodo.fulfilled, (state, action) => {
         state.todo.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getlistTodo.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getlistTodo.rejected, (state, action) => {
+        state.todo.lists = action.payload;
+        state.loading = false
       })
       .addCase(getDetailTodo.fulfilled, (state, action) => {
         state.todo.detail = action.payload;
+        state.loading = false
+      })
+      .addCase(getDetailTodo.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getDetailTodo.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getlistAbsen.fulfilled, (state, action) => {
         state.absen.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getlistAbsen.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getlistAbsen.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(putAbsen.fulfilled, (state, action) => {
         console.log(action.payload);

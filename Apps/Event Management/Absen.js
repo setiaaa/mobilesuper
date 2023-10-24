@@ -13,11 +13,14 @@ import ListEmpty from '../../components/ListEmpty'
 import { getTokenValue } from '../../service/session'
 import { getlistAbsen } from '../../service/api'
 import moment from 'moment'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
-const CardListAbsen = ({ item }) => {
+const CardListAbsen = ({ item, loading }) => {
     const [user, setUser] = useState('member')
     const [checkIn, setCheckin] = useState('')
     const navigation = useNavigation()
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     return (
         <View style={{
             justifyContent: 'center',
@@ -32,23 +35,32 @@ const CardListAbsen = ({ item }) => {
                     padding: 20
                 }}
             >
-                <Text>{item.member?.nama}</Text>
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                ) : (
+
+                    <Text>{item.member?.nama}</Text>
+                )}
                 <View style={{ marginTop: 10 }}>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                         <Text style={{ width: 110 }}>Status</Text>
-                        <View style={{
-                            width: 80,
-                            height: 24,
-                            borderRadius: 30,
-                            backgroundColor: item.status === 'hadir' ? COLORS.successLight : item.status === 'waiting' ? COLORS.infoLight : null,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{
-                                color: item.status === 'hadir' ? COLORS.success : item.status === 'waiting' ? COLORS.info : null,
-                            }}>{item.status}</Text>
-                        </View>
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                        ) : (
+                            <View style={{
+                                width: 80,
+                                height: 24,
+                                borderRadius: 30,
+                                backgroundColor: item.status === 'hadir' ? COLORS.successLight : item.status === 'waiting' ? COLORS.infoLight : null,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{
+                                    color: item.status === 'hadir' ? COLORS.success : item.status === 'waiting' ? COLORS.info : null,
+                                }}>{item.status}</Text>
+                            </View>
+                        )}
                     </View>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
@@ -81,9 +93,13 @@ const CardListAbsen = ({ item }) => {
                         ) : (
                             <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 120, }}>Waktu Check In</Text>
-                                <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text>{moment(item.updated_at, 'HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                                </View>
+                                {loading ? (
+                                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                ) : (
+                                    <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text>{moment(item.updated_at, 'HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
+                                    </View>
+                                )}
                             </View>
                         )}
                     </View>
@@ -99,7 +115,7 @@ export const Absen = () => {
     const [checkIn, setCheckin] = useState('')
     const [token, setToken] = useState('')
 
-    const { absen, agenda } = useSelector(state => state.event)
+    const { absen, agenda, loading } = useSelector(state => state.event)
     const idagenda = agenda.detail?.id
     const absenLists = absen.lists
     const dispatch = useDispatch()
@@ -243,6 +259,7 @@ export const Absen = () => {
                 data={absenLists}
                 renderItem={({ item }) => <CardListAbsen
                     item={item}
+                    loading={loading}
                 />
                 }
                 style={{ marginVertical: 20 }}

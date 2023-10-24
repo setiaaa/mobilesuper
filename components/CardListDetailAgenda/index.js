@@ -8,11 +8,14 @@ import moment from "moment"
 import { useState } from "react"
 import { Text } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
+import { createShimmerPlaceHolder } from "expo-shimmer-placeholder"
+import { LinearGradient } from "expo-linear-gradient"
 
 
-export const CardListDetailAgenda = ({ token, item, bottomSheetAttach, setIdEdit }) => {
+export const CardListDetailAgenda = ({ token, item, bottomSheetAttach, setIdEdit, loading }) => {
     const navigation = useNavigation()
     const [user, setUser] = useState('resepsionis')
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     // const { agenda } = useSelector(state => state.event)
     const { event } = useSelector(state => state.event)
     const dispatch = useDispatch()
@@ -44,7 +47,11 @@ export const CardListDetailAgenda = ({ token, item, bottomSheetAttach, setIdEdit
                 }}
             >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold, width: 280 }}>{item.title}</Text>
+                    {loading ? (
+                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                    ) : (
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, width: 280 }}>{item.title}</Text>
+                    )}
                     {
                         event.detailEvent.user_role.is_pic === true ||
                             item.user_role?.is_pic === true ||
@@ -65,24 +72,49 @@ export const CardListDetailAgenda = ({ token, item, bottomSheetAttach, setIdEdit
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, alignItems: 'center' }}>
                     <View>
-                        <Text>{moment(item.date).format(DATETIME.LONG_DATE)}</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ marginTop: 5 }}>{moment(item.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
-                            <Text style={{ marginTop: 5 }}>{moment(item.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
-                        </View>
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                        ) : (
+                            <Text>{moment(item.date).format(DATETIME.LONG_DATE)}</Text>
+                        )}
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 10 }} width={100} height={20} />
+                        ) : (
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ marginTop: 5 }}>{moment(item.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
+                                <Text style={{ marginTop: 5 }}>{moment(item.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                            </View>
+                        )}
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                        <Ionicons name='list-circle-outline' size={24} color={COLORS.lighter} />
-                        <Text>{item.jmltodo}</Text>
-                        <Text>Todo</Text>
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                        ) : (
+                            <>
+                                <Ionicons name='list-circle-outline' size={24} color={COLORS.lighter} />
+                                <Text>{item.jmltodo}</Text>
+                                <Text>Todo</Text>
+                            </>
+                        )}
+
                     </View>
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text>{item.location}</Text>
+                    {loading ? (
+                        <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 10 }} width={100} height={20} />
+                    ) : (
+                        <Text>{item.location}</Text>
+                    )}
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                        <Ionicons name='people-outline' size={24} color={COLORS.lighter} />
-                        <Text>{item.member_count}</Text>
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                        ) : (
+                            <>
+                                <Ionicons name='people-outline' size={24} color={COLORS.lighter} />
+                                <Text>{item.member_count}</Text>
+                            </>
+                        )}
                     </View>
                 </View>
             </TouchableOpacity>

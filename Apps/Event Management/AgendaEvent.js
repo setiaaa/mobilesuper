@@ -23,6 +23,8 @@ import { deleteSubAgenda, getEventAgenda, getEventAgendaDetail } from '../../ser
 import { getTokenValue } from '../../service/session'
 import moment from 'moment'
 import { CardListDetailAgenda } from '../../components/CardListDetailAgenda'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 
@@ -59,8 +61,9 @@ export const AgendaEvent = () => {
         setSearch(event)
     }
     const [token, setToken] = useState('')
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
-    const { agenda, event } = useSelector(state => state.event)
+    const { agenda, event, loading } = useSelector(state => state.event)
 
     useEffect(() => {
         getTokenValue().then(val => {
@@ -177,6 +180,7 @@ export const AgendaEvent = () => {
                     item={item}
                     bottomSheetAttach={bottomSheetAttach}
                     setIdEdit={setIdEdit}
+                    loading={loading}
                 />
                 }
                 style={{ marginVertical: 10, height: 440 }}

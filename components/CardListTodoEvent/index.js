@@ -8,12 +8,15 @@ import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps"
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from "react-native"
 import moment from "moment"
+import { createShimmerPlaceHolder } from "expo-shimmer-placeholder"
+import { LinearGradient } from "expo-linear-gradient"
 
 
-export const CardListTodo = ({ token, item, bottomSheetAttach, role, setIdEdit }) => {
+export const CardListTodo = ({ token, item, bottomSheetAttach, role, setIdEdit, loading }) => {
     const [user, setUser] = useState('resepsionis')
     const navigation = useNavigation()
     const dispatch = useDispatch()
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     const getDetail = (id) => {
         const params = { token, id }
@@ -39,32 +42,44 @@ export const CardListTodo = ({ token, item, bottomSheetAttach, role, setIdEdit }
                     navigation.navigate('DetailTodo', { item: item })
                 }}
             >
-                {role.is_pic === true ||
-                    role.is_notulensi === true ||
-                    role.is_pic === false &&
-                    role.is_notulensi === false &&
-                    role.is_presensi === false &&
-                    role.is_member === false ? (
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    {loading ? (
+                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                    ) : (
                         <Text style={{ fontWeight: FONTWEIGHT.bold, width: 250 }}>{item.name}</Text>
+                    )}
+                    {role.is_pic === true ||
+                        role.is_notulensi === true ||
+                        role.is_pic === false &&
+                        role.is_notulensi === false &&
+                        role.is_presensi === false &&
+                        role.is_member === false ? (
                         <TouchableOpacity onPress={() => {
                             bottomSheetAttach()
                             setIdEdit(item.id)
                         }}>
                             <Ionicons name='chevron-forward-outline' size={24} />
                         </TouchableOpacity>
-                    </View>
-                ) : (
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.name}</Text>
-                )}
+                    ) : (
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.name}</Text>
+                    )}
+                </View>
 
                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                     <Text style={{ color: COLORS.lighter }}>Due Date :</Text>
-                    <Text style={{ marginVertical: 10, color: COLORS.lighter }}>{moment(item.due_date).format(DATETIME.LONG_DATE)}</Text>
+                    {loading ? (
+                        <ShimmerPlaceHolder style={{ borderRadius: 4, marginVertical: 10 }} width={100} height={20} />
+                    ) : (
+                        <Text style={{ marginVertical: 10, color: COLORS.lighter }}>{moment(item.due_date).format(DATETIME.LONG_DATE)}</Text>
+                    )}
                 </View>
                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                     <Text style={{ color: COLORS.lighter }}>Agenda :</Text>
-                    <Text style={{ color: COLORS.lighter, width: 250 }}>{item.agenda}</Text>
+                    {loading ? (
+                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                    ) : (
+                        <Text style={{ color: COLORS.lighter, width: 250 }}>{item.agenda}</Text>
+                    )}
                 </View>
             </TouchableOpacity>
         </View>

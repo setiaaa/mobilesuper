@@ -5,11 +5,14 @@ import { COLORS, DATETIME } from "../../config/SuperAppps"
 import { Text } from "react-native"
 import moment from "moment"
 import { TouchableOpacity } from "react-native"
+import { createShimmerPlaceHolder } from "expo-shimmer-placeholder"
+import { LinearGradient } from "expo-linear-gradient"
 
-export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventpic }) => {
+export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventpic, loading }) => {
     const [user, setUser] = useState('member')
     const [checkIn, setCheckin] = useState('')
     const navigation = useNavigation()
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     return (
         <View style={{
             justifyContent: 'center',
@@ -32,23 +35,31 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
             //     navigation.navigate('DetailAbsen')
             // }}
             >
-                <Text>{item.member?.nama}</Text>
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                ) : (
+                    <Text>{item.member?.nama}</Text>
+                )}
                 <View style={{ marginTop: 10 }}>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                         <Text style={{ width: 110 }}>Status</Text>
-                        <View style={{
-                            width: 80,
-                            height: 24,
-                            borderRadius: 30,
-                            backgroundColor: item.status === 'hadir' ? COLORS.successLight : item.status === 'waiting' ? COLORS.infoLight : null,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{
-                                color: item.status === 'hadir' ? COLORS.success : item.status === 'waiting' ? COLORS.info : null,
-                            }}>{item.status}</Text>
-                        </View>
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                        ) : (
+                            <View style={{
+                                width: 80,
+                                height: 24,
+                                borderRadius: 30,
+                                backgroundColor: item.status === 'hadir' ? COLORS.successLight : item.status === 'waiting' ? COLORS.infoLight : null,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{
+                                    color: item.status === 'hadir' ? COLORS.success : item.status === 'waiting' ? COLORS.info : null,
+                                }}>{item.status}</Text>
+                            </View>
+                        )}
                     </View>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
@@ -81,9 +92,15 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                         ) : (
                             <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 120, }}>Waktu Check In</Text>
-                                <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text>{moment(item.updated_at, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                                </View>
+                                {loading ? (
+                                    <View style={{ width: 200, }}>
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    </View>
+                                ) : (
+                                    <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text>{moment(item.updated_at, 'HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
+                                    </View>
+                                )}
                             </View>
                         )}
                     </View>

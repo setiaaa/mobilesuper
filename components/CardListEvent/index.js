@@ -6,9 +6,14 @@ import { TouchableOpacity } from "react-native";
 import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
 import { Text } from "react-native";
 import { Image } from "react-native";
+import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react";
 
-export const CardListEvent = ({ token, item }) => {
+export const CardListEvent = ({ token, item, loading }) => {
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const navigation = useNavigation();
+    // const [loading, setLoading] = useState(true)
     // const { event } = useSelector(state => state.event)
     const dispatch = useDispatch();
 
@@ -38,14 +43,22 @@ export const CardListEvent = ({ token, item }) => {
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                     <Text>Departemen:</Text>
-                    <Text style={{ marginVertical: 10, width: 200 }}>{item.pic.title.name}</Text>
+                    {loading ? (
+                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                    ) : (
+                        <Text style={{ marginVertical: 10, width: 200 }}>{item.pic.title.name}</Text>
+                    )}
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <Text>PIC</Text>
-                        <Image source={{ uri: item.pic.avatar_url }} style={{ width: 26, height: 26, borderRadius: 30 }} />
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                        ) : (
+                            <Image source={{ uri: item.pic.avatar_url }} style={{ width: 26, height: 26, borderRadius: 30 }} />
+                        )}
                     </View>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
@@ -58,7 +71,11 @@ export const CardListEvent = ({ token, item }) => {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <Text style={{ color: COLORS.info }}>{item.status}</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <Text style={{ color: COLORS.info }}>{item.status}</Text>
+                            )}
                         </View>
                     </View>
                 </View>

@@ -32,6 +32,8 @@ import { Pressable } from 'react-native'
 import { CardLampiran } from '../../components/CardLampiran'
 import { CardApprovalEvent } from '../../components/CardApprovalEvent'
 import { CardListAbsenEvent } from '../../components/CardListAbsenEvent'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 export const DetailAgenda = () => {
@@ -40,6 +42,7 @@ export const DetailAgenda = () => {
     const [visibleModal, setVisibleModal] = useState(false);
     const [lampiranById, setLampiranById] = useState(null)
     const [modalVisible, setModalVisible] = useState(false);
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     const getFileExtension = (type) => {
         let jenis = type.split('.')
@@ -49,7 +52,7 @@ export const DetailAgenda = () => {
 
     const video = useRef(null);
 
-    const { agenda, approver, notulensi, absen, event } = useSelector(state => state.event)
+    const { agenda, approver, notulensi, absen, event, loading } = useSelector(state => state.event)
     const data = agenda.detail
     const id = agenda.detail?.notulensi?.id
     const idagenda = agenda.detail?.id
@@ -188,7 +191,12 @@ export const DetailAgenda = () => {
                 <View key={data.id} style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                         <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{data.title}</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={200} height={20} />
+                            ) : (
+
+                                <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{data.title}</Text>
+                            )}
                             {/* <View
                                 style={{
                                     width: 80,
@@ -210,12 +218,17 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>QR Code</Text>
-                            {data.qr_presensi === null ? (
-                                <Text>-</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                <QRCode
-                                    value={data.qr_presensi?.qr_code}
-                                />
+
+                                data.qr_presensi === null ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <QRCode
+                                        value={data.qr_presensi?.qr_code}
+                                    />
+                                )
                             )}
                         </View>
 
@@ -224,7 +237,11 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-                            <Text>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <Text>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
+                            )}
                         </View>
 
                         {/* custom divider */}
@@ -232,10 +249,14 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ marginTop: 5 }}>{moment(data.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
-                                <Text style={{ marginTop: 5 }}>{moment(data.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
-                            </View>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ marginTop: 5 }}>{moment(data.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
+                                    <Text style={{ marginTop: 5 }}>{moment(data.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                                </View>
+                            )}
                         </View>
 
                         {/* custom divider */}
@@ -243,7 +264,11 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
-                            <Text style={{ width: 156 }}>{data.location}</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <Text style={{ width: 156 }}>{data.location}</Text>
+                            )}
                         </View>
 
                         {/* custom divider */}
@@ -252,7 +277,11 @@ export const DetailAgenda = () => {
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
                             {/* <Image source={{ uri: data.extra_attrs?.pic?.avatar_url }} style={{ width: 26, height: 26, borderRadius: 50 }} /> */}
-                            <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
+                            )}
                         </View>
 
                         {/* custom divider */}
@@ -260,10 +289,14 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
-                            {data.extra_attrs?.members?.map((data, index) =>
-                                <View key={index} style={{ position: 'relative' }}>
-                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                                </View>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                data.extra_attrs?.members?.map((data, index) =>
+                                    <View key={index} style={{ position: 'relative' }}>
+                                        <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                    </View>
+                                )
                             )}
                             {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
@@ -275,10 +308,14 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Internal</Text>
-                            {data.extra_attrs?.guests?.map((data, index) =>
-                                <View key={index} style={{ position: 'relative' }}>
-                                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                                </View>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                data.extra_attrs?.guests?.map((data, index) =>
+                                    <View key={index} style={{ position: 'relative' }}>
+                                        <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                    </View>
+                                )
                             )}
                             {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
@@ -290,14 +327,18 @@ export const DetailAgenda = () => {
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Eksternal</Text>
-                            <View style={{ position: 'relative', flexDirection: 'column' }}>
-                                {data.extra_attrs?.guest_external?.map((data, index) =>
-                                    <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
-                                        <Text>-</Text>
-                                        <Text style={{ width: 150 }}>{data.name}</Text>
-                                    </View>
-                                )}
-                            </View>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <View style={{ position: 'relative', flexDirection: 'column' }}>
+                                    {data.extra_attrs?.guest_external?.map((data, index) =>
+                                        <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
+                                            <Text>-</Text>
+                                            <Text style={{ width: 150 }}>{data.name}</Text>
+                                        </View>
+                                    )}
+                                </View>
+                            )}
                         </View>
 
 
@@ -561,29 +602,32 @@ export const DetailAgenda = () => {
 
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
                         <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Materi Agenda</Text>
-
-                        <FlatList
-                            key={'*'}
-                            data={data.attachments}
-                            renderItem={({ item }) =>
-                                <View key={item.id}>
-                                    <CardLampiran
-                                        lampiran={item.file}
-                                        type={getFileExtension(item.name)}
-                                        onClick={() => {
-                                            setVisibleModal(true)
-                                            setLampiranById(item)
-                                        }}
-                                        id={item.id}
-                                    />
-                                </View>
-                            }
-                            scrollEnabled={false}
-                            style={{ marginTop: 10 }}
-                            columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                            numColumns={3}
-                            keyExtractor={item => "*" + item.id}
-                        />
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
+                        ) : (
+                            <FlatList
+                                key={'*'}
+                                data={data.attachments}
+                                renderItem={({ item }) =>
+                                    <View key={item.id}>
+                                        <CardLampiran
+                                            lampiran={item.file}
+                                            type={getFileExtension(item.name)}
+                                            onClick={() => {
+                                                setVisibleModal(true)
+                                                setLampiranById(item)
+                                            }}
+                                            id={item.id}
+                                        />
+                                    </View>
+                                }
+                                scrollEnabled={false}
+                                style={{ marginTop: 10 }}
+                                columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                numColumns={3}
+                                keyExtractor={item => "*" + item.id}
+                            />
+                        )}
 
                         {
                             lampiranById !== null ? (
@@ -695,6 +739,7 @@ export const DetailAgenda = () => {
                             eventpic={event.detailEvent?.user_role?.is_pic}
                             setScanData={setScanData}
                             setIdAbsen={setIdAbsen}
+                            loading={loading}
                         />
                     }
                     scrollEnabled={false}
