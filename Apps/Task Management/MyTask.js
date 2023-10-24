@@ -223,7 +223,7 @@ export const MyTask = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <BottomSheetModalProvider>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
                         <View style={{
                             backgroundColor: COLORS.white,
                             borderRadius: 20,

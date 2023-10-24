@@ -10,11 +10,15 @@ import * as DocumentPicker from 'expo-document-picker';
 import { RichEditor, RichToolbar } from 'react-native-pell-rich-editor'
 import { Modal } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import { getEventProgress, getEventToday, getlistKalender, postAttachment, postEvent } from '../../service/api';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 
 export const PostinganBaru = () => {
   const navigation = useNavigation();
 
+  
   const [modalVisiblePicker, setModalVisiblePicker] = useState('');
   const { kalenderLists, attachment, status } = useSelector(state => state.event)
   const [kategori, setKategori] = useState('')
@@ -25,12 +29,18 @@ export const PostinganBaru = () => {
   const [TanggalSelesai, setTanggalSelsai] = useState('');
 
 
-
-  const payload = {
-    calendar_id: kategori.key === undefined ? '' : kategori.key,
-    start_date: TanggalMulai,
-    end_date: TanggalSelesai,
-}
+  const handleSubmit = () => {
+    const payload = {
+      calendar_id: kategori.key === undefined ? '' : kategori.key,
+      start_date: TanggalMulai,
+      end_date: TanggalSelesai,
+    }
+    const data = {
+      token: token,
+      payload: payload
+    }
+    dispatch(postEvent(data))
+  }
 
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
@@ -42,6 +52,7 @@ export const PostinganBaru = () => {
     setDocument([...document, result])
     setType([...type, tipe])
     console.log(result)
+
     const data = {
         token: token,
         result: result
@@ -52,8 +63,10 @@ export const PostinganBaru = () => {
   
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaView style={{ flex: 1 }}> 
     <ScrollView>
+    <Pressable onPress={() => richText.current?.dismissKeyboard()}>
       <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
         <View style={{
           backgroundColor: COLORS.white,
@@ -74,35 +87,33 @@ export const PostinganBaru = () => {
         </View>
       </View>
 
-      <View>
-        <View style={{
-          marginTop: 20,
+      <View style={{ marginTop: 20,
           marginBottom: 10,
           marginLeft: 17,
           marginRight: 17,
           flexDirection: 'row',
           backgroundColor: COLORS.white,
           borderRadius: 10 }}>
-          <View style={{ padding: 20, gap: 20 }}>
 
+          <View style={{ padding: 20, gap: 20 }}>
             <View style={{ gap: 5}}>
-              <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul</Text>
-              <View style={{
-                borderWidth: 1,
-                borderRadius: 4,
-                borderColor: COLORS.ExtraDivinder,
-                padding: 1,
-              }}
-              >
-              <TextInput
-                editable
-                multiline
-                numberOfLines={2}
-                maxLength={50}
-                placeholder='Masukan Judul'
-                style={{ padding: 5, width: 315, height: 40}}
-              />
-              </View>
+                <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul</Text>
+                <View style={{
+                  borderWidth: 1,
+                  borderRadius: 4,
+                  borderColor: COLORS.ExtraDivinder,
+                  padding: 1,
+                }}
+                >
+                <TextInput
+                  editable
+                  multiline
+                  numberOfLines={2}
+                  maxLength={50}
+                  placeholder='Masukan Judul'
+                  style={{ padding: 5, width: 315, height: 40}}
+                />
+                </View>
             </View>
 
             <View style={{ gap: 5}}>
@@ -258,10 +269,9 @@ export const PostinganBaru = () => {
               </View>
             </View>
           </View>
-        </Modal>
+        </Modal> 
 
-
-            <View style={{ gap: 5}}>
+        <View style={{ gap: 5}}>
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Jenis Pengetahuan</Text>
               <View>
                 <Dropdown
@@ -276,9 +286,9 @@ export const PostinganBaru = () => {
                   placeholder='Pilih'
                 />
               </View>
-            </View>
+        </View>
 
-            <View style={{ gap: 5}}>
+        <View style={{ gap: 5}}>
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Kopetensi Pengetahuan</Text>
               <View>
                 <Dropdown
@@ -293,9 +303,9 @@ export const PostinganBaru = () => {
                   placeholder='Pilih'
                 />
               </View>
-            </View>
+        </View>
 
-            <View style={{ gap: 5}}>
+        <View style={{ gap: 5}}>
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Tagar</Text>
               <View style={{
                 borderWidth: 1,
@@ -314,9 +324,9 @@ export const PostinganBaru = () => {
               />
               </View>
               <Text style={{ fontWeight: FONTWEIGHT.light, fontSize: FONTSIZE.H4 }}>Note: Gunakan tanda koma (,) sebagai pemisah jika lebih dari 1</Text>
-            </View>
+          </View>
 
-            <View style={{ gap: 5}}>
+          <View style={{ gap: 5}}>
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Ringkasan</Text>
               <View style={{
                 borderWidth: 1,
@@ -334,9 +344,9 @@ export const PostinganBaru = () => {
                 style={{ padding: 5, width: 315, height: 40}}
               />
               </View>
-            </View>
+          </View>
 
-            <View style={{ gap: 5}}>
+          <View style={{ gap: 5}}>
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Deskripsi</Text>
               <View style={{
                 borderWidth: 1,
@@ -345,19 +355,18 @@ export const PostinganBaru = () => {
                 padding: 1
               }}
               >
-                <KeyboardAvoidingView style={{ flex: 1 }}>
-                  <RichEditor
-                      ref={richText}
-                      onChange={setRichTextHandle}
-                      placeholder="Tulis Pesan..."
-                      androidHardwareAccelerationDisabled={true}
-                      initialHeight={100}
-                  />
-                </KeyboardAvoidingView>
+              <TextInput
+                editable
+                multiline
+                numberOfLines={2}
+                maxLength={50}
+                placeholder='Tulis Pesan'
+                style={{ padding: 5, width: 315, height: 150}}
+              />
               </View>
-            </View>   
+          </View>
 
-            <View style={{ gap: 5}}>
+          <View style={{ gap: 5}}>
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Foto Cover</Text>
               <Pressable onPress={pickDocument}>
                 <View style={{
@@ -394,9 +403,9 @@ export const PostinganBaru = () => {
                     ))}
                 </View>
               )}
-            </View>
+          </View>
 
-            <View style={{ gap: 5}}>
+          <View style={{ gap: 5}}>
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Lampiran</Text>
               <Pressable onPress={pickDocument}>
                 <View style={{
@@ -452,9 +461,11 @@ export const PostinganBaru = () => {
             </View> 
 
 
+
           </View>
-        </View>
-        <View style={{ marginLeft: 17, flexDirection: 'row', gap: 10, paddingBottom: 10}}>
+          
+      </View>
+      <View style={{ marginLeft: 17, flexDirection: 'row', gap: 10, paddingBottom: 10}}>
           <TouchableOpacity style={{backgroundColor: "#D2B48C", padding: 10, borderRadius: 10, width: "46.5%", height: 50, justifyContent: "center"}}>
             <Text style={{textAlign: "center", color: COLORS.white}}>Ubah Draft</Text>
           </TouchableOpacity>
@@ -462,9 +473,34 @@ export const PostinganBaru = () => {
             <Text style={{textAlign: "center", color: COLORS.white}}>Unggah</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      
+    </Pressable>
     </ScrollView>
     </SafeAreaView>
+    </GestureHandlerRootView>
   );
 };
-
+const styles = StyleSheet.create({
+  Card: {
+      backgroundColor: COLORS.white,
+      width: "90%",
+      marginVertical: 20,
+      marginLeft: 20,
+      borderRadius: 16
+  },
+  iOSBackdrop: {
+      backgroundColor: "#000000",
+      opacity: 0.3
+  },
+  androidBackdrop: {
+      backgroundColor: "#232f34",
+      opacity: 0.32
+  },
+  backdrop: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+  }
+})

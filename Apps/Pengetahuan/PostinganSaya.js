@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { AVATAR, COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { getTokenValue } from "../../service/session";
 import { TabView, SceneMap } from "react-native-tab-view";
@@ -66,6 +66,7 @@ const CardPostinganSaya = ({ item, token }) => {
                 fontSize: 13,
                 textAlign: "justify",
                 marginBottom: 5,
+                maxWidth: 250
               }}
               numberOfLines={1} // Limit the number of lines to 1
               ellipsizeMode="tail" // Display "..." at the end if text overflows
@@ -80,7 +81,7 @@ const CardPostinganSaya = ({ item, token }) => {
               }}
             >
               <Text style={{ color: "#6B7280", fontSize: 13 }}>
-                Tanggal : {item.created_at}
+                Tanggal : {moment(item.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}
               </Text>
               <View style={{ flexDirection: "row" }}>
                 <Text style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}>
@@ -229,10 +230,9 @@ export const PostinganSaya = () => {
       <View
         style={{
           flexDirection: "row",
-          alignItems: "flex-end",
+          alignItems: "center",
           backgroundColor: COLORS.primary,
           height: 80,
-          paddingBottom: 20,
         }}
       >
         <View

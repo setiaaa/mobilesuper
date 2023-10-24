@@ -129,7 +129,7 @@ export const Profile = () => {
                         <View style={{ paddingBottom: 20 }}>
                             <View style={{ flexDirection: 'row', marginTop: 20 }}>
                                 <Text style={{ width: 91, fontSize: 30, fontWeight: FONTWEIGHT.bold }}>{profile.ipasn_nilai}</Text>
-                                <View style={{ backgroundColor: '#CED06C', width: 60, height: 18, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ backgroundColor: '#CED06C', width: 60, height: 25, borderRadius: 30, justifyContent: 'center', alignItems: 'center', }}>
                                     <Text>Tinggi</Text>
                                 </View>
                             </View>

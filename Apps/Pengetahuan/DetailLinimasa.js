@@ -426,12 +426,14 @@ export const DetailLinimasa = () => {
                                     <Text>{detail.summary}</Text>
                                 </View>
 
-                                <View style={{ marginHorizontal: 20 }}>
+                                <View style={{ marginHorizontal: 20, paddingVertical: -20 }}>
                                     <RenderHTML
                                         source={source}
                                         contentWidth={width}
+                                        enableExperimentalMarginCollapsing={true}
                                     />
                                 </View>
+
 
                                 <View style={{ marginHorizontal: 20 }}>
                                     <Text style={{
