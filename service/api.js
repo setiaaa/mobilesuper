@@ -23,6 +23,7 @@ const CHART_POINT = BASE_URL + "mp/mypost/chart/point/";
 const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
+const digitalSign = BASE_URL + 'digitalsign/';
 
 const SUMMARY_TOTAL_POST = BASE_URL + "mp/admin/summary/total-post/";
 const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
@@ -1177,3 +1178,72 @@ export const getSummaryReview = createAsyncThunk(
 //     const respon = await axios.post(`${Linimasa}linimasa/comment/`, data.payload, { headers: { Authorization: data.token } })
 //     return respon?.data
 // })
+//Digital Signature
+export const getListComposer = createAsyncThunk("digitalsign/getListComposer", async ({ token, tipe }) => {
+    const respon = await axios.get(`${digitalSign}document/composer/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.results,
+        tipe: tipe
+    }
+})
+export const getListInProgress = createAsyncThunk("digitalsign/getListInProgress", async ({ token, tipe }) => {
+    const respon = await axios.get(`${digitalSign}document/inprogress/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.results,
+        tipe: tipe
+    }
+})
+export const getListCompleted = createAsyncThunk("digitalsign/getListCompleted", async ({ token, tipe }) => {
+    const respon = await axios.get(`${digitalSign}document/completed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.results,
+        tipe: tipe
+    }
+})
+export const getListDraft = createAsyncThunk("digitalsign/getListDraft", async ({ token, tipe }) => {
+    const respon = await axios.get(`${digitalSign}document/draft/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.results,
+        tipe: tipe
+    }
+})
+
+export const addDocumentDigiSign = createAsyncThunk("digitalsign/addDocumentDigiSign", async (data) => {
+    const respon = await axios.post(`${digitalSign}document/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const putDocumentDigiSign = createAsyncThunk("digitalsign/putDocumentDigiSign", async (data) => {
+    const respon = await axios.put(`${digitalSign}document/${data.id}/draft/`, { status: data.status }, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const addAttachmentDigiSign = createAsyncThunk("digitalsign/addAttachmentDigiSign", async (data) => {
+    const respon = await axios.post(`${digitalSign}attachment/create/`, data.payload, { headers: { Authorization: data.token } })
+    return respon?.data
+})
+
+export const getDetailDigisign = createAsyncThunk("digitalsign/getDetailDigisign", async ({ token, id }) => {
+    const respon = await axios.get(`${digitalSign}document/${id}`, { headers: { Authorization: token } })
+    return respon?.data.result
+})
+
+export const updateDocumentDigiSign = createAsyncThunk("digitalsign/updateDocumentDigiSign", async (data) => {
+    const respon = await axios.put(`${digitalSign}document/${data.id}/draft/`, { status: data.status }, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const putInProgressDigiSign = createAsyncThunk("digitalsign/putInProgressDigiSign", async (data) => {
+    const respon = await axios.put(`${digitalSign}document/approve/`, { status: data.status }, { headers: { Authorization: data.token } })
+    return respon?.data.result
+})
+
+export const getCourseDigiSign = createAsyncThunk("digitalsign/getCourseDigiSign", async (token) => {
+    const respon = await axios.get(`${digitalSign}course/?limit=10`, { headers: { Authorization: token } })
+    return respon?.data.results
+})
+
+export const getListSignedDigiSign = createAsyncThunk("digitalsign/getListSignedDigiSign", async (token, tipe) => {
+    const respon = await axios.get(`${digitalSign}document/signed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
+    return respon?.data.results
+})

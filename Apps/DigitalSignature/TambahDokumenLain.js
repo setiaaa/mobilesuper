@@ -22,34 +22,41 @@ import moment from 'moment'
 import { Dropdown } from '../../components/DropDown'
 import * as DocumentPicker from 'expo-document-picker';
 import { setAttachment } from '../../store/Event'
-import { setStatus } from '../../store/DigitalSign'
-import { FilePickerResult } from 'expo-document-picker';
 import { Modal } from 'react-native'
+import { setStatus } from '../../store/DigitalSign'
 
 
-export const TambahSertifikat = () => {
+export const TambahDokumenLain = () => {
     const navigation = useNavigation()
     const richText = useRef(null);
     const [document, setDocument] = useState([])
 
     const [Subject, setSubject] = useState('');
-    const [Nosertif, setNoSertif] = useState('');
-    const [Course, setCourse] = useState('');
+    const [Nodokumen, setNoDokumen] = useState('');
+    const [Jenisdokumen, setJenisDokumen] = useState([]);
     const [Keterangan, setKeterangan] = useState('');
     const [token, setToken] = useState('')
     const [type, setType] = useState([])
+    const [stateConfig, setStateConfig] = useState({})
+    const [pilihanPenandatangan, setPilihanPenandatangan] = useState([])
+
 
     const dispatch = useDispatch()
-    const { courseList, status } = useSelector(state => state.digitalsign)
+    const { courseList,status } = useSelector(state => state.digitalsign)
     const { profile } = useSelector(state => state.superApps)
     const { attachment } = useSelector(state => state.event)
-    const [selectedFile, setSelectedFile] = useState(null);
+    const { addressbook } = useSelector(state => state.addressBookKKP)
 
+
+    let dummyDokumen = [{
+        key:"1",
+        value:"dokumen"
+    },{
+        key:"2",
+        value:"dokumen2"
+    }]
     const pickDocument = async () => {
-        if (selectedFile){
-            return
-        }
-        let result = await DocumentPicker.getDocumentAsync({type: 'application/pdf',});
+        let result = await DocumentPicker.getDocumentAsync({});
         // const file = convertFileToObject(result)
         let tipe = result.uri.split('/')
         tipe = tipe[tipe.length - 1]
@@ -58,9 +65,6 @@ export const TambahSertifikat = () => {
         setDocument([...document, result])
         setType([...type, tipe])
         console.log(result)
-        if(result.type === 'success'){
-            setSelectedFile(result)
-        }
         const data = {
             token: token,
             result: result
@@ -68,7 +72,11 @@ export const TambahSertifikat = () => {
         dispatch(postAttachment(data))
     };
 
-    
+    useEffect(() => {
+        if (stateConfig.title === 'Pimpinan Event') {
+            setPilihanPenandatangan(addressbook.selected)
+        }
+    }, [addressbook])
 
     useEffect(() => {
         getTokenValue().then(val => {
@@ -86,6 +94,15 @@ export const TambahSertifikat = () => {
     
     const handleSubmitUnggah = () => {
 
+        const pilihTtd = []
+        pilihanPenandatangan?.map(item => {
+            if (item?.code) {
+                pilihTtd.push(item?.code)
+            } else {
+                pilihTtd.push(item.nip)
+            }
+        })
+
         let id_attch = [];
         attachment.map((item) => {
             id_attch.push(
@@ -95,17 +112,17 @@ export const TambahSertifikat = () => {
         const payload = {
             subject: Subject,
             senders:[profile.nip],
-            approvers:['197908162002121003'],
+            approvers:pilihTtd,
             action:"submit",
             id_attachments:id_attch,
             extra_attributes:{
-                noSertif: Nosertif,
+                noDokumen: Nodokumen,
                 keterangan: Keterangan,
-                id_course: Course.key === undefined ? '' : Course.key,
-                tanggalSertif: new Date()
+                jenisDokumen: Jenisdokumen.value === undefined ? '' : Jenisdokumen.value,
+                tanggalDokumen: new Date()
             },
             comment:'comment',
-            tipe_dokumen:'bankom'
+            tipe_dokumen:'dokumen_lain'
         }
         const data = {
             token: token,
@@ -113,10 +130,18 @@ export const TambahSertifikat = () => {
         }
         console.log(data)
         dispatch(addDocumentDigiSign(data))
-        
     }
 
     const handleSubmitDraft = () => {
+        const pilihTtd = []
+        pilihanPenandatangan?.map(item => {
+            if (item?.code) {
+                pilihTtd.push(item?.code)
+            } else {
+                pilihTtd.push(item.nip)
+            }
+        })
+
         let id_attch = [];
         attachment.map((item) => {
             id_attch.push(
@@ -126,24 +151,24 @@ export const TambahSertifikat = () => {
         const payload = {
             subject: Subject,
             senders:[profile.nip],
-            approvers:['197908162002121003'],
+            approvers:pilihTtd,
             action:"draft",
             id_attachments:id_attch,
             extra_attributes:{
-                noSertif: Nosertif,
+                noDokumen: Nodokumen,
                 keterangan: Keterangan,
-                id_course: Course.key === undefined ? '' : Course.key,
-                tanggalSertif: new Date()
+                jenisDokumen: Jenisdokumen.key === undefined ? '' : Jenisdokumen.key,
+                tanggalDokumen: new Date()
             },
             comment:'comment',
-            tipe_dokumen:'bankom'
+            tipe_dokumen:'dokumen_lain'
         }
         const data = {
             token: token,
             payload: payload
         }
         console.log(data)
-        dispatch(addDocumentDigiSign(data))
+        // dispatch(addDocumentDigiSign(data))
     }
     
 
@@ -157,8 +182,6 @@ export const TambahSertifikat = () => {
         });
         return judulCourse
     }
-
-    // console.log(courseList)
 
     return (
         <SafeAreaView>
@@ -179,13 +202,13 @@ export const TambahSertifikat = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Sertifikat Baru</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Dokumen Baru</Text>
                         </View>
                     </View>
 
                     <View style={styles.Card}>
                         <View style={{ marginTop: 20, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul Sertifikat</Text>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul Dokumen</Text>
                             <Text style={{ color: COLORS.danger }}>*</Text>
                         </View>
                         <View style={{
@@ -202,7 +225,7 @@ export const TambahSertifikat = () => {
                                 multiline
                                 numberOfLines={4}
                                 maxLength={40}
-                                placeholder='Masukan Judul Sertifikat'
+                                placeholder='Masukan Judul Dokumen'
                                 style={{ padding: 10 }}
                                 onChangeText={setSubject}
                                 value={Subject}
@@ -210,7 +233,7 @@ export const TambahSertifikat = () => {
                         </View>
 
                         <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>No Sertifikat</Text>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>No Dokumen</Text>
                             <Text style={{ color: COLORS.danger }}>*</Text>
                         </View>
                         <View style={{
@@ -228,20 +251,61 @@ export const TambahSertifikat = () => {
                                 multiline
                                 numberOfLines={4}
                                 maxLength={40}
-                                placeholder='Masukan Nomor sertifikat'
+                                placeholder='Masukan Nomor Dokumen'
                                 style={{ padding: 10 }}
-                                onChangeText={setNoSertif}
-                                value={Nosertif}
+                                onChangeText={setNoDokumen}
+                                value={Nodokumen}
                             />
                         </View>
 
+                        <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Penandatangan</Text>
+                            <Text style={{ color: COLORS.danger }}>*</Text>
+                        </View>
+                                <View style={{
+                                    borderWidth: 1,
+                                    marginHorizontal: 17,
+                                    borderRadius: 4,
+                                    borderColor: COLORS.ExtraDivinder,
+                                    flexDirection: 'row',
+                                }}
+                                >
+                                    <TextInput
+                                        required={true}
+                                        editable
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        placeholder='Pilih member'
+                                        style={{ padding: 10, width: '80%' }}
+                                        value={pilihanPenandatangan[0]?.title}
+                                    />
+                                    <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
+                                        <TouchableOpacity onPress={() => {
+                                            const config = {
+                                                title: 'Pimpinan Event',
+                                                tabs: {
+                                                    jabatan: true,
+                                                    pegawai: false
+                                                },
+                                                multiselect: false,
+                                                payload: pilihanPenandatangan
+                                            }
+                                            setStateConfig(config)
+                                            navigation.navigate("AddressBook", { config: config });
+                                        }}>
+                                            <Ionicons name='people-outline' size={24} color={COLORS.grey} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+
                         <View style={{ marginTop: 20, marginBottom: 10, marginLeft: 17, flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul Course</Text>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3 }}>Judul Dokumen</Text>
                         </View>
                         <View style={{ marginHorizontal: 17 }}>
                             <Dropdown
-                                data={pickCourse()}
-                                setSelected={setCourse}
+                                data={dummyDokumen}
+                                setSelected={setJenisDokumen}
                                 borderWidth={1}
                                 borderColor={COLORS.ExtraDivinder}
                                 borderwidthDrop={1}
@@ -274,7 +338,6 @@ export const TambahSertifikat = () => {
                                         <Text style={{ color: '#66656C' }}>Klik Untuk Unggah</Text>
                                     </View>
                                 </Pressable>
-                                {/* TODO:handler 1 attch & only pdf */}
                                 {document.length < 1 ? (
                                     null
                                 ) : (
@@ -372,7 +435,7 @@ export const TambahSertifikat = () => {
                                                 </View>
                                                 <TouchableOpacity onPress={() => {
                                                     dispatch(setStatus(''))
-                                                    navigation.navigate('Bankom')
+                                                    navigation.navigate('DokumenLain')
                                                 }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
                                                     <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
                                                         <Text style={{ color: COLORS.white }}>Ok</Text>
