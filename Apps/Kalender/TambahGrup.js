@@ -30,6 +30,7 @@ import { setStatus } from '../../store/GrupKalender'
 import { getTokenValue } from '../../service/session'
 import { ModalSubmit } from '../../components/ModalSubmit'
 import { CardListPesertaAddresbook } from '../../components/CardListPesertaAddresbook'
+import { Loading } from '../../components/Loading'
 
 // const CardListPeserta = ({ item, addressbook }) => {
 //     const dispatch = useDispatch()
@@ -118,7 +119,7 @@ export const TambahGrup = () => {
     const dispatch = useDispatch()
 
     const { addressbook } = useSelector(state => state.addressBookKKP)
-    const { status } = useSelector(state => state.grupKalender)
+    const { status, loading } = useSelector(state => state.grupKalender)
 
     useEffect(() => {
         getTokenValue().then(val => {
@@ -265,6 +266,11 @@ export const TambahGrup = () => {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView>
+                {
+                    loading ? (
+                        <Loading />
+                    ) : null
+                }
                 <BottomSheetModalProvider>
                     <ScrollView>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>

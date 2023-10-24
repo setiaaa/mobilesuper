@@ -29,6 +29,7 @@ import { postGrup, putEditGrup } from '../../service/api'
 import { setStatus } from '../../store/GrupKalender'
 import { getTokenValue } from '../../service/session'
 import { ModalSubmit } from '../../components/ModalSubmit'
+import { Loading } from '../../components/Loading'
 
 const CardListPeserta = ({ item, addressbook, persetaSubAgenda = false, setPilihanPeserta }) => {
     const dispatch = useDispatch()
@@ -126,7 +127,7 @@ export const EditGrup = () => {
     const dispatch = useDispatch()
 
     const { addressbook } = useSelector(state => state.addressBookKKP)
-    const { status, detailGrup } = useSelector(state => state.grupKalender)
+    const { status, detailGrup, loading } = useSelector(state => state.grupKalender)
 
 
     useEffect(() => {
@@ -282,6 +283,11 @@ export const EditGrup = () => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <SafeAreaView>
                 <BottomSheetModalProvider>
                     <ScrollView>

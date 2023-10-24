@@ -21,7 +21,8 @@ const DashboardSlice = createSlice({
         },
         perencanaan: {
             lists: []
-        }
+        },
+        loading: false
     },
     reducers: {
         setBerita: (state, action) => {
@@ -38,12 +39,33 @@ const DashboardSlice = createSlice({
         builder
             .addCase(getKesejahteraan.fulfilled, (state, action) => {
                 state.kesejahteraan.lists = action.payload;
+                state.loading = false
+            })
+            .addCase(getKesejahteraan.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getKesejahteraan.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getPerencanaan.fulfilled, (state, action) => {
                 state.perencanaan.lists = action.payload;
+                state.loading = false
+            })
+            .addCase(getPerencanaan.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getPerencanaan.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getTeknologi.fulfilled, (state, action) => {
                 state.teknologi.lists = action.payload;
+                state.loading = false
+            })
+            .addCase(getTeknologi.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getTeknologi.rejected, (state, action) => {
+                state.loading = false
             })
     }
 })

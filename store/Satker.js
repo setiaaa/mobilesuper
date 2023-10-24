@@ -12,7 +12,8 @@ const SatkerSlice = createSlice({
         },
         pesan: [],
         ultah: [],
-        linimasa: []
+        linimasa: [],
+        loading: true
     },
     reducers: {
 
@@ -21,24 +22,73 @@ const SatkerSlice = createSlice({
         builder
             .addCase(getBennerSatker.fulfilled, (state, action) => {
                 state.benner = action.payload;
+                state.loading = false
+            })
+            .addCase(getBennerSatker.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getBennerSatker.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getGallerySatker.fulfilled, (state, action) => {
                 state.gallery = action.payload;
+                state.loading = false
+            })
+            .addCase(getGallerySatker.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getGallerySatker.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getSatkerNews.fulfilled, (state, action) => {
                 state.berita.lists = action.payload;
+                state.loading = false
+            })
+            .addCase(getSatkerNews.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getSatkerNews.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getDetailSatkerNews.fulfilled, (state, action) => {
                 state.berita.detail = action.payload;
+                state.loading = false
+            })
+            .addCase(getDetailSatkerNews.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getDetailSatkerNews.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getPesan.fulfilled, (state, action) => {
                 state.pesan = action.payload;
+                state.loading = false
+            })
+            .addCase(getPesan.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getPesan.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getUltah.fulfilled, (state, action) => {
                 state.ultah = action.payload;
+                state.loading = false
+            })
+            .addCase(getUltah.pending, (state, action) => {
+                state.loading = false
+            })
+            .addCase(getUltah.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getSatkerLinimasa.fulfilled, (state, action) => {
                 state.linimasa = action.payload;
+                state.loading = false
+            })
+            .addCase(getSatkerLinimasa.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getSatkerLinimasa.rejected, (state, action) => {
+                state.loading = false
             })
     }
 })

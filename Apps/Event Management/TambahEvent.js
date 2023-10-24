@@ -30,6 +30,7 @@ import { getEventProgress, getEventToday, getlistKalender, postAttachment, postE
 import Addressbook from '../../components/AddressbookKKp/Addressbook';
 import { setAddressbookSelected } from '../../store/AddressbookKKP';
 import { setAttachment, setStatus } from '../../store/Event';
+import { Loading } from '../../components/Loading';
 
 
 // const Input = () => {
@@ -234,7 +235,7 @@ export const TambahEvent = () => {
     };
 
 
-    const { kalenderLists, attachment, status } = useSelector(state => state.event)
+    const { kalenderLists, attachment, status, loading } = useSelector(state => state.event)
     const [stateConfig, setStateConfig] = useState({})
 
     const { addressbook } = useSelector(state => state.addressBookKKP)
@@ -319,6 +320,11 @@ export const TambahEvent = () => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <SafeAreaView>
                 <BottomSheetModalProvider>
                     <ScrollView>

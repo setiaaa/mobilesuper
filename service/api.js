@@ -428,8 +428,9 @@ export const postKomenTodo = createAsyncThunk(
 //pegawai
 export const getPegawai = createAsyncThunk(
     "calendar/getPegawai",
-    async (token) => {
-        const respon = await axios.get(`${pegawai}profile/all/?limit=10`, {
+    async ({ token, page }) => {
+        const offset = page * 10
+        const respon = await axios.get(`${pegawai}profile/all/?limit=10&offset=${offset}`, {
             headers: { Authorization: token },
         });
         return respon?.data.results;

@@ -15,9 +15,11 @@ import { Ionicons } from '@expo/vector-icons';
 import RenderHTML from 'react-native-render-html'
 import { useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 
-const CardLists = ({ item, setDetail, setDetailContent, value }) => {
+const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
     const source = {
         html: `<section id="services" className="services">
         <div className="container">
@@ -86,7 +88,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
         </div>
     </section>`
     };
-
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const { width } = useWindowDimensions();
 
     return (
@@ -105,8 +107,17 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
                     console.log(item)
                 }}
             >
-                <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
-                <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={330} height={20} />
+                ) : (
+                    <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
+                )}
+
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 10 }} width={330} height={20} />
+                ) : (
+                    <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                )}
             </TouchableOpacity>
             {/* )} */}
         </View>
@@ -128,7 +139,7 @@ export const Kesejahteraan = () => {
         })
     }, [])
 
-    const { kesejahteraan } = useSelector(state => state.dashboard)
+    const { kesejahteraan, loading } = useSelector(state => state.dashboard)
     const [lists, setLists] = useState([])
 
     const { width } = useWindowDimensions();
@@ -194,6 +205,7 @@ export const Kesejahteraan = () => {
                             setDetail={setDetail}
                             setDetailContent={setDetailContent}
                             value={value}
+                            loading={loading}
                         />
                         }
                         style={{ height: 500 }}

@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
 import { getBennerSatker, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah } from '../../service/api';
+import { Loading } from '../../components/Loading';
 
 const BannerSetjen = [
     {
@@ -76,7 +77,7 @@ export const Satker = () => {
     // }, []);
 
 
-    const { benner, gallery, berita, pesan, ultah, linimasa } = useSelector(state => state.satker)
+    const { benner, gallery, berita, pesan, ultah, linimasa, loading } = useSelector(state => state.satker)
     const { profile } = useSelector((state) => state.superApps);
 
     console.log(profile.satuan_kerja_nama)
@@ -218,6 +219,11 @@ export const Satker = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <ScrollView
                 style={{ flexGrow: 1 }}
                 nestedScrollEnabled={true}

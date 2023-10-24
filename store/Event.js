@@ -244,36 +244,60 @@ const EventSlice = createSlice({
       .addCase(postAttachment.rejected, (state, action) => {
         console.log('gagal')
       })
+      .addCase(postEvent.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+        state.loading = false
+      })
+      .addCase(postEvent.pending, (state, action) => {
+        state.status = 'berhasil'
+        state.loading = false
+      })
       .addCase(postEvent.rejected, (state, action) => {
         console.log(action.payload)
         state.status = 'error'
-      })
-      .addCase(postEvent.fulfilled, (state, action) => {
-        state.status = 'berhasil'
+        state.loading = false
       })
       .addCase(updateStatus.fulfilled, (state, action) => {
         state.statusEvent = action.payload;
       })
+      .addCase(updateEvent.fulfilled, (state, action) => {
+        state.status = 'berhasil'
+        state.loading = false
+      })
+      .addCase(updateEvent.pending, (state, action) => {
+        state.status = 'berhasil'
+        state.loading = true
+      })
       .addCase(updateEvent.rejected, (state, action) => {
         console.log(action.payload)
         state.status = 'error'
+        state.loading = false
       })
-      .addCase(updateEvent.fulfilled, (state, action) => {
+      .addCase(postSubAgenda.fulfilled, (state, action) => {
         state.status = 'berhasil'
+        state.loading = false
+      })
+      .addCase(postSubAgenda.pending, (state, action) => {
+        state.status = 'berhasil'
+        state.loading = true
       })
       .addCase(postSubAgenda.rejected, (state, action) => {
         console.log(action.payload, 'error')
         state.status = 'error'
+        state.loading = false
       })
-      .addCase(postSubAgenda.fulfilled, (state, action) => {
+      .addCase(updateSubAgenda.fulfilled, (state, action) => {
         state.status = 'berhasil'
+        state.loading = false
+      })
+      .addCase(updateSubAgenda.pending, (state, action) => {
+        state.status = 'berhasil'
+        state.loading = true
       })
       .addCase(updateSubAgenda.rejected, (state, action) => {
         console.log(action.payload)
         state.status = 'error'
-      })
-      .addCase(updateSubAgenda.fulfilled, (state, action) => {
-        state.status = 'berhasil'
+        state.loading = false
       })
       .addCase(readyToApprove.rejected, (state, action) => {
         console.log(action.payload)
@@ -282,21 +306,35 @@ const EventSlice = createSlice({
       .addCase(readyToApprove.fulfilled, (state, action) => {
         state.status = 'berhasil'
       })
-      .addCase(postTodo.rejected, (state, action) => {
-        console.log(action.payload)
-        state.status = 'error'
-      })
       .addCase(postTodo.fulfilled, (state, action) => {
         console.log(action.payload)
         state.status = 'berhasil'
+        state.loading = false
       })
-      .addCase(updateTodo.rejected, (state, action) => {
+      .addCase(postTodo.pending, (state, action) => {
+        console.log(action.payload)
+        state.status = 'berhasil'
+        state.loading = true
+      })
+      .addCase(postTodo.rejected, (state, action) => {
         console.log(action.payload)
         state.status = 'error'
+        state.loading = false
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
         console.log(action.payload)
         state.status = 'berhasil'
+        state.loading = false
+      })
+      .addCase(updateTodo.pending, (state, action) => {
+        console.log(action.payload)
+        state.status = 'berhasil'
+        state.loading = true
+      })
+      .addCase(updateTodo.rejected, (state, action) => {
+        console.log(action.payload)
+        state.status = 'error'
+        state.loading = false
       })
   }
 })

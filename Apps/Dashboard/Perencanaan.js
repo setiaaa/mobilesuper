@@ -16,8 +16,10 @@ import RenderHTML from 'react-native-render-html'
 import { useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
-const CardLists = ({ item, setDetail, setDetailContent, value }) => {
+const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
     const source = {
         html: `<section id="services" className="services">
         <div className="container">
@@ -88,6 +90,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
     };
 
     const { width } = useWindowDimensions();
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     return (
         <View>
@@ -105,8 +108,17 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
                     console.log(item)
                 }}
             >
-                <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
-                <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={330} height={20} />
+                ) : (
+                    <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
+                )}
+
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 10 }} width={330} height={20} />
+                ) : (
+                    <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                )}
             </TouchableOpacity>
             {/* )} */}
         </View>
@@ -128,7 +140,7 @@ export const Perencanaan = () => {
         })
     }, [])
 
-    const { perencanaan } = useSelector(state => state.dashboard)
+    const { perencanaan, loading } = useSelector(state => state.dashboard)
     const lists = perencanaan.lists.results
 
     const { width } = useWindowDimensions();
@@ -160,6 +172,7 @@ export const Perencanaan = () => {
                             setDetail={setDetail}
                             setDetailContent={setDetailContent}
                             value={value}
+                            loading={loading}
                         />
                         }
                         style={{ height: 500 }}

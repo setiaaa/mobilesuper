@@ -12,17 +12,21 @@ import { ScrollView } from 'react-native'
 import { CollapseCardLinimasa } from '../../components/CollapseCardLinimasa'
 import { removeTokenValue } from '../../service/session'
 import { setLogout } from '../../store/LoginAuth'
+import { Loading } from '../../components/Loading'
 
 
 export const Profile = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
-    const { profile, linimasa } = useSelector(state => state.superApps)
+    const { profile, linimasa, loading } = useSelector(state => state.superApps)
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-
-    console.log(profile)
     return (
         <SafeAreaView>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{

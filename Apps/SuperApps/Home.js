@@ -59,6 +59,7 @@ import {
 import { bannerKegiatan } from "../../components/BannerKegiatan";
 import { BeritaHome } from "../../components/BeritaHome";
 import { GaleriHome } from "../../components/GaleriHome";
+import { Loading } from "../../components/Loading";
 
 const { width: screenWidth } = Dimensions.get("window");
 export const Home = () => {
@@ -109,7 +110,7 @@ export const Home = () => {
     }
   }, [token]);
 
-  const { berita, agenda, program, galeri, profile, visimisi, banner } =
+  const { berita, agenda, program, galeri, profile, visimisi, banner, loading } =
     useSelector((state) => state.superApps);
 
 
@@ -159,9 +160,14 @@ export const Home = () => {
   // console.log(galeri.lists);
   // console.log(berita.lists);
   return (
-    <SafeAreaView style={{ flex: 1 }} key={1}>
+    < >
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
+          {
+            loading ? (
+              <Loading />
+            ) : null
+          }
           <ScrollView>
             <View
               style={{
@@ -817,9 +823,10 @@ export const Home = () => {
               />
             </View>
           </ScrollView>
+
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </SafeAreaView>
+    </>
   );
 };
 

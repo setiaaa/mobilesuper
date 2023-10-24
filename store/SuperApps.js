@@ -29,6 +29,7 @@ const SuperAppsSlice = createSlice({
       misi: [],
     },
     banner: [],
+    loading: false
   },
   reducers: {
     setProfile: (state, action) => {
@@ -72,19 +73,54 @@ const SuperAppsSlice = createSlice({
     builder
       .addCase(getProfileMe.fulfilled, (state, action) => {
         state.profile = action.payload;
+        state.loading = false
+      })
+      .addCase(getProfileMe.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getProfileMe.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getBanner.fulfilled, (state, action) => {
         state.banner = action.payload;
+        state.loading = false
+      })
+      .addCase(getBanner.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getBanner.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getGaleri.fulfilled, (state, action) => {
         state.galeri.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getGaleri.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getGaleri.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getBerita.fulfilled, (state, action) => {
         state.berita.lists = action.payload;
+        state.loading = false
+      })
+      .addCase(getBerita.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getBerita.rejected, (state, action) => {
+        state.loading = false
       })
       .addCase(getDetailBerita.fulfilled, (state, action) => {
         state.berita.detail = action.payload;
-      });
+        state.loading = false
+      })
+      .addCase(getDetailBerita.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getDetailBerita.rejected, (state, action) => {
+        state.loading = false
+      })
   },
 });
 

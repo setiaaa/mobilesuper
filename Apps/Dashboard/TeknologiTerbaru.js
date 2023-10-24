@@ -14,9 +14,12 @@ import { useEffect } from 'react'
 import { getTokenValue } from '../../service/session'
 import { getKesejahteraan, getTeknologi } from '../../service/api'
 import { Linking } from 'react-native'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
-const ListTeknologi = ({ item }) => {
+const ListTeknologi = ({ item, loading }) => {
     const navigation = useNavigation()
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     return (
         <View style={{
             backgroundColor: 'white',
@@ -29,28 +32,42 @@ const ListTeknologi = ({ item }) => {
             marginHorizontal: 20
         }}>
             <View>
-                <View>
-                    <Image source={{ uri: item.image_url }} style={Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid} />
-                </View>
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={355} height={355} />
+                ) : (
+                    <View>
+                        <Image source={{ uri: item.image_url }} style={Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid} />
+                    </View>
+                )}
                 <View style={{ marginTop: 20, marginHorizontal: 5 }}>
-                    <Text style={{ marginVertical: 5, fontSize: 13, fontWeight: FONTWEIGHT.bold, marginHorizontal: 10 }}>{item.title}</Text>
+                    {loading ? (
+                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={250} height={20} />
+                    ) : (
+                        <Text style={{ marginVertical: 5, fontSize: 13, fontWeight: FONTWEIGHT.bold, marginHorizontal: 10 }}>{item.title}</Text>
+                    )}
                 </View>
-                <TouchableOpacity style={{
-                    borderWidth: 1,
-                    marginHorizontal: 20,
-                    marginVertical: 20,
-                    padding: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 8,
-                    borderColor: COLORS.primary
-                }}
-                    onPress={() => {
-                        Linking.openURL(item.url)
+                {loading ? (
+                    <View style={{ alignItems: 'center' }}>
+                        <ShimmerPlaceHolder style={{ borderRadius: 4, marginVertical: 20 }} width={250} height={40} />
+                    </View>
+                ) : (
+                    <TouchableOpacity style={{
+                        borderWidth: 1,
+                        marginHorizontal: 20,
+                        marginVertical: 20,
+                        padding: 10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 8,
+                        borderColor: COLORS.primary
                     }}
-                >
-                    <Text style={{ color: COLORS.primary }}>Buka Lebih Lengkap</Text>
-                </TouchableOpacity>
+                        onPress={() => {
+                            Linking.openURL(item.url)
+                        }}
+                    >
+                        <Text style={{ color: COLORS.primary }}>Buka Lebih Lengkap</Text>
+                    </TouchableOpacity>
+                )}
             </View>
         </View>
     );
@@ -74,8 +91,7 @@ export const TeknologiTerbaru = () => {
         }
     }, [token])
 
-    const { teknologi } = useSelector(state => state.dashboard)
-
+    const { teknologi, loading } = useSelector(state => state.dashboard)
     console.log(teknologi.lists)
 
     return (
@@ -89,6 +105,7 @@ export const TeknologiTerbaru = () => {
                 data={teknologi.lists}
                 renderItem={({ item }) => <ListTeknologi
                     item={item}
+                    loading={loading}
                 />
                 }
                 keyExtractor={item => item.id}

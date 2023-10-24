@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, Pressable, Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, FlatList, Pressable, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AVATAR, COLORS, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
@@ -21,6 +21,9 @@ import { Platform } from 'react-native';
 import { getTokenValue } from '../../service/session';
 import { getDetailPegawai, getPegawai } from '../../service/api';
 import { CardListPegawai } from '../../components/CardListPegawai';
+import { Loading } from '../../components/Loading';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { StatusBar } from 'expo-status-bar';
 
 
 
@@ -40,20 +43,24 @@ export const ListPegawai = () => {
 
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
+    const [page, setPage] = useState(0)
 
     useEffect(() => {
         getTokenValue().then(val => {
             setToken(val)
         })
+        dispatch(setPegawai([]))
+        setPage(0)
     }, [])
 
     useEffect(() => {
         if (token !== '') {
-            dispatch(getPegawai(token))
+            dispatch(getPegawai({ token, page }))
+            console.log(page, 'page')
         }
-    }, [token])
+    }, [token, page])
 
-    const { pegawai } = useSelector(state => state.Pegawai)
+    const { pegawai, loading } = useSelector(state => state.Pegawai)
     // const filter = (event) => {
     //     setSearch(event)
     // }
@@ -73,37 +80,43 @@ export const ListPegawai = () => {
     //     }
     // }, [search])
 
+    const loadMore = () => {
+        setPage(page + 1)
+    }
+
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView>
-            <ScrollView>
-                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 20
-                    }}>
-                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Pegawai</Text>
-                    </View>
+        <>
+            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
+                <View style={{
+                    backgroundColor: COLORS.white,
+                    borderRadius: 20,
+                    width: 28,
+                    height: 28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 20
+                }}>
+                    <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                    </TouchableOpacity>
                 </View>
-
-                <View style={{ width: '90%', marginVertical: 20, marginHorizontal: 20, }}>
-                    <Search
-                        placeholder={'Cari'}
-                    // onSearch={filter}
-                    />
+                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Pegawai</Text>
                 </View>
+            </View>
 
+            <View style={{ width: '90%', marginVertical: 20, marginHorizontal: 20, }}>
+                <Search
+                    placeholder={'Cari'}
+                // onSearch={filter}
+                />
+            </View>
+
+            <View
+                style={{ flex: 1, paddingBottom: 24 }}
+            >
                 <FlatList
                     data={pegawai.lists}
                     renderItem={({ item }) => <CardListPegawai
@@ -112,16 +125,27 @@ export const ListPegawai = () => {
                         setCollapse={setCollapse}
                         navigation={navigation}
                         token={token}
+                        loading={loading}
                     />
                     }
+                    style={{ flex: 1 }}
+                    ListFooterComponent={() => (
+                        loading && (
+                            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                                <ActivityIndicator size="large" color={COLORS.primary} />
+                            </View>
+                        )
+                    )}
                     keyExtractor={item => item.id}
-                    scrollEnabled={false}
+                    scrollEnabled={true}
+                    onEndReached={loadMore}
                     ListEmptyComponent={() => (
                         <ListEmpty />
                     )}
                 />
-            </ScrollView>
-        </SafeAreaView>
+                {/* {loading && <Loading />} */}
+            </View>
+        </>
     )
 }
 

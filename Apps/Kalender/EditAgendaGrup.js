@@ -32,6 +32,7 @@ import { postAgendaAcara, putEditAgendaGrup } from '../../service/api';
 import { useEffect } from 'react';
 import { ModalSubmit } from '../../components/ModalSubmit';
 import { CardListDataPeserta } from '../../components/CardListDataPeserta';
+import { Loading } from '../../components/Loading';
 
 
 
@@ -80,7 +81,7 @@ export const EditAgendaGrup = ({ route }) => {
         }
     }
 
-    const { detailGrup, status, acara } = useSelector(state => state.grupKalender)
+    const { detailGrup, status, acara, loading } = useSelector(state => state.grupKalender)
     // console.log(detailGrup)
     const editAgenda = acara.detail
     const [anggotaAcara, setAnggotaAcara] = useState(detailGrup.members)
@@ -194,6 +195,11 @@ export const EditAgendaGrup = ({ route }) => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <SafeAreaView>
                 <BottomSheetModalProvider>
                     <ScrollView>
