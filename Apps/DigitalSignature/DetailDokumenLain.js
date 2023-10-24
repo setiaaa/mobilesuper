@@ -28,6 +28,7 @@ export const DetailDokumenLain = () => {
     const { digitalsign } = useSelector((state) => state.digitalsign)
     const item = digitalsign.detail
     let links = [];
+    let tanggalApprove = [];
 
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
@@ -46,7 +47,6 @@ export const DetailDokumenLain = () => {
             bottomSheetModalRef.current?.close()
     }
 
-    console.log(item)
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -118,43 +118,59 @@ export const DetailDokumenLain = () => {
                                 <Text style={{ width: "50%"}}>{item.extra_attributes?.keterangan}</Text>
                             </View>
                         </View>
-                        {item.approvers?.map((data) => {
+                        {item.logs?.map((log) => {
+                        tanggalApprove.push(
+                            log.created_at
+                        )})}
+                        {item.approvers?.map((data, index=0) => {
                             return (
                                 <View style={{ borderWidth: 1, borderRadius: 4, width: '95%', marginHorizontal: 10, marginBottom: 20, borderColor: '#DBDADE' }}>
                                     <View style={{ backgroundColor: COLORS.primary, alignItems: 'center', height: 30, justifyContent: 'center' }}>
                                         <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Approval</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                        <View style={{ alignItems: 'center' }}>
+                                        <View style={{ alignItems: 'left', width:'98%'}}>
                                             <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center', }}>
                                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penandatangan</Text>
                                                 <Image source={data.avatar_url}/>
-                                                    {item.approved_by !== null?(
+                                                    {index < item.logs.length?(
+                                                        <>
                                                         <View style={{ backgroundColor: COLORS.success, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
                                                             <Ionicons name='checkmark-outline' color={COLORS.white} />
                                                         </View>
+                                                        <View style={{backgroundColor:COLORS.successLight, paddingVertical:5, borderRadius:20, paddingHorizontal:15}}>
+                                                            <Text style={{color: COLORS.success}}>Ditandatangani</Text>
+                                                        </View>
+                                                    </>
                                                     ):(
-                                                        null
+                                                    <>
+                                                        <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <Ionicons name='close' color={COLORS.white} />
+                                                        </View>
+                                                        <View style={{backgroundColor:COLORS.infoDangerLight, paddingVertical:5, borderRadius:20, paddingHorizontal:15}}>
+                                                            <Text style={{color: COLORS.infoDanger}}>Belum Ditandatangani</Text>
+                                                        </View>
+                                                    </>
                                                     )}
                                             </View>
                                                 {data?.officer?(
-                                                <View>
-                                                    <Text style={{ marginTop: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold, textAlign:'center' }}>{data.display_title}</Text>
-                                                    <Text style={{ marginTop: 10, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold, textAlign:'center' }}>{data.officer.nama}</Text>
+                                                <View style={{width:'95%'}}>
+                                                    <Text style={{ marginTop: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold, textAlign:'left'}}>{data.display_title}</Text>
+                                                    <Text style={{ marginTop: 2, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold, textAlign:'left'}}>{data.officer.nama}</Text>
                                                 </View>
                                                 ) : (
-                                                <View>
-                                                    <Text style={{ marginTop: 10, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold, textAlign:'center' }}>{data.nama}</Text>
+                                                <View style={{width:'95%'}}>
+                                                    <Text style={{ marginTop: 10, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold}}>{data.nama}</Text>
                                                 </View>
                                                 )}
                                                     {/* TODO:date approval belum fix */}
-                                                    {item.approved_by !== null?(
+                                                    {index < item.logs.length?(
                                                         <View style={{ flexDirection: 'row', gap: 10, marginTop: 5, marginBottom: 10 }}>
-                                                            <Text style={{ color: COLORS.lighter, marginTop: 5 }}>Disetujui :</Text>
-                                                            <Text style={{ color: COLORS.lighter }}>{moment(item.extra_attributes?.last_approved_date).format("DD MMMM YYYY")}</Text>
+                                                            <Text style={{ color: COLORS.lighter}}>Disetujui :</Text>
+                                                            <Text style={{ color: COLORS.lighter }}>{moment(tanggalApprove[index]).format("DD MMMM YYYY")}</Text>
                                                             {/* divider custom */}
                                                             <View style={{ height: '100%', width: 1, backgroundColor: COLORS.lighter }} />
-                                                            <Text style={{ color: COLORS.lighter }}>{moment(item.extra_attributes?.last_approved_date).format("HH:mm")}</Text>
+                                                            <Text style={{ color: COLORS.lighter }}>{moment(tanggalApprove[index]).format("HH:mm")}</Text>
                                                         </View>
                                                     ):(
                                                         <Text style={{ color: COLORS.lighter, marginVertical: 10 }}></Text>

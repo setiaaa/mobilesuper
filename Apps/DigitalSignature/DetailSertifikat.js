@@ -129,25 +129,37 @@ export const DetailSertifikat = (route) => {
                                 <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Approval</Text>
                             </View>
                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center' }}>
-                            <View style={{ alignItems: 'center' }}>
-                                            <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center', }}>
+                            <View style={{ alignItems: 'left',width:'97%' }}>
+                                            <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center' }}>
                                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penandatangan</Text>
                                                     {item.approved_by !== null?(
+                                                    <>
                                                         <View style={{ backgroundColor: COLORS.success, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
                                                             <Ionicons name='checkmark-outline' color={COLORS.white} />
                                                         </View>
+                                                        <View style={{backgroundColor:COLORS.successLight, paddingVertical:5, borderRadius:20, paddingHorizontal:15}}>
+                                                            <Text style={{color: COLORS.success}}>Ditandatangani</Text>
+                                                        </View>
+                                                    </>
                                                     ):(
-                                                        null
+                                                    <>
+                                                        <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <Ionicons name='close' color={COLORS.white} />
+                                                        </View>
+                                                        <View style={{backgroundColor:COLORS.infoDangerLight, paddingVertical:5, borderRadius:20, paddingHorizontal:15}}>
+                                                            <Text style={{color: COLORS.infoDanger}}>Belum Ditandatangani</Text>
+                                                        </View>
+                                                    </>
                                                     )}
                                             </View>
+                                            <Text style={{ marginTop: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold, textAlign:'left', width:'90%' }}>{item.approvers[1]?.display_title}</Text>
+                                            <Text style={{ marginTop: 2, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold, textAlign:'left', width:'90%' }}>{item.approvers[1]?.officer?.nama}</Text>
 
-                                            <Text style={{ marginTop: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold, textAlign:'center' }}>{item.approvers[1]?.display_title}</Text>
-                                            <Text style={{ marginTop: 10, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold, textAlign:'center' }}>{item.approvers[1]?.officer?.nama}</Text>
-
-                                            <Text style={{ color: COLORS.lighter, marginTop: 5 }}>Disetujui :</Text>
+                                            
                                             {/* TODO date approval belum fix */}
                                             {item.approved_by !== null?(
                                                 <View style={{ flexDirection: 'row', gap: 10, marginTop: 5, marginBottom: 10 }}>
+                                                    <Text style={{ color: COLORS.lighter}}>Disetujui :</Text>
                                                     <Text style={{ color: COLORS.lighter }}>{moment(item.extra_attributes?.last_approved_date).format("DD MMMM yyyy")}</Text>
                                                     {/* divider custom */}
                                                     <View style={{ height: '100%', width: 1, backgroundColor: COLORS.lighter }} />

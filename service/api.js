@@ -650,6 +650,14 @@ export const addDocumentDigiSign = createAsyncThunk("digitalsign/addDocumentDigi
     return respon?.data
 })
 
+export const getListSignedDigiSign = createAsyncThunk("digitalsign/getListSignedDigiSign", async ({token, tipe}) => {
+    const respon = await axios.get(`${digitalSign}document/signed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.results,
+        tipe: tipe
+    }
+})
+
 export const putDocumentDigiSign = createAsyncThunk("digitalsign/putDocumentDigiSign", async (data) => {
     const respon = await axios.put(`${digitalSign}document/${data.id}/draft/`, { status: data.status }, { headers: { Authorization: data.token } })
     return respon?.data.result
@@ -677,10 +685,5 @@ export const putInProgressDigiSign = createAsyncThunk("digitalsign/putInProgress
 
 export const getCourseDigiSign = createAsyncThunk("digitalsign/getCourseDigiSign", async (token) => {
     const respon = await axios.get(`${digitalSign}course/?limit=10`, { headers: { Authorization: token } })
-    return respon?.data.results
-})
-
-export const getListSignedDigiSign = createAsyncThunk("digitalsign/getListSignedDigiSign", async (token, tipe) => {
-    const respon = await axios.get(`${digitalSign}document/signed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
     return respon?.data.results
 })

@@ -13,21 +13,14 @@ import Checkbox from 'expo-checkbox'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import ListEmpty from '../../components/ListEmpty'
-import { getDetailDigisign, getListCompleted, getListComposer, getListDraft, getListInProgress } from '../../service/api'
+import { getDetailDigisign, getListCompleted, getListComposer, getListDraft, getListInProgress, getListSignedDigiSign } from '../../service/api'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {
-    BottomSheetModal,
-    BottomSheetModalProvider,
-    BottomSheetBackdrop,
-    BottomSheetView,
-    BottomSheetTextInput,
-    useBottomSheetDynamicSnapPoints
-} from '@gorhom/bottom-sheet';
+
 import { getTokenValue } from '../../service/session'
 import { setDigitalSignLists } from '../../store/DigitalSign'
 
 
-const ListBankom = ({item, tipe, token}) => {
+const ListBankom = ({item, variant, token}) => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const [isSelected, setSelection] = useState(false);
@@ -61,7 +54,7 @@ const ListBankom = ({item, tipe, token}) => {
                     getDetail(item.id)
                     navigation.navigate('DetailSertifikat')
             }}>
-            {tipe === 'inprogress'?(
+            {variant === 'inprogress'?(
                 <Checkbox
                         value={isSelected}
                         onValueChange={setSelection}
@@ -84,19 +77,9 @@ export const Bankom = () => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const [search, setSearch] = useState('')
-    const [tipe, setTipe] = useState('')
-    // const [type, setType] = useState('bankom')
+    const [tipe, setTipe] = useState('bankom')
+    const [variant, SetVariant] = useState('')
     const [filterData, setFilterData] = useState([])
-    
-    const bottomSheetModalMemberRef = useRef(null);
-    
-    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
-    const {
-        animatedHandleHeight,
-        animatedSnapPoints,
-        animatedContentHeight,
-        handleContentLayout,
-    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
     
     useEffect(() => {
         getTokenValue().then(val => {
@@ -105,35 +88,32 @@ export const Bankom = () => {
     }, [])
 
     useEffect(() => {
-        setTipe('')
-        dispatch(getListComposer({token:token, tipe:'bankom'}));
+        SetVariant('draft')
+        dispatch(getListDraft({token:token, tipe:tipe}));
     }, [tipe])
 
     const filterHandlerComposer = () => {
-        setTipe('')
-        dispatch(getListComposer({token:token, tipe:'bankom'}));
+        SetVariant('composer')
+        dispatch(getListComposer({token:token, tipe:tipe}));
     }
     const filterHandlerInProgress = () => {
-        setTipe('inprogress')
-        dispatch(getListInProgress({token:token, tipe:'bankom'}));
+        SetVariant('inprogress')
+        dispatch(getListInProgress({token:token, tipe:tipe}));
     }
     const filterHandlerCompleted = () => {
-        setTipe('')
-        dispatch(getListCompleted({token:token, tipe:'bankom'}));
+        SetVariant('completed')
+        dispatch(getListCompleted({token:token, tipe:tipe}));
     }
     const filterHandlerDraft = () => {
-        setTipe('')
-        dispatch(getListDraft({token:token, tipe:'bankom'}));
+        SetVariant('draft')
+        dispatch(getListDraft({token:token, tipe:tipe}));
     }
-
+    const filterHandlerSigned = () => {
+        SetVariant('signed')
+        dispatch(getListSignedDigiSign({token:token, tipe:tipe}));
+    }
     
     const { digitalsign } = useSelector((state) => state.digitalsign)
-    
-
-
-    const bottomSheetMember = () => {
-        bottomSheetModalMemberRef.current?.present()
-    }
 
     const filter = (event) => {
         setSearch(event)
@@ -155,14 +135,14 @@ export const Bankom = () => {
         }
     }, [search])
 
+    console.log(digitalsign.lists)
 
-    // console.log(digitalsign.lists)
-    // console.log(filterData)
     return (
         <GestureHandlerRootView>
                 <SafeAreaView style={{ position: 'relative' }}>
                 {filterData !== null?(
-                    <><View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80,  }}>
+                    <>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80,  }}>
                         <View style={{
                             backgroundColor: COLORS.white,
                             borderRadius: 20,
@@ -179,33 +159,108 @@ export const Bankom = () => {
                         <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
                             <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Digital Signature</Text>
                         </View>
-                    </View><View style={{ flexDirection: 'row' }}>
-                            <View style={{ width: '75%', marginLeft: 20, marginTop: 20, }}>
-                                <Search
-                                    placeholder={'Cari'}
-                                    iconColor={COLORS.primary}
-                                    onSearch={filter} />
-                            </View>
-                            <TouchableOpacity style={{ marginTop: 20, width: '15%', justifyContent: 'center', alignItems: 'center' }} onPress={() => { bottomSheetMember() } }>
-                                <Icon name="filter-list" size={24} color="black" />
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={{ width: '90%', marginLeft: 20, marginTop: 20, }}>
+                            <Search
+                                placeholder={'Cari'}
+                                iconColor={COLORS.primary}
+                                onSearch={filter} />
+                        </View>
+                    </View>
+                    <View>
+                        <View style={{paddingVertical:10, paddingHorizontal:20, flexDirection:'row', justifyContent:'center'}}>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 60,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerDraft()}
+                            >
+                            <Text style={{color: variant === 'draft' ? COLORS.infoDanger: COLORS.foundation}}>Draft</Text>
+                                </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 80,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerComposer()}
+                            >
+                                <Text style={{color: variant === 'composer' ? COLORS.infoDanger: COLORS.foundation}}>List Saya</Text>
                             </TouchableOpacity>
-                        </View><View>
-                            <FlatList
-                                data={filterData}
-                                renderItem={({ item }) => (
-                                    <View key={item.id}>
-                                        <ListBankom
-                                            item={item}
-                                            token={token}
-                                            tipe={tipe} />
-                                    </View>
-                                )}
-                                keyExtractor={item => item.id}
-                                ListEmptyComponent={() => <ListEmpty />}
-                                style={{ height: '80%' }} />
-                        </View><TouchableOpacity onPress={() => {
-                            navigation.navigate('TambahSertifikat')
-                        } }
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 85,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerInProgress()}
+                            >
+                                <Text style={{color: variant === 'inprogress' ? COLORS.infoDanger: COLORS.foundation}}>Need Sign</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 60,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerSigned()}
+                            >
+                                <Text style={{color: variant === 'signed' ? COLORS.infoDanger: COLORS.foundation}}>Signed</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 60,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerCompleted()}
+                            >
+                                <Text style={{color: variant === 'completed' ? COLORS.infoDanger: COLORS.foundation}}>Selesai</Text>
+                            </TouchableOpacity>    
+                        </View>
+                        <FlatList
+                            data={filterData}
+                            renderItem={({ item }) => (
+                                <View key={item.id}>
+                                    <ListBankom
+                                        item={item}
+                                        token={token}
+                                        tipe={tipe} />
+                                        </View>
+                                    )}
+                                    keyExtractor={item => item.id}
+                                    ListEmptyComponent={() => <ListEmpty />}
+                                    style={{ height: '73%' }} />
+                    </View>
+                        <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
                             style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}
                         >
                             <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
@@ -213,80 +268,10 @@ export const Bankom = () => {
                             </View>
                         </TouchableOpacity></>
                 ):(
-                    <Text>Loading</Text>
+                    null
                 )}
                     
                 </SafeAreaView>
-                <BottomSheetModalProvider>
-                    <BottomSheetModal
-                        ref={bottomSheetModalMemberRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50, }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout}>
-                            <View>
-                                <View style={{ marginHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between', marginTop: 50 }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                        }}
-                                    >
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ marginHorizontal: 20, gap: 30, alignItems: "center"}}>
-                                    <TouchableOpacity onPress={filterHandlerComposer} style={{
-                                        borderWidth: 1,
-                                        padding: 15,
-                                        width: "100%",
-                                        borderRadius: 4,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        alignItems: 'center'
-                                    }}>
-                                        <Text>Composer</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={filterHandlerInProgress} style={{
-                                        borderWidth: 1,
-                                        padding: 15,
-                                        width: "100%",
-                                        borderRadius: 4,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        alignItems: 'center'
-                                    }}>
-                                        <Text>Inprogress</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={filterHandlerCompleted} style={{
-                                        borderWidth: 1,
-                                        padding: 15,
-                                        width: "100%",
-                                        borderRadius: 4,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        alignItems: 'center'
-                                    }}>
-                                        <Text>Completed</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={filterHandlerDraft} style={{
-                                        borderWidth: 1,
-                                        padding: 15,
-                                        width: "100%",
-                                        borderRadius: 4,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        alignItems: 'center',
-                                        marginBottom: 200
-                                    }}>
-                                        <Text>Draft</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-                </BottomSheetModalProvider>
         </GestureHandlerRootView>
     )
 }

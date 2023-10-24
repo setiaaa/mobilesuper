@@ -57,7 +57,11 @@ const DigitalSignSlice = createSlice({
                 }
             })
             .addCase(getListSignedDigiSign.fulfilled, (state, action) => {
-                state.digitalsign.lists = action.payload;
+                if (action.payload.tipe === 'bankom') {
+                    state.digitalsign.lists = action.payload.data;
+                } else {
+                    state.dokumenlain.lists = action.payload.data;
+                }
             })
             .addCase(getDetailDigisign.fulfilled, (state, action) => {
                 state.digitalsign.detail = action.payload;
