@@ -129,9 +129,11 @@ import { DetailLinimasa } from "../Pengetahuan/DetailLinimasa";
 import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
+import { DetailDokumenLain } from "../DigitalSignature/DetailDokumenLain";
 import MainDigitalSign from "../DigitalSignature/MainDigitalSign";
 import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
+import { TambahDokumenLain } from "../DigitalSignature/TambahDokumenLain";
 import MainPengetahuan from "../Pengetahuan/MainPengetahuan";
 import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
 import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
@@ -355,6 +357,13 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="DetailDokumenLain"
+          component={DetailDokumenLain}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="DetailActivity"
           component={DetailActivity}
           options={{
@@ -448,6 +457,13 @@ function AuthStack() {
         <Stack.Screen
           name="TambahSertifikat"
           component={TambahSertifikat}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahDokumenLain"
+          component={TambahDokumenLain}
           options={{
             headerShown: false,
           }}
