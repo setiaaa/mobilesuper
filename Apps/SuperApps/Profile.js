@@ -167,11 +167,11 @@ export const Profile = () => {
                     {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
                 </View>
 
-                <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ marginVertical: 20, justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity
                         style={{
                             backgroundColor: COLORS.primary,
-                            width: '90%',
+                            width: '93%',
                             height: 50,
                             borderRadius: 8,
                             justifyContent: 'center',

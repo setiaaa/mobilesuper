@@ -593,7 +593,7 @@ export const TambahGrup = () => {
 
                         <TouchableOpacity onPress={() => handleSubmit()}>
                             <View style={{ alignItems: 'flex-end', marginRight: 40 }}>
-                                <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
                                     <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
                                 </View>
                             </View>

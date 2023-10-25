@@ -179,6 +179,8 @@ export const GrupKalender = () => {
     setDate(today)
   }
 
+  
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -229,7 +231,7 @@ export const GrupKalender = () => {
                     <View style={{ marginVertical: 20, marginLeft: 20 }}>
                       <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Pilih Grup</Text>
                     </View>
-                    <View style={{ width: '90%', marginLeft: 20, marginBottom: 20 }}>
+                    <View style={{ width: '90%', marginLeft: 20, }}>
                       <Dropdown
                         data={datagrup()}
                         setSelected={setKategoriField}
@@ -357,7 +359,7 @@ export const GrupKalender = () => {
                 dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
                 navigation.navigate('DetailGrup')
               }}>
-                <Text style={{ color: COLORS.info, }}>Lihat Detail</Text>
+                {/* <Text style={{ color: COLORS.info, }}>Lihat Detail</Text> */}
               </TouchableOpacity>
             </View>
 
@@ -419,13 +421,20 @@ export const GrupKalender = () => {
                 })}
                 <View>
                 </View>
+
+                <View style={{ marginBottom: 10, }}>
+                  <Text style={{ }}>
+                    Agenda Hari Ini
+                  </Text>
+                </View>
+
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <TouchableOpacity style={{ marginVertical: 10 }} onPress={bottomSheetAttach}>
                     <Text style={{ color: COLORS.info, }}>Selengkapnya</Text>
                   </TouchableOpacity>
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
                     <TouchableOpacity onPress={bottomSheetAdd}>
-                      <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                      <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center',  }}>
                         <Ionicons name='add-outline' size={24} color={COLORS.white} />
                       </View>
                     </TouchableOpacity>

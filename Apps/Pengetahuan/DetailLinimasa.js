@@ -374,11 +374,11 @@ export const DetailLinimasa = () => {
                                     alignItems: 'center',
                                     borderRadius: 50,
                                     position: 'absolute',
-                                    right: 10,
+                                    right: 35,
                                     bottom: 30
 
                                 }}>
-                                    <Ionicons name='share-social-outline' size={20} color={COLORS.white} />
+                                    <Ionicons name='share-social-outline' size={24} color={COLORS.white} />
                                 </TouchableOpacity>
                             </View>
                             <View style={{ backgroundColor: COLORS.white, }}>

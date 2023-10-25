@@ -52,7 +52,7 @@ const CardLiniMasa = ({ item, token }) => {
             borderRadius: 16,
             width: '90%',
             flex: 1,
-            marginTop: 10,
+            marginTop: 20,
             marginHorizontal: 20,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
@@ -60,14 +60,17 @@ const CardLiniMasa = ({ item, token }) => {
             shadowOpacity: 0.2,
             //shadow android
             elevation: 2,
+            alignContent: 'center',
+            marginBottom: 20
+        
         }}>
             <TouchableOpacity onPress={(e) => {
                 e.stopPropagation()
                 getDetail(item.id)
                 navigation.navigate('DetailLinimasa')
             }}>
-                <View style={{ marginVertical: 20, marginHorizontal: 15 }}>
-                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                <View style={{ marginVertical: 30, marginHorizontal: 15 }}>
+                    <View style={{ flexDirection: 'row', gap: 15 }}>
                         <View>
                             <Image source={{ uri: item.avatar_url }} style={{ borderRadius: 50, width: 50, height: 50 }} />
                         </View>
@@ -281,11 +284,6 @@ const CardLiniMasa = ({ item, token }) => {
                                 )
                             })}
                         </ScrollView>
-
-
-
-
-
                     </View>
                 </View>
             </Modal>

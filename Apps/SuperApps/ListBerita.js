@@ -77,6 +77,29 @@ export const ListBerita = () => {
     });
   }, []);
 
+  const [search, setSearch] = useState('')
+  const [filterData, setFilterData] = useState([])
+
+
+  const filter = (event) => {
+    setSearch(event)
+  }
+
+  useEffect(() => {
+    setFilterData(berita.lists)
+  }, [berita])
+
+  useEffect(() => {
+    if (search !== '') {
+        const data = berita.lists.filter((item) => {
+            return item.title.toLowerCase().includes(search.toLowerCase());
+        })
+        setFilterData(data)
+    } else {
+        setFilterData(berita.lists)
+    }
+}, [search])
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
@@ -116,10 +139,15 @@ export const ListBerita = () => {
           </View>
         </View>
         <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-          <Search placeholder={"Pencarian"} />
+        <Search
+          placeholder={'Cari'}
+          iconColor={COLORS.primary}
+          onSearch={filter}
+        />
+        
         </View>
         <FlatList
-          data={berita.lists}
+          data={filterData}
           renderItem={({ item, index }) => (
             <View key={index}>
               <Item

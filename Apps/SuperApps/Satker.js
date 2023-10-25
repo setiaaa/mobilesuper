@@ -218,6 +218,7 @@ export const Satker = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ alignContent: 'center'}}>
             <ScrollView
                 style={{ flexGrow: 1 }}
                 nestedScrollEnabled={true}
@@ -247,7 +248,7 @@ export const Satker = () => {
                     </View>
                 </View>
 
-                <CardSatker profile={profile} />
+                <CardSatker profile={profile}/>
 
                 <View style={[styles.containerr, { marginTop: 20 }]}>
                     <Carousel
@@ -285,7 +286,7 @@ export const Satker = () => {
                     />
                 </View>
 
-                <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
+                <View style={ { marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
@@ -316,7 +317,7 @@ export const Satker = () => {
                         hasParallaxImages={true}
                         onSnapToItem={setSlide2}
                     />
-                    <Pagination
+                    <Pagination 
                         dotsLength={pesan.length}
                         dotColor={'black'}
                         inactiveDotColor={COLORS.grey}
@@ -335,7 +336,7 @@ export const Satker = () => {
                     markedDates={{
                         [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: COLORS.primary }
                     }}
-                    style={{ width: '90%', marginLeft: 20, borderRadius: 16 }}
+                    style={{ width: '85%', marginLeft: 28, borderRadius: 5, marginTop: 20,}}
                     theme={{
                         arrowColor: COLORS.primary,
                         selectedDayBackgroundColor: COLORS.primary,
@@ -365,6 +366,7 @@ export const Satker = () => {
                 </View>
 
             </ScrollView>
+            </View>
         </SafeAreaView>
     )
 }
@@ -409,10 +411,10 @@ const styles = StyleSheet.create({
     cardListSatker: {
         backgroundColor: "#FFFFFF",
         flexDirection: "column",
-        width: '90%',
-        marginLeft: 20,
+        width: '86%',
+        marginLeft: 25,
         opacity: 0.9,
-        borderRadius: 12,
+        borderRadius: 5,
         marginVertical: 40
     },
     vertical: {
