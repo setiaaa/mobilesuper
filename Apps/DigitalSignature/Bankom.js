@@ -253,7 +253,7 @@ export const Bankom = () => {
                                     <ListBankom
                                         item={item}
                                         token={token}
-                                        tipe={tipe} />
+                                        variant={variant} />
                                         </View>
                                     )}
                                     keyExtractor={item => item.id}

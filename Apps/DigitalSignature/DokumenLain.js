@@ -251,7 +251,7 @@ export const DokumenLain = () => {
                                     <ListDokumenLain
                                         item={item}
                                         token={token}
-                                        tipe = {tipe}
+                                        variant = {variant}
                                     />
                                 </View>
                             )}
