@@ -303,15 +303,8 @@ function MyTabBar({ props, navigation }) {
                                 <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
                             </TouchableOpacity>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 20 }}>
-                                <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
-                                        <View style={[styles.cardApps, { backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                                            <Image source={require('../../assets/superApp/ikon-perencanaan.png')} />
-                                        </View>
-                                    </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Perencanaan</Text>
-                                </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 20, alignItems: 'center' }}>
+
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                                     <TouchableOpacity onPress={() => {
                                         navigation.navigate('Keuangan')
@@ -321,7 +314,7 @@ function MyTabBar({ props, navigation }) {
                                             <Image source={require('../../assets/superApp/ikon-keuangan.png')} />
                                         </View>
                                     </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Keuangan & Kinerja</Text>
+                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, height: 40 }}>Keuangan & Kinerja</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                                     <TouchableOpacity onPress={() => {
@@ -333,11 +326,8 @@ function MyTabBar({ props, navigation }) {
                                             <Image source={require('../../assets/superApp/ikon-kepagawaian.png')} />
                                         </View>
                                     </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kepegawaian</Text>
+                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, height: 40 }}>Kepegawaian</Text>
                                 </View>
-                            </View>
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 10, marginTop: 30, marginHorizontal: 15, alignItems: 'flex-start' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                                     <TouchableOpacity onPress={() => {
                                         navigation.navigate('ProduksiBudidaya')
@@ -347,8 +337,11 @@ function MyTabBar({ props, navigation }) {
                                             <Image source={require('../../assets/superApp/ikon-budidaya.png')} />
                                         </View>
                                     </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Produksi{'\n'}Budidaya</Text>
+                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontSize: FONTSIZE.H4, height: 40 }}>Produksi{'\n'}Budidaya</Text>
                                 </View>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 10, marginTop: 30, marginHorizontal: 15, alignItems: 'flex-start' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                                     <TouchableOpacity onPress={() => {
                                         navigation.navigate('Penangkapan')

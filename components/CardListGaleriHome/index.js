@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { View } from 'react-native';
-import { COLORS } from '../../config/SuperAppps';
+import { COLORS, FONTWEIGHT } from '../../config/SuperAppps';
 import { TouchableOpacity } from 'react-native';
 import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Image } from 'react-native';
+import { Text } from 'react-native';
 
 
 export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
@@ -33,19 +34,21 @@ export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
                             Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid
                         }
                     />
-                    {/* <View style={{ marginVertical: 20, marginHorizontal: 5 }}>
-              <Text
-                style={{
-                  color: COLORS.grey,
-                  marginVertical: 5,
-                  fontSize: 10,
-                  fontWeight: 400,
-                  textAlign: "center",
-                }}
-              >
-                {deskripsi}
-              </Text>
-            </View> */}
+                    <View style={{ marginVertical: 20, marginHorizontal: 5 }}>
+                        <Text
+                            numberOfLines={3}
+                            style={{
+                                color: COLORS.grey,
+                                marginVertical: 5,
+                                fontSize: 10,
+                                fontWeight: 400,
+                                textAlign: "center",
+                                fontWeight: FONTWEIGHT.bold
+                            }}
+                        >
+                            {deskripsi}
+                        </Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

@@ -77,6 +77,7 @@ export const Home = () => {
   const [modalVisibleVisiMisi, setModalVisibleVisiMisi] = useState(false);
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
   const [token, setToken] = useState("");
+  const [page, setPage] = useState(1)
 
   const dispatch = useDispatch();
 
@@ -100,13 +101,13 @@ export const Home = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getGaleri(token));
+      dispatch(getGaleri({ token, page }));
     }
   }, [token]);
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getBerita(token));
+      dispatch(getBerita({ token, page }));
     }
   }, [token]);
 

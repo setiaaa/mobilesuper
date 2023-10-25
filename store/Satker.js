@@ -16,7 +16,9 @@ const SatkerSlice = createSlice({
         loading: true
     },
     reducers: {
-
+        setBeritaSatker: (state, action) => {
+            state.berita.lists = action.payload;
+        },
     },
     extraReducers(builder) {
         builder
@@ -41,7 +43,12 @@ const SatkerSlice = createSlice({
                 state.loading = false
             })
             .addCase(getSatkerNews.fulfilled, (state, action) => {
-                state.berita.lists = action.payload;
+                // state.berita.lists = action.payload;
+                // state.loading = false
+                let dataPrev = state.berita.lists
+                let dataNext = action.payload
+                let gabung = dataPrev.concat(dataNext)
+                state.berita.lists = gabung
                 state.loading = false
             })
             .addCase(getSatkerNews.pending, (state, action) => {
@@ -94,7 +101,7 @@ const SatkerSlice = createSlice({
 })
 
 export const {
-
+    setBeritaSatker
 } =
     SatkerSlice.actions;
 

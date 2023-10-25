@@ -92,7 +92,12 @@ const SuperAppsSlice = createSlice({
         state.loading = false
       })
       .addCase(getGaleri.fulfilled, (state, action) => {
-        state.galeri.lists = action.payload;
+        // state.galeri.lists = action.payload;
+        // state.loading = false
+        let dataPrev = state.galeri.lists
+        let dataNext = action.payload
+        let gabung = dataPrev.concat(dataNext)
+        state.galeri.lists = gabung
         state.loading = false
       })
       .addCase(getGaleri.pending, (state, action) => {
@@ -102,7 +107,10 @@ const SuperAppsSlice = createSlice({
         state.loading = false
       })
       .addCase(getBerita.fulfilled, (state, action) => {
-        state.berita.lists = action.payload;
+        let dataPrev = state.berita.lists
+        let dataNext = action.payload
+        let gabung = dataPrev.concat(dataNext)
+        state.berita.lists = gabung
         state.loading = false
       })
       .addCase(getBerita.pending, (state, action) => {

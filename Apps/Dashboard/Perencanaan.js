@@ -18,6 +18,8 @@ import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
 import { LinearGradient } from 'expo-linear-gradient'
+import { ActivityIndicator } from 'react-native'
+import ListEmpty from '../../components/ListEmpty'
 
 const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
     const source = {
@@ -105,7 +107,6 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
                 onPress={() => {
                     setDetail('detail')
                     setDetailContent(item)
-                    console.log(item)
                 }}
             >
                 {loading ? (
@@ -130,13 +131,14 @@ export const Perencanaan = () => {
     const [value, setValue] = useState('')
     const [detail, setDetail] = useState('')
     const [detailContent, setDetailContent] = useState({})
+    const [page, setPage] = useState(1)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         getTokenValue().then(val => {
             setToken(val)
-            dispatch(getPerencanaan({ token: val, value: 'ropeg' }))
+            dispatch(getPerencanaan({ token: val, value: 'ropeg', page: page }))
         })
     }, [])
 
@@ -150,6 +152,12 @@ export const Perencanaan = () => {
     const formatDate = (date) => {
         return new Date(date).toLocaleDateString('ID', DATE_OPTIONS);
     };
+
+    const loadMore = () => {
+        if (lists.length % 5 === 0) {
+            setPage(page + 1)
+        }
+    }
 
     return (
         // <View style={styles.card}>
@@ -177,6 +185,15 @@ export const Perencanaan = () => {
                         }
                         style={{ height: 500 }}
                         keyExtractor={item => item.id}
+                        ListFooterComponent={() => (
+                            loading && (
+                                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                                    <ActivityIndicator size="large" color={COLORS.primary} />
+                                </View>
+                            )
+                        )}
+                        ListEmptyComponent={() => <ListEmpty />}
+                        onEndReached={loadMore}
                     />
                 </ScrollView>
             ) : (

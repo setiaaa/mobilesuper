@@ -12,7 +12,7 @@ const repository = BASE_URL + "repository/";
 const profile = BASE_URL + "bridge/profile/";
 const banner = BASE_URL + "bridge/home/benner/";
 const galeri = BASE_URL + "bridge/home/gallery/";
-const berita = BASE_URL + "bridge/home/news/?page=1";
+const berita = BASE_URL + "bridge/home/news/";
 const detailBerita = BASE_URL + "bridge/home/news/";
 const taskManagement = BASE_URL + "calendar/";
 const INFOGRAFIS = BASE_URL + "bridge/";
@@ -470,8 +470,8 @@ export const getGallerySatker = createAsyncThunk(
 
 export const getSatkerNews = createAsyncThunk(
     "bridge/getSatkerNews",
-    async (token) => {
-        const respon = await axios.get(`${SATKER}satker/news/?page=1`, {
+    async ({ token, page }) => {
+        const respon = await axios.get(`${SATKER}satker/news/?page=${page}`, {
             headers: { Authorization: token },
         });
         return respon?.data.results;
@@ -578,8 +578,8 @@ export const getBanner = createAsyncThunk("banner/getBanner", async (token) => {
 
 //galeri
 
-export const getGaleri = createAsyncThunk("galeri/getGaleri", async (token) => {
-    const respon = await axios.get(`${galeri}`, {
+export const getGaleri = createAsyncThunk("galeri/getGaleri", async ({ token, page }) => {
+    const respon = await axios.get(`${galeri}?page=${page}`, {
         headers: { Authorization: token },
     });
     return respon?.data.results;
@@ -587,8 +587,8 @@ export const getGaleri = createAsyncThunk("galeri/getGaleri", async (token) => {
 
 //berita
 
-export const getBerita = createAsyncThunk("berita/getBerita", async (token) => {
-    const respon = await axios.get(`${berita}`, {
+export const getBerita = createAsyncThunk("berita/getBerita", async ({ token, page }) => {
+    const respon = await axios.get(`${berita}?page=${page}`, {
         headers: { Authorization: token },
     });
     return respon?.data.results;
@@ -998,10 +998,9 @@ export const deleteGrup = createAsyncThunk("calendar/deleteGrup", async (data) =
 //Dashboard
 export const getKesejahteraan = createAsyncThunk(
     "bridge/getKesejahteraan",
-    async ({ token, value }) => {
-        console.log(token + value);
+    async ({ token, value, page }) => {
         const respon = await axios.get(
-            `${INFOGRAFIS}infografis/?source=${value}&limit=5`,
+            `${INFOGRAFIS}infografis/?source=${value}&limit=5&page=${page}`,
             { headers: { Authorization: token } }
         );
         return respon?.data;
@@ -1010,10 +1009,9 @@ export const getKesejahteraan = createAsyncThunk(
 
 export const getPerencanaan = createAsyncThunk(
     "bridge/getPerencanaan",
-    async ({ token, value }) => {
-        console.log(token + value);
+    async ({ token, value, page }) => {
         const respon = await axios.get(
-            `${INFOGRAFIS}infografis/?source=${value}&limit=5`,
+            `${INFOGRAFIS}infografis/?source=${value}&limit=5&page=${page}`,
             { headers: { Authorization: token } }
         );
         return respon?.data;
@@ -1214,6 +1212,14 @@ export const addDocumentDigiSign = createAsyncThunk("digitalsign/addDocumentDigi
     return respon?.data
 })
 
+export const getListSignedDigiSign = createAsyncThunk("digitalsign/getListSignedDigiSign", async ({ token, tipe }) => {
+    const respon = await axios.get(`${digitalSign}document/signed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
+    return {
+        data: respon?.data.results,
+        tipe: tipe
+    }
+})
+
 export const putDocumentDigiSign = createAsyncThunk("digitalsign/putDocumentDigiSign", async (data) => {
     const respon = await axios.put(`${digitalSign}document/${data.id}/draft/`, { status: data.status }, { headers: { Authorization: data.token } })
     return respon?.data.result
@@ -1241,10 +1247,5 @@ export const putInProgressDigiSign = createAsyncThunk("digitalsign/putInProgress
 
 export const getCourseDigiSign = createAsyncThunk("digitalsign/getCourseDigiSign", async (token) => {
     const respon = await axios.get(`${digitalSign}course/?limit=10`, { headers: { Authorization: token } })
-    return respon?.data.results
-})
-
-export const getListSignedDigiSign = createAsyncThunk("digitalsign/getListSignedDigiSign", async (token, tipe) => {
-    const respon = await axios.get(`${digitalSign}document/signed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
     return respon?.data.results
 })

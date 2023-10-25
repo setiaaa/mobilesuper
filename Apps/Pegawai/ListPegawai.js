@@ -81,7 +81,9 @@ export const ListPegawai = () => {
     // }, [search])
 
     const loadMore = () => {
-        setPage(page + 1)
+        if (pegawai.lists.length % 10 === 0) {
+            setPage(page + 1)
+        }
     }
 
     const navigation = useNavigation()

@@ -18,6 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
 import { getBennerSatker, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah } from '../../service/api';
 import { Loading } from '../../components/Loading';
+import { setBeritaSatker } from '../../store/Satker';
 
 const BannerSetjen = [
     {
@@ -51,6 +52,7 @@ export const Satker = () => {
     const [slide, setSlide] = useState(0)
     const [slide2, setSlide2] = useState(0)
     const [token, setToken] = useState('')
+    const [page, setPage] = useState(1)
 
     const dispatch = useDispatch()
 
@@ -64,7 +66,7 @@ export const Satker = () => {
         if (token !== '') {
             dispatch(getBennerSatker(token))
             dispatch(getGallerySatker(token))
-            dispatch(getSatkerNews(token))
+            dispatch(getSatkerNews({ token, page }))
             dispatch(getPesan(token))
             dispatch(getUltah(token))
             dispatch(getSatkerLinimasa(token))

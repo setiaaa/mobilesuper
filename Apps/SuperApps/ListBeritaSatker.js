@@ -8,22 +8,42 @@ import { COLORS } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
-import { getDetailBerita } from "../../service/api";
+import { getDetailBerita, getSatkerNews } from "../../service/api";
 import { CardListBeritaHome } from "../../components/CardListBeritaHome";
 import { CardListBeritaSatker } from "../../components/CardListBeritaSatker";
+import { setBeritaSatker } from "../../store/Satker";
+import { ActivityIndicator } from "react-native";
 
 
 
 export const ListBeritaSatker = () => {
-    const { berita } = useSelector(state => state.satker)
+    const { berita, loading } = useSelector(state => state.satker)
     const navigation = useNavigation();
     const [token, setToken] = useState("");
+    const [page, setPage] = useState(1)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         getTokenValue().then((val) => {
             setToken(val);
-        });
+        })
+
+        dispatch(setBeritaSatker([]))
+        setPage(1)
     }, []);
+
+    useEffect(() => {
+        if (token !== "") {
+            dispatch(getSatkerNews({ token, page }))
+            console.log('page', page)
+        }
+    }, [token, page]);
+
+    const loadMore = () => {
+        if (berita.lists.length % 10 === 0) {
+            setPage(page + 1)
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -81,7 +101,16 @@ export const ListBeritaSatker = () => {
                             />
                         </View>
                     )}
+                    ListFooterComponent={() => (
+                        loading && (
+                            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                                <ActivityIndicator size="large" color={COLORS.primary} />
+                            </View>
+                        )
+                    )}
+
                     keyExtractor={(item) => item.id}
+                    onEndReached={loadMore}
                 />
             </View>
         </SafeAreaView>
