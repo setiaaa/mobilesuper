@@ -165,7 +165,7 @@ export const DetailTask = () => {
                             </View>
                         </View>
 
-                        <View style={{ marginVertical: 20, marginHorizontal: 20 }}>
+                        <View style={{ marginVertical: 20, marginHorizontal: 18 }}>
                             <Dropdown
                                 placeHolder={'Pilih Prioritas'}
                                 borderWidth={1}
@@ -384,7 +384,7 @@ export const DetailTask = () => {
                                 )
                             }
 
-                            <View style={{ flexDirection: 'column', gap: 10 }}>
+                            <View style={{ flexDirection: 'column', gap: 20, marginBottom: 20 }}>
                                 <TouchableOpacity onPress={bottomSheetKomentar}>
                                     <View style={{
                                         marginHorizontal: 20,

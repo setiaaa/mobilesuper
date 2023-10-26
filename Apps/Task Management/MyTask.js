@@ -5,7 +5,7 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import React, { useMemo, useRef } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -35,6 +35,8 @@ const tipe = [
     { key: '4', value: 'Task Untuk Saya' },
     { key: '5', value: 'Task Dari Saya' },
 ]
+
+const { width: screenWidth } = Dimensions.get('window');
 
 export const MyTask = () => {
     const dispatch = useDispatch()
@@ -443,6 +445,23 @@ export const MyTask = () => {
                                             onSearch={filter}
                                         />
                                     </View>
+                                    {/* <FlatList
+                                        data={filterData}
+                                        renderItem={({ item, index }) => (
+                                            <View key={index}>
+                                            <Item
+                                                image={item.image}
+                                                tanggal={item.updated_at}
+                                                // subtitle={item.subtitle}
+                                                title={item.title}
+                                                id={item.id}
+                                                item={item}
+                                                token={token}
+                                            />
+                                            </View>
+                                        )}
+                                        keyExtractor={(item) => item.id}
+                                    /> */}
                                     <TouchableOpacity style={{ justifyContent: 'center' }}
                                         onPress={() => {
                                             bottomSheetAttachClose()
@@ -521,5 +540,13 @@ const styles = StyleSheet.create({
     },
     checkbox: {
         alignSelf: 'flex-end',
+    },
+    item: {
+        width: screenWidth - 60,
+        height: screenWidth - 60,
+    },
+    items: {
+        width: screenWidth - 60,
+        height: screenWidth - 170,
     },
 })
