@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Text, Image } from "react-native";
 import { Searchbar, List, IconButton } from "react-native-paper";
 import CardTodo from "../../../components/UI/CardTodo";
 import ListTodo from "../../../components/UI/ListTodo";
@@ -8,6 +8,7 @@ import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { Config } from "../../../constants/config";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
+import { COLORS, FONTSIZE } from "../../../config/SuperAppps";
 
 function DTodo() {
   const navigation = useNavigation();
@@ -108,7 +109,7 @@ function DTodo() {
   }
   return (
     <ScrollView style={styles.screen}>
-      <LoadingOverlay visible={isLoading} />
+      {/* <LoadingOverlay visible={isLoading} /> */}
       <View style={styles.counter}>
         <CardTodo
           count={listTodoToday.count}
@@ -147,7 +148,235 @@ function DTodo() {
           </>
         )}
       />
-      <List.AccordionGroup
+      <View style={{ marginBottom: 10 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
+          <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
+            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
+              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Over Due</Text>
+            </View>
+          </View>
+          
+          <View style={{ 
+            backgroundColor: COLORS.white, 
+            marginVertical: 10, 
+            borderRadius: 8, 
+            padding: 20, 
+            flexDirection: "row",
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}>
+            <View style={{ gap: 10, width: "80%" }}>
+              <Text style={{ fontSize: 13,fontWeight: 600 }}>Permohonan Pengembangan Dashboard</Text>
+              <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.info }}>Harap menjadi perhatian Sdr.</Text>
+              <View style={{ flexDirection: 'row', marginLeft: 8 }}>
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+              </View>
+            </View>
+            <View style={{ width: "20%", alignItems: "center", justifyContent: "space-between" }}>
+              <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  borderRadius: 50,
+                  width: 32,
+                  height: 32
+                }} />
+                <View
+                  style={{
+                    backgroundColor: COLORS.infoDangerLight,
+                    borderRadius: 30,
+                    width: 43,
+                    height: 24,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{ color: COLORS.infoDanger, textAlign: "center" }}
+                  >
+                    High
+                  </Text>
+                </View>
+            </View>
+          </View>
+      </View>
+      
+      <View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
+          <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
+            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
+              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Today</Text>
+            </View>
+          </View>
+          
+          <View style={{ 
+            backgroundColor: COLORS.white, 
+            marginVertical: 10, 
+            borderRadius: 8, 
+            padding: 20, 
+            flexDirection: "row",
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}>
+            <View style={{ gap: 10, width: "80%" }}>
+              <Text style={{ fontSize: 13,fontWeight: 600 }}>Permohonan Pengembangan Dashboard</Text>
+              <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.info }}>Harap menjadi perhatian Sdr.</Text>
+              <View style={{ flexDirection: 'row', marginLeft: 8 }}>
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+              </View>
+            </View>
+            <View style={{ width: "20%", alignItems: "center", justifyContent: "space-between" }}>
+              <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  borderRadius: 50,
+                  width: 32,
+                  height: 32
+                }} />
+                <View
+                  style={{
+                    backgroundColor: COLORS.infoDangerLight,
+                    borderRadius: 30,
+                    width: 43,
+                    height: 24,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{ color: COLORS.infoDanger, textAlign: "center" }}
+                  >
+                    High
+                  </Text>
+                </View>
+            </View>
+          </View>
+      </View>
+
+      <View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
+          <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
+            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
+              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>This Week</Text>
+            </View>
+          </View>
+          
+          <View style={{ 
+            backgroundColor: COLORS.white, 
+            marginVertical: 10, 
+            borderRadius: 8, 
+            padding: 20, 
+            flexDirection: "row",
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}>
+            <View style={{ gap: 10, width: "80%" }}>
+              <Text style={{ fontSize: 13,fontWeight: 600 }}>Permohonan Pengembangan Dashboard</Text>
+              <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.info }}>Harap menjadi perhatian Sdr.</Text>
+              <View style={{ flexDirection: 'row', marginLeft: 8 }}>
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  marginLeft: -8,
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: COLORS.white,
+                  width: 26,
+                  height: 26
+                }} />
+              </View>
+            </View>
+            <View style={{ width: "20%", alignItems: "center", justifyContent: "space-between" }}>
+              <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
+                  borderRadius: 50,
+                  width: 32,
+                  height: 32
+                }} />
+                <View
+                  style={{
+                    backgroundColor: COLORS.infoDangerLight,
+                    borderRadius: 30,
+                    width: 43,
+                    height: 24,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{ color: COLORS.infoDanger, textAlign: "center" }}
+                  >
+                    High
+                  </Text>
+                </View>
+            </View>
+          </View>
+      </View>
+
+      {/* <List.AccordionGroup
         expandedId={expanded}
         onAccordionPress={(item) => setExpandedList(item)}
       >
@@ -161,7 +390,7 @@ function DTodo() {
         {listTodoSearch.length != 0 && (
           <ListTodo title="Searching" result={listTodoSearch} />
         )}
-      </List.AccordionGroup>
+      </List.AccordionGroup> */}
     </ScrollView>
   );
 }
@@ -169,7 +398,7 @@ export default DTodo;
 
 const styles = StyleSheet.create({
   screen: {
-    margin: 16,
+    marginTop: 20,
   },
   counter: {
     flexDirection: "row",
@@ -180,5 +409,11 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: "white",
     marginBottom: 16,
+    //shadow ios
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: "#171717",
+    shadowOpacity: 0.2,
+    //shadow android
+    elevation: 2,
   },
 });

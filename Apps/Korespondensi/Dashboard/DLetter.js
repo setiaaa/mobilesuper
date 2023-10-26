@@ -14,17 +14,17 @@ function DLetter() {
   const icon = [
     {
       icon: "email-edit-outline",
-      color: GlobalStyles.colors.dNeedfollowup,
+      color: "rgba(24, 104, 171, 0.6)",
       navName: "NeedFollowUp",
     },
     {
       icon: "inbox-arrow-down",
-      color: GlobalStyles.colors.dIncoming,
+      color: "rgba(73, 189, 101, 0.6)",
       navName: "IncomingUnread",
     },
     {
       icon: "email-send-outline",
-      color: GlobalStyles.colors.dDisposition,
+      color: "rgba(244, 152, 32, 0.6)",
       navName: "DispositionUnread",
     },
   ];
@@ -100,7 +100,7 @@ function DLetter() {
   );
   return (
     <View>
-      {loadingOverlay}
+      {/* {loadingOverlay} */}
       {isCounter.map((data, index) => (
         <CardDLetter
           key={data.count}
