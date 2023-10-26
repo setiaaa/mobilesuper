@@ -170,6 +170,13 @@ import { EditSubAgenda } from "../Event Management/EditSubAgenda";
 import { EditTodo } from "../Event Management/EditTodo";
 import { DetailAcaraAgenda } from "../Kalender/DetailAcaraAgenda";
 import { AddCategory } from "../Task Management/AddCategory";
+import MainCuti from "../Cuti/MainCuti";
+import MyTabCuti from "../Cuti/BottomTabsCuti";
+import { Personal } from "../Cuti/Personal"
+import { DokumenCuti } from "../Cuti/DokumenCuti";
+import { PersetujanCuti } from "../Cuti/PersetujanCuti";
+import { Libur } from "../Cuti/Libur";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -627,6 +634,13 @@ function AuthStack() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="MainCuti"
+          component={MainCuti}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </>
   );
@@ -766,6 +780,17 @@ export const BottomTabsDetailAgenda = () => {
         <Tab.Screen name='DetailAgenda' component={DetailAgenda} options={{ headerShown: false }} />
         <Tab.Screen name='Todo' component={Todo} options={{ headerShown: false }} />
         <Tab.Screen name='Absen' component={Absen} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+export const BottomTabsCuti = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabCuti {...props} />} initialRouteName='Personal'>
+        <Tab.Screen name='Personal' component={Personal} options={{ headerShown: false }} />
+        <Tab.Screen name='PersetujuanCuti' component={PersetujanCuti} options={{ headerShown: false }} />
+        <Tab.Screen name='DokumenCuti' component={DokumenCuti} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )
@@ -1352,6 +1377,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="MyTask"
             component={MyTask}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Libur"
+            component={Libur}
             options={{
               headerShown: false,
             }}
