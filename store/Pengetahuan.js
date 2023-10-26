@@ -4,7 +4,13 @@ import {
   getDetailPegawai,
   getDetailPenilaian,
   getLinimasa,
+  getListCategory,
+  getListCompetence,
+  getListPegawai,
+  getListPegawaiExport,
   getListPenilaian,
+  getListPostPegawai,
+  getListUnitKerja,
   getListsLike,
   getMyPostCount,
   getMyPostDetail,
@@ -51,6 +57,24 @@ const PengetahuanSlice = createSlice({
       graph: {},
       accumulation: {},
       review: {},
+    },
+    kategori: {
+      lists: [],
+    },
+    kompetensi: {
+      lists: [],
+    },
+    unitKerja: {
+      lists: [],
+    },
+    pegawai: {
+      lists: [],
+    },
+    postinganPegawai: {
+      lists: [],
+    },
+    exportPegawai: {
+      lists: [],
     },
     penilaian: {
       lists: [],
@@ -153,6 +177,24 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryReview.fulfilled, (state, action) => {
         state.summary.review = action.payload;
+      })
+      .addCase(getListCategory.fulfilled, (state, action) => {
+        state.kategori.lists = action.payload;
+      })
+      .addCase(getListCompetence.fulfilled, (state, action) => {
+        state.kompetensi.lists = action.payload;
+      })
+      .addCase(getListUnitKerja.fulfilled, (state, action) => {
+        state.unitKerja.lists = action.payload;
+      })
+      .addCase(getListPegawai.fulfilled, (state, action) => {
+        state.pegawai.lists = action.payload;
+      })
+      .addCase(getListPostPegawai.fulfilled, (state, action) => {
+        state.postinganPegawai.lists = action.payload;
+      })
+      .addCase(getListPegawaiExport.fulfilled, (state, action) => {
+        state.exportPegawai.lists = action.payload;
       });
   },
 });

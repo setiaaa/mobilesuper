@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import {
   Pressable,
   Image,
@@ -14,7 +14,6 @@ import {
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { color } from "react-native-reanimated";
 import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -24,35 +23,81 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
+import { useDispatch, useSelector } from "react-redux";
+import { getTokenValue } from "../../service/session";
+import {
+  getListPegawai,
+  getListPegawaiExport,
+  getListPostPegawai,
+  getListUnitKerja,
+} from "../../service/api";
+import { FlatList } from "react-native-gesture-handler";
+import ListEmpty from "../../components/ListEmpty";
 
-const tahun = [
-  { key: "1", value: "2023" },
-  { key: "2", value: "2021" },
-  { key: "3", value: "2020" },
-];
+const ListDaftarPegawai = ({ item, token }) => {
+  const navigation = useNavigation();
 
-const triwulan = [
-  { key: "1", value: "TW 4" },
-  { key: "2", value: "TW 3" },
-  { key: "3", value: "TW 2" },
-  { key: "3", value: "TW 1" },
-];
+  const dispatch = useDispatch();
 
-const informationData = [
-  {
-    name: "Effin Martiana",
-    position: "Kepala Biro Hukum",
-    jabatanInfo: "1",
-  },
-];
-
-const informationData2 = [
-  {
-    name: "Danielle Mahartika",
-    position: "Kepala Biro Hukum",
-    jabatanInfo: "4",
-  },
-];
+  const getDetail = (id) => {
+    const param = { token, id };
+    dispatch(getListPostPegawai(param));
+  };
+  return (
+    <View style={{ paddingHorizontal: "5%" }}>
+      <TouchableOpacity
+        key={item.id}
+        style={{
+          backgroundColor: COLORS.white,
+          borderRadius: 10,
+          padding: 10,
+          gap: 5,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+        onPress={() => {
+          getDetail(item.id);
+          navigation.navigate("ListPostinganPegawai", item.nama);
+        }}
+      >
+        <Text
+          style={{
+            fontSize: FONTSIZE.H1,
+            fontWeight: FONTWEIGHT.bold,
+          }}
+        >
+          {item.nama}
+        </Text>
+        <Text>Jabatan: {item.jabatan}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={{ color: COLORS.lighter }}>
+            Nilai Saat Ini: {item.score.nilai}
+          </Text>
+          <View
+            style={{
+              backgroundColor:
+                item.score.status === "Tidak Memenuhi" ? "#EA5455" : "green",
+              borderRadius: 10,
+              padding: 3,
+              paddingHorizontal: 10,
+            }}
+          >
+            <Text style={{ color: "white" }}>{item.score.status}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export const RangkumanIKU = () => {
   const navigation = useNavigation();
@@ -79,32 +124,146 @@ export const RangkumanIKU = () => {
   const bottomSheetModalSelectRef = useRef(null);
   const bottomSheetModalAddRef = useRef(null);
 
-  const bottomSheetAttach = () => {
+  const bottomSheetAttachSearch = () => {
     bottomSheetModalRef.current?.present();
+  };
+  const bottomSheetAttachSearchClose = () => {
+    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
   const [choiceTipe, setChoiceTipe] = useState({
     key: "1",
     value: "Dashboard",
   });
-  const [choiceKategori, setChoiceKategori] = useState("");
-  const [choiceList, setChoiceList] = useState("");
-  const [dataKategori, setDataKategori] = useState([]);
-  const [dataList, setDataList] = useState([]);
+
+  const listYear = [
+    { key: "year1", value: "2023" },
+    { key: "year2", value: "2024" },
+    { key: "year3", value: "2025" },
+  ];
+
+  const dataKuartal = [
+    { key: "q1", value: "TW 1" },
+    { key: "q2", value: "TW 2" },
+    { key: "q3", value: "TW 3" },
+    { key: "q4", value: "TW 4" },
+  ];
+
+  const [selectedYear, setSelectedYear] = useState({
+    key: "",
+    value: "",
+  });
+  const [selectedQuarter, setSelectedQuarter] = useState({
+    key: "",
+    value: "",
+  });
+  const [selectedUnitKerja, setSelectedUnitKerja] = useState({
+    key: "",
+    value: "",
+  });
 
   const [choiceFilter, setChoiceFilter] = useState("semua");
 
-  const bottomSheetAttachClose = () => {
-    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
+  const bottomSheetAttachSelectClose = () => {
+    if (bottomSheetModalSelectRef.current)
+      bottomSheetModalSelectRef.current?.close();
   };
 
   const bottomSheetAttachSelect = () => {
     bottomSheetModalSelectRef.current?.present();
   };
 
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getListUnitKerja(token));
+    }
+  }, [token]);
+
+  const [savedYear, setSavedYear] = useState({ key: "", value: "" });
+  const [savedQuarter, setSavedQuarter] = useState({ key: "", value: "" });
+  const [savedUnitKerja, setSavedUnitKerja] = useState({ key: "", value: "" });
+
+  const handlePilihSimpan = () => {
+    setSavedYear(selectedYear);
+    setSavedQuarter(selectedQuarter);
+    setSavedUnitKerja(selectedUnitKerja);
+  };
+
+  useEffect(() => {
+    const param = {
+      token: token,
+      year: savedYear.value,
+      quarter: savedQuarter.key,
+      unitKerja: savedUnitKerja.value,
+    };
+    if (token !== "") {
+      dispatch(getListPegawai(param));
+    }
+  }, [token, savedYear, savedQuarter, savedUnitKerja]);
+
+  // useEffect(() => {
+  //   const param = {
+  //     token: token,
+  //     year: savedYear.value,
+  //     quarter: savedQuarter.key,
+  //     unitKerja: savedUnitKerja.value,
+  //   };
+  //   if (token !== "") {
+  //     dispatch(getListPegawaiExport(param));
+  //   }
+  // }, [token, savedYear, savedQuarter, savedUnitKerja]);
+
+  const { pegawai } = useSelector((state) => state.pengetahuan);
+
+  const { unitKerja } = useSelector((state) => state.pengetahuan);
+
+  // const { exportPegawai } = useSelector((state) => state.pengetahuan);
+
+  const dataUnitKerja = () => {
+    let valueUnitKerja = [];
+    unitKerja?.lists?.map((item) => {
+      valueUnitKerja.push({
+        key: item.id,
+        value: item.unit_kerja_nama,
+      });
+    });
+    return valueUnitKerja;
+  };
+
+  useEffect(() => {
+    setFilterData(pegawai.lists);
+  }, [pegawai]);
+
+  useEffect(() => {
+    const item = pegawai.lists;
+    if (search !== "") {
+      const data = item.filter((item) => {
+        return item.nama.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(item);
+    }
+  }, [search]);
+
   const filter = (event) => {
     setSearch(event);
   };
+
+  console.log(pegawai.lists);
+  console.log(exportPegawai);
 
   return (
     <SafeAreaView>
@@ -218,7 +377,6 @@ export const RangkumanIKU = () => {
                 gap: 5,
                 marginHorizontal: 15,
                 width: "100%",
-                // backgroundColor: "red"
               }}
             >
               <TouchableOpacity
@@ -278,49 +436,92 @@ export const RangkumanIKU = () => {
                       }}
                     >
                       <View style={{ width: "40%" }}>
-                        <Dropdown
-                          placeHolder={"Pilih Tahun"}
-                          borderWidth={1}
-                          data={tahun}
-                          // selected={choiceTipe}
-                          setSelected={setChoiceTipe}
-                          borderColor={COLORS.ExtraDivinder}
-                          borderwidthDrop={1}
-                          borderColorDrop={COLORS.ExtraDivinder}
-                          borderWidthValue={1}
-                          borderColorValue={COLORS.ExtraDivinder}
-                        />
+                        {savedYear.key === "" ? (
+                          <Dropdown
+                            placeHolder={"Pilih Tahun"}
+                            borderWidth={1}
+                            data={listYear}
+                            // selected={selectedYear}
+                            setSelected={setSelectedYear}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderwidthDrop={1}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            borderWidthValue={1}
+                            borderColorValue={COLORS.ExtraDivinder}
+                          />
+                        ) : (
+                          <Dropdown
+                            // placeHolder={"Pilih Tahun"}
+                            borderWidth={1}
+                            data={listYear}
+                            selected={savedYear}
+                            setSelected={setSelectedYear}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderwidthDrop={1}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            borderWidthValue={1}
+                            borderColorValue={COLORS.ExtraDivinder}
+                          />
+                        )}
                       </View>
 
                       <View style={{ width: "40%" }}>
-                        <Dropdown
-                          placeHolder={"Pilih Triwulan"}
-                          borderWidth={1}
-                          data={triwulan}
-                          // selected={choiceTipe}
-                          setSelected={setChoiceTipe}
-                          borderColor={COLORS.ExtraDivinder}
-                          borderwidthDrop={1}
-                          borderColorDrop={COLORS.ExtraDivinder}
-                          borderWidthValue={1}
-                          borderColorValue={COLORS.ExtraDivinder}
-                        />
+                        {savedQuarter.key === "" ? (
+                          <Dropdown
+                            placeHolder={"Pilih Triwulan"}
+                            borderWidth={1}
+                            data={dataKuartal}
+                            // selected={selectedQuarter}
+                            setSelected={setSelectedQuarter}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderwidthDrop={1}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            borderWidthValue={1}
+                            borderColorValue={COLORS.ExtraDivinder}
+                          />
+                        ) : (
+                          <Dropdown
+                            // placeHolder={"Pilih Triwulan"}
+                            borderWidth={1}
+                            data={dataKuartal}
+                            selected={savedQuarter}
+                            setSelected={setSelectedQuarter}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderwidthDrop={1}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            borderWidthValue={1}
+                            borderColorValue={COLORS.ExtraDivinder}
+                          />
+                        )}
                       </View>
                     </View>
 
                     <View style={{ width: "94%", paddingLeft: 25 }}>
-                      <Dropdown
-                        placeHolder={"Pilih Unit Kerja"}
-                        borderWidth={1}
-                        data={tahun}
-                        // selected={choiceTipe}
-                        setSelected={setChoiceTipe}
-                        borderColor={COLORS.ExtraDivinder}
-                        borderwidthDrop={1}
-                        borderColorDrop={COLORS.ExtraDivinder}
-                        borderWidthValue={1}
-                        borderColorValue={COLORS.ExtraDivinder}
-                      />
+                      {savedUnitKerja.key === "" ? (
+                        <Dropdown
+                          placeHolder={"Pilih Unit Kerja"}
+                          borderWidth={1}
+                          data={dataUnitKerja()}
+                          setSelected={setSelectedUnitKerja}
+                          borderColor={COLORS.ExtraDivinder}
+                          borderwidthDrop={1}
+                          borderColorDrop={COLORS.ExtraDivinder}
+                          borderWidthValue={1}
+                          borderColorValue={COLORS.ExtraDivinder}
+                        />
+                      ) : (
+                        <Dropdown
+                          borderWidth={1}
+                          data={dataUnitKerja()}
+                          selected={savedUnitKerja}
+                          setSelected={setSelectedUnitKerja}
+                          borderColor={COLORS.ExtraDivinder}
+                          borderwidthDrop={1}
+                          borderColorDrop={COLORS.ExtraDivinder}
+                          borderWidthValue={1}
+                          borderColorValue={COLORS.ExtraDivinder}
+                        />
+                      )}
                     </View>
 
                     {choiceTipe.key === "3" ||
@@ -341,8 +542,8 @@ export const RangkumanIKU = () => {
                         justifyContent: "center",
                       }}
                       onPress={() => {
-                        bottomSheetSelectClose();
-                        handleChoiceSubmit();
+                        handlePilihSimpan();
+                        bottomSheetAttachSelectClose();
                       }}
                     >
                       <Text
@@ -394,7 +595,7 @@ export const RangkumanIKU = () => {
                       <TouchableOpacity
                         style={{ justifyContent: "center" }}
                         onPress={() => {
-                          bottomSheetAttachClose();
+                          bottomSheetAttachSearchClose();
                         }}
                       >
                         <Text
@@ -409,11 +610,28 @@ export const RangkumanIKU = () => {
                       </TouchableOpacity>
                     </View>
                   </View>
+                  <View
+                    style={{
+                      height: 500,
+                      paddingTop: 15,
+                    }}
+                  >
+                    <FlatList
+                      data={filterData}
+                      renderItem={({ item }) => (
+                        <View key={item.id} style={{ marginBottom: 10 }}>
+                          <ListDaftarPegawai item={item} token={token} />
+                        </View>
+                      )}
+                      keyExtractor={(item) => item.id}
+                      ListEmptyComponent={() => <ListEmpty />}
+                    />
+                  </View>
                 </BottomSheetView>
               </BottomSheetModal>
 
               <TouchableOpacity
-                onPress={bottomSheetAttach}
+                onPress={bottomSheetAttachSearch}
                 style={{ width: "11%" }}
               >
                 <View
@@ -432,7 +650,6 @@ export const RangkumanIKU = () => {
                     elevation: 2,
                   }}
                 >
-                  {/* <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text> */}
                   <Ionicons
                     name="search-outline"
                     size={24}
@@ -450,7 +667,7 @@ export const RangkumanIKU = () => {
                 alignItems: "center",
               }}
             >
-              <Text>*) Nilai Minimum = 3</Text>
+              <Text>{"*) Nilai Minimum = 3"}</Text>
               <View style={{ flexDirection: "row", gap: 10 }}>
                 <TouchableOpacity
                   style={{
@@ -479,116 +696,83 @@ export const RangkumanIKU = () => {
               </View>
             </View>
 
-            <View style={{ gap: 15 }}>
-              <View style={{ marginHorizontal: 15, marginTop: 15 }}>
-                {informationData.map((item, index) => {
-                  const numericValue = parseInt(
-                    item.jabatanInfo.match(/\d+/)[0]
-                  );
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 15,
+                  marginTop: 15,
+                  gap: 15,
+                  marginBottom: "95%",
+                }}
+              >
+                {pegawai.lists.length !== 0
+                  ? pegawai.lists.map((item, index) => {
+                      const getDetail = (id) => {
+                        const param = { token, id };
+                        dispatch(getListPostPegawai(param));
+                      };
 
-                  const status =
-                    numericValue < 3 ? "Tidak Memenuhi" : "Memenuhi";
-
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 10,
-                        padding: 10,
-                        gap: 5,
-                      }}
-                      onPress={() =>
-                        navigation.navigate("ListPostinganPegawai")
-                      }
-                    >
-                      <Text
-                        style={{
-                          fontSize: FONTSIZE.H1,
-                          fontWeight: FONTWEIGHT.bold,
-                        }}
-                      >
-                        {item.name}
-                      </Text>
-                      <Text>Jabatan: {item.position}</Text>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Text style={{ color: COLORS.lighter }}>
-                          Nilai Saat Ini: {item.jabatanInfo}
-                        </Text>
-                        <View
+                      return (
+                        <TouchableOpacity
+                          key={index}
                           style={{
-                            backgroundColor:
-                              status === "Tidak Memenuhi" ? "#EA5455" : "green",
+                            backgroundColor: COLORS.white,
                             borderRadius: 10,
-                            padding: 3,
-                            paddingHorizontal: 10,
+                            padding: 10,
+                            gap: 5,
+                            //shadow ios
+                            shadowOffset: { width: -2, height: 4 },
+                            shadowColor: "#171717",
+                            shadowOpacity: 0.2,
+                            //shadow android
+                            elevation: 2,
+                          }}
+                          onPress={() => {
+                            getDetail(item.id);
+                            navigation.navigate(
+                              "ListPostinganPegawai",
+                              item.nama
+                            );
                           }}
                         >
-                          <Text style={{ color: "white" }}>{status}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-
-              <View style={{ marginHorizontal: 15 }}>
-                {informationData2.map((item, index) => {
-                  const numericValue = parseInt(
-                    item.jabatanInfo.match(/\d+/)[0]
-                  );
-
-                  const status =
-                    numericValue < 3 ? "Tidak Memenuhi" : "Memenuhi";
-
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 10,
-                        padding: 10,
-                        gap: 5,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: FONTSIZE.H1,
-                          fontWeight: FONTWEIGHT.bold,
-                        }}
-                      >
-                        {item.name}
-                      </Text>
-                      <Text>Jabatan: {item.position}</Text>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Text style={{ color: COLORS.lighter }}>
-                          Nilai Saat Ini: {item.jabatanInfo}
-                        </Text>
-                        <View
-                          style={{
-                            backgroundColor:
-                              status === "Tidak Memenuhi" ? "#EA5455" : "green",
-                            borderRadius: 10,
-                            padding: 3,
-                            paddingHorizontal: 10,
-                          }}
-                        >
-                          <Text style={{ color: "white" }}>{status}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
+                          <Text
+                            style={{
+                              fontSize: FONTSIZE.H1,
+                              fontWeight: FONTWEIGHT.bold,
+                            }}
+                          >
+                            {item.nama}
+                          </Text>
+                          <Text>Jabatan: {item.jabatan}</Text>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Text style={{ color: COLORS.lighter }}>
+                              Nilai Saat Ini: {item.score.nilai}
+                            </Text>
+                            <View
+                              style={{
+                                backgroundColor:
+                                  item.score.status === "Tidak Memenuhi"
+                                    ? "#EA5455"
+                                    : "green",
+                                borderRadius: 10,
+                                padding: 3,
+                                paddingHorizontal: 10,
+                              }}
+                            >
+                              <Text style={{ color: "white" }}>
+                                {item.score.status}
+                              </Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    })
+                  : ""}
               </View>
             </View>
           </ScrollView>
