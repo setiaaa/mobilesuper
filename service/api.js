@@ -31,6 +31,14 @@ const SUMMARY_ACCUMULATION = BASE_URL + "mp/admin/summary/accumulation/";
 const SUMMARY_REVIEW = BASE_URL + "mp/admin/summary/review/";
 const SUMMARY_BAD_USER = BASE_URL + "mp/admin/summary/bad-user/";
 
+const GET_LIST_CATEGORY = BASE_URL + "mp/admin/category/?limit=10";
+const GET_LIST_COMPETENCE = BASE_URL + "mp/admin/competence/?limit=199";
+
+const GET_LIST_UNIT_KERJA = BASE_URL + "mp/admin/iku/unitkerja-choice/";
+const GET_LIST_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
+const GET_LIST_POSTINGAN_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
+const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
+
 //Login
 export const Login = createAsyncThunk(
     "auth/Login",
@@ -1171,6 +1179,82 @@ export const getSummaryReview = createAsyncThunk(
         );
         return respon?.data.result;
     }
+);
+
+export const getListCategory = createAsyncThunk(
+  "mp/admin/category/",
+  async (token) => {
+    const respon = await axios.get(`${GET_LIST_CATEGORY}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getListCompetence = createAsyncThunk(
+  "mp/admin/competence/",
+  async (token) => {
+    const respon = await axios.get(`${GET_LIST_COMPETENCE}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getListUnitKerja = createAsyncThunk(
+  "mp/admin/iku/unitkerja-choice/",
+  async (token) => {
+    const respon = await axios.get(`${GET_LIST_UNIT_KERJA}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const getListPegawai = createAsyncThunk(
+  "mp/admin/iku/employee",
+  async (data) => {
+    // console.log(data.token);
+    // console.log(data.year);
+    // console.log(data.quarter);
+    // console.log(data.unitKerja);
+    const respon = await axios.get(
+      `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getListPostPegawai = createAsyncThunk(
+  "mp/admin/iku/employee/id",
+  async ({ token, id }) => {
+    // console.log("token : " + token);
+    // console.log("id : " + id);
+    const respon = await axios.get(`${GET_LIST_POSTINGAN_PEGAWAI}${id}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const getListPegawaiExport = createAsyncThunk(
+  "admin/iku/employee/export",
+  async (data) => {
+    // console.log(data.token);
+    // console.log(data.year);
+    // console.log(data.quarter);
+    // console.log(data.unitKerja);
+    const respon = await axios.get(
+      `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.results;
+  }
 );
 
 // export const postMyArticle = createAsyncThunk("mp/", async (data, setRefresh = undefined) => {
