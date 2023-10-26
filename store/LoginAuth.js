@@ -28,6 +28,7 @@ const LoginAuthSlice = createSlice({
             .addCase(Login.rejected, (state, action) => {
                 console.log('gagal!')
                 state.error = true
+                console.log(action)
                 state.msg = 'Username atau Password salah!'
             })
     }

@@ -189,6 +189,8 @@ import { EditGrup } from "../Kalender/EditGrup";
 import { EditAgendaGrup } from "../Kalender/EditAgendaGrup";
 import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
 import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
+import { Ionicons } from "@expo/vector-icons";
+import { View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -232,6 +234,22 @@ function AuthStack() {
           component={Main}
           options={{
             headerShown: false,
+            // headerLeft: () => (
+            //   <View style={{
+            //     backgroundColor: COLORS.white,
+            //     height: 28,
+            //     width: 28,
+            //     borderRadius: 50,
+            //     alignItems: 'center',
+            //     justifyContent: 'center'
+            //   }}>
+            //     <Ionicons name="chevron-back" size={24} />
+            //   </View>
+            // ),
+            // title: '',
+            // headerStyle: {
+            //   backgroundColor: COLORS.primary,
+            // },
             gestureEnabled: false,
           }}
         />
@@ -1433,7 +1451,7 @@ function AuthenticatedStack() {
     }
   };
 
-  const getDeviceId = async () => {};
+  const getDeviceId = async () => { };
   async function checkDevice() {
     try {
       if (
@@ -1831,8 +1849,8 @@ function AppNavigator() {
       Alert.alert(
         "Warning!",
         "You are using an old version of the " +
-          app_name +
-          ". Do you want to upgrade?",
+        app_name +
+        ". Do you want to upgrade?",
         [
           {
             text: "Upgrade",

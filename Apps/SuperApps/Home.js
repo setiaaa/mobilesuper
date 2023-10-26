@@ -7,6 +7,8 @@ import {
   Image,
   Dimensions,
   Linking,
+  BackHandler,
+  Alert,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
@@ -111,6 +113,27 @@ export const Home = () => {
     }
   }, [token]);
 
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Peringatan!", "Apakah anda yakin akan keluar dari aplikasi?", [
+        {
+          text: "Tidak",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YA", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   const { berita, agenda, program, galeri, profile, visimisi, banner, loading } =
     useSelector((state) => state.superApps);
 
@@ -161,7 +184,7 @@ export const Home = () => {
   // console.log(galeri.lists);
   // console.log(berita.lists);
   return (
-    < >
+    <SafeAreaView>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           {
@@ -331,7 +354,7 @@ export const Home = () => {
               >
                 Video
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => navigation.navigate("")}
                 style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
               >
@@ -345,7 +368,7 @@ export const Home = () => {
                 >
                   Selengkapnya
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
 
             <CardVideo setModalVisibleVideo={setModalVisibleVideo} />
@@ -827,7 +850,7 @@ export const Home = () => {
 
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </>
+    </SafeAreaView>
   );
 };
 

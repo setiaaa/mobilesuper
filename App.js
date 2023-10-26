@@ -41,9 +41,9 @@ export default function App() {
         <Host>
           <PaperProvider theme={theme}>
             <Provider store={store}>
-              <Wrapper>
-                <AppNavigator />
-              </Wrapper>
+              {/* <Wrapper> */}
+              <AppNavigator />
+              {/* </Wrapper> */}
             </Provider>
           </PaperProvider>
         </Host>
