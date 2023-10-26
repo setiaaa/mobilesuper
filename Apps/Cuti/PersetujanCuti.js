@@ -30,7 +30,7 @@ export const PersetujanCuti = () => {
                             <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                    <View style={{ flex: 1, alignItems: 'center',  }}>
                         <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Cuti</Text>
                     </View>
                     <View style={{
@@ -81,12 +81,12 @@ export const PersetujanCuti = () => {
                         <TouchableOpacity onPress={() => navigation.navigate('Libur')}>
                             <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                         </TouchableOpacity>
-                            </View>
+                            </View>            
                             <Text style={{color: variant === 'draft' ? COLORS.infoDanger: COLORS.foundation, textAlign: 'center' }}>Disetujui Anda</Text>
                                 </TouchableOpacity>
 
                             <TouchableOpacity style={{
-                                maxWidth: 130,
+                                maxWidth: 120,
                                 borderColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -95,7 +95,7 @@ export const PersetujanCuti = () => {
                                 onPress={() => filterHandlerComposer()}
                             >
                             <View style={{
-                                backgroundColor: COLORS.success,
+                                backgroundColor: COLORS.danger,
                                 borderRadius: 20,
                                 width: 28,
                                 height: 28,
@@ -120,7 +120,7 @@ export const PersetujanCuti = () => {
                                 onPress={() => filterHandlerInProgress()}
                             >
                             <View style={{
-                                backgroundColor: COLORS.success,
+                                backgroundColor: COLORS.orange,
                                 borderRadius: 20,
                                 width: 28,
                                 height: 28,
@@ -144,9 +144,9 @@ export const PersetujanCuti = () => {
                                 <Text style={{fontSize: 12}}>Pemohon: Muhammad Zaini / 196308141989031021</Text>
                             </View>
                                 <Text style={{fontSize: 12, color: COLORS.lighter}}>Jenis: Cuti Alasan Penting</Text>
-                                <View style={{flexDirection: 'row'}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Text style={{fontSize: 12, color: COLORS.lighter}}>Tipe Dokumen: </Text>
-                                    <View style={{backgroundColor: 'red', borderRadius: 10}}>
+                                    <View style={{backgroundColor: 'red', borderRadius: 10, padding: 5,}}>
                                         <Text style={{ fontSize: 12, color: COLORS.white}}>Pembatalan Cuti</Text>
                                     </View>
                                 </View>
@@ -161,10 +161,8 @@ export const PersetujanCuti = () => {
                                     </View>
                                 </View>
                         </View>
-
-
-
                     </View>
+                    
                 </View>
             </SafeAreaView>
         </GestureHandlerRootView>

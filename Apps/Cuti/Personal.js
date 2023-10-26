@@ -124,18 +124,93 @@ export const Personal = () => {
                             )}
                     </View>
                 </View>
-                <View style={{padding:20}}>
-                    <TouchableOpacity style={{
-                        backgroundColor: COLORS.infoDanger,
-                            padding: 15,
-                            borderRadius: 8,
-                            alignItems:"center",
-                    }}>
-                        <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Ionicons name='document-outline' size={24} color={COLORS.white} />
-                            <Text style={{color:COLORS.white, paddingLeft:5}}>Form Pengajuan Cuti</Text>
+                <View style={{padding:20, gap: 10}}>
+                    <Text style={{fontWeight:FONTWEIGHT.bold}}>Form Pengajuan Cuti</Text>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+                        <View style={{gap:30, flexDirection: 'row',}}>
+                            <View style={{alignItems: 'center', gap: 10}}>
+                                <TouchableOpacity style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    padding: 15,
+                                    borderRadius: 30,
+                                    width: 55,
+                                    height: 55,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+
+                                }}>
+                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                </TouchableOpacity>
+                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Tahunan</Text>
+                            </View>
+
+                            <View style={{alignItems: 'center', gap: 10}}>
+                                <TouchableOpacity style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    padding: 15,
+                                    width: 55,
+                                    height: 55,
+                                    borderRadius: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+
+                                }}>
+                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                </TouchableOpacity>
+                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Besar</Text>
+                            </View>
+
+                            <View style={{alignItems: 'center', gap: 10}}>
+                                <TouchableOpacity style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    padding: 15,
+                                    width: 55,
+                                    height: 55,
+                                    borderRadius: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+
+                                }}>
+                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                </TouchableOpacity>
+                                <Text style={{maxWidth: 40, textAlign: 'center'}}>Cuti Sakit</Text>
+                            </View>
+
+                            <View style={{alignItems: 'center', gap: 10}}>
+                                <TouchableOpacity style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    padding: 15,
+                                    width: 55,
+                                    height: 55,
+                                    borderRadius: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+
+                                }}>
+                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                </TouchableOpacity>
+                                <Text style={{maxWidth: 90, textAlign: 'center'}}>Cuti Melahirkan</Text>
+                            </View>
+
+                            <View style={{alignItems: 'center', gap: 10}}>
+                                <TouchableOpacity style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    padding: 15,
+                                    width: 55,
+                                    height: 55,
+                                    borderRadius: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+
+                                }}>
+                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                </TouchableOpacity>
+                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Tahunan</Text>
+                            </View>
+                            
                         </View>
-                    </TouchableOpacity>
+                        
+                    </ScrollView>
                 </View>
                 <View style={{paddingLeft:20}}>
                     <Text style={{fontWeight:FONTWEIGHT.bold}}>Status Dokumen Cuti</Text>
@@ -178,14 +253,16 @@ export const Personal = () => {
                 <View style={{paddingLeft:20}}>
                     <Text style={{fontWeight:FONTWEIGHT.bold}}>Kouta Cuti</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.cardKouta}>
+                        <View style={{ gap: 20, flexDirection: 'row'}}>
+                        <View style={[styles.cardKouta]}>
                             <View style={{
                                 width:"60%",
                                 padding: 15,
+                                borderRadius: 8,
                                 backgroundColor:COLORS.white,
                                 alignItems:"center"
                             }}>
-                                <View style={{rowGap:3}}>
+                                <View style={{rowGap:10}}>
                                     <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
                                     <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
                                     <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
@@ -196,34 +273,36 @@ export const Personal = () => {
                                 width:"40%",
                                 borderBottomRightRadius: 8,
                                 borderTopRightRadius: 8,
-                                backgroundColor:"#  999999",
+                                backgroundColor:"grey",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 }}>
-                                    <View style={{gap:20}}>
+                                    <View style={{gap:20,}}>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                     </View>
                             </View>
                         </View>
-                        <View style={styles.cardKouta}>
+
+                        <View style={[styles.cardKouta, { marginRight: 10 }]}>
                             <View style={{
                                 width:"60%",
                                 padding: 15,
+                                borderRadius: 8,
                                 backgroundColor:COLORS.white,
                                 alignItems:"center"
                             }}>
-                                <View style={{rowGap:3}}>
+                                <View style={{rowGap:10}}>
                                     <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
                                     <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
                                     <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
@@ -234,25 +313,26 @@ export const Personal = () => {
                                 width:"40%",
                                 borderBottomRightRadius: 8,
                                 borderTopRightRadius: 8,
-                                backgroundColor:"#  999999",
+                                backgroundColor:"grey",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 }}>
-                                    <View style={{gap:20}}>
+                                    <View style={{gap:20,}}>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                     </View>
                             </View>
+                        </View>
                         </View>
                         </ScrollView>
                     </View>
@@ -274,7 +354,7 @@ export const Personal = () => {
                                         <View style={{flexDirection: 'row',}}>
                                             <Text>Kuota</Text>
                                             <View style={{ backgroundColor: "#1868AB", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal:130, position: 'absolute' }}>
-                                                <Text style={{color: "white", }}>6</Text>
+                                                <Text style={{color: "white", fontWeight:FONTWEIGHT.bold }}>6</Text>
                                             </View>
                                         </View>
                                         <View style={{flexDirection: 'row'}}>
@@ -307,14 +387,15 @@ export const Personal = () => {
 
                         <View >
                     {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
-                        <View style={styles.cardKouta}>
+                    <View style={[styles.cardKouta]}>
                             <View style={{
                                 width:"60%",
                                 padding: 15,
+                                borderRadius: 8,
                                 backgroundColor:COLORS.white,
                                 alignItems:"center"
                             }}>
-                                <View style={{rowGap:3}}>
+                                <View style={{rowGap:10}}>
                                     <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
                                     <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
                                     <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
@@ -325,34 +406,36 @@ export const Personal = () => {
                                 width:"40%",
                                 borderBottomRightRadius: 8,
                                 borderTopRightRadius: 8,
-                                backgroundColor:"#  999999",
+                                backgroundColor:"grey",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 }}>
-                                    <View style={{gap:20}}>
+                                    <View style={{gap:20,}}>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                     </View>
                             </View>
                         </View>
-                        <View style={styles.cardKouta}>
+
+                        <View style={[styles.cardKouta, { marginRight: 10 }]}>
                             <View style={{
                                 width:"60%",
                                 padding: 15,
+                                borderRadius: 8,
                                 backgroundColor:COLORS.white,
                                 alignItems:"center"
                             }}>
-                                <View style={{rowGap:3}}>
+                                <View style={{rowGap:10}}>
                                     <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
                                     <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
                                     <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
@@ -363,21 +446,21 @@ export const Personal = () => {
                                 width:"40%",
                                 borderBottomRightRadius: 8,
                                 borderTopRightRadius: 8,
-                                backgroundColor:"#  999999",
+                                backgroundColor:"grey",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 }}>
-                                    <View style={{gap:20}}>
+                                    <View style={{gap:20,}}>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                         <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
                                             <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, padding: 10}}>
-                                                <Text>6</Text>
+                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -407,7 +490,8 @@ const styles = StyleSheet.create({
         // padding: 1,
         borderRadius: 8,
         // marginHorizontal: 5,
-        margin:10,
+        // margin:10,
+        marginVertical: 10,
         flexDirection:"row",
     }
 
