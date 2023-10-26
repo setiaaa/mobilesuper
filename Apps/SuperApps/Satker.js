@@ -343,7 +343,7 @@ export const Satker = () => {
                     markedDates={{
                         [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: COLORS.primary }
                     }}
-                    style={{ width: '90%', marginLeft: 20, borderRadius: 16 }}
+                    style={{ width: '85%', marginLeft: 28, borderRadius: 5, marginTop: 20, }}
                     theme={{
                         arrowColor: COLORS.primary,
                         selectedDayBackgroundColor: COLORS.primary,
@@ -417,10 +417,10 @@ const styles = StyleSheet.create({
     cardListSatker: {
         backgroundColor: "#FFFFFF",
         flexDirection: "column",
-        width: '90%',
-        marginLeft: 20,
+        width: '86%',
+        marginLeft: 25,
         opacity: 0.9,
-        borderRadius: 12,
+        borderRadius: 5,
         marginVertical: 40
     },
     vertical: {

@@ -222,13 +222,13 @@ export const Home = () => {
                 gap: 20,
               }}
             >
-              <View style={{ paddingLeft: 20 }}>
+              {/* <View style={{ paddingLeft: 20 }}>
                 <Ionicons
                   name="notifications-outline"
                   size={25}
                   color={"white"}
                 />
-              </View>
+              </View> */}
               <View
                 style={{
                   justifyContent: "flex-end",
@@ -326,7 +326,7 @@ export const Home = () => {
               />
             </View>
 
-            <View style={{ marginHorizontal: 30, marginTop: 20 }}>
+            <View style={{ marginHorizontal: 25, marginTop: 20 }}>
               <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
             </View>
             <View
@@ -335,7 +335,7 @@ export const Home = () => {
                 alignItems: "center",
                 flex: 1,
                 marginTop: 20,
-                marginLeft: 30,
+                marginLeft: 25,
               }}
             >
               <CardTautan setModalVisible={setModalVisible} />
@@ -344,7 +344,7 @@ export const Home = () => {
             <View
               style={{
                 marginVertical: 20,
-                marginLeft: 30,
+                marginLeft: 25,
                 flexDirection: "row",
                 marginTop: 30,
               }}
@@ -438,7 +438,7 @@ export const Home = () => {
             <View
               style={{
                 marginVertical: 20,
-                marginLeft: 30,
+                marginLeft: 25,
                 flexDirection: "row",
               }}
             >
@@ -449,7 +449,7 @@ export const Home = () => {
               </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ListBerita")}
-                style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 30}}
               >
                 <Text
                   style={{
@@ -459,7 +459,7 @@ export const Home = () => {
                     color: "#1868AB",
                   }}
                 >
-                  View all
+                  Selengkapnya
                 </Text>
               </TouchableOpacity>
             </View>
@@ -808,7 +808,7 @@ export const Home = () => {
               </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ListGaleri")}
-                style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 30 }}
               >
                 <Text
                   style={{
@@ -818,7 +818,7 @@ export const Home = () => {
                     color: "#1868AB",
                   }}
                 >
-                  View all
+                  Selengkapnya
                 </Text>
               </TouchableOpacity>
             </View>

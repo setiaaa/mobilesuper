@@ -184,6 +184,8 @@ export const GrupKalender = () => {
     setDate(today)
   }
 
+
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -234,7 +236,7 @@ export const GrupKalender = () => {
                     <View style={{ marginVertical: 20, marginLeft: 20 }}>
                       <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Pilih Grup</Text>
                     </View>
-                    <View style={{ width: '90%', marginLeft: 20, marginBottom: 20 }}>
+                    <View style={{ width: '90%', marginLeft: 20, }}>
                       <Dropdown
                         data={datagrup()}
                         setSelected={setKategoriField}
@@ -457,6 +459,7 @@ export const GrupKalender = () => {
 
                 <View>
                 </View>
+
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
                     <TouchableOpacity onPress={() => {

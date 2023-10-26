@@ -158,7 +158,7 @@ export const RangkumanIKU = () => {
             backgroundColor: switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 8,
+            borderRadius: 30,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -182,7 +182,7 @@ export const RangkumanIKU = () => {
             backgroundColor: !switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 8,
+            borderRadius: 30,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",

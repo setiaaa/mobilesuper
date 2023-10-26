@@ -43,6 +43,28 @@ export const ListBerita = () => {
     }
   }
 
+  const [search, setSearch] = useState('')
+  const [filterData, setFilterData] = useState([])
+
+
+  const filter = (event) => {
+    setSearch(event)
+  }
+
+  useEffect(() => {
+    setFilterData(berita.lists)
+  }, [berita])
+
+  useEffect(() => {
+    if (search !== '') {
+      const data = berita.lists?.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      })
+      setFilterData(data)
+    } else {
+      setFilterData(berita.lists)
+    }
+  }, [search])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -83,11 +105,16 @@ export const ListBerita = () => {
           </View>
         </View>
         <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-          <Search placeholder={"Pencarian"} />
+          <Search
+            placeholder={'Cari'}
+            iconColor={COLORS.primary}
+            onSearch={filter}
+          />
+
         </View>
         <View style={{ flex: 1, paddingBottom: 24 }}>
           <FlatList
-            data={berita.lists}
+            data={filterData}
             renderItem={({ item, index }) => (
               <View key={index}>
                 <CardListBeritaHome
@@ -113,6 +140,23 @@ export const ListBerita = () => {
             onEndReached={loadMore}
           />
         </View>
+        {/* <FlatList
+          data={filterData}
+          renderItem={({ item, index }) => (
+            <View key={index}>
+              <Item
+                image={item.image}
+                tanggal={item.updated_at}
+                // subtitle={item.subtitle}
+                title={item.title}
+                id={item.id}
+                item={item}
+                token={token}
+              />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        /> */}
       </View>
     </SafeAreaView>
   );
