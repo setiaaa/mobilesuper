@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TabBar } from 'react-native-tab-view';
+import { TabBar } from "react-native-tab-view";
 
 const FirstRoute = () => (
   <View style={{ marginTop: 10 }}>
@@ -344,15 +344,20 @@ const FourthRoute = () => (
   </View>
 );
 
-const renderTabBar = props => (
+const renderTabBar = (props) => (
   <TabBar
     {...props}
-    indicatorStyle={{ backgroundColor: COLORS.danger, }}
-    style={{ backgroundColor: '#FFFFFF', shadowOffset: { width: -2, height: 2 }, shadowColor: COLORS.primary, shadowOpacity: 0.2, elevation: 2, }}
+    indicatorStyle={{ backgroundColor: COLORS.danger }}
+    style={{
+      backgroundColor: "#FFFFFF",
+      shadowOffset: { width: -2, height: 2 },
+      shadowColor: COLORS.primary,
+      shadowOpacity: 0.2,
+      elevation: 2,
+    }}
     labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 13 }}
   />
 );
-
 
 const renderScene = SceneMap({
   first: FirstRoute,
@@ -426,7 +431,16 @@ export const JumlahPostingan = () => {
           }}
         >
           <View style={{ backgroundColor: COLORS.primary, borderRadius: 8 }}>
-            <Text style={{ color: "#FFFFFF", textAlign: "center", fontSize: 13, fontWeight: 600}}>Triwulan</Text>
+            <Text
+              style={{
+                color: "#FFFFFF",
+                textAlign: "center",
+                fontSize: 13,
+                fontWeight: 600,
+              }}
+            >
+              Triwulan
+            </Text>
           </View>
           <TabView
             navigationState={{ index, routes }}
