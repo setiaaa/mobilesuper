@@ -107,12 +107,12 @@ export const CardAppsB = ({ handlePressModal }) => {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainSPPD')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='clipboard-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Cuti</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>SPPD</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>

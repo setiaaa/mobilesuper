@@ -191,6 +191,11 @@ import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
 import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
+import MyTabBarSPPD from "../SPPD/BottomTabsSPPD";
+import MainSPPD from "../SPPD/MainSPPD";
+import { Personal } from "../SPPD/Personal";
+import { DokumenSPPD } from "../SPPD/DokumenSPPD";
+import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -753,6 +758,30 @@ function AuthStack() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="Drawer"
+          component={DrawerNavigator}
+          options={{
+            headerShown: false,
+            gestureEnabled: false
+          }}
+        />
+        <Stack.Screen
+          name="MainSPPD"
+          component={MainSPPD}
+          options={{
+            headerTitle: '',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailDokumenSPPD"
+          component={DetailDokumenSPPD}
+          options={{
+            headerTitle: '',
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </>
   );
@@ -1036,6 +1065,17 @@ export const BottomTabsDetailAgenda = () => {
     </BottomSheetModalProvider>
   );
 };
+
+export const BottomTabsSPPD = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarSPPD {...props} />} initialRouteName='Personal'>
+        <Tab.Screen name='Personal' component={Personal} options={{ headerShown: false }} />
+        <Tab.Screen name='DokumenSPPD' component={DokumenSPPD} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
 
 export const TopsTP = () => {
   return (

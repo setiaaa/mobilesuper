@@ -3,7 +3,7 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Alert } from "react-native";
+import { View, StyleSheet, Image, Alert, SafeAreaView } from "react-native";
 import { Avatar, Drawer, Text, IconButton } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerActions } from "@react-navigation/native";
@@ -23,46 +23,97 @@ import SecretaryList from "./List/SecretaryList";
 import DelegationList from "./List/DelegationList";
 import Dashboard from "./Dashboard/Dasboard";
 import TermOfUse from "./TermOfUse";
+import { Profile } from "./Profile";
 import { Config } from "../../constants/config";
 import MyDispositionList from "./List/MyDispositionList";
 import ScanLogList from "./List/ScanLogList";
 import SearchGlobalList from "./List/SearchGlobalList";
 import { GlobalStyles } from "../../constants/styles";
 import { androidId, getIosIdForVendorAsync } from "expo-application";
+import { COLORS } from "../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
 
 const DrawerItemsData = [
   {
-    label: "Incoming Letter",
-    name: "Incoming",
-    icon: "inbox-arrow-down",
+    label: "Beranda", 
+    name: "Dashboard",
+    icon: "home",
     key: 1,
   },
   {
-    label: "Disposition",
-    name: "Disposition",
-    icon: "email-send",
+    label: "Buat Surat",
+    name: "",
+    icon: "file-plus",
     key: 2,
   },
   {
-    label: "My Disposition",
-    name: "MyDisposition",
-    icon: "share",
+    label: "Surat Masuk",
+    name: "Incoming",
+    icon: "email",
     key: 3,
   },
-  { label: "Need Follow Up", name: "NeedFollowUp", icon: "email-edit", key: 4 },
+  { 
+    label: "Disposisi", 
+    name: "Disposition", 
+    icon: "chat-processing", 
+    key: 4 },
   {
-    label: "Tracking Letter",
-    name: "Tracking",
-    icon: "email-search",
+    label: "Surat Keluar",
+    name: "",
+    icon: "email-send",
     key: 5,
   },
   {
-    label: "Submitted Letter",
+    label: "Arsip",
     name: "Submitted",
-    icon: "email-check",
+    icon: "file-multiple",
     key: 6,
   },
+  {
+    label: "Alat",
+    name: "",
+    icon: "toolbox",
+    key: 7,
+  },
 ];
+
+// const DrawerItemsData = [
+//   {
+//     label: "Incoming Letter", 
+//     name: "Incoming",
+//     icon: "inbox-arrow-down",
+//     key: 1,
+//   },
+//   {
+//     label: "Disposition",
+//     name: "Disposition",
+//     icon: "email-send",
+//     key: 2,
+//   },
+//   {
+//     label: "My Disposition",
+//     name: "MyDisposition",
+//     icon: "share",
+//     key: 3,
+//   },
+//   { 
+//     label: "Need Follow Up", 
+//     name: "NeedFollowUp", 
+//     icon: "email-edit", 
+//     key: 4 },
+//   {
+//     label: "Tracking Letter",
+//     name: "Tracking",
+//     icon: "email-search",
+//     key: 5,
+//   },
+//   {
+//     label: "Submitted Letter",
+//     name: "Submitted",
+//     icon: "email-check",
+//     key: 6,
+//   },
+// ];
 
 const DrawerNav = createDrawerNavigator();
 
@@ -167,17 +218,17 @@ const CustomDrawerContent = (props) => {
       <Drawer.Section style={{ marginHorizontal: -5 }}>
         <Drawer.Item
           style={styles.drawerItem}
-          label="Search"
-          icon={drawerItemIndex == 12 ? "magnify" : "magnify"}
-          key="12"
-          active={drawerItemIndex === 12}
+          label="Pencarian"
+          icon={drawerItemIndex == 10 ? "magnify" : "magnify"}
+          key="10"
+          active={drawerItemIndex === 10}
           onPress={() => {
-            setDrawerItemIndex(12);
+            setDrawerItemIndex(10);
             props.navigation.navigate("SearchGlobalList");
           }}
         />
       </Drawer.Section>
-      <Drawer.Section style={{ marginHorizontal: -5 }} showDivider={false}>
+      {/* <Drawer.Section style={{ marginHorizontal: -5 }} showDivider={false}>
         <Drawer.Item
           style={styles.drawerItem}
           label="Dashboard"
@@ -189,8 +240,8 @@ const CustomDrawerContent = (props) => {
             props.navigation.navigate("Dashboard");
           }}
         />
-      </Drawer.Section>
-      <Drawer.Section style={{ margin: -5 }} title="Message">
+      </Drawer.Section> */}
+      <Drawer.Section>
         {DrawerItemsData.map((data, index) => (
           <Drawer.Item
             style={styles.drawerItem}
@@ -206,8 +257,32 @@ const CustomDrawerContent = (props) => {
             }}
           />
         ))}
+        <Drawer.Item
+          style={styles.drawerItem}
+          label="Sign Out"
+          icon="logout"
+          key="8"
+          active={drawerItemIndex === 8}
+          onPress={() => {
+            AlertConfirm("Confirm", "Are you sure to Sign Out?", () => {
+              setDrawerItemIndex(8);
+              handlerLogout();
+            });
+          }}
+        />
       </Drawer.Section>
-      <Drawer.Section style={{ margin: -5 }} title="Tools">
+        <Drawer.Item
+          style={styles.drawerItem}
+          label="Profil"
+          icon={drawerItemIndex == 9 ? "account-circle" : "account-circle-outline"}
+          key="9"
+          active={drawerItemIndex === 9}
+          onPress={() => {
+            setDrawerItemIndex(9);
+            props.navigation.navigate("Profile");
+          }}
+        />
+      {/* <Drawer.Section style={{ margin: -5 }} title="Tools">
         <Drawer.Item
           style={styles.drawerItem}
           label="Delegation"
@@ -247,8 +322,8 @@ const CustomDrawerContent = (props) => {
             props.navigation.navigate("ScanLogList");
           }}
         />
-      </Drawer.Section>
-      <Drawer.Section style={{ margin: -5 }} title="Info">
+      </Drawer.Section> */}
+      {/* <Drawer.Section style={{ margin: -5 }} title="Info">
         {Config.termOfUse && (
           <Drawer.Item
             style={styles.drawerItem}
@@ -275,7 +350,7 @@ const CustomDrawerContent = (props) => {
             });
           }}
         />
-      </Drawer.Section>
+      </Drawer.Section> */}
     </DrawerContentScrollView>
   );
 };
@@ -284,8 +359,12 @@ const CustomDrawerContent = (props) => {
 const defaultOptions = ({ title, navigation }) => ({
   title: title,
   headerTitleContainerStyle: {
-    flex: 1,
+    // flex: 1,
     alignItems: "flex-end",
+    // backgroundColor: "red",
+    alignItems: "center",
+    paddingRight: 10
+    // marginTop: 40
   },
   headerTitleStyle: {
     fontSize: 16,
@@ -295,21 +374,27 @@ const defaultOptions = ({ title, navigation }) => ({
   },
   headerLeftContainerStyle: {
     width: "50%",
-    marginHorizontal: 0,
+    // marginHorizontal: 0,
+    // backgroundColor: "yellow",
+    paddingLeft: 10
   },
-  headerStatusBarHeight: 0,
+  // headerStatusBarHeight: 0,
   headerLeft: () => (
-    <View style={styles.containerHeader}>
+    <SafeAreaView style={{ alignItems: "center" }}>
+      {/* <View style={styles.containerHeader}> */}
       <View style={styles.containerHeaderLeft}>
-        <IconButton
-          icon="menu"
-          size={26}
-          color="black"
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        />
-        <Image style={styles.logoHeader} source={Config.logoHeader} />
+        <View style={{ backgroundColor: "#752A2B", width: 30, height: 30, borderRadius: 15, alignItems: "center", justifyContent: "center", marginBottom: 5 }}>
+          <IconButton
+            icon="menu"
+            size={16}
+            color={COLORS.white}
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          />
+        </View>
+        {/* <Image style={styles.logoHeader} source={Config.logoHeader} /> */}
       </View>
-    </View>
+    {/* </View> */}
+    </SafeAreaView>
   ),
 });
 function DrawerNavigator({ navigation }) {
@@ -424,6 +509,14 @@ function DrawerNavigator({ navigation }) {
           navigation: navigation,
         })}
       />
+      <DrawerNav.Screen
+        name="Profile"
+        component={Profile}
+        options={defaultOptions({
+          title: "Profil",
+          navigation: navigation,
+        })}
+      />
     </DrawerNav.Navigator>
   );
 }
@@ -437,6 +530,7 @@ const styles = StyleSheet.create({
   containerHeaderLeft: {
     flexDirection: "row",
     alignItems: "center",
+    marginStart: 15
   },
   logoHeader: {
     height: 30,
@@ -449,7 +543,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   containerProfile: {
-    marginHorizontal: 24,
+    // marginHorizontal: 24,
+    alignItems: "center"
   },
   avatar: {
     marginBottom: 8,
