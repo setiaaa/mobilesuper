@@ -176,6 +176,12 @@ import { Personal } from "../Cuti/Personal"
 import { DokumenCuti } from "../Cuti/DokumenCuti";
 import { PersetujanCuti } from "../Cuti/PersetujanCuti";
 import { Libur } from "../Cuti/Libur";
+import { TambahCutiBesar } from "../Cuti/TambahCutiBesar";
+import { TambahCutiSakit } from "../Cuti/TambahCutiSakit";
+import { TambahCutiMelahirkan } from "../Cuti/TambahCutiMelahirkan";
+import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
+import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
+import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 
 
 const Stack = createNativeStackNavigator();
@@ -637,6 +643,55 @@ function AuthStack() {
         <Stack.Screen
           name="MainCuti"
           component={MainCuti}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Libur"
+          component={Libur}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiBesar"
+          component={TambahCutiBesar}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiSakit"
+          component={TambahCutiSakit}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiMelahirkan"
+          component={TambahCutiMelahirkan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiDiluarTanggungan"
+          component={TambahCutiDiluarTanggungan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiTahunan"
+          component={TambahCutiTahunan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiAlasanPenting"
+          component={TambahCutiAlasanPenting}
           options={{
             headerShown: false,
           }}
@@ -1377,13 +1432,6 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="MyTask"
             component={MyTask}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Libur"
-            component={Libur}
             options={{
               headerShown: false,
             }}

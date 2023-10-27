@@ -129,7 +129,7 @@ export const Personal = () => {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
                         <View style={{gap:30, flexDirection: 'row',}}>
                             <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity style={{
+                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiTahunan')} style={{
                                     backgroundColor: COLORS.infoDanger,
                                     padding: 15,
                                     borderRadius: 30,
@@ -145,7 +145,7 @@ export const Personal = () => {
                             </View>
 
                             <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity style={{
+                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiBesar')} style={{
                                     backgroundColor: COLORS.infoDanger,
                                     padding: 15,
                                     width: 55,
@@ -161,7 +161,7 @@ export const Personal = () => {
                             </View>
 
                             <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity style={{
+                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiSakit')} style={{
                                     backgroundColor: COLORS.infoDanger,
                                     padding: 15,
                                     width: 55,
@@ -177,7 +177,7 @@ export const Personal = () => {
                             </View>
 
                             <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity style={{
+                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiMelahirkan')} style={{
                                     backgroundColor: COLORS.infoDanger,
                                     padding: 15,
                                     width: 55,
@@ -193,7 +193,7 @@ export const Personal = () => {
                             </View>
 
                             <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity style={{
+                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiAlasanPenting')} style={{
                                     backgroundColor: COLORS.infoDanger,
                                     padding: 15,
                                     width: 55,
@@ -205,7 +205,23 @@ export const Personal = () => {
                                 }}>
                                     <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                 </TouchableOpacity>
-                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Tahunan</Text>
+                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Alasan Penting</Text>
+                            </View>
+
+                            <View style={{alignItems: 'center', gap: 10}}>
+                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiDiluarTanggungan')} style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    padding: 15,
+                                    width: 55,
+                                    height: 55,
+                                    borderRadius: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+
+                                }}>
+                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                </TouchableOpacity>
+                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Diluar Tanggungan Negara</Text>
                             </View>
                             
                         </View>
