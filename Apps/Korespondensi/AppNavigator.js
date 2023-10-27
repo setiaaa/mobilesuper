@@ -182,6 +182,7 @@ import { TambahCutiMelahirkan } from "../Cuti/TambahCutiMelahirkan";
 import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
 import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
+import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
 
 
 const Stack = createNativeStackNavigator();
@@ -692,6 +693,13 @@ function AuthStack() {
         <Stack.Screen
           name="TambahCutiAlasanPenting"
           component={TambahCutiAlasanPenting}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailDokumenCuti"
+          component={DetailDokumenCuti}
           options={{
             headerShown: false,
           }}

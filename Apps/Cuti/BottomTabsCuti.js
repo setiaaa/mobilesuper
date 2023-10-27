@@ -95,7 +95,7 @@ function MyTabCuti({ props, navigation }) {
                                 width: 90,
                             }}>
                                 <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey, textAlign: 'center' }}>Dokumen Persetujuan</Text>
+                                <Text style={{ color: COLORS.grey, textAlign: 'center' }}>Dokumen Personal</Text>
                             </View>
                         )}
                     </TouchableOpacity>
