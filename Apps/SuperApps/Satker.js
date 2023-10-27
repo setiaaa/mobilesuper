@@ -16,7 +16,7 @@ import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
-import { getBennerSatker, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah } from '../../service/api';
+import { getBennerSatker, getDetailLinimasa, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah, getViewLinimasa } from '../../service/api';
 import { Loading } from '../../components/Loading';
 import { setBeritaSatker } from '../../store/Satker';
 
@@ -125,10 +125,23 @@ export const Satker = () => {
         );
     };
 
-    const CardLiniMasaSatker = ({ image, judul, nama, jenis, index, item }) => {
+    const CardLiniMasaSatker = ({ image, judul, nama, jenis, index, item, token }) => {
+
+        const getDetail = (id) => {
+            const params = { token, id }
+            // const data = event.listsprogress.find(item => item.id === id)
+            dispatch(getDetailLinimasa(params))
+            dispatch(getViewLinimasa(params))
+        }
+
         return (
             <View key={index} style={{ flex: 1, justifyContent: 'center', marginHorizontal: 20 }}>
-                <View style={{ flexDirection: 'row', marginVertical: 20 }}>
+                <TouchableOpacity style={{ flexDirection: 'row', marginVertical: 20 }}
+                    onPress={() => {
+                        getDetail(item.id)
+                        navigation.navigate('DetailLinimasa')
+                    }}
+                >
                     <Image source={{ uri: item.cover }} style={{ width: 80, height: 80 }} />
                     <View style={{ marginLeft: 10 }}>
                         <View style={{ width: '88%' }}>
@@ -163,7 +176,7 @@ export const Satker = () => {
 
                         </View>
                     </View>
-                </View >
+                </TouchableOpacity >
                 <Divider bold style={{ width: '90%' }} />
             </View>
         )
@@ -336,7 +349,7 @@ export const Satker = () => {
                         tappableDots={!!carouselRef}
                     />
                 </View>
-                <Calendar
+                {/* <Calendar
                     onDayPress={day => {
                         setSelected(day.dateString);
                     }}
@@ -349,8 +362,8 @@ export const Satker = () => {
                         selectedDayBackgroundColor: COLORS.primary,
                         todayTextColor: COLORS.primary,
                     }}
-                />
-                <View style={[styles.cardListSatker, { flex: 1, justifyContent: 'center', paddingVertical: 40 }]}>
+                /> */}
+                <View style={[styles.cardListSatker, { flex: 1, justifyContent: 'center', paddingVertical: 20 }]}>
                     <Text style={{ marginLeft: 20, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>Linimasa Pengetahuan</Text>
                     <View style={{ marginTop: 10 }}>
                         <FlatList
@@ -359,6 +372,7 @@ export const Satker = () => {
                             renderItem={({ item, index }) => <CardLiniMasaSatker
                                 item={item}
                                 index={index}
+                                token={token}
                             />
                             }
                             keyExtractor={item => item.id}

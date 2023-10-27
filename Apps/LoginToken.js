@@ -9,6 +9,7 @@ import { setTokenValue } from '../service/session'
 import { useDispatch, useSelector } from 'react-redux'
 import { Login } from '../service/api'
 import { Ionicons } from '@expo/vector-icons';
+import { Alert } from 'react-native'
 
 export const LoginToken = () => {
     const navigation = useNavigation()
@@ -30,9 +31,9 @@ export const LoginToken = () => {
     useEffect(() => {
         setUserName('')
         setPassword('')
-        if (error !== null && !error) {
+        if (error !== null && !error && isSelected == true) {
             navigation.navigate('Main')
-        } else if (error !== null && error) {
+        } else if (error !== null && error && isSelected == false) {
             alert('Username atau Password salah')
         }
     }, [error])
@@ -49,9 +50,12 @@ export const LoginToken = () => {
             nip: nipField,
             pass: passField
         })
-        if (username === '' || password === '') {
-            alert('Harap Lengkapi Form')
-        } else {
+        if ((username === '' || password === '') || isSelected === false) {
+            Alert.alert('Terjadi Kesalahan', 'Harap Lengkapi Form')
+        } else if ((username !== '' || password !== '') && isSelected === false) {
+            Alert.alert('Terjadi Kesalahan', 'Harap Lengkapi Form')
+        }
+        else if (isSelected === true) {
             dispatch(Login({ username, password }))
         }
     }
@@ -62,7 +66,7 @@ export const LoginToken = () => {
                 behavior={Platform.OS === 'ios' ? 'height' : 'height'}
             >
                 <ScrollView>
-                    <View style={{  flex: 1 }}>
+                    <View style={{ flex: 1 }}>
                         <View style={{ backgroundColor: COLORS.white, width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, gap: 20, height: "100%" }}>
 
                             <Pressable onPress={() => {
@@ -75,7 +79,7 @@ export const LoginToken = () => {
                                 <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>SSO</Text>
                                 <Text style={{ fontSize: FONTSIZE.Judul }}>Kementerian Kelautan & Perikanan</Text>
                             </View>
-                            <View style={{ width: '90%',  }}>
+                            <View style={{ width: '90%', }}>
                                 <Text>NIP / Email</Text>
                                 <TextInput
                                     style={{ borderWidth: 1, borderRadius: 5, height: 35, marginTop: 5, borderColor: COLORS.ExtraDivinder, padding: 10 }}
@@ -123,7 +127,7 @@ export const LoginToken = () => {
                             </View>
 
 
-                            <View style={{ flexDirection: 'row', gap: 10, maxWidth: 350,alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', gap: 10, maxWidth: 350, alignItems: 'center' }}>
                                 <Checkbox
                                     value={isSelected}
                                     onValueChange={setSelection}
@@ -149,33 +153,33 @@ export const LoginToken = () => {
                                 <Text style={{ color: COLORS.white }}>Masuk</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center"}}>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}>
                                 <Ionicons name='help-circle-outline' size={24} color={"#1868AB"} />
-                                <Text style={{fontWeight: FONTWEIGHT.bold, color: "#1868AB"}}>Service Desk Collaboration Office</Text>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, color: "#1868AB" }}>Service Desk Collaboration Office</Text>
                             </TouchableOpacity>
 
-                            <View style={{ flexDirection: "row", gap: 50, alignItems: 'center'}}>
+                            <View style={{ flexDirection: "row", gap: 50, alignItems: 'center' }}>
                                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10, }}>
-                                    <Ionicons style={{color: COLORS.lighter}} name='calendar-outline' size={24} color={COLORS.yourColor} />
+                                    <Ionicons style={{ color: COLORS.lighter }} name='calendar-outline' size={24} color={COLORS.yourColor} />
                                     <View>
-                                        <Text style={{color: COLORS.lighter}}>
+                                        <Text style={{ color: COLORS.lighter }}>
                                             Senin - Jumat
                                         </Text>
-                                        <Text style={{color: COLORS.lighter}}>
+                                        <Text style={{ color: COLORS.lighter }}>
                                             08.00 - 17.00 WIB
                                         </Text>
                                     </View>
                                 </View>
-                                <TouchableOpacity style={{ flexDirection: "row", gap: 10}} >
+                                <TouchableOpacity style={{ flexDirection: "row", gap: 10 }} >
                                     <Ionicons name='call-outline' size={24} color={COLORS.lighter} />
-                                    <View style={{ borderRadius: 10, padding: 5, borderColor: "#E4EEF5", borderWidth: 1}}>
-                                        <Text style={{color: COLORS.lighter, }}>Support Coofis</Text>
+                                    <View style={{ borderRadius: 10, padding: 5, borderColor: "#E4EEF5", borderWidth: 1 }}>
+                                        <Text style={{ color: COLORS.lighter, }}>Support Coofis</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
 
                             <View style={{ alignItems: "center", gap: 10, marginVertical: 25, marginBottom: 100 }}>
-                                <Text style={{color: COLORS.lighter}}>Terintegrasi</Text>
+                                <Text style={{ color: COLORS.lighter }}>Terintegrasi</Text>
                                 <Image source={require('../assets/superApp/bse.png')} />
 
                             </View>

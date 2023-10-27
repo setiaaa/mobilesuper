@@ -64,6 +64,7 @@ import { GaleriHome } from "../../components/GaleriHome";
 import { Loading } from "../../components/Loading";
 
 const { width: screenWidth } = Dimensions.get("window");
+
 export const Home = () => {
   const carouselRef = useRef(null);
 
@@ -171,18 +172,6 @@ export const Home = () => {
     setPlaying((prev) => !prev);
   }, []);
 
-  // const [token, setToken] = useState('')
-
-  // getTokenValue().then(val => {
-  //     setToken(val)
-  // })
-
-  // console.log(token)
-
-  // console.log(profile);
-  // console.log(banner);
-  // console.log(galeri.lists);
-  // console.log(berita.lists);
   return (
     <SafeAreaView>
       <GestureHandlerRootView>
@@ -449,7 +438,7 @@ export const Home = () => {
               </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ListBerita")}
-                style={{ flex: 1, alignItems: "flex-end", marginRight: 30}}
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 30 }}
               >
                 <Text
                   style={{
