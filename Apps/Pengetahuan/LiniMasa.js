@@ -17,6 +17,9 @@ import { getDetailLinimasa, getLinimasa, getViewLinimasa, patchLike, patchUnlike
 import { getTokenValue } from '../../service/session'
 import moment from 'moment'
 import { ScrollView } from 'react-native'
+import { Loading } from '../../components/Loading'
+import { ActivityIndicator } from 'react-native'
+import ListEmpty from '../../components/ListEmpty'
 
 
 
@@ -62,7 +65,7 @@ const CardLiniMasa = ({ item, token }) => {
             elevation: 2,
             alignContent: 'center',
             marginBottom: 20
-        
+
         }}>
             <TouchableOpacity onPress={(e) => {
                 e.stopPropagation()
@@ -296,6 +299,8 @@ export const LiniMasa = () => {
     const dispatch = useDispatch()
 
     const [token, setToken] = useState('')
+    const [page, setPage] = useState(5)
+
 
     useEffect(() => {
         getTokenValue().then(val => {
@@ -305,57 +310,88 @@ export const LiniMasa = () => {
 
     useEffect(() => {
         if (token !== '') {
-            dispatch(getLinimasa(token))
+            dispatch(getLinimasa({ token: token, page: page }))
+            dispatch(setRefresh(false))
         }
-    }, [token])
+    }, [token, page])
 
-    const { linimasa, refresh } = useSelector(state => state.pengetahuan)
 
+    const { linimasa, refresh, loading } = useSelector(state => state.pengetahuan)
 
     useEffect(() => {
         if (refresh) {
-            dispatch(getLinimasa(token))
-            dispatch(setRefresh(false))
+            dispatch(getLinimasa({ token: token, page: page }))
+
         }
     }, [refresh])
+
+    const loadMore = () => {
+        if (linimasa.lists.length % 5 === 0) {
+            setPage(page + 5)
+        }
+        console.log(page)
+    }
+
+    // console.log(linimasa.lists)
+
     return (
-        <SafeAreaView>
-            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
-                <View style={{
-                    backgroundColor: COLORS.white,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: 20
-                }}>
-                    <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                    </TouchableOpacity>
-                </View>
-                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Linimasa Pengetahuan</Text>
-                </View>
-            </View>
-
-            <FlatList
-                data={linimasa.lists}
-                renderItem={({ item }) =>
-                    <View key={item.id}>
-                        <CardLiniMasa
-                            item={item}
-                            token={token}
-                        // setVisibleModal={setVisibleModal}
-                        />
+        <>
+            {linimasa.lists.length === 0 ? (
+                <Loading />
+            ) : (
+                null
+            )}
+            <SafeAreaView >
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 20
+                    }}>
+                        <TouchableOpacity style={{}} onPress={() => {
+                            navigation.goBack()
+                        }}>
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                        </TouchableOpacity>
                     </View>
-                }
-                style={{ marginBottom: 80 }}
-                keyExtractor={item => item.id}
-            />
+                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Linimasa Pengetahuan</Text>
+                    </View>
+                </View>
 
 
-        </SafeAreaView>
+                <FlatList
+                    data={linimasa.lists}
+                    renderItem={({ item }) =>
+                        <View key={item.id}>
+                            <CardLiniMasa
+                                item={item}
+                                token={token}
+                            // setVisibleModal={setVisibleModal}
+                            />
+                        </View>
+                    }
+                    ListFooterComponent={() => (
+                        loading === true ? (
+                            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                                <ActivityIndicator size="large" color={COLORS.primary} />
+                            </View>
+                        ) : (
+                            null
+                        )
+                    )}
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={() => <ListEmpty />}
+                    onEndReached={loadMore}
+                />
+
+
+            </SafeAreaView>
+        </>
     )
 }
 

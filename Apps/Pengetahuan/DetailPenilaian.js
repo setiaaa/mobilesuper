@@ -240,14 +240,12 @@ export const DetailPenilaian = () => {
                                 <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Deskripsi [How]</Text>
                                 <Text>:</Text>
                             </View>
-                            <View style={{ height: 100, marginHorizontal: 10 }}>
-                                <ScrollView>
-                                    <RenderHTML
-                                        source={source}
-                                        contentWidth={width}
-                                    />
-                                    {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
-                                </ScrollView>
+                            <View style={{ marginHorizontal: 10 }}>
+                                <RenderHTML
+                                    source={source}
+                                    contentWidth={width}
+                                />
+                                {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
                             </View>
                         </View>
 

@@ -613,8 +613,8 @@ export const getDetailBerita = createAsyncThunk(
 );
 
 //mp
-export const getLinimasa = createAsyncThunk("mp/getLinimasa", async (token) => {
-    const respon = await axios.get(`${Linimasa}linimasa/`, {
+export const getLinimasa = createAsyncThunk("mp/getLinimasa", async ({ token, page }) => {
+    const respon = await axios.get(`${Linimasa}linimasa/?limit=${page}`, {
         headers: { Authorization: token },
     });
     return respon?.data.results;
@@ -841,6 +841,17 @@ export const getListPenilaian = createAsyncThunk(
             { headers: { Authorization: data.token } }
         );
         return respon?.data.results;
+    }
+);
+
+export const getTotalPenilaian = createAsyncThunk(
+    "mp/getTotalPenilaian",
+    async (data) => {
+        const respon = await axios.get(
+            `${Linimasa}admin/evaluation/count/?year=${data.tahun}&quarter=${data.TW}`,
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data.result;
     }
 );
 
@@ -1182,79 +1193,79 @@ export const getSummaryReview = createAsyncThunk(
 );
 
 export const getListCategory = createAsyncThunk(
-  "mp/admin/category/",
-  async (token) => {
-    const respon = await axios.get(`${GET_LIST_CATEGORY}`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.results;
-  }
+    "mp/admin/category/",
+    async (token) => {
+        const respon = await axios.get(`${GET_LIST_CATEGORY}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
 );
 
 export const getListCompetence = createAsyncThunk(
-  "mp/admin/competence/",
-  async (token) => {
-    const respon = await axios.get(`${GET_LIST_COMPETENCE}`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.results;
-  }
+    "mp/admin/competence/",
+    async (token) => {
+        const respon = await axios.get(`${GET_LIST_COMPETENCE}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
 );
 
 export const getListUnitKerja = createAsyncThunk(
-  "mp/admin/iku/unitkerja-choice/",
-  async (token) => {
-    const respon = await axios.get(`${GET_LIST_UNIT_KERJA}`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.result;
-  }
+    "mp/admin/iku/unitkerja-choice/",
+    async (token) => {
+        const respon = await axios.get(`${GET_LIST_UNIT_KERJA}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
 );
 
 export const getListPegawai = createAsyncThunk(
-  "mp/admin/iku/employee",
-  async (data) => {
-    // console.log(data.token);
-    // console.log(data.year);
-    // console.log(data.quarter);
-    // console.log(data.unitKerja);
-    const respon = await axios.get(
-      `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
-      {
-        headers: { Authorization: data.token },
-      }
-    );
-    return respon?.data.results;
-  }
+    "mp/admin/iku/employee",
+    async (data) => {
+        // console.log(data.token);
+        // console.log(data.year);
+        // console.log(data.quarter);
+        // console.log(data.unitKerja);
+        const respon = await axios.get(
+            `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
+            {
+                headers: { Authorization: data.token },
+            }
+        );
+        return respon?.data.results;
+    }
 );
 
 export const getListPostPegawai = createAsyncThunk(
-  "mp/admin/iku/employee/id",
-  async ({ token, id }) => {
-    // console.log("token : " + token);
-    // console.log("id : " + id);
-    const respon = await axios.get(`${GET_LIST_POSTINGAN_PEGAWAI}${id}`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.result;
-  }
+    "mp/admin/iku/employee/id",
+    async ({ token, id }) => {
+        // console.log("token : " + token);
+        // console.log("id : " + id);
+        const respon = await axios.get(`${GET_LIST_POSTINGAN_PEGAWAI}${id}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
 );
 
 export const getListPegawaiExport = createAsyncThunk(
-  "admin/iku/employee/export",
-  async (data) => {
-    // console.log(data.token);
-    // console.log(data.year);
-    // console.log(data.quarter);
-    // console.log(data.unitKerja);
-    const respon = await axios.get(
-      `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
-      {
-        headers: { Authorization: data.token },
-      }
-    );
-    return respon?.data.results;
-  }
+    "admin/iku/employee/export",
+    async (data) => {
+        // console.log(data.token);
+        // console.log(data.year);
+        // console.log(data.quarter);
+        // console.log(data.unitKerja);
+        const respon = await axios.get(
+            `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
+            {
+                headers: { Authorization: data.token },
+            }
+        );
+        return respon?.data.results;
+    }
 );
 
 // export const postMyArticle = createAsyncThunk("mp/", async (data, setRefresh = undefined) => {
