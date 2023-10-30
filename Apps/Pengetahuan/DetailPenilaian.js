@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, Modal, ScrollView, Text, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native'
@@ -203,7 +203,7 @@ export const DetailPenilaian = () => {
 
                         <View style={{ flexDirection: 'row', marginTop: 5 }}>
                             <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Terbuat</Text>
-                            <Text>: {moment(data?.published_date, 'HH:mm:ss').format('DD MMMM YYYY')}</Text>
+                            <Text>: {moment(data?.published_date, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: 5 }}>
@@ -240,14 +240,12 @@ export const DetailPenilaian = () => {
                                 <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Deskripsi [How]</Text>
                                 <Text>:</Text>
                             </View>
-                            <View style={{ height: 100, marginHorizontal: 10 }}>
-                                <ScrollView>
-                                    <RenderHTML
-                                        source={source}
-                                        contentWidth={width}
-                                    />
-                                    {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
-                                </ScrollView>
+                            <View style={{ marginHorizontal: 10 }}>
+                                <RenderHTML
+                                    source={source}
+                                    contentWidth={width}
+                                />
+                                {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
                             </View>
                         </View>
 

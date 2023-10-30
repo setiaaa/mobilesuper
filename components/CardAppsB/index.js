@@ -51,7 +51,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='library-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repository</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repositori</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
@@ -60,7 +60,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='school-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, textAlign: 'center' }}>Knowlage Management</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, textAlign: 'center' }}>Pengetahuan</Text>
                 </View>
             </View>
 
@@ -81,7 +81,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='clipboard-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Event Management</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Agenda Rapat</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
@@ -91,7 +91,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Image source={require('../../assets/superApp/DigiSign.png')} style={{ width: 24, height: 24 }} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Digital Signature</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Digital Sign</Text>
                 </View>
             </View>
 

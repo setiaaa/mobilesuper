@@ -179,9 +179,6 @@ const listsDigitalSign = [
 export default function MainDigitalSign() {
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(setDigitalSignLists(listsDigitalSign))
-    }, [])
     return (
         <BottomSheetModalProvider>
             <BottomTabsDigitalSign />

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { TextInput, View } from 'react-native'
 import { Image } from 'react-native'
 import { ScrollView } from 'react-native'
@@ -16,13 +16,21 @@ import {
     BottomSheetTextInput,
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
+import { useSelector } from 'react-redux'
+import { FlatList } from 'react-native-gesture-handler'
+import ListEmpty from '../../components/ListEmpty'
+import moment from "moment/moment";
 
 
-export const DetailSertifikat = ({ route }) => {
-    const { item } = route.params
+export const DetailSertifikat = (route) => {
+    // const { data } = route.params
     const navigation = useNavigation()
     const bottomSheetModalRef = useRef(null);
+    const { digitalsign } = useSelector((state) => state.digitalsign)
+    const item = digitalsign.detail
+    let links = []
 
+    
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
         animatedHandleHeight,
@@ -30,21 +38,32 @@ export const DetailSertifikat = ({ route }) => {
         animatedContentHeight,
         handleContentLayout,
     } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
-
+    
     const bottomSheetAttach = () => {
         bottomSheetModalRef.current?.present()
     }
-
+    
     const bottomSheetAttachClose = () => {
         if (bottomSheetModalRef.current)
-            bottomSheetModalRef.current?.close()
+        bottomSheetModalRef.current?.close()
+    }
+
+    const getLinkPdf = () => {
+        let links = [];
+        item.attachments.map((item) => {
+            links.push({
+                    link: item.file,
+            });
+        });
+        // console.log(links[0])
+        return links[0]
     }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <BottomSheetModalProvider>
-                <ScrollView>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+            <ScrollView>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20,  }}>
                         <View style={{
                             backgroundColor: COLORS.white,
                             borderRadius: 20,
@@ -58,30 +77,30 @@ export const DetailSertifikat = ({ route }) => {
                                 <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Digital Signature</Text>
+                        <View style={{  flex: 1, alignItems: 'center', marginRight: 50  }}>
+                            <Text style={{ color: "white" ,fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold}}>Detail Setifikat</Text>
                         </View>
                     </View>
-
+                    {Object.keys(item).length !== 0 ?(
                     <View style={{ width: '90%', backgroundColor: COLORS.white, marginHorizontal: 20, borderRadius: 8, marginTop: 20 }}>
                         <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
 
-                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{item?.subject}</Text>
 
                             <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>No Sertifikat</Text>
                                 <Text>:</Text>
-                                <Text>{item.nosertifikat}</Text>
+                                <Text style={{ width: "50%" }}>{item.extra_attributes?.noSertif}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>Penerima Sertifikat</Text>
                                 <Text>:</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                    <Image source={item.avatarpenerima} />
+                                    {/* <Image source={item.composer.avatar} /> */}
                                     <View>
-                                        <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.info }}>{item.namapenerima}</Text>
-                                        <Text style={{ color: COLORS.lighter }}>{item.jabatanpenerima}</Text>
+                                        <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.info, width: "80%", marginBottom: 5 }}>{item.receivers?.nama}</Text>
+                                        <Text style={{ color: COLORS.lighter, width: "80%" }}>{item.receivers?.nip }</Text>
                                     </View>
                                 </View>
                             </View>
@@ -89,125 +108,108 @@ export const DetailSertifikat = ({ route }) => {
                             <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>Tanggal Dibuat</Text>
                                 <Text>:</Text>
-                                <Text>{item.tanggal}</Text>
+                                <Text>{moment(item.extra_attributes?.tanggalSertif).format("DD MMMM yyyy")}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>Judul Course</Text>
                                 <Text>:</Text>
-                                <Text>{item.judulcourse}</Text>
+                                <Text  style={{ width: "50%" }}>{item.extra_attributes?.course?.name}</Text>
                             </View>
 
                             <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>keterangan</Text>
                                 <Text>:</Text>
-                                <Text style={{ width: 189 }}>{item.keterangan}</Text>
+                                <Text style={{ width: "50%"}}>{item.extra_attributes?.keterangan}</Text>
                             </View>
                         </View>
-
+                        
                         <View style={{ borderWidth: 1, borderRadius: 4, width: '95%', marginHorizontal: 10, marginBottom: 20, borderColor: '#DBDADE' }}>
                             <View style={{ backgroundColor: COLORS.primary, alignItems: 'center', height: 30, justifyContent: 'center' }}>
                                 <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Approval</Text>
                             </View>
                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                {item.panandatangansatu?.map((data) => {
-                                    return (
-                                        <View key={data.id} style={{ alignItems: 'center' }}>
-                                            <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center', }}>
-                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penamdatangan 1</Text>
-
-                                                {data.status === "terima" ? (
-                                                    <View style={{ backgroundColor: COLORS.success, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
-                                                        <Ionicons name='checkmark-outline' color={COLORS.white} />
-                                                    </View>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </View>
-
-                                            <Image source={data.avatar} style={{ marginTop: 10 }} />
-                                            <Text style={{ marginTop: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold }}>{data.namajabatan}</Text>
-
-                                            <Text style={{ marginTop: 5, color: COLORS.lighter }}>{data.nama}</Text>
-
-                                            <Text style={{ color: COLORS.lighter, marginTop: 5 }}>Disetujui :</Text>
-
-                                            <View style={{ flexDirection: 'row', gap: 10, marginTop: 5, marginBottom: 10 }}>
-                                                <Text style={{ color: COLORS.lighter }}>{data.tanggal}</Text>
-                                                {/* divider custom */}
-                                                <View style={{ height: '100%', width: 1, backgroundColor: COLORS.lighter }} />
-                                                <Text style={{ color: COLORS.lighter }}>{data.jam}</Text>
-                                            </View>
-                                        </View>
-                                    )
-                                })}
-                                {/* divider custom */}
-                                <View style={{ height: '100%', width: 1, backgroundColor: '#DBDADE' }} />
-
-                                {item.panandatangandua?.map((data) => {
-                                    return (
-                                        <View key={data.id} style={{ alignItems: 'center' }}>
+                            <View style={{ alignItems: 'left',width:'97%' }}>
                                             <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center' }}>
-                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penamdatangan 2</Text>
-                                                {/* <Text>{data.status}</Text> */}
-                                                {data.status === "terima" ? (
-                                                    <View style={{ backgroundColor: COLORS.success, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
-                                                        <Ionicons name='checkmark-outline' color={COLORS.white} />
-                                                    </View>
-                                                ) : (
-                                                    <></>
-                                                )}
+                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penandatangan</Text>
+                                                    {item.approved_by !== null?(
+                                                    <>
+                                                        <View style={{ backgroundColor: COLORS.success, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <Ionicons name='checkmark-outline' color={COLORS.white} />
+                                                        </View>
+                                                        <View style={{backgroundColor:COLORS.successLight, paddingVertical:5, borderRadius:20, paddingHorizontal:15}}>
+                                                            <Text style={{color: COLORS.success}}>Ditandatangani</Text>
+                                                        </View>
+                                                    </>
+                                                    ):(
+                                                    <>
+                                                        <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <Ionicons name='close' color={COLORS.white} />
+                                                        </View>
+                                                        <View style={{backgroundColor:COLORS.infoDangerLight, paddingVertical:5, borderRadius:20, paddingHorizontal:15}}>
+                                                            <Text style={{color: COLORS.infoDanger}}>Belum Ditandatangani</Text>
+                                                        </View>
+                                                    </>
+                                                    )}
                                             </View>
+                                            <Text style={{ marginTop: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold, textAlign:'left', width:'90%' }}>{item.approvers[1]?.display_title}</Text>
+                                            <Text style={{ marginTop: 2, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold, textAlign:'left', width:'90%' }}>{item.approvers[1]?.officer?.nama}</Text>
 
-                                            <Image source={data.avatar} style={{ marginTop: 10 }} />
-                                            <Text style={{ marginTop: 10, color: COLORS.info, fontWeight: FONTWEIGHT.bold }}>{data.namajabatan}</Text>
-
-                                            <Text style={{ marginTop: 5, color: COLORS.lighter }}>{data.nama}</Text>
-
-                                            <Text style={{ color: COLORS.lighter, marginTop: 5 }}>Disetujui :</Text>
-
-                                            <View style={{ flexDirection: 'row', gap: 10, marginTop: 5, marginBottom: 10 }}>
-                                                <Text style={{ color: COLORS.lighter }}>{data.tanggal}</Text>
-                                                {/* divider custom */}
-                                                <View style={{ height: '100%', width: 1, backgroundColor: COLORS.lighter }} />
-                                                <Text style={{ color: COLORS.lighter }}>{data.jam}</Text>
-                                            </View>
+                                            
+                                            {/* TODO date approval belum fix */}
+                                            {item.approved_by !== null?(
+                                                <View style={{ flexDirection: 'row', gap: 10, marginTop: 5, marginBottom: 10 }}>
+                                                    <Text style={{ color: COLORS.lighter}}>Disetujui :</Text>
+                                                    <Text style={{ color: COLORS.lighter }}>{moment(item.extra_attributes?.last_approved_date).format("DD MMMM yyyy")}</Text>
+                                                    {/* divider custom */}
+                                                    <View style={{ height: '100%', width: 1, backgroundColor: COLORS.lighter }} />
+                                                    <Text style={{ color: COLORS.lighter }}>{moment(item.extra_attributes?.last_approved_date).format("HH:mm")}</Text>
+                                                </View>
+                                                ):(
+                                                <Text style={{ color: COLORS.lighter, marginVertical: 10 }}>-</Text>
+                                            )}
                                         </View>
-                                    )
-                                })}
-
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity style={{
-                        width: '90%',
-                        backgroundColor: COLORS.info,
-                        borderRadius: 6,
-                        justifyContent: 'flex-end',
-                        alignItems: 'center',
-                        marginHorizontal: 20,
-                        position: 'absolute',
-                        bottom: -100
-                    }}>
-                        <Text style={{ color: COLORS.white, marginVertical: 15 }}>Lihat Sertifikat</Text>
-                    </TouchableOpacity>
+                    ): ""
+                    }
+                    <View style={{ gap: 15, marginTop: 15}}>
+                    {item.attachments?.map((sertif) => {
+                        links.push(
+                            {link:sertif.file}
+                        );
+                        return (
+                        <TouchableOpacity 
+                        onPress={()=> navigation.navigate('PdfViewer',{data:links[0]})}
+                        style={{
+                            width: '90%',
+                            backgroundColor: COLORS.info,
+                            borderRadius: 6,
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                            marginHorizontal: 20,
+                        }}>
+                            <Text style={{ color: COLORS.white, marginVertical: 15 }}>Lihat Sertifikat</Text>
+                        </TouchableOpacity>
+                        )
+                    })}
 
-                    <TouchableOpacity style={{
+                    {/* <TouchableOpacity style={{
                         width: '90%',
                         backgroundColor: COLORS.infoDanger,
                         borderRadius: 6,
                         justifyContent: 'flex-end',
                         alignItems: 'center',
                         marginHorizontal: 20,
-                        position: 'absolute',
-                        bottom: -160
                     }}
                         onPress={() =>
                             bottomSheetAttach()
                         }
                     >
                         <Text style={{ color: COLORS.white, marginVertical: 15 }}>Sign</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+                    </View>
 
                     <BottomSheetModal
                         ref={bottomSheetModalRef}
@@ -252,7 +254,7 @@ export const DetailSertifikat = ({ route }) => {
                                         multiline
                                         numberOfLines={4}
                                         maxLength={40}
-                                        placeholder='Masukan Passphrase'
+                                        placeholder='Masukan Komentar'
                                         style={{ borderWidth: 1, width: '90%', height: 40, paddingHorizontal: 10, paddingTop: 10, borderRadius: 6, borderColor: '#D0D5DD' }}
                                     />
                                 </View>

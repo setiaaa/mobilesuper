@@ -10,14 +10,19 @@ import { TouchableOpacity } from 'react-native'
 import { getKesejahteraan } from '../../service/api'
 import { FlatList } from 'react-native'
 import moment from 'moment'
-import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import RenderHTML from 'react-native-render-html'
 import { useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
+import { ActivityIndicator } from 'react-native'
+import { setKesejahteraanEmpty } from '../../store/Dashboard'
+import ListEmpty from '../../components/ListEmpty'
 
 
-const CardLists = ({ item, setDetail, setDetailContent, value }) => {
+const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
     const source = {
         html: `<section id="services" className="services">
         <div className="container">
@@ -86,7 +91,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
         </div>
     </section>`
     };
-
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const { width } = useWindowDimensions();
 
     return (
@@ -102,11 +107,19 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
                 onPress={() => {
                     setDetail('detail')
                     setDetailContent(item)
-                    console.log(item)
                 }}
             >
-                <Text>{moment(item.created_date).format("DD MMMM YYYY")}</Text>
-                <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={330} height={20} />
+                ) : (
+                    <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
+                )}
+
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 10 }} width={330} height={20} />
+                ) : (
+                    <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                )}
             </TouchableOpacity>
             {/* )} */}
         </View>
@@ -115,20 +128,25 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
 
 export const Kesejahteraan = () => {
     const [token, setToken] = useState('')
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState('tapera')
     const [detail, setDetail] = useState('')
     const [detailContent, setDetailContent] = useState({})
+    const [page, setPage] = useState(1)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        getTokenValue().then(val => {
+        dispatch(getKesejahteraan({ token: token, value: value, page: page }))
+    }, [value, page, token])
 
+    useEffect(() => {
+        getTokenValue().then(val => {
             setToken(val)
         })
-    }, [])
+        setPage(1)
+    }, [token])
 
-    const { kesejahteraan } = useSelector(state => state.dashboard)
+    const { kesejahteraan, loading } = useSelector(state => state.dashboard)
     const [lists, setLists] = useState([])
 
     const { width } = useWindowDimensions();
@@ -143,14 +161,21 @@ export const Kesejahteraan = () => {
         setLists(kesejahteraan.lists.results)
     }, [kesejahteraan])
 
+    const loadMore = () => {
+        if (lists.length % 5 === 0) {
+            setPage(page + 1)
+        }
+    }
+
     return (
         <View>
             <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 80, marginTop: 20 }}>
 
                 <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
                     onPress={() => {
+                        dispatch(setKesejahteraanEmpty())
+                        setPage(1)
                         setValue('tapera')
-                        dispatch(getKesejahteraan({ token: token, value: 'tapera' }))
                     }}
                 >
                     <Image source={require('../../assets/superApp/Tapera.png')} />
@@ -159,8 +184,9 @@ export const Kesejahteraan = () => {
 
                 <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
                     onPress={() => {
+                        dispatch(setKesejahteraanEmpty())
+                        setPage(1)
                         setValue('bpjs')
-                        dispatch(getKesejahteraan({ token: token, value: 'bpjs' }))
                     }}
                 >
                     <Image source={require('../../assets/superApp/BPJS.png')} />
@@ -169,8 +195,9 @@ export const Kesejahteraan = () => {
 
                 <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
                     onPress={() => {
+                        dispatch(setKesejahteraanEmpty())
+                        setPage(1)
                         setValue('taspen')
-                        dispatch(getKesejahteraan({ token: token, value: 'taspen' }))
                     }}
                 >
                     <Image source={require('../../assets/superApp/Taspen.png')} />
@@ -180,26 +207,40 @@ export const Kesejahteraan = () => {
 
 
             {detail === '' ? (
-                <ScrollView>
+                <View>
                     <View style={{ marginTop: 20, marginHorizontal: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginTop: 10 }} />
                     </View>
-
-                    <FlatList
-                        data={lists}
-                        renderItem={({ item }) => <CardLists
-                            item={item}
-                            setDetail={setDetail}
-                            setDetailContent={setDetailContent}
-                            value={value}
+                    {lists.length !== 0 ? (
+                        <FlatList
+                            data={lists}
+                            renderItem={({ item }) => <CardLists
+                                item={item}
+                                setDetail={setDetail}
+                                setDetailContent={setDetailContent}
+                                value={value}
+                                loading={loading}
+                            />
+                            }
+                            ListFooterComponent={() => (
+                                loading && (
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                                        <ActivityIndicator size="large" color={COLORS.primary} />
+                                    </View>
+                                )
+                            )}
+                            style={{ height: 500 }}
+                            keyExtractor={item => item.id}
+                            onEndReached={loadMore}
                         />
-                        }
-                        style={{ height: 500 }}
-                        keyExtractor={item => item.id}
-                    />
-                </ScrollView>
+                    ) : (
+                        <ListEmpty />
+                    )}
+
+                </View>
+
             ) : (
                 <ScrollView>
                     <View style={{ marginTop: 20, marginHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
@@ -217,7 +258,7 @@ export const Kesejahteraan = () => {
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>{detailContent.title}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 5 }}>
                             <Ionicons name='time-outline' size={20} color={COLORS.grey} />
-                            {/* <Text>{moment(detailContent.created_date).format("DD MMMM YYYY")}</Text> */}
+                            {/* <Text>{moment(detailContent.created_date).format(DATETIME.LONG_DATE)}</Text> */}
                             <Text>{formatDate(detailContent.created_date)}</Text>
                         </View>
                         {/* custom divider */}

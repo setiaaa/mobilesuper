@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,80 +13,101 @@ import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from "../../components/DropDown";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { getTokenValue } from "../../service/session";
+import {
+  getSummaryAccumulation,
+  getSummaryBadUser,
+  getSummaryGraph,
+  getSummaryReview,
+  getSummaryTotalPost,
+} from "../../service/api";
 import { StackedBarChart, ProgressChart } from "react-native-chart-kit";
 import PieChart from "react-native-pie-chart";
 import { StatusBar } from "expo-status-bar";
 import * as Progress from "react-native-progress";
 import ProgressCircle from "react-native-progress-circle";
 
-const dataKuartal = [
-  {
-    key: "1",
-    value: "TW1",
-  },
-  {
-    key: "2",
-    value: "TW2",
-  },
-  {
-    key: "3",
-    value: "TW3",
-  },
-  {
-    key: "4",
-    value: "TW4",
-  },
-];
-
 export const LaporanPengetahuan = () => {
   const navigation = useNavigation();
 
-  const [quarter, setQuarter] = useState();
-  // const [kuartal, setKuartal] = useState(dataKuartal)
-  const [listYear, setListYear] = useState();
+  const listYear = [
+    { key: "year1", value: "2023" },
+    { key: "year2", value: "2024" },
+    { key: "year3", value: "2025" },
+  ];
 
-  const [year, setYear] = useState({
-    key: new Date().getFullYear(),
-    value: new Date().getFullYear(),
-  });
+  const dataKuartal = [
+    { key: "1", value: "TW 1" },
+    { key: "2", value: "TW 2" },
+    { key: "3", value: "TW 3" },
+    { key: "4", value: "TW 4" },
+  ];
 
-  const month = new Date().getMonth() + 1;
+  const [year, setYear] = useState({ key: "year1", value: "2023" });
+  const [quarter, setQuarter] = useState({ key: "1", value: "TW 1" });
+
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    let q = "";
-    if (1 <= month && month <= 3) {
-      q = "1";
-    } else if (4 <= month && month <= 6) {
-      q = "2";
-    } else if (7 <= month && month <= 9) {
-      q = "3";
-    } else {
-      q = "4";
-    }
-    setQuarter({
-      key: q,
-      value: q == 1 ? "TW1" : q == 2 ? "TW2" : q == 3 ? "TW3" : "TW4",
+    getTokenValue().then((val) => {
+      setToken(val);
     });
-
-    let thn = [];
-    for (let i = 2023; i <= year; i++) {
-      thn.push({
-        key: i,
-        value: i,
-      });
-    }
-
-    setListYear(thn);
   }, []);
 
+  useEffect(() => {
+    if (token !== "") {
+      const param = { token: token, year: year.value, quarter: quarter.key };
+
+      const paramBad = {
+        token: token,
+        year: year.value,
+        quarter:
+          quarter.key === "1"
+            ? "q1"
+            : quarter.key === "2"
+              ? "q2"
+              : quarter.key === "3"
+                ? "q3"
+                : "q4",
+      };
+      dispatch(getSummaryTotalPost(param));
+      dispatch(getSummaryBadUser(paramBad));
+      dispatch(getSummaryGraph(param));
+      dispatch(getSummaryAccumulation(param));
+      dispatch(getSummaryReview(param));
+    }
+  }, [token, year, quarter]);
+
+  const { summary } = useSelector((state) => state.pengetahuan);
+
+  const totalPost = summary?.total_post.total_post_per_quarter;
+  const badUser = summary?.bad_user;
+  const graph = summary?.graph;
+  const accumulation = summary?.accumulation;
+  const review = summary?.review;
+
   const widthAndHeight = 200;
-  const dataPie = [5300, 3360, 1300, 3360];
+  const dataPie = [
+    accumulation?.Kegiatan?.total,
+    accumulation["Video_/_Jurnal"]?.total,
+    accumulation?.Infografis?.total,
+    accumulation?.Tidak_Sesuai?.total,
+  ];
+
+  const handleDataPie = [1];
+
   const sliceColor = [
     COLORS.info,
     COLORS.success,
     COLORS.warning,
     COLORS.infoDanger,
   ];
+
+  const sliceColorHandle = [COLORS.grey];
+
+  console.log(review);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -131,7 +151,9 @@ export const LaporanPengetahuan = () => {
         </View>
         <View
           style={{
+            display: "flex",
             flexDirection: "row",
+            justifyContent: "space-between",
             marginVertical: 20,
             marginHorizontal: 20,
           }}
@@ -158,7 +180,6 @@ export const LaporanPengetahuan = () => {
             />
           </View>
         </View>
-
         <View
           style={{
             backgroundColor: COLORS.white,
@@ -175,9 +196,15 @@ export const LaporanPengetahuan = () => {
           }}
         >
           <Text style={{ fontSize: 14, fontWeight: 600 }}>
-            Jumlah Postingan pada Triwulan Kedua Tahun 2023
+            Jumlah Postingan pada Triwulan Ke-{quarter.key} Tahun {year.value}
           </Text>
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "flex-start",
+            }}
+          >
             <View
               style={{
                 justifyContent: "center",
@@ -203,7 +230,7 @@ export const LaporanPengetahuan = () => {
                 />
               </View>
               <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
-                2.300
+                {totalPost?.post_publish}
               </Text>
               <Text
                 style={{
@@ -242,7 +269,7 @@ export const LaporanPengetahuan = () => {
                 />
               </View>
               <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
-                8.540
+                {totalPost?.post_reviewed}
               </Text>
               <Text
                 style={{
@@ -281,7 +308,7 @@ export const LaporanPengetahuan = () => {
                 />
               </View>
               <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
-                8.540
+                {totalPost?.post_waiting}
               </Text>
               <Text
                 style={{
@@ -296,7 +323,6 @@ export const LaporanPengetahuan = () => {
             </View>
           </View>
         </View>
-
         <View
           style={{
             flexDirection: "row",
@@ -340,12 +366,13 @@ export const LaporanPengetahuan = () => {
               <Text
                 style={{ fontSize: 16, fontWeight: 600, color: COLORS.primary }}
               >
-                125
+                {badUser?.user_count}
               </Text>
             </View>
             <Text style={{ fontWeight: 400, marginTop: 10 }}>
-              Jumlah pegawai belum memenuhi nilai minimum triwulan Kedua Tahun
-              2023
+              Jumlah pegawai belum memenuhi nilai minimum triwulan Ke-
+              {quarter.key} Tahun
+              {" " + year.value}
             </Text>
           </View>
 
@@ -391,21 +418,23 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Pegawai</Text>
-              <TouchableOpacity
-                style={{
-                  width: 24,
-                  height: 24,
-                  backgroundColor: COLORS.primary,
-                  borderRadius: 4,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="download-outline"
-                  size={18}
-                  color={COLORS.white}
-                />
+              <TouchableOpacity>
+                <View
+                  style={{
+                    width: 24,
+                    height: 24,
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 4,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="download-outline"
+                    size={18}
+                    color={COLORS.white}
+                  />
+                </View>
               </TouchableOpacity>
             </View>
             <View
@@ -417,21 +446,23 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Triwulan</Text>
-              <TouchableOpacity
-                style={{
-                  width: 24,
-                  height: 24,
-                  backgroundColor: COLORS.primary,
-                  borderRadius: 4,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="download-outline"
-                  size={18}
-                  color={COLORS.white}
-                />
+              <TouchableOpacity>
+                <View
+                  style={{
+                    width: 24,
+                    height: 24,
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 4,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="download-outline"
+                    size={18}
+                    color={COLORS.white}
+                  />
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -454,69 +485,170 @@ export const LaporanPengetahuan = () => {
           }}
         >
           <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
-            Capaian Mingguan Triwulan 2 Tahun 2023
+            Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
-          <StackedBarChart
-            data={{
-              labels: [
-                "Apr W1",
-                "Apr W2",
-                "Apr W3",
-                "Apr W4",
-                "May W1",
-                "May W2",
-                "May W3",
-                "May W4",
-                "Jun W1",
-                "Jun W2",
-                "Jun W3",
-                "Jun W4",
-              ],
-              legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
-              data: [
-                [40, 60],
-                [30, 70],
-                [50, 50],
-                [80, 20],
-                [90, 10],
-                [40, 60],
-                [30, 70],
-                [50, 50],
-                [80, 20],
-                [90, 10],
-                [40, 60],
-                [30, 70],
-              ],
-              barColors: [COLORS.primary, COLORS.warning],
-            }}
-            hideLegend
-            yAxisLabel=""
-            yAxisSuffix=""
-            yAxisInterval={2}
-            width={380}
-            // width={Dimensions.get("window").width}
-            height={350}
-            chartConfig={{
-              backgroundGradientFrom: "#F0F0F0",
-              backgroundGradientFromOpacity: 0,
-              backgroundGradientTo: COLORS.white,
-              backgroundGradientToOpacity: 1,
-              color: () => "black",
-              barPercentage: 0.2,
-              propsForBackgroundLines: {
-                x1: 60,
-              },
-              propsForVerticalLabels: {
-                // rotation: 90,
-                // rotate: -90,
-                // letterSpacing: 3,
-                // dy: 10,
-                // dx: 20,
-              },
-            }}
-            withHorizontalLabels={false}
-            style={{ marginHorizontal: -55 }}
-          />
+          {Object.keys(summary.graph).length !== 0 &&
+            Object.keys(summary.total_post).length !== 0 &&
+            Object.keys(summary.bad_user).length !== 0 ? (
+            <StackedBarChart
+              data={{
+                labels: [
+                  graph?.month_list[0],
+                  graph?.month_list[1],
+                  graph?.month_list[2],
+                  graph?.month_list[3],
+                  graph?.month_list[4],
+                  graph?.month_list[5],
+                  graph?.month_list[6],
+                  graph?.month_list[7],
+                  graph?.month_list[8],
+                  graph?.month_list[9],
+                  graph?.month_list[10],
+                  graph?.month_list[11],
+                ],
+                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                data: [
+                  [
+                    graph?.article_unreviewed_count[0],
+                    graph?.article_unreviewed_count[0] +
+                    graph?.article_reviewed_count[0],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[1],
+                    graph?.article_unreviewed_count[1] +
+                    graph?.article_reviewed_count[1],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[2],
+                    graph?.article_unreviewed_count[2] +
+                    graph?.article_reviewed_count[2],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[3],
+                    graph?.article_unreviewed_count[3] +
+                    graph?.article_reviewed_count[3],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[4],
+                    graph?.article_unreviewed_count[4] +
+                    graph?.article_reviewed_count[4],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[5],
+                    graph?.article_unreviewed_count[5] +
+                    graph?.article_reviewed_count[5],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[6],
+                    graph?.article_unreviewed_count[6] +
+                    graph?.article_reviewed_count[6],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[7],
+                    graph?.article_unreviewed_count[7] +
+                    graph?.article_reviewed_count[7],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[8],
+                    graph?.article_unreviewed_count[8] +
+                    graph?.article_reviewed_count[8],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[9],
+                    graph?.article_unreviewed_count[9] +
+                    graph?.article_reviewed_count[9],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[10],
+                    graph?.article_unreviewed_count[10] +
+                    graph?.article_reviewed_count[10],
+                  ],
+                  [
+                    graph?.article_unreviewed_count[11],
+                    graph?.article_unreviewed_count[11] +
+                    graph?.article_reviewed_count[11],
+                  ],
+                ],
+                barColors: [COLORS.primary, COLORS.warning],
+              }}
+              hideLegend
+              yAxisLabel=""
+              yAxisSuffix=""
+              yAxisInterval={2}
+              width={380}
+              // width={Dimensions.get("window").width}
+              height={350}
+              chartConfig={{
+                backgroundGradientFrom: "#F0F0F0",
+                backgroundGradientFromOpacity: 0,
+                backgroundGradientTo: COLORS.white,
+                backgroundGradientToOpacity: 1,
+                color: () => "black",
+                barPercentage: 0.2,
+                propsForBackgroundLines: {
+                  x1: 60,
+                },
+                propsForVerticalLabels: {
+                  rotation: 90,
+                  // rotate: -90,
+                  // letterSpacing: 3,
+                  dy: 10,
+                  // dx: 20,
+                },
+              }}
+              withHorizontalLabels={false}
+              style={{ marginHorizontal: -55 }}
+            />
+          ) : (
+            <StackedBarChart
+              data={{
+                labels: [
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                  ["..."],
+                ],
+                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                data: [],
+                barColors: [COLORS.primary, COLORS.warning],
+              }}
+              hideLegend
+              yAxisLabel=""
+              yAxisSuffix=""
+              yAxisInterval={2}
+              width={380}
+              // width={Dimensions.get("window").width}
+              height={350}
+              chartConfig={{
+                backgroundGradientFrom: "#F0F0F0",
+                backgroundGradientFromOpacity: 0,
+                backgroundGradientTo: COLORS.white,
+                backgroundGradientToOpacity: 1,
+                color: () => "black",
+                barPercentage: 0.2,
+                propsForBackgroundLines: {
+                  x1: 60,
+                },
+                propsForVerticalLabels: {
+                  rotation: 90,
+                  // rotate: -90,
+                  // letterSpacing: 3,
+                  dy: 10,
+                  // dx: 20,
+                },
+              }}
+              withHorizontalLabels={false}
+              style={{ marginHorizontal: -55 }}
+            />
+          )}
           <View
             style={{
               flexDirection: "row",
@@ -568,7 +700,8 @@ export const LaporanPengetahuan = () => {
                 textAlign: "center",
               }}
             >
-              Jumlah yang berlum dinilai triwulan 2 Tahun 2023
+              Jumlah yang belum dinilai triwulan {quarter.key} Tahun
+              {" " + year.value}
             </Text>
             <Text
               style={{
@@ -578,7 +711,7 @@ export const LaporanPengetahuan = () => {
                 marginVertical: 10,
               }}
             >
-              1.265
+              {totalPost?.post_waiting}
             </Text>
             <TouchableOpacity
               style={{
@@ -621,19 +754,35 @@ export const LaporanPengetahuan = () => {
           }}
         >
           <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
-            Postingan Masuk Triwulan Kedua 2023
+            Postingan Masuk Triwulan Ke-{quarter.key}
+            {" " + year.value}
           </Text>
-          <PieChart
-            widthAndHeight={widthAndHeight}
-            series={dataPie}
-            sliceColor={sliceColor}
-            coverRadius={0.75}
-            coverFill={"#FFF"}
-            style={{ alignSelf: "center", marginVertical: 20 }}
-          />
+          {dataPie.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+          ) !== 0 ? (
+            <PieChart
+              widthAndHeight={widthAndHeight}
+              series={dataPie}
+              sliceColor={sliceColor}
+              coverRadius={0.75}
+              coverFill={"#FFF"}
+              style={{ alignSelf: "center", marginVertical: 20 }}
+            />
+          ) : (
+            <PieChart
+              widthAndHeight={widthAndHeight}
+              series={handleDataPie}
+              sliceColor={sliceColorHandle}
+              coverRadius={0.75}
+              coverFill={"#FFF"}
+              style={{ alignSelf: "center", marginVertical: 20 }}
+            />
+          )}
+
           <View style={{ marginBottom: 20, alignItems: "center" }}>
             <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
-              9.960
+              {accumulation?.total_article_all}
             </Text>
             <Text
               style={{
@@ -643,7 +792,8 @@ export const LaporanPengetahuan = () => {
                 textAlign: "center",
               }}
             >
-              Jumlah seluruh postingan masuk di triwulan Kedua Tahun 2023
+              Jumlah seluruh postingan masuk di triwulan Ke-{quarter.key} Tahun
+              {" " + year.value}
             </Text>
           </View>
           <View
@@ -655,7 +805,7 @@ export const LaporanPengetahuan = () => {
               borderColor: COLORS.grey,
             }}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", gap: 16 }}>
               <View style={{ flexDirection: "column" }}>
                 <View style={{ marginBottom: 20, alignItems: "flex-start" }}>
                   <View
@@ -664,6 +814,7 @@ export const LaporanPengetahuan = () => {
                       justifyContent: "center",
                       alignItems: "center",
                       marginBottom: 10,
+                      gap: 8,
                     }}
                   >
                     <View
@@ -689,10 +840,16 @@ export const LaporanPengetahuan = () => {
                   <Text
                     style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
                   >
-                    5.300
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation?.Kegiatan.total
+                      : "-"}
                   </Text>
                   <Progress.Bar
-                    progress={0.398}
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation?.Kegiatan.percent / 100
+                        : 0
+                    }
                     width={130}
                     color={COLORS.info}
                   />
@@ -702,9 +859,10 @@ export const LaporanPengetahuan = () => {
                   <View
                     style={{
                       flexDirection: "row",
-                      justifyContent: "center",
+                      justifyContent: "flex-start",
                       alignItems: "center",
                       marginBottom: 10,
+                      gap: 8,
                     }}
                   >
                     <View
@@ -730,10 +888,16 @@ export const LaporanPengetahuan = () => {
                   <Text
                     style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
                   >
-                    3.360
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation["Video_/_Jurnal"].total
+                      : "-"}
                   </Text>
                   <Progress.Bar
-                    progress={0.252}
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation["Video_/_Jurnal"].percent / 100
+                        : 0
+                    }
                     width={130}
                     color={COLORS.success}
                   />
@@ -767,16 +931,22 @@ export const LaporanPengetahuan = () => {
                       />
                     </View>
                     <Text style={{ fontSize: 14, fontWeight: 600 }}>
-                      Penelitian
+                      Infografis
                     </Text>
                   </View>
                   <Text
                     style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
                   >
-                    1.300
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation?.Infografis.total
+                      : "-"}
                   </Text>
                   <Progress.Bar
-                    progress={0.098}
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation?.Infografis.percent / 100
+                        : 0
+                    }
                     width={130}
                     color={COLORS.warning}
                   />
@@ -814,10 +984,16 @@ export const LaporanPengetahuan = () => {
                   <Text
                     style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
                   >
-                    3.360
+                    {Object.keys(accumulation).length !== 0
+                      ? accumulation?.Tidak_Sesuai.total
+                      : "-"}
                   </Text>
                   <Progress.Bar
-                    progress={0.252}
+                    progress={
+                      Object.keys(accumulation).length !== 0
+                        ? accumulation?.Tidak_Sesuai.percent / 100
+                        : 0
+                    }
                     width={130}
                     color={COLORS.infoDanger}
                   />
@@ -859,25 +1035,27 @@ export const LaporanPengetahuan = () => {
           </Text>
           <View style={{ alignSelf: "center", marginVertical: 20 }}>
             <ProgressCircle
-              percent={85}
+              percent={review?.percent_article_reviewed}
               radius={100}
               borderWidth={15}
               color={COLORS.success}
               shadowColor="#999"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 18 }}>{"85%"}</Text>
+              <Text style={{ fontSize: 18 }}>
+                {review?.percent_article_reviewed}%
+              </Text>
             </ProgressCircle>
           </View>
           <View style={{ marginVertical: 10, alignItems: "center" }}>
             <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
-              8.540
+              {review?.total_article_reviewed}
             </Text>
           </View>
           <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
-            *) Yang belum dinilai :
+            {"*) Yang belum dinilai :"}
           </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", gap: 50 }}>
             <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
               <View
                 style={{
@@ -885,6 +1063,7 @@ export const LaporanPengetahuan = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 10,
+                  gap: 10,
                 }}
               >
                 <View
@@ -914,7 +1093,7 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    500
+                    {review?.total_article_unreview?.Kegiatan}
                   </Text>
                 </View>
               </View>
@@ -924,6 +1103,7 @@ export const LaporanPengetahuan = () => {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
+                  gap: 10,
                 }}
               >
                 <View
@@ -953,7 +1133,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    420
+                    {Object.keys(review).length !== 0
+                      ? review?.total_article_unreview["Video_/_Jurnal"]
+                      : "-"}
                   </Text>
                 </View>
               </View>
@@ -965,6 +1147,7 @@ export const LaporanPengetahuan = () => {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
+                  gap: 10,
                   marginBottom: 10,
                 }}
               >
@@ -986,7 +1169,7 @@ export const LaporanPengetahuan = () => {
                 </View>
                 <View style={{ flexDirection: "column" }}>
                   <Text style={{ fontSize: 13, fontWeight: 600 }}>
-                    Penelitian
+                    Infografis
                   </Text>
                   <Text
                     style={{
@@ -995,7 +1178,7 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    500
+                    {review?.total_article_unreview?.Infografis}
                   </Text>
                 </View>
               </View>
@@ -1005,6 +1188,7 @@ export const LaporanPengetahuan = () => {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
+                  gap: 10,
                 }}
               >
                 <View
@@ -1034,7 +1218,7 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    420
+                    {review?.total_article_unreview?.Tidak_Sesuai}
                   </Text>
                 </View>
               </View>
@@ -1048,7 +1232,7 @@ export const LaporanPengetahuan = () => {
 
 const styles = StyleSheet.create({
   dropdown: {
-    width: "50%",
+    width: "48%",
     //shadow ios
     shadowOffset: { width: -2, height: 4 },
     shadowColor: "#171717",

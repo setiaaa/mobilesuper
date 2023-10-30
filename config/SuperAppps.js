@@ -40,3 +40,10 @@ export const AVATAR = {
     U2: require('../assets/superApp/AvatarDetail.png'),
     U3: require('../assets/superApp/avtar-281.png')
 }
+
+export const DATETIME = {
+    SHORT_DATETIME: 'DD-MM-YYYY HH:mm',
+    LONG_DATETIME: 'DD MMMM YYYY HH:mm',
+    SHORT_DATE: 'DD-MM-YYYY',
+    LONG_DATE: 'DD MMMM YYYY'
+}

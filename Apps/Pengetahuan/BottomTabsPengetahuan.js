@@ -159,7 +159,6 @@ function MyTabBarPengetahuan({ props, navigation }) {
             key={3}
             onPress={() => {
               setTabItemIndex(3);
-              navigation.navigate("PenilaianPenggetahaun", { unread: false });
               navigation.navigate("RangkumanIKU", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}

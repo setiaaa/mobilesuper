@@ -16,6 +16,8 @@ import { getTokenValue } from '../../service/session';
 import moment from 'moment';
 import RenderHTML from 'react-native-render-html';
 import { FlatList } from 'react-native-gesture-handler';
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const CardLampiran = ({ lampiran, onClick, type, id }) => {
     const navigation = useNavigation()
@@ -65,7 +67,7 @@ export const Notulensi = () => {
     const richText = useRef(null);
     const [richTextHandle, setRichTextHandle] = useState('');
 
-    const { agenda, notulensi } = useSelector(state => state.event)
+    const { agenda, notulensi, loading } = useSelector(state => state.event)
     const data = agenda.detail
     const idagenda = agenda.detail?.id
     const idnotu = notulensi.lists[0]?.id
@@ -107,6 +109,7 @@ export const Notulensi = () => {
     const video = useRef(null);
 
     const navigation = useNavigation()
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     console.log(notu)
     return (
@@ -133,11 +136,20 @@ export const Notulensi = () => {
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
                     <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
-                        <View>
-                            <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{data.title}</Text>
-                        </View>
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={200} height={20} />
+                        ) : (
+                            <View>
+                                <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{data.title}</Text>
+                            </View>
+                        )}
 
-                        <Text style={{ marginVertical: 10 }}>{data.note}</Text>
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4, marginVertical: 10 }} width={100} height={20} />
+                        ) : (
+                            <Text style={{ marginVertical: 10 }}>{data.note}</Text>
+                        )}
+
 
                         {/* <View style={{
                             flexDirection: 'row',
@@ -155,22 +167,34 @@ export const Notulensi = () => {
                         <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
                             <Text style={{ width: 120, color: COLORS.lighter }}>Tanggal Acara</Text>
                             <Text>:</Text>
-                            <Text>{data.date}</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <Text>{data.date}</Text>
+                            )}
                         </View>
 
                         <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
                             <Text style={{ width: 120, color: COLORS.lighter }}>Waktu Acara</Text>
                             <Text>:</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text>{moment(data.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
-                                <Text>{moment(data.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
-                            </View>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text>{moment(data.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
+                                    <Text>{moment(data.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                                </View>
+                            )}
                         </View>
 
                         <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
                             <Text style={{ width: 120, color: COLORS.lighter }}>Tempat Acara</Text>
                             <Text>:</Text>
-                            <Text style={{ width: 186 }}>{data.location}</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                <Text style={{ width: 186 }}>{data.location}</Text>
+                            )}
                         </View>
 
                         {/* <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
@@ -190,28 +214,32 @@ export const Notulensi = () => {
                         </View> */}
 
                         <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 20 }}>Notulensi</Text>
-                        <FlatList
-                            key={'*'}
-                            data={notu}
-                            renderItem={({ item }) =>
-                                <View key={item.id}>
-                                    <CardLampiran
-                                        lampiran={item.pdf}
-                                        type={getFileExtension(item.pdf)}
-                                        onClick={() => {
-                                            setVisibleModal(true)
-                                            setLampiranById(item)
-                                        }}
-                                        id={item.id}
-                                    />
-                                </View>
-                            }
-                            scrollEnabled={false}
-                            style={{ marginTop: 10 }}
-                            columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                            numColumns={3}
-                            keyExtractor={item => "*" + item.id}
-                        />
+                        {loading ? (
+                            <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
+                        ) : (
+                            <FlatList
+                                key={'*'}
+                                data={notu}
+                                renderItem={({ item }) =>
+                                    <View key={item.id}>
+                                        <CardLampiran
+                                            lampiran={item.pdf}
+                                            type={getFileExtension(item.pdf)}
+                                            onClick={() => {
+                                                setVisibleModal(true)
+                                                setLampiranById(item)
+                                            }}
+                                            id={item.id}
+                                        />
+                                    </View>
+                                }
+                                scrollEnabled={false}
+                                style={{ marginTop: 10 }}
+                                columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                numColumns={3}
+                                keyExtractor={item => "*" + item.id}
+                            />
+                        )}
 
                         {
                             lampiranById !== null ? (

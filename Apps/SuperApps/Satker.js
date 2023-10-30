@@ -16,7 +16,9 @@ import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
-import { getBennerSatker, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah } from '../../service/api';
+import { getBennerSatker, getDetailLinimasa, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah, getViewLinimasa } from '../../service/api';
+import { Loading } from '../../components/Loading';
+import { setBeritaSatker } from '../../store/Satker';
 
 const BannerSetjen = [
     {
@@ -50,6 +52,7 @@ export const Satker = () => {
     const [slide, setSlide] = useState(0)
     const [slide2, setSlide2] = useState(0)
     const [token, setToken] = useState('')
+    const [page, setPage] = useState(1)
 
     const dispatch = useDispatch()
 
@@ -63,7 +66,7 @@ export const Satker = () => {
         if (token !== '') {
             dispatch(getBennerSatker(token))
             dispatch(getGallerySatker(token))
-            dispatch(getSatkerNews(token))
+            dispatch(getSatkerNews({ token, page }))
             dispatch(getPesan(token))
             dispatch(getUltah(token))
             dispatch(getSatkerLinimasa(token))
@@ -76,7 +79,7 @@ export const Satker = () => {
     // }, []);
 
 
-    const { benner, gallery, berita, pesan, ultah, linimasa } = useSelector(state => state.satker)
+    const { benner, gallery, berita, pesan, ultah, linimasa, loading } = useSelector(state => state.satker)
     const { profile } = useSelector((state) => state.superApps);
 
     console.log(profile.satuan_kerja_nama)
@@ -122,10 +125,23 @@ export const Satker = () => {
         );
     };
 
-    const CardLiniMasaSatker = ({ image, judul, nama, jenis, index, item }) => {
+    const CardLiniMasaSatker = ({ image, judul, nama, jenis, index, item, token }) => {
+
+        const getDetail = (id) => {
+            const params = { token, id }
+            // const data = event.listsprogress.find(item => item.id === id)
+            dispatch(getDetailLinimasa(params))
+            dispatch(getViewLinimasa(params))
+        }
+
         return (
             <View key={index} style={{ flex: 1, justifyContent: 'center', marginHorizontal: 20 }}>
-                <View style={{ flexDirection: 'row', marginVertical: 20 }}>
+                <TouchableOpacity style={{ flexDirection: 'row', marginVertical: 20 }}
+                    onPress={() => {
+                        getDetail(item.id)
+                        navigation.navigate('DetailLinimasa')
+                    }}
+                >
                     <Image source={{ uri: item.cover }} style={{ width: 80, height: 80 }} />
                     <View style={{ marginLeft: 10 }}>
                         <View style={{ width: '88%' }}>
@@ -160,7 +176,7 @@ export const Satker = () => {
 
                         </View>
                     </View>
-                </View >
+                </TouchableOpacity >
                 <Divider bold style={{ width: '90%' }} />
             </View>
         )
@@ -218,6 +234,11 @@ export const Satker = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <ScrollView
                 style={{ flexGrow: 1 }}
                 nestedScrollEnabled={true}
@@ -287,7 +308,7 @@ export const Satker = () => {
 
                 <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('ListBerita')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ListBeritaSatker')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
                     </TouchableOpacity>
                 </View>
@@ -328,21 +349,21 @@ export const Satker = () => {
                         tappableDots={!!carouselRef}
                     />
                 </View>
-                <Calendar
+                {/* <Calendar
                     onDayPress={day => {
                         setSelected(day.dateString);
                     }}
                     markedDates={{
                         [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: COLORS.primary }
                     }}
-                    style={{ width: '90%', marginLeft: 20, borderRadius: 16 }}
+                    style={{ width: '85%', marginLeft: 28, borderRadius: 5, marginTop: 20, }}
                     theme={{
                         arrowColor: COLORS.primary,
                         selectedDayBackgroundColor: COLORS.primary,
                         todayTextColor: COLORS.primary,
                     }}
-                />
-                <View style={[styles.cardListSatker, { flex: 1, justifyContent: 'center', paddingVertical: 40 }]}>
+                /> */}
+                <View style={[styles.cardListSatker, { flex: 1, justifyContent: 'center', paddingVertical: 20 }]}>
                     <Text style={{ marginLeft: 20, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>Linimasa Pengetahuan</Text>
                     <View style={{ marginTop: 10 }}>
                         <FlatList
@@ -351,6 +372,7 @@ export const Satker = () => {
                             renderItem={({ item, index }) => <CardLiniMasaSatker
                                 item={item}
                                 index={index}
+                                token={token}
                             />
                             }
                             keyExtractor={item => item.id}
@@ -409,10 +431,10 @@ const styles = StyleSheet.create({
     cardListSatker: {
         backgroundColor: "#FFFFFF",
         flexDirection: "column",
-        width: '90%',
-        marginLeft: 20,
+        width: '86%',
+        marginLeft: 25,
         opacity: 0.9,
-        borderRadius: 12,
+        borderRadius: 5,
         marginVertical: 40
     },
     vertical: {
