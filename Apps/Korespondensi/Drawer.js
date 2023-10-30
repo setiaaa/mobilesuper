@@ -3,7 +3,7 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Alert, SafeAreaView } from "react-native";
+import { View, StyleSheet, Image, Alert, SafeAreaView, TouchableOpacity } from "react-native";
 import { Avatar, Drawer, Text, IconButton } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerActions } from "@react-navigation/native";
@@ -32,6 +32,7 @@ import { GlobalStyles } from "../../constants/styles";
 import { androidId, getIosIdForVendorAsync } from "expo-application";
 import { COLORS } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
+import { OutgoingList } from "./List/OutgoingList";
 
 const DrawerItemsData = [
   {
@@ -59,7 +60,7 @@ const DrawerItemsData = [
     key: 4 },
   {
     label: "Surat Keluar",
-    name: "",
+    name: "Outgoing",
     icon: "email-send",
     key: 5,
   },
@@ -383,14 +384,20 @@ const defaultOptions = ({ title, navigation }) => ({
     <SafeAreaView style={{ alignItems: "center" }}>
       {/* <View style={styles.containerHeader}> */}
       <View style={styles.containerHeaderLeft}>
-        <View style={{ backgroundColor: "#752A2B", width: 30, height: 30, borderRadius: 15, alignItems: "center", justifyContent: "center", marginBottom: 5 }}>
-          <IconButton
+        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())} style={{ backgroundColor: "#752A2B", width: 30, height: 30, borderRadius: 15, alignItems: "center", justifyContent: "center", marginBottom: 5 }}>
+          {/* <IconButton
             icon="menu"
             size={16}
             color={COLORS.white}
             onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          /> */}
+          <Ionicons 
+            name="menu-outline" 
+            size={16} 
+            color={COLORS.white} 
           />
-        </View>
+        </TouchableOpacity>
+        <Image source={require("../../assets/superApp/LogoKorespondensi.png")} />
         {/* <Image style={styles.logoHeader} source={Config.logoHeader} /> */}
       </View>
     {/* </View> */}
@@ -420,7 +427,15 @@ function DrawerNavigator({ navigation }) {
         name="Incoming"
         component={IncomingList}
         options={defaultOptions({
-          title: "Incoming Letter",
+          title: "Surat Masuk",
+          navigation: navigation,
+        })}
+      />
+      <DrawerNav.Screen
+        name="Outgoing"
+        component={OutgoingList}
+        options={defaultOptions({
+          title: "Surat Keluar",
           navigation: navigation,
         })}
       />
@@ -530,7 +545,9 @@ const styles = StyleSheet.create({
   containerHeaderLeft: {
     flexDirection: "row",
     alignItems: "center",
-    marginStart: 15
+    marginStart: 15,
+    gap: 10,
+    alignItems: "center"
   },
   logoHeader: {
     height: 30,

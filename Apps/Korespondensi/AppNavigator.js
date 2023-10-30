@@ -188,6 +188,12 @@ import MainSPPD from "../SPPD/MainSPPD";
 import { Personal } from "../SPPD/Personal";
 import { DokumenSPPD } from "../SPPD/DokumenSPPD";
 import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
+import MyTabBarOutgoingKorespondensi from "./Detail/Outgoing/BottomTabsOutgoingKorespondensi";
+import MainOutgoingDetail from "./Detail/Outgoing/MainOutgoingDetail";
+import { InfoOutgoindDetail } from "./Detail/Outgoing/InfoOutgoindDetail";
+import { FileOutgoingDetail } from "./Detail/Outgoing/FileOutgoingDetail";
+import { AttachmentOutgoingDetail } from "./Detail/Outgoing/AttachmentOutgoingDetail";
+import { KomentarOutgoingDetail } from "./Detail/Outgoing/KomentarOutgoingDetail";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -645,6 +651,14 @@ function AuthStack() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="MainOutgoingDetail"
+          component={MainOutgoingDetail}
+          options={{
+            headerTitle: '',
+            headerShown: false,
+          }}
+        />
         {/* <Stack.Screen
               name="Main"
               component={Main}
@@ -700,6 +714,47 @@ function AuthStack() {
             gestureEnabled: false
           }}
         />
+        {/* DETAIL LETTER */}
+        <Stack.Screen
+            name="IncomingDetail"
+            component={IncomingDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionDetail"
+            component={DispositionDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SubmittedDetail"
+            component={SubmittedDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="NeedFollowUpDetail"
+            component={NeedFollowUpDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TrackingDetail"
+            component={TrackingDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DelegationDetail"
+            component={DelegationDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SecretaryDetail"
+            component={SecretaryDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TodoDetail"
+            component={TodoDetail}
+            options={{ header: toolbarBack }}
+          />
         <Stack.Screen
           name="MainSPPD"
           component={MainSPPD}
@@ -1006,6 +1061,19 @@ export const BottomTabsSPPD = () => {
       <Tab.Navigator tabBar={props => <MyTabBarSPPD {...props} />} initialRouteName='Personal'>
         <Tab.Screen name='Personal' component={Personal} options={{ headerShown: false }} />
         <Tab.Screen name='DokumenSPPD' component={DokumenSPPD} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
+export const BottomTabsOutgoingKorespondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarOutgoingKorespondensi {...props} />} initialRouteName='InfoOutgoindDetail'>
+        <Tab.Screen name='InfoOutgoindDetail' component={InfoOutgoindDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
+        <Tab.Screen name='FileOutgoingDetail' component={FileOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
+        <Tab.Screen name='AttachmentOutgoingDetail' component={AttachmentOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
+        <Tab.Screen name='KomentarOutgoingDetail' component={KomentarOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )
@@ -1571,47 +1639,6 @@ function AuthenticatedStack() {
             options={{
               headerShown: false,
             }}
-          />
-          {/* DETAIL LETTER */}
-          <Stack.Screen
-            name="IncomingDetail"
-            component={IncomingDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="DispositionDetail"
-            component={DispositionDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="SubmittedDetail"
-            component={SubmittedDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="NeedFollowUpDetail"
-            component={NeedFollowUpDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="TrackingDetail"
-            component={TrackingDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="DelegationDetail"
-            component={DelegationDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="SecretaryDetail"
-            component={SecretaryDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="TodoDetail"
-            component={TodoDetail}
-            options={{ header: toolbarBack }}
           />
           {/* TAB DETAIL LETTER */}
           <Stack.Screen
