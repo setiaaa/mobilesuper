@@ -329,7 +329,6 @@ export const LiniMasa = () => {
         if (linimasa.lists.length % 5 === 0) {
             setPage(page + 5)
         }
-        console.log(page)
     }
 
     // console.log(linimasa.lists)
