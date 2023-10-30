@@ -545,8 +545,18 @@ export const getDivisionTree = createAsyncThunk(
 // repository
 export const getDocument = createAsyncThunk(
     "repository/getDocument",
-    async (token) => {
-        const respon = await axios.get(`${repository}my-documents/`, {
+    async ({ token, page, type }) => {
+        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=${type}&public=false`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
+);
+
+export const getDocumentDibagikan = createAsyncThunk(
+    "repository/getDocumentDibagikan",
+    async ({ token, page, general }) => {
+        const respon = await axios.get(`${repository}shared-documents/?limit=${page}&published=true&public=true`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;

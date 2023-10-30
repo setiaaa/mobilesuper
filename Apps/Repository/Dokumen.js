@@ -22,7 +22,7 @@ import {
 import { useMemo } from "react";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { setDokumentlists } from "../../store/Repository";
+import { setDokumentlists, setLoadMore } from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -32,6 +32,9 @@ import { getTokenValue } from "../../service/session";
 import { getDocument } from "../../service/api";
 import { getDetailDocument } from "../../service/api";
 import moment from "moment/moment";
+import { ActivityIndicator } from "react-native";
+import { Dropdown } from "../../components/DropDown";
+import { Loading } from "../../components/Loading";
 
 const DataList = ({ token, item, bottomSheetAttach }) => {
   const dispatch = useDispatch();
@@ -85,18 +88,19 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   fontSize: 13,
                   fontWeight: FONTWEIGHT.bold,
                   marginBottom: 10,
+                  width: 300
                 }}
               >
                 {item.title}
               </Text>
+
+
               <View
                 style={{
                   // backgroundColor: "brown",
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
-                  width: "90%",
-                  paddingRight: 10
+                  paddingRight: 10,
                 }}
               >
                 <Text
@@ -104,9 +108,10 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     fontSize: 11,
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
+                    width: 100
                   }}
                 >
-                  Dibuat {moment(item.created_at).format("DD MMM yyy")}
+                  Jumlah File
                 </Text>
                 <Text
                   style={{
@@ -115,7 +120,66 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     color: COLORS.lighter,
                   }}
                 >
-                  Diubah {moment(item.updated_at).format("DD MMM yyy")}
+                  {item.attachments.length}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  // backgroundColor: "brown",
+                  display: "flex",
+                  flexDirection: "row",
+                  paddingRight: 10,
+                  marginVertical: 10
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 11,
+                    fontWeight: FONTWEIGHT.normal,
+                    color: COLORS.lighter,
+                    width: 100
+                  }}
+                >
+                  Perubahan
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    fontWeight: FONTWEIGHT.normal,
+                    color: COLORS.lighter,
+                  }}
+                >
+                  {moment(item.updated_at).format("DD MMMM yyyy")}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  // backgroundColor: "brown",
+                  display: "flex",
+                  flexDirection: "row",
+                  paddingRight: 10
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 11,
+                    fontWeight: FONTWEIGHT.normal,
+                    color: COLORS.lighter,
+                    width: 100
+                  }}
+                >
+                  Perubahan
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    fontWeight: FONTWEIGHT.normal,
+                    color: COLORS.lighter,
+                  }}
+                >
+                  {moment(item.updated_at).format("DD MMMM yyyy")}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -140,47 +204,27 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
   );
 };
 
-// const DataGrid = ({ item, bottomSheetAttach }) => {
-//   return (
-//     <View key={item.id} style={{ marginVertical: 20, marginHorizontal: 25 }}>
-//       <View style={styles.cardNo}>
-//         <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
-//           <Ionicons name="document-outline" size={30} color={COLORS.primary} />
-//         </TouchableOpacity>
-//       </View>
-//       <View style={{ flex: 1, justifyContent: "center" }}>
-//         <View style={{ flexDirection: "row" }}>
-//           <TouchableOpacity onPress={() => bottomSheetAttach(item)}>
-//             <Text
-//               style={{
-//                 fontSize: 13,
-//                 fontWeight: FONTWEIGHT.normal,
-//                 marginBottom: 10,
-//                 width: 100,
-//                 textAlign: "center",
-//               }}
-//               numberOfLines={2}
-//             >
-//               {item.title}
-//             </Text>
-//           </TouchableOpacity>
-//           <View style={{ justifyContent: "center" }}>
-//             <Ionicons
-//               name="ellipsis-vertical-outline"
-//               size={24}
-//               color={COLORS.grey}
-//             />
-//           </View>
-//         </View>
-//       </View>
-//     </View>
-//   );
-// };
+
+const dropdownFilter = [
+  {
+    key: 'false',
+    value: 'Draft'
+  },
+  {
+    key: 'true',
+    value: 'Published'
+  },
+]
 
 export const Dokumen = () => {
   const [variant, setVariant] = useState("list");
   const [dataM, setDataM] = useState([]);
   const [token, setToken] = useState("");
+  const [page, setPage] = useState(10);
+  const [type, setType] = useState({
+    key: 'false',
+    value: 'Draft'
+  });
   const dispatch = useDispatch();
 
   const handleVariant = (cekVariant) => {
@@ -196,9 +240,9 @@ export const Dokumen = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDocument(token));
+      dispatch(getDocument({ token: token, page: page, type: type.key }));
     }
-  }, [token]);
+  }, [token, page, type]);
 
   const bottomSheetModalRef = useRef(null);
 
@@ -219,7 +263,7 @@ export const Dokumen = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
-  const { dokumen } = useSelector((state) => state.repository);
+  const { dokumen, loading, load } = useSelector((state) => state.repository);
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
@@ -243,9 +287,20 @@ export const Dokumen = () => {
     }
   }, [search]);
 
-  console.log(dokumen.lists);
+  const loadMore = () => {
+    if (dokumen.lists.length % 10 === 0) {
+      setPage(page + 10)
+    }
+  }
+
+
   return (
     <GestureHandlerRootView>
+      {loading === true && dokumen.lists.length === 0 ? (
+        <Loading />
+      ) : (
+        null
+      )}
       <SafeAreaView>
         <View style={{ marginBottom: 20 }}>
           <View
@@ -282,7 +337,19 @@ export const Dokumen = () => {
             </View>
           </View>
           <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
-            <Search placeholder={"Cari"} onSearch={filter} />
+            <Search
+              placeholder={"Cari"}
+            // onSearch={filter} 
+            />
+            <View style={{ marginTop: 20 }}>
+              <Dropdown
+                data={dropdownFilter}
+                placeHolder={'Filter'}
+                backgroundColor={COLORS.white}
+                selected={type}
+                setSelected={setType}
+              />
+            </View>
           </View>
           <View>
             <FlatList
@@ -295,9 +362,23 @@ export const Dokumen = () => {
                   token={token}
                 />
               )}
+              ListFooterComponent={() => (
+                load === true ? (
+                  <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                    <ActivityIndicator size="large" color={COLORS.primary} />
+                  </View>
+                ) : (
+                  null
+                )
+              )}
               keyExtractor={(item) => "_" + item.id}
-              style={{ height: 400 }}
+              style={{ height: 450 }}
               ListEmptyComponent={() => <ListEmpty />}
+              onEndReached={() => {
+                if (dokumen.lists.length !== 0) {
+                  loadMore()
+                }
+              }}
             />
             <Portal>
               <BottomSheetModalProvider>
@@ -335,6 +416,7 @@ export const Dokumen = () => {
                           style={{
                             fontSize: FONTSIZE.H2,
                             fontWeight: FONTWEIGHT.normal,
+                            width: 300
                           }}
                         >
                           {dataM.title}
