@@ -202,6 +202,7 @@ import { InfoOutgoindDetail } from "./Detail/Outgoing/InfoOutgoindDetail";
 import { FileOutgoingDetail } from "./Detail/Outgoing/FileOutgoingDetail";
 import { AttachmentOutgoingDetail } from "./Detail/Outgoing/AttachmentOutgoingDetail";
 import { KomentarOutgoingDetail } from "./Detail/Outgoing/KomentarOutgoingDetail";
+import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -725,6 +726,14 @@ function AuthStack() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="DetailSuratDiunggah"
+          component={DetailSuratDiunggah}
+          options={{
+            header: toolbarBack, 
+            title: "Detail Surat Keluar",
+          }}
+        />
         {/* <Stack.Screen
               name="Main"
               component={Main}
@@ -876,7 +885,7 @@ export const BottomTabs = () => {
           headerShown: false,
           tabBarStyle: { display: 'none' },
           tabBarItemStyle: { display: 'none' }
-        }}
+    
       /> */}
         </Tab.Navigator>
       </BottomSheetModalProvider>

@@ -33,6 +33,7 @@ import { androidId, getIosIdForVendorAsync } from "expo-application";
 import { COLORS } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { OutgoingList } from "./List/OutgoingList";
+import { useNavigation } from '@react-navigation/native'
 
 const DrawerItemsData = [
   {
@@ -179,6 +180,9 @@ const CustomDrawerContent = (props) => {
     dispatch(setFirstLogin(false));
     dispatch(logout());
   }
+
+  const navigation = useNavigation();
+
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.containerProfile}>
@@ -264,12 +268,13 @@ const CustomDrawerContent = (props) => {
           icon="logout"
           key="8"
           active={drawerItemIndex === 8}
-          onPress={() => {
-            AlertConfirm("Confirm", "Are you sure to Sign Out?", () => {
-              setDrawerItemIndex(8);
-              handlerLogout();
-            });
-          }}
+          // onPress={() => {
+          //   AlertConfirm("Confirm", "Are you sure to Sign Out?", () => {
+          //     setDrawerItemIndex(8);
+          //     handlerLogout();
+          //   });
+          // }}
+          onPress={() => navigation.navigate("Home")}
         />
       </Drawer.Section>
         <Drawer.Item

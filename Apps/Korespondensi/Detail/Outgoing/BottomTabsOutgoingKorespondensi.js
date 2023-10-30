@@ -63,7 +63,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='school-outline' color={COLORS.primary} size={24} />
+                                <Ionicons name='information-circle-outline' color={COLORS.primary} size={24} />
                                 <Text style={{ color: COLORS.primary }}>Info</Text>
                             </View>
                         ) : (
@@ -73,7 +73,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='school-outline' color={COLORS.grey} size={24} />
+                                <Ionicons name='information-circle-outline' color={COLORS.grey} size={24} />
                                 <Text style={{ color: COLORS.grey }}>Info</Text>
                             </View>
                         )}
@@ -107,7 +107,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='home-outline' color={COLORS.primary} size={24} />
+                                <Ionicons name='document-outline' color={COLORS.primary} size={24} />
                                 <Text style={{ color: COLORS.primary, textAlign: "center" }}>File Surat</Text>
                             </View>
                         ) : (
@@ -117,7 +117,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='home-outline' color={COLORS.grey} size={24} />
+                                <Ionicons name='document-outline' color={COLORS.grey} size={24} />
                                 <Text style={{ color: COLORS.grey, textAlign: "center" }}>File Surat</Text>
                             </View>
                         )}
@@ -151,7 +151,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='home-outline' color={COLORS.primary} size={24} />
+                                <Ionicons name='attach-outline' color={COLORS.primary} size={24} />
                                 <Text style={{ color: COLORS.primary, textAlign: "center" }}>Attachment</Text>
                             </View>
                         ) : (
@@ -161,7 +161,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='home-outline' color={COLORS.grey} size={24} />
+                                <Ionicons name='attach-outline' color={COLORS.grey} size={24} />
                                 <Text style={{ color: COLORS.grey, textAlign: "center" }}>Attachment</Text>
                             </View>
                         )}
@@ -195,7 +195,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='home-outline' color={COLORS.primary} size={24} />
+                                <Ionicons name='chatbox-ellipses-outline' color={COLORS.primary} size={24} />
                                 <Text style={{ color: COLORS.primary, textAlign: "center" }}>Komentar</Text>
                             </View>
                         ) : (
@@ -205,7 +205,7 @@ function MyTabBarOutgoingKorespondensi({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='home-outline' color={COLORS.grey} size={24} />
+                                <Ionicons name='chatbox-ellipses-outline' color={COLORS.grey} size={24} />
                                 <Text style={{ color: COLORS.grey, textAlign: "center" }}>Komentar</Text>
                             </View>
                         )}
