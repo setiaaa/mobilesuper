@@ -1216,17 +1216,17 @@ export const getListPostPegawai = createAsyncThunk(
 export const getListPegawaiExport = createAsyncThunk(
   "admin/iku/employee/export",
   async (data) => {
-    // console.log(data.token);
-    // console.log(data.year);
-    // console.log(data.quarter);
-    // console.log(data.unitKerja);
+    console.log(data.token);
+    console.log(data.year);
+    console.log(data.quarter);
+    console.log(data.unitKerja);
     const respon = await axios.get(
       `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
       {
         headers: { Authorization: data.token },
       }
     );
-    return respon?.data.results;
+    return respon?.data.result;
   }
 );
 

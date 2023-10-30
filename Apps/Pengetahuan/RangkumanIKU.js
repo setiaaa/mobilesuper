@@ -33,6 +33,12 @@ import {
 } from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
+import { shareAsync } from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+// import { FileSystem } from "expo";
+import * as DocumentPicker from "expo-document-picker";
+// import { shareAsync } from "expo-sharing";
+// import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
 const ListDaftarPegawai = ({ item, token }) => {
   const navigation = useNavigation();
@@ -213,23 +219,23 @@ export const RangkumanIKU = () => {
     }
   }, [token, savedYear, savedQuarter, savedUnitKerja]);
 
-  // useEffect(() => {
-  //   const param = {
-  //     token: token,
-  //     year: savedYear.value,
-  //     quarter: savedQuarter.key,
-  //     unitKerja: savedUnitKerja.value,
-  //   };
-  //   if (token !== "") {
-  //     dispatch(getListPegawaiExport(param));
-  //   }
-  // }, [token, savedYear, savedQuarter, savedUnitKerja]);
+  useEffect(() => {
+    const param = {
+      token: token,
+      year: savedYear.value,
+      quarter: savedQuarter.key,
+      unitKerja: savedUnitKerja.value,
+    };
+    if (token !== "") {
+      dispatch(getListPegawaiExport(param));
+    }
+  }, [token, savedYear, savedQuarter, savedUnitKerja]);
 
   const { pegawai } = useSelector((state) => state.pengetahuan);
 
   const { unitKerja } = useSelector((state) => state.pengetahuan);
 
-  // const { exportPegawai } = useSelector((state) => state.pengetahuan);
+  const { exportPegawai } = useSelector((state) => state.pengetahuan);
 
   const dataUnitKerja = () => {
     let valueUnitKerja = [];
@@ -262,9 +268,60 @@ export const RangkumanIKU = () => {
     setSearch(event);
   };
 
-  console.log(pegawai.lists);
+  // console.log(pegawai.lists);
   console.log(exportPegawai);
 
+  const downloadFromUrl = async () => {
+    const url = exportPegawai?.lists?.file;
+    const parts = url?.split("/");
+    const fileName = parts[parts?.length - 1];
+    console.log(fileName);
+
+    //
+
+    // const result = await FileSystem.downloadAsync(
+    //   url,
+    //   FileSystem.documentDirectory + fileName
+    // );
+    // console.log(result);
+
+    // await AsyncStorage.setItem("downloadedFile", result.uri);
+
+    // save(result.uri);
+
+    // try {
+    //   const document = await DocumentPicker.getDocumentAsync({
+    //     type: "*/*", // Allow the user to pick any type of file
+    //   });
+
+    //   if (document.type === "success") {
+    //     const directoryPath = document.uri; // Use this path to save the file
+    //     console.log("Selected directory:", directoryPath);
+
+    //     const url = exportPegawai?.lists?.file;
+    //     if (url) {
+    //       const parts = url.split("/");
+    //       const fileName = parts[parts.length - 1];
+    //       const filePath = `${directoryPath}/${fileName}`;
+
+    //       const result = await FileSystem.downloadAsync(url, filePath);
+
+    //       if (result.status === 200) {
+    //         console.log("Downloaded file saved to:", filePath);
+    //       } else {
+    //         console.error("Download failed");
+    //       }
+    //     }
+    //   } else {
+    //     console.log("Document picker canceled or failed.");
+    //   }
+    // } catch (error) {
+    //   console.error("Error selecting directory:", error);
+    // }
+  };
+  // const save = (uri) => {
+  //   shareAsync(uri);
+  // };
   return (
     <SafeAreaView>
       <View
@@ -669,15 +726,19 @@ export const RangkumanIKU = () => {
             >
               <Text>{"*) Nilai Minimum = 3"}</Text>
               <View style={{ flexDirection: "row", gap: 10 }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: 50,
-                    padding: 5,
-                  }}
-                >
-                  <Icon name="get-app" size={24} color={COLORS.grey} />
-                </TouchableOpacity>
+                {exportPegawai?.lists?.length !== 0 ? (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: 50,
+                      padding: 5,
+                    }}
+                    onPress={downloadFromUrl}
+                  >
+                    <Icon name="get-app" size={24} color={COLORS.grey} />
+                  </TouchableOpacity>
+                ) : null}
+
                 <TouchableOpacity>
                   <TouchableOpacity
                     style={{
