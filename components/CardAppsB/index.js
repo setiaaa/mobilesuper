@@ -15,7 +15,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='document-text-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Korespondensi</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, }}>Korespondensi</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MainKeb')}>
@@ -42,7 +42,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kalender</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, height: 30 }}>Kalender</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
@@ -51,7 +51,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='library-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repositori</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', fontSize: FONTSIZE.H4, height: 30 }}>Preparing dan Sharing</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
@@ -60,7 +60,7 @@ export const CardAppsB = ({ handlePressModal }) => {
                             <Ionicons name='school-outline' size={24} color={COLORS.primary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, textAlign: 'center' }}>Pengetahuan</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, textAlign: 'center', height: 30 }}>Pengetahuan</Text>
                 </View>
             </View>
 

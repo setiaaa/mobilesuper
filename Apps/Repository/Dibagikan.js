@@ -174,7 +174,7 @@ export const Dibagikan = () => {
               </View>
               <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
                 <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
-                  Repositori
+                  Preparing dan Sharing
                 </Text>
               </View>
             </View>

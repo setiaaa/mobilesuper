@@ -261,12 +261,12 @@ export const GrupKalender = () => {
                               <Ionicons name='calendar' size={24} color={COLORS.grey} />
                               <Text>Acara Kalender</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {
+                            {/* <TouchableOpacity onPress={() => {
                               dispatch(getDetailGrup({ token: token, id: kategoriField.key }))
                               navigation.navigate('TambahAgenda')
                             }}>
                               <Ionicons name='add-outline' size={24} color={COLORS.primary} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                           </View>
 
                           <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}
@@ -460,7 +460,7 @@ export const GrupKalender = () => {
                 <View>
                 </View>
 
-                <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                {/* <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>
                     <TouchableOpacity onPress={() => {
                       navigation.navigate('TambahGrup', { unread: false })
@@ -470,7 +470,8 @@ export const GrupKalender = () => {
                       </View>
                     </TouchableOpacity>
                   </View>
-                </View>
+                </View> */}
+
                 {/* add agenda
                 <BottomSheetModal
                   ref={bottomSheetModalAddRef}
