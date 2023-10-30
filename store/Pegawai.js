@@ -8,6 +8,7 @@ const PegawaiSlice = createSlice({
             lists: [],
             detail: {}
         },
+        loading: false,
     },
     reducers: {
         setPegawai: (state, action) => {
@@ -17,10 +18,28 @@ const PegawaiSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(getPegawai.fulfilled, (state, action) => {
-                state.pegawai.lists = action.payload;
+                let dataPrev = state.pegawai.lists
+                let dataNext = action.payload
+                let gabung = dataPrev.concat(dataNext)
+                state.pegawai.lists = gabung
+                // console.log(action.payload)
+                state.loading = false
+            })
+            .addCase(getPegawai.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getPegawai.rejected, (state, action) => {
+                state.loading = false
             })
             .addCase(getDetailPegawai.fulfilled, (state, action) => {
                 state.pegawai.detail = action.payload;
+                state.loading = false
+            })
+            .addCase(getDetailPegawai.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getDetailPegawai.rejected, (state, action) => {
+                state.loading = false
             })
     }
 })

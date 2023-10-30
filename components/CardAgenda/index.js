@@ -7,9 +7,9 @@ import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
-import { getDetailAcara, getDetailAgendaAcara, getListSubAgenda } from '../../service/api'
+import { getDetailAcara, getDetailAgendaAcara, getDetailGrup, getListSubAgenda } from '../../service/api'
 
-export const CardAgenda = ({ item, stringToColor, token, kegiatan }) => {
+export const CardAgenda = ({ item, stringToColor, token, kegiatan, idKategori }) => {
     const navigation = useNavigation()
 
     const dispatch = useDispatch();
@@ -17,8 +17,9 @@ export const CardAgenda = ({ item, stringToColor, token, kegiatan }) => {
     const getDetail = (id) => {
         const params = { token, id };
         // const data = event.listsprogress.find(item => item.id === id)
-        dispatch(getDetailAcara(params))
         if (kegiatan === 'acara kalender') {
+            dispatch(getDetailAcara(params))
+            dispatch(getDetailGrup({ token: token, id: idKategori }))
         } else {
             dispatch(getDetailAgendaAcara(params))
             dispatch(getListSubAgenda(params))
@@ -28,8 +29,9 @@ export const CardAgenda = ({ item, stringToColor, token, kegiatan }) => {
         <TouchableOpacity key={item.id}
             onPress={() => {
                 getDetail(item.id)
+
                 if (kegiatan === 'acara kalender') {
-                    navigation.navigate('DetailAcara')
+                    navigation.navigate('DetailAcara', { idKategori: idKategori })
                 } else {
                     navigation.navigate('DetailAcaraAgenda')
                 }

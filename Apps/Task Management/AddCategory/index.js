@@ -16,13 +16,14 @@ import { Image } from 'react-native'
 import { setStatus } from '../../../store/Task'
 import { getTokenValue } from '../../../service/session'
 import { postCategoryTM } from '../../../service/api'
+import { Loading } from '../../../components/Loading'
 
 export const AddCategory = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const [stateConfig, setStateConfig] = useState({})
     const { addressbook } = useSelector(state => state.addressBookKKP)
-    const { status } = useSelector(state => state.task)
+    const { status, loading } = useSelector(state => state.task)
     const [token, setToken] = useState('')
     const [dataKategori, setDataKategori] = useState({
         namaProject: '',
@@ -87,6 +88,11 @@ export const AddCategory = () => {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
+                {
+                    loading ? (
+                        <Loading />
+                    ) : null
+                }
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
                         backgroundColor: COLORS.white,
@@ -253,15 +259,16 @@ export const AddCategory = () => {
                         </View>
                     </View>
                 </ScrollView>
+
+                <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
+                    <TouchableOpacity onPress={() => handleSubmit()}>
+                        <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                            <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </SafeAreaView>
 
-            <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                <TouchableOpacity onPress={() => handleSubmit()}>
-                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                        <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
-                    </View>
-                </TouchableOpacity>
-            </View>
 
             <Modal
                 animationType="fade"
@@ -316,46 +323,55 @@ export const AddCategory = () => {
     )
 }
 
-const CardListPeserta = ({ item, addressbook }) => {
+const CardListPeserta = ({ item, addressbook, persetaSubAgenda = false, setPilihanPeserta }) => {
     const dispatch = useDispatch()
     const deleteItem = (id, state) => {
         let data;
+        let datas = persetaSubAgenda ? addressbook : addressbook.selected
         if (state === "jabatan") {
-            data = addressbook.selected.filter(data => data.id !== id)
-            dispatch(setAddressbookSelected(data))
+            data = datas.filter(data => {
+                let nip = data.nip || data.officer.official?.split('/')[1]
+                return nip !== id
+            })
+            if (persetaSubAgenda) {
+                setPilihanPeserta(data)
+            } else {
+                dispatch(setAddressbookSelected(data))
+            }
         } else {
-            data = addressbook.selected.filter(data => data.nip !== id)
-            dispatch(setAddressbookSelected(data))
+            data = datas.filter(data => data.nip !== id)
+            if (persetaSubAgenda) {
+                setPilihanPeserta(data)
+            } else {
+                dispatch(setAddressbookSelected(data))
+            }
         }
     }
     return (
-        <View>
-            {item.title === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '80%' }}>{item.title}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.id, 'jabatan')
-                    }}>
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
-            {item.fullname === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '80%' }}>{item.fullname}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.nip, 'pegawai')
-                    }}>
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
+        <View key={item.nip || item.id}>
+            {
+                item.code !== undefined || (item.title !== undefined && item.title.name !== '') ? (
+                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                        <Text>-</Text>
+                        <Text style={{ width: '80%' }}>{item.title.name !== undefined ? item.title.name : item.title}</Text>
+                        <TouchableOpacity onPress={() => {
+                            deleteItem(item.nip || item.officer.official?.split('/')[1], 'jabatan')
+                        }}>
+                            <Ionicons name='trash-outline' size={24} />
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+                        <Text>-</Text>
+                        <Text style={{ width: '80%' }}>{item.nama || item.fullname}</Text>
+                        <TouchableOpacity onPress={() => {
+                            deleteItem(item.nip, 'pegawai')
+                        }}>
+                            <Ionicons name='trash-outline' size={24} />
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
         </View>
     )
 }

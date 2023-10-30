@@ -98,7 +98,7 @@ function CardDelegation({ data, onPress }) {
           <Text
             style={[styles.subtitle, { color: GlobalStyles.colors.textBlack }]}
           >
-            Start : {moment(data.start_date).format("DD MMMM YYYY")}
+            Start : {moment(data.start_date).format(DATETIME.LONG_DATE)}
           </Text>
           <Text
             style={[
@@ -108,7 +108,7 @@ function CardDelegation({ data, onPress }) {
           >
             End :{" "}
             <Text style={{ fontWeight: "600" }}>
-              {moment(data.end_date).format("DD MMMM YYYY")}
+              {moment(data.end_date).format(DATETIME.LONG_DATE)}
             </Text>
           </Text>
         </View>
@@ -117,24 +117,24 @@ function CardDelegation({ data, onPress }) {
           textStyle={
             data.status == "activate"
               ? {
-                  color: GlobalStyles.colors.green,
-                }
+                color: GlobalStyles.colors.green,
+              }
               : data.status == "waiting"
-              ? {
+                ? {
                   color: GlobalStyles.colors.yellow,
                 }
-              : ""
+                : ""
           }
           style={
             data.status == "activate"
               ? {
-                  backgroundColor: GlobalStyles.colors.greenlight,
-                }
+                backgroundColor: GlobalStyles.colors.greenlight,
+              }
               : data.status == "waiting"
-              ? {
+                ? {
                   backgroundColor: GlobalStyles.colors.yellowlight,
                 }
-              : ""
+                : ""
           }
         >
           {data.status}

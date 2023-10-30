@@ -12,59 +12,46 @@ import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../../config/SuperAppps";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { CardListGaleriHome } from "../../components/CardListGaleriHome";
+import { getTokenValue } from "../../service/session";
+import { setGaleri } from "../../store/SuperApps";
+import { getGaleri } from "../../service/api";
+import { ActivityIndicator } from "react-native";
 
-const Item = ({ image, deskripsi, onclick }) => {
-  const navigation = useNavigation();
-  return (
-    <View
-      style={{
-        flex: 0.5,
-      }}
-    >
-      <View
-        style={{
-          backgroundColor: COLORS.white,
-          borderRadius: 16,
-          alignItems: "center",
-          justifyContent: "center",
-          marginHorizontal: 20,
-          marginTop: 30,
-        }}
-      >
-        <TouchableOpacity onPress={onclick}>
-          <Image
-            source={{ uri: image }}
-            style={
-              Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid
-            }
-          />
-          {/* <View style={{ marginVertical: 20, marginHorizontal: 5 }}>
-            <Text
-              style={{
-                color: COLORS.grey,
-                marginVertical: 5,
-                fontSize: 10,
-                fontWeight: 400,
-                textAlign: "center",
-              }}
-            >
-              {deskripsi}
-            </Text>
-          </View> */}
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
+
 
 export const ListGaleri = () => {
-  const { galeri } = useSelector((state) => state.superApps);
+  const { galeri, loading } = useSelector((state) => state.superApps);
 
   const navigation = useNavigation();
   const [visibleModal, setVisibleModal] = useState(false);
   const [galeriById, setGaleriById] = useState({});
+  const [page, setPage] = useState(1)
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+    dispatch(setGaleri([]))
+    setPage(1)
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getGaleri({ token, page }));
+      console.log('page', page)
+    }
+  }, [token, page]);
+
+  const loadMore = () => {
+    if (galeri.lists.length % 10 === 0) {
+      setPage(page + 1)
+    }
+  }
   // console.log(visibleModal);
   // console.log(galeri.lists);
   return (
@@ -112,17 +99,25 @@ export const ListGaleri = () => {
           key={"#"}
           data={galeri.lists}
           renderItem={({ item }) => (
-            <Item
+            <CardListGaleriHome
               image={item.main_images?.image}
-              // deskripsi={item.main_images.title}
+              deskripsi={item.main_images.title}
               onclick={() => {
                 setVisibleModal(true);
                 setGaleriById(item);
               }}
             />
           )}
+          ListFooterComponent={() => (
+            loading && (
+              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                <ActivityIndicator size="large" color={COLORS.primary} />
+              </View>
+            )
+          )}
           numColumns={2}
           keyExtractor={(item) => "#" + item.id}
+          onEndReached={loadMore}
         />
       </View>
 

@@ -31,6 +31,7 @@ import DispositionForm from "../Apps/Korespondensi/Form/DispositionForm";
 import ForwardForm from "../Apps/Korespondensi/Form/ForwardForm";
 import { removeAll } from "../store/addressbook";
 import { removeAllDispoMulti } from "../store/dispoMulti";
+import { COLORS } from "../config/SuperAppps";
 
 const project = Constants.manifest.extra.id;
 function TabViewBg({
@@ -181,28 +182,30 @@ function TabViewBg({
       renderIcon={renderIcon}
       indicatorStyle={
         tipe == "dashboard"
-          ? { backgroundColor: GlobalStyles.colors.primary }
+          ? { backgroundColor: COLORS.danger }
           : { backgroundColor: null }
       }
       style={{
         color: GlobalStyles.colors.textBlack,
         backgroundColor: GlobalStyles.colors.textWhite,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
       }}
       labelStyle={{
         color: GlobalStyles.colors.textBlack,
-        fontSize: GlobalStyles.font.xs,
+        fontSize: GlobalStyles.font.sm,
       }}
-      activeColor={GlobalStyles.colors.textBlack}
-      inactiveColor={GlobalStyles.colors.grey}
+      activeColor={COLORS.danger}
+      inactiveColor={GlobalStyles.colors.textBlack}
     />
   );
   return (
     <View style={styles.screen}>
-      <ImageBackground
+      {/* <ImageBackground
         source={Config.backgroundLayoutBottom}
         style={styles.container}
         imageStyle={styles.backgroundImage}
-      ></ImageBackground>
+      ></ImageBackground> */}
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
@@ -211,19 +214,20 @@ function TabViewBg({
         initialLayout={{ width: layout.width }}
         tabBarPosition={position}
       />
-      <Snackbar visible={snackbar}>Copied to clipboard</Snackbar>
+      {/* <Snackbar visible={snackbar}>Copied to clipboard</Snackbar> */}
     </View>
   );
 }
 export default TabViewBg;
 
 const styles = StyleSheet.create({
-  screen: { flex: 1 },
+  screen: { flex: 1, paddingHorizontal:20, paddingTop: 20 },
   container: {
-    position: "absolute",
+    // position: "absolute",
     width: "100%",
     height: 300,
     bottom: 0,
+    marginTop: 20,
   },
   backgroundImage: {
     resizeMode: "cover",

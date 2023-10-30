@@ -6,7 +6,7 @@ import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
@@ -374,11 +374,11 @@ export const DetailLinimasa = () => {
                                     alignItems: 'center',
                                     borderRadius: 50,
                                     position: 'absolute',
-                                    right: 10,
+                                    right: 35,
                                     bottom: 30
 
                                 }}>
-                                    <Ionicons name='share-social-outline' size={20} color={COLORS.white} />
+                                    <Ionicons name='share-social-outline' size={24} color={COLORS.white} />
                                 </TouchableOpacity>
                             </View>
                             <View style={{ backgroundColor: COLORS.white, }}>
@@ -390,7 +390,7 @@ export const DetailLinimasa = () => {
                                     </View>
                                     <View>
                                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>{detail.creator?.name}</Text>
-                                        <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(detail.published_date, "DD MMMM YYYY HH:mm:ss").format("DD MMMM YYYY")}</Text>
+                                        <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(detail.published_date, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
                                     </View>
                                 </View>
 
@@ -426,12 +426,14 @@ export const DetailLinimasa = () => {
                                     <Text>{detail.summary}</Text>
                                 </View>
 
-                                <View style={{ marginHorizontal: 20 }}>
+                                <View style={{ marginHorizontal: 20, paddingVertical: -20 }}>
                                     <RenderHTML
                                         source={source}
                                         contentWidth={width}
+                                        enableExperimentalMarginCollapsing={true}
                                     />
                                 </View>
+
 
                                 <View style={{ marginHorizontal: 20 }}>
                                     <Text style={{
@@ -721,7 +723,7 @@ export const DetailLinimasa = () => {
                                                     <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[When]</Text>
                                                 </View>
 
-                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{moment(detail.start_date_agenda, "DD MMMM YYYY HH:mm:ss").format("DD MMMM YYYY")}</Text>
+                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{moment(detail.start_date_agenda, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
                                             </View>
                                         </View>
                                     </View>

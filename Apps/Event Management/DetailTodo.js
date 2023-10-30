@@ -27,6 +27,8 @@ import moment from 'moment'
 import { TextInput } from 'react-native'
 import { getTokenValue } from '../../service/session'
 import { getDetailTodo, postKomenTodo } from '../../service/api'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 const CardLampiran = ({ lampiran, onClick, type }) => {
@@ -72,36 +74,36 @@ const CardLampiran = ({ lampiran, onClick, type }) => {
     )
 }
 
-const CardApproval = ({ item }) => {
-    return (
-        <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
-            <View>
-                <Text>{item.nama}</Text>
-                <View style={{ flexDirection: 'row', gap: 5 }}>
-                    <Text>Waktu:</Text>
-                    <Text>{item.waktu}</Text>
-                </View>
-            </View>
-            <View style={{
-                width: 100,
-                height: 24,
-                borderRadius: 30,
-                backgroundColor: item.status === 'Sepakat' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : COLORS.infoDangerLight,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <Text style={{
-                    color: item.status === 'Sepakat' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : COLORS.infoDanger
-                }}>{item.status}</Text>
-            </View>
-        </View>
-    )
-}
+// const CardApproval = ({ item }) => {
+//     return (
+//         <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+//             <View>
+//                 <Text>{item.nama}</Text>
+//                 <View style={{ flexDirection: 'row', gap: 5 }}>
+//                     <Text>Waktu:</Text>
+//                     <Text>{item.waktu}</Text>
+//                 </View>
+//             </View>
+//             <View style={{
+//                 width: 100,
+//                 height: 24,
+//                 borderRadius: 30,
+//                 backgroundColor: item.status === 'Sepakat' ? COLORS.successLight : item.status === 'Menunggu' ? COLORS.infoLight : COLORS.infoDangerLight,
+//                 justifyContent: 'center',
+//                 alignItems: 'center'
+//             }}>
+//                 <Text style={{
+//                     color: item.status === 'Sepakat' ? COLORS.success : item.status === 'Menunggu' ? COLORS.info : COLORS.infoDanger
+//                 }}>{item.status}</Text>
+//             </View>
+//         </View>
+//     )
+// }
 
 
 export const DetailTodo = () => {
     const navigation = useNavigation()
-
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const bottomSheetModalRef = useRef(null);
     const bottomSheetModalCommetRef = useRef(null);
 
@@ -174,7 +176,7 @@ export const DetailTodo = () => {
         })
     }, [])
 
-    const { todo, agenda } = useSelector(state => state.event)
+    const { todo, agenda, loading } = useSelector(state => state.event)
     const detail = todo.detail
     const agendaDetail = agenda.detail
 
@@ -223,11 +225,19 @@ export const DetailTodo = () => {
                             <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
 
                                 <View style={{ flexDirection: 'row', gap: 20 }}>
-                                    <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{detail.project?.name}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={200} height={20} />
+                                    ) : (
+                                        <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{detail.project?.name}</Text>
+                                    )}
                                 </View>
 
                                 <View style={{ marginTop: 10 }}>
-                                    <Text>{agendaDetail.note}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{agendaDetail.note}</Text>
+                                    )}
                                 </View>
 
                                 {/* custom divider */}
@@ -235,7 +245,11 @@ export const DetailTodo = () => {
 
                                 <View style={{ flexDirection: 'row', }}>
                                     <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Todo</Text>
-                                    <Text style={{ width: 150 }}>{detail.name}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text style={{ width: 150 }}>{detail.name}</Text>
+                                    )}
                                 </View>
 
                                 {/* custom divider */}
@@ -243,7 +257,11 @@ export const DetailTodo = () => {
 
                                 <View style={{ flexDirection: 'row', }}>
                                     <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tenggat Waktu</Text>
-                                    <Text>{detail.due_date}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{detail.due_date}</Text>
+                                    )}
                                 </View>
 
                                 {/* custom divider */}
@@ -251,7 +269,11 @@ export const DetailTodo = () => {
 
                                 <View style={{ flexDirection: 'row', }}>
                                     <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-                                    <Text>{agendaDetail.date}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{agendaDetail.date}</Text>
+                                    )}
                                 </View>
 
                                 {/* custom divider */}
@@ -259,10 +281,14 @@ export const DetailTodo = () => {
 
                                 <View style={{ flexDirection: 'row', }}>
                                     <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={{ marginTop: 5 }}>{moment(agendaDetail.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
-                                        <Text style={{ marginTop: 5 }}>{moment(agendaDetail.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
-                                    </View>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={{ marginTop: 5 }}>{moment(agendaDetail.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
+                                            <Text style={{ marginTop: 5 }}>{moment(agendaDetail.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                                        </View>
+                                    )}
                                 </View>
 
                                 {/* custom divider */}
@@ -270,36 +296,44 @@ export const DetailTodo = () => {
 
                                 <View style={{ flexDirection: 'row', }}>
                                     <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
-                                    <Text>{agendaDetail.location}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{agendaDetail.location}</Text>
+                                    )}
                                 </View>
 
                                 {/* custom divider */}
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                                 <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
+                                {loading ? (
+                                    <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
+                                ) : (
+                                    <FlatList
+                                        key={'*'}
+                                        data={agendaDetail.attachments}
+                                        renderItem={({ item }) =>
+                                            <View key={item.id}>
+                                                <CardLampiran
+                                                    lampiran={item.file}
+                                                    type={getFileExtension(item.name)}
+                                                    onClick={() => {
+                                                        setVisibleModal(true)
+                                                        setLampiranById(item)
+                                                    }}
+                                                    id={item.id}
+                                                />
+                                            </View>
+                                        }
+                                        scrollEnabled={false}
+                                        style={{ marginTop: 10 }}
+                                        columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                        numColumns={3}
+                                        keyExtractor={item => "*" + item.id}
+                                    />
+                                )}
 
-                                <FlatList
-                                    key={'*'}
-                                    data={agendaDetail.attachments}
-                                    renderItem={({ item }) =>
-                                        <View key={item.id}>
-                                            <CardLampiran
-                                                lampiran={item.file}
-                                                type={getFileExtension(item.name)}
-                                                onClick={() => {
-                                                    setVisibleModal(true)
-                                                    setLampiranById(item)
-                                                }}
-                                                id={item.id}
-                                            />
-                                        </View>
-                                    }
-                                    scrollEnabled={false}
-                                    style={{ marginTop: 10 }}
-                                    columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                                    numColumns={3}
-                                    keyExtractor={item => "*" + item.id}
-                                />
 
                                 {
                                     lampiranById !== null ? (
@@ -518,10 +552,8 @@ export const DetailTodo = () => {
                                 )
                                 )}
                             </View>
+
                         </ScrollView>
-
-
-
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>

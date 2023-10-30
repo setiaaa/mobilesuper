@@ -6,6 +6,9 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  Linking,
+  BackHandler,
+  Alert,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
@@ -55,8 +58,13 @@ import {
   getGaleri,
   getBerita,
 } from "../../service/api";
+import { bannerKegiatan } from "../../components/BannerKegiatan";
+import { BeritaHome } from "../../components/BeritaHome";
+import { GaleriHome } from "../../components/GaleriHome";
+import { Loading } from "../../components/Loading";
 
 const { width: screenWidth } = Dimensions.get("window");
+
 export const Home = () => {
   const carouselRef = useRef(null);
 
@@ -72,6 +80,7 @@ export const Home = () => {
   const [modalVisibleVisiMisi, setModalVisibleVisiMisi] = useState(false);
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
   const [token, setToken] = useState("");
+  const [page, setPage] = useState(1)
 
   const dispatch = useDispatch();
 
@@ -95,182 +104,42 @@ export const Home = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getGaleri(token));
+      dispatch(getGaleri({ token, page }));
     }
   }, [token]);
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getBerita(token));
+      dispatch(getBerita({ token, page }));
     }
   }, [token]);
 
-  const { berita, agenda, program, galeri, profile, visimisi, banner } =
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Peringatan!", "Apakah anda yakin akan keluar dari aplikasi?", [
+        {
+          text: "Tidak",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YA", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  const { berita, agenda, program, galeri, profile, visimisi, banner, loading } =
     useSelector((state) => state.superApps);
 
-  const renderItem = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: item.image }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            backgroundColor: "white",
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: 10,
-              marginVertical: 20,
-              fontWeight: FONTWEIGHT.bold,
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
-  const renderItem2 = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={item.image}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: 10,
-              marginVertical: 50,
-              textAlign: "center",
-              fontSize: 13,
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
-  const renderItem3 = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={item.image}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: 10,
-              marginVertical: 50,
-              textAlign: "center",
-              fontSize: 13,
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  const renderItem4 = ({ item, index }, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: item.main_images.image }}
-          containerStyle={styles.galeri}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        {/* <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
-                    <Text style={{
-                        marginLeft: 10, color: '#111827',
-                        marginVertical: 50,
-                        textAlign: 'center',
-                        fontSize: 13,
-                        fontWeight: 400
-                    }}>
-                        {item.title}
-                    </Text>
-                </View> */}
-      </View>
-    );
-  };
-
-  const bannerKegiatan = ({ item }, parallaxProps) => {
-    return (
-      <View style={styles.items}>
-        <ParallaxImage
-          source={{ uri: item.image }}
-          containerStyle={styles.imageContainer}
-          style={styles.images}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            width: "100%",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: COLORS.primary,
-              borderBottomLeftRadius: 8,
-              borderBottomRightRadius: 8,
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: 70,
-              opacity: 0.5,
-            }}
-          />
-          <Text
-            style={{
-              color: COLORS.white,
-              marginVertical: 20,
-              marginHorizontal: 40,
-              textAlign: "center",
-            }}
-          >
-            {item.description}
-          </Text>
-        </View>
-      </View>
-    );
-  };
   const bottomSheetModalRef = useRef(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -303,22 +172,15 @@ export const Home = () => {
     setPlaying((prev) => !prev);
   }, []);
 
-  // const [token, setToken] = useState('')
-
-  // getTokenValue().then(val => {
-  //     setToken(val)
-  // })
-
-  // console.log(token)
-
-  // console.log(profile);
-  // console.log(banner);
-  // console.log(galeri.lists);
-  // console.log(berita.lists);
   return (
-    <SafeAreaView style={{ flex: 1 }} key={1}>
+    <SafeAreaView>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
+          {
+            loading ? (
+              <Loading />
+            ) : null
+          }
           <ScrollView>
             <View
               style={{
@@ -349,13 +211,13 @@ export const Home = () => {
                 gap: 20,
               }}
             >
-              <View style={{ paddingLeft: 20 }}>
+              {/* <View style={{ paddingLeft: 20 }}>
                 <Ionicons
                   name="notifications-outline"
                   size={25}
                   color={"white"}
                 />
-              </View>
+              </View> */}
               <View
                 style={{
                   justifyContent: "flex-end",
@@ -453,7 +315,7 @@ export const Home = () => {
               />
             </View>
 
-            <View style={{ marginHorizontal: 30, marginTop: 20 }}>
+            <View style={{ marginHorizontal: 25, marginTop: 20 }}>
               <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
             </View>
             <View
@@ -462,7 +324,7 @@ export const Home = () => {
                 alignItems: "center",
                 flex: 1,
                 marginTop: 20,
-                marginLeft: 30,
+                marginLeft: 25,
               }}
             >
               <CardTautan setModalVisible={setModalVisible} />
@@ -471,7 +333,7 @@ export const Home = () => {
             <View
               style={{
                 marginVertical: 20,
-                marginLeft: 30,
+                marginLeft: 25,
                 flexDirection: "row",
                 marginTop: 30,
               }}
@@ -481,7 +343,7 @@ export const Home = () => {
               >
                 Video
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => navigation.navigate("")}
                 style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
               >
@@ -495,7 +357,7 @@ export const Home = () => {
                 >
                   Selengkapnya
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
 
             <CardVideo setModalVisibleVideo={setModalVisibleVideo} />
@@ -562,113 +424,10 @@ export const Home = () => {
               </View>
             </Modal>
 
-            <View style={{ marginTop: 15, alignItems: "center" }}>
-              <CardVisiMisi setModalVisibleVisiMisi={setModalVisibleVisiMisi} />
-            </View>
-            <Modal
-              animationType="fade"
-              transparent={true}
-              visible={modalVisibleVisiMisi}
-              onRequestClose={() => {
-                setModalVisibleVisiMisi(!modalVisibleVisiMisi);
-              }}
-            >
-              <TouchableOpacity
-                style={[
-                  Platform.OS === "ios"
-                    ? styles.iOSBackdrop
-                    : styles.androidBackdrop,
-                  styles.backdrop,
-                ]}
-              />
-              <View style={{ alignItems: "center", flex: 1 }}>
-                <View
-                  style={{
-                    backgroundColor: COLORS.white,
-                    width: "90%",
-                    height: 500,
-                    borderRadius: 10,
-                    marginTop: 100,
-                  }}
-                >
-                  <TouchableOpacity
-                    style={{
-                      marginHorizontal: 20,
-                      marginTop: 20,
-                      alignItems: "flex-end",
-                    }}
-                    onPress={() => {
-                      setModalVisibleVisiMisi(false);
-                    }}
-                  >
-                    <Ionicons name="close-outline" size={24} />
-                  </TouchableOpacity>
-
-                  <View style={styles.cardVisiMisi}>
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        textAlign: "center",
-                        marginVertical: 5,
-                      }}
-                    >
-                      VISI KKP
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      marginHorizontal: 30,
-                      fontSize: FONTSIZE.H4,
-                      marginTop: 20,
-                    }}
-                  >
-                    {visimisi.visi}
-                  </Text>
-
-                  <View style={[styles.cardVisiMisi, { marginTop: 20 }]}>
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        textAlign: "center",
-                        marginVertical: 5,
-                      }}
-                    >
-                      MISI KKP
-                    </Text>
-                  </View>
-
-                  {visimisi.misi.map((item, index) => (
-                    <View
-                      key={index}
-                      style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        marginLeft: 30,
-                        marginTop: 20,
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: 10,
-                          height: 10,
-                          borderRadius: 50,
-                          backgroundColor: COLORS.primary,
-                          marginTop: 5,
-                        }}
-                      />
-                      <Text style={{ width: 260, fontSize: FONTSIZE.H4 }}>
-                        {item.text}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              </View>
-            </Modal>
-
             <View
               style={{
                 marginVertical: 20,
-                marginLeft: 30,
+                marginLeft: 25,
                 flexDirection: "row",
               }}
             >
@@ -679,7 +438,7 @@ export const Home = () => {
               </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ListBerita")}
-                style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 30 }}
               >
                 <Text
                   style={{
@@ -689,7 +448,7 @@ export const Home = () => {
                     color: "#1868AB",
                   }}
                 >
-                  View all
+                  Selengkapnya
                 </Text>
               </TouchableOpacity>
             </View>
@@ -702,7 +461,7 @@ export const Home = () => {
                   sliderHeight={screenWidth}
                   itemWidth={screenWidth - 60}
                   data={berita.lists.slice(0, 3)}
-                  renderItem={renderItem}
+                  renderItem={BeritaHome}
                   hasParallaxImages={true}
                 />
               </View>
@@ -730,7 +489,7 @@ export const Home = () => {
                   style={{
                     backgroundColor: COLORS.white,
                     width: "90%",
-                    height: 500,
+                    height: 550,
                     borderRadius: 10,
                     marginTop: 100,
                   }}
@@ -763,42 +522,22 @@ export const Home = () => {
                       marginTop: 20,
                     }}
                   >
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://halo-bupbj.com/')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/Tp1.png")}
+                        source={require("../../assets/superApp/BUPBJ.png")}
                         style={{ width: 48, height: 48 }}
                       />
-                      <Text style={{ fontSize: FONTSIZE.H4 }}>Semar</Text>
-                    </View>
+                      <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
+                    </TouchableOpacity>
 
-                    <View
-                      style={{ justifyContent: "center", alignItems: "center" }}
-                    >
-                      <Image
-                        source={require("../../assets/superApp/Tp2.png")}
-                        style={{ width: 48, height: 48 }}
-                      />
-                      <Text style={{ fontSize: FONTSIZE.H4 }}>Sistolik</Text>
-                    </View>
-
-                    <View
-                      style={{ justifyContent: "center", alignItems: "center" }}
-                    >
-                      <Image
-                        source={require("../../assets/superApp/Tp3.png")}
-                        style={{ width: 48, height: 48 }}
-                      />
-                      <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
-                      >
-                        Bus Jemputan
-                      </Text>
-                    </View>
                   </View>
 
-                  <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+                  <View style={{ marginHorizontal: 20, marginTop: 40 }}>
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
                       Pengawasan
                     </Text>
@@ -812,11 +551,14 @@ export const Home = () => {
                       marginTop: 20,
                     }}
                   >
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://www.lapor.go.id/')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/lapor.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -824,13 +566,16 @@ export const Home = () => {
                       >
                         Lapor.go.id
                       </Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://wbs.kkp.go.id/registration')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/wbs.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -838,13 +583,16 @@ export const Home = () => {
                       >
                         WBS KKP
                       </Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://sidak.kkp.go.id/login')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/sidak.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -852,13 +600,16 @@ export const Home = () => {
                       >
                         Sidak
                       </Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View
+                    <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
+                      onPress={() => {
+                        Linking.openURL('https://jdih.kkp.go.id/')
+                      }}
                     >
                       <Image
-                        source={require("../../assets/superApp/white.png")}
+                        source={require("../../assets/superApp/JDIH.png")}
                         style={{ width: 48, height: 48 }}
                       />
                       <Text
@@ -866,7 +617,7 @@ export const Home = () => {
                       >
                         JDIH
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   </View>
 
                   <View style={{ marginHorizontal: 20, marginTop: 50 }}>
@@ -883,10 +634,14 @@ export const Home = () => {
                       marginTop: 20,
                     }}
                   >
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://e-monev.bappenas.go.id/fe/')
+                      }}
+                    >
                       <View>
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/monev.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -897,9 +652,13 @@ export const Home = () => {
                           Emonev{"\n"} Bapennas
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://www.kinerjaku.kkp.go.id/')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -907,7 +666,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/kinerjaku.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -918,9 +677,13 @@ export const Home = () => {
                           Kinerjaku
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://elearning.kkp.go.id/')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -928,7 +691,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/milea.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -939,9 +702,13 @@ export const Home = () => {
                           E-Milea
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://kinerja.bkn.go.id/login')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -949,7 +716,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/kinerjabkn.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -960,9 +727,13 @@ export const Home = () => {
                           E-Kinerja {"\n"}BKN
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://siasn.bkn.go.id/')
+                      }}
+                    >
                       <View
                         style={{
                           justifyContent: "center",
@@ -970,7 +741,7 @@ export const Home = () => {
                         }}
                       >
                         <Image
-                          source={require("../../assets/superApp/white.png")}
+                          source={require("../../assets/superApp/SIASN.png")}
                           style={{ width: 48, height: 48 }}
                         />
                       </View>
@@ -981,77 +752,43 @@ export const Home = () => {
                           SIASN{"\n"} BKN
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      marginHorizontal: 20,
+                      marginTop: 20,
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL('https://mysapk.bkn.go.id/')
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={require("../../assets/superApp/mysapk.png")}
+                          style={{ width: 48, height: 48 }}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        >
+                          My SAPK
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
             </Modal>
 
-            <View style={{ marginVertical: 20, marginLeft: 30 }}>
-              <Text
-                style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
-              >
-                Agenda Prioritas KKP Dengan 5 Kebijakan
-              </Text>
-            </View>
-            <View style={styles.containerr}>
-              <Carousel
-                ref={carouselRef}
-                sliderWidth={screenWidth}
-                sliderHeight={screenWidth}
-                itemWidth={screenWidth - 60}
-                data={agenda}
-                renderItem={renderItem2}
-                hasParallaxImages={true}
-                onSnapToItem={setSlide2}
-              />
-              <Pagination
-                dotsLength={agenda.length}
-                dotColor={"black"}
-                inactiveDotColor={COLORS.grey}
-                dotStyle={styles.paginationDot}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.6}
-                activeDotIndex={slide2}
-                carouselRef={carouselRef}
-                tappableDots={!!carouselRef}
-              />
-            </View>
-
-            <View style={{ marginLeft: 30, marginBottom: 20 }}>
-              <Text
-                style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
-              >
-                7 Program Prioritas
-              </Text>
-            </View>
-
-            <View style={styles.containerr}>
-              <Carousel
-                ref={carouselRef}
-                sliderWidth={screenWidth}
-                sliderHeight={screenWidth}
-                itemWidth={screenWidth - 60}
-                data={program}
-                renderItem={renderItem3}
-                hasParallaxImages={true}
-                onSnapToItem={setSlide3}
-              />
-              <Pagination
-                dotsLength={program.length}
-                dotColor={"black"}
-                inactiveDotColor={COLORS.grey}
-                dotStyle={styles.paginationDot}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.6}
-                activeDotIndex={slide3}
-                carouselRef={carouselRef}
-                tappableDots={!!carouselRef}
-              />
-            </View>
-
             <View
-              style={{ marginLeft: 30, marginBottom: 20, flexDirection: "row" }}
+              style={{ marginLeft: 30, marginVertical: 20, flexDirection: "row" }}
             >
               <Text
                 style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
@@ -1060,7 +797,7 @@ export const Home = () => {
               </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ListGaleri")}
-                style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 30 }}
               >
                 <Text
                   style={{
@@ -1070,7 +807,7 @@ export const Home = () => {
                     color: "#1868AB",
                   }}
                 >
-                  View all
+                  Selengkapnya
                 </Text>
               </TouchableOpacity>
             </View>
@@ -1082,7 +819,7 @@ export const Home = () => {
                 sliderHeight={screenWidth}
                 itemWidth={screenWidth - 60}
                 data={galeri.lists.slice(0, 3)}
-                renderItem={renderItem4}
+                renderItem={GaleriHome}
                 hasParallaxImages={true}
                 onSnapToItem={setSlide4}
               />
@@ -1099,6 +836,7 @@ export const Home = () => {
               />
             </View>
           </ScrollView>
+
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </SafeAreaView>
