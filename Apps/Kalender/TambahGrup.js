@@ -28,50 +28,53 @@ import { setAddressbookSelected } from '../../store/AddressbookKKP'
 import { postGrup } from '../../service/api'
 import { setStatus } from '../../store/GrupKalender'
 import { getTokenValue } from '../../service/session'
+import { ModalSubmit } from '../../components/ModalSubmit'
+import { CardListPesertaAddresbook } from '../../components/CardListPesertaAddresbook'
+import { Loading } from '../../components/Loading'
 
-const CardListPeserta = ({ item, addressbook }) => {
-    const dispatch = useDispatch()
-    const deleteItem = (id, state) => {
-        let data;
-        if (state === "jabatan") {
-            data = addressbook.selected.filter(data => data.id !== id)
-            dispatch(setAddressbookSelected(data))
-        } else {
-            data = addressbook.selected.filter(data => data.nip !== id)
-            dispatch(setAddressbookSelected(data))
-        }
-    }
-    return (
-        <View>
-            {item.title === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '80%' }}>{item.title}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.id, 'jabatan')
-                    }}>
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
-            {item.fullname === undefined ? (
-                null
-            ) : (
-                <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
-                    <Text>-</Text>
-                    <Text style={{ width: '80%' }}>{item.fullname}</Text>
-                    <TouchableOpacity onPress={() => {
-                        deleteItem(item.nip, 'pegawai')
-                    }}>
-                        <Ionicons name='trash-outline' size={24} />
-                    </TouchableOpacity>
-                </View>
-            )}
-        </View>
-    )
-}
+// const CardListPeserta = ({ item, addressbook }) => {
+//     const dispatch = useDispatch()
+//     const deleteItem = (id, state) => {
+//         let data;
+//         if (state === "jabatan") {
+//             data = addressbook.selected.filter(data => data.id !== id)
+//             dispatch(setAddressbookSelected(data))
+//         } else {
+//             data = addressbook.selected.filter(data => data.nip !== id)
+//             dispatch(setAddressbookSelected(data))
+//         }
+//     }
+//     return (
+//         <View>
+//             {item.title === undefined ? (
+//                 null
+//             ) : (
+//                 <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+//                     <Text>-</Text>
+//                     <Text style={{ width: '80%' }}>{item.title}</Text>
+//                     <TouchableOpacity onPress={() => {
+//                         deleteItem(item.id, 'jabatan')
+//                     }}>
+//                         <Ionicons name='trash-outline' size={24} />
+//                     </TouchableOpacity>
+//                 </View>
+//             )}
+//             {item.fullname === undefined ? (
+//                 null
+//             ) : (
+//                 <View style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', marginTop: 10, marginHorizontal: '5%', gap: 10 }}>
+//                     <Text>-</Text>
+//                     <Text style={{ width: '80%' }}>{item.fullname}</Text>
+//                     <TouchableOpacity onPress={() => {
+//                         deleteItem(item.nip, 'pegawai')
+//                     }}>
+//                         <Ionicons name='trash-outline' size={24} />
+//                     </TouchableOpacity>
+//                 </View>
+//             )}
+//         </View>
+//     )
+// }
 
 export const TambahGrup = () => {
     const bottomSheetModalMemberRef = useRef(null);
@@ -116,7 +119,7 @@ export const TambahGrup = () => {
     const dispatch = useDispatch()
 
     const { addressbook } = useSelector(state => state.addressBookKKP)
-    const { status } = useSelector(state => state.grupKalender)
+    const { status, loading } = useSelector(state => state.grupKalender)
 
     useEffect(() => {
         getTokenValue().then(val => {
@@ -246,7 +249,7 @@ export const TambahGrup = () => {
             description: '',
             editors_list: pilihEditor,
             members_list: pilihAnggota,
-            pic_objid: pilihanPimpinanGrup[0].code,
+            pic_objid: pilihanPimpinanGrup[0]?.code,
             extra_attributes: {
                 ketentuan_busana: busana,
                 perlengkapan: perlengkapan,
@@ -263,6 +266,11 @@ export const TambahGrup = () => {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView>
+                {
+                    loading ? (
+                        <Loading />
+                    ) : null
+                }
                 <BottomSheetModalProvider>
                     <ScrollView>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -397,7 +405,7 @@ export const TambahGrup = () => {
                             </View>
                             <FlatList
                                 data={pilihanEditorGrup}
-                                renderItem={({ item }) => <CardListPeserta
+                                renderItem={({ item }) => <CardListPesertaAddresbook
                                     item={item}
                                     addressbook={addressbook}
                                 />
@@ -537,177 +545,17 @@ export const TambahGrup = () => {
 
                         </View>
 
-                        {/* <BottomSheetModal
-                            ref={bottomSheetModalMemberRef}
-                            snapPoints={animatedSnapPoints}
-                            handleHeight={animatedHandleHeight}
-                            contentHeight={animatedContentHeight}
-                            index={0}
-                            style={{ borderRadius: 50 }}
-                            keyboardBlurBehavior="restore"
-                            android_keyboardInputMode="adjust"
-                            backdropComponent={({ style }) => (
-                                <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                            )}
-                        >
-                            <BottomSheetView onLayout={handleContentLayout}>
-                                <View>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text style={{ fontWeight: 500 }}>Pilih Member</Text>
-                                    </View>
-                                    <View style={{ width: '90%', marginHorizontal: 20, marginVertical: 20 }}>
-                                        <Search
-                                            placeholder={'Cari'}
-                                        />
-                                    </View>
-                                    <View>
-                                        <FlatList
-                                            data={dataFilter}
-                                            horizontal={true}
-                                            renderItem={({ item }) => <CardPilihMember
-                                                nama={item.nama}
-                                                avatar={item.avatar}
-                                                id={item.id}
-                                                handleClickItem={handleClickItem}
-                                                filter={true}
-                                            />
-                                            }
-                                        />
-                                    </View>
-                                    <View>
-                                        <FlatList
-                                            data={items}
-                                            renderItem={({ item }) => <CardPilihMember
-                                                nama={item.nama}
-                                                avatar={item.avatar}
-                                                id={item.id}
-                                                handleClickItem={handleClickItem}
-                                                filter={false}
-                                            />
-                                            }
-                                        />
-                                    </View>
-                                </View>
-                            </BottomSheetView>
-                        </BottomSheetModal> */}
 
                         <TouchableOpacity onPress={() => handleSubmit()}>
                             <View style={{ alignItems: 'flex-end', marginRight: 40 }}>
-                                <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
                                     <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
                                 </View>
                             </View>
                         </TouchableOpacity>
 
-                        <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={status === '' ? false : true}
-                            onRequestClose={() => {
-                                dispatch(setStatus(''))
-                            }}
-                        >
-                            <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                                <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
-                                    <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 5, paddingRight: '80%' }}>
-                                        <Ionicons name='close-outline' size={24} />
-                                    </TouchableOpacity>
-                                    {
-                                        status === 'berhasil' ? (
-                                            <>
-                                                <View style={{ marginBottom: 40 }}>
-                                                    <Image source={require('../../assets/superApp/alertBerhasil.png')} />
-                                                    <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                                        <Text >Berhasil Ditambahkan!</Text>
-                                                    </View>
-                                                    <TouchableOpacity onPress={() => {
-                                                        dispatch(setStatus(''))
-                                                        navigation.navigate('GrupKalender')
-                                                    }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
-                                                        <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
-                                                            <Text style={{ color: COLORS.white }}>Ok</Text>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                </View>
-                                            </>
-                                        ) : (
-                                            <View style={{ marginBottom: 40 }}>
-                                                <Image source={require('../../assets/superApp/alertGagal.png')} />
-                                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                                    <Text >Terjadi Kesalahan!</Text>
-                                                </View>
-                                                <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
-                                                    <View style={{ backgroundColor: COLORS.danger, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
-                                                        <Text style={{ color: COLORS.white }}>Ok</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            </View>
-                                        )
-                                    }
-                                </View>
-                            </View>
-                        </Modal>
+                        <ModalSubmit />
 
-                        {/* {namaGrup === '' ? (
-                            <Modal
-                                animationType="fade"
-                                transparent={true}
-                                visible={modalVisible}
-                                onRequestClose={() => {
-                                    setModalVisible(!modalVisible);
-                                }}
-                            >
-                                <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                                <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                                    <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
-                                        <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 5, paddingRight: '80%' }}>
-                                            <Ionicons name='close-outline' size={24} />
-                                        </TouchableOpacity>
-                                        <View style={{ marginBottom: 40 }}>
-                                            <Image source={require('../../assets/superApp/alertGagal.png')} />
-                                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                                <Text >Terjadi Kesalahan!</Text>
-                                            </View>
-                                            <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
-                                                <View style={{ backgroundColor: COLORS.danger, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
-                                                    <Text style={{ color: COLORS.white }}>Ok</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
-                            </Modal>
-                        ) : (
-                            <Modal
-                                animationType="fade"
-                                transparent={true}
-                                visible={modalVisible}
-                                onRequestClose={() => {
-                                    setModalVisible(!modalVisible);
-                                }}
-                            >
-                                <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                                <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                                    <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
-                                        <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 5, paddingRight: '80%' }}>
-                                            <Ionicons name='close-outline' size={24} />
-                                        </TouchableOpacity>
-                                        <View style={{ marginBottom: 40 }}>
-                                            <Image source={require('../../assets/superApp/alertBerhasil.png')} />
-                                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                                <Text >Berhasil Ditambahkan!</Text>
-                                            </View>
-                                            <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
-                                                <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
-                                                    <Text style={{ color: COLORS.white }}>Ok</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
-                            </Modal>
-                        )} */}
                     </ScrollView>
                 </BottomSheetModalProvider>
             </SafeAreaView>

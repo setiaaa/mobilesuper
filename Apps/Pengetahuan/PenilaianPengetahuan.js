@@ -19,9 +19,10 @@ import { Portal } from 'react-native-portalize';
 import ListEmpty from '../../components/ListEmpty';
 import { Dropdown } from '../../components/DropDown';
 import { getTokenValue } from '../../service/session';
-import { getDetailLinimasa, getDetailPenilaian, getListPenilaian, getNilai } from '../../service/api';
+import { getDetailLinimasa, getDetailPenilaian, getListPenilaian, getNilai, getTotalPenilaian } from '../../service/api';
 import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Loading } from '../../components/Loading';
 
 
 const CardPenilaian = ({ item, token }) => {
@@ -209,198 +210,196 @@ export const PenilaianPenggetahaun = () => {
             }
             // dispatch(getDivision(token))
             dispatch(getListPenilaian(data))
+            dispatch(getTotalPenilaian(data))
             // dispatch(getDivisionTree({ token: token, id: kategori.key }))
         }
     }, [token, quarter, year, isFocused])
 
-    const { penilaian } = useSelector(state => state.pengetahuan)
+    const { penilaian, loading } = useSelector(state => state.pengetahuan)
+
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                <View style={{
-                    backgroundColor: COLORS.white,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: 20
-                }}>
-                    <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+        <>
+            {loading ? (
+                <Loading />
+            ) : (
+                null
+            )}
+            <SafeAreaView style={{ flex: 1 }}>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 20
+                    }}>
+                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Penilaian</Text>
+                    </View>
+                </View>
+
+                <View style={{ flexDirection: 'row', marginVertical: 20, marginHorizontal: 20, gap: 5 }}>
+                    <View style={{
+                        width: '43%',
+                    }}>
+                        <Dropdown
+                            data={listYear}
+                            placeHolder={'Pilih Tahun'}
+                            backgroundColor={COLORS.white}
+                            selected={year}
+                            setSelected={setYear}
+                        />
+                    </View>
+
+                    <View style={{
+                        width: "43%",
+                    }}>
+                        <Dropdown
+                            data={dataKuartal}
+                            placeHolder={'Pilih Kuartal'}
+                            backgroundColor={COLORS.white}
+                            selected={quarter}
+                            setSelected={setQuarter}
+                        />
+                    </View>
+
+                    <TouchableOpacity style={{
+                        height: 43,
+                        width: "12%",
+                        backgroundColor: COLORS.white,
+                        borderRadius: 8,
+                        justifyContent: 'center',
+                        paddingLeft: 10
+                    }}
+                        onPress={() => {
+                            bottomSheetAttach()
+                        }}
+                    >
+                        <Ionicons name='search-outline' size={24} />
                     </TouchableOpacity>
                 </View>
-                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Penilaian</Text>
-                </View>
-            </View>
 
-            <View style={{ flexDirection: 'row', marginVertical: 20, marginHorizontal: 20, gap: 5 }}>
-                <View style={{
-                    width: '43%',
-                }}>
-                    <Dropdown
-                        data={listYear}
-                        placeHolder={'Pilih Tahun'}
-                        backgroundColor={COLORS.white}
-                        selected={year}
-                        setSelected={setYear}
-                    />
-                </View>
+                <Portal>
+                    <BottomSheetModalProvider>
+                        <BottomSheetModal
+                            ref={bottomSheetModalRef}
+                            snapPoints={animatedSnapPoints}
+                            handleHeight={animatedHandleHeight}
+                            contentHeight={animatedContentHeight}
+                            index={0}
+                            style={{ borderRadius: 50 }}
+                            keyboardBlurBehavior="restore"
+                            android_keyboardInputMode="adjust"
+                            backdropComponent={({ style }) => (
+                                <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                            )}
+                        >
+                            <BottomSheetView onLayout={handleContentLayout} >
+                                <View style={{ flex: 1 }}>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 }}>
+                                        {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
+                <Ionicons name='chevron-back-outline' size={24} />
+            </TouchableOpacity> */}
+                                        <View style={{ width: '85%' }}>
+                                            <Search
+                                                placeholder={'Cari'}
+                                                onSearch={filter}
+                                            />
+                                        </View>
+                                        <TouchableOpacity onPress={() => {
+                                            bottomSheetAttachClose()
+                                        }}>
+                                            <Text style={{ color: COLORS.danger }}>Batal</Text>
+                                        </TouchableOpacity>
+                                    </View>
 
-                <View style={{
-                    width: "43%",
-                }}>
-                    <Dropdown
-                        data={dataKuartal}
-                        placeHolder={'Pilih Kuartal'}
-                        backgroundColor={COLORS.white}
-                        selected={quarter}
-                        setSelected={setQuarter}
-                    />
-                </View>
+                                    {/* custom divider */}
+                                    <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
-                <TouchableOpacity style={{
-                    height: 43,
-                    width: "12%",
-                    backgroundColor: COLORS.white,
-                    borderRadius: 8,
-                    justifyContent: 'center',
-                    paddingLeft: 10
-                }}
-                    onPress={() => {
-                        bottomSheetAttach()
-                    }}
-                >
-                    <Ionicons name='search-outline' size={24} />
-                </TouchableOpacity>
-            </View>
-
-            <Portal>
-                <BottomSheetModalProvider>
-                    <BottomSheetModal
-                        ref={bottomSheetModalRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout} >
-                            <View style={{ flex: 1 }}>
-                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 }}>
-                                    {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
-                                    <Ionicons name='chevron-back-outline' size={24} />
-                                </TouchableOpacity> */}
-                                    <View style={{ width: '85%' }}>
-                                        <Search
-                                            placeholder={'Cari'}
-                                            onSearch={filter}
+                                    <View style={{ marginBottom: 50 }}>
+                                        <FlatList
+                                            data={filterData}
+                                            renderItem={({ item }) =>
+                                                <CardPenilaian
+                                                    item={item}
+                                                />
+                                            }
+                                            keyExtractor={item => item.id}
+                                            ListEmptyComponent={() =>
+                                                <ListEmpty />
+                                            }
                                         />
                                     </View>
-                                    <TouchableOpacity onPress={() => {
-                                        bottomSheetAttachClose()
-                                    }}>
-                                        <Text style={{ color: COLORS.danger }}>Batal</Text>
-                                    </TouchableOpacity>
+
                                 </View>
+                            </BottomSheetView>
+                        </BottomSheetModal>
+                    </BottomSheetModalProvider>
+                </Portal>
 
-                                {/* custom divider */}
-                                <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-
-                                <View style={{ marginBottom: 50 }}>
-                                    <FlatList
-                                        data={filterData}
-                                        renderItem={({ item }) =>
-                                            <CardPenilaian
-                                                item={item}
-                                            />
-                                        }
-                                        keyExtractor={item => item.id}
-                                        ListEmptyComponent={() =>
-                                            <ListEmpty />
-                                        }
-                                    />
-                                </View>
-
-                            </View>
-                        </BottomSheetView>
-                    </BottomSheetModal>
-                </BottomSheetModalProvider>
-            </Portal>
-
-            <View style={{ flexDirection: 'row', marginHorizontal: 20, gap: 5 }}>
-                <View style={{
-                    backgroundColor: COLORS.white,
-                    width: "49.5%",
-                    height: 100,
-                    borderRadius: 16,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 20,
-                    gap: 10
-                }}>
+                <View style={{ flexDirection: 'row', marginHorizontal: 20, gap: 5 }}>
                     <View style={{
-                        backgroundColor: COLORS.secondaryLighter,
-                        width: 64,
-                        height: 64,
-                        borderRadius: 50,
+                        backgroundColor: COLORS.white,
+                        width: "49.5%",
+                        height: 130,
+                        borderRadius: 16,
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <Ionicons name='clipboard-outline' size={40} color={COLORS.lighter} />
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: 10,
+                        }}>
+                            <Image source={require('../../assets/superApp/unreviewed.png')} />
+                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.total.total_unreviewed}</Text>
+                        </View>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, marginVertical: 5 }}>BELUM DINILAI</Text>
+                        <Text style={{ color: COLORS.lighter }}>pada triwulan terakhir</Text>
                     </View>
-                    <View>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>BELUM{'\n'}DITINJAU</Text>
-                        <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.belumDitinjau}</Text>
-                    </View>
-                </View>
 
-                <View style={{
-                    backgroundColor: COLORS.white,
-                    width: "49.5%",
-                    height: 100,
-                    borderRadius: 16,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 20,
-                    gap: 10
-                }}>
                     <View style={{
-                        backgroundColor: COLORS.successLight,
-                        width: 64,
-                        height: 64,
-                        borderRadius: 50,
+                        backgroundColor: COLORS.white,
+                        width: "49.5%",
+                        height: 130,
+                        borderRadius: 16,
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <Ionicons name='clipboard-outline' size={40} color={COLORS.success} />
-                    </View>
-                    <View>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>TELAH{'\n'}DITINJAU</Text>
-                        <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.telahDitinjau}</Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: 10,
+                        }}>
+                            <Image source={require('../../assets/superApp/reviewed.png')} />
+                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.total.total_reviewed}</Text>
+                        </View>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, marginVertical: 5 }}>TELAH DINILAI</Text>
+                        <Text style={{ color: COLORS.lighter }}>pada triwulan terakhir</Text>
                     </View>
                 </View>
-            </View>
 
-            <View style={{ marginTop: 10 }}>
-                <FlatList
-                    data={penilaian.lists}
-                    renderItem={({ item }) => <CardPenilaian
-                        item={item}
-                        token={token}
+                <View style={{ marginTop: 10 }}>
+                    <FlatList
+                        data={penilaian.lists}
+                        renderItem={({ item }) => <CardPenilaian
+                            item={item}
+                            token={token}
+                        />
+                        }
+                        style={{ height: 400 }}
+                        keyExtractor={item => item.id}
                     />
-                    }
-                    style={{ height: 400 }}
-                    keyExtractor={item => item.id}
-                />
-            </View>
-        </SafeAreaView>
+                </View>
+            </SafeAreaView>
+        </>
     )
 }
 

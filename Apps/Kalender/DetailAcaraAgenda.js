@@ -12,7 +12,7 @@ import { View } from 'react-native'
 import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { AVATAR, COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel'
 import { StyleSheet } from 'react-native'
@@ -27,36 +27,33 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import moment from 'moment'
 import { getTokenValue } from '../../service/session'
 import { getListSubAgenda } from '../../service/api'
-
-
-const CardSubAgenda = ({ item }) => {
-    return (
-        <View style={{ marginTop: 20 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', gap: 30 }}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: FONTSIZE.H3 }}>{moment(item.date).format('DD MMMM YYYY')}</Text>
-                        <Text style={{ fontSize: FONTSIZE.H4 }}>{item.start_time.substr(0, 5)} - {item.end_time.substr(0, 5)}</Text>
-                    </View>
-                    <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>{item.title}</Text>
-                </View>
-                <Text>{item.location}</Text>
-            </View>
-            <View style={{ height: 1, width: '100%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10 }} />
-        </View>
-    )
-}
-
-
+import ListEmpty from '../../components/ListEmpty'
+import { CardSubAgendaGrup } from '../../components/CardSubAgendaGrup'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
+import { CardItemMember } from '../../components/CardItemMember'
 
 export const DetailAcaraAgenda = () => {
     const navigation = useNavigation()
     const [token, setToken] = useState('')
 
-
-    const { acara, agendaAcara } = useSelector(state => state.grupKalender)
+    const { acara, agendaAcara, loading } = useSelector(state => state.grupKalender)
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const detail = acara.detail
     const dispatch = useDispatch()
+    const bottomSheetModalRef = useRef(null);
+    const initialSnapPoints = useMemo(() => ["95%"], [])
+    const {
+        animatedHandleHeight,
+        animatedSnapPoints,
+        animatedContentHeight,
+        handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
+
+    const bottomSheetAttach = () => {
+        bottomSheetModalRef.current?.present()
+    }
+
 
     return (
         <SafeAreaView>
@@ -83,11 +80,17 @@ export const DetailAcaraAgenda = () => {
                         </View>
 
                         <View style={styles.container}>
-                            <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20 }}>
+                            <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginHorizontal: 20 }}>
 
-                                <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-                                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail?.title}</Text>
-                                </View>
+                                {loading ? (
+                                    <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    </View>
+                                ) : (
+                                    <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.Judul }}>{detail?.title}</Text>
+                                    </View>
+                                )}
 
                                 <View style={{
                                     marginHorizontal: 20,
@@ -96,29 +99,41 @@ export const DetailAcaraAgenda = () => {
                                     gap: 10
                                 }}>
                                     <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Dibuat Pada :</Text>
-                                    <Text>{moment(detail?.created_at, 'HH:mm:ss').format('DD MMMM YYYY')}</Text>
+                                    {loading ? (
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                    ) : (
+                                        <Text>{moment(detail?.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
+                                    )}
                                 </View>
 
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
+                                        <View style={{ width: '45%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{detail?.location}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{detail?.location}</Text>
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
 
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
+                                        <View style={{ width: '45%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Mulai</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail?.start_date).format('DD MMMM YYYY HH:mm')}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{moment(detail?.start_date).format(DATETIME.LONG_DATETIME)}</Text>
+                                            </View>
+                                        )}
                                     </View>
 
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
@@ -126,48 +141,91 @@ export const DetailAcaraAgenda = () => {
 
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
+                                        <View style={{ width: '45%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Waktu Selesai</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <Text>{moment(detail?.end_date).format('DD MMMM YYYY HH:mm')}</Text>
-                                        </View>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text>{moment(detail?.end_date).format(DATETIME.LONG_DATETIME)}</Text>
+                                            </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
 
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
+                                        <View style={{ width: '45%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
                                         </View>
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                                                <Image source={{ uri: detail.pic?.avatar_url }} style={{
-                                                    marginLeft: -8,
-                                                    borderWidth: 2,
-                                                    borderRadius: 50,
-                                                    borderColor: COLORS.white,
-                                                    width: 30,
-                                                    height: 30
-                                                }} />
-                                                <Text>{detail.pic?.nama}</Text>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                                                    <Image source={{ uri: detail.pic?.avatar_url }} style={{
+                                                        marginLeft: -8,
+                                                        borderWidth: 2,
+                                                        borderRadius: 50,
+                                                        borderColor: COLORS.white,
+                                                        width: 30,
+                                                        height: 30
+                                                    }} />
+                                                    <Text>{detail.pic?.nama}</Text>
+                                                </View>
                                             </View>
-                                        </View>
+                                        )}
                                     </View>
                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                 </View>
 
                                 <View>
                                     <View style={{ marginHorizontal: 20, marginVertical: 20, flexDirection: 'row' }}>
-                                        <View style={{ width: '50%' }}>
+                                        <View style={{ width: '45%' }}>
                                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>Anggota</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', }}>
-                                            {detail.members?.map((item, index) => {
-                                                return (
-                                                    <View key={index}>
-                                                        <Image source={{ uri: item.avatar_url }} style={{
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        ) : (
+                                            detail.members.length < 3 ? (
+                                                <View style={{ flexDirection: 'row', }}>
+                                                    {detail.members?.map((item, index) => {
+                                                        return (
+                                                            <View key={index}>
+                                                                <Image source={{ uri: item.avatar_url }} style={{
+                                                                    marginLeft: -8,
+                                                                    borderWidth: 2,
+                                                                    borderRadius: 50,
+                                                                    borderColor: COLORS.white,
+                                                                    width: 30,
+                                                                    height: 30
+                                                                }} />
+                                                            </View>
+                                                        )
+                                                    })}
+                                                </View>
+                                            ) : (
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                                        <Image source={{ uri: detail.members[0]?.avatar_url }} style={{
+                                                            marginLeft: -8,
+                                                            borderWidth: 2,
+                                                            borderRadius: 50,
+                                                            borderColor: COLORS.white,
+                                                            width: 30,
+                                                            height: 30
+                                                        }} />
+                                                        <Image source={{ uri: detail.members[1]?.avatar_url }} style={{
+                                                            marginLeft: -8,
+                                                            borderWidth: 2,
+                                                            borderRadius: 50,
+                                                            borderColor: COLORS.white,
+                                                            width: 30,
+                                                            height: 30
+                                                        }} />
+                                                        <Image source={{ uri: detail.members[2]?.avatar_url }} style={{
                                                             marginLeft: -8,
                                                             borderWidth: 2,
                                                             borderRadius: 50,
@@ -176,11 +234,52 @@ export const DetailAcaraAgenda = () => {
                                                             height: 30
                                                         }} />
                                                     </View>
-                                                )
-                                            })}
-                                        </View>
+                                                    <TouchableOpacity onPress={() => {
+                                                        bottomSheetAttach()
+                                                    }}>
+                                                        <Ionicons name='chevron-forward' size={24} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                            )
+                                        )}
                                     </View>
                                 </View>
+
+
+                                <BottomSheetModal
+                                    ref={bottomSheetModalRef}
+                                    snapPoints={animatedSnapPoints}
+                                    handleHeight={animatedHandleHeight}
+                                    contentHeight={animatedContentHeight}
+                                    index={0}
+                                    style={{ borderRadius: 50 }}
+                                    keyboardBlurBehavior="restore"
+                                    android_keyboardInputMode="adjust"
+                                    backdropComponent={({ style }) => (
+                                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                                    )}
+                                >
+                                    <BottomSheetView onLayout={handleContentLayout}>
+                                        <View style={{ marginTop: 20, marginBottom: 40 }}>
+                                            <View style={{ marginBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
+                                                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Anggota</Text>
+                                            </View>
+                                            <View>
+                                                <FlatList
+                                                    data={detail.members}
+                                                    renderItem={({ item }) =>
+                                                        <View key={item.nip}>
+                                                            <CardItemMember
+                                                                item={item}
+                                                            />
+                                                        </View>
+                                                    }
+                                                    keyExtractor={item => item.id}
+                                                />
+                                            </View>
+                                        </View>
+                                    </BottomSheetView>
+                                </BottomSheetModal>
 
                             </View>
                             <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 8, marginLeft: 20, marginVertical: 20 }}>
@@ -193,18 +292,22 @@ export const DetailAcaraAgenda = () => {
 
                                     <FlatList
                                         data={agendaAcara.listsSub}
-                                        renderItem={({ item }) => <CardSubAgenda
+                                        renderItem={({ item }) => <CardSubAgendaGrup
                                             item={item}
+                                            loading={loading}
                                         />
                                         }
-                                        style={{ height: 150 }}
+                                        style={{ height: 250 }}
                                         keyExtractor={item => item.id}
+                                        ListEmptyComponent={() =>
+                                            <ListEmpty />
+                                        }
                                     />
                                 </View>
                             </View>
 
                         </View>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             onPress={() => {
 
                             }}
@@ -238,7 +341,7 @@ export const DetailAcaraAgenda = () => {
                             }}
                         >
                             <Text>Edit</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>

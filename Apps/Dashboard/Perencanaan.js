@@ -10,14 +10,18 @@ import { TouchableOpacity } from 'react-native'
 import { getKesejahteraan, getPerencanaan } from '../../service/api'
 import { FlatList } from 'react-native'
 import moment from 'moment'
-import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import RenderHTML from 'react-native-render-html'
 import { useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
+import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
+import { LinearGradient } from 'expo-linear-gradient'
+import { ActivityIndicator } from 'react-native'
+import ListEmpty from '../../components/ListEmpty'
 
-const CardLists = ({ item, setDetail, setDetailContent, value }) => {
+const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
     const source = {
         html: `<section id="services" className="services">
         <div className="container">
@@ -88,6 +92,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
     };
 
     const { width } = useWindowDimensions();
+    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     return (
         <View>
@@ -102,11 +107,19 @@ const CardLists = ({ item, setDetail, setDetailContent, value }) => {
                 onPress={() => {
                     setDetail('detail')
                     setDetailContent(item)
-                    console.log(item)
                 }}
             >
-                <Text>{moment(item.created_date).format("DD MMMM YYYY")}</Text>
-                <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={330} height={20} />
+                ) : (
+                    <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
+                )}
+
+                {loading ? (
+                    <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 10 }} width={330} height={20} />
+                ) : (
+                    <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+                )}
             </TouchableOpacity>
             {/* )} */}
         </View>
@@ -118,17 +131,18 @@ export const Perencanaan = () => {
     const [value, setValue] = useState('')
     const [detail, setDetail] = useState('')
     const [detailContent, setDetailContent] = useState({})
+    const [page, setPage] = useState(1)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         getTokenValue().then(val => {
             setToken(val)
-            dispatch(getPerencanaan({ token: val, value: 'ropeg' }))
+            dispatch(getPerencanaan({ token: val, value: 'ropeg', page: page }))
         })
     }, [])
 
-    const { perencanaan } = useSelector(state => state.dashboard)
+    const { perencanaan, loading } = useSelector(state => state.dashboard)
     const lists = perencanaan.lists.results
 
     const { width } = useWindowDimensions();
@@ -138,6 +152,12 @@ export const Perencanaan = () => {
     const formatDate = (date) => {
         return new Date(date).toLocaleDateString('ID', DATE_OPTIONS);
     };
+
+    const loadMore = () => {
+        if (lists.length % 5 === 0) {
+            setPage(page + 1)
+        }
+    }
 
     return (
         // <View style={styles.card}>
@@ -160,10 +180,20 @@ export const Perencanaan = () => {
                             setDetail={setDetail}
                             setDetailContent={setDetailContent}
                             value={value}
+                            loading={loading}
                         />
                         }
                         style={{ height: 500 }}
                         keyExtractor={item => item.id}
+                        ListFooterComponent={() => (
+                            loading && (
+                                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                                    <ActivityIndicator size="large" color={COLORS.primary} />
+                                </View>
+                            )
+                        )}
+                        ListEmptyComponent={() => <ListEmpty />}
+                        onEndReached={loadMore}
                     />
                 </ScrollView>
             ) : (
@@ -183,7 +213,7 @@ export const Perencanaan = () => {
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>{detailContent.title}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 5 }}>
                             <Ionicons name='time-outline' size={20} color={COLORS.grey} />
-                            {/* <Text>{moment(detailContent.created_date).format("DD MMMM YYYY")}</Text> */}
+                            {/* <Text>{moment(detailContent.created_date).format(DATETIME.LONG_DATE)}</Text> */}
                             <Text>{formatDate(detailContent.created_date)}</Text>
                         </View>
                         {/* custom divider */}

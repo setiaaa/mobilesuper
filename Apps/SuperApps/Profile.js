@@ -12,17 +12,21 @@ import { ScrollView } from 'react-native'
 import { CollapseCardLinimasa } from '../../components/CollapseCardLinimasa'
 import { removeTokenValue } from '../../service/session'
 import { setLogout } from '../../store/LoginAuth'
+import { Loading } from '../../components/Loading'
 
 
 export const Profile = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
-    const { profile, linimasa } = useSelector(state => state.superApps)
+    const { profile, linimasa, loading } = useSelector(state => state.superApps)
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-
-    console.log(profile)
     return (
         <SafeAreaView>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
@@ -129,7 +133,7 @@ export const Profile = () => {
                         <View style={{ paddingBottom: 20 }}>
                             <View style={{ flexDirection: 'row', marginTop: 20 }}>
                                 <Text style={{ width: 91, fontSize: 30, fontWeight: FONTWEIGHT.bold }}>{profile.ipasn_nilai}</Text>
-                                <View style={{ backgroundColor: '#CED06C', width: 60, height: 18, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ backgroundColor: '#CED06C', width: 60, height: 25, borderRadius: 30, justifyContent: 'center', alignItems: 'center', }}>
                                     <Text>Tinggi</Text>
                                 </View>
                             </View>
@@ -167,11 +171,11 @@ export const Profile = () => {
                     {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
                 </View>
 
-                <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ marginVertical: 20, justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity
                         style={{
                             backgroundColor: COLORS.primary,
-                            width: '90%',
+                            width: '93%',
                             height: 50,
                             borderRadius: 8,
                             justifyContent: 'center',

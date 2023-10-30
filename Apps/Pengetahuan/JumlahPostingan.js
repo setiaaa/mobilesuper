@@ -19,7 +19,6 @@ import {
   getMyPostPoint,
   getMyPostView,
 } from "../../service/api";
-import { Loading } from "../../components/Loading";
 
 export const JumlahPostingan = () => {
   const navigation = useNavigation();
@@ -28,10 +27,10 @@ export const JumlahPostingan = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Pertama" },
-    { key: "second", title: "Kedua" },
-    { key: "third", title: "Ketiga" },
-    { key: "fourth", title: "Keempat" },
+    { key: "first", title: "1" },
+    { key: "second", title: "2" },
+    { key: "third", title: "3" },
+    { key: "fourth", title: "4" },
   ]);
 
   const [token, setToken] = useState("");
@@ -580,7 +579,7 @@ export const JumlahPostingan = () => {
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: "45%",
+            height: 230,
             padding: 16,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
@@ -590,22 +589,13 @@ export const JumlahPostingan = () => {
             elevation: 2,
           }}
         >
-          <View style={{ backgroundColor: COLORS.primary, borderRadius: 8 }}>
-            <Text
-              style={{
-                color: "#FFFFFF",
-                textAlign: "center",
-                fontSize: 13,
-                fontWeight: 600,
-              }}
-            >
-              Triwulan
-            </Text>
+          <View style={{ backgroundColor: COLORS.primary, borderRadius: 8, padding: 10 }}>
+            <Text style={{ color: "#FFFFFF", textAlign: "center", fontSize: 13, fontWeight: 600 }}>Triwulan</Text>
           </View>
           {Object.keys(postinganSayaJumlah.dilihat).length !== 0 &&
-          Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
-          Object.keys(postinganSayaJumlah.draft).length !== 0 &&
-          Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
+            Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
+            Object.keys(postinganSayaJumlah.draft).length !== 0 &&
+            Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
             <TabView
               navigationState={{ index, routes }}
               renderScene={renderScene}
@@ -630,7 +620,7 @@ export const JumlahPostingan = () => {
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: "40%",
+            height: 210,
             padding: 16,
             marginTop: 10,
             //shadow ios
@@ -672,6 +662,7 @@ export const JumlahPostingan = () => {
               textAlign: "center",
               borderRadius: 4,
               marginTop: 10,
+              padding: 5
             }}
           >
             JUMLAH

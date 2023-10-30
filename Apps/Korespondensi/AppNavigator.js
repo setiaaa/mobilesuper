@@ -136,9 +136,11 @@ import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
 import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
+import { DetailDokumenLain } from "../DigitalSignature/DetailDokumenLain";
 import MainDigitalSign from "../DigitalSignature/MainDigitalSign";
 import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
+import { TambahDokumenLain } from "../DigitalSignature/TambahDokumenLain";
 import MainPengetahuan from "../Pengetahuan/MainPengetahuan";
 import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
 import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
@@ -183,6 +185,17 @@ import { IKU } from "../Dashboard/IKU";
 import { DetailGrup } from "../Kalender/DetailGrup";
 import { EditTask } from "../Task Management/EditTask";
 import { EditCategory } from "../Task Management/EditCategory";
+import { EditGrup } from "../Kalender/EditGrup";
+import { EditAgendaGrup } from "../Kalender/EditAgendaGrup";
+import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
+import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
+import { Ionicons } from "@expo/vector-icons";
+import { View } from "react-native";
+import MyTabBarSPPD from "../SPPD/BottomTabsSPPD";
+import MainSPPD from "../SPPD/MainSPPD";
+import { Personal } from "../SPPD/Personal";
+import { DokumenSPPD } from "../SPPD/DokumenSPPD";
+import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -226,6 +239,22 @@ function AuthStack() {
           component={Main}
           options={{
             headerShown: false,
+            // headerLeft: () => (
+            //   <View style={{
+            //     backgroundColor: COLORS.white,
+            //     height: 28,
+            //     width: 28,
+            //     borderRadius: 50,
+            //     alignItems: 'center',
+            //     justifyContent: 'center'
+            //   }}>
+            //     <Ionicons name="chevron-back" size={24} />
+            //   </View>
+            // ),
+            // title: '',
+            // headerStyle: {
+            //   backgroundColor: COLORS.primary,
+            // },
             gestureEnabled: false,
           }}
         />
@@ -277,6 +306,20 @@ function AuthStack() {
           }}
         />
         <Stack.Screen
+          name="ListBeritaSatker"
+          component={ListBeritaSatker}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailBeritaSatker"
+          component={DetailBeritaSatker}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="ListGaleri"
           component={ListGaleri}
           options={{
@@ -300,6 +343,20 @@ function AuthStack() {
         <Stack.Screen
           name="TambahGrup"
           component={TambahGrup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditGrup"
+          component={EditGrup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditAgendaGrup"
+          component={EditAgendaGrup}
           options={{
             headerShown: false,
           }}
@@ -384,6 +441,13 @@ function AuthStack() {
         <Stack.Screen
           name="Dokumen"
           component={Dokumen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailDokumenLain"
+          component={DetailDokumenLain}
           options={{
             headerShown: false,
           }}
@@ -510,6 +574,13 @@ function AuthStack() {
         <Stack.Screen
           name="TambahSertifikat"
           component={TambahSertifikat}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahDokumenLain"
+          component={TambahDokumenLain}
           options={{
             headerShown: false,
           }}
@@ -684,6 +755,30 @@ function AuthStack() {
           component={AddressBook}
           options={{
             headerTitle: "",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Drawer"
+          component={DrawerNavigator}
+          options={{
+            headerShown: false,
+            gestureEnabled: false
+          }}
+        />
+        <Stack.Screen
+          name="MainSPPD"
+          component={MainSPPD}
+          options={{
+            headerTitle: '',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailDokumenSPPD"
+          component={DetailDokumenSPPD}
+          options={{
+            headerTitle: '',
             headerShown: false,
           }}
         />
@@ -970,6 +1065,17 @@ export const BottomTabsDetailAgenda = () => {
     </BottomSheetModalProvider>
   );
 };
+
+export const BottomTabsSPPD = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarSPPD {...props} />} initialRouteName='Personal'>
+        <Tab.Screen name='Personal' component={Personal} options={{ headerShown: false }} />
+        <Tab.Screen name='DokumenSPPD' component={DokumenSPPD} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
 
 export const TopsTP = () => {
   return (
@@ -1385,7 +1491,7 @@ function AuthenticatedStack() {
     }
   };
 
-  const getDeviceId = async () => {};
+  const getDeviceId = async () => { };
   async function checkDevice() {
     try {
       if (
@@ -1500,6 +1606,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="ListBerita"
             component={ListBerita}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListBeritaSatker"
+            component={ListBeritaSatker}
             options={{
               headerShown: false,
             }}
@@ -1776,8 +1889,8 @@ function AppNavigator() {
       Alert.alert(
         "Warning!",
         "You are using an old version of the " +
-          app_name +
-          ". Do you want to upgrade?",
+        app_name +
+        ". Do you want to upgrade?",
         [
           {
             text: "Upgrade",

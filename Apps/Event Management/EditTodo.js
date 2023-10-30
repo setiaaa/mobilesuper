@@ -30,6 +30,7 @@ import PdfReader from 'rn-pdf-reader-js-improved';
 import { postTodo, updateTodo } from '../../service/api';
 import { setStatus } from '../../store/Event';
 import { getTokenValue } from '../../service/session';
+import { Loading } from '../../components/Loading';
 
 const PrioritasData = [
     { key: 'high', value: 'High' },
@@ -62,7 +63,7 @@ export const EditTodo = () => {
 
     const dispatch = useDispatch()
 
-    const { agenda, notulensi, status, todo } = useSelector(state => state.event)
+    const { agenda, notulensi, status, todo, loading } = useSelector(state => state.event)
     const data = agenda.detail
     const notu = notulensi.lists
     const detail = todo.detail
@@ -126,6 +127,11 @@ export const EditTodo = () => {
 
     return (
         <GestureHandlerRootView>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <SafeAreaView>
                 <BottomSheetModalProvider>
                     <ScrollView>

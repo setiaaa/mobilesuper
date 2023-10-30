@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useRef } from 'react'
 import { FlatList, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,44 +8,64 @@ import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Search } from '../../components/Search'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Checkbox from 'expo-checkbox'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import ListEmpty from '../../components/ListEmpty'
+import { getDetailDigisign, getListCompleted, getListComposer, getListDraft, getListInProgress, getListSignedDigiSign } from '../../service/api'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import { getTokenValue } from '../../service/session'
+import { setDigitalSignLists } from '../../store/DigitalSign'
 
 
-const ListBankom = ({ judul, item }) => {
+const ListBankom = ({item, variant, token}) => {
+    const dispatch = useDispatch()
     const navigation = useNavigation()
     const [isSelected, setSelection] = useState(false);
+    
+    const getDetail = (id) => {
+        const params = { token, id };
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getDetailDigisign(params));
+      };
     return (
-        <View style={{
-            backgroundColor: 'white',
-            borderRadius: 16,
-            width: '90%',
-            flex: 1,
-            marginTop: 10,
-            marginHorizontal: 20,
-            //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: '#171717',
-            shadowOpacity: 0.2,
-            //shadow android
-            elevation: 2,
+        <View 
+            key={item.id}
+            style={{
+                backgroundColor: 'white',
+                borderRadius: 16,
+                width: '90%',
+                flex: 1,
+                marginTop: 10,
+                marginHorizontal: 20,
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: '#171717',
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
             marginVertical: 10
         }}>
-            <TouchableOpacity onPress={() => navigation.navigate('DetailSertifikat', {
-                item: item
-            })}>
-
-                <View style={{ marginVertical: 20, marginHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                    <Checkbox
+            <TouchableOpacity 
+                
+                onPress={(e) => {
+                    getDetail(item.id)
+                    navigation.navigate('DetailSertifikat')
+            }}>
+            {variant === 'inprogress'?(
+                <Checkbox
                         value={isSelected}
                         onValueChange={setSelection}
                         color={isSelected === true ? COLORS.lighter : null}
-                    />
-                    <Text style={{ marginVertical: 5, fontSize: 13 }}>{item.judul}</Text>
+                />
+            ):(
+                null
+            )}
+                <View style={{ marginVertical: 20, marginHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                    
+                    <Text style={{ marginVertical: 5, fontSize: 13, width:300, textAlign:'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -53,36 +73,76 @@ const ListBankom = ({ judul, item }) => {
 }
 
 export const Bankom = () => {
+    const [token, setToken] = useState('')
+    const dispatch = useDispatch()
     const navigation = useNavigation()
-    const { digitalsign } = useSelector(state => state.digitalsign)
-
     const [search, setSearch] = useState('')
+    const [tipe, setTipe] = useState('bankom')
+    const [variant, SetVariant] = useState('')
     const [filterData, setFilterData] = useState([])
+    
+    useEffect(() => {
+        getTokenValue().then(val => {
+            setToken(val)
+        })
+    }, [])
+
+    useEffect(() => {
+        SetVariant('draft')
+        dispatch(getListDraft({token:token, tipe:tipe}));
+    }, [tipe])
+
+    const filterHandlerComposer = () => {
+        SetVariant('composer')
+        dispatch(getListComposer({token:token, tipe:tipe}));
+    }
+    const filterHandlerInProgress = () => {
+        SetVariant('inprogress')
+        dispatch(getListInProgress({token:token, tipe:tipe}));
+    }
+    const filterHandlerCompleted = () => {
+        SetVariant('completed')
+        dispatch(getListCompleted({token:token, tipe:tipe}));
+    }
+    const filterHandlerDraft = () => {
+        SetVariant('draft')
+        dispatch(getListDraft({token:token, tipe:tipe}));
+    }
+    const filterHandlerSigned = () => {
+        SetVariant('signed')
+        dispatch(getListSignedDigiSign({token:token, tipe:tipe}));
+    }
+    
+    const { digitalsign } = useSelector((state) => state.digitalsign)
 
     const filter = (event) => {
         setSearch(event)
     }
-
+    
     useEffect(() => {
         setFilterData(digitalsign.lists)
     }, [digitalsign])
-
+    
     useEffect(() => {
+        const item = digitalsign.lists
         if (search !== '') {
-            const data = digitalsign.lists.filter((item) => {
-                return item.judul.toLowerCase().includes(search.toLowerCase());
+            const data = item.filter((item) => {
+                return item.subject.toLowerCase().includes(search.toLowerCase());
             })
             setFilterData(data)
         } else {
-            setFilterData(digitalsign.lists)
+            setFilterData(item)
         }
     }, [search])
 
+    console.log(digitalsign.lists)
+
     return (
         <GestureHandlerRootView>
-            <BottomSheetModalProvider>
                 <SafeAreaView style={{ position: 'relative' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
+                {filterData !== null?(
+                    <>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80,  }}>
                         <View style={{
                             backgroundColor: COLORS.white,
                             borderRadius: 20,
@@ -100,38 +160,118 @@ export const Bankom = () => {
                             <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Digital Signature</Text>
                         </View>
                     </View>
-
-                    <View style={{ width: '90%', marginLeft: 20, marginTop: 20 }}>
-                        <Search
-                            placeholder={'Cari'}
-                            iconColor={COLORS.primary}
-                            onSearch={filter}
-                        />
-                    </View>
-                    <FlatList
-                        data={filterData}
-                        renderItem={({ item }) => <ListBankom
-                            judul={item.judul}
-                            item={item}
-                        />
-                        }
-                        keyExtractor={item => item.id}
-                        ListEmptyComponent={() =>
-                            <ListEmpty />
-                        }
-                        style={{ height: '100%' }}
-                    />
-                    <TouchableOpacity onPress={() => {
-                        navigation.navigate('TambahSertifikat')
-                    }}
-                        style={{ position: 'absolute', bottom: 300, right: 30, zIndex: 99 }}
-                    >
-                        <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                            <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={{ width: '90%', marginLeft: 20, marginTop: 20, }}>
+                            <Search
+                                placeholder={'Cari'}
+                                iconColor={COLORS.primary}
+                                onSearch={filter} />
                         </View>
-                    </TouchableOpacity>
+                    </View>
+                    <View>
+                        <View style={{paddingVertical:10, paddingHorizontal:20, flexDirection:'row', justifyContent:'center'}}>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 60,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerDraft()}
+                            >
+                            <Text style={{color: variant === 'draft' ? COLORS.infoDanger: COLORS.foundation}}>Draft</Text>
+                                </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 80,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerComposer()}
+                            >
+                                <Text style={{color: variant === 'composer' ? COLORS.infoDanger: COLORS.foundation}}>List Saya</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 85,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerInProgress()}
+                            >
+                                <Text style={{color: variant === 'inprogress' ? COLORS.infoDanger: COLORS.foundation}}>Need Sign</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 60,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerSigned()}
+                            >
+                                <Text style={{color: variant === 'signed' ? COLORS.infoDanger: COLORS.foundation}}>Signed</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{
+                                marginHorizontal:5,
+                                width: 60,
+                                height: 30,
+                                borderWidth: 1,
+                                backgroundColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.input,
+                                borderRadius: 30,
+                                borderColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                                onPress={() => filterHandlerCompleted()}
+                            >
+                                <Text style={{color: variant === 'completed' ? COLORS.infoDanger: COLORS.foundation}}>Selesai</Text>
+                            </TouchableOpacity>    
+                        </View>
+                        <FlatList
+                            data={filterData}
+                            renderItem={({ item }) => (
+                                <View key={item.id}>
+                                    <ListBankom
+                                        item={item}
+                                        token={token}
+                                        variant={variant} />
+                                        </View>
+                                    )}
+                                    keyExtractor={item => item.id}
+                                    ListEmptyComponent={() => <ListEmpty />}
+                                    style={{ height: '73%' }} />
+                    </View>
+                        <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
+                            style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}
+                        >
+                            <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                                <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                            </View>
+                        </TouchableOpacity></>
+                ):(
+                    null
+                )}
+                    
                 </SafeAreaView>
-            </BottomSheetModalProvider>
         </GestureHandlerRootView>
     )
 }

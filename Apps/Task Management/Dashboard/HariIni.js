@@ -8,6 +8,7 @@ import { CardListGridTask } from '../../../components/CardListGridTask'
 import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
+import { DATETIME } from '../../../config/SuperAppps'
 
 
 export const HariIni = () => {
@@ -64,7 +65,7 @@ export const HariIni = () => {
                                     renderItem={({ item }) => <CardListTask
                                         id={item.id}
                                         title={item.title}
-                                        duedate={moment(item.due_date).format('DD MMMM YYYY')}
+                                        duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
                                     />
                                     }
                                     ListEmptyComponent={() =>
@@ -91,7 +92,7 @@ export const HariIni = () => {
                                 renderItem={({ item }) => <CardListGridTask
                                     id={item.id}
                                     title={item.title}
-                                    duedate={moment(item.due_date).format('DD MMMM YYYY')}
+                                    duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
                                     priority={item.priority}
                                     members={item.members}
                                 />

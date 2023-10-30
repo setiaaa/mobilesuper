@@ -406,7 +406,7 @@ export const PostinganBaru = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                    modalVisiblePicker === "selesai"
+                      modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }

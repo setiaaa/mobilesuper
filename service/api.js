@@ -12,7 +12,7 @@ const repository = BASE_URL + "repository/";
 const profile = BASE_URL + "bridge/profile/";
 const banner = BASE_URL + "bridge/home/benner/";
 const galeri = BASE_URL + "bridge/home/gallery/";
-const berita = BASE_URL + "bridge/home/news/?page=1";
+const berita = BASE_URL + "bridge/home/news/";
 const detailBerita = BASE_URL + "bridge/home/news/";
 const taskManagement = BASE_URL + "calendar/";
 const INFOGRAFIS = BASE_URL + "bridge/";
@@ -23,6 +23,7 @@ const CHART_POINT = BASE_URL + "mp/mypost/chart/point/";
 const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
+const digitalSign = BASE_URL + "digitalsign/";
 
 const SUMMARY_TOTAL_POST = BASE_URL + "mp/admin/summary/total-post/";
 const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
@@ -435,10 +436,14 @@ export const postKomenTodo = createAsyncThunk(
 //pegawai
 export const getPegawai = createAsyncThunk(
   "calendar/getPegawai",
-  async (token) => {
-    const respon = await axios.get(`${pegawai}profile/all/?limit=10`, {
-      headers: { Authorization: token },
-    });
+  async ({ token, page }) => {
+    const offset = page * 10;
+    const respon = await axios.get(
+      `${pegawai}profile/all/?limit=10&offset=${offset}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return respon?.data.results;
   }
 );
@@ -476,9 +481,19 @@ export const getGallerySatker = createAsyncThunk(
 
 export const getSatkerNews = createAsyncThunk(
   "bridge/getSatkerNews",
-  async (token) => {
-    const respon = await axios.get(`${SATKER}satker/news/?page=1`, {
+  async ({ token, page }) => {
+    const respon = await axios.get(`${SATKER}satker/news/?page=${page}`, {
       headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getDetailSatkerNews = createAsyncThunk(
+  "bridge/getDetailSatkerNews",
+  async (data) => {
+    const respon = await axios.get(`${SATKER}satker/news/${data.id}/`, {
+      headers: { Authorization: data.token },
     });
     return respon?.data.results;
   }
@@ -579,21 +594,27 @@ export const getBanner = createAsyncThunk("banner/getBanner", async (token) => {
 
 //galeri
 
-export const getGaleri = createAsyncThunk("galeri/getGaleri", async (token) => {
-  const respon = await axios.get(`${galeri}`, {
-    headers: { Authorization: token },
-  });
-  return respon?.data.results;
-});
+export const getGaleri = createAsyncThunk(
+  "galeri/getGaleri",
+  async ({ token, page }) => {
+    const respon = await axios.get(`${galeri}?page=${page}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
 
 //berita
 
-export const getBerita = createAsyncThunk("berita/getBerita", async (token) => {
-  const respon = await axios.get(`${berita}`, {
-    headers: { Authorization: token },
-  });
-  return respon?.data.results;
-});
+export const getBerita = createAsyncThunk(
+  "berita/getBerita",
+  async ({ token, page }) => {
+    const respon = await axios.get(`${berita}?page=${page}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
 
 export const getDetailBerita = createAsyncThunk(
   "berita/getDetailBerita",
@@ -606,12 +627,15 @@ export const getDetailBerita = createAsyncThunk(
 );
 
 //mp
-export const getLinimasa = createAsyncThunk("mp/getLinimasa", async (token) => {
-  const respon = await axios.get(`${Linimasa}linimasa/`, {
-    headers: { Authorization: token },
-  });
-  return respon?.data.results;
-});
+export const getLinimasa = createAsyncThunk(
+  "mp/getLinimasa",
+  async ({ token, page }) => {
+    const respon = await axios.get(`${Linimasa}linimasa/?limit=${page}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
 
 export const patchLike = createAsyncThunk(
   "mp/patchLike",
@@ -837,6 +861,17 @@ export const getListPenilaian = createAsyncThunk(
   }
 );
 
+export const getTotalPenilaian = createAsyncThunk(
+  "mp/getTotalPenilaian",
+  async (data) => {
+    const respon = await axios.get(
+      `${Linimasa}admin/evaluation/count/?year=${data.tahun}&quarter=${data.TW}`,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.result;
+  }
+);
+
 export const getDetailPenilaian = createAsyncThunk(
   "mp/getDetailPenilaian",
   async ({ token, id }) => {
@@ -963,6 +998,19 @@ export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
   return respon?.data;
 });
 
+export const postAgendaAcara = createAsyncThunk(
+  "calendar/postAgendaAcara",
+  async (data) => {
+    console.log(data.payload);
+    const respon = await axios.post(
+      `${kalender}calendar/event/create/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
 export const getDetailGrup = createAsyncThunk(
   "calendar/getDetailGrup",
   async ({ token, id }) => {
@@ -974,13 +1022,59 @@ export const getDetailGrup = createAsyncThunk(
   }
 );
 
+export const putEditGrup = createAsyncThunk(
+  "calendar/putEditGrup",
+  async (data) => {
+    const respon = await axios.put(
+      `${kalender}calendar/${data.id}/update/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const putEditAgendaGrup = createAsyncThunk(
+  "calendar/putEditAgendaGrup",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.put(
+      `${kalender}calendar/event/${data.id}/update/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.result;
+  }
+);
+export const deleteAgendaGrup = createAsyncThunk(
+  "calendar/deleteAgendaGrup",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.delete(
+      `${kalender}calendar/event/${data.id}/destroy/`,
+      { headers: { Authorization: data.token } }
+    );
+    return respon;
+  }
+);
+export const deleteGrup = createAsyncThunk(
+  "calendar/deleteGrup",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.delete(
+      `${kalender}calendar/${data.id}/destroy/`,
+      { headers: { Authorization: data.token } }
+    );
+    return respon;
+  }
+);
+
 //Dashboard
 export const getKesejahteraan = createAsyncThunk(
   "bridge/getKesejahteraan",
-  async ({ token, value }) => {
-    console.log(token + value);
+  async ({ token, value, page }) => {
     const respon = await axios.get(
-      `${INFOGRAFIS}infografis/?source=${value}&limit=5`,
+      `${INFOGRAFIS}infografis/?source=${value}&limit=5&page=${page}`,
       { headers: { Authorization: token } }
     );
     return respon?.data;
@@ -989,10 +1083,9 @@ export const getKesejahteraan = createAsyncThunk(
 
 export const getPerencanaan = createAsyncThunk(
   "bridge/getPerencanaan",
-  async ({ token, value }) => {
-    console.log(token + value);
+  async ({ token, value, page }) => {
     const respon = await axios.get(
-      `${INFOGRAFIS}infografis/?source=${value}&limit=5`,
+      `${INFOGRAFIS}infografis/?source=${value}&limit=5&page=${page}`,
       { headers: { Authorization: token } }
     );
     return respon?.data;
@@ -1234,3 +1327,150 @@ export const getListPegawaiExport = createAsyncThunk(
 //     const respon = await axios.post(`${Linimasa}linimasa/comment/`, data.payload, { headers: { Authorization: data.token } })
 //     return respon?.data
 // })
+//Digital Signature
+export const getListComposer = createAsyncThunk(
+  "digitalsign/getListComposer",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/composer/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+export const getListInProgress = createAsyncThunk(
+  "digitalsign/getListInProgress",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/inprogress/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+export const getListCompleted = createAsyncThunk(
+  "digitalsign/getListCompleted",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/completed/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+export const getListDraft = createAsyncThunk(
+  "digitalsign/getListDraft",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/draft/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+
+export const addDocumentDigiSign = createAsyncThunk(
+  "digitalsign/addDocumentDigiSign",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}document/create/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
+export const getListSignedDigiSign = createAsyncThunk(
+  "digitalsign/getListSignedDigiSign",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/signed/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+
+export const putDocumentDigiSign = createAsyncThunk(
+  "digitalsign/putDocumentDigiSign",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/${data.id}/draft/`,
+      { status: data.status },
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const addAttachmentDigiSign = createAsyncThunk(
+  "digitalsign/addAttachmentDigiSign",
+  async (data) => {
+    const respon = await axios.post(
+      `${digitalSign}attachment/create/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
+export const getDetailDigisign = createAsyncThunk(
+  "digitalsign/getDetailDigisign",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${digitalSign}document/${id}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const updateDocumentDigiSign = createAsyncThunk(
+  "digitalsign/updateDocumentDigiSign",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/${data.id}/draft/`,
+      { status: data.status },
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const putInProgressDigiSign = createAsyncThunk(
+  "digitalsign/putInProgressDigiSign",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/approve/`,
+      { status: data.status },
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.result;
+  }
+);
+
+export const getCourseDigiSign = createAsyncThunk(
+  "digitalsign/getCourseDigiSign",
+  async (token) => {
+    const respon = await axios.get(`${digitalSign}course/?limit=10`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);

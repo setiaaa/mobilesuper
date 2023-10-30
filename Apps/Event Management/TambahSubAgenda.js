@@ -31,6 +31,7 @@ import Addressbook from '../../components/AddressbookKKp/Addressbook';
 import { setAddressbookSelected } from '../../store/AddressbookKKP';
 import { setAttachment, setStatus } from '../../store/Event';
 import Checkbox from 'expo-checkbox';
+import { Loading } from '../../components/Loading';
 
 const CardListPeserta = ({ item, addressbook, persetaSubAgenda = false, setPilihanPeserta }) => {
     const dispatch = useDispatch()
@@ -201,7 +202,7 @@ export const TambahSubAgenda = () => {
     };
 
 
-    const { attachment, status, event } = useSelector(state => state.event)
+    const { attachment, status, event, loading } = useSelector(state => state.event)
     const [stateConfig, setStateConfig] = useState({})
 
     const { addressbook } = useSelector(state => state.addressBookKKP)
@@ -281,6 +282,11 @@ export const TambahSubAgenda = () => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
+            {
+                loading ? (
+                    <Loading />
+                ) : null
+            }
             <SafeAreaView>
                 <BottomSheetModalProvider>
                     <ScrollView>

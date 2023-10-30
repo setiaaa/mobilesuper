@@ -23,6 +23,7 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
+import WebView from "react-native-webview";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import {
@@ -268,7 +269,7 @@ export const RangkumanIKU = () => {
     setSearch(event);
   };
 
-  // console.log(pegawai.lists);
+  console.log(pegawai.lists);
   console.log(exportPegawai);
 
   const downloadFromUrl = async () => {
@@ -327,10 +328,9 @@ export const RangkumanIKU = () => {
       <View
         style={{
           flexDirection: "row",
-          alignItems: "flex-end",
+          alignItems: "center",
           backgroundColor: COLORS.primary,
           height: 80,
-          paddingBottom: 20,
         }}
       >
         <View
@@ -372,7 +372,7 @@ export const RangkumanIKU = () => {
             backgroundColor: switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 8,
+            borderRadius: 30,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -396,7 +396,7 @@ export const RangkumanIKU = () => {
             backgroundColor: !switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 8,
+            borderRadius: 30,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -419,13 +419,19 @@ export const RangkumanIKU = () => {
 
       <View style={{ width: "90%", alignSelf: "center" }}>
         {switchView ? (
-          <ScrollView>
-            <View>
-              <Text>Ini halaman rangkuman</Text>
-              <Text>Ini halaman rangkuman</Text>
-              <Text>Ini halaman rangkuman</Text>
-            </View>
-          </ScrollView>
+          <View style={{ height: "100%", width: "100%" }}>
+            <WebView
+              originWhitelist={["*"]}
+              source={{
+                uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+              }}
+              style={{ flex: 1 }}
+              allowFileAccess={true}
+              androidLayerType={"software"}
+              mixedContentMode={"always"}
+              allowUniversalAccessFromFileURLs={true}
+            />
+          </View>
         ) : (
           <ScrollView>
             <View

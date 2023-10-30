@@ -67,10 +67,10 @@ export const LaporanPengetahuan = () => {
           quarter.key === "1"
             ? "q1"
             : quarter.key === "2"
-            ? "q2"
-            : quarter.key === "3"
-            ? "q3"
-            : "q4",
+              ? "q2"
+              : quarter.key === "3"
+                ? "q3"
+                : "q4",
       };
       dispatch(getSummaryTotalPost(param));
       dispatch(getSummaryBadUser(paramBad));
@@ -488,8 +488,8 @@ export const LaporanPengetahuan = () => {
             Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
           {Object.keys(summary.graph).length !== 0 &&
-          Object.keys(summary.total_post).length !== 0 &&
-          Object.keys(summary.bad_user).length !== 0 ? (
+            Object.keys(summary.total_post).length !== 0 &&
+            Object.keys(summary.bad_user).length !== 0 ? (
             <StackedBarChart
               data={{
                 labels: [
@@ -511,62 +511,62 @@ export const LaporanPengetahuan = () => {
                   [
                     graph?.article_unreviewed_count[0],
                     graph?.article_unreviewed_count[0] +
-                      graph?.article_reviewed_count[0],
+                    graph?.article_reviewed_count[0],
                   ],
                   [
                     graph?.article_unreviewed_count[1],
                     graph?.article_unreviewed_count[1] +
-                      graph?.article_reviewed_count[1],
+                    graph?.article_reviewed_count[1],
                   ],
                   [
                     graph?.article_unreviewed_count[2],
                     graph?.article_unreviewed_count[2] +
-                      graph?.article_reviewed_count[2],
+                    graph?.article_reviewed_count[2],
                   ],
                   [
                     graph?.article_unreviewed_count[3],
                     graph?.article_unreviewed_count[3] +
-                      graph?.article_reviewed_count[3],
+                    graph?.article_reviewed_count[3],
                   ],
                   [
                     graph?.article_unreviewed_count[4],
                     graph?.article_unreviewed_count[4] +
-                      graph?.article_reviewed_count[4],
+                    graph?.article_reviewed_count[4],
                   ],
                   [
                     graph?.article_unreviewed_count[5],
                     graph?.article_unreviewed_count[5] +
-                      graph?.article_reviewed_count[5],
+                    graph?.article_reviewed_count[5],
                   ],
                   [
                     graph?.article_unreviewed_count[6],
                     graph?.article_unreviewed_count[6] +
-                      graph?.article_reviewed_count[6],
+                    graph?.article_reviewed_count[6],
                   ],
                   [
                     graph?.article_unreviewed_count[7],
                     graph?.article_unreviewed_count[7] +
-                      graph?.article_reviewed_count[7],
+                    graph?.article_reviewed_count[7],
                   ],
                   [
                     graph?.article_unreviewed_count[8],
                     graph?.article_unreviewed_count[8] +
-                      graph?.article_reviewed_count[8],
+                    graph?.article_reviewed_count[8],
                   ],
                   [
                     graph?.article_unreviewed_count[9],
                     graph?.article_unreviewed_count[9] +
-                      graph?.article_reviewed_count[9],
+                    graph?.article_reviewed_count[9],
                   ],
                   [
                     graph?.article_unreviewed_count[10],
                     graph?.article_unreviewed_count[10] +
-                      graph?.article_reviewed_count[10],
+                    graph?.article_reviewed_count[10],
                   ],
                   [
                     graph?.article_unreviewed_count[11],
                     graph?.article_unreviewed_count[11] +
-                      graph?.article_reviewed_count[11],
+                    graph?.article_reviewed_count[11],
                   ],
                 ],
                 barColors: [COLORS.primary, COLORS.warning],

@@ -18,96 +18,6 @@ import { StyleSheet } from 'react-native'
 import { Dimensions } from 'react-native'
 import { useRef } from 'react'
 
-const beritas = [
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/berita.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
-        image: require('../../assets/superApp/berita.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        dari: 'Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan..',
-        illustration: 'https://i.imgur.com/MABUbpDl.jpg',
-        image: require('../../assets/superApp/berita.png')
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        title: 'KKP RESMI PUNYA LOGO BARU',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/logobaru.png'),
-        deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-        pembuat: 'Firman Hidranto',
-        dilihat: '219'
-    },
-    {
-        tanggal: 'Senin, 5 Juni 2023',
-        subtitle: 'Jakarta, (20/2) - Kementerian Kelautan dan Perikanan (KKP) bersama dengan dewan.. ',
-        title: 'KKP RESMI PUNYA LOGO BARU',
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-        image: require('../../assets/superApp/logobaru.png'),
-        deskripsi: 'JAKARTA (17/9) - Menteri Kelautan dan Perikanan Sakti Wahyu Trenggono meluncurkan logo baru kementerian sesuai Peraturan Menteri Kelautan dan Perikanan Nomor 36 Tahun 2021 tentang Logo Kementerian Kelautan dan Perikanan dan Penggunaannya. Peluncuran logo baru berlangsung di Gedung Mina Bahari III, Jakarta Pusat pada Jumat (17/9/2021). Alhamdulillah, setelah melalui proses panjang dan segala macam sensitivitasnya semua sudah dilalui dan akhirnya hari ini diresmikan logo baru. KKP harus bangkit, KKP harus hebat. Mari bekerja dengan semangat baru dengan logo baru untuk NKRI maju, ujar Menteri Trenggono dalam sambutannya. Logo baru terdiri dari enam elemen, terdiri dari lambang Garuda Pancasila, matahari terbit, jangkar, trisula, ombak laut, dan infiniti. Filosofi logo baru tersebut sejalan dengan tiga program terobosan KKP periode 2021 - 2024 yang bermuara pada keseimbangan ekologi dan ekonomi. Meliputi peningkatan PNBP dari sumber daya alam perikanan tangkap untuk peningkatan kesejahteraan neyalan melalui kebijakan penangkapan terukur di setiap Wilayah Pengelolaan Perikanan Negara Republik Indonesia. Kemudian pengembangan perikanan budidaya untuk peningkatan ekspor yang didukung riset kelautan dan perikanan. Serta pembangunan kempung-kampung perikanan budidaya tawar, payau dan laut berbasis kearifan lokal. Proses perubahan logo menurut Menteri Trenggono mencerminkan inklusivitas sebab melibatkan seluruh tingkatan, dari jajaran pimpinan hingga petugas lapangan Kementerian Kelautan dan Perikanan. Sebelum pergantian logo, Menteri Trenggono lebih dulu menggagas tagline KKP Rebound yang berarti menciptakan semangat kebangkitan, pembenahan tata kelola, dan peningkatan kinerja secara berkesinambungan. Logo baru KKP dibuat dengan semangat mewujudkan masyarakat kelautan dan perikanan yang sejahtera dan pengelolaan sumber daya kelautan dan perikanan yang berdaulat, mandiri, berkepribadian, serta berlandaskan gotong royong sesuai dengan prinsip ekonomi biru, terangnya. Sementara itu, Sekretaris Jenderal KKP Antam Novambar memaparkan penetapan logo baru melalui berbagai tahapan sejak beberapa bulan lalu. Mulai dari beauty contest yang diikuti seluruh perwakilan eselon I lingkup KKP yang berhasil memperoleh 39 usulan logo.',
-        pembuat: 'Firman Hidranto',
-        dilihat: '219'
-    },
-];
-
-const dataPengumuman = [
-    {
-        judul: 'Daftar Nama PNS Pensiun dan Ahli Waris TMT 30 Desember 2020',
-        tanggal: '31 Desember 2021'
-    },
-    {
-        judul: 'Pengumuman Pengembalian Dana PNS Pensiun dan Ahli Waris Tahap V',
-        tanggal: '01 Desember 2021'
-    },
-    {
-        judul: 'Pengumuman Pengembalian Dana PNS Pensiun dan Ahli Waris Tahap III melalui BRI',
-        tanggal: '06 Desember 2021'
-    },
-    {
-        judul: 'Data PNS Ahli Waris',
-        tanggal: '27 Desember 2021'
-    },
-    {
-        judul: 'Surat Pernyataan Pengembalian Tabungan',
-        tanggal: '23 Desember 2021'
-    },
-    {
-        judul: 'Surat Pernyataan Pengembalian Tabungan',
-        tanggal: '23 Desember 2021'
-    },
-    {
-        judul: 'Surat Pernyataan Pengembalian Tabungan',
-        tanggal: '23 Desember 2021'
-    },
-    {
-        judul: 'Surat Pernyataan Pengembalian Tabungan',
-        tanggal: '23 Desember 2021'
-    },
-    {
-        judul: 'Surat Pernyataan Pengembalian Tabungan',
-        tanggal: '23 Desember 2021'
-    },
-    {
-        judul: 'Surat Pernyataan Pengembalian Tabungan',
-        tanggal: '23 Desember 2021'
-    },
-    {
-        judul: 'Surat Pernyataan Pengembalian Tabungan',
-        tanggal: '23 Desember 2021'
-    },
-];
 
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -116,34 +26,11 @@ export const Kepegawaian = () => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(setBerita(beritas))
-        dispatch(setPengumuman((dataPengumuman)))
-    }, []);
+
 
     const { berita, pengumuman } = useSelector(state => state.dashboard)
     const navigation = useNavigation()
 
-    const carouselRef = useRef(null);
-
-    const renderBerita = ({ item, index }, parallaxProps) => {
-        return (
-            <View style={styles.item}>
-                <ParallaxImage
-                    source={item.image}
-                    containerStyle={styles.imageContainer}
-                    style={styles.image}
-                    parallaxFactor={0.4}
-                    {...parallaxProps}
-                />
-                <View style={{ backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
-                    <Text style={{ marginLeft: 10, color: COLORS.lighter, marginVertical: 10 }}>{item.tanggal}</Text>
-                    <Text style={{ marginLeft: 10, color: COLORS.lighter }}> {item.subtitle} </Text>
-                    <Text style={{ marginLeft: 10, marginVertical: 10 }}>{item.dari}</Text>
-                </View>
-            </View>
-        );
-    };
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <GestureHandlerRootView style={{ flex: 1 }}>
