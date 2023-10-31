@@ -259,14 +259,14 @@ export const Dibagikan = () => {
   console.log(load)
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {loading === true && dibagikan.lists.length === 0 ? (
         <Loading />
       ) : (
         null
       )}
       <BottomSheetModalProvider>
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -330,16 +330,14 @@ export const Dibagikan = () => {
               />
             )}
             ListFooterComponent={() => (
-              load === true ? (
+              load && (
                 <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
                   <ActivityIndicator size="large" color={COLORS.primary} />
                 </View>
-              ) : (
-                null
               )
             )}
             keyExtractor={(item) => "_" + item.id}
-            style={{ height: 500 }}
+            style={{ flex: 1 }}
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={() => {
               if (dibagikan.lists.length !== 0) {
@@ -347,35 +345,64 @@ export const Dibagikan = () => {
               }
             }}
           />
-          <BottomSheetModal
-            ref={bottomSheetModalRef}
-            snapPoints={animatedSnapPoints}
-            handleHeight={animatedHandleHeight}
-            contentHeight={animatedContentHeight}
-            index={0}
-            style={{ borderRadius: 50 }}
-            keyboardBlurBehavior="restore"
-            android_keyboardInputMode="adjust"
-            backdropComponent={({ style }) => (
+        </SafeAreaView>
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          snapPoints={animatedSnapPoints}
+          handleHeight={animatedHandleHeight}
+          contentHeight={animatedContentHeight}
+          index={0}
+          style={{ borderRadius: 50 }}
+          keyboardBlurBehavior="restore"
+          android_keyboardInputMode="adjust"
+          backdropComponent={({ style }) => (
+            <View
+              style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+            />
+          )}
+        >
+          <BottomSheetView onLayout={handleContentLayout}>
+            <View style={{ marginVertical: 20 }}>
               <View
-                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-              />
-            )}
-          >
-            <BottomSheetView onLayout={handleContentLayout}>
-              <View style={{ marginVertical: 20 }}>
+                style={{
+                  marginLeft: 30,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <Ionicons
+                  name="document-outline"
+                  size={32}
+                  color={COLORS.primary}
+                />
+                <Text
+                  style={{
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.normal,
+                    width: 300
+                  }}
+                >
+                  {dataM.title}
+                </Text>
+              </View>
+              <View style={{ marginTop: 20 }}>
+                <Divider bold />
+              </View>
+              <TouchableOpacity>
                 <View
                   style={{
                     marginLeft: 30,
                     flexDirection: "row",
                     alignItems: "center",
                     gap: 10,
+                    marginTop: 20,
                   }}
                 >
                   <Ionicons
-                    name="document-outline"
+                    name="download-outline"
                     size={32}
-                    color={COLORS.primary}
+                    color={"#6B7280"}
                   />
                   <Text
                     style={{
@@ -383,68 +410,40 @@ export const Dibagikan = () => {
                       fontWeight: FONTWEIGHT.normal,
                     }}
                   >
-                    {dataM.title}
+                    Download
                   </Text>
                 </View>
-                <View style={{ marginTop: 20 }}>
-                  <Divider bold />
-                </View>
-                <TouchableOpacity>
-                  <View
-                    style={{
-                      marginLeft: 30,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 10,
-                      marginTop: 20,
-                    }}
-                  >
-                    <Ionicons
-                      name="download-outline"
-                      size={32}
-                      color={"#6B7280"}
-                    />
-                    <Text
-                      style={{
-                        fontSize: FONTSIZE.H2,
-                        fontWeight: FONTWEIGHT.normal,
-                      }}
-                    >
-                      Download
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("MainDetailRepo")}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MainDetailRepo")}
+              >
+                <View
+                  style={{
+                    marginLeft: 30,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    marginTop: 20,
+                  }}
                 >
-                  <View
+                  <Ionicons
+                    name="information-circle-outline"
+                    size={32}
+                    color={"#6B7280"}
+                  />
+                  <Text
                     style={{
-                      marginLeft: 30,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 10,
-                      marginTop: 20,
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.normal,
                     }}
                   >
-                    <Ionicons
-                      name="information-circle-outline"
-                      size={32}
-                      color={"#6B7280"}
-                    />
-                    <Text
-                      style={{
-                        fontSize: FONTSIZE.H2,
-                        fontWeight: FONTWEIGHT.normal,
-                      }}
-                    >
-                      Details & activity
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </BottomSheetView>
-          </BottomSheetModal>
-        </SafeAreaView>
+                    Details & activity
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </BottomSheetView>
+        </BottomSheetModal>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );

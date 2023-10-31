@@ -203,6 +203,7 @@ import { FileOutgoingDetail } from "./Detail/Outgoing/FileOutgoingDetail";
 import { AttachmentOutgoingDetail } from "./Detail/Outgoing/AttachmentOutgoingDetail";
 import { KomentarOutgoingDetail } from "./Detail/Outgoing/KomentarOutgoingDetail";
 import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
+import { DokumenTamplate } from "../Repository/DokumenTamplate";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -730,7 +731,7 @@ function AuthStack() {
           name="DetailSuratDiunggah"
           component={DetailSuratDiunggah}
           options={{
-            header: toolbarBack, 
+            header: toolbarBack,
             title: "Detail Surat Keluar",
           }}
         />
@@ -791,45 +792,45 @@ function AuthStack() {
         />
         {/* DETAIL LETTER */}
         <Stack.Screen
-            name="IncomingDetail"
-            component={IncomingDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="DispositionDetail"
-            component={DispositionDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="SubmittedDetail"
-            component={SubmittedDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="NeedFollowUpDetail"
-            component={NeedFollowUpDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="TrackingDetail"
-            component={TrackingDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="DelegationDetail"
-            component={DelegationDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="SecretaryDetail"
-            component={SecretaryDetail}
-            options={{ header: toolbarBack }}
-          />
-          <Stack.Screen
-            name="TodoDetail"
-            component={TodoDetail}
-            options={{ header: toolbarBack }}
-          />
+          name="IncomingDetail"
+          component={IncomingDetail}
+          options={{ header: toolbarBack }}
+        />
+        <Stack.Screen
+          name="DispositionDetail"
+          component={DispositionDetail}
+          options={{ header: toolbarBack }}
+        />
+        <Stack.Screen
+          name="SubmittedDetail"
+          component={SubmittedDetail}
+          options={{ header: toolbarBack }}
+        />
+        <Stack.Screen
+          name="NeedFollowUpDetail"
+          component={NeedFollowUpDetail}
+          options={{ header: toolbarBack }}
+        />
+        <Stack.Screen
+          name="TrackingDetail"
+          component={TrackingDetail}
+          options={{ header: toolbarBack }}
+        />
+        <Stack.Screen
+          name="DelegationDetail"
+          component={DelegationDetail}
+          options={{ header: toolbarBack }}
+        />
+        <Stack.Screen
+          name="SecretaryDetail"
+          component={SecretaryDetail}
+          options={{ header: toolbarBack }}
+        />
+        <Stack.Screen
+          name="TodoDetail"
+          component={TodoDetail}
+          options={{ header: toolbarBack }}
+        />
         <Stack.Screen
           name="MainSPPD"
           component={MainSPPD}
@@ -908,6 +909,11 @@ export const BottomTabsRepo = () => {
         <Tab.Screen
           name="Dibagikan"
           component={Dibagikan}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="DokumenTamplate"
+          component={DokumenTamplate}
           options={{ headerShown: false }}
         />
         {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}

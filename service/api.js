@@ -556,7 +556,18 @@ export const getDocument = createAsyncThunk(
 export const getDocumentDibagikan = createAsyncThunk(
     "repository/getDocumentDibagikan",
     async ({ token, page, general }) => {
-        const respon = await axios.get(`${repository}shared-documents/?limit=${page}&published=true&public=true`, {
+        const respon = await axios.get(`${repository}shared-documents/?limit=${page}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
+);
+
+export const getDocumentTamplate = createAsyncThunk(
+    "repository/getDocumentTamplate",
+    async ({ token, page }) => {
+        console.log(page)
+        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=true&public=true&general=&by_title=false&unker=&satker=`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;

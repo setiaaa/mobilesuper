@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailDocument, getDocument, getDocumentDibagikan } from "../service/api";
+import { getDetailDocument, getDocument, getDocumentDibagikan, getDocumentTamplate } from "../service/api";
 
 const RepositorySlice = createSlice({
   name: "Repository",
@@ -11,6 +11,10 @@ const RepositorySlice = createSlice({
     dibagikan: {
       lists: [],
       detail: {},
+    },
+    tamplate: {
+      lists: [],
+      detail: {}
     },
     loading: false,
     load: false
@@ -56,6 +60,22 @@ const RepositorySlice = createSlice({
       .addCase(getDocumentDibagikan.rejected, (state, action) => {
         state.loading = false
         state.load = false
+      })
+      .addCase(getDocumentTamplate.fulfilled, (state, action) => {
+        console.log(action)
+        state.tamplate.lists = action.payload;
+        state.loading = false
+        state.load = false
+        console.log('masukk')
+      })
+      .addCase(getDocumentTamplate.pending, (state, action) => {
+        state.loading = true
+        state.load = true
+      })
+      .addCase(getDocumentTamplate.rejected, (state, action) => {
+        state.loading = false
+        state.load = false
+        console.log('tidak')
       })
   },
 });
