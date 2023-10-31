@@ -48,7 +48,7 @@ const CardLiniMasa = ({ item, token }) => {
         dispatch(getDetailLinimasa(params))
         dispatch(getViewLinimasa(params))
     }
-
+    console.log(item)
     return (
         <View style={{
             backgroundColor: 'white',
@@ -79,7 +79,7 @@ const CardLiniMasa = ({ item, token }) => {
                         </View>
                         <View>
                             <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.creator.name}</Text>
-                            <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(item.published_date, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
+                            <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{item.published_date.slice(0, -9)}</Text>
                         </View>
                     </View>
                     <View style={{ marginVertical: 20 }}>
@@ -155,17 +155,19 @@ const CardLiniMasa = ({ item, token }) => {
                 <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                 <View style={{ alignItems: 'center', flex: 1 }}>
                     <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 10, marginTop: '40%' }}>
-
-                        <TouchableOpacity
-                            style={{ alignItems: 'flex-end', marginHorizontal: 20, marginTop: 20 }}
-                            onPress={() => {
-                                setVisibleModal(false)
-                            }}
-                        >
-                            <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
-                        </TouchableOpacity>
-
-                        <View style={{
+                        <View style={{marginHorizontal: 20, marginTop: 20, flexDirection:"row", justifyContent:"space-between", padding:10, borderBottomWidth:2, borderBottomColor:COLORS.grey}}>
+                                    <Text style={{fontWeight:FONTWEIGHT.bold, fontSize: FONTSIZE.H1,}}>Informasi Pengetahuan</Text>
+                                    <TouchableOpacity
+                                        style={{}}
+                                        onPress={() => {
+                                        console.log()
+                                        setVisibleModal(false)
+                                        }}
+                                    >
+                                        <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                                    </TouchableOpacity>
+                        </View>
+                        {/* <View style={{
                             backgroundColor: COLORS.primary,
                             padding: 10,
                             width: 179,
@@ -176,8 +178,7 @@ const CardLiniMasa = ({ item, token }) => {
                             borderBottomLeftRadius: 12,
                             borderBottomRightRadius: 4
                         }}>
-                            <Text style={{ color: COLORS.white }}>Informasi Pengetahuan</Text>
-                        </View>
+                        </View> */}
 
                         <View>
                             <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', marginHorizontal: 40 }}>
@@ -216,7 +217,7 @@ const CardLiniMasa = ({ item, token }) => {
                                 <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[Where]</Text>
                             </View>
 
-                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.tempat}</Text>
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>{item.unit_kerja}</Text>
                         </View>
 
                         <View>
@@ -226,7 +227,7 @@ const CardLiniMasa = ({ item, token }) => {
                                 <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[When]</Text>
                             </View>
 
-                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{item.kapan}</Text>
+                            <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{item.start_date_agenda.slice(0,-9)}</Text>
                         </View>
                     </View>
                 </View>
@@ -241,7 +242,7 @@ const CardLiniMasa = ({ item, token }) => {
                 }}
             >
                 <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                <View style={{ alignItems: 'center', flex: 1 }}>
+                <View style={{ alignItems: 'center', flex: 1, justifyContent:"center", marginTop:-100 }}>
                     <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 10, marginTop: '40%' }}>
 
                         <View style={{

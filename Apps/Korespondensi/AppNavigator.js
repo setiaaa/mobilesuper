@@ -198,9 +198,9 @@ import { DokumenSPPD } from "../SPPD/DokumenSPPD";
 import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
 import MainCuti from "../Cuti/MainCuti";
 import MyTabCuti from "../Cuti/BottomTabsCuti";
-import { Personal } from "../Cuti/Personal"
 import { DokumenCuti } from "../Cuti/DokumenCuti";
 import { PersetujanCuti } from "../Cuti/PersetujanCuti";
+import { PersonalCuti } from "../Cuti/PersonalCuti";
 import { Libur } from "../Cuti/Libur";
 import { TambahCutiBesar } from "../Cuti/TambahCutiBesar";
 import { TambahCutiSakit } from "../Cuti/TambahCutiSakit";
@@ -1142,11 +1142,23 @@ export const BottomTabsDetailAgenda = () => {
     </BottomSheetModalProvider>
   )
 }
+
+export const BottomTabsSPPD = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabBarSPPD {...props} />} initialRouteName='Personal'>
+        <Tab.Screen name='Personal' component={Personal} options={{ headerShown: false }} />
+        <Tab.Screen name='DokumenSPPD' component={DokumenSPPD} options={{ headerShown: false }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+
 export const BottomTabsCuti = () => {
   return (
     <BottomSheetModalProvider>
-      <Tab.Navigator tabBar={props => <MyTabCuti {...props} />} initialRouteName='Personal'>
-        <Tab.Screen name='Personal' component={Personal} options={{ headerShown: false }} />
+      <Tab.Navigator tabBar={props => <MyTabCuti {...props} />} initialRouteName='PersonalCuti'>
+        <Tab.Screen name='PersonalCuti' component={PersonalCuti} options={{ headerShown: false }} />
         <Tab.Screen name='PersetujuanCuti' component={PersetujanCuti} options={{ headerShown: false }} />
         <Tab.Screen name='DokumenCuti' component={DokumenCuti} options={{ headerShown: false }} />
       </Tab.Navigator>

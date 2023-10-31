@@ -309,7 +309,7 @@ export const Satker = () => {
                 <View style={{ marginLeft: 30, flexDirection: 'row', marginBottom: 20 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: FONTSIZE.H2 }}>Berita Terkini</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('ListBeritaSatker')} style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>View all</Text>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H3, flex: 1, color: '#1868AB' }}>Selengkapnya</Text>
                     </TouchableOpacity>
                 </View>
                 <View>

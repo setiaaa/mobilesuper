@@ -12,6 +12,7 @@ import { getBerita, getDetailBerita } from "../../service/api";
 import { CardListBeritaHome } from "../../components/CardListBeritaHome";
 import { ActivityIndicator } from "react-native";
 import { setBerita } from "../../store/SuperApps";
+import ListEmpty from "../../components/ListEmpty";
 
 
 
@@ -128,6 +129,7 @@ export const ListBerita = () => {
                 />
               </View>
             )}
+            ListEmptyComponent={() => <ListEmpty />}
             style={{ flex: 1 }}
             ListFooterComponent={() => (
               loading && (

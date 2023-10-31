@@ -13,7 +13,7 @@ import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
 
 
-export const Personal = () => {
+export const PersonalCuti = () => {
     const dispatch = useDispatch()
     const { profile } = useSelector(state => state.superApps)
     const [collapse, setCollapse] = useState({

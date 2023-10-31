@@ -249,9 +249,11 @@ export const DetailPenilaian = () => {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', }}>
-                            <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
-                            <Text>: </Text>
+                        <View style={{ flexDirection: 'row' }}>
+                        {!data?.attachments === 0 ? (
+                            <Text style={{ width: 130, fontWeight: 'bold' }}>Lampiran</Text>
+                        ) : null }
+
                         </View>
                         <FlatList
                             key={'#'}
@@ -345,9 +347,10 @@ export const DetailPenilaian = () => {
                     borderRadius: 8,
                     marginBottom: 20,
                 }}>
-                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                    <View style={{  gap: 20, paddingVertical: 20 }}>
+                        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center'}}>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Nilai</Text>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold,  }}>Nilai</Text>
                             <Text style={{ color: COLORS.danger }}>*</Text>
                         </View>
 
@@ -366,9 +369,10 @@ export const DetailPenilaian = () => {
                                 borderColorValue={COLORS.ExtraDivinder}
                             />
                         </View>
+                        </View>
 
-                        <View>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, marginBottom: 5 }}>Tanggal Nilai :</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', position: 'relative'}}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, marginBottom: 5, position: 'absolute', left: 5 }}>Tanggal Nilai :</Text>
                             <Text>{tanggal}</Text>
                         </View>
                     </View>
