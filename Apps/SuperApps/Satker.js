@@ -12,7 +12,7 @@ import { Divider } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { CardUltah } from '../../components/CardUltah';
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
@@ -240,7 +240,7 @@ export const Satker = () => {
                 ) : null
             }
             <ScrollView
-                style={{ flexGrow: 1 }}
+                style={{ flexGrow: 1,  }}
                 nestedScrollEnabled={true}
             >
                 <View style={{ width: '100%', height: 170, position: 'absolute', top: 0, borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }}>
@@ -270,7 +270,7 @@ export const Satker = () => {
 
                 <CardSatker profile={profile} />
 
-                <View style={[styles.containerr, { marginTop: 20 }]}>
+                <View style={[styles.containerr, { marginTop: 20, }]}>
                     <Carousel
                         ref={carouselRef}
                         sliderWidth={screenWidth}

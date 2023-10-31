@@ -527,7 +527,7 @@ export const DetailLinimasa = () => {
                                 {/* divider custom */}
                                 <View style={{ height: 1, width: '90%', backgroundColor: '#DBDADE', marginTop: 20, marginHorizontal: 20 }} />
 
-                                <View style={{ flexDirection: 'row', gap: 10, marginVertical: 20, marginHorizontal: 20 }}>
+                                <View style={{ flexDirection: 'row', gap: 10, marginVertical: 20, marginHorizontal: 20,}}>
 
                                     <TouchableOpacity style={{ flexDirection: 'row', gap: 3, alignItems: 'center' }} onPress={handleLike}>
                                         <Ionicons name='thumbs-up-outline' size={18} color={detail.liked == true ? COLORS.primary : null} />
@@ -597,7 +597,7 @@ export const DetailLinimasa = () => {
                                                         flexDirection: 'row',
                                                         backgroundColor: COLORS.ExtraDivinder,
                                                         marginTop: 10,
-                                                        marginBottom: 40,
+                                                        marginBottom: 80,
                                                     }}
                                                     >
                                                         <BottomSheetTextInput

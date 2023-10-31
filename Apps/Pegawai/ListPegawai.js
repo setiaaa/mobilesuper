@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Pressable, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { AVATAR, COLORS, FONTWEIGHT } from '../../config/SuperAppps'
+import { AVATAR, COLORS, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import { Search } from '../../components/Search';
@@ -90,6 +90,7 @@ export const ListPegawai = () => {
 
     return (
         <>
+        <SafeAreaView>
             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
                 <View style={{
                     backgroundColor: COLORS.white,
@@ -109,16 +110,18 @@ export const ListPegawai = () => {
                 </View>
             </View>
 
-            <View style={{ width: '90%', marginVertical: 20, marginHorizontal: 20, }}>
+            <View
+                style={{  }}
+            >
+
+            <View style={{ marginVertical: 20, paddingHorizontal: 20 }}>
                 <Search
                     placeholder={'Cari'}
                 // onSearch={filter}
                 />
             </View>
 
-            <View
-                style={{ flex: 1, paddingBottom: 24 }}
-            >
+            
                 <FlatList
                     data={pegawai.lists}
                     renderItem={({ item }) => <CardListPegawai
@@ -130,10 +133,10 @@ export const ListPegawai = () => {
                         loading={loading}
                     />
                     }
-                    style={{ flex: 1 }}
+                    // style={{ flex: 1 }}
                     ListFooterComponent={() => (
                         loading && (
-                            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center',}}>
                                 <ActivityIndicator size="large" color={COLORS.primary} />
                             </View>
                         )
@@ -147,6 +150,7 @@ export const ListPegawai = () => {
                 />
                 {/* {loading && <Loading />} */}
             </View>
+            </SafeAreaView>
         </>
     )
 }
@@ -159,7 +163,6 @@ const styles = StyleSheet.create({
     },
     cardCollapse: {
         backgroundColor: '#fff',
-        marginHorizontal: 20,
         width: 362
     }
 })

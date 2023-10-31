@@ -34,6 +34,40 @@ export const CardApps = ({ handlePressModal }) => {
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Email</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainPengetahuan')}>
+                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                            <Ionicons name='school-outline' size={24} color={COLORS.primary} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pengetahuan</Text>
+                </View>
+            </View>
+            <View style={{ flexDirection: 'row', gap: 28, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('GrupKalender')}>
+                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                            <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kalender</Text>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
+                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                            <Ionicons name='library-outline' size={24} color={COLORS.primary} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repositori</Text>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('HalamanUtama')}>
+                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                            <Ionicons name='clipboard-outline' size={24} color={COLORS.primary} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Agenda</Text>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={handlePressModal}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                             <Ionicons name='ellipsis-horizontal-outline' size={24} color={'#6B7280'} />
@@ -51,9 +85,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         flexDirection: "column",
         width: '90%',
-        height: 150,
+        height: 220,
         borderRadius: 12,
         marginLeft: 20,
+        marginTop:60,
+        padding:5,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: COLORS.primary,

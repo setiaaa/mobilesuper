@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
-import { COLORS,FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS,FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search'
 import { useNavigation } from '@react-navigation/native'
@@ -47,9 +47,9 @@ export const DokumenCuti = () => {
                     </View>
                 </View>
 
-                <View>
+                <View style={{ padding: PADDING.Page}}>
                     <View style={{ flexDirection: 'row' }}>
-                        <View style={{ width: '90%', marginLeft: 20, marginTop: 20, }}>
+                        <View style={{ width: '100%',marginTop: 20, }}>
                             <Search
                                 placeholder={'Cari'}
                                 iconColor={COLORS.primary}
@@ -57,7 +57,7 @@ export const DokumenCuti = () => {
                         </View>
                     </View>
 
-                    <View style={{ paddingHorizontal: 20, gap: 10}}>
+                    <View style={{ gap: 10}}>
                     <View style={{ backgroundColor: 'white', marginTop: 10, borderRadius: 8}}>
                     <View style={{paddingVertical:10, paddingHorizontal:20, flexDirection:'row', justifyContent:'center', gap: 30}}>
                             <TouchableOpacity style={{

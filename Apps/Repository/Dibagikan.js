@@ -194,7 +194,7 @@ export const Dibagikan = () => {
                   marginBottom: 10,
                 }}
               >
-                <TouchableOpacity onPress={() => handleVariant("list")}>
+                {/* <TouchableOpacity onPress={() => handleVariant("list")}>
                   <View style={styles.circleList}>
                     <Ionicons
                       name="list-outline"
@@ -202,8 +202,8 @@ export const Dibagikan = () => {
                       color={variant === "list" ? COLORS.primary : COLORS.grey}
                     />
                   </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleVariant("grid")}>
+                </TouchableOpacity> */}
+                {/* <TouchableOpacity onPress={() => handleVariant("grid")}>
                   <View style={styles.circleList}>
                     <Ionicons
                       name="apps-outline"
@@ -211,7 +211,7 @@ export const Dibagikan = () => {
                       color={variant === "grid" ? COLORS.primary : COLORS.grey}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
               <Divider bold />
               {variant === "list" ? (

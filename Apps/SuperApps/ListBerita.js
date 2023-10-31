@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, PADDING } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
@@ -105,7 +105,7 @@ export const ListBerita = () => {
             </Text>
           </View>
         </View>
-        <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
+        <View style={{ padding: PADDING.Page}}>
           <Search
             placeholder={'Cari'}
             iconColor={COLORS.primary}

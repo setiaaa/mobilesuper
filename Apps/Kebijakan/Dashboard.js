@@ -213,13 +213,13 @@ export default function Dashboard() {
                 </View>
                 <View style={styles.ContainerCard}>
                     <View style={{ marginRight: 20, marginTop: 20, flexDirection: 'row', gap: 10, marginBottom: 10, alignItems: 'center' }}>
-                        <View style={{ marginLeft: 20, width: '55%' }}>
+                        <View style={{ marginLeft: 20, width: '90%' }}>
                             <Search
                                 placeholder={'Pencarian Kebijakan'}
                                 onSearch={filterData}
                             />
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
+                        {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
                             <TouchableOpacity>
                                 <View style={styles.circleList}>
                                     <Ionicons name='filter-outline' size={25} color={COLORS.grey} onPress={() => handleVariant('list')} />
@@ -235,7 +235,7 @@ export default function Dashboard() {
                                     <Ionicons name='apps-outline' size={25} color={variant === 'card' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('card')} />
                                 </View>
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </View>
                     <View style={{ marginBottom: 30 }}>
                         <Divider bold />

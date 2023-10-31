@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
-import { COLORS,FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS,FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search'
 import { useNavigation } from '@react-navigation/native'
@@ -61,7 +61,7 @@ export const PersonalCuti = () => {
                                        
                 </View>
                 
-                <View style={{padding:20}}>
+                <View style={{padding: PADDING.Page}}>
                     <View style={{
                         padding: 20,
                         marginTop: 10,

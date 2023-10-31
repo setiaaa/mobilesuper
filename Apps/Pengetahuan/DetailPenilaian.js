@@ -150,46 +150,64 @@ export const DetailPenilaian = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 20
-                    }}>
-                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Penilaian</Text>
-                    </View>
-                </View>
+
+    <View style={{ flex: 1 }}>
+          <Image
+            source={{ uri: data?.cover }}
+            style={{ width: "100%", height: 260 }}
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              position: "absolute",
+              width: "100%",
+              marginTop: 20,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: 28,
+                height: 28,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 20,
+              }}
+            >
+              <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
 
                 <View style={{
-                    backgroundColor: COLORS.white,
-                    width: '90%',
-                    marginHorizontal: 20,
-                    marginVertical: 20,
-                    paddingHorizontal: 20,
-                    borderRadius: 8
+                    width: "100%",
+            backgroundColor: "#FFFFFF",
+            borderTopLeftRadius: 32,
+            borderTopRightRadius: 32,
+            marginTop: -40,
+            padding: 20,
                 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20, justifyContent: 'center' }}>
                         <Image source={require('../../assets/superApp/logoKecil.png')} style={{ width: 37, height: 37 }} />
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Formulir Penilaian Pengetahuan</Text>
                     </View>
 
 
-                    <View key={data?.id} style={{ marginTop: 10 }}>
-                        <View style={{ flexDirection: 'row' }}>
+                    <View key={data?.id} style={{ marginTop: 10,  }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Text>Periode: </Text>
                             <Text>{getPeriode(data?.quarter)}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginTop: 5 }}>
+                        <View style={{ flexDirection: 'row', marginTop: 5, justifyContent: 'center' }}>
                             <Text>PJ: </Text>
                             <Text>{profile.nama}</Text>
                         </View>
@@ -206,11 +224,7 @@ export const DetailPenilaian = () => {
                             <Text>: {moment(data?.published_date, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                            <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Foto Cover</Text>
-                            <Text>: </Text>
-                            <Image source={{ uri: data?.cover }} style={{ width: 100, height: 71 }} />
-                        </View>
+                        
 
                         <View style={{ flexDirection: 'row', marginTop: 5 }}>
                             <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Judul [What]</Text>
@@ -238,12 +252,13 @@ export const DetailPenilaian = () => {
                         <View style={{ marginTop: 5 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Deskripsi [How]</Text>
-                                <Text>:</Text>
+                                <Text  >:</Text>
                             </View>
                             <View style={{ marginHorizontal: 10 }}>
                                 <RenderHTML
                                     source={source}
                                     contentWidth={width}
+                                    enableExperimentalMarginCollapsing={true} 
                                 />
                                 {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
                             </View>
@@ -340,8 +355,6 @@ export const DetailPenilaian = () => {
 
                 <View style={{
                     backgroundColor: COLORS.white,
-                    width: '90%',
-                    marginHorizontal: 20,
                     paddingHorizontal: 20,
                     paddingVertical: 10,
                     borderRadius: 8,
