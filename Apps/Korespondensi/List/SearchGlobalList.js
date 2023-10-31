@@ -264,7 +264,7 @@ function SearchGlobalList() {
           getSearch={getSearchGlobal}
         /> */}
         <Searchbar
-          placeholder="Search"
+          placeholder="Cari..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           onIconPress={() => getSearchGlobal(1)}

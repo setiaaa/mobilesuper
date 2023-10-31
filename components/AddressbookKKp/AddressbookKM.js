@@ -104,7 +104,7 @@ function AddressbookKM() {
         <View>
           {loadingOverlay}
           <Searchbar
-            placeholder="Search"
+            placeholder="Cari..."
             onChangeText={setSearchQuery}
             value={searchQuery}
             onIconPress={getKMSearch}

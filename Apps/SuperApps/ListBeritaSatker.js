@@ -84,7 +84,7 @@ export const ListBeritaSatker = () => {
                     </View>
                 </View>
                 <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-                    <Search placeholder={"Pencarian"} />
+                    <Search placeholder={"Cari..."} />
                 </View>
                 <FlatList
                     data={berita.lists}

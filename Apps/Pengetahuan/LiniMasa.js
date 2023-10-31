@@ -353,7 +353,7 @@ export const LiniMasa = () => {
                         marginLeft: 20
                     }}>
                         <TouchableOpacity style={{}} onPress={() => {
-                            navigation.goBack()
+                            navigation.navigate("Home")
                         }}>
                             <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                         </TouchableOpacity>

@@ -95,7 +95,7 @@ export const ListPostinganPegawai = (param) => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
             <Ionicons
               name="chevron-back-outline"
               size={24}

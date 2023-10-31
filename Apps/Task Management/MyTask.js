@@ -233,7 +233,7 @@ export const MyTask = () => {
                             justifyContent: 'center',
                             marginLeft: 20
                         }}>
-                            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                            <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
                                 <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                             </TouchableOpacity>
                         </View>
