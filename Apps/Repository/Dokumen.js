@@ -96,7 +96,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   width: "90%",
-                  paddingRight: 10
+                  paddingRight: 10,
                 }}
               >
                 <Text
@@ -277,7 +277,7 @@ export const Dokumen = () => {
             </View>
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
-                Repositori
+                Preparing and Sharing
               </Text>
             </View>
           </View>

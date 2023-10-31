@@ -80,7 +80,7 @@ export const Home = () => {
   const [modalVisibleVisiMisi, setModalVisibleVisiMisi] = useState(false);
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
   const [token, setToken] = useState("");
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -116,14 +116,18 @@ export const Home = () => {
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Peringatan!", "Apakah anda yakin akan keluar dari aplikasi?", [
-        {
-          text: "Tidak",
-          onPress: () => null,
-          style: "cancel"
-        },
-        { text: "YA", onPress: () => BackHandler.exitApp() }
-      ]);
+      Alert.alert(
+        "Peringatan!",
+        "Apakah anda yakin akan keluar dari aplikasi?",
+        [
+          {
+            text: "Tidak",
+            onPress: () => null,
+            style: "cancel",
+          },
+          { text: "YA", onPress: () => BackHandler.exitApp() },
+        ]
+      );
       return true;
     };
 
@@ -135,10 +139,16 @@ export const Home = () => {
     return () => backHandler.remove();
   }, []);
 
-  const { berita, agenda, program, galeri, profile, visimisi, banner, loading } =
-    useSelector((state) => state.superApps);
-
-
+  const {
+    berita,
+    agenda,
+    program,
+    galeri,
+    profile,
+    visimisi,
+    banner,
+    loading,
+  } = useSelector((state) => state.superApps);
 
   const bottomSheetModalRef = useRef(null);
 
@@ -176,11 +186,7 @@ export const Home = () => {
     <SafeAreaView>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
-          {
-            loading ? (
-              <Loading />
-            ) : null
-          }
+          {loading ? <Loading /> : null}
           <ScrollView>
             <View
               style={{
@@ -525,7 +531,7 @@ export const Home = () => {
                     <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
                       onPress={() => {
-                        Linking.openURL('https://halo-bupbj.com/')
+                        Linking.openURL("https://halo-bupbj.com/");
                       }}
                     >
                       <Image
@@ -534,7 +540,6 @@ export const Home = () => {
                       />
                       <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
                     </TouchableOpacity>
-
                   </View>
 
                   <View style={{ marginHorizontal: 20, marginTop: 40 }}>
@@ -554,7 +559,7 @@ export const Home = () => {
                     <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
                       onPress={() => {
-                        Linking.openURL('https://www.lapor.go.id/')
+                        Linking.openURL("https://www.lapor.go.id/");
                       }}
                     >
                       <Image
@@ -571,7 +576,7 @@ export const Home = () => {
                     <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
                       onPress={() => {
-                        Linking.openURL('https://wbs.kkp.go.id/registration')
+                        Linking.openURL("https://wbs.kkp.go.id/registration");
                       }}
                     >
                       <Image
@@ -588,7 +593,7 @@ export const Home = () => {
                     <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
                       onPress={() => {
-                        Linking.openURL('https://sidak.kkp.go.id/login')
+                        Linking.openURL("https://sidak.kkp.go.id/login");
                       }}
                     >
                       <Image
@@ -605,7 +610,7 @@ export const Home = () => {
                     <TouchableOpacity
                       style={{ justifyContent: "center", alignItems: "center" }}
                       onPress={() => {
-                        Linking.openURL('https://jdih.kkp.go.id/')
+                        Linking.openURL("https://jdih.kkp.go.id/");
                       }}
                     >
                       <Image
@@ -636,7 +641,7 @@ export const Home = () => {
                   >
                     <TouchableOpacity
                       onPress={() => {
-                        Linking.openURL('https://e-monev.bappenas.go.id/fe/')
+                        Linking.openURL("https://e-monev.bappenas.go.id/fe/");
                       }}
                     >
                       <View>
@@ -656,7 +661,7 @@ export const Home = () => {
 
                     <TouchableOpacity
                       onPress={() => {
-                        Linking.openURL('https://www.kinerjaku.kkp.go.id/')
+                        Linking.openURL("https://www.kinerjaku.kkp.go.id/");
                       }}
                     >
                       <View
@@ -681,7 +686,7 @@ export const Home = () => {
 
                     <TouchableOpacity
                       onPress={() => {
-                        Linking.openURL('https://elearning.kkp.go.id/')
+                        Linking.openURL("https://elearning.kkp.go.id/");
                       }}
                     >
                       <View
@@ -706,7 +711,7 @@ export const Home = () => {
 
                     <TouchableOpacity
                       onPress={() => {
-                        Linking.openURL('https://kinerja.bkn.go.id/login')
+                        Linking.openURL("https://kinerja.bkn.go.id/login");
                       }}
                     >
                       <View
@@ -731,7 +736,7 @@ export const Home = () => {
 
                     <TouchableOpacity
                       onPress={() => {
-                        Linking.openURL('https://siasn.bkn.go.id/')
+                        Linking.openURL("https://siasn.bkn.go.id/");
                       }}
                     >
                       <View
@@ -765,7 +770,7 @@ export const Home = () => {
                   >
                     <TouchableOpacity
                       onPress={() => {
-                        Linking.openURL('https://mysapk.bkn.go.id/')
+                        Linking.openURL("https://mysapk.bkn.go.id/");
                       }}
                     >
                       <View>
@@ -788,7 +793,11 @@ export const Home = () => {
             </Modal>
 
             <View
-              style={{ marginLeft: 30, marginVertical: 20, flexDirection: "row" }}
+              style={{
+                marginLeft: 30,
+                marginVertical: 20,
+                flexDirection: "row",
+              }}
             >
               <Text
                 style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
@@ -836,7 +845,6 @@ export const Home = () => {
               />
             </View>
           </ScrollView>
-
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </SafeAreaView>

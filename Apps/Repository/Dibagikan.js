@@ -150,7 +150,7 @@ export const Dibagikan = () => {
                 alignItems: "center",
                 backgroundColor: COLORS.primary,
                 height: 80,
-                alignItems: 'center'
+                alignItems: "center",
               }}
             >
               <View
@@ -174,7 +174,7 @@ export const Dibagikan = () => {
               </View>
               <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
                 <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
-                  Repositori
+                  Preparing and Sharing
                 </Text>
               </View>
             </View>
