@@ -504,7 +504,9 @@ export const getPesan = createAsyncThunk("bridge/getPesan", async (token) => {
         headers: { Authorization: token },
     });
     return respon?.data.results;
-});
+}
+);
+
 
 export const getUltah = createAsyncThunk("bridge/getUltah", async (token) => {
     const respon = await axios.get(`${SATKER}satker/birthday/`, {

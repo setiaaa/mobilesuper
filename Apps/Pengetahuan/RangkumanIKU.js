@@ -277,7 +277,7 @@ export const RangkumanIKU = () => {
   };
 
   console.log(pegawai.lists);
-  // console.log(exportPegawai);
+  console.log(exportPegawai);
 
   const downloadFromUrl = async () => {
     const url = exportPegawai?.lists?.file;
@@ -426,13 +426,13 @@ export const RangkumanIKU = () => {
 
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
-          <View style={{ height: '100%', width: '100%' }}>
+          <View style={{ height: "100%", width: "100%" }}>
             <WebView
               originWhitelist={["*"]}
               source={{
                 uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
               }}
-              style={{ flex: 1, }}
+              style={{ flex: 1 }}
               allowFileAccess={true}
               androidLayerType={"software"}
               mixedContentMode={"always"}
@@ -786,7 +786,7 @@ export const RangkumanIKU = () => {
               >
                 <FlatList
                   data={filterData}
-                  renderItem={({ item }) => 
+                  renderItem={({ item }) =>
                     <View key={item.id} style={{ marginBottom: 10 }}>
                       <ListDaftarPegawai item={item} token={token} />
                     </View>
@@ -806,66 +806,67 @@ export const RangkumanIKU = () => {
 
                 {/* {pegawai.lists.length !== 0
                   ? pegawai.lists.map((item, index) => {
-                    const getDetail = (id) => {
-                      const param = { token, id };
-                      dispatch(getListPostPegawai(param));
-                    };
+                      const getDetail = (id) => {
+                        const param = { token, id };
+                        dispatch(getListPostPegawai(param));
+                      };
 
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        style={{
-                          backgroundColor: COLORS.white,
-                          borderRadius: 10,
-                          padding: 10,
-                          gap: 5,
-                          //shadow ios
-                          shadowOffset: { width: -2, height: 4 },
-                          shadowColor: "#171717",
-                          shadowOpacity: 0.2,
-                          //shadow android
-                          elevation: 2,
-                        }}
-                        onPress={() => {
-                          getDetail(item.id);
-                          navigation.navigate(
-                            "ListPostinganPegawai",
-                            item.nama
-                          );
-                        }}
-                      >
-                        <Text
+                      return (
+                        <TouchableOpacity
+                          key={index}
                           style={{
-                            fontSize: FONTSIZE.H1,
-                            fontWeight: FONTWEIGHT.bold,
+                            backgroundColor: COLORS.white,
+                            borderRadius: 10,
+                            padding: 10,
+                            gap: 5,
+                            //shadow ios
+                            shadowOffset: { width: -2, height: 4 },
+                            shadowColor: "#171717",
+                            shadowOpacity: 0.2,
+                            //shadow android
+                            elevation: 2,
+                          }}
+                          onPress={() => {
+                            getDetail(item.id);
+                            navigation.navigate(
+                              "ListPostinganPegawai",
+                              item.nama
+                            );
                           }}
                         >
-                          {item.nama}
-                        </Text>
-                        <Text>Jabatan: {item.jabatan}</Text>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Text style={{ color: COLORS.lighter }}>
-                            Nilai Saat Ini: {item.score.nilai}
-                          </Text>
-                          <View
+                          <Text
                             style={{
-                              backgroundColor:
-                                item.score.status === "Tidak Memenuhi"
-                                  ? "#EA5455"
-                                  : "green",
-                              borderRadius: 10,
-                              padding: 3,
-                              paddingHorizontal: 10,
+                              fontSize: FONTSIZE.H1,
+                              fontWeight: FONTWEIGHT.bold,
                             }}
                           >
-                            <Text style={{ color: "white" }}>
-                              {item.score.status}
+                            {item.nama}
+                          </Text>
+                          <Text>Jabatan: {item.jabatan}</Text>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Text style={{ color: COLORS.lighter }}>
+                              Nilai Saat Ini: {item.score.nilai}
                             </Text>
+                            <View
+                              style={{
+                                backgroundColor:
+                                  item.score.status === "Tidak Memenuhi"
+                                    ? "#EA5455"
+                                    : "green",
+                                borderRadius: 10,
+                                padding: 3,
+                                paddingHorizontal: 10,
+                              }}
+                            >
+                              <Text style={{ color: "white" }}>
+                                {item.score.status}
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </TouchableOpacity>
