@@ -98,7 +98,7 @@ export const TeknologiTerbaru = () => {
         <View style={{ flex: 1 }}>
             {/* <View style={{ width: '90%', marginLeft: 20, marginTop: 20 }}>
                 <Search
-                    placeholder={'Pencarian'}
+                    placeholder={'Cari...'}
                 />
             </View> */}
             <FlatList

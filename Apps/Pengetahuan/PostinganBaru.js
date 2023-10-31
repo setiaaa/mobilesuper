@@ -156,7 +156,7 @@ export const PostinganBaru = () => {
               >
                 <TouchableOpacity
                   style={{}}
-                  onPress={() => navigation.goBack()}
+                  onPress={() => navigation.navigate("Home")}
                 >
                   <Ionicons
                     name="chevron-back-outline"

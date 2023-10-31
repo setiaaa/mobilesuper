@@ -358,7 +358,7 @@ export const DetailLinimasa = () => {
                 <BottomSheetModalProvider>
                     <ScrollView>
                         <View>
-                            <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', zIndex: 1 }}>
+                            <TouchableOpacity onPress={() => navigation.navigate("Home")} style={{ position: 'absolute', zIndex: 1 }}>
                                 <View style={[styles.backIcon, { justifyContent: 'center', alignItems: 'center', marginTop: 25, marginLeft: 20 }]}>
                                     <Ionicons name='chevron-back' size={24} color={COLORS.primary} />
                                 </View>

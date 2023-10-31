@@ -11,7 +11,7 @@ function MyTabDigitalSign({ props, navigation }) {
     return (
         <SafeAreaView>
             <BottomSheetModalProvider>
-                <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
+                <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16, }}>
                     <TouchableOpacity
                         key={1}
                         onPress={() => {
@@ -40,8 +40,8 @@ function MyTabDigitalSign({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='briefcase-outline' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Bankom</Text>
+                                <Ionicons name='briefcase-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
+                                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Bankom</Text>
                             </View>
                         ) : (
                             <View style={{
@@ -50,8 +50,8 @@ function MyTabDigitalSign({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Bankom</Text>
+                                <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
+                                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Bankom</Text>
                             </View>
                         )}
                     </TouchableOpacity>

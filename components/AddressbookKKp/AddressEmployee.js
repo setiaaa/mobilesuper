@@ -135,7 +135,7 @@ function AddressbookEmployee({
       <View style={{ marginBottom: 80 }}>
         {loadingOverlay}
         <Searchbar
-          placeholder="Search"
+          placeholder="Cari..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           onIconPress={getEmployeeSearch}

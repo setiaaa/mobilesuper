@@ -111,7 +111,7 @@ export default function Dashboard() {
                         justifyContent: 'center',
                         marginLeft: 20
                     }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                             <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                         </TouchableOpacity>
                     </View>
@@ -215,7 +215,7 @@ export default function Dashboard() {
                     <View style={{ marginRight: 20, marginTop: 20, flexDirection: 'row', gap: 10, marginBottom: 10, alignItems: 'center' }}>
                         <View style={{ marginLeft: 20, width: '55%' }}>
                             <Search
-                                placeholder={'Pencarian Kebijakan'}
+                                placeholder={'Cari...'}
                                 onSearch={filterData}
                             />
                         </View>

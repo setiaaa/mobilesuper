@@ -223,7 +223,7 @@ const CustomDrawerContent = (props) => {
       <Drawer.Section style={{ marginHorizontal: -5 }}>
         <Drawer.Item
           style={styles.drawerItem}
-          label="Pencarian"
+          label="Cari..."
           icon={drawerItemIndex == 10 ? "magnify" : "magnify"}
           key="10"
           active={drawerItemIndex === 10}
