@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import { COLORS } from '../../config/SuperAppps';
+import { COLORS, PADDING } from '../../config/SuperAppps';
 import { StyleSheet } from 'react-native';
 import { TopsKeuanganKinerja } from '../Korespondensi/AppNavigator';
 import { useDispatch } from 'react-redux';
@@ -46,7 +46,7 @@ export const Keuangan = () => {
                 </View>
             </View>
 
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, padding: PADDING.Page }}>
                 <TopsKeuanganKinerja />
             </View>
         </SafeAreaView>

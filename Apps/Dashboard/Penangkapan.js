@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import WebView from 'react-native-webview'
-import { COLORS } from '../../config/SuperAppps'
+import { COLORS, PADDING } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -23,15 +23,18 @@ export const Penangkapan = () => {
                     <Text style={{ color: 'white', fontSize: 15, fontWeight: 600 }}>Produksi Budidaya</Text>
                 </View>
             </View>
-            <WebView
-                originWhitelist={["*"]}
-                source={{ uri: 'https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html' }}
-                style={{ flex: 1 }}
-                allowFileAccess={true}
-                androidLayerType={"software"}
-                mixedContentMode={"always"}
-                allowUniversalAccessFromFileURLs={true}
-            />
+            <View style={{height: '90%', width: '100%', padding:PADDING.Page }}>
+                <WebView
+                    originWhitelist={["*"]}
+                    source={{ uri: 'https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html' }}
+                    style={{ flex: 1 }}
+                    allowFileAccess={true}
+                    androidLayerType={"software"}
+                    mixedContentMode={"always"}
+                    allowUniversalAccessFromFileURLs={true}
+                />
+                <Text style={{color:COLORS.primary}}>*) Cubit dengan 2 jari untuk menyesuaikan zoom</Text>
+            </View>
         </SafeAreaView>
     )
 }

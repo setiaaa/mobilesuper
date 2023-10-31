@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
@@ -47,15 +47,14 @@ export const Profile = () => {
                     </View>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', padding: PADDING.Page }}>
                     <View style={{
                         backgroundColor: COLORS.white,
                         width: 362,
                         borderRadius: 8,
                         justifyContent: 'center',
                         alignItems: 'center',
-                        paddingHorizontal: 16,
-                        paddingVertical: 16,
+                        padding: PADDING.Page,
                         //shadow ios
                         shadowOffset: { width: -2, height: 4 },
                         shadowColor: '#171717',
@@ -70,7 +69,7 @@ export const Profile = () => {
                     </View>
                 </View>
 
-                <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'center' }}>
+                <View style={{ flexDirection: 'row', gap: 7, justifyContent: 'center' }}>
 
                     <View style={{
                         backgroundColor: COLORS.white,
@@ -171,11 +170,11 @@ export const Profile = () => {
                     {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
                 </View>
 
-                <View style={{ marginVertical: 20, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ marginVertical: 20, justifyContent: 'center', alignItems: 'center', paddingHorizontal:PADDING.Page }}>
                     <TouchableOpacity
                         style={{
                             backgroundColor: COLORS.primary,
-                            width: '93%',
+                            width: '97%',
                             height: 50,
                             borderRadius: 8,
                             justifyContent: 'center',

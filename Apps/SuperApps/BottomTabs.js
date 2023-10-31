@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { COLORS, FONTSIZE } from '../../config/SuperAppps';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { SafeAreaView } from 'react-native';
 import { Modal } from 'react-native';
 
@@ -293,15 +293,17 @@ function MyTabBar({ props, navigation }) {
                     <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                     <View style={{ alignItems: 'center', flex: 1 }}>
                         <View style={{ backgroundColor: COLORS.white, width: '90%', height: '40%', borderRadius: 10, marginTop: '70%' }}>
-
-                            <TouchableOpacity
-                                style={{ alignItems: 'flex-end', marginHorizontal: 20, marginTop: 20 }}
-                                onPress={() => {
-                                    setVisibleModal(false)
-                                }}
-                            >
-                                <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            <View style={{marginHorizontal: 20, marginTop: 20, flexDirection:"row", justifyContent:"space-between", padding:10, borderBottomWidth:2, borderBottomColor:COLORS.grey }}>
+                                <Text style={{fontWeight:FONTWEIGHT.bold}}>Dashboard</Text>
+                                <TouchableOpacity
+                                    style={{}}
+                                    onPress={() => {
+                                        setVisibleModal(false)
+                                    }}
+                                >
+                                    <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                                </TouchableOpacity>
+                            </View>
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 20, alignItems: 'center' }}>
 

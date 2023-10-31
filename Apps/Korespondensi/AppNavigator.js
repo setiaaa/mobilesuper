@@ -204,6 +204,20 @@ import { AttachmentOutgoingDetail } from "./Detail/Outgoing/AttachmentOutgoingDe
 import { KomentarOutgoingDetail } from "./Detail/Outgoing/KomentarOutgoingDetail";
 import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
 import { DokumenTamplate } from "../Repository/DokumenTamplate";
+import MainCuti from "../Cuti/MainCuti"
+import { Libur } from "../Cuti/Libur"
+import { TambahCutiBesar } from "../Cuti/TambahCutiBesar"
+import { TambahCutiSakit } from "../Cuti/TambahCutiSakit"
+import { TambahCutiMelahirkan } from "../Cuti/TambahCutiMelahirkan"
+import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan"
+import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan"
+import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting"
+import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti"
+import MyTabCuti from "../Cuti/BottomTabsCuti"
+import { PersonalCuti } from "../Cuti/PersonalCuti"
+import { PersetujanCuti } from "../Cuti/PersetujanCuti"
+import { DokumenCuti } from "../Cuti/DokumenCuti"
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -778,7 +792,7 @@ function AuthStack() {
           name="AddressBook"
           component={AddressBook}
           options={{
-            headerTitle: "",
+            headerTitle: '',
             headerShown: false,
           }}
         />
@@ -844,6 +858,69 @@ function AuthStack() {
           component={DetailDokumenSPPD}
           options={{
             headerTitle: '',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="MainCuti"
+          component={MainCuti}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Libur"
+          component={Libur}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiBesar"
+          component={TambahCutiBesar}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiSakit"
+          component={TambahCutiSakit}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiMelahirkan"
+          component={TambahCutiMelahirkan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiDiluarTanggungan"
+          component={TambahCutiDiluarTanggungan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiTahunan"
+          component={TambahCutiTahunan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TambahCutiAlasanPenting"
+          component={TambahCutiAlasanPenting}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailDokumenCuti"
+          component={DetailDokumenCuti}
+          options={{
             headerShown: false,
           }}
         />
@@ -1133,8 +1210,8 @@ export const BottomTabsDetailAgenda = () => {
         />
       </Tab.Navigator>
     </BottomSheetModalProvider>
-  );
-};
+  )
+}
 
 export const BottomTabsSPPD = () => {
   return (
@@ -1155,6 +1232,17 @@ export const BottomTabsOutgoingKorespondensi = () => {
         <Tab.Screen name='FileOutgoingDetail' component={FileOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
         <Tab.Screen name='AttachmentOutgoingDetail' component={AttachmentOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
         <Tab.Screen name='KomentarOutgoingDetail' component={KomentarOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  )
+}
+export const BottomTabsCuti = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator tabBar={props => <MyTabCuti {...props} />} initialRouteName='PersonalCuti'>
+        <Tab.Screen name='PersonalCuti' component={PersonalCuti} options={{ headerShown: false }} />
+        <Tab.Screen name='PersetujuanCuti' component={PersetujanCuti} options={{ headerShown: false }} />
+        <Tab.Screen name='DokumenCuti' component={DokumenCuti} options={{ headerShown: false }} />
       </Tab.Navigator>
     </BottomSheetModalProvider>
   )

@@ -351,6 +351,7 @@ export const DetailLinimasa = () => {
             dispatch(setRefresh(false))
         }
     }, [refresh])
+    console.log(detail)
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -390,7 +391,7 @@ export const DetailLinimasa = () => {
                                     </View>
                                     <View>
                                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>{detail.creator?.name}</Text>
-                                        <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{moment(detail.published_date, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
+                                        <Text style={{ color: COLORS.grey, marginVertical: 5, fontSize: 13, }}>{detail.published_date}</Text>
                                     </View>
                                 </View>
 
@@ -436,10 +437,9 @@ export const DetailLinimasa = () => {
 
 
                                 <View style={{ marginHorizontal: 20 }}>
-                                    <Text style={{
-                                        fontSize: FONTSIZE.Judul,
-                                        fontWeight: FONTWEIGHT.bold
-                                    }}>Lampiran</Text>
+                                {!detail?.attachments === 0 ? (
+                                    <Text style={{ width: 130, fontWeight: 'bold' }}>Lampiran</Text>
+                                ) : null }
                                 </View>
 
                                 {/* Lampiran */}
@@ -527,7 +527,7 @@ export const DetailLinimasa = () => {
                                 {/* divider custom */}
                                 <View style={{ height: 1, width: '90%', backgroundColor: '#DBDADE', marginTop: 20, marginHorizontal: 20 }} />
 
-                                <View style={{ flexDirection: 'row', gap: 10, marginVertical: 20, marginHorizontal: 20 }}>
+                                <View style={{ flexDirection: 'row', gap: 10, marginVertical: 20, marginHorizontal: 20,}}>
 
                                     <TouchableOpacity style={{ flexDirection: 'row', gap: 3, alignItems: 'center' }} onPress={handleLike}>
                                         <Ionicons name='thumbs-up-outline' size={18} color={detail.liked == true ? COLORS.primary : null} />
@@ -583,7 +583,7 @@ export const DetailLinimasa = () => {
                                                         setParentId={setParentId}
                                                     />
                                                     }
-                                                    style={{ height: 500 }}
+                                                    style={{ height: 600}}
                                                 />
 
                                                 <View style={{ justifyContent: 'flex-end' }}>
@@ -597,7 +597,7 @@ export const DetailLinimasa = () => {
                                                         flexDirection: 'row',
                                                         backgroundColor: COLORS.ExtraDivinder,
                                                         marginTop: 10,
-                                                        marginBottom: 40
+                                                        marginBottom: 80,
                                                     }}
                                                     >
                                                         <BottomSheetTextInput
@@ -652,17 +652,21 @@ export const DetailLinimasa = () => {
                                     <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                                     <View style={{ alignItems: 'center', flex: 1 }}>
                                         <View style={{ backgroundColor: COLORS.white, width: '90%', borderRadius: 10, marginTop: '40%' }}>
+                                            <View style={{marginHorizontal: 20, marginTop: 20, flexDirection:"row", justifyContent:"space-between", padding:10, borderBottomWidth:2, borderBottomColor:COLORS.grey}}>
+                                                <Text style={{fontWeight:FONTWEIGHT.bold, fontSize: FONTSIZE.H1,}}>Informasi Pengetahuan</Text>
+                                                <TouchableOpacity
+                                                    style={{}}
+                                                    onPress={() => {
+                                                    console.log()
+                                                        setVisibleModalInfo(false)
+                                                    }}
+                                                >
+                                                    <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                                                </TouchableOpacity>
+                                            </View>
+                                            
 
-                                            <TouchableOpacity
-                                                style={{ alignItems: 'flex-end', marginHorizontal: 20, marginTop: 20 }}
-                                                onPress={() => {
-                                                    setVisibleModalInfo(false)
-                                                }}
-                                            >
-                                                <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
-                                            </TouchableOpacity>
-
-                                            <View style={{
+                                            {/* <View style={{
                                                 backgroundColor: COLORS.primary,
                                                 padding: 10,
                                                 width: 179,
@@ -674,7 +678,7 @@ export const DetailLinimasa = () => {
                                                 borderBottomRightRadius: 4
                                             }}>
                                                 <Text style={{ color: COLORS.white }}>Informasi Pengetahuan</Text>
-                                            </View>
+                                            </View> */}
 
                                             <View>
                                                 <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', marginHorizontal: 40 }}>
@@ -723,7 +727,7 @@ export const DetailLinimasa = () => {
                                                     <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[When]</Text>
                                                 </View>
 
-                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{moment(detail.start_date_agenda, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
+                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{detail.start_date_agenda}</Text>
                                             </View>
                                         </View>
                                     </View>

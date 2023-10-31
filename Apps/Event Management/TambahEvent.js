@@ -315,7 +315,7 @@ export const TambahEvent = () => {
             token: token,
             payload: payload
         }
-        dispatch(postEvent(data))
+        // dispatch(postEvent(data))
     }
 
     return (

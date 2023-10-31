@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import { COLORS } from '../../config/SuperAppps';
+import { COLORS, PADDING } from '../../config/SuperAppps';
 import { StyleSheet } from 'react-native';
 import { TopsProduksiBudidaya } from '../Korespondensi/AppNavigator';
 import { useDispatch } from 'react-redux';
@@ -17,7 +17,7 @@ export const ProduksiBudidaya = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ backgroundColor: COLORS.primary, height: '10%', flexDirection: 'row' }}>
+            <View style={{ backgroundColor: COLORS.primary, height: '10%', flexDirection: 'row'}}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <View style={[styles.backIcon, { justifyContent: 'center', alignItems: 'center', marginTop: 25, marginLeft: 20 }]}>
                         <Ionicons name='chevron-back' size={24} color={COLORS.primary} />
@@ -28,7 +28,7 @@ export const ProduksiBudidaya = () => {
                 </View>
             </View>
 
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1,}}>
                 <TopsProduksiBudidaya />
             </View>
         </SafeAreaView>
