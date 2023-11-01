@@ -175,6 +175,29 @@ export const HalamanUtama = () => {
     if (bottomSheetModalAddRef.current) bottomSheetModalAddRef.current?.close();
   };
 
+  const [search, setSearch] = useState('')
+  const [filterData, setFilterData] = useState([])
+
+
+  const filter = (event) => {
+    setSearch(event)
+  }
+
+  useEffect(() => {
+    setFilterData(event.lists)
+  }, [event])
+
+  useEffect(() => {
+    if (search !== '') {
+      const data = event.lists?.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      })
+      setFilterData(data)
+    } else {
+      setFilterData(event.lists)
+    }
+  }, [search])
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -207,6 +230,8 @@ export const HalamanUtama = () => {
 
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, marginTop: 40 }}>
 
+          
+            
             <TouchableOpacity style={{
               width: 171,
               height: 41,
@@ -221,6 +246,8 @@ export const HalamanUtama = () => {
             >
               <Text style={{ color: variant === 'hariini' ? COLORS.white : null }}>Agenda Rapat Hari Ini</Text>
             </TouchableOpacity>
+
+            
 
             <TouchableOpacity style={{
               width: 171,
@@ -237,6 +264,16 @@ export const HalamanUtama = () => {
               <Text style={{ color: variant === 'progres' ? COLORS.white : null }}>Progres Agenda Rapat</Text>
             </TouchableOpacity>
           </View>
+
+        <View style={{ padding: 20, gap: 20 }}>
+          <View style={{}}>
+            <Search
+              placeholder={'Cari'}
+              onSearch={filter}
+            />
+          </View>
+        </View>
+
           {variant === 'hariini' ? (
             <FlatList
               data={list}
@@ -252,12 +289,21 @@ export const HalamanUtama = () => {
             />
           ) : (
             <View>
-              <View style={{ padding: 25 }}>
+              <View style={{ padding: 25, gap: 20 }}>
+
+              {/* <View style={{ }}>
+                <Search
+                placeholder={'Cari'}
+                onSearch={filter}
+                />
+              </View> */}
+
                 <View style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center'
                 }}>
+                  
                   <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>Event</Text>
 
                   <View style={{ flexDirection: 'row', gap: 10 }}>
