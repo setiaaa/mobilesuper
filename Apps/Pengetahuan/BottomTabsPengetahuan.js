@@ -79,8 +79,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="school-outline"
                   color={COLORS.primary}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.primary }}>Linimasa</Text>
+                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Linimasa</Text>
               </View>
             ) : (
               <View
@@ -91,8 +92,8 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   width: 80,
                 }}
               >
-                <Ionicons name="school-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Linimasa</Text>
+                <Ionicons name="school-outline" color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
+                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Linimasa</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -253,8 +254,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="chatbubbles-outline"
                   color={COLORS.primary}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.primary }}>Laporan</Text>
+                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 20 }}>Laporan</Text>
               </View>
             ) : (
               <View
@@ -269,8 +271,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="chatbubbles-outline"
                   color={COLORS.grey}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.grey }}>Laporan</Text>
+                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Laporan</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -311,8 +314,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="document-text-outline"
                   color={COLORS.primary}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.primary }}>Penilaian</Text>
+                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Penilaian</Text>
               </View>
             ) : (
               <View
@@ -327,8 +331,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="document-text-outline"
                   color={COLORS.grey}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.grey }}>Penilaian</Text>
+                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Penilaian</Text>
               </View>
             )}
           </TouchableOpacity>

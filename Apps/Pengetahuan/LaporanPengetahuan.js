@@ -133,7 +133,7 @@ export const LaporanPengetahuan = () => {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
               <Ionicons
                 name="chevron-back-outline"
                 size={24}
@@ -716,8 +716,8 @@ export const LaporanPengetahuan = () => {
             <TouchableOpacity
               style={{
                 backgroundColor: COLORS.primary,
-                width: 226,
-                height: 32,
+                width: '100%',
+                height: 40,
                 borderRadius: 8,
                 justifyContent: "center",
                 marginTop: 20,

@@ -17,7 +17,7 @@ function SearchFilter({
             borderRadius: 12,
             backgroundColor: GlobalStyles.colors.textWhite,
           }}
-          placeholder="Search"
+          placeholder="Cari..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           onIconPress={getSearch}

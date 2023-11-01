@@ -50,6 +50,23 @@ export const PostinganBaru = () => {
     (state) => state.event
   );
 
+  const [modal, setModal] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [image, setImage] = useState(null);
+  const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+      })
+
+      if (!result.canceled) {
+          setImage(result.assets[0].uri);
+      }
+  };
+
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
 
@@ -86,6 +103,8 @@ export const PostinganBaru = () => {
     };
     dispatch(postEvent(data));
   };
+
+  const [type, setType] = useState([])
 
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
@@ -156,7 +175,7 @@ export const PostinganBaru = () => {
               >
                 <TouchableOpacity
                   style={{}}
-                  onPress={() => navigation.goBack()}
+                  onPress={() => navigation.navigate("Home")}
                 >
                   <Ionicons
                     name="chevron-back-outline"

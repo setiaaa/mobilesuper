@@ -230,7 +230,7 @@ function AddressbookTitle({
       <View style={{ marginBottom: 200 }}>
         {loadingOverlay}
         <Searchbar
-          placeholder="Search"
+          placeholder="Cari..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           onIconPress={getTitleSearch}

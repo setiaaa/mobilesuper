@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
@@ -12,20 +12,16 @@ import { StatusBar } from "expo-status-bar";
 const CardListPostingan = ({ item }) => {
   // console.log(item);
   return (
-    <View style={{ width: "90%", alignSelf: "center", marginVertical: 5 }}>
+    <View style={{ width: "90%", alignSelf: "center", marginVertical: 20, padding: PADDING.Page }}>
       <View
         style={{
-          width: "100%",
-          backgroundColor: COLORS.white,
           height: 90,
+          borderBottomWidth: 10,
+          borderColor: COLORS.lighter,
           alignItems: "center",
           borderRadius: 8,
-          padding: 20,
           flexDirection: "row",
           //shadow ios
-          shadowOffset: { width: -2, height: 4 },
-          shadowColor: "#171717",
-          shadowOpacity: 0.2,
           //shadow android
           elevation: 2,
         }}
@@ -35,12 +31,13 @@ const CardListPostingan = ({ item }) => {
           <View
             style={{
               display: "flex",
-              flexDirection: "row",
               // justifyContent: "space-between",
               marginVertical: 10,
+              gap: 10,
+              paddingBottom: 10
             }}
           >
-            <View style={{ width: "65%" }}>
+            <View style={{ width: "80%" }}>
               <Text
                 style={{ fontSize: 13, fontWeight: 400, color: COLORS.grey }}
               >
@@ -95,7 +92,7 @@ export const ListPostinganPegawai = (param) => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
             <Ionicons
               name="chevron-back-outline"
               size={24}

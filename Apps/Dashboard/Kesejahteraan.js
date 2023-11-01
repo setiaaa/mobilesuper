@@ -93,7 +93,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
     };
     const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const { width } = useWindowDimensions();
-
+    console.log(item)
     return (
         <View>
             {/* {value === 'taspen' ? (
@@ -103,7 +103,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
                 />
             ) : ( */}
 
-            <TouchableOpacity style={{ backgroundColor: COLORS.white, marginTop: 20, marginHorizontal: 20, padding: 10, borderRadius: 8 }}
+            <TouchableOpacity style={{ backgroundColor: COLORS.white, marginTop: 20, marginHorizontal: 20, padding: 10, borderRadius: 8}}
                 onPress={() => {
                     setDetail('detail')
                     setDetailContent(item)
@@ -179,7 +179,7 @@ export const Kesejahteraan = () => {
                     }}
                 >
                     <Image source={require('../../assets/superApp/Tapera.png')} />
-                    <Text>Tapera</Text>
+                    <Text style={{ color: value === 'tapera' ? COLORS.primary : COLORS.foundation}}>Tapera</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
@@ -190,7 +190,7 @@ export const Kesejahteraan = () => {
                     }}
                 >
                     <Image source={require('../../assets/superApp/BPJS.png')} />
-                    <Text>BPJS</Text>
+                    <Text style={{ color: value === 'bpjs' ? COLORS.primary : COLORS.foundation}}>BPJS</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
@@ -201,7 +201,7 @@ export const Kesejahteraan = () => {
                     }}
                 >
                     <Image source={require('../../assets/superApp/Taspen.png')} />
-                    <Text>Taspen</Text>
+                    <Text style={{ color: value === 'taspen' ? COLORS.primary : COLORS.foundation}}>Taspen</Text>
                 </TouchableOpacity>
             </View>
 
@@ -222,6 +222,7 @@ export const Kesejahteraan = () => {
                                 setDetailContent={setDetailContent}
                                 value={value}
                                 loading={loading}
+                                enableExperimentalMarginCollapsing={true}
                             />
                             }
                             ListFooterComponent={() => (

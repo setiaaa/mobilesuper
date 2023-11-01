@@ -13,6 +13,7 @@ import { CardListBeritaHome } from "../../components/CardListBeritaHome";
 import { CardListBeritaSatker } from "../../components/CardListBeritaSatker";
 import { setBeritaSatker } from "../../store/Satker";
 import { ActivityIndicator } from "react-native";
+import ListEmpty from "../../components/ListEmpty";
 
 
 
@@ -20,8 +21,10 @@ export const ListBeritaSatker = () => {
     const { berita, loading } = useSelector(state => state.satker)
     const navigation = useNavigation();
     const [token, setToken] = useState("");
+    const [search, setSearch] = useState('')
     const [page, setPage] = useState(1)
     const dispatch = useDispatch()
+    const [filterData, setFilterData] = useState([])
 
     useEffect(() => {
         getTokenValue().then((val) => {
@@ -44,6 +47,26 @@ export const ListBeritaSatker = () => {
             setPage(page + 1)
         }
     }
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(berita.lists)
+    }, [berita])
+
+    useEffect(() => {
+        const item = berita.lists
+        if (search !== '') {
+            const data = item.filter((item) => {
+                return item.title.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(item)
+        }
+    }, [search])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -84,10 +107,14 @@ export const ListBeritaSatker = () => {
                     </View>
                 </View>
                 <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-                    <Search placeholder={"Pencarian"} />
+                    <Search
+                        placeholder={'Cari'}
+                        iconColor={COLORS.primary}
+                        onSearch={filter}
+                    />
                 </View>
                 <FlatList
-                    data={berita.lists}
+                    data={filterData}
                     renderItem={({ item, index }) => (
                         <View key={index}>
                             <CardListBeritaSatker
@@ -101,6 +128,7 @@ export const ListBeritaSatker = () => {
                             />
                         </View>
                     )}
+                    ListEmptyComponent={() => <ListEmpty />}
                     ListFooterComponent={() => (
                         loading && (
                             <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>

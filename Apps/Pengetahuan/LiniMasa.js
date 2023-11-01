@@ -422,8 +422,8 @@ const CardLiniMasa = ({ item, token }) => {
                       item.category === "Video / Jurnal"
                         ? COLORS.successLight
                         : item.category === "Infografis"
-                        ? COLORS.warningLight
-                        : COLORS.infoLight,
+                          ? COLORS.warningLight
+                          : COLORS.infoLight,
                     height: 30,
                     width: 120,
                     borderRadius: 30,
@@ -458,8 +458,8 @@ const CardLiniMasa = ({ item, token }) => {
                         item.category === "Infografis"
                           ? COLORS.warning
                           : item.category === "Kegiatan"
-                          ? COLORS.info
-                          : COLORS.success,
+                            ? COLORS.info
+                            : COLORS.success,
                     }}
                   >
                     {item.category}
@@ -1196,7 +1196,7 @@ export const LiniMasa = () => {
               <CardLiniMasa
                 item={item}
                 token={token}
-                // setVisibleModal={setVisibleModal}
+              // setVisibleModal={setVisibleModal}
               />
             </View>
           )}

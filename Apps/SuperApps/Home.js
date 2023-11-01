@@ -165,7 +165,7 @@ export const Home = () => {
   }
 
   const closeBottomSheet = () => {
-    bottomSheetModalRef.current.collapse();
+    bottomSheetModalRef.current.close();
   };
   const navigation = useNavigation();
 
@@ -270,7 +270,7 @@ export const Home = () => {
               </View>
             </View>
 
-            <View style={{ marginTop: 30 }}>
+            <View>
               <CardApps handlePressModal={handlePressModal} />
               <Portal>
                 <BottomSheetModal
@@ -290,17 +290,18 @@ export const Home = () => {
                 >
                   <View onLayout={handleContentLayout}>
                     <View style={{ marginVertical: 20 }}>
-                      <View style={{ marginLeft: 30 }}>
-                        <Text
-                          style={{
-                            fontSize: FONTSIZE.H1,
-                            fontWeight: FONTWEIGHT.bold,
+                      <View style={{ marginHorizontal: 20, marginTop: 10, flexDirection: "row", justifyContent: "space-between", padding: 14 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H1, }}>Aplikasi</Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log()
+                            closeBottomSheet()
                           }}
                         >
-                          Aplikasi
-                        </Text>
+                          <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                        </TouchableOpacity>
                       </View>
-                      <View style={{ marginVertical: 50 }}>
+                      <View style={{ marginVertical: 20 }}>
                         <CardAppsB />
                       </View>
                     </View>

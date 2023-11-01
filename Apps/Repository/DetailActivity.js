@@ -18,7 +18,7 @@ import { useMemo } from "react";
 import { BottomTabsDetailRepo } from "../Korespondensi/AppNavigator";
 import { useState } from "react";
 import { useEffect } from "react";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import {
   GestureHandlerRootView,
   ScrollView,
@@ -214,7 +214,7 @@ export const DetailActivity = () => {
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
-                  : {moment(detail.attributes.tanggal).format("DD MMM yyy")}
+                  : {moment(detail.attributes.tanggal).format("DD MMMM YYYY")}
                 </Text>
               </View>
               <View

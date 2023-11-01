@@ -66,27 +66,34 @@ const CardPenilaian = ({ item, token }) => {
                 </View>
                 <View style={{ width: '75%' }}>
                     <Text>{item.title}</Text>
-                    <View style={{ flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
+                    <View style={{  gap: 10, marginTop: 10, }}>
                         <Text style={{ color: COLORS.lighter }}>Tanggal: {moment(item.published_date, 'HH:mm:ss').format('DD MMM YYYY')}</Text>
+                        <View style={{ display: 'flex', flexDirection: 'row', gap: 10}}>
                         <Text style={{ color: COLORS.lighter }}>Poin:</Text>
                         {item.is_scored !== true ? (
                             <View style={{
                                 borderWidth: 1,
+                                width: 80,
                                 padding: 5,
                                 borderColor: COLORS.primary,
-                                borderRadius: 16
+                                borderRadius: 16,
+                                alignItems: 'center'
                             }}>
                                 <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}>Waiting</Text>
                             </View>
                         ) : (
                             <View style={{
                                 padding: 5,
+                                width: 80,
                                 backgroundColor: COLORS.success,
-                                borderRadius: 16
+                                borderRadius: 16,
+                                alignItems: 'center'
+
                             }}>
                                 <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>{item.score}</Text>
                             </View>
                         )}
+                        </View>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -236,7 +243,7 @@ export const PenilaianPenggetahaun = () => {
                         justifyContent: 'center',
                         marginLeft: 20
                     }}>
-                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
                             <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                         </TouchableOpacity>
                     </View>
@@ -245,9 +252,26 @@ export const PenilaianPenggetahaun = () => {
                     </View>
                 </View>
 
+                <View style={{ alignItems: 'center', marginTop: 20}}>
+                <TouchableOpacity style={{
+                        height: 43,
+                        width: "91%",
+                        backgroundColor: COLORS.white,
+                        borderRadius: 8,
+                        justifyContent: 'center',
+                        paddingLeft: 10
+                    }}
+                        onPress={() => {
+                            bottomSheetAttach()
+                        }}
+                    >
+                        <Ionicons name='search-outline' size={24} />
+                </TouchableOpacity>
+                </View>
+
                 <View style={{ flexDirection: 'row', marginVertical: 20, marginHorizontal: 20, gap: 5 }}>
                     <View style={{
-                        width: '43%',
+                        width: '50%',
                     }}>
                         <Dropdown
                             data={listYear}
@@ -259,7 +283,7 @@ export const PenilaianPenggetahaun = () => {
                     </View>
 
                     <View style={{
-                        width: "43%",
+                        width: "50%",
                     }}>
                         <Dropdown
                             data={dataKuartal}
@@ -270,7 +294,7 @@ export const PenilaianPenggetahaun = () => {
                         />
                     </View>
 
-                    <TouchableOpacity style={{
+                    {/* <TouchableOpacity style={{
                         height: 43,
                         width: "12%",
                         backgroundColor: COLORS.white,
@@ -283,7 +307,7 @@ export const PenilaianPenggetahaun = () => {
                         }}
                     >
                         <Ionicons name='search-outline' size={24} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 <Portal>

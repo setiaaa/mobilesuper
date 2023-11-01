@@ -47,3 +47,7 @@ export const DATETIME = {
     SHORT_DATE: 'DD-MM-YYYY',
     LONG_DATE: 'DD MMMM YYYY'
 }
+
+export const PADDING = {
+    Page : 20,
+}

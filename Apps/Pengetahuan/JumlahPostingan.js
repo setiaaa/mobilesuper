@@ -65,6 +65,8 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
+          marginTop: 10,
+          padding: 5,
         }}
       >
         JUMLAH
@@ -157,6 +159,8 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
+          marginTop: 10,
+          padding: 5,
         }}
       >
         JUMLAH
@@ -249,6 +253,8 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
+          marginTop: 10,
+          padding: 5,
         }}
       >
         JUMLAH
@@ -341,6 +347,8 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
+          marginTop: 10,
+          padding: 5,
         }}
       >
         JUMLAH
@@ -436,7 +444,7 @@ export const JumlahPostingan = () => {
         shadowOpacity: 0.2,
         elevation: 2,
       }}
-      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 9 }}
+      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 13 }}
     />
   );
 
@@ -449,6 +457,8 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
+          marginTop: 10,
+          padding: 5,
         }}
       >
         JUMLAH
@@ -560,7 +570,7 @@ export const JumlahPostingan = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -589,13 +599,32 @@ export const JumlahPostingan = () => {
             elevation: 2,
           }}
         >
-          <View style={{ backgroundColor: COLORS.primary, borderRadius: 8, padding: 10 }}>
-            <Text style={{ color: "#FFFFFF", textAlign: "center", fontSize: 13, fontWeight: 600 }}>Triwulan</Text>
+          <View
+            style={{
+              // backgroundColor: COLORS.primary,
+              // borderRadius: 8,
+              // borderTopLeftRadius: 8,
+              // borderTopRightRadius: 8,
+              borderBottomWidth: 1,
+              borderBottomColor: COLORS.primary,
+              padding: 10,
+            }}
+          >
+            <Text
+              style={{
+                color: COLORS.primary,
+                textAlign: "center",
+                fontSize: 17,
+                fontWeight: 600,
+              }}
+            >
+              Triwulan
+            </Text>
           </View>
           {Object.keys(postinganSayaJumlah.dilihat).length !== 0 &&
-            Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
-            Object.keys(postinganSayaJumlah.draft).length !== 0 &&
-            Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
+          Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
+          Object.keys(postinganSayaJumlah.draft).length !== 0 &&
+          Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
             <TabView
               navigationState={{ index, routes }}
               renderScene={renderScene}
@@ -662,7 +691,7 @@ export const JumlahPostingan = () => {
               textAlign: "center",
               borderRadius: 4,
               marginTop: 10,
-              padding: 5
+              padding: 5,
             }}
           >
             JUMLAH
@@ -670,15 +699,14 @@ export const JumlahPostingan = () => {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "center",
+              justifyContent: "space-between",
             }}
           >
             <View
               style={{
-                width: "30%",
+                width: "45%",
                 height: 64,
                 alignItems: "center",
-                alignContent: "center",
                 padding: 10,
               }}
             >
@@ -688,15 +716,15 @@ export const JumlahPostingan = () => {
                   marginTop: 10,
                   backgroundColor: "#F0F0F0",
                   borderRadius: 8,
-                  width: 41,
-                  height: 46,
+                  width: 155,
+                  height: 60,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: 700,
                     color: "#6B7280",
                   }}
@@ -709,10 +737,9 @@ export const JumlahPostingan = () => {
             </View>
             <View
               style={{
-                width: "30%",
+                width: "45%",
                 height: 64,
                 alignItems: "center",
-                alignContent: "center",
                 padding: 10,
               }}
             >
@@ -722,15 +749,15 @@ export const JumlahPostingan = () => {
                   marginTop: 10,
                   backgroundColor: "#D9F5E5",
                   borderRadius: 8,
-                  width: 41,
-                  height: 46,
+                  width: 155,
+                  height: 60,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: 700,
                     color: "#6B7280",
                   }}

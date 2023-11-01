@@ -342,8 +342,8 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
             {listData.child.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === listData.id) ||
-                (toggleComment.id !== listData.id &&
-                  listData.child.length > 0) ? (
+                  (toggleComment.id !== listData.id &&
+                    listData.child.length > 0) ? (
                   <TouchableOpacity
                     key={listData.id}
                     onPress={() => clickBalas(listData.id, true)}
@@ -705,8 +705,8 @@ export const DetailLinimasa = () => {
                         detail.category === "Video / Jurnal"
                           ? COLORS.successLight
                           : detail.category === "Infografis"
-                          ? COLORS.warningLight
-                          : COLORS.infoLight,
+                            ? COLORS.warningLight
+                            : COLORS.infoLight,
                       width: 130,
                       height: 30,
                       borderRadius: 30,
@@ -741,8 +741,8 @@ export const DetailLinimasa = () => {
                           detail.category === "Infografis"
                             ? COLORS.warning
                             : detail.category === "Kegiatan"
-                            ? COLORS.info
-                            : COLORS.success,
+                              ? COLORS.info
+                              : COLORS.success,
                       }}
                     >
                       {detail.category}
@@ -1139,8 +1139,8 @@ export const DetailLinimasa = () => {
                         </View>
                       </TouchableOpacity>
                       {getFileExtension(lampiranById.name) === "png" ||
-                      getFileExtension(lampiranById.name) === "jpg" ||
-                      getFileExtension(lampiranById.name) === "jpeg" ? (
+                        getFileExtension(lampiranById.name) === "jpg" ||
+                        getFileExtension(lampiranById.name) === "jpeg" ? (
                         <View>
                           <Image
                             source={{ uri: lampiranById.file }}

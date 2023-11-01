@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
@@ -19,7 +19,7 @@ import { getTokenValue } from '../../service/session'
 import { setDigitalSignLists } from '../../store/DigitalSign'
 
 
-const ListDokumenLain = ({item, variant, token}) => {
+const ListDokumenLain = ({ item, variant, token }) => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const [isSelected, setSelection] = useState(false);
@@ -27,10 +27,10 @@ const ListDokumenLain = ({item, variant, token}) => {
         const params = { token, id };
         // const data = event.listsprogress.find(item => item.id === id)
         dispatch(getDetailDigisign(params));
-      };
+    };
     return (
 
-        <View 
+        <View
             key={item.id}
             style={{
                 backgroundColor: 'white',
@@ -47,22 +47,22 @@ const ListDokumenLain = ({item, variant, token}) => {
                 // //shadow android
                 elevation: 2,
                 marginVertical: 10
-        }}>
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", gap: 10}}
+            }}>
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
                 onPress={() => {
                     getDetail(item.id)
                     navigation.navigate('DetailDokumenLain')
-            }}>
-            {variant === 'inprogress'?(
-                <Checkbox
+                }}>
+                {variant === 'inprogress' ? (
+                    <Checkbox
                         value={isSelected}
                         onValueChange={setSelection}
                         color={isSelected === true ? COLORS.lighter : null}
-                />
-            ):(
-                null
-            )}                    
-            <Text style={{ marginVertical: 5, fontSize: 13, width:300, textAlign:'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
+                    />
+                ) : (
+                    null
+                )}
+                <Text style={{ marginVertical: 5, fontSize: 13, width: 300, textAlign: 'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -76,8 +76,8 @@ export const DokumenLain = () => {
     const [tipe, setTipe] = useState('dokumen_lain')
     const [variant, SetVariant] = useState('')
     const [filterData, setFilterData] = useState([])
-    
-    
+
+
     useEffect(() => {
         getTokenValue().then(val => {
             setToken(val)
@@ -86,41 +86,41 @@ export const DokumenLain = () => {
 
     useEffect(() => {
         SetVariant('draft')
-        dispatch(getListDraft({token:token, tipe:tipe}));
+        dispatch(getListDraft({ token: token, tipe: tipe }));
     }, [tipe])
 
     const filterHandlerComposer = () => {
         SetVariant('composer')
-        dispatch(getListComposer({token:token, tipe:tipe}));
+        dispatch(getListComposer({ token: token, tipe: tipe }));
     }
     const filterHandlerInProgress = () => {
         SetVariant('inprogress')
-        dispatch(getListInProgress({token:token, tipe:tipe}));
+        dispatch(getListInProgress({ token: token, tipe: tipe }));
     }
     const filterHandlerCompleted = () => {
         SetVariant('completed')
-        dispatch(getListCompleted({token:token, tipe:tipe}));
+        dispatch(getListCompleted({ token: token, tipe: tipe }));
     }
     const filterHandlerDraft = () => {
         SetVariant('draft')
-        dispatch(getListDraft({token:token, tipe:tipe}));
+        dispatch(getListDraft({ token: token, tipe: tipe }));
     }
     const filterHandlerSigned = () => {
         SetVariant('signed')
-        dispatch(getListSignedDigiSign({token:token, tipe:tipe}));
+        dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
     }
 
-    
+
     const { dokumenlain } = useSelector((state) => state.digitalsign)
 
     const filter = (event) => {
         setSearch(event)
     }
-    
+
     useEffect(() => {
         setFilterData(dokumenlain.lists)
     }, [dokumenlain])
-    
+
     useEffect(() => {
         const item = dokumenlain.lists
         if (search !== '') {
@@ -138,130 +138,130 @@ export const DokumenLain = () => {
     // console.log(filterData)
     return (
         <GestureHandlerRootView>
-                <SafeAreaView style={{ position: 'relative' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            borderRadius: 20,
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginLeft: 20
-                        }}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Digital Signature</Text>
-                        </View>
+            <SafeAreaView style={{ position: 'relative' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 20
+                    }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
-                        <View style={{ width: '90%', marginLeft: 20, marginTop: 20, }}>
-                            <Search
-                                placeholder={'Cari'}
-                                iconColor={COLORS.primary}
-                                onSearch={filter}
-                            />
-                        </View>
+                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Digital Signature</Text>
                     </View>
-                    <View>
-                        <View style={{paddingVertical:10, paddingHorizontal:20, flexDirection:'row', justifyContent:'center'}}>
-                            <TouchableOpacity style={{
-                                marginHorizontal:5,
-                                width: 60,
-                                height: 30,
-                                borderWidth: 1,
-                                backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
-                                borderRadius: 30,
-                                borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                                }}
-                                onPress={() => filterHandlerDraft()}
-                            >
-                            <Text style={{color: variant === 'draft' ? COLORS.infoDanger: COLORS.foundation}}>Draft</Text>
-                                </TouchableOpacity>
-                            <TouchableOpacity style={{
-                                marginHorizontal:5,
-                                width: 80,
-                                height: 30,
-                                borderWidth: 1,
-                                backgroundColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.input,
-                                borderRadius: 30,
-                                borderColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                                }}
-                                onPress={() => filterHandlerComposer()}
-                            >
-                                <Text style={{color: variant === 'composer' ? COLORS.infoDanger: COLORS.foundation}}>List Saya</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{
-                                marginHorizontal:5,
-                                width: 85,
-                                height: 30,
-                                borderWidth: 1,
-                                backgroundColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.input,
-                                borderRadius: 30,
-                                borderColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                                }}
-                                onPress={() => filterHandlerInProgress()}
-                            >
-                                <Text style={{color: variant === 'inprogress' ? COLORS.infoDanger: COLORS.foundation}}>Need Sign</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{
-                                marginHorizontal:5,
-                                width: 60,
-                                height: 30,
-                                borderWidth: 1,
-                                backgroundColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.input,
-                                borderRadius: 30,
-                                borderColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                                }}
-                                onPress={() => filterHandlerSigned()}
-                            >
-                                <Text style={{color: variant === 'signed' ? COLORS.infoDanger: COLORS.foundation}}>Signed</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{
-                                marginHorizontal:5,
-                                width: 60,
-                                height: 30,
-                                borderWidth: 1,
-                                backgroundColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.input,
-                                borderRadius: 30,
-                                borderColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                                }}
-                                onPress={() => filterHandlerCompleted()}
-                            >
-                                <Text style={{color: variant === 'completed' ? COLORS.infoDanger: COLORS.foundation}}>Selesai</Text>
-                            </TouchableOpacity>    
-                        </View>
-                        <FlatList
-                            data={filterData}
-                            renderItem={({ item }) => (
-                                <View key={item.id}>
-                                    <ListDokumenLain
-                                        item={item}
-                                        token={token}
-                                        variant = {variant}
-                                    />
-                                </View>
-                            )}
-                            keyExtractor={item => item.id}
-                            ListEmptyComponent={() => <ListEmpty />}
-                            style={{ height: '70%' }} 
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ width: '90%', marginLeft: 20, marginTop: 20, }}>
+                        <Search
+                            placeholder={'Cari'}
+                            iconColor={COLORS.primary}
+                            onSearch={filter}
                         />
                     </View>
-                    
-                    <TouchableOpacity onPress={() => {
+                </View>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'center' }}>
+                        <TouchableOpacity style={{
+                            marginHorizontal: 5,
+                            width: 60,
+                            height: 30,
+                            borderWidth: 1,
+                            backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
+                            borderRadius: 30,
+                            borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                            onPress={() => filterHandlerDraft()}
+                        >
+                            <Text style={{ color: variant === 'draft' ? COLORS.infoDanger : COLORS.foundation }}>Draft</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            marginHorizontal: 5,
+                            width: 80,
+                            height: 30,
+                            borderWidth: 1,
+                            backgroundColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.input,
+                            borderRadius: 30,
+                            borderColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                            onPress={() => filterHandlerComposer()}
+                        >
+                            <Text style={{ color: variant === 'composer' ? COLORS.infoDanger : COLORS.foundation }}>List Saya</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            marginHorizontal: 5,
+                            width: 85,
+                            height: 30,
+                            borderWidth: 1,
+                            backgroundColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.input,
+                            borderRadius: 30,
+                            borderColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                            onPress={() => filterHandlerInProgress()}
+                        >
+                            <Text style={{ color: variant === 'inprogress' ? COLORS.infoDanger : COLORS.foundation }}>Need Sign</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            marginHorizontal: 5,
+                            width: 60,
+                            height: 30,
+                            borderWidth: 1,
+                            backgroundColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.input,
+                            borderRadius: 30,
+                            borderColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                            onPress={() => filterHandlerSigned()}
+                        >
+                            <Text style={{ color: variant === 'signed' ? COLORS.infoDanger : COLORS.foundation }}>Signed</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            marginHorizontal: 5,
+                            width: 60,
+                            height: 30,
+                            borderWidth: 1,
+                            backgroundColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.input,
+                            borderRadius: 30,
+                            borderColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                            onPress={() => filterHandlerCompleted()}
+                        >
+                            <Text style={{ color: variant === 'completed' ? COLORS.infoDanger : COLORS.foundation }}>Selesai</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <FlatList
+                    data={filterData}
+                    renderItem={({ item }) => (
+                        <View key={item.id}>
+                            <ListDokumenLain
+                                item={item}
+                                token={token}
+                                variant={variant}
+                            />
+                        </View>
+                    )}
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={() => <ListEmpty />}
+                    style={{ height: '73%' }}
+                />
+
+                {/* <TouchableOpacity onPress={() => {
                         navigation.navigate('TambahDokumenLain')
                     }}
                         style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}
@@ -269,8 +269,8 @@ export const DokumenLain = () => {
                         <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
                             <Ionicons name='add-outline' size={24} color={COLORS.white} />
                         </View>
-                    </TouchableOpacity>
-                </SafeAreaView>
+                    </TouchableOpacity> */}
+            </SafeAreaView>
         </GestureHandlerRootView>
     )
 }

@@ -10,13 +10,19 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  DATETIME,
+  FONTSIZE,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { getTokenValue } from "../../service/session";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Search } from "../../components/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyPostDetail, getMyPostList } from "../../service/api";
+import { getDetailLinimasa, getMyPostDetail, getMyPostList, getViewLinimasa } from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
 import moment from "moment/moment";
 import ListEmpty from "../../components/ListEmpty";
@@ -26,16 +32,18 @@ const CardPostinganSaya = ({ item, token }) => {
   const dispatch = useDispatch();
 
   const getDetail = (id) => {
-    const param = { token, id };
-    dispatch(getMyPostDetail(param));
-  };
+    const params = { token, id }
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDetailLinimasa(params))
+    dispatch(getViewLinimasa(params))
+  }
 
   return (
-    <View style={{ width: "90%", alignSelf: "center", marginTop: 5 }}>
+    <View style={{ width: "90%", alignSelf: "center", marginTop: 20 }}>
       <TouchableOpacity
         onPress={() => {
           getDetail(item.id);
-          navigation.navigate("DetailPostinganSaya");
+          navigation.navigate("DetailLinimasa");
         }}
       >
         <View
@@ -47,106 +55,85 @@ const CardPostinganSaya = ({ item, token }) => {
             shadowOpacity: 0.2,
             elevation: 2,
             borderRadius: 8,
-            height: 130,
-            flexDirection: "row",
-            padding: 10,
-            marginVertical: 5,
+            // height: 130,
           }}
         >
-          <View style={{ justifyContent: "center" }}>
-            <Image
-              source={{ uri: item?.cover }}
-              style={{ height: 38, width: 70 }}
-            />
-          </View>
-          <View style={{ marginStart: 10 }}>
-            <Text
-              style={{
-                width: 270,
-                fontSize: 13,
-                textAlign: "justify",
-                marginBottom: 5,
-                maxWidth: 250
-              }}
-              numberOfLines={1} // Limit the number of lines to 1
-              ellipsizeMode="tail" // Display "..." at the end if text overflows
-            >
-              {item.title}
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginVertical: 15,
-              }}
-            >
-              <Text style={{ color: "#6B7280", fontSize: 13 }}>
-                Tanggal : {moment(item.created_at, 'HH:mm:ss').format(DATETIME.LONG_DATE)}
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}>
-                  Poin :
-                </Text>
-                <View
-                  style={{
-                    backgroundColor: COLORS.success,
-                    borderRadius: 8,
-                    width: 30,
-                  }}
-                >
-                  <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
-                    {item.score}
-                  </Text>
-                </View>
+          <View
+            style={{
+              flexDirection: "row",
+              paddingHorizontal: 20,
+              paddingTop: 20,
+              paddingBottom: 10,
+              marginVertical: 5,
+            }}
+          >
+            <View style={{ justifyContent: "center" }}>
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 2,
+                  borderRadius: 6,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                }}
+              >
+                <Image
+                  source={{ uri: item?.cover }}
+                  style={{ height: 38, width: 70, borderRadius: 6 }}
+                />
               </View>
             </View>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    borderRadius: 8,
-                    width: 33,
-                    height: 26,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Ionicons
-                    name="thumbs-up-outline"
-                    size={18}
-                    color="#FFFFFF"
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    color: COLORS.primary,
-                    marginStart: 5,
-                  }}
-                >
-                  {item.likes_count}
+            <View style={{ marginHorizontal: 10, width: "75%" }}>
+              <Text
+                style={{
+                  width: 270,
+                  fontSize: 13,
+                  textAlign: "justify",
+                  marginBottom: 5,
+                  maxWidth: 250,
+                }}
+                numberOfLines={1} // Limit the number of lines to 1
+                ellipsizeMode="tail" // Display "..." at the end if text overflows
+              >
+                {item.title}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginVertical: 15,
+                }}
+              >
+                <Text style={{ color: "#6B7280", fontSize: 13 }}>
+                  Tanggal :{" "}
+                  {moment(item.created_at, "HH:mm:ss").format(
+                    DATETIME.LONG_DATE
+                  )}
                 </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
+                  >
+                    Poin :
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.success,
+                      borderRadius: 8,
+                      width: 30,
+                    }}
+                  >
+                    <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                      {item.score}
+                    </Text>
+                  </View>
+                </View>
               </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons
-                  name="chatbox-ellipses-outline"
-                  size={18}
-                  color={COLORS.grey}
-                />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {item.comment_count}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {item.views_count}
-                </Text>
-              </View>
-              <View style={{ alignItems: "center" }}>
+              <View style={{ alignItems: "flex-end" }}>
                 {item?.state === "publish" ? (
                   <View
                     style={{
@@ -195,6 +182,51 @@ const CardPostinganSaya = ({ item, token }) => {
                   </View>
                 )}
               </View>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "center", gap: 50, paddingVertical: 10, borderTopWidth: 1, borderColor: "#E0E0E0", }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: COLORS.primary,
+                  borderRadius: 8,
+                  width: 33,
+                  height: 26,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons
+                  name="thumbs-up-outline"
+                  size={18}
+                  color="#FFFFFF"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: COLORS.primary,
+                  marginStart: 5,
+                }}
+              >
+                {item.likes_count}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons
+                name="chatbox-ellipses-outline"
+                size={18}
+                color={COLORS.grey}
+              />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>
+                {item.comment_count}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>
+                {item.views_count}
+              </Text>
             </View>
           </View>
         </View>
@@ -246,7 +278,7 @@ export const PostinganSaya = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -286,7 +318,7 @@ export const PostinganSaya = () => {
       <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
         <View
           style={{
-            marginVertical: 15,
+            marginTop: 15,
             borderRadius: 8,
             flexDirection: "row",
           }}

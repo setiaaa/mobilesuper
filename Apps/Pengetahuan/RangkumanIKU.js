@@ -38,6 +38,7 @@ import { shareAsync } from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 // import { FileSystem } from "expo";
 import * as DocumentPicker from "expo-document-picker";
+import { ActivityIndicator } from "react-native";
 // import { shareAsync } from "expo-sharing";
 // import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
@@ -232,7 +233,13 @@ export const RangkumanIKU = () => {
     }
   }, [token, savedYear, savedQuarter, savedUnitKerja]);
 
-  const { pegawai } = useSelector((state) => state.pengetahuan);
+  const { pegawai, refresh, loading } = useSelector((state) => state.pengetahuan);
+
+  useEffect(() => {
+    if (refresh) {
+      dispatch(getListPegawai({ token: token }))
+    }
+  }, [refresh])
 
   const { unitKerja } = useSelector((state) => state.pengetahuan);
 
@@ -344,7 +351,7 @@ export const RangkumanIKU = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -372,7 +379,7 @@ export const RangkumanIKU = () => {
             backgroundColor: switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 30,
+            borderRadius: 6,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -396,7 +403,7 @@ export const RangkumanIKU = () => {
             backgroundColor: !switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 30,
+            borderRadius: 6,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -417,7 +424,7 @@ export const RangkumanIKU = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ width: "90%", alignSelf: "center" }}>
+      <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
           <View style={{ height: "100%", width: "100%" }}>
             <WebView
@@ -444,7 +451,7 @@ export const RangkumanIKU = () => {
             >
               <TouchableOpacity
                 onPress={bottomSheetAttachSelect}
-                style={{ width: "80%" }}
+                style={{ width: "46%" }}
               >
                 <View
                   style={{
@@ -588,8 +595,8 @@ export const RangkumanIKU = () => {
                     </View>
 
                     {choiceTipe.key === "3" ||
-                    choiceTipe.key === "4" ||
-                    choiceTipe.key === "5" ? (
+                      choiceTipe.key === "4" ||
+                      choiceTipe.key === "5" ? (
                       <></>
                     ) : null}
 
@@ -695,7 +702,7 @@ export const RangkumanIKU = () => {
 
               <TouchableOpacity
                 onPress={bottomSheetAttachSearch}
-                style={{ width: "11%" }}
+                style={{ width: "46%" }}
               >
                 <View
                   style={{
@@ -763,6 +770,11 @@ export const RangkumanIKU = () => {
               </View>
             </View>
 
+            <View style={{ paddingHorizontal: 20, marginVertical: 10, gap: 2 }}>
+              <Text style={{ fontSize: 13, fontWeight: 500, color: COLORS.grey }}>Yang dipilih:</Text>
+              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value} / {savedQuarter.value} / {savedUnitKerja.value}</Text>
+            </View>
+
             <View>
               <View
                 style={{
@@ -772,7 +784,27 @@ export const RangkumanIKU = () => {
                   marginBottom: "95%",
                 }}
               >
-                {pegawai.lists.length !== 0
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) =>
+                    <View key={item.id} style={{ marginBottom: 10 }}>
+                      <ListDaftarPegawai item={item} token={token} />
+                    </View>
+                  }
+                  ListFooterComponent={() => (
+                    loading === true ? (
+                      <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                        <ActivityIndicator size="large" color={COLORS.primary} />
+                      </View>
+                    ) : (
+                      null
+                    )
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                />
+
+                {/* {pegawai.lists.length !== 0
                   ? pegawai.lists.map((item, index) => {
                       const getDetail = (id) => {
                         const param = { token, id };
@@ -836,10 +868,11 @@ export const RangkumanIKU = () => {
                               </Text>
                             </View>
                           </View>
-                        </TouchableOpacity>
-                      );
-                    })
-                  : ""}
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })
+                  : ""} */}
               </View>
             </View>
           </ScrollView>
