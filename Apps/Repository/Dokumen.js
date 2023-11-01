@@ -279,7 +279,7 @@ export const Dokumen = () => {
   useEffect(() => {
     if (search !== "") {
       const data = dokumen.lists.filter((item) => {
-        return item.judul.toLowerCase().includes(search.toLowerCase());
+        return item.title.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
     } else {
@@ -339,7 +339,7 @@ export const Dokumen = () => {
           <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
             <Search
               placeholder={"Cari"}
-            // onSearch={filter} 
+              onSearch={filter}
             />
             <View style={{ marginTop: 20 }}>
               <Dropdown
@@ -354,7 +354,7 @@ export const Dokumen = () => {
           <View>
             <FlatList
               key={"_"}
-              data={dokumen.lists}
+              data={filterData}
               renderItem={({ item }) => (
                 <DataList
                   bottomSheetAttach={bottomSheetAttach}

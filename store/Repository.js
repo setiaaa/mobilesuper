@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailDocument, getDocument, getDocumentDibagikan, getDocumentTamplate } from "../service/api";
+import { getDetailDocument, getDivisionFilter, getDocument, getDocumentDibagikan, getDocumentTamplate, getSubDivisionFilter } from "../service/api";
 
 const RepositorySlice = createSlice({
   name: "Repository",
@@ -17,7 +17,11 @@ const RepositorySlice = createSlice({
       detail: {}
     },
     loading: false,
-    load: false
+    load: false,
+    filter: {
+      unker: [],
+      satker: []
+    }
   },
   reducers: {
     // setDokumentlists: (state, action) => {
@@ -62,11 +66,9 @@ const RepositorySlice = createSlice({
         state.load = false
       })
       .addCase(getDocumentTamplate.fulfilled, (state, action) => {
-        console.log(action)
         state.tamplate.lists = action.payload;
         state.loading = false
         state.load = false
-        console.log('masukk')
       })
       .addCase(getDocumentTamplate.pending, (state, action) => {
         state.loading = true
@@ -75,7 +77,12 @@ const RepositorySlice = createSlice({
       .addCase(getDocumentTamplate.rejected, (state, action) => {
         state.loading = false
         state.load = false
-        console.log('tidak')
+      })
+      .addCase(getDivisionFilter.fulfilled, (state, action) => {
+        state.filter.unker = action.payload;
+      })
+      .addCase(getSubDivisionFilter.fulfilled, (state, action) => {
+        state.filter.satker = action.payload;
       })
   },
 });

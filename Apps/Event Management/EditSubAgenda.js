@@ -157,7 +157,7 @@ export const EditSubAgenda = () => {
         }
         dispatch(setAttachment([]))
         let pic = []
-        event.detailEvent.extra_attrs?.members.map(item => {
+        event.detailEvent?.extra_attrs?.members.map(item => {
             pic.push({
                 key: item.is_employee ? item.nip : item.title.objid,
                 value: item.is_employee ? item.nama : item.title.name
@@ -181,8 +181,8 @@ export const EditSubAgenda = () => {
         setPilihanPesertaTambahanInternal(agendaDetail.extra_attrs?.guests)
         setTempat(agendaDetail.location)
         setNote(agendaDetail.note)
-        agendaDetail.attachments.map(item => {
-            const data = document.some(doc => doc.id === item.id)
+        agendaDetail?.attachments?.map(item => {
+            const data = document?.some(doc => doc.id === item.id)
             if (!data) {
                 let tipe = item.file.split('/')
                 tipe = tipe[tipe.length - 1]
@@ -245,7 +245,7 @@ export const EditSubAgenda = () => {
 
     const handleSubmit = () => {
         const pilihanInternal = []
-        pilihanPesertaTambahanInternal.map(item => {
+        pilihanPesertaTambahanInternal?.map(item => {
             if (item.code) {
                 pilihanInternal.push(item.code)
             } else {
@@ -259,7 +259,7 @@ export const EditSubAgenda = () => {
         })
 
         const members = []
-        arrIsChecked.map(item => {
+        arrIsChecked?.map(item => {
             if (item.is_employee) {
                 members.push(item.nip)
             } else {
@@ -292,7 +292,7 @@ export const EditSubAgenda = () => {
     }
 
     const handleChangeChecked = (item, index) => {
-        const isChecked = arrIsChecked.some(data => data.nip === item.nip)
+        const isChecked = arrIsChecked?.some(data => data.nip === item.nip)
         const arr = [...arrIsChecked]
         if (isChecked) {
             arr.splice(index, 1)
@@ -302,11 +302,12 @@ export const EditSubAgenda = () => {
         setArrIsChecked(arr);
     }
 
+    console.log(agendaDetail)
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             {
-                loading ? (
+                loading === true && agendaDetail === null ? (
                     <Loading />
                 ) : null
             }
@@ -550,7 +551,7 @@ export const EditSubAgenda = () => {
                                                     minuteInterval={30}
                                                     style={{ borderRadius: 10 }}
                                                     onSelectedChange={date => {
-                                                        const [year, month, day] = date.split('/').map(Number)
+                                                        const [year, month, day] = date.split('/')?.map(Number)
                                                         const formattedDate = new Date(year, month - 1, day)
                                                         setTanggalMulai(moment(formattedDate).format('YYYY-MM-DD'))
                                                     }
@@ -642,7 +643,7 @@ export const EditSubAgenda = () => {
                                                     />
                                                 </View>
                                                 <ScrollView>
-                                                    {pilihanPeserta.map((item, index) => {
+                                                    {pilihanPeserta?.map((item, index) => {
                                                         return (
                                                             item.is_employee ? (
                                                                 <View>
@@ -652,7 +653,7 @@ export const EditSubAgenda = () => {
                                                                             <Text style={{ width: 250 }}>{item.nama}</Text>
                                                                         </View>
                                                                         <Checkbox
-                                                                            value={arrIsChecked.some(data => data.nip === item.nip)}
+                                                                            value={arrIsChecked?.some(data => data.nip === item.nip)}
                                                                             onValueChange={() =>
                                                                                 handleChangeChecked(item, index)
                                                                             }
@@ -670,7 +671,7 @@ export const EditSubAgenda = () => {
                                                                             <Text style={{ width: 250 }}>{item.title.name}</Text>
                                                                         </View>
                                                                         <Checkbox
-                                                                            value={arrIsChecked.some(data => data.nip === item.nip)}
+                                                                            value={arrIsChecked?.some(data => data.nip === item.nip)}
                                                                             onValueChange={() =>
                                                                                 handleChangeChecked(item, index)
                                                                             }
@@ -778,7 +779,7 @@ export const EditSubAgenda = () => {
                                 </View>
 
                                 <View>
-                                    {Tamu.map((item, index) => {
+                                    {Tamu?.map((item, index) => {
                                         return (
                                             <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 17, gap: 10 }}>
                                                 <View style={{

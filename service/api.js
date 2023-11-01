@@ -140,6 +140,7 @@ export const getEventAgenda = createAsyncThunk(
 export const getEventAgendaDetail = createAsyncThunk(
     "calendar/getEventAgendaDetail",
     async ({ token, id }) => {
+        console.log(id)
         const respon = await axios.get(`${kalender}event/agenda/${id}/retrieve/`, {
             headers: { Authorization: token },
         });
@@ -563,6 +564,26 @@ export const getDocument = createAsyncThunk(
     }
 );
 
+export const getDivisionFilter = createAsyncThunk(
+    "repository/getDivisionFilter",
+    async ({ token }) => {
+        const respon = await axios.get(`${BASE_URL}bridge/master/division/`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
+);
+
+export const getSubDivisionFilter = createAsyncThunk(
+    "repository/getSubDivisionFilter",
+    async ({ token, id }) => {
+        const respon = await axios.get(`${BASE_URL}bridge/master/department-div/${id}/`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
+);
+
 export const getDocumentDibagikan = createAsyncThunk(
     "repository/getDocumentDibagikan",
     async ({ token, page, general }) => {
@@ -575,9 +596,9 @@ export const getDocumentDibagikan = createAsyncThunk(
 
 export const getDocumentTamplate = createAsyncThunk(
     "repository/getDocumentTamplate",
-    async ({ token, page }) => {
-        console.log(page)
-        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=true&public=true&general=&by_title=false&unker=&satker=`, {
+    async ({ token, page, general, by_title, unker, satker }) => {
+        console.log(satker)
+        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=true&public=true&general=${general}&by_title=${by_title}&unker=${unker}&satker${satker}=`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;

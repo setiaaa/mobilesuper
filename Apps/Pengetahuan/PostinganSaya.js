@@ -26,6 +26,7 @@ import { getDetailLinimasa, getMyPostDetail, getMyPostList, getViewLinimasa } fr
 import { FlatList } from "react-native-gesture-handler";
 import moment from "moment/moment";
 import ListEmpty from "../../components/ListEmpty";
+import { Loading } from "../../components/Loading";
 
 const CardPostinganSaya = ({ item, token }) => {
   const navigation = useNavigation();
@@ -253,12 +254,17 @@ export const PostinganSaya = () => {
     }
   }, [token]);
 
-  const { postinganSaya } = useSelector((state) => state.pengetahuan);
+  const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
 
   // console.log(postinganSaya.lists);
 
   return (
     <SafeAreaView>
+      {loading ? (
+        <Loading />
+      ) : (
+        null
+      )}
       <View
         style={{
           flexDirection: "row",

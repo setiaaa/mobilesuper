@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react'
-import { ActivityIndicator, FlatList, SafeAreaView, Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, FlatList, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native'
 import { getTokenValue } from '../../service/session'
 import { useEffect } from 'react'
-import { getDetailDocument, getDocumentTamplate } from '../../service/api'
+import { getDetailDocument, getDivisionFilter, getDocumentTamplate, getSubDivisionFilter } from '../../service/api'
 import {
     BottomSheetModal,
     BottomSheetModalProvider,
@@ -19,6 +19,7 @@ import {
     BottomSheetView,
     BottomSheetTextInput,
     useBottomSheetDynamicSnapPoints,
+    BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { Portal } from 'react-native-portalize'
 import { Divider } from 'react-native-paper'
@@ -195,14 +196,27 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
 };
 
 
+const dropdownFilter = [
+    {
+        key: 'true',
+        value: 'Nama Tamplate'
+    },
+    {
+        key: 'false',
+        value: 'Pembuat'
+    },
+]
 export const DokumenTamplate = () => {
     const [token, setToken] = useState("");
     const [dataM, setDataM] = useState([]);
     const [page, setPage] = useState(10);
     const [type, setType] = useState({
-        key: 'false',
-        value: 'Draft'
+        key: 'true',
+        value: 'Nama Tamplate'
     });
+    const [search, setSearch] = useState('');
+    const [filterUnker, setFilterUnker] = useState()
+    const [filterSatker, setFilterSatker] = useState()
     const dispatch = useDispatch();
     const navigation = useNavigation()
 
@@ -213,13 +227,26 @@ export const DokumenTamplate = () => {
     }, []);
 
     useEffect(() => {
-        if (token !== "") {
-            dispatch(getDocumentTamplate({ token: token, page: page }));
+        if (filterUnker && filterUnker.key) {
+            dispatch(getSubDivisionFilter({ token: token, id: filterUnker.key }))
         }
-    }, [token, page]);
+    }, [filterUnker])
+
+    useEffect(() => {
+        if (token !== "") {
+            dispatch(getDocumentTamplate({
+                token: token,
+                page: page,
+                general: search,
+                by_title: type.key,
+                unker: filterUnker ? filterUnker.value : '',
+                satker: filterSatker ? filterSatker.value : ''
+            }));
+        }
+    }, [token, page, type, search, filterUnker, filterSatker]);
 
 
-    const { tamplate, loading, load } = useSelector((state) => state.repository);
+    const { tamplate, loading, load, filter } = useSelector((state) => state.repository);
 
     const loadMore = () => {
         if (tamplate.lists.length % 10 === 0) {
@@ -228,6 +255,7 @@ export const DokumenTamplate = () => {
     }
 
     const bottomSheetModalRef = useRef(null);
+    const bottomSheetModalFilterRef = useRef(null);
 
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
     const {
@@ -242,11 +270,41 @@ export const DokumenTamplate = () => {
         setDataM(item);
     };
 
+    const bottomSheetAttachFilter = (item) => {
+        bottomSheetModalFilterRef.current?.present();
+    };
+
     const bottomSheetAttachClose = () => {
         if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
     };
 
-    console.log(tamplate)
+    const bottomSheetAttachFilterClose = () => {
+        if (bottomSheetModalFilterRef.current) bottomSheetModalFilterRef.current?.close();
+    };
+
+    const unker = () => {
+        let judulUnker = [];
+        filter.unker.map((item) => {
+            judulUnker.push({
+                key: item.id,
+                value: item.name,
+            });
+        });
+        return judulUnker
+    }
+
+    const satker = () => {
+        let judulSatker = [];
+        filter.satker.map((item) => {
+            judulSatker.push({
+                key: item.id,
+                value: item.name,
+            });
+        });
+        return judulSatker
+    }
+
+
     return (
         <GestureHandlerRootView>
             {loading === true && tamplate.lists.length === 0 ? (
@@ -292,18 +350,110 @@ export const DokumenTamplate = () => {
                     <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
                         <Search
                             placeholder={"Cari"}
-                        // onSearch={filter} 
+                            onSearch={setSearch}
                         />
-                        <View style={{ marginTop: 20 }}>
-                            {/* <Dropdown
-                                data={dropdownFilter}
-                                placeHolder={'Filter'}
-                                backgroundColor={COLORS.white}
-                                selected={type}
-                                setSelected={setType}
-                            /> */}
+                        <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <View style={{ width: '90%' }}>
+                                <Dropdown
+                                    data={dropdownFilter}
+                                    placeHolder={'Filter'}
+                                    backgroundColor={COLORS.white}
+                                    selected={type}
+                                    setSelected={setType}
+                                />
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    bottomSheetAttachFilter()
+                                    dispatch(getDivisionFilter({ token: token }))
+                                }}
+                            >
+                                <Ionicons name='filter-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity>
                         </View>
                     </View>
+
+                    <Portal>
+                        <BottomSheetModalProvider>
+                            <BottomSheetModal
+                                ref={bottomSheetModalFilterRef}
+                                snapPoints={animatedSnapPoints}
+                                handleHeight={animatedHandleHeight}
+                                contentHeight={animatedContentHeight}
+                                index={0}
+                                style={{ borderRadius: 50 }}
+                                keyboardBlurBehavior="restore"
+                                android_keyboardInputMode="adjust"
+                                backdropComponent={({ style }) => (
+                                    <View
+                                        style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                                    />
+                                )}
+                            >
+                                <BottomSheetView onLayout={handleContentLayout}>
+                                    <View style={{ marginVertical: 20 }}>
+                                        <View style={{ marginHorizontal: 20, flexDirection: "row", justifyContent: "space-between", padding: 10, borderBottomWidth: 2, borderBottomColor: COLORS.grey }}>
+                                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Filter Satuan dan Unit Kerja</Text>
+                                            <TouchableOpacity
+                                                style={{}}
+                                                onPress={() => {
+                                                    bottomSheetAttachFilterClose()
+                                                }}
+                                            >
+                                                <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                                            </TouchableOpacity>
+                                        </View>
+
+                                        <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                                            <Text style={{ marginHorizontal: 10, marginBottom: 10, fontWeight: FONTWEIGHT.bold }}>Unit Kerja</Text>
+                                            <Dropdown
+                                                data={unker()}
+                                                placeHolder={'Pilih Unit Kerja'}
+                                                backgroundColor={COLORS.white}
+                                                selected={filterUnker}
+                                                setSelected={setFilterUnker}
+                                                borderWidth={1}
+                                                borderWidthValue={1}
+                                                borderwidthDrop={1}
+                                                borderColor={COLORS.ExtraDivinder}
+                                                borderColorValue={COLORS.ExtraDivinder}
+                                                borderColorDrop={COLORS.ExtraDivinder}
+                                            />
+                                        </View>
+
+                                        <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                                            <Text style={{ marginHorizontal: 10, marginBottom: 10, fontWeight: FONTWEIGHT.bold }}>Satuan Kerja</Text>
+                                            {filterUnker && filterUnker.key ? (
+                                                <Dropdown
+                                                    data={satker()}
+                                                    placeHolder={'Pilih Satuan Kerja'}
+                                                    backgroundColor={COLORS.white}
+                                                    selected={filterSatker}
+                                                    setSelected={setFilterSatker}
+                                                    borderWidth={1}
+                                                    borderWidthValue={1}
+                                                    borderwidthDrop={1}
+                                                    borderColor={COLORS.ExtraDivinder}
+                                                    borderColorValue={COLORS.ExtraDivinder}
+                                                    borderColorDrop={COLORS.ExtraDivinder}
+                                                    heightValue={300}
+                                                />
+                                            ) : (
+                                                <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10, gap: 5 }}>
+                                                    <Text style={{ color: COLORS.infoDanger }}>*</Text>
+                                                    <Text style={{ color: COLORS.lighter }}>Daftar satuan kerja akan muncul setelah memilih unit kerja</Text>
+                                                </View>
+                                            )}
+                                        </View>
+
+
+                                    </View>
+                                </BottomSheetView>
+                            </BottomSheetModal>
+                        </BottomSheetModalProvider>
+                    </Portal>
+
+
                     <View>
                         <FlatList
                             key={"_"}
