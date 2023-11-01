@@ -25,7 +25,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { setDokumentlists, setLoadMore } from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
@@ -301,7 +301,7 @@ export const Dokumen = () => {
       ) : (
         null
       )}
-      <SafeAreaView>
+      < >
         <View style={{ marginBottom: 20 }}>
           <View
             style={{
@@ -487,7 +487,7 @@ export const Dokumen = () => {
             </Portal>
           </View>
         </View>
-      </SafeAreaView>
+      </ >
     </GestureHandlerRootView>
   );
 };

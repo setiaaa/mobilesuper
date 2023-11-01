@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react'
-import { ActivityIndicator, FlatList, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, FlatList, ScrollView, Text, TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
@@ -312,7 +312,7 @@ export const DokumenTamplate = () => {
             ) : (
                 null
             )}
-            <SafeAreaView>
+            < >
                 <View style={{ marginBottom: 20 }}>
                     <View
                         style={{
@@ -590,7 +590,7 @@ export const DokumenTamplate = () => {
                         </Portal>
                     </View>
                 </View>
-            </SafeAreaView>
+            </ >
         </GestureHandlerRootView>
     )
 }

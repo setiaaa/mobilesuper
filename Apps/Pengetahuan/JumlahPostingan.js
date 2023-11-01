@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -549,7 +549,7 @@ export const JumlahPostingan = () => {
   });
 
   return (
-    <SafeAreaView>
+    < >
       <View
         style={{
           flexDirection: "row",
@@ -622,9 +622,9 @@ export const JumlahPostingan = () => {
             </Text>
           </View>
           {Object.keys(postinganSayaJumlah.dilihat).length !== 0 &&
-          Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
-          Object.keys(postinganSayaJumlah.draft).length !== 0 &&
-          Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
+            Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
+            Object.keys(postinganSayaJumlah.draft).length !== 0 &&
+            Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
             <TabView
               navigationState={{ index, routes }}
               renderScene={renderScene}
@@ -771,6 +771,6 @@ export const JumlahPostingan = () => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </ >
   );
 };

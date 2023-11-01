@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { CardSuka } from '../../components/CardSuka'
 import { FlatList } from 'react-native'
 import { useSelector } from 'react-redux'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 
 
 export const ListSukaLinimasa = () => {
@@ -17,7 +17,7 @@ export const ListSukaLinimasa = () => {
     const navigation = useNavigation()
     console.log(item)
     return (
-        <SafeAreaView>
+        < >
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: COLORS.white,
@@ -45,6 +45,6 @@ export const ListSukaLinimasa = () => {
                     }
                 />
             </View>
-        </SafeAreaView>
+        </ >
     )
 }

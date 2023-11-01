@@ -6,7 +6,6 @@ import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS, PADDING } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import { getBerita, getDetailBerita } from "../../service/api";
 import { CardListBeritaHome } from "../../components/CardListBeritaHome";
@@ -68,7 +67,7 @@ export const ListBerita = () => {
   }, [search])
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
         <View
           style={{
@@ -105,7 +104,7 @@ export const ListBerita = () => {
             </Text>
           </View>
         </View>
-        <View style={{ padding: PADDING.Page}}>
+        <View style={{ padding: PADDING.Page }}>
           <Search
             placeholder={'Cari'}
             iconColor={COLORS.primary}
@@ -160,7 +159,7 @@ export const ListBerita = () => {
           keyExtractor={(item) => item.id}
         /> */}
       </View>
-    </SafeAreaView>
+    </View >
   );
 };
 

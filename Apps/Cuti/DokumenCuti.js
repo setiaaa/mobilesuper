@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
 import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
@@ -14,7 +14,7 @@ export const DokumenCuti = () => {
 
     return (
         <GestureHandlerRootView>
-            <SafeAreaView style={{ position: 'relative' }}>
+            < View style={{ position: 'relative' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
                     <View style={{
                         backgroundColor: COLORS.white,
@@ -192,7 +192,7 @@ export const DokumenCuti = () => {
 
                 </View>
 
-            </SafeAreaView>
-        </GestureHandlerRootView>
+            </ View >
+        </GestureHandlerRootView >
     )
 }

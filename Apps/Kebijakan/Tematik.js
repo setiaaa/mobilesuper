@@ -6,7 +6,6 @@ import { ScrollView } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const data = [
   {
@@ -93,7 +92,7 @@ const DataGrid = ({ judul, item }) => {
 export const Tematik = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flexDirection: "row",
@@ -179,7 +178,7 @@ export const Tematik = () => {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </View  >
   );
 };
 

@@ -10,7 +10,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, ScrollView, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
@@ -266,7 +265,7 @@ export const Dibagikan = () => {
         null
       )}
       <BottomSheetModalProvider>
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -345,7 +344,7 @@ export const Dibagikan = () => {
               }
             }}
           />
-        </SafeAreaView>
+        </View >
         <BottomSheetModal
           ref={bottomSheetModalRef}
           snapPoints={animatedSnapPoints}
@@ -445,7 +444,7 @@ export const Dibagikan = () => {
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+    </GestureHandlerRootView >
   );
 };
 

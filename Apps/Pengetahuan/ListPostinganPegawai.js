@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -70,7 +70,7 @@ export const ListPostinganPegawai = (param) => {
   const nama = param?.route?.params;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flexDirection: "row",
@@ -119,6 +119,6 @@ export const ListPostinganPegawai = (param) => {
           ListEmptyComponent={() => <ListEmpty />}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };

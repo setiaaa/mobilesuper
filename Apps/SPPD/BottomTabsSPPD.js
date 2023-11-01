@@ -12,7 +12,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native';
+import { } from 'react-native';
 
 
 function MyTabBarSPPD({ props, navigation }) {
@@ -32,7 +32,7 @@ function MyTabBarSPPD({ props, navigation }) {
     }
 
     return (
-        <SafeAreaView>
+        < >
             <BottomSheetModalProvider>
                 <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
                     <TouchableOpacity
@@ -124,7 +124,7 @@ function MyTabBarSPPD({ props, navigation }) {
                     </TouchableOpacity>
                 </View>
             </BottomSheetModalProvider>
-        </SafeAreaView>
+        </ >
     )
 }
 

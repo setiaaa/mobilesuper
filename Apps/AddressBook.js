@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import { COLORS } from '../config/SuperAppps'
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native'
+import { } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTokenValue } from '../service/session'
 import { getDivision, getDivisionTree, getEmployee } from '../service/api'
@@ -115,7 +115,7 @@ export const AddressBook = ({ route }) => {
     // }, [])
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <GestureHandlerRootView>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20, paddingHorizontal: 20 }}>
                     <View style={{
@@ -209,6 +209,6 @@ export const AddressBook = ({ route }) => {
                     </BottomSheetModal>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>
-        </SafeAreaView>
+        </View>
     )
 }

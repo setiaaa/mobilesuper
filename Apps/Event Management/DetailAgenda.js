@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -167,7 +167,7 @@ export const DetailAgenda = () => {
 
 
     return (
-        <SafeAreaView>
+        < >
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
@@ -787,7 +787,7 @@ export const DetailAgenda = () => {
 
             </ScrollView>
 
-        </SafeAreaView>
+        </ >
     )
 }
 const styles = StyleSheet.create({

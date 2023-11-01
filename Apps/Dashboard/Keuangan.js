@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { COLORS, PADDING } from '../../config/SuperAppps';
@@ -34,7 +33,7 @@ export const Keuangan = () => {
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: COLORS.primary, height: '10%', flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <View style={[styles.backIcon, { justifyContent: 'center', alignItems: 'center', marginTop: 25, marginLeft: 20 }]}>
@@ -49,7 +48,7 @@ export const Keuangan = () => {
             <View style={{ flex: 1, padding: PADDING.Page }}>
                 <TopsKeuanganKinerja />
             </View>
-        </SafeAreaView>
+        </View >
     )
 }
 const styles = StyleSheet.create({

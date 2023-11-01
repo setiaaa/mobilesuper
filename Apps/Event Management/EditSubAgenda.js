@@ -21,13 +21,12 @@ import { Search } from '../../components/Search';
 import { FlatList } from 'react-native';
 import DatePicker from 'react-native-modern-datepicker'
 import moment from 'moment';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { } from 'react-native-safe-area-context';
 import { Dropdown } from '../../components/DropDown';
 import * as DocumentPicker from 'expo-document-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenValue } from '../../service/session';
 import { getEventProgress, getEventToday, getlistKalender, postAttachment, postEvent, postSubAgenda, updateSubAgenda } from '../../service/api';
-import Addressbook from '../../components/AddressbookKKp/Addressbook';
 import { setAddressbookSelected } from '../../store/AddressbookKKP';
 import { setAttachment, setStatus } from '../../store/Event';
 import Checkbox from 'expo-checkbox';
@@ -311,7 +310,7 @@ export const EditSubAgenda = () => {
                     <Loading />
                 ) : null
             }
-            <SafeAreaView>
+            < >
                 <BottomSheetModalProvider>
                     <ScrollView>
                         <Pressable onPress={() => richText.current?.dismissKeyboard()}>
@@ -1068,7 +1067,7 @@ export const EditSubAgenda = () => {
                     </Modal>
 
                 </BottomSheetModalProvider>
-            </SafeAreaView>
+            </ >
         </GestureHandlerRootView>
     )
 }

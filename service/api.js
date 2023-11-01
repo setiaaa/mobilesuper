@@ -42,17 +42,20 @@ const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
 //Login
 export const Login = createAsyncThunk(
     "auth/Login",
-    async ({ username, password }) => {
-        const payload = {
-            username: username,
-            password: password,
-        };
-        console.log(payload);
-        const respon = await axios.post(
-            `https://auth.kubekkp.coofis.com/mobile/login/`,
-            payload
-        );
-        return respon?.data;
+    async ({ username, password }, { rejectWithValue }) => {
+        try {
+            const payload = {
+                username: username,
+                password: password,
+            };
+            const respon = await axios.post(
+                `https://auth.kubekkp.coofis.com/mobile/login/`,
+                payload
+            );
+            return respon?.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
     }
 );
 
@@ -140,7 +143,6 @@ export const getEventAgenda = createAsyncThunk(
 export const getEventAgendaDetail = createAsyncThunk(
     "calendar/getEventAgendaDetail",
     async ({ token, id }) => {
-        console.log(id)
         const respon = await axios.get(`${kalender}event/agenda/${id}/retrieve/`, {
             headers: { Authorization: token },
         });
@@ -505,9 +507,7 @@ export const getPesan = createAsyncThunk("bridge/getPesan", async (token) => {
         headers: { Authorization: token },
     });
     return respon?.data.results;
-}
-);
-
+});
 
 export const getUltah = createAsyncThunk("bridge/getUltah", async (token) => {
     const respon = await axios.get(`${SATKER}satker/birthday/`, {
@@ -557,9 +557,12 @@ export const getDivisionTree = createAsyncThunk(
 export const getDocument = createAsyncThunk(
     "repository/getDocument",
     async ({ token, page, type }) => {
-        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=${type}&public=false`, {
-            headers: { Authorization: token },
-        });
+        const respon = await axios.get(
+            `${repository}my-documents/?limit=${page}&published=${type}&public=false`,
+            {
+                headers: { Authorization: token },
+            }
+        );
         return respon?.data.result;
     }
 );
@@ -587,9 +590,12 @@ export const getSubDivisionFilter = createAsyncThunk(
 export const getDocumentDibagikan = createAsyncThunk(
     "repository/getDocumentDibagikan",
     async ({ token, page, general }) => {
-        const respon = await axios.get(`${repository}shared-documents/?limit=${page}`, {
-            headers: { Authorization: token },
-        });
+        const respon = await axios.get(
+            `${repository}shared-documents/?limit=${page}`,
+            {
+                headers: { Authorization: token },
+            }
+        );
         return respon?.data.result;
     }
 );

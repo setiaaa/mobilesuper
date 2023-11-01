@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Pressable,
   Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -54,17 +53,17 @@ export const PostinganBaru = () => {
   const [visible, setVisible] = useState(false);
   const [image, setImage] = useState(null);
   const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
-      let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-      })
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
 
-      if (!result.canceled) {
-          setImage(result.assets[0].uri);
-      }
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
 
   const [token, setToken] = useState("");
@@ -150,7 +149,7 @@ export const PostinganBaru = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <ScrollView>
           <Pressable onPress={() => richText.current?.dismissKeyboard()}>
             <View
@@ -906,8 +905,8 @@ export const PostinganBaru = () => {
             </View>
           </Pressable>
         </ScrollView>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+      </View >
+    </GestureHandlerRootView >
   );
 };
 const styles = StyleSheet.create({

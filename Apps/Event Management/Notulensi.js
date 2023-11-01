@@ -3,7 +3,7 @@ import { Text, View, useWindowDimensions } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import { ScrollView } from 'react-native';
@@ -113,7 +113,7 @@ export const Notulensi = () => {
 
     console.log(notu)
     return (
-        <SafeAreaView>
+        < >
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
@@ -364,6 +364,6 @@ export const Notulensi = () => {
                 </View> */}
 
             </ScrollView>
-        </SafeAreaView>
+        </ >
     )
 }

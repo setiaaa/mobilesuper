@@ -3,7 +3,7 @@ import {
   Provider as PaperProvider,
 } from "react-native-paper";
 import { Provider } from "react-redux";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, } from "react-native-safe-area-context";
 import { store } from "./store/store";
 import { GlobalStyles } from "./constants/styles";
 // import AppNavigator from "./screen/AppNavigator";
@@ -52,18 +52,3 @@ export default function App() {
   );
 }
 
-const Wrapper = ({ children }) => {
-  const isIos = Platform.OS
-  return (
-    isIos === 'ios' ? (
-      <View style={{ flex: 1 }}>
-        {children}
-      </View>
-    ) : (
-      <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar backgroundColor={COLORS.primary} />
-        {children}
-      </SafeAreaView>
-    )
-  )
-}

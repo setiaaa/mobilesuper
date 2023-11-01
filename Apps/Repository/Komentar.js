@@ -9,7 +9,7 @@ import { Image } from "react-native";
 import { useState } from "react";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 
 const DaftarKomentar = ({ items }) => {
   const [toggleComment, setToggleComment] = useState({
@@ -94,7 +94,7 @@ const DaftarKomentar = ({ items }) => {
             {items.child === "" ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === items.id) ||
-                (toggleComment.id !== items.id && items.child > 0) ? (
+                  (toggleComment.id !== items.id && items.child > 0) ? (
                   <TouchableOpacity onPress={() => clickBalas(items.id, true)}>
                     <View
                       style={{
@@ -127,107 +127,107 @@ const DaftarKomentar = ({ items }) => {
 
                 {items.id === toggleComment.id && toggleComment.toggle
                   ? {
-                      /* <View>
-                    {items.child.map((listKomen, index) => (
-                      <View
-                        key={index}
-                        style={{
-                          flexDirection: "row",
-                          marginVertical: 10,
-                          marginHorizontal: 20,
-                        }}
-                      >
-                        <View>
-                          <Image source={listKomen.avatarBalas} />
-                        </View>
-                        <View style={{ marginLeft: 10 }}>
+                    /* <View>
+                  {items.child.map((listKomen, index) => (
+                    <View
+                      key={index}
+                      style={{
+                        flexDirection: "row",
+                        marginVertical: 10,
+                        marginHorizontal: 20,
+                      }}
+                    >
+                      <View>
+                        <Image source={listKomen.avatarBalas} />
+                      </View>
+                      <View style={{ marginLeft: 10 }}>
+                        <Text
+                          style={{
+                            fontSize: FONTSIZE.H2,
+                            fontWeight: FONTWEIGHT.bold,
+                            lineHeight: 20,
+                          }}
+                        >
+                          {listKomen.nama}
+                        </Text>
+                        <View style={{ flexDirection: "row", gap: 5 }}>
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
-                              fontWeight: FONTWEIGHT.bold,
-                              lineHeight: 20,
+                              color: COLORS.lighter,
+                              fontSize: FONTSIZE.H5,
+                              fontWeight: FONTWEIGHT.normal,
+                              lineHeight: 18,
+                              marginBottom: 10,
                             }}
                           >
-                            {listKomen.nama}
+                            {listKomen.tanggal}
                           </Text>
-                          <View style={{ flexDirection: "row", gap: 5 }}>
-                            <Text
-                              style={{
-                                color: COLORS.lighter,
-                                fontSize: FONTSIZE.H5,
-                                fontWeight: FONTWEIGHT.normal,
-                                lineHeight: 18,
-                                marginBottom: 10,
-                              }}
-                            >
-                              {listKomen.tanggal}
-                            </Text>
-                            <View
-                              style={{
-                                height: "70%",
-                                width: 1,
-                                backgroundColor: "#DBDADE",
-                              }}
-                            />
-                            <Text
-                              style={{
-                                color: COLORS.lighter,
-                                fontSize: FONTSIZE.H5,
-                                fontWeight: FONTWEIGHT.normal,
-                                lineHeight: 18,
-                              }}
-                            >
-                              {listKomen.jam}
-                            </Text>
-                          </View>
+                          <View
+                            style={{
+                              height: "70%",
+                              width: 1,
+                              backgroundColor: "#DBDADE",
+                            }}
+                          />
                           <Text
                             style={{
-                              color: "#999999",
+                              color: COLORS.lighter,
                               fontSize: FONTSIZE.H5,
                               fontWeight: FONTWEIGHT.normal,
                               lineHeight: 18,
                             }}
                           >
-                            {listKomen.isi}
+                            {listKomen.jam}
                           </Text>
-                          {items.balas.length - 1 === index ? (
-                            <TouchableOpacity
-                              key={listKomen.id}
-                              onPress={() => clickBalas(items.id, false)}
+                        </View>
+                        <Text
+                          style={{
+                            color: "#999999",
+                            fontSize: FONTSIZE.H5,
+                            fontWeight: FONTWEIGHT.normal,
+                            lineHeight: 18,
+                          }}
+                        >
+                          {listKomen.isi}
+                        </Text>
+                        {items.balas.length - 1 === index ? (
+                          <TouchableOpacity
+                            key={listKomen.id}
+                            onPress={() => clickBalas(items.id, false)}
+                          >
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 5,
+                                marginTop: 10,
+                              }}
                             >
                               <View
                                 style={{
-                                  flexDirection: "row",
-                                  alignItems: "center",
-                                  gap: 5,
-                                  marginTop: 10,
+                                  height: 1,
+                                  width: 20,
+                                  backgroundColor: "#DBDADE",
+                                }}
+                              />
+                              <Text
+                                style={{
+                                  color: COLORS.lighter,
+                                  fontSize: FONTSIZE.H5,
+                                  fontWeight: FONTWEIGHT.normal,
+                                  lineHeight: 18,
                                 }}
                               >
-                                <View
-                                  style={{
-                                    height: 1,
-                                    width: 20,
-                                    backgroundColor: "#DBDADE",
-                                  }}
-                                />
-                                <Text
-                                  style={{
-                                    color: COLORS.lighter,
-                                    fontSize: FONTSIZE.H5,
-                                    fontWeight: FONTWEIGHT.normal,
-                                    lineHeight: 18,
-                                  }}
-                                >
-                                  Tutup {items.jmlhBalas} Balasan
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-                          ) : null}
-                        </View>
+                                Tutup {items.jmlhBalas} Balasan
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        ) : null}
                       </View>
-                    ))}
-                  </View> */
-                    }
+                    </View>
+                  ))}
+                </View> */
+                  }
                   : null}
               </View>
             )}
@@ -248,7 +248,7 @@ export const Komentar = () => {
   console.log(comment);
 
   return (
-    <SafeAreaView>
+    < >
       <View
         style={{
           flexDirection: "row",
@@ -297,6 +297,6 @@ export const Komentar = () => {
         )}
         keyExtractor={(item) => item.id}
       />
-    </SafeAreaView>
+    </ >
   );
 };

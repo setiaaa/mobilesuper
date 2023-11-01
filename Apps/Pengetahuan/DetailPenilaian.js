@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, Modal, ScrollView, Text, View, useWindowDimensions } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -148,7 +147,7 @@ export const DetailPenilaian = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <ScrollView>
 
                 <View style={{ flex: 1 }}>
@@ -470,7 +469,7 @@ export const DetailPenilaian = () => {
                 </TouchableOpacity>
 
             </ScrollView>
-        </SafeAreaView >
+        </View>
     )
 }
 

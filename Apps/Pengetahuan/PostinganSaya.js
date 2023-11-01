@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import {
   AVATAR,
   COLORS,
@@ -259,7 +259,7 @@ export const PostinganSaya = () => {
   // console.log(postinganSaya.lists);
 
   return (
-    <SafeAreaView>
+    < >
       {loading ? (
         <Loading />
       ) : (
@@ -378,6 +378,6 @@ export const PostinganSaya = () => {
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <ListEmpty />}
       />
-    </SafeAreaView>
+    </ >
   );
 };

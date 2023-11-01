@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons';
@@ -47,7 +46,7 @@ export const DetailPengmuman = () => {
     const navigation = useNavigation()
     const { pengumuman } = useSelector(state => state.dashboard)
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: COLORS.primary, height: '10%', flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <View style={[styles.backIcon, { justifyContent: 'center', alignItems: 'center', marginTop: 25, marginLeft: 20 }]}>
@@ -74,7 +73,7 @@ export const DetailPengmuman = () => {
                 }
                 keyExtractor={item => item.id}
             />
-        </SafeAreaView>
+        </View >
     )
 }
 const styles = StyleSheet.create({

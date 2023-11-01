@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import PdfReader from 'rn-pdf-reader-js-improved'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { } from 'react-native-safe-area-context';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 
@@ -11,7 +11,7 @@ export const FileViewer = ({ route }) => {
     const navigation = useNavigation()
     const { lampiran, type } = route.params
     return (
-        <SafeAreaView>
+        < >
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: COLORS.white,
@@ -54,6 +54,6 @@ export const FileViewer = ({ route }) => {
                     null
                 )}
             </View>
-        </SafeAreaView>
+        </ >
     )
 }
