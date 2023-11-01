@@ -34,6 +34,13 @@ import {
 } from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
+import { shareAsync } from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+// import { FileSystem } from "expo";
+import * as DocumentPicker from "expo-document-picker";
+import { ActivityIndicator } from "react-native";
+// import { shareAsync } from "expo-sharing";
+// import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
 const ListDaftarPegawai = ({ item, token }) => {
   const navigation = useNavigation();
@@ -214,23 +221,29 @@ export const RangkumanIKU = () => {
     }
   }, [token, savedYear, savedQuarter, savedUnitKerja]);
 
-  // useEffect(() => {
-  //   const param = {
-  //     token: token,
-  //     year: savedYear.value,
-  //     quarter: savedQuarter.key,
-  //     unitKerja: savedUnitKerja.value,
-  //   };
-  //   if (token !== "") {
-  //     dispatch(getListPegawaiExport(param));
-  //   }
-  // }, [token, savedYear, savedQuarter, savedUnitKerja]);
+  useEffect(() => {
+    const param = {
+      token: token,
+      year: savedYear.value,
+      quarter: savedQuarter.key,
+      unitKerja: savedUnitKerja.value,
+    };
+    if (token !== "") {
+      dispatch(getListPegawaiExport(param));
+    }
+  }, [token, savedYear, savedQuarter, savedUnitKerja]);
 
-  const { pegawai } = useSelector((state) => state.pengetahuan);
+  const { pegawai, refresh, loading } = useSelector((state) => state.pengetahuan);
+
+  useEffect(() => {
+    if (refresh) {
+      dispatch(getListPegawai({ token: token }))
+    }
+  }, [refresh])
 
   const { unitKerja } = useSelector((state) => state.pengetahuan);
 
-  // const { exportPegawai } = useSelector((state) => state.pengetahuan);
+  const { exportPegawai } = useSelector((state) => state.pengetahuan);
 
   const dataUnitKerja = () => {
     let valueUnitKerja = [];
@@ -264,8 +277,59 @@ export const RangkumanIKU = () => {
   };
 
   console.log(pegawai.lists);
-  // console.log(exportPegawai);
+  console.log(exportPegawai);
 
+  const downloadFromUrl = async () => {
+    const url = exportPegawai?.lists?.file;
+    const parts = url?.split("/");
+    const fileName = parts[parts?.length - 1];
+    console.log(fileName);
+
+    //
+
+    // const result = await FileSystem.downloadAsync(
+    //   url,
+    //   FileSystem.documentDirectory + fileName
+    // );
+    // console.log(result);
+
+    // await AsyncStorage.setItem("downloadedFile", result.uri);
+
+    // save(result.uri);
+
+    // try {
+    //   const document = await DocumentPicker.getDocumentAsync({
+    //     type: "*/*", // Allow the user to pick any type of file
+    //   });
+
+    //   if (document.type === "success") {
+    //     const directoryPath = document.uri; // Use this path to save the file
+    //     console.log("Selected directory:", directoryPath);
+
+    //     const url = exportPegawai?.lists?.file;
+    //     if (url) {
+    //       const parts = url.split("/");
+    //       const fileName = parts[parts.length - 1];
+    //       const filePath = `${directoryPath}/${fileName}`;
+
+    //       const result = await FileSystem.downloadAsync(url, filePath);
+
+    //       if (result.status === 200) {
+    //         console.log("Downloaded file saved to:", filePath);
+    //       } else {
+    //         console.error("Download failed");
+    //       }
+    //     }
+    //   } else {
+    //     console.log("Document picker canceled or failed.");
+    //   }
+    // } catch (error) {
+    //   console.error("Error selecting directory:", error);
+    // }
+  };
+  // const save = (uri) => {
+  //   shareAsync(uri);
+  // };
   return (
     <SafeAreaView>
       <View
@@ -287,7 +351,7 @@ export const RangkumanIKU = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -315,7 +379,7 @@ export const RangkumanIKU = () => {
             backgroundColor: switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 30,
+            borderRadius: 6,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -339,7 +403,7 @@ export const RangkumanIKU = () => {
             backgroundColor: !switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: 150,
-            borderRadius: 30,
+            borderRadius: 6,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -360,13 +424,15 @@ export const RangkumanIKU = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ width: "90%", alignSelf: "center" }}>
+      <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
-          <View style={{ height: '100%', width: '100%' }}>
+          <View style={{ height: "100%", width: "100%" }}>
             <WebView
               originWhitelist={["*"]}
-              source={{ uri: 'https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html' }}
-              style={{ flex: 1, }}
+              source={{
+                uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+              }}
+              style={{ flex: 1 }}
               allowFileAccess={true}
               androidLayerType={"software"}
               mixedContentMode={"always"}
@@ -385,7 +451,7 @@ export const RangkumanIKU = () => {
             >
               <TouchableOpacity
                 onPress={bottomSheetAttachSelect}
-                style={{ width: "80%" }}
+                style={{ width: "46%" }}
               >
                 <View
                   style={{
@@ -636,7 +702,7 @@ export const RangkumanIKU = () => {
 
               <TouchableOpacity
                 onPress={bottomSheetAttachSearch}
-                style={{ width: "11%" }}
+                style={{ width: "46%" }}
               >
                 <View
                   style={{
@@ -673,15 +739,19 @@ export const RangkumanIKU = () => {
             >
               <Text>{"*) Nilai Minimum = 3"}</Text>
               <View style={{ flexDirection: "row", gap: 10 }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: 50,
-                    padding: 5,
-                  }}
-                >
-                  <Icon name="get-app" size={24} color={COLORS.grey} />
-                </TouchableOpacity>
+                {exportPegawai?.lists?.length !== 0 ? (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: 50,
+                      padding: 5,
+                    }}
+                    onPress={downloadFromUrl}
+                  >
+                    <Icon name="get-app" size={24} color={COLORS.grey} />
+                  </TouchableOpacity>
+                ) : null}
+
                 <TouchableOpacity>
                   <TouchableOpacity
                     style={{
@@ -700,6 +770,11 @@ export const RangkumanIKU = () => {
               </View>
             </View>
 
+            <View style={{ paddingHorizontal: 20, marginVertical: 10, gap: 2 }}>
+              <Text style={{ fontSize: 13, fontWeight: 500, color: COLORS.grey }}>Yang dipilih:</Text>
+              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value} / {savedQuarter.value} / {savedUnitKerja.value}</Text>
+            </View>
+
             <View>
               <View
                 style={{
@@ -709,74 +784,95 @@ export const RangkumanIKU = () => {
                   marginBottom: "95%",
                 }}
               >
-                {pegawai.lists.length !== 0
-                  ? pegawai.lists.map((item, index) => {
-                    const getDetail = (id) => {
-                      const param = { token, id };
-                      dispatch(getListPostPegawai(param));
-                    };
+                <FlatList
+                  data={filterData}
+                  renderItem={({ item }) =>
+                    <View key={item.id} style={{ marginBottom: 10 }}>
+                      <ListDaftarPegawai item={item} token={token} />
+                    </View>
+                  }
+                  ListFooterComponent={() => (
+                    loading === true ? (
+                      <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                        <ActivityIndicator size="large" color={COLORS.primary} />
+                      </View>
+                    ) : (
+                      null
+                    )
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={() => <ListEmpty />}
+                />
 
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        style={{
-                          backgroundColor: COLORS.white,
-                          borderRadius: 10,
-                          padding: 10,
-                          gap: 5,
-                          //shadow ios
-                          shadowOffset: { width: -2, height: 4 },
-                          shadowColor: "#171717",
-                          shadowOpacity: 0.2,
-                          //shadow android
-                          elevation: 2,
-                        }}
-                        onPress={() => {
-                          getDetail(item.id);
-                          navigation.navigate(
-                            "ListPostinganPegawai",
-                            item.nama
-                          );
-                        }}
-                      >
-                        <Text
+                {/* {pegawai.lists.length !== 0
+                  ? pegawai.lists.map((item, index) => {
+                      const getDetail = (id) => {
+                        const param = { token, id };
+                        dispatch(getListPostPegawai(param));
+                      };
+
+                      return (
+                        <TouchableOpacity
+                          key={index}
                           style={{
-                            fontSize: FONTSIZE.H1,
-                            fontWeight: FONTWEIGHT.bold,
+                            backgroundColor: COLORS.white,
+                            borderRadius: 10,
+                            padding: 10,
+                            gap: 5,
+                            //shadow ios
+                            shadowOffset: { width: -2, height: 4 },
+                            shadowColor: "#171717",
+                            shadowOpacity: 0.2,
+                            //shadow android
+                            elevation: 2,
+                          }}
+                          onPress={() => {
+                            getDetail(item.id);
+                            navigation.navigate(
+                              "ListPostinganPegawai",
+                              item.nama
+                            );
                           }}
                         >
-                          {item.nama}
-                        </Text>
-                        <Text>Jabatan: {item.jabatan}</Text>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Text style={{ color: COLORS.lighter }}>
-                            Nilai Saat Ini: {item.score.nilai}
-                          </Text>
-                          <View
+                          <Text
                             style={{
-                              backgroundColor:
-                                item.score.status === "Tidak Memenuhi"
-                                  ? "#EA5455"
-                                  : "green",
-                              borderRadius: 10,
-                              padding: 3,
-                              paddingHorizontal: 10,
+                              fontSize: FONTSIZE.H1,
+                              fontWeight: FONTWEIGHT.bold,
                             }}
                           >
-                            <Text style={{ color: "white" }}>
-                              {item.score.status}
+                            {item.nama}
+                          </Text>
+                          <Text>Jabatan: {item.jabatan}</Text>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Text style={{ color: COLORS.lighter }}>
+                              Nilai Saat Ini: {item.score.nilai}
                             </Text>
+                            <View
+                              style={{
+                                backgroundColor:
+                                  item.score.status === "Tidak Memenuhi"
+                                    ? "#EA5455"
+                                    : "green",
+                                borderRadius: 10,
+                                padding: 3,
+                                paddingHorizontal: 10,
+                              }}
+                            >
+                              <Text style={{ color: "white" }}>
+                                {item.score.status}
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </TouchableOpacity>
                     );
                   })
-                  : ""}
+                  : ""} */}
               </View>
             </View>
           </ScrollView>

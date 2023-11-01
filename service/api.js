@@ -23,7 +23,7 @@ const CHART_POINT = BASE_URL + "mp/mypost/chart/point/";
 const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
-const digitalSign = BASE_URL + 'digitalsign/';
+const digitalSign = BASE_URL + "digitalsign/";
 
 const SUMMARY_TOTAL_POST = BASE_URL + "mp/admin/summary/total-post/";
 const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
@@ -437,10 +437,13 @@ export const postKomenTodo = createAsyncThunk(
 export const getPegawai = createAsyncThunk(
     "calendar/getPegawai",
     async ({ token, page }) => {
-        const offset = page * 10
-        const respon = await axios.get(`${pegawai}profile/all/?limit=10&offset=${offset}`, {
-            headers: { Authorization: token },
-        });
+        const offset = page * 10;
+        const respon = await axios.get(
+            `${pegawai}profile/all/?limit=10&offset=${offset}`,
+            {
+                headers: { Authorization: token },
+            }
+        );
         return respon?.data.results;
     }
 );
@@ -486,17 +489,24 @@ export const getSatkerNews = createAsyncThunk(
     }
 );
 
-export const getDetailSatkerNews = createAsyncThunk("bridge/getDetailSatkerNews", async (data) => {
-    const respon = await axios.get(`${SATKER}satker/news/${data.id}/`, { headers: { Authorization: data.token } })
-    return respon?.data.results
-})
+export const getDetailSatkerNews = createAsyncThunk(
+    "bridge/getDetailSatkerNews",
+    async (data) => {
+        const respon = await axios.get(`${SATKER}satker/news/${data.id}/`, {
+            headers: { Authorization: data.token },
+        });
+        return respon?.data.results;
+    }
+);
 
 export const getPesan = createAsyncThunk("bridge/getPesan", async (token) => {
     const respon = await axios.get(`${SATKER}satker/pesan/`, {
         headers: { Authorization: token },
     });
     return respon?.data.results;
-});
+}
+);
+
 
 export const getUltah = createAsyncThunk("bridge/getUltah", async (token) => {
     const respon = await axios.get(`${SATKER}satker/birthday/`, {
@@ -545,8 +555,29 @@ export const getDivisionTree = createAsyncThunk(
 // repository
 export const getDocument = createAsyncThunk(
     "repository/getDocument",
-    async (token) => {
-        const respon = await axios.get(`${repository}my-documents/`, {
+    async ({ token, page, type }) => {
+        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=${type}&public=false`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
+);
+
+export const getDocumentDibagikan = createAsyncThunk(
+    "repository/getDocumentDibagikan",
+    async ({ token, page, general }) => {
+        const respon = await axios.get(`${repository}shared-documents/?limit=${page}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
+);
+
+export const getDocumentTamplate = createAsyncThunk(
+    "repository/getDocumentTamplate",
+    async ({ token, page }) => {
+        console.log(page)
+        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=true&public=true&general=&by_title=false&unker=&satker=`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -586,21 +617,27 @@ export const getBanner = createAsyncThunk("banner/getBanner", async (token) => {
 
 //galeri
 
-export const getGaleri = createAsyncThunk("galeri/getGaleri", async ({ token, page }) => {
-    const respon = await axios.get(`${galeri}?page=${page}`, {
-        headers: { Authorization: token },
-    });
-    return respon?.data.results;
-});
+export const getGaleri = createAsyncThunk(
+    "galeri/getGaleri",
+    async ({ token, page }) => {
+        const respon = await axios.get(`${galeri}?page=${page}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
+);
 
 //berita
 
-export const getBerita = createAsyncThunk("berita/getBerita", async ({ token, page }) => {
-    const respon = await axios.get(`${berita}?page=${page}`, {
-        headers: { Authorization: token },
-    });
-    return respon?.data.results;
-});
+export const getBerita = createAsyncThunk(
+    "berita/getBerita",
+    async ({ token, page }) => {
+        const respon = await axios.get(`${berita}?page=${page}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
+);
 
 export const getDetailBerita = createAsyncThunk(
     "berita/getDetailBerita",
@@ -613,12 +650,15 @@ export const getDetailBerita = createAsyncThunk(
 );
 
 //mp
-export const getLinimasa = createAsyncThunk("mp/getLinimasa", async ({ token, page }) => {
-    const respon = await axios.get(`${Linimasa}linimasa/?limit=${page}`, {
-        headers: { Authorization: token },
-    });
-    return respon?.data.results;
-});
+export const getLinimasa = createAsyncThunk(
+    "mp/getLinimasa",
+    async ({ token, page }) => {
+        const respon = await axios.get(`${Linimasa}linimasa/?limit=${page}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
+);
 
 export const patchLike = createAsyncThunk(
     "mp/patchLike",
@@ -974,45 +1014,83 @@ export const getListSubAgenda = createAsyncThunk(
 );
 
 export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
-    console.log(data.payload)
-    const respon = await axios.post(`${kalender}calendar/create/`, data.payload, { headers: { Authorization: data.token } })
-    return respon?.data
-})
+    console.log(data.payload);
+    const respon = await axios.post(`${kalender}calendar/create/`, data.payload, {
+        headers: { Authorization: data.token },
+    });
+    return respon?.data;
+});
 
-export const postAgendaAcara = createAsyncThunk("calendar/postAgendaAcara", async (data) => {
-    console.log(data.payload)
-    const respon = await axios.post(`${kalender}calendar/event/create/`, data.payload, { headers: { Authorization: data.token } })
-    return respon?.data
-})
+export const postAgendaAcara = createAsyncThunk(
+    "calendar/postAgendaAcara",
+    async (data) => {
+        console.log(data.payload);
+        const respon = await axios.post(
+            `${kalender}calendar/event/create/`,
+            data.payload,
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data;
+    }
+);
 
-export const getDetailGrup = createAsyncThunk("calendar/getDetailGrup", async ({ token, id }) => {
-    console.log(id)
-    const respon = await axios.get(`${kalender}calendar/${id}`, { headers: { Authorization: token } })
-    return respon?.data.result
-})
+export const getDetailGrup = createAsyncThunk(
+    "calendar/getDetailGrup",
+    async ({ token, id }) => {
+        console.log(id);
+        const respon = await axios.get(`${kalender}calendar/${id}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
+);
 
-export const putEditGrup = createAsyncThunk("calendar/putEditGrup", async (data) => {
-    const respon = await axios.put(`${kalender}calendar/${data.id}/update/`, data.payload, { headers: { Authorization: data.token } })
-    return respon?.data.result
-})
+export const putEditGrup = createAsyncThunk(
+    "calendar/putEditGrup",
+    async (data) => {
+        const respon = await axios.put(
+            `${kalender}calendar/${data.id}/update/`,
+            data.payload,
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data.result;
+    }
+);
 
-export const putEditAgendaGrup = createAsyncThunk("calendar/putEditAgendaGrup", async (data) => {
-    console.log(data)
-    const respon = await axios.put(`${kalender}calendar/event/${data.id}/update/`, data.payload, { headers: { Authorization: data.token } })
-    return respon?.data.result
-})
-export const deleteAgendaGrup = createAsyncThunk("calendar/deleteAgendaGrup", async (data) => {
-    console.log(data)
-    const respon = await axios.delete(`${kalender}calendar/event/${data.id}/destroy/`, { headers: { Authorization: data.token } })
-    return respon
-})
-export const deleteGrup = createAsyncThunk("calendar/deleteGrup", async (data) => {
-    console.log(data)
-    const respon = await axios.delete(`${kalender}calendar/${data.id}/destroy/`, { headers: { Authorization: data.token } })
-    return respon
-})
-
-
+export const putEditAgendaGrup = createAsyncThunk(
+    "calendar/putEditAgendaGrup",
+    async (data) => {
+        console.log(data);
+        const respon = await axios.put(
+            `${kalender}calendar/event/${data.id}/update/`,
+            data.payload,
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data.result;
+    }
+);
+export const deleteAgendaGrup = createAsyncThunk(
+    "calendar/deleteAgendaGrup",
+    async (data) => {
+        console.log(data);
+        const respon = await axios.delete(
+            `${kalender}calendar/event/${data.id}/destroy/`,
+            { headers: { Authorization: data.token } }
+        );
+        return respon;
+    }
+);
+export const deleteGrup = createAsyncThunk(
+    "calendar/deleteGrup",
+    async (data) => {
+        console.log(data);
+        const respon = await axios.delete(
+            `${kalender}calendar/${data.id}/destroy/`,
+            { headers: { Authorization: data.token } }
+        );
+        return respon;
+    }
+);
 
 //Dashboard
 export const getKesejahteraan = createAsyncThunk(
@@ -1254,17 +1332,17 @@ export const getListPostPegawai = createAsyncThunk(
 export const getListPegawaiExport = createAsyncThunk(
     "admin/iku/employee/export",
     async (data) => {
-        // console.log(data.token);
-        // console.log(data.year);
-        // console.log(data.quarter);
-        // console.log(data.unitKerja);
+        console.log(data.token);
+        console.log(data.year);
+        console.log(data.quarter);
+        console.log(data.unitKerja);
         const respon = await axios.get(
             `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
             {
                 headers: { Authorization: data.token },
             }
         );
-        return respon?.data.results;
+        return respon?.data.result;
     }
 );
 
@@ -1273,74 +1351,149 @@ export const getListPegawaiExport = createAsyncThunk(
 //     return respon?.data
 // })
 //Digital Signature
-export const getListComposer = createAsyncThunk("digitalsign/getListComposer", async ({ token, tipe }) => {
-    const respon = await axios.get(`${digitalSign}document/composer/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
-    return {
-        data: respon?.data.results,
-        tipe: tipe
+export const getListComposer = createAsyncThunk(
+    "digitalsign/getListComposer",
+    async ({ token, tipe }) => {
+        const respon = await axios.get(
+            `${digitalSign}document/composer/?tipe_dokumen=${tipe}`,
+            { headers: { Authorization: token } }
+        );
+        return {
+            data: respon?.data.results,
+            tipe: tipe,
+        };
     }
-})
-export const getListInProgress = createAsyncThunk("digitalsign/getListInProgress", async ({ token, tipe }) => {
-    const respon = await axios.get(`${digitalSign}document/inprogress/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
-    return {
-        data: respon?.data.results,
-        tipe: tipe
+);
+export const getListInProgress = createAsyncThunk(
+    "digitalsign/getListInProgress",
+    async ({ token, tipe }) => {
+        const respon = await axios.get(
+            `${digitalSign}document/inprogress/?tipe_dokumen=${tipe}`,
+            { headers: { Authorization: token } }
+        );
+        return {
+            data: respon?.data.results,
+            tipe: tipe,
+        };
     }
-})
-export const getListCompleted = createAsyncThunk("digitalsign/getListCompleted", async ({ token, tipe }) => {
-    const respon = await axios.get(`${digitalSign}document/completed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
-    return {
-        data: respon?.data.results,
-        tipe: tipe
+);
+export const getListCompleted = createAsyncThunk(
+    "digitalsign/getListCompleted",
+    async ({ token, tipe }) => {
+        const respon = await axios.get(
+            `${digitalSign}document/completed/?tipe_dokumen=${tipe}`,
+            { headers: { Authorization: token } }
+        );
+        return {
+            data: respon?.data.results,
+            tipe: tipe,
+        };
     }
-})
-export const getListDraft = createAsyncThunk("digitalsign/getListDraft", async ({ token, tipe }) => {
-    const respon = await axios.get(`${digitalSign}document/draft/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
-    return {
-        data: respon?.data.results,
-        tipe: tipe
+);
+export const getListDraft = createAsyncThunk(
+    "digitalsign/getListDraft",
+    async ({ token, tipe }) => {
+        const respon = await axios.get(
+            `${digitalSign}document/draft/?tipe_dokumen=${tipe}`,
+            { headers: { Authorization: token } }
+        );
+        return {
+            data: respon?.data.results,
+            tipe: tipe,
+        };
     }
-})
+);
 
-export const addDocumentDigiSign = createAsyncThunk("digitalsign/addDocumentDigiSign", async (data) => {
-    const respon = await axios.post(`${digitalSign}document/create/`, data.payload, { headers: { Authorization: data.token } })
-    return respon?.data
-})
-
-export const getListSignedDigiSign = createAsyncThunk("digitalsign/getListSignedDigiSign", async ({ token, tipe }) => {
-    const respon = await axios.get(`${digitalSign}document/signed/?tipe_dokumen=${tipe}`, { headers: { Authorization: token } })
-    return {
-        data: respon?.data.results,
-        tipe: tipe
+export const addDocumentDigiSign = createAsyncThunk(
+    "digitalsign/addDocumentDigiSign",
+    async (data) => {
+        const respon = await axios.post(
+            `${digitalSign}document/create/`,
+            data.payload,
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data;
     }
-})
+);
 
-export const putDocumentDigiSign = createAsyncThunk("digitalsign/putDocumentDigiSign", async (data) => {
-    const respon = await axios.put(`${digitalSign}document/${data.id}/draft/`, { status: data.status }, { headers: { Authorization: data.token } })
-    return respon?.data.result
-})
+export const getListSignedDigiSign = createAsyncThunk(
+    "digitalsign/getListSignedDigiSign",
+    async ({ token, tipe }) => {
+        const respon = await axios.get(
+            `${digitalSign}document/signed/?tipe_dokumen=${tipe}`,
+            { headers: { Authorization: token } }
+        );
+        return {
+            data: respon?.data.results,
+            tipe: tipe,
+        };
+    }
+);
 
-export const addAttachmentDigiSign = createAsyncThunk("digitalsign/addAttachmentDigiSign", async (data) => {
-    const respon = await axios.post(`${digitalSign}attachment/create/`, data.payload, { headers: { Authorization: data.token } })
-    return respon?.data
-})
+export const putDocumentDigiSign = createAsyncThunk(
+    "digitalsign/putDocumentDigiSign",
+    async (data) => {
+        const respon = await axios.put(
+            `${digitalSign}document/${data.id}/draft/`,
+            { status: data.status },
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data.result;
+    }
+);
 
-export const getDetailDigisign = createAsyncThunk("digitalsign/getDetailDigisign", async ({ token, id }) => {
-    const respon = await axios.get(`${digitalSign}document/${id}`, { headers: { Authorization: token } })
-    return respon?.data.result
-})
+export const addAttachmentDigiSign = createAsyncThunk(
+    "digitalsign/addAttachmentDigiSign",
+    async (data) => {
+        const respon = await axios.post(
+            `${digitalSign}attachment/create/`,
+            data.payload,
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data;
+    }
+);
 
-export const updateDocumentDigiSign = createAsyncThunk("digitalsign/updateDocumentDigiSign", async (data) => {
-    const respon = await axios.put(`${digitalSign}document/${data.id}/draft/`, { status: data.status }, { headers: { Authorization: data.token } })
-    return respon?.data.result
-})
+export const getDetailDigisign = createAsyncThunk(
+    "digitalsign/getDetailDigisign",
+    async ({ token, id }) => {
+        const respon = await axios.get(`${digitalSign}document/${id}`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.result;
+    }
+);
 
-export const putInProgressDigiSign = createAsyncThunk("digitalsign/putInProgressDigiSign", async (data) => {
-    const respon = await axios.put(`${digitalSign}document/approve/`, { status: data.status }, { headers: { Authorization: data.token } })
-    return respon?.data.result
-})
+export const updateDocumentDigiSign = createAsyncThunk(
+    "digitalsign/updateDocumentDigiSign",
+    async (data) => {
+        const respon = await axios.put(
+            `${digitalSign}document/${data.id}/draft/`,
+            { status: data.status },
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data.result;
+    }
+);
 
-export const getCourseDigiSign = createAsyncThunk("digitalsign/getCourseDigiSign", async (token) => {
-    const respon = await axios.get(`${digitalSign}course/?limit=10`, { headers: { Authorization: token } })
-    return respon?.data.results
-})
+export const putInProgressDigiSign = createAsyncThunk(
+    "digitalsign/putInProgressDigiSign",
+    async (data) => {
+        const respon = await axios.put(
+            `${digitalSign}document/approve/`,
+            { status: data.status },
+            { headers: { Authorization: data.token } }
+        );
+        return respon?.data.result;
+    }
+);
+
+export const getCourseDigiSign = createAsyncThunk(
+    "digitalsign/getCourseDigiSign",
+    async (token) => {
+        const respon = await axios.get(`${digitalSign}course/?limit=10`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
+    }
+);

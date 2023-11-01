@@ -63,8 +63,8 @@ function MyTabBarSPPD({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='school-outline' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Personal</Text>
+                                <Ionicons name='school-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
+                                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Personal</Text>
                             </View>
                         ) : (
                             <View style={{
@@ -73,8 +73,8 @@ function MyTabBarSPPD({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='school-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Personal</Text>
+                                <Ionicons name='school-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
+                                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Personal</Text>
                             </View>
                         )}
                     </TouchableOpacity>

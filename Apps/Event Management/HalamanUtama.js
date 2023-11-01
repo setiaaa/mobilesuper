@@ -302,7 +302,7 @@ export const HalamanUtama = () => {
 
           )}
 
-          <TouchableOpacity style={{
+          {/* <TouchableOpacity style={{
             width: 50,
             height: 50,
             backgroundColor: COLORS.infoDanger,
@@ -318,7 +318,7 @@ export const HalamanUtama = () => {
             }}
           >
             <Ionicons name="add-outline" size={24} color={COLORS.white} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <BottomSheetModal
             ref={bottomSheetModalAddRef}

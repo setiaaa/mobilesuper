@@ -151,49 +151,49 @@ export const DetailPenilaian = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
 
-    <View style={{ flex: 1 }}>
-          <Image
-            source={{ uri: data?.cover }}
-            style={{ width: "100%", height: 260 }}
-          />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              position: "absolute",
-              width: "100%",
-              marginTop: 20,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                borderRadius: 20,
-                width: 28,
-                height: 28,
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: 20,
-              }}
-            >
-              <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                <Ionicons
-                  name="chevron-back-outline"
-                  size={24}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+                <View style={{ flex: 1 }}>
+                    <Image
+                        source={{ uri: data?.cover }}
+                        style={{ width: "100%", height: 260 }}
+                    />
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            position: "absolute",
+                            width: "100%",
+                            marginTop: 20,
+                        }}
+                    >
+                        <View
+                            style={{
+                                backgroundColor: COLORS.white,
+                                borderRadius: 20,
+                                width: 28,
+                                height: 28,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                marginLeft: 20,
+                            }}
+                        >
+                            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                                <Ionicons
+                                    name="chevron-back-outline"
+                                    size={24}
+                                    color={COLORS.primary}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
 
                 <View style={{
                     width: "100%",
-            backgroundColor: "#FFFFFF",
-            borderTopLeftRadius: 32,
-            borderTopRightRadius: 32,
-            marginTop: -40,
-            padding: 20,
+                    backgroundColor: "#FFFFFF",
+                    borderTopLeftRadius: 32,
+                    borderTopRightRadius: 32,
+                    marginTop: -40,
+                    padding: 20,
                 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 20, justifyContent: 'center' }}>
                         <Image source={require('../../assets/superApp/logoKecil.png')} style={{ width: 37, height: 37 }} />
@@ -201,7 +201,7 @@ export const DetailPenilaian = () => {
                     </View>
 
 
-                    <View key={data?.id} style={{ marginTop: 10,  }}>
+                    <View key={data?.id} style={{ marginTop: 10, }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Text>Periode: </Text>
                             <Text>{getPeriode(data?.quarter)}</Text>
@@ -224,7 +224,7 @@ export const DetailPenilaian = () => {
                             <Text>: {moment(data?.published_date, 'HH:mm:ss').format(DATETIME.LONG_DATE)}</Text>
                         </View>
 
-                        
+
 
                         <View style={{ flexDirection: 'row', marginTop: 5 }}>
                             <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>Judul [What]</Text>
@@ -258,16 +258,16 @@ export const DetailPenilaian = () => {
                                 <RenderHTML
                                     source={source}
                                     contentWidth={width}
-                                    enableExperimentalMarginCollapsing={true} 
+                                    enableExperimentalMarginCollapsing={true}
                                 />
                                 {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
                             </View>
                         </View>
 
                         <View style={{ flexDirection: 'row' }}>
-                        {!data?.attachments === 0 ? (
-                            <Text style={{ width: 130, fontWeight: 'bold' }}>Lampiran</Text>
-                        ) : null }
+                            {!data?.attachments === 0 ? (
+                                <Text style={{ width: 130, fontWeight: 'bold' }}>Lampiran</Text>
+                            ) : null}
 
                         </View>
                         <FlatList
@@ -360,31 +360,31 @@ export const DetailPenilaian = () => {
                     borderRadius: 8,
                     marginBottom: 20,
                 }}>
-                    <View style={{  gap: 20, paddingVertical: 20 }}>
-                        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center'}}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold,  }}>Nilai</Text>
-                            <Text style={{ color: COLORS.danger }}>*</Text>
-                        </View>
+                    <View style={{ gap: 20, paddingVertical: 20 }}>
+                        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, }}>Nilai</Text>
+                                <Text style={{ color: COLORS.danger }}>*</Text>
+                            </View>
 
 
-                        <View style={{ width: 170 }}>
-                            <Dropdown
-                                data={dataNilai()}
-                                placeHolder={'Nilai'}
-                                setSelected={setNilai}
-                                selected={Nilai}
-                                borderWidth={1}
-                                borderColor={COLORS.ExtraDivinder}
-                                borderWidthValue={1}
-                                borderwidthDrop={1}
-                                borderColorDrop={COLORS.ExtraDivinder}
-                                borderColorValue={COLORS.ExtraDivinder}
-                            />
-                        </View>
+                            <View style={{ width: 170 }}>
+                                <Dropdown
+                                    data={dataNilai()}
+                                    placeHolder={'Nilai'}
+                                    setSelected={setNilai}
+                                    selected={Nilai}
+                                    borderWidth={1}
+                                    borderColor={COLORS.ExtraDivinder}
+                                    borderWidthValue={1}
+                                    borderwidthDrop={1}
+                                    borderColorDrop={COLORS.ExtraDivinder}
+                                    borderColorValue={COLORS.ExtraDivinder}
+                                />
+                            </View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', position: 'relative'}}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', position: 'relative' }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold, marginBottom: 5, position: 'absolute', left: 5 }}>Tanggal Nilai :</Text>
                             <Text>{tanggal}</Text>
                         </View>

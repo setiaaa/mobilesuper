@@ -1,12 +1,35 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { COLORS } from '../../config/SuperAppps';
+import { useRef, useState } from 'react';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../../config/SuperAppps';
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+    BottomSheetBackdrop,
+    BottomSheetView,
+    BottomSheetTextInput,
+    useBottomSheetDynamicSnapPoints
+} from '@gorhom/bottom-sheet';
+import { useMemo } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native';
 
-function MyTabBarRepo({ props, navigation }) {
+
+function MyTabBarOutgoingKorespondensi({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);
+    const bottomSheetModalAddRef = useRef(null);
+
+    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
+    const {
+        animatedHandleHeight,
+        animatedSnapPoints,
+        animatedContentHeight,
+        handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
+
+    const bottomSheetAdd = () => {
+        bottomSheetModalAddRef.current?.present()
+    }
 
     return (
         <SafeAreaView>
@@ -16,7 +39,7 @@ function MyTabBarRepo({ props, navigation }) {
                         key={1}
                         onPress={() => {
                             setTabItemIndex(1)
-                            navigation.navigate('Dokumen', { unread: false })
+                            navigation.navigate('InfoOutgoindDetail', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }}>
                         {tabItemIndex === 1 ? (
@@ -40,8 +63,8 @@ function MyTabBarRepo({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='list' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Dokumen</Text>
+                                <Ionicons name='information-circle-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Info</Text>
                             </View>
                         ) : (
                             <View style={{
@@ -50,8 +73,8 @@ function MyTabBarRepo({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='list' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Dokumen</Text>
+                                <Ionicons name='information-circle-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Info</Text>
                             </View>
                         )}
                     </TouchableOpacity>
@@ -60,7 +83,7 @@ function MyTabBarRepo({ props, navigation }) {
                         key={2}
                         onPress={() => {
                             setTabItemIndex(2)
-                            navigation.navigate('Dibagikan', { unread: false })
+                            navigation.navigate('FileOutgoingDetail', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }}>
                         {tabItemIndex === 2 ? (
@@ -84,8 +107,8 @@ function MyTabBarRepo({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='people-outline' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Dibagikan</Text>
+                                <Ionicons name='document-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary, textAlign: "center" }}>File Surat</Text>
                             </View>
                         ) : (
                             <View style={{
@@ -94,8 +117,8 @@ function MyTabBarRepo({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='people-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Dibagikan</Text>
+                                <Ionicons name='document-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey, textAlign: "center" }}>File Surat</Text>
                             </View>
                         )}
                     </TouchableOpacity>
@@ -104,7 +127,7 @@ function MyTabBarRepo({ props, navigation }) {
                         key={3}
                         onPress={() => {
                             setTabItemIndex(3)
-                            navigation.navigate('DokumenTamplate', { unread: false })
+                            navigation.navigate('AttachmentOutgoingDetail', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }}>
                         {tabItemIndex === 3 ? (
@@ -128,8 +151,8 @@ function MyTabBarRepo({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='documents-outline' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Dokumen Tamplate</Text>
+                                <Ionicons name='attach-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary, textAlign: "center" }}>Attachment</Text>
                             </View>
                         ) : (
                             <View style={{
@@ -138,8 +161,52 @@ function MyTabBarRepo({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='documents-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Dokumen Tamplate</Text>
+                                <Ionicons name='attach-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey, textAlign: "center" }}>Attachment</Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        key={4}
+                        onPress={() => {
+                            setTabItemIndex(4)
+                            navigation.navigate('KomentarOutgoingDetail', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }}>
+                        {tabItemIndex === 4 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='chatbox-ellipses-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary, textAlign: "center" }}>Komentar</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='chatbox-ellipses-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey, textAlign: "center" }}>Komentar</Text>
                             </View>
                         )}
                     </TouchableOpacity>
@@ -153,4 +220,4 @@ function MyTabBarRepo({ props, navigation }) {
 const styles = StyleSheet.create({
 
 })
-export default MyTabBarRepo
+export default MyTabBarOutgoingKorespondensi

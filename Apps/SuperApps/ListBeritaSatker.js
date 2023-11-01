@@ -55,7 +55,7 @@ export const ListBeritaSatker = () => {
     useEffect(() => {
         setFilterData(berita.lists)
     }, [berita])
-    
+
     useEffect(() => {
         const item = berita.lists
         if (search !== '') {
@@ -107,7 +107,7 @@ export const ListBeritaSatker = () => {
                     </View>
                 </View>
                 <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-                    <Search 
+                    <Search
                         placeholder={'Cari'}
                         iconColor={COLORS.primary}
                         onSearch={filter}

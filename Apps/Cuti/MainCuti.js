@@ -6,11 +6,9 @@ import { BottomTabsCuti } from '../Korespondensi/AppNavigator'
 
 
 export default function MainCuti() {
-    const dispatch = useDispatch()
-
     return (
         <BottomSheetModalProvider>
-            <BottomTabsCuti/>
+            <BottomTabsCuti />
         </BottomSheetModalProvider>
     )
 }

@@ -128,7 +128,7 @@ function DTodo() {
         />
       </View>
       <Searchbar
-        placeholder="Search"
+        placeholder="Cari..."
         onChangeText={setSearchTodo}
         value={searchTodo}
         style={styles.searchBar}

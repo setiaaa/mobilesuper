@@ -244,7 +244,7 @@ function DelegationList() {
           getSearch={filter}
         /> */}
         <Searchbar
-          placeholder="Search"
+          placeholder="Cari..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           onIconPress={filter}
