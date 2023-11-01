@@ -67,7 +67,7 @@ export default function Dashboard() {
         if (token !== '') {
             dispatch(getCategory({token:token, page:page}))
         }
-    }, [token]);
+    }, [token, page]);
 
     const { dokumen, lists, loading } = useSelector(state => state.kebijakan)
 
@@ -104,8 +104,8 @@ export default function Dashboard() {
         console.log(page)
     }
 
-    console.log(page)
-    console.log(lists.results?.datas)
+    console.log('ini page dari dashboarfd'+ page)
+    console.log(lists?.results?.datas)
     const navigation = useNavigation()
 
     return (

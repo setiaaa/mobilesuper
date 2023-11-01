@@ -172,7 +172,7 @@ export const DetailTask = () => {
                                 data={dataStatus}
                                 selected={status}
                                 setSelected={setStatus}
-                                backgroundColor={'#fff'}
+                                backgroundColor={COLORS.primary}
                                 borderColor={COLORS.ExtraDivinder}
                                 borderwidthDrop={1}
                                 borderColorDrop={COLORS.ExtraDivinder}
@@ -232,11 +232,13 @@ export const DetailTask = () => {
                                                                             )
                                                                         })}
                                                                     </View>
-                                                                    <TouchableOpacity onPress={bottomSheetMember}>
-                                                                        <View>
-                                                                            <Ionicons name='chevron-forward-outline' size={24} color={COLORS.grey} />
-                                                                        </View>
-                                                                    </TouchableOpacity>
+                                                                    {taskDetail.members.length > 3 ? (
+                                                                        <TouchableOpacity onPress={bottomSheetMember}>
+                                                                            <View>
+                                                                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.grey} />
+                                                                            </View>
+                                                                        </TouchableOpacity>
+                                                                    ) : ( null )}
                                                                 </>
                                                             ) : (
                                                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>

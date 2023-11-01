@@ -739,8 +739,8 @@ export const getTreeTM = createAsyncThunk(
 
 export const getListDashboardTM = createAsyncThunk(
     "taskmanagement/getListDashboardTM",
-    async ({ token }) => {
-        const respon = await axios.get(`${taskManagement}dashboard/list/`, {
+    async ({ token, page }) => {
+        const respon = await axios.get(`${taskManagement}dashboard/list/?limit=$(page)`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
