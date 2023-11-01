@@ -26,6 +26,9 @@ import { getMyPostDetail, getMyPostList } from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
 import moment from "moment/moment";
 import ListEmpty from "../../components/ListEmpty";
+import { setRefresh } from "../../store/Pengetahuan";
+import { Loading } from "../../components/Loading";
+import { ActivityIndicator } from "react-native";
 
 const CardPostinganSaya = ({ item, token }) => {
   const navigation = useNavigation();
@@ -239,6 +242,8 @@ export const PostinganSaya = () => {
 
   const dispatch = useDispatch();
 
+  const [page, setPage] = useState(10)
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -247,15 +252,51 @@ export const PostinganSaya = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getMyPostList(token));
+      dispatch(getMyPostList({ token: token, page: page }));
+      dispatch(setRefresh(false))
     }
-  }, [token]);
+  }, [token, page]);
 
-  const { postinganSaya } = useSelector((state) => state.pengetahuan);
+  const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
+
+  const loadMore = () => {
+    if (postinganSaya.lists.length % 10 === 0) {
+      setPage(page + 10)
+    }
+    console.log(page)
+  }
+
+  const [search, setSearch] = useState("")
+  const [filterData, setFilterData] = useState([])
+
+  const filter = (event) => {
+    setSearch(event)
+  }
+
+  useEffect(() => {
+    setFilterData(postinganSaya.lists)
+  }, [postinganSaya])
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = postinganSaya.lists?.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      })
+      setFilterData(data)
+    } else {
+      setFilterData(postinganSaya.lists)
+    }
+  }, [search])
 
   // console.log(postinganSaya.lists);
 
   return (
+    <>
+    {loading ? (
+      <Loading />
+    ) : (
+      null
+    )}
     <SafeAreaView>
       <View
         style={{
@@ -319,25 +360,17 @@ export const PostinganSaya = () => {
             marginTop: 15,
             borderRadius: 8,
             flexDirection: "row",
+            alignItems: "center"
           }}
         >
-          <TextInput
-            placeholder="Cari..."
-            style={{
-              width: "85%",
-              backgroundColor: "#FFFFFF",
-              marginRight: 10,
-              borderRadius: 8,
-              paddingStart: 10,
-              //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
-            }}
-          />
-          <TouchableOpacity
+          <View style={{ width: "85%", marginRight: 10, }}>
+            <Search 
+              placeholder={'Cari...'}
+              iconColor={COLORS.primary}
+              onSearch={filter}
+            />
+          </View>
+          {/* <TouchableOpacity
             style={{
               backgroundColor: "#C34647",
               borderRadius: 8,
@@ -355,12 +388,33 @@ export const PostinganSaya = () => {
             onPress={() => navigation.navigate("PostinganBaru")}
           >
             <Ionicons name="add-outline" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
 
       <FlatList
-        data={postinganSaya.lists}
+        data={filterData}
+        renderItem={({ item }) => 
+          <View key={item.id}>
+            <CardPostinganSaya item={item} token={token} />
+          </View>
+        }
+        ListFooterComponent={() => (
+          loading === true ? (
+            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            </View>
+          ) : (
+            null
+          )
+        )}
+        style={{ marginBottom: 80 }}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => <ListEmpty />}
+        onEndReached={loadMore}
+      />
+      {/* <FlatList
+        data={filterData}
         renderItem={({ item }) => (
           <View key={item.id}>
             <CardPostinganSaya item={item} token={token} />
@@ -369,7 +423,8 @@ export const PostinganSaya = () => {
         style={{ marginBottom: 80 }}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <ListEmpty />}
-      />
+      /> */}
     </SafeAreaView>
+    </>
   );
 };

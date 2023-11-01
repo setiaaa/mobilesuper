@@ -331,6 +331,7 @@ export const RangkumanIKU = () => {
   //   shareAsync(uri);
   // };
   return (
+    <>
     <SafeAreaView>
       <View
         style={{
@@ -370,16 +371,17 @@ export const RangkumanIKU = () => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          marginHorizontal: "10%",
+          marginHorizontal: 20,
           marginVertical: 20,
+          gap: 10,
         }}
       >
         <TouchableOpacity
           style={{
             backgroundColor: switchView ? COLORS.primary : COLORS.white,
             padding: 10,
-            width: 150,
-            borderRadius: 6,
+            width: "47%",
+            borderRadius: 30,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -402,8 +404,8 @@ export const RangkumanIKU = () => {
           style={{
             backgroundColor: !switchView ? COLORS.primary : COLORS.white,
             padding: 10,
-            width: 150,
-            borderRadius: 6,
+            width: "47%",
+            borderRadius: 30,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
             shadowColor: "#171717",
@@ -426,7 +428,7 @@ export const RangkumanIKU = () => {
 
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
-          <View style={{ height: '100%', width: '100%' }}>
+          <View style={{ height: '85%', width: '100%', paddingHorizontal: 20 }}>
             <WebView
               originWhitelist={["*"]}
               source={{
@@ -443,20 +445,20 @@ export const RangkumanIKU = () => {
           <ScrollView>
             <View
               style={{
-                flexDirection: "row",
+                flexDirection: "column",
                 gap: 5,
-                marginHorizontal: 15,
+                paddingHorizontal: 20,
                 width: "100%",
               }}
             >
               <TouchableOpacity
                 onPress={bottomSheetAttachSelect}
-                style={{ width: "46%" }}
+                // style={{ width: "46%" }}
               >
                 <View
                   style={{
                     backgroundColor: COLORS.white,
-                    marginVertical: 20,
+                    marginVertical: 10,
                     height: 54,
                     justifyContent: "center",
                     borderRadius: 8,
@@ -629,7 +631,7 @@ export const RangkumanIKU = () => {
                   </View>
                 </BottomSheetView>
               </BottomSheetModal>
-
+{/* 
               <BottomSheetModal
                 ref={bottomSheetModalRef}
                 snapPoints={animatedSnapPoints}
@@ -698,40 +700,20 @@ export const RangkumanIKU = () => {
                     />
                   </View>
                 </BottomSheetView>
-              </BottomSheetModal>
+              </BottomSheetModal> */}
 
-              <TouchableOpacity
-                onPress={bottomSheetAttachSearch}
-                style={{ width: "46%" }}
-              >
-                <View
-                  style={{
-                    backgroundColor: COLORS.white,
-                    marginVertical: 20,
-                    height: 54,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 8,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 4 },
-                    shadowColor: "#171717",
-                    shadowOpacity: 0.2,
-                    //shadow android
-                    elevation: 2,
-                  }}
-                >
-                  <Ionicons
-                    name="search-outline"
-                    size={24}
-                    color={COLORS.primary}
-                  />
-                </View>
-              </TouchableOpacity>
+              <View style={{ marginVertical: 10 }}>
+                <Search 
+                placeholder={'Cari...'}
+                iconColor={COLORS.primary}
+                onSearch={filter}
+                />
+              </View>
             </View>
 
             <View
               style={{
-                marginHorizontal: 15,
+                marginHorizontal: 20,
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -772,7 +754,7 @@ export const RangkumanIKU = () => {
 
             <View style={{ paddingHorizontal: 20, marginVertical: 10, gap: 2 }}>
               <Text style={{ fontSize: 13, fontWeight: 500, color: COLORS.grey }}>Yang dipilih:</Text>
-              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value} / {savedQuarter.value} / {savedUnitKerja.value}</Text>
+              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value ? savedYear.value : "-" } / {savedQuarter.value ? savedQuarter.value : "-"} / {savedUnitKerja.value ? savedUnitKerja.value : "-"}</Text>
             </View>
 
             <View>
@@ -878,5 +860,6 @@ export const RangkumanIKU = () => {
         )}
       </View>
     </SafeAreaView>
+    </>
   );
 };
