@@ -34,7 +34,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { useMemo } from "react";
 import { CardAppsB } from "../../components/CardAppsB";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import {
   GestureHandlerRootView,
@@ -83,6 +83,7 @@ export const Home = () => {
   const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
+  const route = useRoute();
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -131,12 +132,12 @@ export const Home = () => {
       return true;
     };
 
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
+    // const backHandler = BackHandler.addEventListener(
+    //   "hardwareBackPress",
+    //   backAction
+    // );
 
-    return () => backHandler.remove();
+    // return () => backHandler.remove();
   }, []);
 
   const {
@@ -290,15 +291,34 @@ export const Home = () => {
                 >
                   <View onLayout={handleContentLayout}>
                     <View style={{ marginVertical: 20 }}>
-                      <View style={{ marginHorizontal: 20, marginTop: 10, flexDirection: "row", justifyContent: "space-between", padding: 14 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H1, }}>Aplikasi</Text>
-                        <TouchableOpacity
-                          onPress={() => {
-                            console.log()
-                            closeBottomSheet()
+                      <View
+                        style={{
+                          marginHorizontal: 20,
+                          marginTop: 10,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          padding: 14,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: FONTSIZE.H1,
                           }}
                         >
-                          <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                          Aplikasi
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log();
+                            closeBottomSheet();
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
                         </TouchableOpacity>
                       </View>
                       <View style={{ marginVertical: 20 }}>

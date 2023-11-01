@@ -58,7 +58,7 @@
     "todo": true,
     "labelTodo": "To do",
     "prefix": "Sdr. ",
-    "statusBarAuth": "light-content",
+    "statusBarAuth": "dark-content",
     "statusBarAuthtenticated": "dark-content",
     "api": {
       "auth": "/api/auth/mobile/",
