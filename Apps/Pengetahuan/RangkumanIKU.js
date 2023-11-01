@@ -362,7 +362,7 @@ export const RangkumanIKU = () => {
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
-            Rangkuman IKU
+            {switchView ? "Rangkuman IKU" : "Daftar Pegawai"}
           </Text>
         </View>
       </View>
@@ -381,13 +381,15 @@ export const RangkumanIKU = () => {
             backgroundColor: switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: "47%",
-            borderRadius: 30,
+            borderRadius: 8,
+            height: 45,
+            justifyContent: "center",
             //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
+            shadowOffset: switchView ? { width: -2, height: 4 } : { width: 0, height: 0 }, 
+            shadowColor: switchView ? "#8E1414" : "FFFFFF",
+            shadowOpacity: switchView ?  0.2 : 0,
             //shadow android
-            elevation: 2,
+            elevation: switchView ? 2 : 0,
           }}
           onPress={switchRangkumanView}
         >
@@ -395,6 +397,8 @@ export const RangkumanIKU = () => {
             style={{
               color: switchView ? COLORS.white : COLORS.primary,
               textAlign: "center",
+              fontSize: 13,
+              fontWeight: 600
             }}
           >
             Rangkuman
@@ -405,13 +409,15 @@ export const RangkumanIKU = () => {
             backgroundColor: !switchView ? COLORS.primary : COLORS.white,
             padding: 10,
             width: "47%",
-            borderRadius: 30,
+            borderRadius: 8,
+            height: 45,
+            justifyContent: "center",
             //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
+            shadowOffset: !switchView ? { width: -2, height: 4 } : { width: 0, height: 0 }, 
+            shadowColor: !switchView ? "#8E1414" : "FFFFFF",
+            shadowOpacity: !switchView ?  0.2 : 0,
             //shadow android
-            elevation: 2,
+            elevation: !switchView ? 2 : 0,
           }}
           onPress={switchDaftarPegawaiView}
         >
@@ -419,6 +425,8 @@ export const RangkumanIKU = () => {
             style={{
               color: !switchView ? COLORS.white : COLORS.primary,
               textAlign: "center",
+              fontSize: 13,
+              fontWeight: 600
             }}
           >
             Daftar Pegawai
