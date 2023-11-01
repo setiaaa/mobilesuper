@@ -531,7 +531,9 @@ export const DetailLinimasa = () => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
 
-  const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
+  const { linimasa, refresh, loading } = useSelector(
+    (state) => state.pengetahuan
+  );
   const detail = linimasa.detail;
   const listsView = linimasa.view;
   const source = {
@@ -577,7 +579,7 @@ export const DetailLinimasa = () => {
     }
   }, [refresh]);
 
-  console.log(detail);
+  // console.log(loading);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -1436,10 +1438,7 @@ export const DetailLinimasa = () => {
                             marginBottom: 20,
                           }}
                         >
-                          {moment(
-                            detail.start_date_agenda,
-                            "DD MMMM YYYY HH:mm:ss"
-                          ).format(DATETIME.LONG_DATE)}
+                          {detail.start_date_agenda?.slice(0, -9)}
                         </Text>
                       </View>
                     </View>

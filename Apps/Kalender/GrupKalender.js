@@ -642,9 +642,16 @@ export const GrupKalender = () => {
                       size={24}
                       color={COLORS.primary}
                     /> */}
-                    <Text style={{ color: COLORS.info }}>
-                      Ke tanggal hari ini
-                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.primary,
+                        paddingVertical: 5,
+                        paddingHorizontal: 10,
+                        borderRadius: 10,
+                      }}
+                    >
+                      <Text style={{ color: COLORS.white }}>Hari ini</Text>
+                    </View>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
