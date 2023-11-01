@@ -22,7 +22,12 @@ import { getTokenValue } from "../../service/session";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Search } from "../../components/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailLinimasa, getMyPostDetail, getMyPostList, getViewLinimasa } from "../../service/api";
+import {
+  getDetailLinimasa,
+  getMyPostDetail,
+  getMyPostList,
+  getViewLinimasa,
+} from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
 import moment from "moment/moment";
 import ListEmpty from "../../components/ListEmpty";
@@ -35,11 +40,11 @@ const CardPostinganSaya = ({ item, token }) => {
   const dispatch = useDispatch();
 
   const getDetail = (id) => {
-    const params = { token, id }
+    const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
-    dispatch(getDetailLinimasa(params))
-    dispatch(getViewLinimasa(params))
-  }
+    dispatch(getDetailLinimasa(params));
+    dispatch(getViewLinimasa(params));
+  };
 
   return (
     <View style={{ width: "90%", alignSelf: "center", marginTop: 20 }}>
@@ -90,24 +95,22 @@ const CardPostinganSaya = ({ item, token }) => {
                 />
               </View>
             </View>
-            <View style={{ marginHorizontal: 10, width: "75%" }}>
+            <View style={{ marginHorizontal: 10, width: "75%", }}>
               <Text
                 style={{
-                  width: 270,
+                  // width: 270,
                   fontSize: 13,
                   textAlign: "justify",
                   marginBottom: 5,
                   maxWidth: 250,
                 }}
-                numberOfLines={1} // Limit the number of lines to 1
+                numberOfLines={3} // Limit the number of lines to 1
                 ellipsizeMode="tail" // Display "..." at the end if text overflows
               >
                 {item.title}
               </Text>
               <View
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
                   marginVertical: 15,
                 }}
               >
@@ -117,26 +120,27 @@ const CardPostinganSaya = ({ item, token }) => {
                     DATETIME.LONG_DATE
                   )}
                 </Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
-                  >
-                    Poin :
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: COLORS.success,
-                      borderRadius: 8,
-                      width: 30,
-                    }}
-                  >
-                    <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
-                      {item.score}
-                    </Text>
-                  </View>
-                </View>
               </View>
-              <View style={{ alignItems: "flex-end" }}>
+              <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
+                    >
+                      Poin :
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.success,
+                        borderRadius: 8,
+                        width: 30,
+                      }}
+                    >
+                      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                        {item.score}
+                      </Text>
+                    </View>
+                  </View>
+
                 {item?.state === "publish" ? (
                   <View
                     style={{
@@ -187,7 +191,16 @@ const CardPostinganSaya = ({ item, token }) => {
               </View>
             </View>
           </View>
-          <View style={{ flexDirection: "row", justifyContent: "center", gap: 50, paddingVertical: 10, borderTopWidth: 1, borderColor: "#E0E0E0", }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: 50,
+              paddingVertical: 10,
+              borderTopWidth: 1,
+              borderColor: "#E0E0E0",
+            }}
+          >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity
                 style={{
@@ -199,11 +212,7 @@ const CardPostinganSaya = ({ item, token }) => {
                   justifyContent: "center",
                 }}
               >
-                <Ionicons
-                  name="thumbs-up-outline"
-                  size={18}
-                  color="#FFFFFF"
-                />
+                <Ionicons name="thumbs-up-outline" size={18} color="#FFFFFF" />
               </TouchableOpacity>
               <Text
                 style={{
@@ -244,7 +253,7 @@ export const PostinganSaya = () => {
 
   const dispatch = useDispatch();
 
-  const [page, setPage] = useState(10)
+  const [page, setPage] = useState(10);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -255,7 +264,6 @@ export const PostinganSaya = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getMyPostList({ token: token, page: page }));
-      dispatch(setRefresh(false))
     }
   }, [token, page]);
 
@@ -263,116 +271,121 @@ export const PostinganSaya = () => {
 
   const loadMore = () => {
     if (postinganSaya.lists.length % 10 === 0) {
-      setPage(page + 10)
+      setPage(page + 10);
     }
-    console.log(page)
-  }
+    console.log(page);
+  };
 
-  const [search, setSearch] = useState("")
-  const [filterData, setFilterData] = useState([])
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
 
   const filter = (event) => {
-    setSearch(event)
-  }
+    setSearch(event);
+  };
 
   useEffect(() => {
-    setFilterData(postinganSaya.lists)
-  }, [postinganSaya])
+    setFilterData(postinganSaya.lists);
+  }, [postinganSaya]);
 
   useEffect(() => {
     if (search !== "") {
       const data = postinganSaya.lists?.filter((item) => {
         return item.title.toLowerCase().includes(search.toLowerCase());
-      })
-      setFilterData(data)
+      });
+      setFilterData(data);
     } else {
-      setFilterData(postinganSaya.lists)
+      setFilterData(postinganSaya.lists);
     }
-  }, [search])
+  }, [search]);
 
   // console.log(postinganSaya.lists);
 
   return (
     <>
-    {loading ? (
-      <Loading />
-    ) : (
-      null
-    )}
-    <SafeAreaView>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: COLORS.primary,
-          height: 80,
-        }}
-      >
+      {loading ? (
+        <Loading />
+      ): (
+          null
+      )}
+      <SafeAreaView>
         <View
           style={{
-            backgroundColor: COLORS.white,
-            borderRadius: 20,
-            width: 28,
-            height: 28,
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: 20,
-          }}
-        >
-          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
-            <Ionicons
-              name="chevron-back-outline"
-              size={24}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
-            Postingan Saya
-          </Text>
-        </View>
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderRadius: 20,
-            width: 28,
-            height: 28,
-            alignItems: "center",
-            justifyContent: "center",
-            marginRight: 20,
-          }}
-        >
-          <TouchableOpacity
-            style={{}}
-            onPress={() => navigation.navigate("JumlahPostingan")}
-          >
-            <Ionicons
-              name="document-text-outline"
-              size={24}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
-        <View
-          style={{
-            marginTop: 15,
-            borderRadius: 8,
             flexDirection: "row",
-            alignItems: "center"
+            alignItems: "center",
+            backgroundColor: COLORS.primary,
+            height: 80,
           }}
         >
-          <View style={{ width: "85%", marginRight: 10, }}>
-            <Search 
-              placeholder={'Cari...'}
-              iconColor={COLORS.primary}
-              onSearch={filter}
-            />
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              borderRadius: 20,
+              width: 28,
+              height: 28,
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 20,
+            }}
+          >
+            <TouchableOpacity
+              style={{}}
+              onPress={() => navigation.navigate("Home")}
+            >
+              <Ionicons
+                name="chevron-back-outline"
+                size={24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
           </View>
-          {/* <TouchableOpacity
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <Text
+              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+            >
+              Postingan Saya
+            </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              borderRadius: 20,
+              width: 28,
+              height: 28,
+              alignItems: "center",
+              justifyContent: "center",
+              marginRight: 20,
+            }}
+          >
+            <TouchableOpacity
+              style={{}}
+              onPress={() => navigation.navigate("JumlahPostingan")}
+            >
+              <Ionicons
+                name="document-text-outline"
+                size={24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
+          <View
+            style={{
+              marginTop: 15,
+              borderRadius: 8,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
+              <Search
+                placeholder={"Cari..."}
+                iconColor={COLORS.primary}
+                onSearch={filter}
+              />
+            </View>
+            {/* <TouchableOpacity
             style={{
               backgroundColor: "#C34647",
               borderRadius: 8,
@@ -391,31 +404,63 @@ export const PostinganSaya = () => {
           >
             <Ionicons name="add-outline" size={24} color="#FFFFFF" />
           </TouchableOpacity> */}
-        </View>
-      </View>
-
-      <FlatList
-        data={filterData}
-        renderItem={({ item }) => 
-          <View key={item.id}>
-            <CardPostinganSaya item={item} token={token} />
           </View>
-        }
-        ListFooterComponent={() => (
-          loading === true ? (
-            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
-              <ActivityIndicator size="large" color={COLORS.primary} />
+        </View>
+
+        <FlatList
+          data={filterData}
+          renderItem={({ item }) => (
+            <View key={item.id}>
+              <CardPostinganSaya
+                item={item}
+                token={token}
+              />
             </View>
-          ) : (
-            null
-          )
-        )}
-        style={{ marginBottom: 80 }}
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <ListEmpty />}
-        onEndReached={loadMore}
-      />
-      {/* <FlatList
+          )}
+          ListFooterComponent={() =>
+            loading === true ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 24,
+                }}
+              >
+                <ActivityIndicator size="large" color={COLORS.primary} />
+              </View>
+            ) : null
+          }
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={() => <ListEmpty />}
+          onEndReached={loadMore}
+        />
+
+        {/* <FlatList
+          data={filterData}
+          renderItem={({ item }) => (
+            <View key={item.id}>
+              <CardPostinganSaya item={item} token={token} />
+            </View>
+          )}
+          ListFooterComponent={() =>
+            loading === true ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 24,
+                }}
+              >
+                <ActivityIndicator size="large" color={COLORS.primary} />
+              </View>
+            ) : null
+          }
+          style={{ marginBottom: 80 }}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={() => <ListEmpty />}
+          onEndReached={loadMore}
+        /> */}
+        {/* <FlatList
         data={filterData}
         renderItem={({ item }) => (
           <View key={item.id}>
@@ -426,7 +471,7 @@ export const PostinganSaya = () => {
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <ListEmpty />}
       /> */}
-    </SafeAreaView>
+      </SafeAreaView>
     </>
   );
 };
