@@ -22,6 +22,8 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
+import { ActivityIndicator } from 'react-native';
+import { Loading } from '../../components/Loading';
 
 
 export default function Dashboard() {
@@ -34,7 +36,7 @@ export default function Dashboard() {
     const [category, setCategory] = useState([])
     const bottomSheetModalRef = useRef(null);
     const [variant, setVariant] = useState('list')
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(5)
     const [count, setCount] = useState()
     const [token, setToken] = useState('')
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
@@ -63,11 +65,11 @@ export default function Dashboard() {
 
     useEffect(() => {
         if (token !== '') {
-            dispatch(getCategory(token))
+            dispatch(getCategory({token:token, page:page}))
         }
     }, [token]);
 
-    const { dokumen, lists } = useSelector(state => state.kebijakan)
+    const { dokumen, lists, loading } = useSelector(state => state.kebijakan)
 
     useEffect(() => {
         setCategory(dokumen)
@@ -95,10 +97,24 @@ export default function Dashboard() {
         setFilterData(filter);
     };
 
+    const loadMore = () => {
+        if (lists.results?.datas.length % 5 === 0) {
+            setPage(page + 5)
+        }
+        console.log(page)
+    }
 
+    console.log(page)
+    console.log(lists.results?.datas)
     const navigation = useNavigation()
 
     return (
+        <>
+        {loading ? (
+            <Loading />
+        ) : (
+            null
+        )}
         <SafeAreaView style={{ flex: 1 }}>
             <BottomSheetModalProvider>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
@@ -246,7 +262,8 @@ export default function Dashboard() {
                                 <Text>Tidak ada</Text>
                             </View>
                         ) : (
-                            <>
+                            <View style={{marginBottom:100, paddingBottom:30}}>
+                            
                                 {
                                     variant === 'list' ? (
                                         <FlatList
@@ -259,6 +276,16 @@ export default function Dashboard() {
                                                 nomor={item.nomor}
                                                 tahun={item.tahun} />}
                                             keyExtractor={item => item.id_peraturan}
+                                            ListFooterComponent={() => (
+                                                loading === true ? (
+                                                    <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                                                        <ActivityIndicator size="small" color={COLORS.primary} />
+                                                    </View>
+                                                ) : (
+                                                    null
+                                                )
+                                            )}
+                                            onEndReached={loadMore}
                                         />
 
                                     ) : (
@@ -279,7 +306,7 @@ export default function Dashboard() {
                                         />
                                     )
                                 }
-                                {
+                                {/* {
                                     dataFilter.length >= 1 ? (
                                         <></>
                                     ) : (
@@ -293,8 +320,8 @@ export default function Dashboard() {
                                             </TouchableOpacity>
                                         </View>
                                     )
-                                }
-                            </>
+                                } */}
+                            </View>
                         )
                     }
 
@@ -303,6 +330,7 @@ export default function Dashboard() {
                 </View>
             </BottomSheetModalProvider>
         </SafeAreaView>
+        </>
     )
 }
 
@@ -324,7 +352,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         backgroundColor: COLORS.white,
         paddingTop: 10,
-        height: 400
+        height: '65%'
     },
     dropdown: {
         borderRadius: 12,

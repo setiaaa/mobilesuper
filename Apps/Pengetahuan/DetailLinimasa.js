@@ -727,7 +727,7 @@ export const DetailLinimasa = () => {
                                                     <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>[When]</Text>
                                                 </View>
 
-                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{detail.start_date_agenda}</Text>
+                                                <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10, marginBottom: 20 }}>{detail.start_date_agenda?.slice(0, -9)}</Text>
                                             </View>
                                         </View>
                                     </View>

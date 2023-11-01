@@ -20,6 +20,8 @@ import { getMyPostDetail, getMyPostList } from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
 import moment from "moment/moment";
 import ListEmpty from "../../components/ListEmpty";
+import { Loading } from "../../components/Loading";
+import { ActivityIndicator } from "react-native";
 
 const CardPostinganSaya = ({ item, token }) => {
   const navigation = useNavigation();
@@ -209,6 +211,8 @@ export const PostinganSaya = () => {
 
   const dispatch = useDispatch();
 
+  const [page, setPage] = useState(10)
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -217,15 +221,28 @@ export const PostinganSaya = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getMyPostList(token));
+      dispatch(getMyPostList({ token: token, page: page }));
     }
   }, [token]);
 
-  const { postinganSaya } = useSelector((state) => state.pengetahuan);
+  const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
+
+  const loadMore = () => {
+    if (postinganSaya.lists.length % 10 === 0) {
+      setPage(page + 10)
+    }
+    console.log(page)
+  }
 
   // console.log(postinganSaya.lists);
 
   return (
+    <>
+    {loading ? (
+      <Loading />
+    ) : (
+      null
+    )}
     <SafeAreaView>
       <View
         style={{
@@ -331,15 +348,26 @@ export const PostinganSaya = () => {
 
       <FlatList
         data={postinganSaya.lists}
-        renderItem={({ item }) => (
+        renderItem={({ item }) => 
           <View key={item.id}>
             <CardPostinganSaya item={item} token={token} />
           </View>
+        }
+        ListFooterComponent={() => (
+          loading === true ? (
+            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            </View>
+          ) : (
+            null
+          )
         )}
         style={{ marginBottom: 80 }}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <ListEmpty />}
+        onEndReached={loadMore}
       />
     </SafeAreaView>
+    </>
   );
 };

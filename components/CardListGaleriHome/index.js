@@ -34,7 +34,7 @@ export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
                             Platform.OS === "ios" ? styles.imageIos : styles.imageAndroid
                         }
                     />
-                    <View style={{ marginVertical: 4, marginHorizontal: 3, paddingHorizontal:10 }}>
+                    <View style={{ marginVertical: 4, marginHorizontal: 3, paddingHorizontal:10}}>
                         <Text
                             numberOfLines={3}
                             style={{
@@ -63,12 +63,10 @@ const styles = StyleSheet.create({
     },
     imageIos: {
         height: 193,
-        width: 180,
         borderRadius: 16,
     },
     imageAndroid: {
         height: 193,
-        width: 180,
         borderRadius: 16,
     },
     iOSBackdrop: {

@@ -124,7 +124,7 @@ export const PersonalCuti = () => {
                             )}
                     </View>
                 </View>
-                <View style={{padding:20, gap: 10}}>
+                <View style={{paddingLeft:20, gap: 10}}>
                     <Text style={{fontWeight:FONTWEIGHT.bold}}>Form Pengajuan Cuti</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
                         <View style={{gap:30, flexDirection: 'row',}}>
