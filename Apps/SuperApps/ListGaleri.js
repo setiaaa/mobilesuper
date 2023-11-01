@@ -19,6 +19,7 @@ import { getTokenValue } from "../../service/session";
 import { setGaleri } from "../../store/SuperApps";
 import { getGaleri } from "../../service/api";
 import { ActivityIndicator } from "react-native";
+import ListEmpty from "../../components/ListEmpty";
 
 
 
@@ -30,6 +31,8 @@ export const ListGaleri = () => {
   const [galeriById, setGaleriById] = useState({});
   const [page, setPage] = useState(1)
   const [token, setToken] = useState("");
+  const [filterData, setFilterData] = useState([])
+  const [search, setSearch] = useState('')
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -52,8 +55,28 @@ export const ListGaleri = () => {
       setPage(page + 1)
     }
   }
+
+  const filter = (event) => {
+    setSearch(event)
+  }
+
+  useEffect(() => {
+      setFilterData(galeri.lists)
+  }, [galeri])
+
+  useEffect(() => {
+    const item = galeri.lists
+    if (search !== '') {
+        const data = item.filter((item) => {
+            return item.title.toLowerCase().includes(search.toLowerCase());
+        })
+        setFilterData(data)
+    } else {
+        setFilterData(item)
+    }
+  }, [search])
   // console.log(visibleModal);
-  // console.log(galeri.lists);
+  console.log(galeri.lists);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
@@ -93,11 +116,15 @@ export const ListGaleri = () => {
           </View>
         </View>
         <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-          <Search placeholder={"Cari"} />
+          <Search
+            placeholder={'Cari'}
+            iconColor={COLORS.primary}
+            onSearch={filter}
+          />
         </View>
         <FlatList
           key={"#"}
-          data={galeri.lists}
+          data={filterData}
           renderItem={({ item }) => (
             <CardListGaleriHome
               image={item.main_images?.image}
@@ -108,6 +135,7 @@ export const ListGaleri = () => {
               }}
             />
           )}
+          ListEmptyComponent={() => <ListEmpty />}
           ListFooterComponent={() => (
             loading && (
               <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>

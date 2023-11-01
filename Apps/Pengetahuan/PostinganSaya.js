@@ -22,7 +22,7 @@ import { getTokenValue } from "../../service/session";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Search } from "../../components/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyPostDetail, getMyPostList } from "../../service/api";
+import { getDetailLinimasa, getMyPostDetail, getMyPostList, getViewLinimasa } from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
 import moment from "moment/moment";
 import ListEmpty from "../../components/ListEmpty";
@@ -35,16 +35,18 @@ const CardPostinganSaya = ({ item, token }) => {
   const dispatch = useDispatch();
 
   const getDetail = (id) => {
-    const param = { token, id };
-    dispatch(getMyPostDetail(param));
-  };
+    const params = { token, id }
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDetailLinimasa(params))
+    dispatch(getViewLinimasa(params))
+  }
 
   return (
     <View style={{ width: "90%", alignSelf: "center", marginTop: 20 }}>
       <TouchableOpacity
         onPress={() => {
           getDetail(item.id);
-          navigation.navigate("DetailPostinganSaya");
+          navigation.navigate("DetailLinimasa");
         }}
       >
         <View
@@ -187,48 +189,48 @@ const CardPostinganSaya = ({ item, token }) => {
           </View>
           <View style={{ flexDirection: "row", justifyContent: "center", gap: 50, paddingVertical: 10, borderTopWidth: 1, borderColor: "#E0E0E0", }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    borderRadius: 8,
-                    width: 33,
-                    height: 26,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Ionicons
-                    name="thumbs-up-outline"
-                    size={18}
-                    color="#FFFFFF"
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    color: COLORS.primary,
-                    marginStart: 5,
-                  }}
-                >
-                  {item.likes_count}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: COLORS.primary,
+                  borderRadius: 8,
+                  width: 33,
+                  height: 26,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <Ionicons
-                  name="chatbox-ellipses-outline"
+                  name="thumbs-up-outline"
                   size={18}
-                  color={COLORS.grey}
+                  color="#FFFFFF"
                 />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {item.comment_count}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {item.views_count}
-                </Text>
-              </View>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: COLORS.primary,
+                  marginStart: 5,
+                }}
+              >
+                {item.likes_count}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons
+                name="chatbox-ellipses-outline"
+                size={18}
+                color={COLORS.grey}
+              />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>
+                {item.comment_count}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+              <Text style={{ fontSize: 13, marginStart: 5 }}>
+                {item.views_count}
+              </Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>

@@ -3,9 +3,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { COLORS } from '../../config/SuperAppps';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-function MyTabBarRepo({ props, navigation }) {
+function MyTabCuti({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);
 
     return (
@@ -16,7 +16,7 @@ function MyTabBarRepo({ props, navigation }) {
                         key={1}
                         onPress={() => {
                             setTabItemIndex(1)
-                            navigation.navigate('Dokumen', { unread: false })
+                            navigation.navigate('Personal', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }}>
                         {tabItemIndex === 1 ? (
@@ -40,8 +40,8 @@ function MyTabBarRepo({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='list' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Dokumen</Text>
+                                <Ionicons name='home-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary }}>Personal</Text>
                             </View>
                         ) : (
                             <View style={{
@@ -50,8 +50,8 @@ function MyTabBarRepo({ props, navigation }) {
                                 justifyContent: 'center',
                                 width: 80,
                             }}>
-                                <Ionicons name='list' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Dokumen</Text>
+                                <Ionicons name='home-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey }}>Personal</Text>
                             </View>
                         )}
                     </TouchableOpacity>
@@ -60,7 +60,7 @@ function MyTabBarRepo({ props, navigation }) {
                         key={2}
                         onPress={() => {
                             setTabItemIndex(2)
-                            navigation.navigate('Dibagikan', { unread: false })
+                            navigation.navigate('PersetujuanCuti', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }}>
                         {tabItemIndex === 2 ? (
@@ -68,7 +68,7 @@ function MyTabBarRepo({ props, navigation }) {
                                 alignItems: 'center',
                                 height: 65,
                                 justifyContent: 'center',
-                                width: 80,
+                                width: 90,
                             }}>
 
                                 <View style={{
@@ -84,27 +84,26 @@ function MyTabBarRepo({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='people-outline' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Dibagikan</Text>
+                                <Ionicons name='briefcase-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary, textAlign: 'center' }}>Dokumen Persetujuan</Text>
                             </View>
                         ) : (
                             <View style={{
                                 alignItems: 'center',
                                 height: 65,
                                 justifyContent: 'center',
-                                width: 80,
+                                width: 90,
                             }}>
-                                <Ionicons name='people-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Dibagikan</Text>
+                                <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey, textAlign: 'center' }}>Dokumen Personal</Text>
                             </View>
                         )}
                     </TouchableOpacity>
-
                     <TouchableOpacity
                         key={3}
                         onPress={() => {
                             setTabItemIndex(3)
-                            navigation.navigate('DokumenTamplate', { unread: false })
+                            navigation.navigate('DokumenCuti', { unread: false })
                             // props.navigation.navigate('Home', { unread: false })
                         }}>
                         {tabItemIndex === 3 ? (
@@ -112,7 +111,7 @@ function MyTabBarRepo({ props, navigation }) {
                                 alignItems: 'center',
                                 height: 65,
                                 justifyContent: 'center',
-                                width: 80,
+                                width: 90,
                             }}>
 
                                 <View style={{
@@ -128,18 +127,18 @@ function MyTabBarRepo({ props, navigation }) {
                                     //shadow android
                                     elevation: 2,
                                 }} />
-                                <Ionicons name='documents-outline' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary }}>Dokumen Tamplate</Text>
+                                <Ionicons name='document-outline' color={COLORS.primary} size={24} />
+                                <Text style={{ color: COLORS.primary, textAlign: 'center' }}>Dokumen Persetujuan</Text>
                             </View>
                         ) : (
                             <View style={{
                                 alignItems: 'center',
                                 height: 65,
                                 justifyContent: 'center',
-                                width: 80,
+                                width: 90,
                             }}>
-                                <Ionicons name='documents-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey }}>Dokumen Tamplate</Text>
+                                <Ionicons name='document-outline' color={COLORS.grey} size={24} />
+                                <Text style={{ color: COLORS.grey, textAlign: 'center' }}>Dokumen Persetujuan</Text>
                             </View>
                         )}
                     </TouchableOpacity>
@@ -153,4 +152,4 @@ function MyTabBarRepo({ props, navigation }) {
 const styles = StyleSheet.create({
 
 })
-export default MyTabBarRepo
+export default MyTabCuti

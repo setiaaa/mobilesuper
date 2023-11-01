@@ -161,7 +161,7 @@ export const Todo = () => {
             </View> */}
 
             <View style={{ alignItems: 'flex-end', marginHorizontal: 20 }}>
-                <TouchableOpacity style={{
+                {/* <TouchableOpacity style={{
                     width: 157,
                     height: 40,
                     backgroundColor: COLORS.primary,
@@ -175,7 +175,7 @@ export const Todo = () => {
                     }}
                 >
                     <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
             <FlatList

@@ -716,8 +716,8 @@ export const LaporanPengetahuan = () => {
             <TouchableOpacity
               style={{
                 backgroundColor: COLORS.primary,
-                width: 226,
-                height: 32,
+                width: '100%',
+                height: 40,
                 borderRadius: 8,
                 justifyContent: "center",
                 marginTop: 20,

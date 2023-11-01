@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, PADDING } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
@@ -12,6 +12,7 @@ import { getBerita, getDetailBerita } from "../../service/api";
 import { CardListBeritaHome } from "../../components/CardListBeritaHome";
 import { ActivityIndicator } from "react-native";
 import { setBerita } from "../../store/SuperApps";
+import ListEmpty from "../../components/ListEmpty";
 
 
 
@@ -104,7 +105,7 @@ export const ListBerita = () => {
             </Text>
           </View>
         </View>
-        <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
+        <View style={{ padding: PADDING.Page}}>
           <Search
             placeholder={'Cari'}
             iconColor={COLORS.primary}
@@ -128,6 +129,7 @@ export const ListBerita = () => {
                 />
               </View>
             )}
+            ListEmptyComponent={() => <ListEmpty />}
             style={{ flex: 1 }}
             ListFooterComponent={() => (
               loading && (

@@ -256,6 +256,22 @@ export const DetailPostinganSaya = () => {
                 style={{ width: 180, height: 97, borderRadius: 6 }}
               />
             </View>
+            <View style={{ flexDirection: 'row', gap: 5, justifyContent: 'space-between', marginTop: 20}}>
+              <View style={{ flexDirection: 'row', gap: 5}}>
+                <Text style={{ color: COLORS.lighter, fontSize: 13}}>{detail?.likes_count}</Text>
+                <Text style={{ color: COLORS.lighter, fontSize: 13}}>Disukai</Text>
+              </View>
+              <View style={{ flexDirection: 'row', gap: 5}}>
+                <Text style={{ color: COLORS.lighter, fontSize: 13}}>{detail?.comment_count}</Text>
+                <Text style={{ color: COLORS.lighter, fontSize: 13}}>Komentar</Text>
+              </View>
+              <View style={{ flexDirection: 'row', gap: 5}}>
+                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+                <Text style={{ color: COLORS.lighter, fontSize: 13}}>{detail?.views_count}</Text>
+                <Text style={{ color: COLORS.lighter, fontSize: 13}}>Dilihat</Text>
+              </View>
+            </View>
+
             <View
               style={{
                 backgroundColor: "#DBDADE",
@@ -264,11 +280,10 @@ export const DetailPostinganSaya = () => {
                 marginTop: 20,
               }}
             />
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={{ flexDirection: "row", marginTop: 10, justifyContent: 'space-between' }}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TouchableOpacity
                   style={{
-                    backgroundColor: COLORS.primary,
                     borderRadius: 8,
                     width: 33,
                     height: 26,
@@ -279,17 +294,15 @@ export const DetailPostinganSaya = () => {
                   <Ionicons
                     name="thumbs-up-outline"
                     size={18}
-                    color="#FFFFFF"
+                    color={COLORS.grey}
                   />
                 </TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 13,
-                    color: COLORS.primary,
-                    marginStart: 5,
                   }}
                 >
-                  {detail?.likes_count}
+                  Suka
                 </Text>
               </View>
               <View
@@ -305,25 +318,28 @@ export const DetailPostinganSaya = () => {
                   color={COLORS.grey}
                 />
                 <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {detail?.comment_count}
+                  Komen
                 </Text>
               </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginLeft: 10,
-                }}
-              >
-                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  {detail?.views_count}
-                </Text>
-              </View>
-              <TouchableOpacity
+              <TouchableOpacity>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginLeft: 10,
+                  }}
+                >
+                  <Ionicons name="information-circle-outline" size={18} color={COLORS.grey} />
+                  <Text style={{ fontSize: 13, marginStart: 5 }}>
+                    Info
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              
+              {/* <TouchableOpacity
                 style={{
                   borderRadius: 8,
-                  width: 33,
+                  width: 100,
                   height: 26,
                   alignItems: "center",
                   justifyContent: "center",
@@ -331,7 +347,7 @@ export const DetailPostinganSaya = () => {
                 }}
               >
                 <Ionicons name="information-circle-outline" size={18} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View
               style={{
@@ -376,6 +392,7 @@ export const DetailPostinganSaya = () => {
                   size={18}
                   color={COLORS.grey}
                 />
+                
               </View>
             </TouchableOpacity>
           </View>

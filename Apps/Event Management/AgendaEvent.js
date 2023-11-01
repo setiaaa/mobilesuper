@@ -156,7 +156,7 @@ export const AgendaEvent = () => {
                 </View>
             </View> */}
             <View style={{ alignItems: 'flex-end', marginHorizontal: 20 }}>
-                <TouchableOpacity style={{
+                {/* <TouchableOpacity style={{
                     width: 157,
                     height: 40,
                     backgroundColor: COLORS.primary,
@@ -170,7 +170,7 @@ export const AgendaEvent = () => {
                     }}
                 >
                     <Text style={{ color: COLORS.white }}>Tambah Sub Agenda</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
             <FlatList

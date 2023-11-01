@@ -374,16 +374,16 @@ export const MyTask = () => {
                         {
                             list.type !== 'Detail Project' ? (
                                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                                    <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
+                                    {/* <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
                                         <View style={styles.circleList}>
                                             <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
                                         </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
+                                    </TouchableOpacity> */}
+                                    {/* <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
                                         <View style={styles.circleList}>
                                             <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
                                         </View>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                 </View>
                             ) : null
                         }
