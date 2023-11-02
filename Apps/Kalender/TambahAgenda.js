@@ -36,7 +36,7 @@ import { Search } from "../../components/Search";
 import { FlatList } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
 import moment from "moment";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
@@ -191,7 +191,7 @@ export const TambahAgenda = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
-      <SafeAreaView>
+      < >
         <BottomSheetModalProvider>
           <ScrollView>
             <Pressable>
@@ -412,7 +412,7 @@ export const TambahAgenda = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                    modalVisiblePicker === "selesai"
+                      modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }
@@ -1057,7 +1057,7 @@ export const TambahAgenda = () => {
                         </Modal> */}
           </ScrollView>
         </BottomSheetModalProvider>
-      </SafeAreaView>
+      </ >
     </GestureHandlerRootView>
   );
 };

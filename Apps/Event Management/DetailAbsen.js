@@ -3,11 +3,11 @@ import { Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { } from 'react-native-safe-area-context';
 
 export const DetailAbsen = () => {
     return (
-        <SafeAreaView>
+        < >
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: COLORS.white,
@@ -26,6 +26,6 @@ export const DetailAbsen = () => {
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail Absensi</Text>
                 </View>
             </View>
-        </SafeAreaView>
+        </ >
     )
 }

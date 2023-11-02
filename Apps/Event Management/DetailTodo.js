@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
 import {
     BottomSheetModal,
@@ -198,7 +198,7 @@ export const DetailTodo = () => {
     }
 
     return (
-        <SafeAreaView>
+        < >
             <GestureHandlerRootView>
                 <BottomSheetModalProvider>
                     <ScrollView>
@@ -557,7 +557,7 @@ export const DetailTodo = () => {
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>
-        </SafeAreaView >
+        </  >
     )
 }
 const styles = StyleSheet.create({

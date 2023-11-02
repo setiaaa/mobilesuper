@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native'
@@ -138,7 +137,7 @@ export const DokumenLain = () => {
     // console.log(filterData)
     return (
         <GestureHandlerRootView>
-            <SafeAreaView style={{ position: 'relative' }}>
+            <View style={{ position: 'relative' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
                     <View style={{
                         backgroundColor: COLORS.white,
@@ -270,7 +269,7 @@ export const DokumenLain = () => {
                             <Ionicons name='add-outline' size={24} color={COLORS.white} />
                         </View>
                     </TouchableOpacity> */}
-            </SafeAreaView>
-        </GestureHandlerRootView>
+            </View >
+        </GestureHandlerRootView >
     )
 }

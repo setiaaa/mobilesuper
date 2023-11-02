@@ -12,7 +12,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { useMemo } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native";
+import { } from "react-native";
 
 function MyTabBarPengetahuan({ props, navigation }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
@@ -31,7 +31,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
   };
 
   return (
-    <SafeAreaView>
+    < >
       <BottomSheetModalProvider>
         <View
           style={{
@@ -339,7 +339,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
           </TouchableOpacity>
         </View>
       </BottomSheetModalProvider>
-    </SafeAreaView>
+    </ >
   );
 }
 

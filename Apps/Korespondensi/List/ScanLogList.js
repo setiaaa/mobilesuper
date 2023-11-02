@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
@@ -320,7 +319,7 @@ function ScanLogList() {
       </View>
 
       <BottomSheetModalProvider>
-        <SafeAreaView>
+        < >
           <BottomSheetModal
             name="filter"
             ref={bottomSheetModalRef}
@@ -413,7 +412,7 @@ function ScanLogList() {
               </View>
             </View>
           </BottomSheetModal>
-        </SafeAreaView>
+        </ >
       </BottomSheetModalProvider>
     </>
   );

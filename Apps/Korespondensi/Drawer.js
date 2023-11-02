@@ -37,7 +37,7 @@ import { useNavigation } from '@react-navigation/native'
 
 const DrawerItemsData = [
   {
-    label: "Beranda", 
+    label: "Beranda",
     name: "Dashboard",
     icon: "home",
     key: 1,
@@ -54,11 +54,12 @@ const DrawerItemsData = [
     icon: "email",
     key: 3,
   },
-  { 
-    label: "Disposisi", 
-    name: "Disposition", 
-    icon: "chat-processing", 
-    key: 4 },
+  {
+    label: "Disposisi",
+    name: "Disposition",
+    icon: "chat-processing",
+    key: 4
+  },
   {
     label: "Surat Keluar",
     name: "Outgoing",
@@ -136,7 +137,8 @@ const CustomDrawerContent = (props) => {
       AsyncStorage.removeItem("profileLogin");
       //get profile login
       let data = await AsyncStorage.getItem("profileLogin");
-      if (data === null || data === []) {
+      if (data === null) {
+        // || data === []
         let response = await getHTTP(nde_api.profile);
         dispatch(setProfile(response.data));
 
@@ -277,17 +279,17 @@ const CustomDrawerContent = (props) => {
           onPress={() => navigation.navigate("Home")}
         />
       </Drawer.Section>
-        <Drawer.Item
-          style={styles.drawerItem}
-          label="Profil"
-          icon={drawerItemIndex == 9 ? "account-circle" : "account-circle-outline"}
-          key="9"
-          active={drawerItemIndex === 9}
-          onPress={() => {
-            setDrawerItemIndex(9);
-            props.navigation.navigate("Profile");
-          }}
-        />
+      <Drawer.Item
+        style={styles.drawerItem}
+        label="Profil"
+        icon={drawerItemIndex == 9 ? "account-circle" : "account-circle-outline"}
+        key="9"
+        active={drawerItemIndex === 9}
+        onPress={() => {
+          setDrawerItemIndex(9);
+          props.navigation.navigate("Profile");
+        }}
+      />
       {/* <Drawer.Section style={{ margin: -5 }} title="Tools">
         <Drawer.Item
           style={styles.drawerItem}
@@ -396,16 +398,16 @@ const defaultOptions = ({ title, navigation }) => ({
             color={COLORS.white}
             onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
           /> */}
-          <Ionicons 
-            name="menu-outline" 
-            size={16} 
-            color={COLORS.white} 
+          <Ionicons
+            name="menu-outline"
+            size={16}
+            color={COLORS.white}
           />
         </TouchableOpacity>
         <Image source={require("../../assets/superApp/LogoKorespondensi.png")} />
         {/* <Image style={styles.logoHeader} source={Config.logoHeader} /> */}
       </View>
-    {/* </View> */}
+      {/* </View> */}
     </SafeAreaView>
   ),
 });

@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from "react";
 import { Modal, Text } from "react-native";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import {
   AVATAR,
   COLORS,
@@ -732,7 +732,7 @@ export const LiniMasa = () => {
   return (
     <>
       {linimasa.lists.length === 0 ? <Loading /> : null}
-      <SafeAreaView>
+      < >
         <View
           style={{
             flexDirection: "row",
@@ -802,7 +802,7 @@ export const LiniMasa = () => {
           ListEmptyComponent={() => <ListEmpty />}
           onEndReached={loadMore}
         />
-      </SafeAreaView>
+      </ >
     </>
   );
 };

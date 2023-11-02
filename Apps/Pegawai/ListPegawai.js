@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Pressable, Text, TouchableOpacity } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { AVATAR, COLORS, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
@@ -109,67 +109,67 @@ export const ListPegawai = () => {
 
     return (
         <>
-        <SafeAreaView>
-            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
-                <View style={{
-                    backgroundColor: COLORS.white,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: 20
-                }}>
-                    <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                    </TouchableOpacity>
+            < >
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 20,
+                        width: 28,
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 20
+                    }}>
+                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+                        <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Pegawai</Text>
+                    </View>
                 </View>
-                <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                    <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Pegawai</Text>
-                </View>
-            </View>
 
-            <View
-                style={{  }}
-            >
+                <View
+                    style={{}}
+                >
 
             <View style={{ marginVertical: 20, paddingHorizontal: 20 }}>
                 <Search
                     placeholder={'Cari'}
-                onSearch={filter}
+                    onSearch={filter}
                 />
             </View>
 
-            
-                <FlatList
-                    data={filterData}
-                    renderItem={({ item }) => <CardListPegawai
-                        item={item}
-                        collapse={collapse}
-                        setCollapse={setCollapse}
-                        navigation={navigation}
-                        token={token}
-                        loading={loading}
+
+                    <FlatList
+                        data={filterData}
+                        renderItem={({ item }) => <CardListPegawai
+                            item={item}
+                            collapse={collapse}
+                            setCollapse={setCollapse}
+                            navigation={navigation}
+                            token={token}
+                            loading={loading}
+                        />
+                        }
+                        // style={{ flex: 1 }}
+                        ListFooterComponent={() => (
+                            loading && (
+                                <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                                    <ActivityIndicator size="large" color={COLORS.primary} />
+                                </View>
+                            )
+                        )}
+                        keyExtractor={item => item.id}
+                        scrollEnabled={true}
+                        onEndReached={loadMore}
+                        ListEmptyComponent={() => (
+                            <ListEmpty />
+                        )}
                     />
-                    }
-                    // style={{ flex: 1 }}
-                    ListFooterComponent={() => (
-                        loading && (
-                            <View style={{ justifyContent: 'center', alignItems: 'center',}}>
-                                <ActivityIndicator size="large" color={COLORS.primary} />
-                            </View>
-                        )
-                    )}
-                    keyExtractor={item => item.id}
-                    scrollEnabled={true}
-                    onEndReached={loadMore}
-                    ListEmptyComponent={() => (
-                        <ListEmpty />
-                    )}
-                />
-                {/* {loading && <Loading />} */}
-            </View>
-            </SafeAreaView>
+                    {/* {loading && <Loading />} */}
+                </View>
+            </ >
         </>
     )
 }

@@ -25,7 +25,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { setDokumentlists, setLoadMore } from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
@@ -279,7 +279,7 @@ export const Dokumen = () => {
   useEffect(() => {
     if (search !== "") {
       const data = dokumen.lists.filter((item) => {
-        return item.judul.toLowerCase().includes(search.toLowerCase());
+        return item.title.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
     } else {
@@ -301,7 +301,7 @@ export const Dokumen = () => {
       ) : (
         null
       )}
-      <SafeAreaView>
+      < >
         <View style={{ marginBottom: 20 }}>
           <View
             style={{
@@ -339,7 +339,7 @@ export const Dokumen = () => {
           <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
             <Search
               placeholder={"Cari"}
-            // onSearch={filter} 
+              onSearch={filter}
             />
             <View style={{ marginTop: 20 }}>
               <Dropdown
@@ -354,7 +354,7 @@ export const Dokumen = () => {
           <View>
             <FlatList
               key={"_"}
-              data={dokumen.lists}
+              data={filterData}
               renderItem={({ item }) => (
                 <DataList
                   bottomSheetAttach={bottomSheetAttach}
@@ -487,7 +487,7 @@ export const Dokumen = () => {
             </Portal>
           </View>
         </View>
-      </SafeAreaView>
+      </ >
     </GestureHandlerRootView>
   );
 };

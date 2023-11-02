@@ -22,7 +22,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import { FlatList } from 'react-native'
 import { CardPilihMember } from '../../components/CardPilihMember'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAddressbookSelected } from '../../store/AddressbookKKP'
 import { postGrup, putEditGrup } from '../../service/api'
@@ -288,7 +288,7 @@ export const EditGrup = () => {
                     <Loading />
                 ) : null
             }
-            <SafeAreaView>
+            < >
                 <BottomSheetModalProvider>
                     <ScrollView>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -581,7 +581,7 @@ export const EditGrup = () => {
 
                     </ScrollView>
                 </BottomSheetModalProvider>
-            </SafeAreaView>
+            </ >
         </GestureHandlerRootView>
     )
 }

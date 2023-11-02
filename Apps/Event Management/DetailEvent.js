@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import { Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useNavigation } from '@react-navigation/native';
@@ -57,9 +57,9 @@ export const DetailEvent = () => {
   const data = event.detailEvent;
 
   return (
-    <SafeAreaView>
+    < >
       <ScrollView>
-        <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80,}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
           <View style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
@@ -438,7 +438,7 @@ export const DetailEvent = () => {
             <></>
           )}
       </ScrollView>
-    </SafeAreaView>
+    </ >
   );
 };
 const styles = StyleSheet.create({

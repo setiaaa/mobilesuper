@@ -20,7 +20,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Divider } from 'react-native-paper';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
 
 
@@ -99,7 +98,7 @@ export default function Dashboard() {
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <BottomSheetModalProvider>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
                     <View style={{
@@ -302,7 +301,7 @@ export default function Dashboard() {
                     <StatusBar style="auto" />
                 </View>
             </BottomSheetModalProvider>
-        </SafeAreaView>
+        </View>
     )
 }
 

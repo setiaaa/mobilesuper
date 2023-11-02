@@ -24,7 +24,7 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import moment from "moment/moment";
 
@@ -87,7 +87,7 @@ export const DetailActivity = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <View>
           <View
             style={{
@@ -439,7 +439,7 @@ export const DetailActivity = () => {
             </BottomSheetModalProvider>
           </Portal>
         </View>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+      </View>
+    </GestureHandlerRootView >
   );
 };

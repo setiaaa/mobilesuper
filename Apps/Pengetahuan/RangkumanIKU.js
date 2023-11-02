@@ -2,7 +2,6 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import {
   Pressable,
   Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,

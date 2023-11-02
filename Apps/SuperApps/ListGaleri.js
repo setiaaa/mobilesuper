@@ -13,7 +13,6 @@ import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { CardListGaleriHome } from "../../components/CardListGaleriHome";
 import { getTokenValue } from "../../service/session";
 import { setGaleri } from "../../store/SuperApps";
@@ -61,24 +60,24 @@ export const ListGaleri = () => {
   }
 
   useEffect(() => {
-      setFilterData(galeri.lists)
+    setFilterData(galeri.lists)
   }, [galeri])
 
   useEffect(() => {
     const item = galeri.lists
     if (search !== '') {
-        const data = item.filter((item) => {
-            return item.title.toLowerCase().includes(search.toLowerCase());
-        })
-        setFilterData(data)
+      const data = item.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      })
+      setFilterData(data)
     } else {
-        setFilterData(item)
+      setFilterData(item)
     }
   }, [search])
   // console.log(visibleModal);
   console.log(galeri.lists);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
         <View
           style={{
@@ -205,7 +204,7 @@ export const ListGaleri = () => {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 
