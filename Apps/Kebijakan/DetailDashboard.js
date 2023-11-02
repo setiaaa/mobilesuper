@@ -8,7 +8,6 @@ import { shareAsync } from 'expo-sharing';
 import { useNavigation } from "@react-navigation/native";
 import { Button } from '../../components/Button';
 import { CollapseCard } from '../../components/CollapseCard'
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { TouchableOpacity } from 'react-native';
 
@@ -38,7 +37,7 @@ export default function DetailDashboard({ route }) {
 
     return (
         <ScrollView style={styles.container}>
-            <SafeAreaView>
+            < >
                 <StatusBar style="auto" />
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
@@ -129,7 +128,7 @@ export default function DetailDashboard({ route }) {
                         />
                     </View>
                 </View>
-            </SafeAreaView>
+            </ >
         </ScrollView>
     );
 }

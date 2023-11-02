@@ -10,6 +10,7 @@ import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
 import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
+import { Loading } from '../../../components/Loading'
 
 
 export const Terlewat = () => {
@@ -54,11 +55,7 @@ export const Terlewat = () => {
                 <View style={{ flex: 1 }}>
                     {
                         loading ? (
-                            <View style={{ flexDirection: 'column', gap: 10, marginTop: 20 }}>
-                                {
-                                    renderShimmerList()
-                                }
-                            </View>
+                            <Loading/>
                         ) : (
                             <View style={{ marginTop: 20 }}>
                                 <FlatList

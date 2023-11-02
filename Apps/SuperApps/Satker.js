@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { CardUltah } from '../../components/CardUltah';
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
 import { getBennerSatker, getDetailLinimasa, getGallerySatker, getPesan, getSatkerLinimasa, getSatkerNews, getUltah, getViewLinimasa } from '../../service/api';
 import { Loading } from '../../components/Loading';
@@ -233,14 +233,14 @@ export const Satker = () => {
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             {
                 loading ? (
                     <Loading />
                 ) : null
             }
             <ScrollView
-                style={{ flexGrow: 1,  }}
+                style={{ flexGrow: 1, }}
                 nestedScrollEnabled={true}
             >
                 <View style={{ width: '100%', height: 170, position: 'absolute', top: 0, borderBottomLeftRadius: 14, borderBottomRightRadius: 14 }}>
@@ -248,9 +248,6 @@ export const Satker = () => {
                 </View>
 
                 <View style={{ flexDirection: 'row', gap: 20, paddingTop: 20, height: 120 }}>
-                    <View style={{ paddingLeft: 20 }}>
-                        <Ionicons name='notifications-outline' size={25} color={COLORS.white} />
-                    </View>
                     <View style={{ justifyContent: 'flex-end', flex: 1, marginTop: 5, flexDirection: 'row', gap: 10, marginRight: '11%' }}>
                         <View style={{}}>
                             <Text style={{ color: COLORS.white, textAlign: 'right', fontWeight: FONTWEIGHT.bolder, marginBottom: 10, fontSize: FONTSIZE.H2 }}>{profile.nama}</Text>
@@ -387,7 +384,7 @@ export const Satker = () => {
                 </View>
 
             </ScrollView>
-        </SafeAreaView>
+        </View  >
     )
 }
 

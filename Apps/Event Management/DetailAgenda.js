@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -167,7 +167,7 @@ export const DetailAgenda = () => {
 
 
     return (
-        <SafeAreaView>
+        < >
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                     <View style={{
@@ -210,11 +210,14 @@ export const DetailAgenda = () => {
                                 <Text style={{ color: COLORS.white }}>{data.jenis}</Text>
                             </View> */}
                         </View>
-
-                        <Text style={{ marginTop: 10 }}>{data.note}</Text>
+                        {data.note === "" ? (
+                            <Text style={{ marginTop: 10 }}>-</Text>
+                        ) : (
+                            <Text style={{ marginTop: 10 }}>{data.note}</Text>
+                        )}
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>QR Code</Text>
@@ -233,7 +236,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
@@ -245,7 +248,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
@@ -260,7 +263,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
@@ -272,7 +275,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
@@ -285,7 +288,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
@@ -304,17 +307,24 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Internal</Text>
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                data.extra_attrs?.guests?.map((data, index) =>
-                                    <View key={index} style={{ position: 'relative' }}>
-                                        <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                                    </View>
+                                data.extra_attrs.guests.length === 0 ? (
+                                    <>
+                                        <Text>-</Text>
+                                    </>
+                                ) : (
+
+                                    data.extra_attrs?.guests?.map((data, index) =>
+                                        <View key={index} style={{ position: 'relative' }}>
+                                            <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                        </View>
+                                    )
                                 )
                             )}
                             {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -330,14 +340,20 @@ export const DetailAgenda = () => {
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                <View style={{ position: 'relative', flexDirection: 'column' }}>
-                                    {data.extra_attrs?.guest_external?.map((data, index) =>
-                                        <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
-                                            <Text>-</Text>
-                                            <Text style={{ width: 150 }}>{data.name}</Text>
-                                        </View>
-                                    )}
-                                </View>
+                                data.extra_attrs.guest_external.length === 0 ? (
+                                    <>
+                                        <Text>-</Text>
+                                    </>
+                                ) : (
+                                    <View style={{ position: 'relative', flexDirection: 'column' }}>
+                                        {data.extra_attrs?.guest_external?.map((data, index) =>
+                                            <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
+                                                <Text>-</Text>
+                                                <Text style={{ width: 150 }}>{data.name}</Text>
+                                            </View>
+                                        )}
+                                    </View>
+                                )
                             )}
                         </View>
 
@@ -497,7 +513,7 @@ export const DetailAgenda = () => {
                                             <Text style={{ color: COLORS.white }} >Lihat Notulensi</Text>
                                         </TouchableOpacity>
 
-                                        <TouchableOpacity style={{
+                                        {/* <TouchableOpacity style={{
                                             width: '100%',
                                             height: 50,
                                             borderRadius: 8,
@@ -514,7 +530,124 @@ export const DetailAgenda = () => {
                                         >
                                             <Ionicons name='trash-outline' size={24} color={COLORS.white} />
                                             <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
+                                        </TouchableOpacity> */}
+
+                                        <TouchableOpacity
+                                            style={{
+                                                width: '100%',
+                                                height: 50,
+                                                borderRadius: 8,
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: 10,
+                                                backgroundColor: COLORS.infoDanger,
+                                                marginTop: 10
+                                            }}
+                                            onPress={() => setVisibleModal(true)}
+                                        >
+                                            <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
                                         </TouchableOpacity>
+
+                                        <Modal
+                                            animationType="fade"
+                                            transparent={true}
+                                            visible={visibleModal}
+                                            onRequestClose={() => {
+                                                setVisibleModal(!visibleModal);
+                                            }}
+                                        >
+                                            <TouchableOpacity
+                                                style={[
+                                                    Platform.OS === "ios"
+                                                        ? styles.iOSBackdrop
+                                                        : styles.androidBackdrop,
+                                                    styles.backdrop,
+                                                ]}
+                                            />
+                                            <View style={{ alignItems: "center", justifyContent: 'center', flex: 1 }}>
+                                                <View
+                                                    style={{
+                                                        backgroundColor: COLORS.white,
+                                                        width: "90%",
+                                                        borderRadius: 10,
+                                                        alignContent: 'center',
+                                                    }}
+                                                >
+                                                    <View
+                                                        style={{
+                                                            marginTop: 20,
+                                                            flexDirection: "row",
+                                                            justifyContent: "space-between",
+                                                            alignItems: "center",
+                                                            marginHorizontal: 20,
+                                                        }}
+                                                    >
+                                                        <View>
+                                                            <Text
+                                                                style={{
+                                                                    fontSize: FONTSIZE.Judul,
+                                                                    fontWeight: FONTWEIGHT.bold,
+                                                                }}
+                                                            >
+                                                                Apa anda yakin?
+                                                            </Text>
+                                                        </View>
+
+                                                        <TouchableOpacity
+                                                            style={{}}
+                                                            onPress={() => {
+                                                                setVisibleModal(false);
+                                                            }}
+                                                        >
+                                                            <Ionicons
+                                                                name="close-outline"
+                                                                size={24}
+                                                                color={COLORS.lighter}
+                                                            />
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    {/* custom divider */}
+                                                    <View
+                                                        style={{
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                        }}
+                                                    >
+                                                        <View
+                                                            style={{
+                                                                height: 1,
+                                                                width: "90%",
+                                                                backgroundColor: "#DBDADE",
+                                                                marginVertical: 10,
+                                                            }}
+                                                        />
+                                                    </View>
+
+                                                    <ScrollView style={{ marginBottom: 40 }}>
+                                                        <TouchableOpacity style={{
+                                                            width: '90%',
+                                                            height: 50,
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center',
+                                                            borderRadius: 8,
+                                                            marginHorizontal: 20,
+                                                            marginTop: 10,
+                                                            backgroundColor: COLORS.danger
+
+                                                        }}
+                                                            onPress={() => {
+                                                                handleDelete()
+                                                            }}
+                                                        >
+                                                            <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
+                                                        </TouchableOpacity>
+                                                    </ScrollView>
+                                                </View>
+                                            </View>
+                                        </Modal>
+
+
                                     </View>
                                 ) : (
                                     <></>
@@ -600,34 +733,40 @@ export const DetailAgenda = () => {
 
                     </View>
 
-                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
+                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 8, marginTop: 20 }}>
                         <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Materi Agenda</Text>
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
                         ) : (
-                            <FlatList
-                                key={'*'}
-                                data={data.attachments}
-                                renderItem={({ item }) =>
-                                    <View key={item.id}>
-                                        <CardLampiran
-                                            lampiran={item.file}
-                                            type={getFileExtension(item.name)}
-                                            onClick={() => {
-                                                setVisibleModal(true)
-                                                setLampiranById(item)
-                                            }}
-                                            id={item.id}
-                                        />
-                                    </View>
-                                }
-                                scrollEnabled={false}
-                                style={{ marginTop: 10 }}
-                                columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                                numColumns={3}
-                                keyExtractor={item => "*" + item.id}
-                            />
+                            data.attachments.length === 0 ? (
+                                <Text style={{ marginTop: 10 }}>-</Text>
+                            ) : (
+                                <FlatList
+                                    key={'*'}
+                                    data={data.attachments}
+                                    renderItem={({ item }) =>
+                                        <View key={item.id}>
+                                            <CardLampiran
+                                                lampiran={item.file}
+                                                type={getFileExtension(item.name)}
+                                                onClick={() => {
+                                                    setVisibleModal(true)
+                                                    setLampiranById(item)
+                                                }}
+                                                id={item.id}
+                                            />
+                                        </View>
+                                    }
+                                    scrollEnabled={false}
+                                    style={{ marginTop: 10 }}
+                                    columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                    numColumns={3}
+                                    keyExtractor={item => "*" + item.id}
+                                />
+                            )
                         )}
+
+
 
                         {
                             lampiranById !== null ? (
@@ -787,7 +926,7 @@ export const DetailAgenda = () => {
 
             </ScrollView>
 
-        </SafeAreaView>
+        </ >
     )
 }
 const styles = StyleSheet.create({

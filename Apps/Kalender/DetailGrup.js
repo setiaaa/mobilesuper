@@ -32,7 +32,7 @@ import { useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setAgendaDetail } from "../../store/GrupKalender";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import moment from "moment";
 import { deleteGrup, getDetailGrup } from "../../service/api";
 import { getTokenValue } from "../../service/session";
@@ -125,7 +125,7 @@ export const DetailGrup = () => {
   };
 
   return (
-    <SafeAreaView>
+    < >
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <ScrollView>
@@ -741,7 +741,7 @@ export const DetailGrup = () => {
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </SafeAreaView>
+    </ >
   );
 };
 

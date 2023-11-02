@@ -1,9 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
-import { SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
-import { COLORS,FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
+import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search'
 import { useNavigation } from '@react-navigation/native'
@@ -25,98 +25,98 @@ export const PersonalCuti = () => {
     console.log(profile)
     return (
         <GestureHandlerRootView>
-            <SafeAreaView style={{ position: 'relative' }}>
-            <ScrollView>
-            
-                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80,  }}>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 20
-                    }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                        </TouchableOpacity>
+            <View style={{ position: 'relative' }}>
+                <ScrollView>
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
+                        <View style={{
+                            backgroundColor: COLORS.white,
+                            borderRadius: 20,
+                            width: 28,
+                            height: 28,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginLeft: 20
+                        }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ flex: 1, alignItems: 'center', }}>
+                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Cuti</Text>
+                        </View>
+                        <View style={{
+                            backgroundColor: COLORS.white,
+                            borderRadius: 20,
+                            width: 28,
+                            height: 28,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginRight: 20
+                        }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Libur')}>
+                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center',}}>
-                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Cuti</Text>
-                    </View>
-                    <View style={{
-                        backgroundColor: COLORS.white,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginRight: 20
-                    }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Libur')}>
-                            <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                        </TouchableOpacity>
-                    </View>
-                                       
-                </View>
-                
-                <View style={{padding: PADDING.Page}}>
-                    <View style={{
-                        padding: 20,
-                        marginTop: 10,
-                        borderTopRightRadius: 8,
-                        borderTopLeftRadius:8,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor:COLORS.primary
+
+                    <View style={{ padding: PADDING.Page }}>
+                        <View style={{
+                            padding: 20,
+                            marginTop: 10,
+                            borderTopRightRadius: 8,
+                            borderTopLeftRadius: 8,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: COLORS.primary
                         }}>
                             <Image source={{ uri: BASE_URL + profile.avatar }} style={{ width: 61, height: 61, borderRadius: 30 }} />
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, color:COLORS.white }}>{profile.nama}</Text>
-                            <Text style={{ marginTop: 5, color:COLORS.white }}>{profile.nip}</Text>    
-                    </View>
-                    <View style={{
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{profile.nama}</Text>
+                            <Text style={{ marginTop: 5, color: COLORS.white }}>{profile.nip}</Text>
+                        </View>
+                        <View style={{
                             backgroundColor: COLORS.white,
                             padding: 15,
                             borderBottomRightRadius: 8,
                             borderBottomLeftRadius: 8,
-                    }}>
-                        <TouchableOpacity onPress={() => setCollapse({ nip: profile.nip, toggle: true })}>
-                            <View style={{flexDirection:"row"}}>
-                                <Text style={{marginRight:"80%"}}>Profil</Text>
-                                {collapse.nip === profile.nip && collapse.toggle === true ? (
-                                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                                        <Ionicons name='chevron-up' size={24} />
-                                    </TouchableOpacity>
-                                ) : (
-                                    <Ionicons name='chevron-down' size={24} />
-                                )}
-                            </View>
-                        </TouchableOpacity>
+                        }}>
+                            <TouchableOpacity onPress={() => setCollapse({ nip: profile.nip, toggle: true })}>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={{ marginRight: "80%" }}>Profil</Text>
+                                    {collapse.nip === profile.nip && collapse.toggle === true ? (
+                                        <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
+                                            <Ionicons name='chevron-up' size={24} />
+                                        </TouchableOpacity>
+                                    ) : (
+                                        <Ionicons name='chevron-down' size={24} />
+                                    )}
+                                </View>
+                            </TouchableOpacity>
 
                             {collapse.nip === profile.nip && collapse.toggle === true ? (
                                 <View>
 
                                     <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
                                         <Text style={{ marginTop: 10, }}>Jenis Kelamin</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold}}>{profile.jenis_kelamin}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.jenis_kelamin}</Text>
 
                                         <Text style={{ marginTop: 10, }}>Golongan</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold}}>{profile.golongan}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.golongan}</Text>
 
                                         <Text style={{ marginTop: 10, }}>Jabatan</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold}}>{profile.nama_jabatan}</Text>
-                                        
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.nama_jabatan}</Text>
+
                                         <Text style={{ marginTop: 10, }}>Kementrian</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold}}></Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}></Text>
 
                                         <Text style={{ marginTop: 10, }}>Unit Kerja</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold}}>{profile.unit_kerja}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.unit_kerja}</Text>
 
                                         <Text style={{ marginTop: 10, }}>Satuan Kerja</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold}}>{profile.satuan_kerja_nama}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.satuan_kerja_nama}</Text>
 
-                                        
+
                                     </TouchableOpacity>
                                 </View>
                             ) : (
@@ -124,7 +124,7 @@ export const PersonalCuti = () => {
                             )}
                     </View>
                 </View>
-                <View style={{padding:20, gap: 10}}>
+                <View style={{paddingLeft:20, gap: 10}}>
                     <Text style={{fontWeight:FONTWEIGHT.bold}}>Form Pengajuan Cuti</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
                         <View style={{gap:30, flexDirection: 'row',}}>
@@ -138,377 +138,377 @@ export const PersonalCuti = () => {
                                     justifyContent: 'center',
                                     alignItems: 'center'
 
-                                }}>
-                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                </TouchableOpacity>
-                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Tahunan</Text>
+                                    }}>
+                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                    </TouchableOpacity>
+                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Tahunan</Text>
+                                </View>
+
+                                <View style={{ alignItems: 'center', gap: 10 }}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiBesar')} style={{
+                                        backgroundColor: COLORS.infoDanger,
+                                        padding: 15,
+                                        width: 55,
+                                        height: 55,
+                                        borderRadius: 30,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+
+                                    }}>
+                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                    </TouchableOpacity>
+                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Besar</Text>
+                                </View>
+
+                                <View style={{ alignItems: 'center', gap: 10 }}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiSakit')} style={{
+                                        backgroundColor: COLORS.infoDanger,
+                                        padding: 15,
+                                        width: 55,
+                                        height: 55,
+                                        borderRadius: 30,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+
+                                    }}>
+                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                    </TouchableOpacity>
+                                    <Text style={{ maxWidth: 40, textAlign: 'center' }}>Cuti Sakit</Text>
+                                </View>
+
+                                <View style={{ alignItems: 'center', gap: 10 }}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiMelahirkan')} style={{
+                                        backgroundColor: COLORS.infoDanger,
+                                        padding: 15,
+                                        width: 55,
+                                        height: 55,
+                                        borderRadius: 30,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+
+                                    }}>
+                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                    </TouchableOpacity>
+                                    <Text style={{ maxWidth: 90, textAlign: 'center' }}>Cuti Melahirkan</Text>
+                                </View>
+
+                                <View style={{ alignItems: 'center', gap: 10 }}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiAlasanPenting')} style={{
+                                        backgroundColor: COLORS.infoDanger,
+                                        padding: 15,
+                                        width: 55,
+                                        height: 55,
+                                        borderRadius: 30,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+
+                                    }}>
+                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                    </TouchableOpacity>
+                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Alasan Penting</Text>
+                                </View>
+
+                                <View style={{ alignItems: 'center', gap: 10 }}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiDiluarTanggungan')} style={{
+                                        backgroundColor: COLORS.infoDanger,
+                                        padding: 15,
+                                        width: 55,
+                                        height: 55,
+                                        borderRadius: 30,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+
+                                    }}>
+                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                    </TouchableOpacity>
+                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Diluar Tanggungan Negara</Text>
+                                </View>
+
                             </View>
 
-                            <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiBesar')} style={{
-                                    backgroundColor: COLORS.infoDanger,
-                                    padding: 15,
-                                    width: 55,
-                                    height: 55,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
+                        </ScrollView>
+                    </View>
+                    <View style={{ paddingLeft: 20 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Status Dokumen Cuti</Text>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            <View style={{ flexDirection: "row" }}>
+                                <View style={styles.cardStatus}>
+                                    <View style={{ width: "70%", alignItems: "center", rowGap: 20 }}>
+                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
+                                        <Text>Draft</Text>
+                                        <Text>3</Text>
+                                    </View>
+                                </View>
 
-                                }}>
-                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                </TouchableOpacity>
-                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Besar</Text>
-                            </View>
+                                <View style={styles.cardStatus}>
+                                    <View style={{ width: "70%", alignItems: "center", rowGap: 10 }}>
+                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
+                                        <Text>Sedang Proses</Text>
+                                        <Text>3</Text>
+                                    </View>
+                                </View>
 
-                            <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiSakit')} style={{
-                                    backgroundColor: COLORS.infoDanger,
-                                    padding: 15,
-                                    width: 55,
-                                    height: 55,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
+                                <View style={styles.cardStatus}>
+                                    <View style={{ width: "70%", alignItems: "center", rowGap: 10 }}>
+                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
+                                        <Text>Dokumen Disetujui</Text>
+                                        <Text>3</Text>
+                                    </View>
+                                </View>
 
-                                }}>
-                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                </TouchableOpacity>
-                                <Text style={{maxWidth: 40, textAlign: 'center'}}>Cuti Sakit</Text>
-                            </View>
-
-                            <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiMelahirkan')} style={{
-                                    backgroundColor: COLORS.infoDanger,
-                                    padding: 15,
-                                    width: 55,
-                                    height: 55,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-
-                                }}>
-                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                </TouchableOpacity>
-                                <Text style={{maxWidth: 90, textAlign: 'center'}}>Cuti Melahirkan</Text>
-                            </View>
-
-                            <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiAlasanPenting')} style={{
-                                    backgroundColor: COLORS.infoDanger,
-                                    padding: 15,
-                                    width: 55,
-                                    height: 55,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-
-                                }}>
-                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                </TouchableOpacity>
-                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Alasan Penting</Text>
-                            </View>
-
-                            <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiDiluarTanggungan')} style={{
-                                    backgroundColor: COLORS.infoDanger,
-                                    padding: 15,
-                                    width: 55,
-                                    height: 55,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-
-                                }}>
-                                    <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                </TouchableOpacity>
-                                <Text style={{maxWidth: 60, textAlign: 'center'}}>Cuti Diluar Tanggungan Negara</Text>
-                            </View>
-                            
-                        </View>
-                        
-                    </ScrollView>
-                </View>
-                <View style={{paddingLeft:20}}>
-                    <Text style={{fontWeight:FONTWEIGHT.bold}}>Status Dokumen Cuti</Text>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={{flexDirection:"row"}}>
-                            <View style={styles.cardStatus}>
-                                <View style={{width:"70%", alignItems:"center", rowGap:20}}>
-                                    <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                    <Text>Draft</Text>
-                                    <Text>3</Text>
+                                <View style={styles.cardStatus}>
+                                    <View style={{ width: "70%", alignItems: "center", rowGap: 2 }}>
+                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
+                                        <Text>Dokumen Tidak Disetujui</Text>
+                                        <Text>3</Text>
+                                    </View>
                                 </View>
                             </View>
-                            
-                            <View style={styles.cardStatus}>
-                                <View style={{width:"70%", alignItems:"center", rowGap:10}}>
-                                    <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                    <Text>Sedang Proses</Text>
-                                    <Text>3</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.cardStatus}>
-                                <View style={{width:"70%", alignItems:"center", rowGap:10}}>
-                                    <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                    <Text>Dokumen Disetujui</Text>
-                                    <Text>3</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.cardStatus}>
-                                <View style={{width:"70%", alignItems:"center", rowGap:2}}>
-                                    <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                    <Text>Dokumen Tidak Disetujui</Text>
-                                    <Text>3</Text>
-                                </View>
-                                </View>
-                        </View>
-                    </ScrollView>
-                </View>
-                <View style={{paddingLeft:20}}>
-                    <Text style={{fontWeight:FONTWEIGHT.bold}}>Kouta Cuti</Text>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={{ gap: 20, flexDirection: 'row'}}>
-                        <View style={[styles.cardKouta]}>
-                            <View style={{
-                                width:"60%",
-                                padding: 15,
-                                borderRadius: 8,
-                                backgroundColor:COLORS.white,
-                                alignItems:"center"
-                            }}>
-                                <View style={{rowGap:10}}>
-                                    <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
-                                    <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Akhir Beralaku: 31 Desember 2021</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                width:"40%",
-                                borderBottomRightRadius: 8,
-                                borderTopRightRadius: 8,
-                                backgroundColor:"grey",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                }}>
-                                    <View style={{gap:20,}}>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
-                                            <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
-                                            </View>
+                        </ScrollView>
+                    </View>
+                    <View style={{ paddingLeft: 20 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            <View style={{ gap: 20, flexDirection: 'row' }}>
+                                <View style={[styles.cardKouta]}>
+                                    <View style={{
+                                        width: "60%",
+                                        padding: 15,
+                                        borderRadius: 8,
+                                        backgroundColor: COLORS.white,
+                                        alignItems: "center"
+                                    }}>
+                                        <View style={{ rowGap: 10 }}>
+                                            <Text style={{ fontSize: 12 }}>Jenis : Cuti Tahunan</Text>
+                                            <Text style={{ fontSize: 12 }}>Periode:  N-2 </Text>
+                                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai Berlaku: 01 Januari 2021</Text>
+                                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Beralaku: 31 Desember 2021</Text>
                                         </View>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
-                                            <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
+                                    </View>
+                                    <View style={{
+                                        width: "40%",
+                                        borderBottomRightRadius: 8,
+                                        borderTopRightRadius: 8,
+                                        backgroundColor: "grey",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}>
+                                        <View style={{ gap: 20, }}>
+                                            <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
+                                                <Text>Kuota Cuti</Text>
+                                                <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
+                                                </View>
+                                            </View>
+                                            <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
+                                                <Text>Sisa Kuota</Text>
+                                                <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
+                                                </View>
                                             </View>
                                         </View>
                                     </View>
-                            </View>
-                        </View>
-
-                        <View style={[styles.cardKouta, { marginRight: 10 }]}>
-                            <View style={{
-                                width:"60%",
-                                padding: 15,
-                                borderRadius: 8,
-                                backgroundColor:COLORS.white,
-                                alignItems:"center"
-                            }}>
-                                <View style={{rowGap:10}}>
-                                    <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
-                                    <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Akhir Beralaku: 31 Desember 2021</Text>
                                 </View>
-                            </View>
-                            <View style={{
-                                width:"40%",
-                                borderBottomRightRadius: 8,
-                                borderTopRightRadius: 8,
-                                backgroundColor:"grey",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                }}>
-                                    <View style={{gap:20,}}>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
-                                            <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
-                                            </View>
+
+                                <View style={[styles.cardKouta, { marginRight: 10 }]}>
+                                    <View style={{
+                                        width: "60%",
+                                        padding: 15,
+                                        borderRadius: 8,
+                                        backgroundColor: COLORS.white,
+                                        alignItems: "center"
+                                    }}>
+                                        <View style={{ rowGap: 10 }}>
+                                            <Text style={{ fontSize: 12 }}>Jenis : Cuti Tahunan</Text>
+                                            <Text style={{ fontSize: 12 }}>Periode:  N-2 </Text>
+                                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai Berlaku: 01 Januari 2021</Text>
+                                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Beralaku: 31 Desember 2021</Text>
                                         </View>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
-                                            <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
+                                    </View>
+                                    <View style={{
+                                        width: "40%",
+                                        borderBottomRightRadius: 8,
+                                        borderTopRightRadius: 8,
+                                        backgroundColor: "grey",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}>
+                                        <View style={{ gap: 20, }}>
+                                            <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
+                                                <Text>Kuota Cuti</Text>
+                                                <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
+                                                </View>
+                                            </View>
+                                            <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
+                                                <Text>Sisa Kuota</Text>
+                                                <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
+                                                </View>
                                             </View>
                                         </View>
                                     </View>
+                                </View>
                             </View>
-                        </View>
-                        </View>
                         </ScrollView>
                     </View>
 
-                    <View style={{padding: 20, rowGap:10}}>
-                        <Text style={{fontWeight:FONTWEIGHT.bold}}>Monitoring Kuota</Text>
-                        <View style={{ backgroundColor: "white", borderRadius: 8}}>
-                                <View style={{flexDirection: "row", gap: 70, padding: 10, justifyContent: 'center'}}>
-                                    <TouchableOpacity>
-                                        <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                                    </TouchableOpacity>
-                                    <Text>Cuti Tahunan 2021</Text>
-                                    <TouchableOpacity>
-                                        <Ionicons name='chevron-forward-outline' size={24} color={COLORS.primary} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ padding: 10, marginHorizontal: 15, marginBottom: 15, flexDirection: 'row'}}>
-                                    <View style={{ gap: 20, position: 'relative'}}>
-                                        <View style={{flexDirection: 'row',}}>
-                                            <Text>Kuota</Text>
-                                            <View style={{ backgroundColor: "#1868AB", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal:130, position: 'absolute' }}>
-                                                <Text style={{color: "white", fontWeight:FONTWEIGHT.bold }}>6</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text>Penggunaan</Text>
-                                            <View style={{ backgroundColor: "#F6AD1D", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal:130, position: 'absolute' }}>
-                                                <Text style={{color: "white", }}>6</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text>Sisa</Text>
-                                            <View style={{ backgroundColor: "#11C15B", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal:130, position: 'absolute'}}>
-                                                <Text style={{color: "white" }}>6</Text>
-                                            </View>
+                    <View style={{ padding: 20, rowGap: 10 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Monitoring Kuota</Text>
+                        <View style={{ backgroundColor: "white", borderRadius: 8 }}>
+                            <View style={{ flexDirection: "row", gap: 70, padding: 10, justifyContent: 'center' }}>
+                                <TouchableOpacity>
+                                    <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                                </TouchableOpacity>
+                                <Text>Cuti Tahunan 2021</Text>
+                                <TouchableOpacity>
+                                    <Ionicons name='chevron-forward-outline' size={24} color={COLORS.primary} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ padding: 10, marginHorizontal: 15, marginBottom: 15, flexDirection: 'row' }}>
+                                <View style={{ gap: 20, position: 'relative' }}>
+                                    <View style={{ flexDirection: 'row', }}>
+                                        <Text>Kuota</Text>
+                                        <View style={{ backgroundColor: "#1868AB", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal: 130, position: 'absolute' }}>
+                                            <Text style={{ color: "white", fontWeight: FONTWEIGHT.bold }}>6</Text>
                                         </View>
                                     </View>
-                                    <View>
-                                        {/* Masukan diagram pie disini */}
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text>Penggunaan</Text>
+                                        <View style={{ backgroundColor: "#F6AD1D", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal: 130, position: 'absolute' }}>
+                                            <Text style={{ color: "white", }}>6</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text>Sisa</Text>
+                                        <View style={{ backgroundColor: "#11C15B", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal: 130, position: 'absolute' }}>
+                                            <Text style={{ color: "white" }}>6</Text>
+                                        </View>
                                     </View>
                                 </View>
+                                <View>
+                                    {/* Masukan diagram pie disini */}
+                                </View>
+                            </View>
                         </View>
-                  </View>
+                    </View>
 
-                    <View style={{padding: 20}}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <Text style={{fontWeight:FONTWEIGHT.bold}}>Arsip Cuti</Text>
-                            <TouchableOpacity style={{ justifyContent: 'flex-end'}}>
-                                <Text style={{ color: COLORS.info}}>Selengkapnya</Text>
+                    <View style={{ padding: 20 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Arsip Cuti</Text>
+                            <TouchableOpacity style={{ justifyContent: 'flex-end' }}>
+                                <Text style={{ color: COLORS.info }}>Selengkapnya</Text>
                             </TouchableOpacity>
                         </View>
 
                         <View >
-                    {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
-                    <View style={[styles.cardKouta]}>
-                            <View style={{
-                                width:"60%",
-                                padding: 15,
-                                borderRadius: 8,
-                                backgroundColor:COLORS.white,
-                                alignItems:"center"
-                            }}>
-                                <View style={{rowGap:10}}>
-                                    <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
-                                    <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Akhir Beralaku: 31 Desember 2021</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                width:"40%",
-                                borderBottomRightRadius: 8,
-                                borderTopRightRadius: 8,
-                                backgroundColor:"grey",
-                                alignItems: "center",
-                                justifyContent: "center",
+                            {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
+                            <View style={[styles.cardKouta]}>
+                                <View style={{
+                                    width: "60%",
+                                    padding: 15,
+                                    borderRadius: 8,
+                                    backgroundColor: COLORS.white,
+                                    alignItems: "center"
                                 }}>
-                                    <View style={{gap:20,}}>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
+                                    <View style={{ rowGap: 10 }}>
+                                        <Text style={{ fontSize: 12 }}>Jenis : Cuti Tahunan</Text>
+                                        <Text style={{ fontSize: 12 }}>Periode:  N-2 </Text>
+                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai Berlaku: 01 Januari 2021</Text>
+                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Beralaku: 31 Desember 2021</Text>
+                                    </View>
+                                </View>
+                                <View style={{
+                                    width: "40%",
+                                    borderBottomRightRadius: 8,
+                                    borderTopRightRadius: 8,
+                                    backgroundColor: "grey",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}>
+                                    <View style={{ gap: 20, }}>
+                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
                                             <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
+                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
                                             </View>
                                         </View>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
+                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
                                             <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
+                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
                                             </View>
                                         </View>
                                     </View>
+                                </View>
                             </View>
-                        </View>
 
-                        <View style={[styles.cardKouta, { marginRight: 10 }]}>
-                            <View style={{
-                                width:"60%",
-                                padding: 15,
-                                borderRadius: 8,
-                                backgroundColor:COLORS.white,
-                                alignItems:"center"
-                            }}>
-                                <View style={{rowGap:10}}>
-                                    <Text style={{ fontSize: 12}}>Jenis : Cuti Tahunan</Text>
-                                    <Text style={{ fontSize: 12}}>Periode:  N-2 </Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai Berlaku: 01 Januari 2021</Text>
-                                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Akhir Beralaku: 31 Desember 2021</Text>
-                                </View>
-                            </View>
-                            <View style={{
-                                width:"40%",
-                                borderBottomRightRadius: 8,
-                                borderTopRightRadius: 8,
-                                backgroundColor:"grey",
-                                alignItems: "center",
-                                justifyContent: "center",
+                            <View style={[styles.cardKouta, { marginRight: 10 }]}>
+                                <View style={{
+                                    width: "60%",
+                                    padding: 15,
+                                    borderRadius: 8,
+                                    backgroundColor: COLORS.white,
+                                    alignItems: "center"
                                 }}>
-                                    <View style={{gap:20,}}>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
+                                    <View style={{ rowGap: 10 }}>
+                                        <Text style={{ fontSize: 12 }}>Jenis : Cuti Tahunan</Text>
+                                        <Text style={{ fontSize: 12 }}>Periode:  N-2 </Text>
+                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai Berlaku: 01 Januari 2021</Text>
+                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Beralaku: 31 Desember 2021</Text>
+                                    </View>
+                                </View>
+                                <View style={{
+                                    width: "40%",
+                                    borderBottomRightRadius: 8,
+                                    borderTopRightRadius: 8,
+                                    backgroundColor: "grey",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}>
+                                    <View style={{ gap: 20, }}>
+                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
                                             <Text>Kuota Cuti</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
+                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
                                             </View>
                                         </View>
-                                        <View style={{flexDirection:"row", columnGap:5, alignItems: "center"}}>
+                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
                                             <Text>Sisa Kuota</Text>
-                                            <View style={{backgroundColor:COLORS.white, borderRadius:5, paddingHorizontal: 12, paddingVertical: 8}}>
-                                                <Text style={{fontWeight:FONTWEIGHT.bold}}>6</Text>
+                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
+                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
                                             </View>
                                         </View>
                                     </View>
+                                </View>
                             </View>
+                            {/* </ScrollView> */}
                         </View>
-                        {/* </ScrollView> */}
-                    </View>
                     </View>
                 </ScrollView>
-            </SafeAreaView>
-        </GestureHandlerRootView>
+            </View >
+        </GestureHandlerRootView >
     )
 }
 
 const styles = StyleSheet.create({
     cardStatus: {
-        width:"23%",
+        width: "23%",
         padding: 15,
         borderRadius: 8,
         marginHorizontal: 5,
-        margin:10,
-        backgroundColor:COLORS.white,
-        alignItems:"center",
+        margin: 10,
+        backgroundColor: COLORS.white,
+        alignItems: "center",
     },
-    cardKouta:{
-        width:360,
+    cardKouta: {
+        width: 360,
         // padding: 1,
         borderRadius: 8,
         // marginHorizontal: 5,
         // margin:10,
         marginVertical: 10,
-        flexDirection:"row",
+        flexDirection: "row",
     }
 
 })

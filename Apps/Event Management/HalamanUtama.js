@@ -230,7 +230,7 @@ export const HalamanUtama = () => {
 
   console.log(filterData);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <View
@@ -538,6 +538,6 @@ export const HalamanUtama = () => {
           </BottomSheetModal>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </SafeAreaView>
+    </View>
   );
 };

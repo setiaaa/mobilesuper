@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
 import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
@@ -8,13 +8,51 @@ import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search'
 import { useNavigation } from '@react-navigation/native'
 
+const ListDokumen = ({item, variant, token}) => {
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
+    const [isSelected, setSelection] = useState(false);
+    // const getDetail = (id) => {
+    //     const params = { token, id };
+        // const data = event.listsprogress.find(item => item.id === id)
+        // dispatch(getDetailDigisign(params));
+    //   };
+    return (
+
+        <View style={{backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15}}>
+            <Text style={{fontSize: 12}}>Tanggal Pengajuan: 30 Sepember 2023 | 15:33:30</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Ionicons name='person' size={18} color={COLORS.primary} />
+                <Text style={{fontSize: 12}}>Pemohon: Muhammad Zaini / 196308141989031021</Text>
+            </View>
+            <Text style={{fontSize: 12, color: COLORS.lighter}}>Jenis: Cuti Alasan Penting</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{fontSize: 12, color: COLORS.lighter}}>Tipe Dokumen: </Text>
+                <View style={{backgroundColor: 'red', borderRadius: 10, padding: 5,}}>
+                    <Text style={{ fontSize: 12, color: COLORS.white}}>Pembatalan Cuti</Text>
+                </View>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
+                    <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
+                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
+                </View>
+                <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
+                    <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
+                    <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
+                </View>
+            </View>
+        </View>
+    );
+}
+
 export const DokumenCuti = () => {
     const navigation = useNavigation()
     const [variant, SetVariant] = useState('')
 
     return (
         <GestureHandlerRootView>
-            <SafeAreaView style={{ position: 'relative' }}>
+            < View style={{ position: 'relative' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
                     <View style={{
                         backgroundColor: COLORS.white,
@@ -192,7 +230,7 @@ export const DokumenCuti = () => {
 
                 </View>
 
-            </SafeAreaView>
-        </GestureHandlerRootView>
+            </ View >
+        </GestureHandlerRootView >
     )
 }

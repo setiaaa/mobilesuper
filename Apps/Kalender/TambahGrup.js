@@ -22,7 +22,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { CardPilihMember } from "../../components/CardPilihMember";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddressbookSelected } from "../../store/AddressbookKKP";
 import { postGrup } from "../../service/api";
@@ -277,7 +277,7 @@ export const TambahGrup = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView>
+      < >
         {loading ? <Loading /> : null}
         <BottomSheetModalProvider>
           <ScrollView>
@@ -752,7 +752,7 @@ export const TambahGrup = () => {
             <ModalSubmit />
           </ScrollView>
         </BottomSheetModalProvider>
-      </SafeAreaView>
+      </ >
     </GestureHandlerRootView>
   );
 };

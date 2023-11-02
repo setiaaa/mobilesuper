@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import RenderHTML from "react-native-render-html";
 
@@ -62,7 +61,7 @@ export const DetailBeritaSatker = () => {
     const baseStyles = {};
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <ScrollView>
                 <View style={{ backgroundColor: COLORS.primary }}>
                     <TouchableOpacity
@@ -100,7 +99,7 @@ export const DetailBeritaSatker = () => {
                     </View>
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 };
 

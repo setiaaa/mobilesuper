@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
@@ -322,7 +321,7 @@ function SubmittedList() {
       </View>
 
       <BottomSheetModalProvider>
-        <SafeAreaView>
+        < >
           <View>
             <BottomSheetModal
               name="filter"
@@ -421,7 +420,7 @@ function SubmittedList() {
               </View>
             </BottomSheetModal>
           </View>
-        </SafeAreaView>
+        </ >
       </BottomSheetModalProvider>
     </>
   );

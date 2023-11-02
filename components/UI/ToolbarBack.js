@@ -15,14 +15,14 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
     <SafeAreaView style={{ height: 95, backgroundColor: COLORS.white }}>
       <View style={{ paddingHorizontal: 20, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View style={styles.containerHeaderLeft}>
-          <TouchableOpacity onPress={() => navigation.goBack()} 
-            style={{ 
-              backgroundColor: COLORS.white, 
-              width: 30, 
-              height: 30, 
+          <TouchableOpacity onPress={() => navigation.goBack()}
+            style={{
+              backgroundColor: COLORS.white,
+              width: 30,
+              height: 30,
               borderRadius: 15,
-              alignItems: "center", 
-              justifyContent: "center", 
+              alignItems: "center",
+              justifyContent: "center",
               marginBottom: 5,
               //shadow ios
               shadowOffset: { width: -2, height: 4 },
@@ -31,10 +31,10 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
               //shadow android
               elevation: 2,
             }}>
-            <Ionicons 
-              name="chevron-back-outline" 
-              size={16} 
-              // color={COLORS.white} 
+            <Ionicons
+              name="chevron-back-outline"
+              size={16}
+            // color={COLORS.white} 
             />
           </TouchableOpacity>
           <Image source={require("../../assets/superApp/LogoKorespondensi.png")} />

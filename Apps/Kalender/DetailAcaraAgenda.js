@@ -23,7 +23,7 @@ import { useMemo } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAgendaDetail } from '../../store/GrupKalender'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import moment from 'moment'
 import { getTokenValue } from '../../service/session'
 import { getListSubAgenda } from '../../service/api'
@@ -56,7 +56,7 @@ export const DetailAcaraAgenda = () => {
 
 
     return (
-        <SafeAreaView>
+        < >
             <GestureHandlerRootView>
                 <BottomSheetModalProvider>
                     <ScrollView>
@@ -345,7 +345,7 @@ export const DetailAcaraAgenda = () => {
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>
-        </SafeAreaView>
+        </ >
     )
 }
 

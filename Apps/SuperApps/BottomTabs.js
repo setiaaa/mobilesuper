@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
-import { SafeAreaView } from 'react-native';
+import { } from 'react-native';
 import { Modal } from 'react-native';
 
 function MyTabBar({ props, navigation }) {
@@ -13,7 +13,7 @@ function MyTabBar({ props, navigation }) {
 
     return (
         <BottomSheetModalProvider>
-            <SafeAreaView>
+            < >
                 <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
                     <TouchableOpacity
                         key={1}
@@ -293,8 +293,8 @@ function MyTabBar({ props, navigation }) {
                     <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                     <View style={{ alignItems: 'center', flex: 1 }}>
                         <View style={{ backgroundColor: COLORS.white, width: '90%', height: '40%', borderRadius: 10, marginTop: '70%' }}>
-                            <View style={{marginHorizontal: 20, marginTop: 20, flexDirection:"row", justifyContent:"space-between", padding:10, borderBottomWidth:2, borderBottomColor:COLORS.grey }}>
-                                <Text style={{fontWeight:FONTWEIGHT.bold}}>Dashboard</Text>
+                            <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: "row", justifyContent: "space-between", padding: 10, borderBottomWidth: 2, borderBottomColor: COLORS.grey }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
                                 <TouchableOpacity
                                     style={{}}
                                     onPress={() => {
@@ -389,7 +389,7 @@ function MyTabBar({ props, navigation }) {
                         </View>
                     </TouchableOpacity> */}
                 </Modal>
-            </SafeAreaView>
+            </ >
         </BottomSheetModalProvider >
     )
 }

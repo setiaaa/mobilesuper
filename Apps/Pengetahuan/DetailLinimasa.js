@@ -3,7 +3,6 @@ import { FlatList, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "react-native";
 import {
@@ -582,7 +581,7 @@ export const DetailLinimasa = () => {
   // console.log(loading);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <ScrollView>
@@ -1578,7 +1577,7 @@ export const DetailLinimasa = () => {
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </SafeAreaView>
+    </View >
   );
 };
 const styles = StyleSheet.create({

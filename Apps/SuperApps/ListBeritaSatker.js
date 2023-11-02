@@ -6,7 +6,6 @@ import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import { getDetailBerita, getSatkerNews } from "../../service/api";
 import { CardListBeritaHome } from "../../components/CardListBeritaHome";
@@ -69,7 +68,7 @@ export const ListBeritaSatker = () => {
     }, [search])
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
                 <View
                     style={{
@@ -141,7 +140,7 @@ export const ListBeritaSatker = () => {
                     onEndReached={loadMore}
                 />
             </View>
-        </SafeAreaView>
+        </View  >
     );
 };
 

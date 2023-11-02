@@ -42,25 +42,28 @@ const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
 //Login
 export const Login = createAsyncThunk(
     "auth/Login",
-    async ({ username, password }) => {
-        const payload = {
-            username: username,
-            password: password,
-        };
-        console.log(payload);
-        const respon = await axios.post(
-            `https://auth.kubekkp.coofis.com/mobile/login/`,
-            payload
-        );
-        return respon?.data;
+    async ({ username, password }, { rejectWithValue }) => {
+        try {
+            const payload = {
+                username: username,
+                password: password,
+            };
+            const respon = await axios.post(
+                `https://auth.kubekkp.coofis.com/mobile/login/`,
+                payload
+            );
+            return respon?.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
     }
 );
 
 // kebijakan
 export const getCategory = createAsyncThunk(
     "kebijakan/getCategory",
-    async (token) => {
-        const respon = await axios.get(`${kebijakan}category/`, {
+    async ({ token, page }) => {
+        const respon = await axios.get(`${kebijakan}category/?limit=${page}`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -504,9 +507,7 @@ export const getPesan = createAsyncThunk("bridge/getPesan", async (token) => {
         headers: { Authorization: token },
     });
     return respon?.data.results;
-}
-);
-
+});
 
 export const getUltah = createAsyncThunk("bridge/getUltah", async (token) => {
     const respon = await axios.get(`${SATKER}satker/birthday/`, {
@@ -556,28 +557,54 @@ export const getDivisionTree = createAsyncThunk(
 export const getDocument = createAsyncThunk(
     "repository/getDocument",
     async ({ token, page, type }) => {
-        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=${type}&public=false`, {
+        const respon = await axios.get(
+            `${repository}my-documents/?limit=${page}&published=${type}&public=false`,
+            {
+                headers: { Authorization: token },
+            }
+        );
+        return respon?.data.result;
+    }
+);
+
+export const getDivisionFilter = createAsyncThunk(
+    "repository/getDivisionFilter",
+    async ({ token }) => {
+        const respon = await axios.get(`${BASE_URL}bridge/master/division/`, {
             headers: { Authorization: token },
         });
-        return respon?.data.result;
+        return respon?.data.results;
+    }
+);
+
+export const getSubDivisionFilter = createAsyncThunk(
+    "repository/getSubDivisionFilter",
+    async ({ token, id }) => {
+        const respon = await axios.get(`${BASE_URL}bridge/master/department-div/${id}/`, {
+            headers: { Authorization: token },
+        });
+        return respon?.data.results;
     }
 );
 
 export const getDocumentDibagikan = createAsyncThunk(
     "repository/getDocumentDibagikan",
     async ({ token, page, general }) => {
-        const respon = await axios.get(`${repository}shared-documents/?limit=${page}`, {
-            headers: { Authorization: token },
-        });
+        const respon = await axios.get(
+            `${repository}shared-documents/?limit=${page}`,
+            {
+                headers: { Authorization: token },
+            }
+        );
         return respon?.data.result;
     }
 );
 
 export const getDocumentTamplate = createAsyncThunk(
     "repository/getDocumentTamplate",
-    async ({ token, page }) => {
-        console.log(page)
-        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=true&public=true&general=&by_title=false&unker=&satker=`, {
+    async ({ token, page, general, by_title, unker, satker }) => {
+        console.log(satker)
+        const respon = await axios.get(`${repository}my-documents/?limit=${page}&published=true&public=true&general=${general}&by_title=${by_title}&unker=${unker}&satker${satker}=`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -739,8 +766,8 @@ export const getTreeTM = createAsyncThunk(
 
 export const getListDashboardTM = createAsyncThunk(
     "taskmanagement/getListDashboardTM",
-    async ({ token }) => {
-        const respon = await axios.get(`${taskManagement}dashboard/list/`, {
+    async ({ token, page }) => {
+        const respon = await axios.get(`${taskManagement}dashboard/list/?limit=$(page)`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -1145,8 +1172,8 @@ export const getDetailsSharedDocuments = createAsyncThunk(
 );
 
 //postingan saya
-export const getMyPostList = createAsyncThunk("mp/mypost", async (token) => {
-    const respon = await axios.get(`${MYPOST_LIST}`, {
+export const getMyPostList = createAsyncThunk("mp/mypost", async ({ token, page }) => {
+    const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
         headers: { Authorization: token },
     });
     return respon?.data.results;
