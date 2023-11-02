@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   AVATAR,
   COLORS,
@@ -301,69 +301,62 @@ export const PostinganSaya = () => {
   // console.log(postinganSaya.lists);
 
   return (
-    <>
-      {postinganSaya.lists.length === 0 ? <Loading /> : null}
-      <SafeAreaView>
+    <SafeAreaView>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: COLORS.primary,
+          height: 80,
+        }}
+      >
         <View
           style={{
-            flexDirection: "row",
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: 28,
+            height: 28,
             alignItems: "center",
-            backgroundColor: COLORS.primary,
-            height: 80,
+            justifyContent: "center",
+            marginLeft: 20,
           }}
         >
-          <View
-            style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
-            }}
-          >
-            <TouchableOpacity
-              style={{}}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <Ionicons
-                name="chevron-back-outline"
-                size={24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: "center" }}>
-            <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
-            >
-              Postingan Saya
-            </Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 20,
-            }}
-          >
-            <TouchableOpacity
-              style={{}}
-              onPress={() => navigation.navigate("JumlahPostingan")}
-            >
-              <Ionicons
-                name="document-text-outline"
-                size={24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
+            <Ionicons
+              name="chevron-back-outline"
+              size={24}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
         </View>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+            Postingan Saya
+          </Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: 28,
+            height: 28,
+            alignItems: "center",
+            justifyContent: "center",
+            marginRight: 20,
+          }}
+        >
+          <TouchableOpacity
+            style={{}}
+            onPress={() => navigation.navigate("JumlahPostingan")}
+          >
+            <Ionicons
+              name="document-text-outline"
+              size={24}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
 
         <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
           <View
@@ -403,34 +396,17 @@ export const PostinganSaya = () => {
           </View>
         </View>
 
-        <FlatList
-          data={filterData}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <CardPostinganSaya
-                item={item}
-                token={token}
-              />
-            </View>
-          )}
-          ListFooterComponent={() =>
-            loading === true ? (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
-                }}
-              >
-                <ActivityIndicator size="large" color={COLORS.primary} />
-              </View>
-            ) : null
-          }
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={loadMore}
-        />
-      </SafeAreaView>
-    </>
+      <FlatList
+        data={postinganSaya.lists}
+        renderItem={({ item }) => (
+          <View key={item.id}>
+            <CardPostinganSaya item={item} token={token} />
+          </View>
+        )}
+        style={{ marginBottom: 80 }}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => <ListEmpty />}
+      />
+    </SafeAreaView>
   );
 };

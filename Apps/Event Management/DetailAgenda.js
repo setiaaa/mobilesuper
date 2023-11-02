@@ -165,6 +165,8 @@ export const DetailAgenda = () => {
         dispatch(deleteNotulensi(item))
     }
 
+    console.log(data.extra_attrs)
+
 
     return (
         < >
@@ -311,10 +313,14 @@ export const DetailAgenda = () => {
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                data.extra_attrs?.guests?.map((data, index) =>
+                                data.extra_attrs.guests.length === 0 ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    data.extra_attrs?.guests?.map((data, index) =>
                                     <View key={index} style={{ position: 'relative' }}>
                                         <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
                                     </View>
+                                    )
                                 )
                             )}
                             {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -330,14 +336,18 @@ export const DetailAgenda = () => {
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                <View style={{ position: 'relative', flexDirection: 'column' }}>
-                                    {data.extra_attrs?.guest_external?.map((data, index) =>
-                                        <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
-                                            <Text>-</Text>
-                                            <Text style={{ width: 150 }}>{data.name}</Text>
-                                        </View>
-                                    )}
-                                </View>
+                                data.extra_attrs.guest_external.length === 0 ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <View style={{ position: 'relative', flexDirection: 'column' }}>
+                                        {data.extra_attrs?.guest_external?.map((data, index) =>
+                                            <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
+                                                <Text>-</Text>
+                                                <Text style={{ width: 150 }}>{data.name}</Text>
+                                            </View>
+                                        )}
+                                    </View>
+                                )
                             )}
                         </View>
 
@@ -605,28 +615,32 @@ export const DetailAgenda = () => {
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
                         ) : (
-                            <FlatList
-                                key={'*'}
-                                data={data.attachments}
-                                renderItem={({ item }) =>
-                                    <View key={item.id}>
-                                        <CardLampiran
-                                            lampiran={item.file}
-                                            type={getFileExtension(item.name)}
-                                            onClick={() => {
-                                                setVisibleModal(true)
-                                                setLampiranById(item)
-                                            }}
-                                            id={item.id}
-                                        />
-                                    </View>
-                                }
-                                scrollEnabled={false}
-                                style={{ marginTop: 10 }}
-                                columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                                numColumns={3}
-                                keyExtractor={item => "*" + item.id}
-                            />
+                            data.attachments.length === 0 ? (
+                                <Text style={{ marginVertical: 5 }}>-</Text>
+                            ) : (
+                                <FlatList
+                                    key={'*'}
+                                    data={data.attachments}
+                                    renderItem={({ item }) =>
+                                        <View key={item.id}>
+                                            <CardLampiran
+                                                lampiran={item.file}
+                                                type={getFileExtension(item.name)}
+                                                onClick={() => {
+                                                    setVisibleModal(true)
+                                                    setLampiranById(item)
+                                                }}
+                                                id={item.id}
+                                            />
+                                        </View>
+                                    }
+                                    scrollEnabled={false}
+                                    style={{ marginTop: 10 }}
+                                    columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                    numColumns={3}
+                                    keyExtractor={item => "*" + item.id}
+                                />
+                            )
                         )}
 
                         {
@@ -717,9 +731,9 @@ export const DetailAgenda = () => {
 
                 <View style={{
                     backgroundColor: COLORS.white,
-                    width: '92%',
+                    width: '90%',
                     flex: 1,
-                    marginLeft: 15,
+                    alignSelf: "center",
                     padding: 15,
                     borderRadius: 8
                 }}>

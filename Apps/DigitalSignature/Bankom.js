@@ -39,6 +39,7 @@ const ListBankom = ({ item, variant, token }) => {
                 flex: 1,
                 marginTop: 10,
                 marginHorizontal: 20,
+                padding: 20,
                 //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: '#171717',
@@ -48,7 +49,7 @@ const ListBankom = ({ item, variant, token }) => {
                 marginVertical: 10
             }}>
             <TouchableOpacity
-
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
                 onPress={(e) => {
                     getDetail(item.id)
                     navigation.navigate('DetailSertifikat')
@@ -62,9 +63,17 @@ const ListBankom = ({ item, variant, token }) => {
                 ) : (
                     null
                 )}
-                <View style={{ marginVertical: 20, marginHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-
-                    <Text style={{ marginVertical: 5, fontSize: 13, width: 300, textAlign: 'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
+                <View style={{ flexDirection: 'column', }}>
+                    <Text style={{ fontSize: 16, width: 300, textAlign: 'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
+                    <View style={{ backgroundColor: COLORS.lighter, height: 1, marginVertical: 5 }} />
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ fontSize: 13, width: 100, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penerima :</Text>
+                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>{item.receivers[0]?.nama}</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ fontSize: 13, width: 100, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penandatangan :</Text>
+                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>{item.approvers[1]?.officer?.nama !== null ? item.approvers[1]?.officer?.nama : "-"} </Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         </View>
@@ -88,8 +97,8 @@ export const Bankom = () => {
 
     useEffect(() => {
         SetVariant('composer')
-        dispatch(getListDraft({ token: token, tipe: tipe }));
-    }, [tipe])
+        dispatch(getListComposer({ token: token, tipe: tipe }));
+    }, [ token, tipe ])
 
     const filterHandlerComposer = () => {
         SetVariant('composer')
@@ -134,7 +143,7 @@ export const Bankom = () => {
         }
     }, [search])
 
-    console.log(digitalsign.lists)
+    // console.log(digitalsign.lists)
 
     return (
         <GestureHandlerRootView>
@@ -168,7 +177,7 @@ export const Bankom = () => {
                             </View>
                         </View>
                         {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ backgroundColor: "yellow", }}> */}
-                            <View style={{ paddingVertical: 10, flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 20, }}>
+                            <View style={{ paddingVertical: 10, flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, }}>
                                 <TouchableOpacity style={{
                                     marginHorizontal: 5,
                                     paddingHorizontal: 6,
@@ -258,7 +267,7 @@ export const Bankom = () => {
                             )}
                             keyExtractor={item => item.id}
                             ListEmptyComponent={() => <ListEmpty />}
-                            style={{ height: '90%' }} 
+                            style={{ height: '74%', }} 
                         />
                         {/* <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
                             style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}

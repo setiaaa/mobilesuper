@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
-import { Text } from 'react-native'
+import { Text, Image } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native'
@@ -27,6 +27,10 @@ const ListDokumenLain = ({ item, variant, token }) => {
         // const data = event.listsprogress.find(item => item.id === id)
         dispatch(getDetailDigisign(params));
     };
+
+    const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
+
+    console.log(item)
     return (
 
         <View
@@ -61,7 +65,19 @@ const ListDokumenLain = ({ item, variant, token }) => {
                 ) : (
                     null
                 )}
-                <Text style={{ marginVertical: 5, fontSize: 13, width: 300, textAlign: 'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
+                <View style={{ flexDirection: "column" }}>
+                    <Text style={{ fontSize: 13, width: 300, textAlign: 'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
+                    <View style={{ backgroundColor: COLORS.lighter, height: 1, marginVertical: 5 }} />
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ fontSize: 13, width: 100, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penerima :</Text>
+                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>{item.receivers?.nama}</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ fontSize: 13, width: 100, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penandatangan :</Text>
+                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>{item.approvers[1]?.officer?.nama !== null ? item.approvers[1]?.officer?.nama : "-"} </Text>
+                    </View>
+                    <Image source={{ uri: item.approvers[1]?.avatar_url }} />
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -84,9 +100,9 @@ export const DokumenLain = () => {
     }, [])
 
     useEffect(() => {
-        SetVariant('draft')
-        dispatch(getListDraft({ token: token, tipe: tipe }));
-    }, [tipe])
+        SetVariant('composer')
+        dispatch(getListComposer({ token: token, tipe: tipe }));
+    }, [ token, tipe ])
 
     const filterHandlerComposer = () => {
         SetVariant('composer')
@@ -165,85 +181,85 @@ export const DokumenLain = () => {
                         />
                     </View>
                 </View>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'center' }}>
-                        <TouchableOpacity style={{
-                            marginHorizontal: 5,
-                            width: 60,
-                            height: 30,
-                            borderWidth: 1,
-                            backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
-                            borderRadius: 30,
-                            borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                            onPress={() => filterHandlerDraft()}
-                        >
-                            <Text style={{ color: variant === 'draft' ? COLORS.infoDanger : COLORS.foundation }}>Draft</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            marginHorizontal: 5,
-                            width: 80,
-                            height: 30,
-                            borderWidth: 1,
-                            backgroundColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.input,
-                            borderRadius: 30,
-                            borderColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                            onPress={() => filterHandlerComposer()}
-                        >
-                            <Text style={{ color: variant === 'composer' ? COLORS.infoDanger : COLORS.foundation }}>List Saya</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            marginHorizontal: 5,
-                            width: 85,
-                            height: 30,
-                            borderWidth: 1,
-                            backgroundColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.input,
-                            borderRadius: 30,
-                            borderColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                            onPress={() => filterHandlerInProgress()}
-                        >
-                            <Text style={{ color: variant === 'inprogress' ? COLORS.infoDanger : COLORS.foundation }}>Need Sign</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            marginHorizontal: 5,
-                            width: 60,
-                            height: 30,
-                            borderWidth: 1,
-                            backgroundColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.input,
-                            borderRadius: 30,
-                            borderColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                            onPress={() => filterHandlerSigned()}
-                        >
-                            <Text style={{ color: variant === 'signed' ? COLORS.infoDanger : COLORS.foundation }}>Signed</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            marginHorizontal: 5,
-                            width: 60,
-                            height: 30,
-                            borderWidth: 1,
-                            backgroundColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.input,
-                            borderRadius: 30,
-                            borderColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                            onPress={() => filterHandlerCompleted()}
-                        >
-                            <Text style={{ color: variant === 'completed' ? COLORS.infoDanger : COLORS.foundation }}>Selesai</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
+                {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
+                <View style={{ paddingVertical: 10, flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 10, }}>
+                                <TouchableOpacity style={{
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
+                                    borderWidth: 1,
+                                    backgroundColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.input,
+                                    borderRadius: 30,
+                                    borderColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                                    onPress={() => filterHandlerComposer()}
+                                >
+                                    <Text style={{ color: variant === 'composer' ? COLORS.infoDanger : COLORS.foundation }}>List Saya</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
+                                    borderWidth: 1,
+                                    backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
+                                    borderRadius: 30,
+                                    borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                                    onPress={() => filterHandlerDraft()}
+                                >
+                                    <Text style={{ color: variant === 'draft' ? COLORS.infoDanger : COLORS.foundation }}>Draft</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
+                                    borderWidth: 1,
+                                    backgroundColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.input,
+                                    borderRadius: 30,
+                                    borderColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                                    onPress={() => filterHandlerInProgress()}
+                                >
+                                    <Text style={{ color: variant === 'inprogress' ? COLORS.infoDanger : COLORS.foundation }}>Need Sign</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
+                                    borderWidth: 1,
+                                    backgroundColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.input,
+                                    borderRadius: 30,
+                                    borderColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                                    onPress={() => filterHandlerSigned()}
+                                >
+                                    <Text style={{ color: variant === 'signed' ? COLORS.infoDanger : COLORS.foundation }}>Signed</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
+                                    borderWidth: 1,
+                                    backgroundColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.input,
+                                    borderRadius: 30,
+                                    borderColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                                    onPress={() => filterHandlerCompleted()}
+                                >
+                                    <Text style={{ color: variant === 'completed' ? COLORS.infoDanger : COLORS.foundation }}>Selesai</Text>
+                                </TouchableOpacity>
+                            </View>
+                {/* </ScrollView> */}
                 <FlatList
                     data={filterData}
                     renderItem={({ item }) => (
