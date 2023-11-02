@@ -40,6 +40,7 @@ export const DetailAgenda = () => {
     const navigation = useNavigation()
 
     const [visibleModal, setVisibleModal] = useState(false);
+    const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
     const [lampiranById, setLampiranById] = useState(null)
     const [modalVisible, setModalVisible] = useState(false);
     const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
@@ -124,8 +125,6 @@ export const DetailAgenda = () => {
             dispatch(putAbsen({ token: token, idabsen: idabsen, status: 'waiting', is_scan: true }))
             alert('gagal')
         }
-        console.log(`data: ${data}`)
-        console.log(`type: ${type}`)
     }
 
     const [document, setDocument] = useState(null)
@@ -140,7 +139,6 @@ export const DetailAgenda = () => {
         tipe = tipe[tipe.length - 1]
         setDocument(result)
         setType(tipe)
-        console.log(result)
         const data = {
             token: token,
             result: result
@@ -165,6 +163,7 @@ export const DetailAgenda = () => {
         dispatch(deleteNotulensi(item))
     }
 
+    console.log(data.nama)
 
     return (
         < >
@@ -287,6 +286,20 @@ export const DetailAgenda = () => {
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
+                        {/* <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+                                data.extra_attrs?.members?.map((data, index) =>
+                                    <View key={index} style={{ position: 'relative' }}>
+                                        <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                    </View>
+                                )
+                            )}
+                            
+                        </View> */}
+
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
                             {loading ? (
@@ -298,10 +311,118 @@ export const DetailAgenda = () => {
                                     </View>
                                 )
                             )}
-                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                            <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }} onPress={() => setVisibleModalPeserta(true)}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity> */}
+                            </TouchableOpacity>
                         </View>
+
+
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={visibleModalPeserta}
+                            onRequestClose={() => {
+                                setVisibleModalPeserta(!visibleModalPeserta);
+                            }}
+                            >
+                            <TouchableOpacity
+                                style={[
+                                Platform.OS === "ios"
+                                    ? styles.iOSBackdrop
+                                    : styles.androidBackdrop,
+                                styles.backdrop,
+                                ]}
+                            />
+                            <View style={{ alignItems: "center", justifyContent: 'center', flex: 1 }}>
+                                <View
+                                style={{
+                                    backgroundColor: COLORS.white,
+                                    width: "90%",
+                                    height: '90%',
+                                    borderRadius: 10,
+                                    alignContent: 'center',
+                                }}
+                                >
+                                <View
+                                    style={{
+                                    marginTop: 20,
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    marginHorizontal: 20,
+                                    }}
+                                >
+                                    <View>
+                                    <Text
+                                        style={{
+                                        fontSize: FONTSIZE.Judul,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        }}
+                                    >
+                                        Peserta Agenda
+                                    </Text>
+                                    </View>
+
+                                    <TouchableOpacity
+                                    style={{}}
+                                    onPress={() => {
+                                        setVisibleModalPeserta(false);
+                                    }}
+                                    >
+                                    <Ionicons
+                                        name="close-outline"
+                                        size={24}
+                                        color={COLORS.lighter}
+                                    />
+                                    </TouchableOpacity>
+                                </View>
+                                {/* custom divider */}
+                                <View
+                                    style={{
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    }}
+                                >
+                                    <View
+                                    style={{
+                                        height: 1,
+                                        width: "90%",
+                                        backgroundColor: "#DBDADE",
+                                        marginVertical: 10,
+                                    }}
+                                    />
+                                </View>
+
+                                <ScrollView style={{ marginBottom: 40 }}>
+                                    <View style={{
+                                        width: '90%',
+                                        borderRadius: 8,
+                                        marginHorizontal: 20,
+                                        marginTop: 10,
+                                        flexDirection: 'column', 
+                                        gap: 20
+                                    }}>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100}  />
+                                        ) : (
+                                            data.extra_attrs?.members?.map((member, index) =>
+                                                <View key={index} style={{ position: 'relative', flexDirection: 'row', alignContent: 'center', gap: 20 }}>
+                                                    <Image source={{ uri: member.avatar_url }} style={{ width: 45, height: 45, borderRadius: 50 }} />
+                                                    <Text>{member.nama}</Text>
+                                                </View>
+                                            )
+                                        )}
+                                    </View>
+
+                                    
+
+                                </ScrollView>
+                                </View>
+                            </View>
+                        </Modal>
+
+                        
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />

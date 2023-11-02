@@ -39,12 +39,12 @@ const CardListAbsen = ({ item, loading }) => {
                     <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                 ) : (
 
-                    <Text>{item.member?.nama}</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold}}>{item.member?.nama}</Text>
                 )}
                 <View style={{ marginTop: 10 }}>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                        <Text style={{ width: 110 }}>Status</Text>
+                        <Text style={{ width: 110, color: COLORS.lighter }}>Status</Text>
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                         ) : (
@@ -92,7 +92,7 @@ const CardListAbsen = ({ item, loading }) => {
                             </TouchableOpacity>
                         ) : (
                             <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
-                                <Text style={{ width: 120, }}>Waktu Check In</Text>
+                                <Text style={{ width: 120, color: COLORS.lighter }}>Waktu Check In</Text>
                                 {loading ? (
                                     <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                 ) : (

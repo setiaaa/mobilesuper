@@ -28,6 +28,8 @@ export const DetailEvent = () => {
   const [lampiranById, setLampiranById] = useState(null)
   const [token, setToken] = useState('')
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
+  const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
+
 
   const statusEvent = [
     { key: 'siap', value: 'persiapan' },
@@ -114,7 +116,7 @@ export const DetailEvent = () => {
             </View>
 
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
             <View style={{ flexDirection: 'row', }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
@@ -129,7 +131,7 @@ export const DetailEvent = () => {
             </View>
 
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
             <View style={{ flexDirection: 'row', }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
@@ -141,7 +143,7 @@ export const DetailEvent = () => {
             </View>
 
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
             <View style={{ flexDirection: 'row', }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Pimpinan Agenda Rapat</Text>
@@ -153,7 +155,7 @@ export const DetailEvent = () => {
             </View>
 
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat</Text>
               {loading ? (
@@ -165,13 +167,120 @@ export const DetailEvent = () => {
                   </View>
                 )
               )}
-              {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity> */}
+              <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }} onPress={() => setVisibleModalPeserta(true)}>
+                  <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+              </TouchableOpacity>
             </View>
 
+
+            <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={visibleModalPeserta}
+                            onRequestClose={() => {
+                                setVisibleModalPeserta(!visibleModalPeserta);
+                            }}
+                            >
+                            <TouchableOpacity
+                                style={[
+                                Platform.OS === "ios"
+                                    ? styles.iOSBackdrop
+                                    : styles.androidBackdrop,
+                                styles.backdrop,
+                                ]}
+                            />
+                            <View style={{ alignItems: "center", justifyContent: 'center', flex: 1 }}>
+                                <View
+                                style={{
+                                    backgroundColor: COLORS.white,
+                                    width: "90%",
+                                    height: '90%',
+                                    borderRadius: 10,
+                                    alignContent: 'center',
+                                }}
+                                >
+                                <View
+                                    style={{
+                                    marginTop: 20,
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    marginHorizontal: 20,
+                                    }}
+                                >
+                                    <View>
+                                    <Text
+                                        style={{
+                                        fontSize: FONTSIZE.Judul,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        }}
+                                    >
+                                        Peserta Agenda
+                                    </Text>
+                                    </View>
+
+                                    <TouchableOpacity
+                                    style={{}}
+                                    onPress={() => {
+                                        setVisibleModalPeserta(false);
+                                    }}
+                                    >
+                                    <Ionicons
+                                        name="close-outline"
+                                        size={24}
+                                        color={COLORS.lighter}
+                                    />
+                                    </TouchableOpacity>
+                                </View>
+                                {/* custom divider */}
+                                <View
+                                    style={{
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    }}
+                                >
+                                    <View
+                                    style={{
+                                        height: 1,
+                                        width: "90%",
+                                        backgroundColor: "#DBDADE",
+                                        marginVertical: 20,
+                                    }}
+                                    />
+                                </View>
+
+                                <ScrollView style={{ marginBottom: 40 }}>
+                                    <View style={{
+                                        width: '90%',
+                                        borderRadius: 8,
+                                        marginHorizontal: 20,
+                                        marginTop: 10,
+                                        flexDirection: 'column', 
+                                        gap: 20
+                                    }}>
+                                        {loading ? (
+                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100}  />
+                                        ) : (
+                                            data.extra_attrs?.members?.map((member, index) =>
+                                                <View key={index} style={{ position: 'relative', flexDirection: 'row', alignContent: 'center', gap: 20 }}>
+                                                    <Image source={{ uri: member.avatar_url }} style={{ width: 45, height: 45, borderRadius: 50 }} />
+                                                    <Text>{member.nama}</Text>
+                                                </View>
+                                            )
+                                        )}
+                                    </View>
+
+                                    
+
+                                </ScrollView>
+                                </View>
+                            </View>
+                        </Modal>
+
+
+
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat Eksternal</Text>
               <View>
@@ -193,7 +302,7 @@ export const DetailEvent = () => {
             </View>
 
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Notulen</Text>
               {loading ? (
@@ -212,7 +321,7 @@ export const DetailEvent = () => {
             </View>
 
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absen</Text>
               {loading ? (
@@ -232,7 +341,7 @@ export const DetailEvent = () => {
 
 
             {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
             {loading ? (
@@ -412,7 +521,7 @@ export const DetailEvent = () => {
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               >
                 <TouchableOpacity
