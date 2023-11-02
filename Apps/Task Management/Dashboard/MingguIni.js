@@ -37,6 +37,7 @@ export const MingguIni = () => {
         return arr
     }
 
+    console.log(filterData)
     const renderShimmerGrid = () => {
         const arr = []
         for (let i = 0; i < 6; i++) {

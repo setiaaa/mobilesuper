@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../../components/CardListTask'
 import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
@@ -16,6 +16,8 @@ export const HariIni = () => {
     const { list, variant, loading } = useSelector(state => state.task)
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
+    const [page, setPage] = useState(5);
+
 
     useEffect(() => {
         const data = taskLists.filter((item) => {
@@ -23,6 +25,15 @@ export const HariIni = () => {
         })
         setFilterData(data)
     }, [taskLists])
+
+    const loadMore = () => {
+        if (filterData % 5 === 0) {
+          setPage(page + 5);
+        }
+        console.log(page);
+    };
+
+    // console.log(list)
 
     const renderShimmerList = () => {
         const arr = []
@@ -51,7 +62,7 @@ export const HariIni = () => {
     return (
         <>
             {variant === 'list' ? (
-                <View style={{ flex: 1, marginTop: 20 }}>
+                <View style={{ flex: 1, marginTop: 20,}}>
                     {
                         loading ? (
                             <Loading/>
@@ -68,6 +79,20 @@ export const HariIni = () => {
                                     ListEmptyComponent={() =>
                                         <ListEmpty />
                                     }
+                                    ListFooterComponent={() =>
+                                        loading === true ? (
+                                        <View
+                                            style={{
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            padding: 24,
+                                            }}
+                                        >
+                                            <ActivityIndicator size="large" color={COLORS.primary} />
+                                        </View>
+                                        ) : null
+                                    }
+                                    onEndReached={loadMore}
                                 />
                             </View>
                         )
