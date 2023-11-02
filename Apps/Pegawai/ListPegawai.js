@@ -81,7 +81,7 @@ export const ListPegawai = () => {
     // }, [search])
 
     const loadMore = () => {
-        if (pegawai.lists.length % 10 === 0) {
+        if (filterData.length % 10 === 0) {
             setPage(page + 1)
         }
     }

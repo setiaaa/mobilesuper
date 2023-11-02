@@ -426,10 +426,12 @@ export const DetailTodo = () => {
                             </View>
                         </View>
 
+
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
                             <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
                                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
+                                
                                     <TextInput
                                         editable
                                         multiline
@@ -441,6 +443,7 @@ export const DetailTodo = () => {
                                             setMessage(e)
                                         }}
                                     />
+                               
                                     <TouchableOpacity onPress={() => {
                                         submitComment('')
                                     }}>

@@ -270,7 +270,7 @@ export const PostinganSaya = () => {
   const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
 
   const loadMore = () => {
-    if (postinganSaya.lists.length % 5 === 0) {
+    if (filterData.length % 5 === 0) {
       setPage(page + 5);
     }
     console.log(page);
