@@ -1146,7 +1146,7 @@ export const getDetailsSharedDocuments = createAsyncThunk(
 
 //postingan saya
 export const getMyPostList = createAsyncThunk("mp/mypost", async ({ token, page }) => {
-  const respon = await axios.get(`${MYPOST_LIST}/?limit=${page}`, {
+  const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
     headers: { Authorization: token },
   });
   return respon?.data.results;

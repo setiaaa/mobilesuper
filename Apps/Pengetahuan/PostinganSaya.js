@@ -253,7 +253,7 @@ export const PostinganSaya = () => {
 
   const dispatch = useDispatch();
 
-  const [page, setPage] = useState(10);
+  const [page, setPage] = useState(5);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -270,8 +270,8 @@ export const PostinganSaya = () => {
   const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
 
   const loadMore = () => {
-    if (postinganSaya.lists.length % 10 === 0) {
-      setPage(page + 10);
+    if (postinganSaya.lists.length % 5 === 0) {
+      setPage(page + 5);
     }
     console.log(page);
   };
@@ -302,11 +302,7 @@ export const PostinganSaya = () => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ): (
-          null
-      )}
+      {postinganSaya.lists.length === 0 ? <Loading /> : null}
       <SafeAreaView>
         <View
           style={{
@@ -434,43 +430,6 @@ export const PostinganSaya = () => {
           ListEmptyComponent={() => <ListEmpty />}
           onEndReached={loadMore}
         />
-
-        {/* <FlatList
-          data={filterData}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <CardPostinganSaya item={item} token={token} />
-            </View>
-          )}
-          ListFooterComponent={() =>
-            loading === true ? (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
-                }}
-              >
-                <ActivityIndicator size="large" color={COLORS.primary} />
-              </View>
-            ) : null
-          }
-          style={{ marginBottom: 80 }}
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={loadMore}
-        /> */}
-        {/* <FlatList
-        data={filterData}
-        renderItem={({ item }) => (
-          <View key={item.id}>
-            <CardPostinganSaya item={item} token={token} />
-          </View>
-        )}
-        style={{ marginBottom: 80 }}
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <ListEmpty />}
-      /> */}
       </SafeAreaView>
     </>
   );
