@@ -139,6 +139,22 @@ export const Absen = () => {
         setSearch(event)
     }
 
+
+  useEffect(() => {
+    setFilterData(absen.lists)
+  }, [absen])
+
+  useEffect(() => {
+    if (search !== '') {
+      const data = absen.lists?.filter((item) => {
+        return item.member?.nama.toLowerCase().includes(search.toLowerCase());
+      })
+      setFilterData(data)
+    } else {
+      setFilterData(absen.lists)
+    }
+  }, [search])
+
     // useEffect(() => {
     //     setFilterData(absen)
     // }, [absen])
@@ -255,8 +271,17 @@ export const Absen = () => {
 
             {/* </View> */}
 
+            <View style={{ padding: 20}}>
+                <View style={{ }}>
+                        <Search
+                            placeholder={'Cari'}
+                            onSearch={filter}
+                        />
+                </View>
+            </View>
+
             <FlatList
-                data={absenLists}
+                data={filterData}
                 renderItem={({ item }) => <CardListAbsen
                     item={item}
                     loading={loading}

@@ -10,6 +10,7 @@ import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
+import { Loading } from '../../../components/Loading'
 
 
 export const MingguIni = () => {
@@ -54,11 +55,7 @@ export const MingguIni = () => {
                 <View style={{ flex: 1, marginTop: 20 }}>
                     {
                         loading ? (
-                            <View style={{ flexDirection: 'column', gap: 10 }}>
-                                {
-                                    renderShimmerList()
-                                }
-                            </View>
+                            <Loading/>
                         ) : (
                             <View style={{ marginTop: 20 }}>
                                 <FlatList

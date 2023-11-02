@@ -62,8 +62,8 @@ export const Login = createAsyncThunk(
 // kebijakan
 export const getCategory = createAsyncThunk(
     "kebijakan/getCategory",
-    async (token) => {
-        const respon = await axios.get(`${kebijakan}category/`, {
+    async ({ token, page }) => {
+        const respon = await axios.get(`${kebijakan}category/?limit=${page}`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -766,8 +766,8 @@ export const getTreeTM = createAsyncThunk(
 
 export const getListDashboardTM = createAsyncThunk(
     "taskmanagement/getListDashboardTM",
-    async ({ token }) => {
-        const respon = await axios.get(`${taskManagement}dashboard/list/`, {
+    async ({ token, page }) => {
+        const respon = await axios.get(`${taskManagement}dashboard/list/?limit=$(page)`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -1173,10 +1173,10 @@ export const getDetailsSharedDocuments = createAsyncThunk(
 
 //postingan saya
 export const getMyPostList = createAsyncThunk("mp/mypost", async ({ token, page }) => {
-  const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
-    headers: { Authorization: token },
-  });
-  return respon?.data.results;
+    const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
+        headers: { Authorization: token },
+    });
+    return respon?.data.results;
 });
 
 export const getMyPostDetail = createAsyncThunk(

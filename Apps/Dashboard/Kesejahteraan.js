@@ -167,37 +167,47 @@ export const Kesejahteraan = () => {
         }
     }
 
+    const filterHandleTapera = () => {
+        dispatch(setKesejahteraanEmpty())
+        setPage(1)
+        setValue('tapera')
+    }
+    const filterHandleBpjs = () => {
+        dispatch(setKesejahteraanEmpty())
+        setPage(1)
+        setValue('bpjs')
+    }
+    const filterHandleTaspen = () => {
+        dispatch(setKesejahteraanEmpty())
+        setPage(1)
+        setValue('taspen')
+    }
+
     return (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 80, marginTop: 20 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 30, marginTop: 20 }}>
 
-                <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
+                <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'tapera' ? COLORS.primary : COLORS.grey }}
                     onPress={() => {
-                        dispatch(setKesejahteraanEmpty())
-                        setPage(1)
-                        setValue('tapera')
+                        filterHandleTapera()
                     }}
                 >
                     <Image source={require('../../assets/superApp/Tapera.png')} />
                     <Text style={{ color: value === 'tapera' ? COLORS.primary : COLORS.foundation }}>Tapera</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
+                <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'bpjs' ? COLORS.primary : COLORS.grey }}
                     onPress={() => {
-                        dispatch(setKesejahteraanEmpty())
-                        setPage(1)
-                        setValue('bpjs')
+                        filterHandleBpjs()
                     }}
                 >
                     <Image source={require('../../assets/superApp/BPJS.png')} />
                     <Text style={{ color: value === 'bpjs' ? COLORS.primary : COLORS.foundation }}>BPJS</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ alignItems: 'center', width: 50 }}
+                <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'taspen' ? COLORS.primary : COLORS.grey }}
                     onPress={() => {
-                        dispatch(setKesejahteraanEmpty())
-                        setPage(1)
-                        setValue('taspen')
+                        filterHandleTaspen()
                     }}
                 >
                     <Image source={require('../../assets/superApp/Taspen.png')} />
@@ -208,7 +218,7 @@ export const Kesejahteraan = () => {
 
             {detail === '' ? (
                 <View>
-                    <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                    <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom:10 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginTop: 10 }} />

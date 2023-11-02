@@ -56,6 +56,9 @@ export const DetailEvent = () => {
 
   const data = event.detailEvent;
 
+
+  console.log(event)
+
   return (
     < >
       <ScrollView>
@@ -239,16 +242,21 @@ export const DetailEvent = () => {
                 key={'*'}
                 data={data.attachments}
                 renderItem={({ item }) =>
-                  <View key={item.id}>
-                    <CardLampiran
-                      lampiran={item.file}
-                      type={getFileExtension(item.name)}
-                      onClick={() => {
-                        setVisibleModal(true)
-                        setLampiranById(item)
-                      }}
-                    />
-                  </View>
+                <View key={item.id}>
+                {item.attachments !== 0 ? (
+                  <Text>-</Text> 
+                ) : (
+                  <CardLampiran
+                    lampiran={item.file}
+                    type={getFileExtension(item.name)}
+                    onClick={() => {
+                      setVisibleModal(true);
+                      setLampiranById(item);
+                    }}
+                  />
+                )}
+              </View>
+              
                 }
                 scrollEnabled={false}
                 style={{ marginTop: 10 }}

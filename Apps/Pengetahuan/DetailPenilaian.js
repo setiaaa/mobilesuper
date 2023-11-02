@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, Modal, ScrollView, Text, View, useWindowDimensions } from 'react-native'
-import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { COLORS, DATETIME, FONTWEIGHT, FONTSIZE } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'react-native'
@@ -12,6 +13,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { StyleSheet } from 'react-native'
 import { getDetailLinimasa, getViewLinimasa, putAddApprove, putCancelApprove, putTakeDown } from '../../service/api'
 import { getTokenValue } from '../../service/session'
+import { color } from 'react-native-reanimated'
 
 const CardLampiran = ({ lampiran, onClick, type, id }) => {
     const navigation = useNavigation()
@@ -359,11 +361,10 @@ export const DetailPenilaian = () => {
                     borderRadius: 8,
                     marginBottom: 20,
                 }}>
-                    <View style={{ gap: 20, paddingVertical: 20 }}>
-                        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ gap: 20, paddingVertical: 20,}}>
+                        <View style={{ gap: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 40 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold, }}>Nilai</Text>
-                                <Text style={{ color: COLORS.danger }}>*</Text>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold, }}>Nilai:</Text>
                             </View>
 
 
@@ -383,9 +384,9 @@ export const DetailPenilaian = () => {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', position: 'relative' }}>
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, marginBottom: 5, position: 'absolute', left: 5 }}>Tanggal Nilai :</Text>
-                            <Text>{tanggal}</Text>
+                        <View style={{  justifyContent: 'center', alignItems: 'center', flexDirection: 'row'   }}>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, position: 'absolute', left: 1}}>Tanggal Nilai :</Text>
+                            <Text style={{ paddingVertical: 17}}>{tanggal}</Text>
                         </View>
                     </View>
 
@@ -429,7 +430,7 @@ export const DetailPenilaian = () => {
                         <Text style={{ color: COLORS.white }}>Cancel Approve</Text>
                     </TouchableOpacity>
                 )}
-                <TouchableOpacity style={{
+                {/* <TouchableOpacity style={{
                     width: '90%',
                     height: 50,
                     justifyContent: 'center',
@@ -447,7 +448,124 @@ export const DetailPenilaian = () => {
                     }}
                 >
                     <Text style={{ color: COLORS.infoDanger }}>Take Down Artikel</Text>
+                </TouchableOpacity> */}
+
+                <TouchableOpacity
+                    style={{
+                        width: '90%',
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 8,
+                        marginHorizontal: 20,
+                        marginTop: 10,
+                        borderColor: COLORS.infoDanger,
+                        borderWidth: 1
+                    }}
+                    onPress={() => setVisibleModal(true)}
+                  >
+                    <Text style={{ color: COLORS.infoDanger }}>Take Down Artikel</Text>
                 </TouchableOpacity>
+
+                <Modal
+                  animationType="fade"
+                  transparent={true}
+                  visible={visibleModal}
+                  onRequestClose={() => {
+                    setVisibleModal(!visibleModal);
+                  }}
+                >
+                  <TouchableOpacity
+                    style={[
+                      Platform.OS === "ios"
+                        ? styles.iOSBackdrop
+                        : styles.androidBackdrop,
+                      styles.backdrop,
+                    ]}
+                  />
+                  <View style={{ alignItems: "center", justifyContent: 'center', flex: 1 }}>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.white,
+                        width: "90%",
+                        borderRadius: 10,
+                        alignContent: 'center',
+                      }}
+                    >
+                      <View
+                        style={{
+                          marginTop: 20,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginHorizontal: 20,
+                        }}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: FONTSIZE.Judul,
+                              fontWeight: FONTWEIGHT.bold,
+                            }}
+                          >
+                            Apa anda yakin?
+                          </Text>
+                        </View>
+
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => {
+                            setVisibleModal(false);
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      {/* custom divider */}
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: 1,
+                            width: "90%",
+                            backgroundColor: "#DBDADE",
+                            marginVertical: 10,
+                          }}
+                        />
+                      </View>
+
+                      <ScrollView style={{ marginBottom: 40 }}>
+                      <TouchableOpacity style={{
+                            width: '90%',
+                            height: 50,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 8,
+                            marginHorizontal: 20,
+                            marginTop: 10,
+                            backgroundColor: COLORS.danger
+                            
+                        }}
+                            onPress={() => {
+                                dispatch(putTakeDown({ token: token, id: data?.id }))
+                                if (error !== '' && error == false) navigation.navigate('PenilaianPenggetahaun')
+                                else if (error !== '' && error) alert('gagal takedown')
+                            }}
+                        >
+                            <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
+                        </TouchableOpacity>
+                      </ScrollView>
+                    </View>
+                  </View>
+                </Modal>
 
                 <TouchableOpacity style={{
                     width: '90%',

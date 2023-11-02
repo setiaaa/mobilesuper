@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         textAlign: 'left',
-        paddingLeft: 10,
+        // paddingHorizontal:20,
         paddingTop: 10
     },
     deskripsi: {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginTop: 10,
         fontWeight: '600',
-        paddingLeft: 10,
+        // paddingHorizontal:20,
     },
     tanggal: {
         fontSize: 14,
@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
         height: 110,
         borderBottomWidth: 1,
         borderBottomColor: '#959CA9',
+        paddingHorizontal:10,
     },
 })

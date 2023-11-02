@@ -214,7 +214,7 @@ export const DetailAgenda = () => {
                         <Text style={{ marginTop: 10 }}>{data.note}</Text>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>QR Code</Text>
@@ -233,7 +233,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
@@ -245,7 +245,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
@@ -260,7 +260,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
@@ -272,7 +272,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row', }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>PIC</Text>
@@ -285,7 +285,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
@@ -304,7 +304,7 @@ export const DetailAgenda = () => {
                         </View>
 
                         {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
+                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Internal</Text>
@@ -497,7 +497,7 @@ export const DetailAgenda = () => {
                                             <Text style={{ color: COLORS.white }} >Lihat Notulensi</Text>
                                         </TouchableOpacity>
 
-                                        <TouchableOpacity style={{
+                                        {/* <TouchableOpacity style={{
                                             width: '100%',
                                             height: 50,
                                             borderRadius: 8,
@@ -514,7 +514,124 @@ export const DetailAgenda = () => {
                                         >
                                             <Ionicons name='trash-outline' size={24} color={COLORS.white} />
                                             <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
+                                        </TouchableOpacity> */}
+
+                                        <TouchableOpacity
+                                            style={{
+                                                width: '100%',
+                                            height: 50,
+                                            borderRadius: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: 10,
+                                            backgroundColor: COLORS.infoDanger,
+                                            marginTop: 10
+                                            }}
+                                            onPress={() => setVisibleModal(true)}
+                                        >
+                                            <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
                                         </TouchableOpacity>
+
+                                        <Modal
+                                            animationType="fade"
+                                            transparent={true}
+                                            visible={visibleModal}
+                                            onRequestClose={() => {
+                                                setVisibleModal(!visibleModal);
+                                            }}
+                                            >
+                                            <TouchableOpacity
+                                                style={[
+                                                Platform.OS === "ios"
+                                                    ? styles.iOSBackdrop
+                                                    : styles.androidBackdrop,
+                                                styles.backdrop,
+                                                ]}
+                                            />
+                                            <View style={{ alignItems: "center", justifyContent: 'center', flex: 1 }}>
+                                                <View
+                                                style={{
+                                                    backgroundColor: COLORS.white,
+                                                    width: "90%",
+                                                    borderRadius: 10,
+                                                    alignContent: 'center',
+                                                }}
+                                                >
+                                                <View
+                                                    style={{
+                                                    marginTop: 20,
+                                                    flexDirection: "row",
+                                                    justifyContent: "space-between",
+                                                    alignItems: "center",
+                                                    marginHorizontal: 20,
+                                                    }}
+                                                >
+                                                    <View>
+                                                    <Text
+                                                        style={{
+                                                        fontSize: FONTSIZE.Judul,
+                                                        fontWeight: FONTWEIGHT.bold,
+                                                        }}
+                                                    >
+                                                        Apa anda yakin?
+                                                    </Text>
+                                                    </View>
+
+                                                    <TouchableOpacity
+                                                    style={{}}
+                                                    onPress={() => {
+                                                        setVisibleModal(false);
+                                                    }}
+                                                    >
+                                                    <Ionicons
+                                                        name="close-outline"
+                                                        size={24}
+                                                        color={COLORS.lighter}
+                                                    />
+                                                    </TouchableOpacity>
+                                                </View>
+                                                {/* custom divider */}
+                                                <View
+                                                    style={{
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    }}
+                                                >
+                                                    <View
+                                                    style={{
+                                                        height: 1,
+                                                        width: "90%",
+                                                        backgroundColor: "#DBDADE",
+                                                        marginVertical: 10,
+                                                    }}
+                                                    />
+                                                </View>
+
+                                                <ScrollView style={{ marginBottom: 40 }}>
+                                                <TouchableOpacity style={{
+                                                        width: '90%',
+                                                        height: 50,
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center',
+                                                        borderRadius: 8,
+                                                        marginHorizontal: 20,
+                                                        marginTop: 10,
+                                                        backgroundColor: COLORS.danger
+                                                        
+                                                    }}
+                                                        onPress={() => {
+                                                            handleDelete()
+                                                        }}
+                                                    >
+                                                        <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
+                                                    </TouchableOpacity>
+                                                </ScrollView>
+                                                </View>
+                                            </View>
+                                            </Modal>
+
+
                                     </View>
                                 ) : (
                                     <></>
@@ -600,7 +717,7 @@ export const DetailAgenda = () => {
 
                     </View>
 
-                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16, marginTop: 20 }}>
+                    <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 8, marginTop: 20 }}>
                         <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Materi Agenda</Text>
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />

@@ -9,6 +9,7 @@ import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
 import { DATETIME } from '../../../config/SuperAppps'
+import { Loading } from '../../../components/Loading'
 
 
 export const HariIni = () => {
@@ -53,11 +54,7 @@ export const HariIni = () => {
                 <View style={{ flex: 1, marginTop: 20 }}>
                     {
                         loading ? (
-                            <View style={{ flexDirection: 'column', gap: 10 }}>
-                                {
-                                    renderShimmerList()
-                                }
-                            </View>
+                            <Loading/>
                         ) : (
                             <View style={{ marginTop: 20 }}>
                                 <FlatList
