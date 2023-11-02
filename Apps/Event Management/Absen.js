@@ -192,25 +192,24 @@ export const Absen = () => {
     setSearch(event);
   };
 
+  useEffect(() => {
+    setFilterData(absen.lists);
+  }, [absen]);
 
   useEffect(() => {
-    setFilterData(absen.lists)
-  }, [absen])
-
-  useEffect(() => {
-    if (search !== '') {
+    if (search !== "") {
       const data = absen.lists?.filter((item) => {
         return item.member?.nama.toLowerCase().includes(search.toLowerCase());
-      })
-      setFilterData(data)
+      });
+      setFilterData(data);
     } else {
-      setFilterData(absen.lists)
+      setFilterData(absen.lists);
     }
-  }, [search])
+  }, [search]);
 
-    // useEffect(() => {
-    //     setFilterData(absen)
-    // }, [absen])
+  // useEffect(() => {
+  //     setFilterData(absen)
+  // }, [absen])
 
   // useEffect(() => {
   //     if (search !== '') {
@@ -343,30 +342,22 @@ export const Absen = () => {
                     </TouchableOpacity>
                 )} */}
 
+      {/* </View> */}
 
-            {/* </View> */}
+      <View style={{ padding: 20 }}>
+        <View style={{}}>
+          <Search placeholder={"Cari"} onSearch={filter} />
+        </View>
+      </View>
 
-            <View style={{ padding: 20}}>
-                <View style={{ }}>
-                        <Search
-                            placeholder={'Cari'}
-                            onSearch={filter}
-                        />
-                </View>
-            </View>
-
-            <FlatList
-                data={filterData}
-                renderItem={({ item }) => <CardListAbsen
-                    item={item}
-                    loading={loading}
-                />
-                }
-                style={{ marginVertical: 20 }}
-                ListEmptyComponent={() => (
-                    <ListEmpty />
-                )}
-            />
-        </ >
-    )
-}
+      <FlatList
+        data={filterData}
+        renderItem={({ item }) => (
+          <CardListAbsen item={item} loading={loading} />
+        )}
+        style={{ marginVertical: 20 }}
+        ListEmptyComponent={() => <ListEmpty />}
+      />
+    </SafeAreaView>
+  );
+};
