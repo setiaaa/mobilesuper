@@ -161,7 +161,6 @@ function MyTabBarPengetahuan({ props, navigation }) {
             onPress={() => {
               setTabItemIndex(3);
               navigation.navigate("RangkumanIKU", { unread: false });
-              navigation.navigate("RangkumanIKU", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
@@ -255,8 +254,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="chatbubbles-outline"
                   color={COLORS.primary}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.primary }}>Laporan</Text>
+                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 20 }}>Laporan</Text>
               </View>
             ) : (
               <View
@@ -271,8 +271,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="chatbubbles-outline"
                   color={COLORS.grey}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.grey }}>Laporan</Text>
+                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Laporan</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -313,8 +314,9 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="document-text-outline"
                   color={COLORS.primary}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.primary }}>Penilaian</Text>
+                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Penilaian</Text>
               </View>
             ) : (
               <View
@@ -329,72 +331,15 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="document-text-outline"
                   color={COLORS.grey}
                   size={24}
+                  style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.grey }}>Penilaian</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            key={5}
-            onPress={() => {
-              setTabItemIndex(5);
-              navigation.navigate("PenilaianPenggetahaun", { unread: false });
-              // props.navigation.navigate('Home', { unread: false })
-            }}
-          >
-            {tabItemIndex === 5 ? (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: 65,
-                  justifyContent: "center",
-                  width: 80,
-                }}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: 3,
-                    backgroundColor: COLORS.primary,
-                    position: "absolute",
-                    top: 0,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 5 },
-                    shadowColor: COLORS.primary,
-                    shadowOpacity: 0.4,
-                    //shadow android
-                    elevation: 2,
-                  }}
-                />
-                <Ionicons
-                  name="document-text-outline"
-                  color={COLORS.primary}
-                  size={24}
-                />
-                <Text style={{ color: COLORS.primary }}>Penilaian</Text>
-              </View>
-            ) : (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: 65,
-                  justifyContent: "center",
-                  width: 80,
-                }}
-              >
-                <Ionicons
-                  name="document-text-outline"
-                  color={COLORS.grey}
-                  size={24}
-                />
-                <Text style={{ color: COLORS.grey }}>Penilaian</Text>
+                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Penilaian</Text>
               </View>
             )}
           </TouchableOpacity>
         </View>
       </BottomSheetModalProvider>
-    </SafeAreaView>
+    </ >
   );
 }
 
