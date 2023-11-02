@@ -331,7 +331,6 @@ export const RangkumanIKU = () => {
   // };
   return (
     <>
-    <SafeAreaView>
       <View
         style={{
           flexDirection: "row",
@@ -384,9 +383,9 @@ export const RangkumanIKU = () => {
             height: 45,
             justifyContent: "center",
             //shadow ios
-            shadowOffset: switchView ? { width: -2, height: 4 } : { width: 0, height: 0 }, 
+            shadowOffset: switchView ? { width: -2, height: 4 } : { width: 0, height: 0 },
             shadowColor: switchView ? "#8E1414" : "FFFFFF",
-            shadowOpacity: switchView ?  0.2 : 0,
+            shadowOpacity: switchView ? 0.2 : 0,
             //shadow android
             elevation: switchView ? 2 : 0,
           }}
@@ -412,9 +411,9 @@ export const RangkumanIKU = () => {
             height: 45,
             justifyContent: "center",
             //shadow ios
-            shadowOffset: !switchView ? { width: -2, height: 4 } : { width: 0, height: 0 }, 
+            shadowOffset: !switchView ? { width: -2, height: 4 } : { width: 0, height: 0 },
             shadowColor: !switchView ? "#8E1414" : "FFFFFF",
-            shadowOpacity: !switchView ?  0.2 : 0,
+            shadowOpacity: !switchView ? 0.2 : 0,
             //shadow android
             elevation: !switchView ? 2 : 0,
           }}
@@ -460,7 +459,7 @@ export const RangkumanIKU = () => {
             >
               <TouchableOpacity
                 onPress={bottomSheetAttachSelect}
-                // style={{ width: "46%" }}
+              // style={{ width: "46%" }}
               >
                 <View
                   style={{
@@ -638,7 +637,7 @@ export const RangkumanIKU = () => {
                   </View>
                 </BottomSheetView>
               </BottomSheetModal>
-{/* 
+              {/* 
               <BottomSheetModal
                 ref={bottomSheetModalRef}
                 snapPoints={animatedSnapPoints}
@@ -710,10 +709,10 @@ export const RangkumanIKU = () => {
               </BottomSheetModal> */}
 
               <View style={{ marginVertical: 10 }}>
-                <Search 
-                placeholder={'Cari...'}
-                iconColor={COLORS.primary}
-                onSearch={filter}
+                <Search
+                  placeholder={'Cari...'}
+                  iconColor={COLORS.primary}
+                  onSearch={filter}
                 />
               </View>
             </View>
@@ -761,7 +760,7 @@ export const RangkumanIKU = () => {
 
             <View style={{ paddingHorizontal: 20, marginVertical: 10, gap: 2 }}>
               <Text style={{ fontSize: 13, fontWeight: 500, color: COLORS.grey }}>Yang dipilih:</Text>
-              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value ? savedYear.value : "-" } / {savedQuarter.value ? savedQuarter.value : "-"} / {savedUnitKerja.value ? savedUnitKerja.value : "-"}</Text>
+              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value ? savedYear.value : "-"} / {savedQuarter.value ? savedQuarter.value : "-"} / {savedUnitKerja.value ? savedUnitKerja.value : "-"}</Text>
             </View>
 
             <View>
@@ -867,7 +866,6 @@ export const RangkumanIKU = () => {
           </ScrollView>
         )}
       </View>
-    </SafeAreaView>
     </>
   );
 };

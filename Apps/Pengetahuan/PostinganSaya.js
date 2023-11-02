@@ -123,23 +123,23 @@ const CardPostinganSaya = ({ item, token }) => {
               </View>
               <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
-                    >
-                      Poin :
+                  <Text
+                    style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
+                  >
+                    Poin :
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.success,
+                      borderRadius: 8,
+                      width: 30,
+                    }}
+                  >
+                    <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                      {item.score}
                     </Text>
-                    <View
-                      style={{
-                        backgroundColor: COLORS.success,
-                        borderRadius: 8,
-                        width: 30,
-                      }}
-                    >
-                      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
-                        {item.score}
-                      </Text>
-                    </View>
                   </View>
+                </View>
 
                 {item?.state === "publish" ? (
                   <View
@@ -303,85 +303,84 @@ export const PostinganSaya = () => {
   return (
     <>
       {postinganSaya.lists.length === 0 ? <Loading /> : null}
-      <SafeAreaView>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: COLORS.primary,
+          height: 80,
+        }}
+      >
         <View
           style={{
-            flexDirection: "row",
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: 28,
+            height: 28,
             alignItems: "center",
-            backgroundColor: COLORS.primary,
-            height: 80,
+            justifyContent: "center",
+            marginLeft: 20,
           }}
         >
-          <View
-            style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
-            }}
+          <TouchableOpacity
+            style={{}}
+            onPress={() => navigation.navigate("Home")}
           >
-            <TouchableOpacity
-              style={{}}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <Ionicons
-                name="chevron-back-outline"
-                size={24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: "center" }}>
-            <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
-            >
-              Postingan Saya
-            </Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 20,
-            }}
-          >
-            <TouchableOpacity
-              style={{}}
-              onPress={() => navigation.navigate("JumlahPostingan")}
-            >
-              <Ionicons
-                name="document-text-outline"
-                size={24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
+            <Ionicons
+              name="chevron-back-outline"
+              size={24}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
         </View>
-
-        <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
-          <View
-            style={{
-              marginTop: 15,
-              borderRadius: 8,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <Text
+            style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
           >
-            <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
-              <Search
-                placeholder={"Cari..."}
-                iconColor={COLORS.primary}
-                onSearch={filter}
-              />
-            </View>
-            {/* <TouchableOpacity
+            Postingan Saya
+          </Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: 28,
+            height: 28,
+            alignItems: "center",
+            justifyContent: "center",
+            marginRight: 20,
+          }}
+        >
+          <TouchableOpacity
+            style={{}}
+            onPress={() => navigation.navigate("JumlahPostingan")}
+          >
+            <Ionicons
+              name="document-text-outline"
+              size={24}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={{ width: "90%", alignSelf: "center", marginTop: 10 }}>
+        <View
+          style={{
+            marginTop: 15,
+            borderRadius: 8,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
+            <Search
+              placeholder={"Cari..."}
+              iconColor={COLORS.primary}
+              onSearch={filter}
+            />
+          </View>
+          {/* <TouchableOpacity
             style={{
               backgroundColor: "#C34647",
               borderRadius: 8,
@@ -400,37 +399,36 @@ export const PostinganSaya = () => {
           >
             <Ionicons name="add-outline" size={24} color="#FFFFFF" />
           </TouchableOpacity> */}
-          </View>
         </View>
+      </View>
 
-        <FlatList
-          data={filterData}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <CardPostinganSaya
-                item={item}
-                token={token}
-              />
+      <FlatList
+        data={filterData}
+        renderItem={({ item }) => (
+          <View key={item.id}>
+            <CardPostinganSaya
+              item={item}
+              token={token}
+            />
+          </View>
+        )}
+        ListFooterComponent={() =>
+          loading === true ? (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 24,
+              }}
+            >
+              <ActivityIndicator size="large" color={COLORS.primary} />
             </View>
-          )}
-          ListFooterComponent={() =>
-            loading === true ? (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
-                }}
-              >
-                <ActivityIndicator size="large" color={COLORS.primary} />
-              </View>
-            ) : null
-          }
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={loadMore}
-        />
-      </SafeAreaView>
+          ) : null
+        }
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => <ListEmpty />}
+        onEndReached={loadMore}
+      />
     </>
   );
 };
