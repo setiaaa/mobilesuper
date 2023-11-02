@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
@@ -171,7 +171,7 @@ export const Absen = () => {
     // }, [search])
 
     return (
-        <SafeAreaView>
+        < >
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: COLORS.white,
@@ -292,6 +292,6 @@ export const Absen = () => {
                     <ListEmpty />
                 )}
             />
-        </SafeAreaView>
+        </ >
     )
 }

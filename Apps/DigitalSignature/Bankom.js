@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native'
@@ -139,7 +138,7 @@ export const Bankom = () => {
 
     return (
         <GestureHandlerRootView>
-            <SafeAreaView style={{ position: 'relative' }}>
+            <View style={{ position: 'relative' }}>
                 {filterData !== null ? (
                     <>
                         <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
@@ -272,7 +271,7 @@ export const Bankom = () => {
                     null
                 )}
 
-            </SafeAreaView>
-        </GestureHandlerRootView>
+            </View >
+        </GestureHandlerRootView >
     )
 }

@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
@@ -324,7 +323,7 @@ function MyDispositionList() {
       </View>
 
       <BottomSheetModalProvider>
-        <SafeAreaView>
+        < >
           <View>
             <BottomSheetModal
               name="filter"
@@ -423,7 +422,7 @@ function MyDispositionList() {
               </View>
             </BottomSheetModal>
           </View>
-        </SafeAreaView>
+        </ >
       </BottomSheetModalProvider>
     </>
   );

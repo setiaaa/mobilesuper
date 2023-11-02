@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { TouchableOpacity } from 'react-native';
@@ -22,7 +22,7 @@ export const DetailProfile = () => {
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
     const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     return (
-        <SafeAreaView>
+        < >
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
                     <View style={{
@@ -105,6 +105,6 @@ export const DetailProfile = () => {
                 </View>
 
             </ScrollView>
-        </SafeAreaView>
+        </ >
     )
 }

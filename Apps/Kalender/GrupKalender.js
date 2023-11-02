@@ -29,7 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAcara, setAgenda } from "../../store/GrupKalender";
 import { setKategori } from "../../store/GrupKalender";
 import { setSubKategori } from "../../store/GrupKalender";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import {
   getDetailGrup,
@@ -192,7 +192,7 @@ export const GrupKalender = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <ScrollView>
@@ -964,6 +964,6 @@ export const GrupKalender = () => {
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </SafeAreaView>
+    </View>
   );
 };

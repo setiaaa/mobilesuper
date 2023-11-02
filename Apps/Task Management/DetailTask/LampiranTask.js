@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { CardFileTask } from '../../../components/CardFileTask'
 import { CardDokumenTask } from '../../../components/CardDokumenTask'
 import { useSelector } from 'react-redux'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 
 
 export const LampiranTask = () => {
@@ -21,7 +21,7 @@ export const LampiranTask = () => {
 
     return (
         <GestureHandlerRootView>
-            <SafeAreaView>
+            < >
                 <BottomSheetModalProvider>
                     <ScrollView>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -54,7 +54,7 @@ export const LampiranTask = () => {
                         </View>
                     </ScrollView>
                 </BottomSheetModalProvider>
-            </SafeAreaView>
+            </ >
         </GestureHandlerRootView>
     )
 }

@@ -204,20 +204,20 @@ import { AttachmentOutgoingDetail } from "./Detail/Outgoing/AttachmentOutgoingDe
 import { KomentarOutgoingDetail } from "./Detail/Outgoing/KomentarOutgoingDetail";
 import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
 import { DokumenTamplate } from "../Repository/DokumenTamplate";
-import MainCuti from "../Cuti/MainCuti"
-import { Libur } from "../Cuti/Libur"
-import { TambahCutiBesar } from "../Cuti/TambahCutiBesar"
-import { TambahCutiSakit } from "../Cuti/TambahCutiSakit"
-import { TambahCutiMelahirkan } from "../Cuti/TambahCutiMelahirkan"
-import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan"
-import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan"
-import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting"
-import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti"
-import MyTabCuti from "../Cuti/BottomTabsCuti"
-import { PersonalCuti } from "../Cuti/PersonalCuti"
-import { PersetujanCuti } from "../Cuti/PersetujanCuti"
-import { DokumenCuti } from "../Cuti/DokumenCuti"
-
+import MainCuti from "../Cuti/MainCuti";
+import { Libur } from "../Cuti/Libur";
+import { TambahCutiBesar } from "../Cuti/TambahCutiBesar";
+import { TambahCutiSakit } from "../Cuti/TambahCutiSakit";
+import { TambahCutiMelahirkan } from "../Cuti/TambahCutiMelahirkan";
+import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
+import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
+import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
+import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
+import MyTabCuti from "../Cuti/BottomTabsCuti";
+import { PersonalCuti } from "../Cuti/PersonalCuti";
+import { PersetujanCuti } from "../Cuti/PersetujanCuti";
+import { DokumenCuti } from "../Cuti/DokumenCuti";
+import { getTokenValue } from "../../service/session";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -254,674 +254,6 @@ function AuthStack() {
           options={{
             headerShown: false,
             gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="Main"
-          component={Main}
-          options={{
-            headerShown: false,
-            // headerLeft: () => (
-            //   <View style={{
-            //     backgroundColor: COLORS.white,
-            //     height: 28,
-            //     width: 28,
-            //     borderRadius: 50,
-            //     alignItems: 'center',
-            //     justifyContent: 'center'
-            //   }}>
-            //     <Ionicons name="chevron-back" size={24} />
-            //   </View>
-            // ),
-            // title: '',
-            // headerStyle: {
-            //   backgroundColor: COLORS.primary,
-            // },
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainRepo"
-          component={MainRepo}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainKeb"
-          component={MainKeb}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainDetailRepo"
-          component={MainDetailRepo}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        {/* <Stack.Screen
-              name="MainKalender"
-              component={MainKalender}
-              options={{
-                headerShown: false,
-                gestureEnabled: false
-              }}
-            /> */}
-        <Stack.Screen
-          name="GrupKalender"
-          component={GrupKalender}
-          options={{
-            headerShown: false,
-            // gestureEnabled: false
-          }}
-        />
-        <Stack.Screen
-          name="ListBerita"
-          component={ListBerita}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ListBeritaSatker"
-          component={ListBeritaSatker}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailBeritaSatker"
-          component={DetailBeritaSatker}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ListGaleri"
-          component={ListGaleri}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Tp"
-          component={Tp}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailBerita"
-          component={DetailBerita}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahGrup"
-          component={TambahGrup}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EditGrup"
-          component={EditGrup}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EditAgendaGrup"
-          component={EditAgendaGrup}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailGrup"
-          component={DetailGrup}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahAgenda"
-          component={TambahAgenda}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailAcara"
-          component={DetailAcara}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailAcaraAgenda"
-          component={DetailAcaraAgenda}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ListSuka"
-          component={ListSuka}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MyTask"
-          component={MyTask}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="AddTask"
-          component={AddTask}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EditTask"
-          component={EditTask}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="AddCategory"
-          component={AddCategory}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EditCategory"
-          component={EditCategory}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainDetailTask"
-          component={MainDetailTask}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Dokumen"
-          component={Dokumen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailDokumenLain"
-          component={DetailDokumenLain}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailActivity"
-          component={DetailActivity}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Kepegawaian"
-          component={Kepegawaian}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailPengumuman"
-          component={DetailPengmuman}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ProduksiBudidaya"
-          component={ProduksiBudidaya}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailTeknologi"
-          component={DetailTeknologi}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainPengetahuan"
-          component={MainPengetahuan}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailLinimasa"
-          component={DetailLinimasa}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ListSukaLinimasa"
-          component={ListSukaLinimasa}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="JumlahPostingan"
-          component={JumlahPostingan}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="PostinganBaru"
-          component={PostinganBaru}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailPostinganSaya"
-          component={DetailPostinganSaya}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ListPostinganPegawai"
-          component={ListPostinganPegawai}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="FileViewer"
-          component={FileViewer}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ListPegawai"
-          component={ListPegawai}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailProfile"
-          component={DetailProfile}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainDigitalSign"
-          component={MainDigitalSign}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailSertifikat"
-          component={DetailSertifikat}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahSertifikat"
-          component={TambahSertifikat}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahDokumenLain"
-          component={TambahDokumenLain}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailPenilain"
-          component={DetailPenilaian}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="HalamanUtama"
-          component={HalamanUtama}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailEvent"
-          component={DetailEvent}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainDetailEvent"
-          component={MainDetailEvent}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainDetailAgenda"
-          component={MainDetailAgenda}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Notulensi"
-          component={Notulensi}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailTodo"
-          component={DetailTodo}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahEvent"
-          component={TambahEvent}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahAgendaEvent"
-          component={TambahAgendaEvent}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahTodo"
-          component={TambahTodo}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailAbsen"
-          component={DetailAbsen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="ScannerBarCode"
-          component={ScannerBarCode}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EditEvent"
-          component={EditEvent}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahSubAgenda"
-          component={TambahSubAgenda}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EditSubAgenda"
-          component={EditSubAgenda}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="EditTodo"
-          component={EditTodo}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Penangkapan"
-          component={Penangkapan}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Keuangan"
-          component={Keuangan}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainOutgoingDetail"
-          component={MainOutgoingDetail}
-          options={{
-            headerTitle: '',
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailSuratDiunggah"
-          component={DetailSuratDiunggah}
-          options={{
-            header: toolbarBack,
-            title: "Detail Surat Keluar",
-          }}
-        />
-        {/* <Stack.Screen
-              name="Main"
-              component={Main}
-              options={{
-                headerShown: false,
-              }}
-            /> */}
-        {/* <Stack.Screen
-              name="Kebijakan"
-              component={DrawerNavigation}
-              options={{
-                headerShown: false,
-                gestureEnabled: false
-              }}
-            /> */}
-        <Stack.Screen
-          name="DetailDashboard"
-          component={DetailDashboard}
-          options={{
-            headerTitle: "",
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="PdfViewer"
-          component={PdfViewer}
-          options={{
-            headerTitle: "",
-            headerShown: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="TermOfUse"
-          component={TermOfUse}
-          options={{
-            header: toolbarBack,
-          }}
-        />
-        <Stack.Screen
-          name="AddressBook"
-          component={AddressBook}
-          options={{
-            headerTitle: '',
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Drawer"
-          component={DrawerNavigator}
-          options={{
-            headerShown: false,
-            gestureEnabled: false
-          }}
-        />
-        {/* DETAIL LETTER */}
-        <Stack.Screen
-          name="IncomingDetail"
-          component={IncomingDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DispositionDetail"
-          component={DispositionDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="SubmittedDetail"
-          component={SubmittedDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="NeedFollowUpDetail"
-          component={NeedFollowUpDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="TrackingDetail"
-          component={TrackingDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="DelegationDetail"
-          component={DelegationDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="SecretaryDetail"
-          component={SecretaryDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="TodoDetail"
-          component={TodoDetail}
-          options={{ header: toolbarBack }}
-        />
-        <Stack.Screen
-          name="MainSPPD"
-          component={MainSPPD}
-          options={{
-            headerTitle: '',
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailDokumenSPPD"
-          component={DetailDokumenSPPD}
-          options={{
-            headerTitle: '',
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MainCuti"
-          component={MainCuti}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Libur"
-          component={Libur}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahCutiBesar"
-          component={TambahCutiBesar}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahCutiSakit"
-          component={TambahCutiSakit}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahCutiMelahirkan"
-          component={TambahCutiMelahirkan}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahCutiDiluarTanggungan"
-          component={TambahCutiDiluarTanggungan}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahCutiTahunan"
-          component={TambahCutiTahunan}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TambahCutiAlasanPenting"
-          component={TambahCutiAlasanPenting}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DetailDokumenCuti"
-          component={DetailDokumenCuti}
-          options={{
-            headerShown: false,
           }}
         />
       </Stack.Navigator>
@@ -1210,43 +542,88 @@ export const BottomTabsDetailAgenda = () => {
         />
       </Tab.Navigator>
     </BottomSheetModalProvider>
-  )
-}
+  );
+};
 
 export const BottomTabsSPPD = () => {
   return (
     <BottomSheetModalProvider>
-      <Tab.Navigator tabBar={props => <MyTabBarSPPD {...props} />} initialRouteName='Personal'>
-        <Tab.Screen name='Personal' component={Personal} options={{ headerShown: false }} />
-        <Tab.Screen name='DokumenSPPD' component={DokumenSPPD} options={{ headerShown: false }} />
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarSPPD {...props} />}
+        initialRouteName="Personal"
+      >
+        <Tab.Screen
+          name="Personal"
+          component={Personal}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="DokumenSPPD"
+          component={DokumenSPPD}
+          options={{ headerShown: false }}
+        />
       </Tab.Navigator>
     </BottomSheetModalProvider>
-  )
-}
+  );
+};
 
 export const BottomTabsOutgoingKorespondensi = () => {
   return (
     <BottomSheetModalProvider>
-      <Tab.Navigator tabBar={props => <MyTabBarOutgoingKorespondensi {...props} />} initialRouteName='InfoOutgoindDetail'>
-        <Tab.Screen name='InfoOutgoindDetail' component={InfoOutgoindDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
-        <Tab.Screen name='FileOutgoingDetail' component={FileOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
-        <Tab.Screen name='AttachmentOutgoingDetail' component={AttachmentOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
-        <Tab.Screen name='KomentarOutgoingDetail' component={KomentarOutgoingDetail} options={{ header: toolbarBack, title: "Detail Surat Keluar", }} />
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarOutgoingKorespondensi {...props} />}
+        initialRouteName="InfoOutgoindDetail"
+      >
+        <Tab.Screen
+          name="InfoOutgoindDetail"
+          component={InfoOutgoindDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
+        <Tab.Screen
+          name="FileOutgoingDetail"
+          component={FileOutgoingDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
+        <Tab.Screen
+          name="AttachmentOutgoingDetail"
+          component={AttachmentOutgoingDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
+        <Tab.Screen
+          name="KomentarOutgoingDetail"
+          component={KomentarOutgoingDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
       </Tab.Navigator>
     </BottomSheetModalProvider>
-  )
-}
+  );
+};
 export const BottomTabsCuti = () => {
   return (
     <BottomSheetModalProvider>
-      <Tab.Navigator tabBar={props => <MyTabCuti {...props} />} initialRouteName='PersonalCuti'>
-        <Tab.Screen name='PersonalCuti' component={PersonalCuti} options={{ headerShown: false }} />
-        <Tab.Screen name='PersetujuanCuti' component={PersetujanCuti} options={{ headerShown: false }} />
-        <Tab.Screen name='DokumenCuti' component={DokumenCuti} options={{ headerShown: false }} />
+      <Tab.Navigator
+        tabBar={(props) => <MyTabCuti {...props} />}
+        initialRouteName="PersonalCuti"
+      >
+        <Tab.Screen
+          name="PersonalCuti"
+          component={PersonalCuti}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="PersetujuanCuti"
+          component={PersetujanCuti}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="DokumenCuti"
+          component={DokumenCuti}
+          options={{ headerShown: false }}
+        />
       </Tab.Navigator>
     </BottomSheetModalProvider>
-  )
-}
+  );
+};
 
 export const TopsTP = () => {
   return (
@@ -1713,7 +1090,7 @@ function AuthenticatedStack() {
 
   return (
     <BottomSheetModalProvider>
-      <SafeAreaView style={styles.rootScreen}>
+      < SafeAreaView style={styles.rootScreen}>
         <StatusBar
           barStyle={Config.statusbarAuthenticated}
           backgroundColor={GlobalStyles.colors.secondary}
@@ -1724,6 +1101,7 @@ function AuthenticatedStack() {
             component={Main}
             options={{
               headerShown: false,
+              gestureEnabled: false,
             }}
           />
           <Stack.Screen
@@ -1941,9 +1319,558 @@ function AuthenticatedStack() {
               headerShown: false,
             }}
           />
+          {/* <Stack.Screen
+                name="MainKalender"
+                component={MainKalender}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: false
+                }}
+              /> */}
+          <Stack.Screen
+            name="GrupKalender"
+            component={GrupKalender}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false
+            }}
+          />
+          <Stack.Screen
+            name="DetailBeritaSatker"
+            component={DetailBeritaSatker}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListGaleri"
+            component={ListGaleri}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditGrup"
+            component={EditGrup}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditAgendaGrup"
+            component={EditAgendaGrup}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailGrup"
+            component={DetailGrup}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailAcara"
+            component={DetailAcara}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailAcaraAgenda"
+            component={DetailAcaraAgenda}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListSuka"
+            component={ListSuka}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AddTask"
+            component={AddTask}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditTask"
+            component={EditTask}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AddCategory"
+            component={AddCategory}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditCategory"
+            component={EditCategory}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainDetailTask"
+            component={MainDetailTask}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailDokumenLain"
+            component={DetailDokumenLain}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Kepegawaian"
+            component={Kepegawaian}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailPengumuman"
+            component={DetailPengmuman}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ProduksiBudidaya"
+            component={ProduksiBudidaya}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailTeknologi"
+            component={DetailTeknologi}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainPengetahuan"
+            component={MainPengetahuan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailLinimasa"
+            component={DetailLinimasa}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListSukaLinimasa"
+            component={ListSukaLinimasa}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="JumlahPostingan"
+            component={JumlahPostingan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PostinganBaru"
+            component={PostinganBaru}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailPostinganSaya"
+            component={DetailPostinganSaya}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListPostinganPegawai"
+            component={ListPostinganPegawai}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="FileViewer"
+            component={FileViewer}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListPegawai"
+            component={ListPegawai}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailProfile"
+            component={DetailProfile}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainDigitalSign"
+            component={MainDigitalSign}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailSertifikat"
+            component={DetailSertifikat}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahSertifikat"
+            component={TambahSertifikat}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahDokumenLain"
+            component={TambahDokumenLain}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailPenilain"
+            component={DetailPenilaian}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HalamanUtama"
+            component={HalamanUtama}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailEvent"
+            component={DetailEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainDetailEvent"
+            component={MainDetailEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainDetailAgenda"
+            component={MainDetailAgenda}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Notulensi"
+            component={Notulensi}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailTodo"
+            component={DetailTodo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahEvent"
+            component={TambahEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahAgendaEvent"
+            component={TambahAgendaEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahTodo"
+            component={TambahTodo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailAbsen"
+            component={DetailAbsen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ScannerBarCode"
+            component={ScannerBarCode}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditEvent"
+            component={EditEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahSubAgenda"
+            component={TambahSubAgenda}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditSubAgenda"
+            component={EditSubAgenda}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditTodo"
+            component={EditTodo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Penangkapan"
+            component={Penangkapan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Keuangan"
+            component={Keuangan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainOutgoingDetail"
+            component={MainOutgoingDetail}
+            options={{
+              headerTitle: "",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailSuratDiunggah"
+            component={DetailSuratDiunggah}
+            options={{
+              header: toolbarBack,
+              title: "Detail Surat Keluar",
+            }}
+          />
+          {/* <Stack.Screen
+                name="Main"
+                component={Main}
+                options={{
+                  headerShown: false,
+                }}
+              /> */}
+          {/* <Stack.Screen
+                name="Kebijakan"
+                component={DrawerNavigation}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: false
+                }}
+              /> */}
+          <Stack.Screen
+            name="DetailDashboard"
+            component={DetailDashboard}
+            options={{
+              headerTitle: "",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PdfViewer"
+            component={PdfViewer}
+            options={{
+              headerTitle: "",
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="TermOfUse"
+            component={TermOfUse}
+            options={{
+              header: toolbarBack,
+            }}
+          />
+          <Stack.Screen
+            name="AddressBook"
+            component={AddressBook}
+            options={{
+              headerTitle: "",
+              headerShown: false,
+            }}
+          />
+          {/* DETAIL LETTER */}
+          <Stack.Screen
+            name="IncomingDetail"
+            component={IncomingDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionDetail"
+            component={DispositionDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SubmittedDetail"
+            component={SubmittedDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="NeedFollowUpDetail"
+            component={NeedFollowUpDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TrackingDetail"
+            component={TrackingDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DelegationDetail"
+            component={DelegationDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SecretaryDetail"
+            component={SecretaryDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TodoDetail"
+            component={TodoDetail}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="MainSPPD"
+            component={MainSPPD}
+            options={{
+              headerTitle: "",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailDokumenSPPD"
+            component={DetailDokumenSPPD}
+            options={{
+              headerTitle: "",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainCuti"
+            component={MainCuti}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Libur"
+            component={Libur}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahCutiBesar"
+            component={TambahCutiBesar}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahCutiSakit"
+            component={TambahCutiSakit}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahCutiMelahirkan"
+            component={TambahCutiMelahirkan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahCutiDiluarTanggungan"
+            component={TambahCutiDiluarTanggungan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahCutiTahunan"
+            component={TambahCutiTahunan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TambahCutiAlasanPenting"
+            component={TambahCutiAlasanPenting}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailDokumenCuti"
+            component={DetailDokumenCuti}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
-      </SafeAreaView>
-    </BottomSheetModalProvider>
+      </ SafeAreaView>
+    </BottomSheetModalProvider >
   );
 }
 
@@ -1952,16 +1879,21 @@ function AppNavigator() {
   const app_version = Config.app_version;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isToken, setIsToken] = useState(true);
+  const { token } = useSelector((state) => state.login);
 
   useEffect(() => {
     //checkversion
-    if (Platform.OS == "android") {
-      checkVersionAndroid();
-    } else if (Platform.OS == "ios") {
-      checkVersionIos();
-    }
-  }, []);
+    // if (Platform.OS == "android") {
+    //   checkVersionAndroid();
+    // } else if (Platform.OS == "ios") {
+    //   checkVersionIos();
+    // }
+    getTokenValue().then((val) => {
+      setIsToken(val);
+      setIsLoading(false);
+    });
+  }, [token]);
 
   async function getToken() {
     setIsLoading(true);
@@ -2060,10 +1992,10 @@ function AppNavigator() {
         {/* awas lupa */}
         <NavigationContainer>
           {/* {!isLoading && !isAuthenticated && <AuthStack />} */}
-          {<AuthStack />}
-          {!isLoading && isAuthenticated && <AuthenticatedStack />}
+          {!isLoading && isToken == null && <AuthStack />}
+          {!isLoading && isToken != null && <AuthenticatedStack />}
         </NavigationContainer>
-        {/* {loadingOverlay} */}
+        {loadingOverlay}
       </Host>
     </>
   );

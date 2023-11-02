@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Image } from 'react-native'
 import { FlatList } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { Portal } from 'react-native-portalize'
 import moment from 'moment/moment'
 import { CardItemMember } from '../../../components/CardItemMember'
@@ -145,7 +145,7 @@ export const DetailTask = () => {
         <>
             {taskDetail !== null ? (
                 <GestureHandlerRootView style={{ flex: 1 }}>
-                    <SafeAreaView style={{ flex: 1 }}>
+                    <View style={{ flex: 1 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                             <View style={{
                                 backgroundColor: COLORS.white,
@@ -507,8 +507,8 @@ export const DetailTask = () => {
                             </Portal>
 
                         </ScrollView>
-                    </SafeAreaView>
-                </GestureHandlerRootView>
+                    </View>
+                </GestureHandlerRootView >
             ) : null
             }
         </>

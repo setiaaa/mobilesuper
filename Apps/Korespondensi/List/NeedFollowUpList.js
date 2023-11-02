@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
@@ -330,7 +329,7 @@ function NeedFollowUpList() {
       </View>
 
       <BottomSheetModalProvider>
-        <SafeAreaView>
+        < >
           <View>
             <BottomSheetModal
               name="filter"
@@ -429,7 +428,7 @@ function NeedFollowUpList() {
               </View>
             </BottomSheetModal>
           </View>
-        </SafeAreaView>
+        </ >
       </BottomSheetModalProvider>
     </>
   );

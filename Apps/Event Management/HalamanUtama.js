@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -199,7 +199,7 @@ export const HalamanUtama = () => {
   }, [search])
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
@@ -469,6 +469,6 @@ export const HalamanUtama = () => {
           </BottomSheetModal>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </SafeAreaView>
+    </View>
   );
 };

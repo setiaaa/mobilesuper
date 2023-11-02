@@ -103,7 +103,7 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
                 />
             ) : ( */}
 
-            <TouchableOpacity style={{ backgroundColor: COLORS.white, marginTop: 20, marginHorizontal: 20, padding: 10, borderRadius: 8}}
+            <TouchableOpacity style={{ backgroundColor: COLORS.white, marginTop: 20, marginHorizontal: 20, padding: 10, borderRadius: 8 }}
                 onPress={() => {
                     setDetail('detail')
                     setDetailContent(item)
@@ -193,7 +193,7 @@ export const Kesejahteraan = () => {
                     }}
                 >
                     <Image source={require('../../assets/superApp/Tapera.png')} />
-                    <Text style={{ color: value === 'tapera' ? COLORS.primary : COLORS.foundation}}>Tapera</Text>
+                    <Text style={{ color: value === 'tapera' ? COLORS.primary : COLORS.foundation }}>Tapera</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'bpjs' ? COLORS.primary : COLORS.grey }}
@@ -202,7 +202,7 @@ export const Kesejahteraan = () => {
                     }}
                 >
                     <Image source={require('../../assets/superApp/BPJS.png')} />
-                    <Text style={{ color: value === 'bpjs' ? COLORS.primary : COLORS.foundation}}>BPJS</Text>
+                    <Text style={{ color: value === 'bpjs' ? COLORS.primary : COLORS.foundation }}>BPJS</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'taspen' ? COLORS.primary : COLORS.grey }}
@@ -211,7 +211,7 @@ export const Kesejahteraan = () => {
                     }}
                 >
                     <Image source={require('../../assets/superApp/Taspen.png')} />
-                    <Text style={{ color: value === 'taspen' ? COLORS.primary : COLORS.foundation}}>Taspen</Text>
+                    <Text style={{ color: value === 'taspen' ? COLORS.primary : COLORS.foundation }}>Taspen</Text>
                 </TouchableOpacity>
             </View>
 

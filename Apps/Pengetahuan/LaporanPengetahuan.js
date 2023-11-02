@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
@@ -110,7 +109,7 @@ export const LaporanPengetahuan = () => {
   console.log(review);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <StatusBar />
       <ScrollView>
         <View
@@ -1226,7 +1225,7 @@ export const LaporanPengetahuan = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

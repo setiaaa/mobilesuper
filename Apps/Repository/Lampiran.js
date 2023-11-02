@@ -7,7 +7,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "react-native";
 import { Modal } from "react-native-paper";
 
@@ -267,7 +266,7 @@ export const Lampiran = () => {
 
   console.log(detail.attachments);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flexDirection: "row",
@@ -335,82 +334,84 @@ export const Lampiran = () => {
         numColumns={2}
         keyExtractor={(item) => "#" + item.id}
       />
-      {lampiranById !== null ? (
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={visibleModal}
-          onRequestClose={() => {
-            setVisibleModal(false);
-            setLampiranById(null);
-          }}
-        >
-          <TouchableOpacity
-            style={[
-              Platform.OS === "ios"
-                ? styles.iOSBackdrop
-                : styles.androidBackdrop,
-              styles.backdrop,
-            ]}
-          />
-          <View
-            style={{
-              alignItems: "center",
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
+      {
+        lampiranById !== null ? (
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={visibleModal}
+            onRequestClose={() => {
+              setVisibleModal(false);
+              setLampiranById(null);
             }}
           >
             <TouchableOpacity
-              onPress={() => {
-                setVisibleModal(false);
-                setLampiranById(null);
-              }}
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
               style={{
-                position: "absolute",
-                top: "15%",
-                left: 20,
+                alignItems: "center",
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
               }}
             >
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  setVisibleModal(false);
+                  setLampiranById(null);
+                }}
                 style={{
-                  backgroundColor: COLORS.primary,
-                  width: 51,
-                  height: 51,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 50,
+                  position: "absolute",
+                  top: "15%",
+                  left: 20,
                 }}
               >
-                <Ionicons name="close-outline" color={COLORS.white} size={24} />
-              </View>
-            </TouchableOpacity>
-            {getFileExtension(lampiranById.name) === "png" ||
-            getFileExtension(lampiranById.name) === "jpg" ||
-            getFileExtension(lampiranById.name) === "jpeg" ? (
-              <View>
-                <Image
-                  source={{ uri: lampiranById.files }}
+                <View
+                  style={{
+                    backgroundColor: COLORS.primary,
+                    width: 51,
+                    height: 51,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 50,
+                  }}
+                >
+                  <Ionicons name="close-outline" color={COLORS.white} size={24} />
+                </View>
+              </TouchableOpacity>
+              {getFileExtension(lampiranById.name) === "png" ||
+                getFileExtension(lampiranById.name) === "jpg" ||
+                getFileExtension(lampiranById.name) === "jpeg" ? (
+                <View>
+                  <Image
+                    source={{ uri: lampiranById.files }}
+                    style={{ width: 390, height: 283 }}
+                  />
+                </View>
+              ) : getFileExtension(lampiranById.name) === "mp4" ? (
+                <Video
+                  ref={video}
                   style={{ width: 390, height: 283 }}
+                  source={lampiranById.gambar}
+                  useNativeControls
+                  resizeMode={ResizeMode.CONTAIN}
+                  isLooping
+                  onPlaybackStatusUpdate={(status) => setStatus(() => status)}
                 />
-              </View>
-            ) : getFileExtension(lampiranById.name) === "mp4" ? (
-              <Video
-                ref={video}
-                style={{ width: 390, height: 283 }}
-                source={lampiranById.gambar}
-                useNativeControls
-                resizeMode={ResizeMode.CONTAIN}
-                isLooping
-                onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-              />
-            ) : (
-              <></>
-            )}
-          </View>
-        </Modal>
-      ) : null}
-    </SafeAreaView>
+              ) : (
+                <></>
+              )}
+            </View>
+          </Modal>
+        ) : null
+      }
+    </View>
   );
 };
 

@@ -6,7 +6,6 @@ import { View } from 'react-native'
 import { ScrollView } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TopsDash } from '../Korespondensi/AppNavigator'
@@ -32,7 +31,7 @@ export const Kepegawaian = () => {
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <BottomSheetModalProvider style={{ flex: 1 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
@@ -109,7 +108,7 @@ export const Kepegawaian = () => {
                     </ScrollView> */}
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>
-        </SafeAreaView>
+        </View >
     )
 }
 

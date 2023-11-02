@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import PdfReader from "rn-pdf-reader-js-improved";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { } from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 
 const PdfViewer = ({ route }) => {
@@ -19,7 +19,7 @@ const PdfViewer = ({ route }) => {
     console.log(data);
   }, []);
   return (
-    <SafeAreaView>
+    < >
       <View
         style={{
           flexDirection: "row",
@@ -62,7 +62,7 @@ const PdfViewer = ({ route }) => {
           }}
         />
       </View>
-    </SafeAreaView>
+    </ >
   );
 };
 

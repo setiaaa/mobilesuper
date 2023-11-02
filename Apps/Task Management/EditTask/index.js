@@ -10,7 +10,6 @@ import { ScrollView } from 'react-native'
 import { TextInput } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAddressbookSelected } from '../../../store/AddressbookKKP'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Modal } from 'react-native'
 import { Image } from 'react-native'
 import { setStatus } from '../../../store/Task'
@@ -216,7 +215,7 @@ export const EditTask = ({ route }) => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
                 {
                     loading ? (
                         <Loading />
@@ -478,7 +477,7 @@ export const EditTask = ({ route }) => {
                         </View>
                     </TouchableOpacity>
                 </View>
-            </SafeAreaView>
+            </View>
 
 
             <Modal
@@ -658,7 +657,7 @@ export const EditTask = ({ route }) => {
                     </View>
                 </View>
             </Modal>
-        </GestureHandlerRootView>
+        </GestureHandlerRootView >
     )
 }
 

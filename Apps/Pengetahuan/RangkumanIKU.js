@@ -2,7 +2,6 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import {
   Pressable,
   Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -331,7 +330,7 @@ export const RangkumanIKU = () => {
   //   shareAsync(uri);
   // };
   return (
-    <SafeAreaView>
+    < >
       <View
         style={{
           flexDirection: "row",
@@ -878,6 +877,6 @@ export const RangkumanIKU = () => {
           </ScrollView>
         )}
       </View>
-    </SafeAreaView>
+    </ >
   );
 };

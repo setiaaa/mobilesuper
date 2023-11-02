@@ -21,7 +21,7 @@ import { Dropdown } from '../../components/DropDown';
 import { getTokenValue } from '../../service/session';
 import { getDetailLinimasa, getDetailPenilaian, getListPenilaian, getNilai, getTotalPenilaian } from '../../service/api';
 import moment from 'moment';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { } from 'react-native-safe-area-context';
 import { Loading } from '../../components/Loading';
 
 
@@ -66,33 +66,33 @@ const CardPenilaian = ({ item, token }) => {
                 </View>
                 <View style={{ width: '75%' }}>
                     <Text>{item.title}</Text>
-                    <View style={{  gap: 10, marginTop: 10, }}>
+                    <View style={{ gap: 10, marginTop: 10, }}>
                         <Text style={{ color: COLORS.lighter }}>Tanggal: {moment(item.published_date, 'HH:mm:ss').format('DD MMM YYYY')}</Text>
-                        <View style={{ display: 'flex', flexDirection: 'row', gap: 10}}>
-                        <Text style={{ color: COLORS.lighter }}>Poin:</Text>
-                        {item.is_scored !== true ? (
-                            <View style={{
-                                borderWidth: 1,
-                                width: 80,
-                                padding: 5,
-                                borderColor: COLORS.primary,
-                                borderRadius: 16,
-                                alignItems: 'center'
-                            }}>
-                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}>Waiting</Text>
-                            </View>
-                        ) : (
-                            <View style={{
-                                padding: 5,
-                                width: 80,
-                                backgroundColor: COLORS.success,
-                                borderRadius: 16,
-                                alignItems: 'center'
+                        <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+                            <Text style={{ color: COLORS.lighter }}>Poin:</Text>
+                            {item.is_scored !== true ? (
+                                <View style={{
+                                    borderWidth: 1,
+                                    width: 80,
+                                    padding: 5,
+                                    borderColor: COLORS.primary,
+                                    borderRadius: 16,
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}>Waiting</Text>
+                                </View>
+                            ) : (
+                                <View style={{
+                                    padding: 5,
+                                    width: 80,
+                                    backgroundColor: COLORS.success,
+                                    borderRadius: 16,
+                                    alignItems: 'center'
 
-                            }}>
-                                <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>{item.score}</Text>
-                            </View>
-                        )}
+                                }}>
+                                    <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>{item.score}</Text>
+                                </View>
+                            )}
                         </View>
                     </View>
                 </View>
@@ -250,7 +250,7 @@ export const PenilaianPenggetahaun = () => {
             ) : (
                 null
             )}
-            <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80 }}>
                     <View style={{
@@ -439,7 +439,7 @@ export const PenilaianPenggetahaun = () => {
                 }
                 />
                 </View>
-            </SafeAreaView>
+            </View >
         </>
     )
 }

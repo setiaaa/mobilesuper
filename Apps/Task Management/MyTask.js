@@ -19,7 +19,7 @@ import { Search } from '../../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { setRefresh, setVariant } from '../../store/Task'
 import { useEffect } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { } from 'react-native-safe-area-context'
 import { Dropdown } from '../../components/DropDown'
 import { getDetailProjectTM, getListDashboardTM, getListTaskTM, getTreeTM } from '../../service/api'
 import { getTokenValue } from '../../service/session'
@@ -222,7 +222,7 @@ export const MyTask = () => {
     console.log(taskLists)
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
                 <BottomSheetModalProvider>
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
                         <View style={{
@@ -500,8 +500,8 @@ export const MyTask = () => {
                         </BottomSheetView>
                     </BottomSheetModal>
                 </BottomSheetModalProvider>
-            </SafeAreaView>
-        </GestureHandlerRootView>
+            </View>
+        </GestureHandlerRootView >
     )
 }
 

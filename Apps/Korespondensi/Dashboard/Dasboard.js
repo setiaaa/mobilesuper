@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Alert, SafeAreaView } from "react-native";
+import { Alert, } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import TabViewBg from "../../../components/TabViewBg";
 import { Config } from "../../../constants/config";
@@ -128,12 +128,12 @@ function Dashboard() {
     }
   }
   return (
-      <TabViewBg
-        tipe="dashboard"
-        title="Dashboard"
-        position="top"
-        routes={routes}
-      />
+    <TabViewBg
+      tipe="dashboard"
+      title="Dashboard"
+      position="top"
+      routes={routes}
+    />
   );
 }
 

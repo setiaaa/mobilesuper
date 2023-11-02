@@ -149,7 +149,7 @@ export const DetailPenilaian = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <ScrollView>
 
                 <View style={{ flex: 1 }}>
@@ -587,7 +587,7 @@ export const DetailPenilaian = () => {
                 </TouchableOpacity>
 
             </ScrollView>
-        </SafeAreaView >
+        </View>
     )
 }
 

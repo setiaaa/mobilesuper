@@ -20,7 +20,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Divider } from 'react-native-paper';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import { useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTokenValue } from '../../service/session';
 import { ActivityIndicator } from 'react-native';
 import { Loading } from '../../components/Loading';
