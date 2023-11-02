@@ -122,21 +122,21 @@ export const PersonalCuti = () => {
                             ) : (
                                 null
                             )}
-                        </View>
                     </View>
-                    <View style={{ padding: 20, gap: 10 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Form Pengajuan Cuti</Text>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-                            <View style={{ gap: 30, flexDirection: 'row', }}>
-                                <View style={{ alignItems: 'center', gap: 10 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiTahunan')} style={{
-                                        backgroundColor: COLORS.infoDanger,
-                                        padding: 15,
-                                        borderRadius: 30,
-                                        width: 55,
-                                        height: 55,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
+                </View>
+                <View style={{paddingLeft:20, gap: 10}}>
+                    <Text style={{fontWeight:FONTWEIGHT.bold}}>Form Pengajuan Cuti</Text>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+                        <View style={{gap:30, flexDirection: 'row',}}>
+                            <View style={{alignItems: 'center', gap: 10}}>
+                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiTahunan')} style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    padding: 15,
+                                    borderRadius: 30,
+                                    width: 55,
+                                    height: 55,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
 
                                     }}>
                                         <Ionicons name='calendar-outline' size={18} color={COLORS.white} />

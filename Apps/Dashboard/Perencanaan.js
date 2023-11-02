@@ -167,7 +167,7 @@ export const Perencanaan = () => {
         <View>
             {detail === '' ? (
                 <ScrollView>
-                    <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                    <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom:10 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginTop: 10 }} />
@@ -183,7 +183,7 @@ export const Perencanaan = () => {
                             loading={loading}
                         />
                         }
-                        style={{ height: 500 }}
+                        style={{ height: 600 }}
                         keyExtractor={item => item.id}
                         ListFooterComponent={() => (
                             loading && (

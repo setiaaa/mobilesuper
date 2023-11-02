@@ -219,6 +219,7 @@ export const MyTask = () => {
         dispatch(setRefresh(null))
     }, [refresh])
 
+    console.log(taskLists)
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
@@ -233,7 +234,7 @@ export const MyTask = () => {
                             justifyContent: 'center',
                             marginLeft: 20
                         }}>
-                            <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
+                            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                                 <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                             </TouchableOpacity>
                         </View>
@@ -242,8 +243,8 @@ export const MyTask = () => {
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: 'row', gap: 5, marginHorizontal: 15, width: '100%' }}>
-                        <TouchableOpacity onPress={bottomSheetAttachSelect} style={{ width: '80%' }}>
+                    <View style={{ flexDirection: 'row', gap: 5,  paddingHorizontal:20 }}>
+                        <TouchableOpacity onPress={bottomSheetAttachSelect} style={{ width: '100%' }}>
                             <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, justifyContent: 'center', borderRadius: 8 }}>
                                 <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text>
                             </View>
@@ -319,37 +320,37 @@ export const MyTask = () => {
                                         ) : null
                                     }
 
-                                    <TouchableOpacity style={{
-                                        width: '90%',
-                                        backgroundColor: COLORS.primary,
-                                        height: 34,
-                                        marginVertical: 40,
-                                        borderRadius: 6,
-                                        alignItems: 'center',
-                                        marginHorizontal: 20,
-                                        justifyContent: 'center'
-                                    }}
+                                    <TouchableOpacity>
+                                        <View style={{
+                                            marginHorizontal: 20,
+                                            backgroundColor: COLORS.primary,
+                                            width: Platform.OS === 'ios' ? '90%' : '91%',
+                                            height: 50,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderRadius: 6,
+                                            marginVertical: 40,
+                                        }}
                                         onPress={() => {
                                             bottomSheetSelectClose()
                                             handleChoiceSubmit()
-                                        }}
-                                    >
-                                        <Text style={{ color: COLORS.white, fontSize: FONTSIZE.H1, fontWeight: 500 }}>Terapkan</Text>
+                                        }}>
+                                            <Text style={{ color: COLORS.white }}>Hapus</Text>
+                                        </View>
                                     </TouchableOpacity>
 
                                 </View>
                             </BottomSheetView>
                         </BottomSheetModal>
 
-                        <TouchableOpacity onPress={bottomSheetAttach} style={{ width: "11%" }}>
+                        {/* <TouchableOpacity onPress={bottomSheetAttach} style={{ width: "11%" }}>
                             <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}>
-                                {/* <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text> */}
                                 <Ionicons name='search-outline' size={24} color={COLORS.primary} />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
 
-                    <View style={{ marginHorizontal: 15, flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ paddingHorizontal:20, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'column', gap: 4, flex: 1 }}>
                             {
                                 loading ? (
@@ -358,7 +359,7 @@ export const MyTask = () => {
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} />
                                     </>
                                 ) : (
-                                    <>
+                                    <View>
                                         <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>{list.type}</Text>
                                         {
                                             list.type === 'Dashboard' || list.type === 'Korespondensi' ? null :
@@ -366,7 +367,7 @@ export const MyTask = () => {
                                                     <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
                                                 )
                                         }
-                                    </>
+                                    </View>
                                 )
                             }
                         </View>
@@ -374,11 +375,11 @@ export const MyTask = () => {
                         {
                             list.type !== 'Detail Project' ? (
                                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                                    {/* <TouchableOpacity onPress={() => dispatch(setVariant("list"))}>
+                                    <TouchableOpacity onPress={bottomSheetAttach}>
                                         <View style={styles.circleList}>
-                                            <Ionicons name='list-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
+                                            <Ionicons name='filter-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
                                         </View>
-                                    </TouchableOpacity> */}
+                                    </TouchableOpacity>
                                     {/* <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
                                         <View style={styles.circleList}>
                                             <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />

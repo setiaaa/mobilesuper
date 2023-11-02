@@ -22,30 +22,28 @@ const ListDokumen = ({ item, variant, token }) => {
     //   };
     return (
 
-        <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
-            <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: 30 Sepember 2023 | 15:33:30</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name='person' size={18} color={COLORS.primary} />
-                <Text style={{ fontSize: 12 }}>Pemohon: Muhammad Zaini / 196308141989031021</Text>
-            </View>
-            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: Cuti Alasan Penting</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Tipe Dokumen: </Text>
-                <View style={{ backgroundColor: 'red', borderRadius: 10, padding: 5, }}>
-                    <Text style={{ fontSize: 12, color: COLORS.white }}>Pembatalan Cuti</Text>
+        <TouchableOpacity onPress={onPress=()=>navigation.navigate('DetailDokumenCuti')}>
+            <View style={{backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15}}>
+                <Text style={{fontSize: 12}}>Tanggal Pengajuan: 30 Sepember 2023 | 15:33:30</Text>
+                <Text style={{fontSize: 12, color: COLORS.lighter}}>Jenis: Cuti Alasan Penting</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 12, color: COLORS.lighter}}>Tipe Dokumen: </Text>
+                    <View style={{backgroundColor: 'red', borderRadius: 10, padding: 5,}}>
+                        <Text style={{ fontSize: 12, color: COLORS.white}}>Pembatalan Cuti</Text>
+                    </View>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
+                        <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
+                        <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
+                        <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
+                        <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
+                    </View>
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                    <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                    <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: 01 Jan 2021</Text>
-                </View>
-                <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                    <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                    <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: 01 Jan 2021</Text>
-                </View>
-            </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
@@ -158,27 +156,49 @@ export const PersetujanCuti = () => {
                                         alignItems: 'center',
                                         gap: 10
 
-                                    }}
-                                        onPress={() => filterHandlerInProgress()}
-                                    >
-                                        <View style={{
-                                            backgroundColor: COLORS.orange,
-                                            borderRadius: 20,
-                                            width: 28,
-                                            height: 28,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}>
-                                            <TouchableOpacity onPress={() => navigation.navigate('Libur')}>
-                                                <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                            </TouchableOpacity>
-                                        </View>
-                                        <Text style={{ color: variant === 'inprogress' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Dikembalikan Anda</Text>
-                                    </TouchableOpacity>
-
-                                </View>
+                                }}
+                                onPress={() => filterHandlerInProgress()}
+                            >
+                            <View style={{
+                                backgroundColor: COLORS.orange,
+                                borderRadius: 20,
+                                width: 28,
+                                height: 28,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Libur')}>
+                            <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                        </TouchableOpacity>
                             </View>
-                            {/* <FlatList
+                                <Text style={{color: variant === 'inprogress' ? COLORS.infoDanger: COLORS.foundation, textAlign: 'center'}}>Dikembalikan Anda</Text>
+                            </TouchableOpacity>
+                                
+                        </View>
+                    </View>
+                    <TouchableOpacity onPress={onPress=()=>navigation.navigate('DetailDokumenCuti')}>
+                        <View style={{backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15}}>
+                                    <Text style={{fontSize: 12}}>Tanggal Pengajuan: 30 Sepember 2023 | 15:33:30</Text>
+                                    <Text style={{fontSize: 12, color: COLORS.lighter}}>Jenis: Cuti Alasan Penting</Text>
+                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                        <Text style={{fontSize: 12, color: COLORS.lighter}}>Tipe Dokumen: </Text>
+                                        <View style={{backgroundColor: 'red', borderRadius: 10, padding: 5,}}>
+                                            <Text style={{ fontSize: 12, color: COLORS.white}}>Pembatalan Cuti</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
+                                            <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
+                                            <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
+                                            <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
+                                            <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
+                                        </View>
+                                    </View>
+                            </View>
+                    </TouchableOpacity>
+                    {/* <FlatList
                             // data={filterData}
                             renderItem={({ item }) => (
                                 <View key={item.id}>
@@ -193,11 +213,10 @@ export const PersetujanCuti = () => {
                             ListEmptyComponent={() => <ListEmpty />}
                             style={{ height: '70%' }} 
                         /> */}
-
-                        </View>
-                        <TouchableOpacity style={{ padding: 10 }} onPress={() => navigation.navigate('DetailDokumenCuti')}><Text>Temp TO DETAIL</Text></TouchableOpacity>
-
+                        
                     </View>
+                    
+                </View>
                 </View>
             </ View>
         </GestureHandlerRootView >
