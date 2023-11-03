@@ -245,24 +245,33 @@ export const DetailAgenda = () => {
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                <Text>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
+                                data.date === null ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <Text>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
+                                )
                             )}
                         </View>
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
-                        <View style={{ flexDirection: 'row', }}>
+                        <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{ marginTop: 5 }}>{moment(data.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
-                                    <Text style={{ marginTop: 5 }}>{moment(data.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
-                                </View>
+                                (data.start_time === null || data.end_time === null) ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={{ marginTop: 5 }}>{moment(data.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
+                                        <Text style={{ marginTop: 5 }}>{moment(data.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                                    </View>
+                                )
                             )}
                         </View>
+
 
                         {/* custom divider */}
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
@@ -272,7 +281,11 @@ export const DetailAgenda = () => {
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                <Text style={{ width: 156 }}>{data.location}</Text>
+                                data.location === null ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <Text style={{ width: 156 }}>{data.location}</Text>
+                                )
                             )}
                         </View>
 
@@ -285,7 +298,11 @@ export const DetailAgenda = () => {
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
-                                <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
+                                data.extra_attrs === null ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
+                                )
                             )}
                         </View>
 
@@ -320,9 +337,9 @@ export const DetailAgenda = () => {
                                     <Text>-</Text>
                                 ) : (
                                     data.extra_attrs?.guests?.map((data, index) =>
-                                    <View key={index} style={{ position: 'relative' }}>
-                                        <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                                    </View>
+                                        <View key={index} style={{ position: 'relative' }}>
+                                            <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                        </View>
                                     )
                                 )
                             )}
@@ -352,7 +369,26 @@ export const DetailAgenda = () => {
                                     </View>
                                 )
                             )}
+
                         </View>
+
+
+                        {/* <View style={{ flexDirection: 'row', }}>
+                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>QR Code</Text>
+                            {loading ? (
+                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                            ) : (
+
+                                data.qr_presensi === null ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <QRCode
+                                        value={data.qr_presensi?.qr_code}
+                                    />
+                                )
+                            )}
+                        </View> */}
+
 
 
                     </View>

@@ -218,6 +218,7 @@ import { PersonalCuti } from "../Cuti/PersonalCuti";
 import { PersetujanCuti } from "../Cuti/PersetujanCuti";
 import { DokumenCuti } from "../Cuti/DokumenCuti";
 import { getTokenValue } from "../../service/session";
+import { Semua } from "../Task Management/Dashboard/Semua";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -714,7 +715,7 @@ export const TopsTaskDashboard = () => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
-        initialRouteName={"HariIni"}
+        initialRouteName={"Semua"}
         screenOptions={{
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
@@ -726,6 +727,13 @@ export const TopsTaskDashboard = () => {
           },
         }}
       >
+        <Top.Screen
+          name="Semua"
+          component={Semua}
+          options={{
+            title: "Semua",
+          }}
+        />
         <Top.Screen
           name="HariIni"
           component={HariIni}
