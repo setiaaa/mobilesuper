@@ -49,7 +49,7 @@ export const MyTask = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(getListDashboardTM({ token: token, page:page }))
+        dispatch(getListDashboardTM({ token: token, page: page }))
         dispatch(getTreeTM({ token: token }))
     }, [token, page]);
 
@@ -99,7 +99,7 @@ export const MyTask = () => {
 
     const loadMore = () => {
         if (taskLists.length % 5 === 0) {
-          setPage(page + 5);
+            setPage(page + 5);
         }
         console.log(page);
     };
@@ -153,7 +153,7 @@ export const MyTask = () => {
                 value: item.name
             })
         })
-        console.log("index mytask"+ index)
+        // console.log("index mytask" + index)
         // setChoiceList(arrList.length > 0 ? arrList[0] : '')
         setDataList(arrList)
     }, [choiceKategori])
@@ -162,14 +162,16 @@ export const MyTask = () => {
 
     const handleChoiceSubmit = () => {
         if (choiceTipe.value === 'Dashboard') {
-            dispatch(getListDashboardTM({ token: token, page:page }))
+            dispatch(getListDashboardTM({ token: token, page: page }))
         } else if (choiceTipe.value === 'Korespondensi') {
 
         } else {
             if (choiceList === '' && choiceKategori !== '') {
                 dispatch(getDetailProjectTM({ token: token, id_project: choiceKategori.key, type: 'Detail Project' }))
+                setChoiceKategori([])
             } else {
-                dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
+                // dispatch(getListTaskTM({ token: token, id_list: choiceList.key, type: choiceTipe.value }))
+                alert('Data Tidak boleh kosong, Harap diisi')
             }
         }
         setChoiceFilter('semua')
@@ -231,7 +233,7 @@ export const MyTask = () => {
         dispatch(setRefresh(null))
     }, [refresh])
 
-    // console.log(taskLists)
+
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
@@ -255,9 +257,9 @@ export const MyTask = () => {
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: 'row', gap: 5,  paddingHorizontal:20 }}>
+                    <View style={{ flexDirection: 'row', gap: 5, paddingHorizontal: 20 }}>
                         <TouchableOpacity onPress={bottomSheetAttachSelect} style={{ width: '100%' }}>
-                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, paddingVertical:14, paddingHorizontal:10 ,justifyContent: 'space-between', alignContent:"center" , borderRadius: 8, flexDirection:"row" }}>
+                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, paddingVertical: 14, paddingHorizontal: 10, justifyContent: 'space-between', alignContent: "center", borderRadius: 8, flexDirection: "row" }}>
                                 <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text>
                                 <Ionicons name='chevron-down-outline' size={24} color={COLORS.primary} />
                             </View>
@@ -335,10 +337,10 @@ export const MyTask = () => {
 
                                     <TouchableOpacity
                                         onPress={() => {
-                                                bottomSheetSelectClose()
-                                                handleChoiceSubmit()
+                                            bottomSheetSelectClose()
+                                            handleChoiceSubmit()
                                         }}
-                                        >
+                                    >
                                         <View style={{
                                             marginHorizontal: 20,
                                             backgroundColor: COLORS.primary,
@@ -365,7 +367,7 @@ export const MyTask = () => {
                         </TouchableOpacity> */}
                     </View>
 
-                    <View style={{ paddingHorizontal:20, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ paddingHorizontal: 20, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'column', gap: 4, flex: 1 }}>
                             {
                                 loading ? (
@@ -381,24 +383,24 @@ export const MyTask = () => {
                                                 (
                                                     <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
                                                 )
-                                        }           
+                                        }
                                     </View>
                                 )
                             }
                             {list.type !== 'Detail Project' ? (
 
-                                <View style={{ backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, marginTop:10}}>
+                                <View style={{ backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, marginTop: 10 }}>
                                     <Search
                                         placeholder={"Cari"}
                                         iconColor={COLORS.primary}
                                         onSearch={filter}
                                     />
                                 </View>
-                            ) : null }
+                            ) : null}
                         </View>
                     </View>
 
-                    
+
 
                     {
                         list.type !== 'Detail Project' ? (
@@ -406,7 +408,7 @@ export const MyTask = () => {
                                 {
                                     list.type === 'Dashboard' ? (
                                         <TopsTaskDashboard />
-                                        
+
                                     ) : list.type === 'Korespondensi' ? (
                                         <TopsTaskKorespondensi />
                                     ) : (
@@ -415,7 +417,9 @@ export const MyTask = () => {
                                 }
                             </View>
                         ) : (
-                            <DetailProject 
+                            <DetailProject
+                                token={token}
+                                type={choiceTipe}
                                 choiceKategori={choiceKategori}
                             />
                         )

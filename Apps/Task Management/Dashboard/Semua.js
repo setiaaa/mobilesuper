@@ -3,13 +3,14 @@ import { ActivityIndicator, View } from 'react-native'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../../components/CardListTask'
 import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CardListGridTask } from '../../../components/CardListGridTask'
 import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
 import { DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
+import { ActivityIndicatorBase } from 'react-native'
 
 
 export const Semua = () => {
@@ -28,10 +29,11 @@ export const Semua = () => {
 
 
     const loadMore = () => {
-        if (filterData % 5 === 0) {
+        if (taskLists % 5 === 0) {
           setPage(page + 5);
         }
-        console.log(page);
+        console.log(page)
+        return page
     };
 
     // console.log(list)
@@ -89,7 +91,7 @@ export const Semua = () => {
                                             padding: 24,
                                             }}
                                         >
-                                            <ActivityIndicator size="large" color={COLORS.primary} />
+                                            <ActivityIndicatorBase size="large" color={COLORS.primary} />
                                         </View>
                                         ) : null
                                     }
