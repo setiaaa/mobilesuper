@@ -81,29 +81,32 @@ export const ListPegawai = () => {
     // }, [search])
 
     const loadMore = () => {
-        if (filterData.length % 10 === 0) {
-            setPage(page + 1)
+    if (filterData.length % 10 === 0) {
+        setPage(page + 1);
         }
-    }
-
+    };
+    
     const filter = (event) => {
         setSearch(event);
     };
-
+    
     useEffect(() => {
         setFilterData(pegawai.lists);
     }, [pegawai]);
-
+    
     useEffect(() => {
         if (search !== "") {
         const data = pegawai.lists?.filter((item) => {
-            return item.nama.toLowerCase().includes(search.toLowerCase());
+        return item.nama.toLowerCase().includes(search.toLowerCase());
         });
         setFilterData(data);
-        } else {
+        if (data.length === 0) {
+
+        }
+    } else {
         setFilterData(pegawai.lists);
         }
-    }, [search]);
+    }, [search, pegawai]);
 
     const navigation = useNavigation()
 
@@ -143,7 +146,8 @@ export const ListPegawai = () => {
 
                     <FlatList
                         data={filterData}
-                        renderItem={({ item }) => <CardListPegawai
+                        renderItem={({ item }) => 
+                        <CardListPegawai
                             item={item}
                             collapse={collapse}
                             setCollapse={setCollapse}
