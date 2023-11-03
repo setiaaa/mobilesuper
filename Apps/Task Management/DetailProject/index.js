@@ -65,9 +65,7 @@ export const DetailProject = (choiceKategori, dataKategori) => {
 
     useEffect(() => {
         let arrList = []
-        // console.log(choiceKategori)
-        const index = 3
-        // const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+        const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
         treeView[index]?.list_tasks?.map(item => {
             arrList.push({
                 key: item.id,
