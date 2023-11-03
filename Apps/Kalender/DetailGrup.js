@@ -403,7 +403,7 @@ export const DetailGrup = () => {
                         }}
                       >
                         <Text numberOfLines={10}>
-                          {detailGrup?.extra_attributes?.perlengkapan == ""
+                          {detailGrup?.extra_attributes?.perlengkapan === ""
                             ? "-"
                             : detailGrup?.extra_attributes?.perlengkapan}
                         </Text>
@@ -454,7 +454,7 @@ export const DetailGrup = () => {
                         }}
                       >
                         <Text numberOfLines={10}>
-                          {detailGrup?.extra_attributes?.atribut == ""
+                          {detailGrup?.extra_attributes?.atribut === ""
                             ? "-"
                             : detailGrup?.extra_attributes?.atribut}
                         </Text>

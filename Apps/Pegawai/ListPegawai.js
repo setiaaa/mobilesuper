@@ -86,6 +86,25 @@ export const ListPegawai = () => {
         }
     }
 
+    const filter = (event) => {
+        setSearch(event);
+    };
+
+    useEffect(() => {
+        setFilterData(pegawai.lists);
+    }, [pegawai]);
+
+    useEffect(() => {
+        if (search !== "") {
+        const data = pegawai.lists?.filter((item) => {
+            return item.nama.toLowerCase().includes(search.toLowerCase());
+        });
+        setFilterData(data);
+        } else {
+        setFilterData(pegawai.lists);
+        }
+    }, [search]);
+
     const navigation = useNavigation()
 
     return (
@@ -114,16 +133,16 @@ export const ListPegawai = () => {
                     style={{}}
                 >
 
-                    <View style={{ marginVertical: 20, paddingHorizontal: 20 }}>
-                        <Search
-                            placeholder={'Cari'}
-                        // onSearch={filter}
-                        />
-                    </View>
+            <View style={{ marginVertical: 20, paddingHorizontal: 20 }}>
+                <Search
+                    placeholder={'Cari'}
+                    onSearch={filter}
+                />
+            </View>
 
 
                     <FlatList
-                        data={pegawai.lists}
+                        data={filterData}
                         renderItem={({ item }) => <CardListPegawai
                             item={item}
                             collapse={collapse}

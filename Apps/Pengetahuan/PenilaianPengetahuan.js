@@ -155,17 +155,17 @@ export const PenilaianPenggetahaun = () => {
         setSearch(event)
     }
     useEffect(() => {
-        setFilterData(penilaian.lists)
+        setFilterData(penilaian.lists.listPenilaian)
     }, [penilaian])
 
     useEffect(() => {
         if (search !== '') {
-            const data = penilaian.lists.filter((item) => {
-                return item.title.toLowerCase().includes(search.toLowerCase());
+            const data = penilaian.lists.listPenilaian.filter((item) => {
+                return item.judul.toLowerCase().includes(search.toLowerCase());
             })
             setFilterData(data)
         } else {
-            setFilterData(penilaian.lists)
+            setFilterData(penilaian.lists.listPenilaian)
         }
     }, [search])
 
@@ -224,25 +224,6 @@ export const PenilaianPenggetahaun = () => {
 
     const { penilaian, loading } = useSelector(state => state.pengetahuan)
 
-
-
-  
-
-  useEffect(() => {
-    setFilterData(penilaian.lists)
-  }, [penilaian])
-
-  useEffect(() => {
-    if (search !== '') {
-      const data = penilaian.lists?.filter((item) => {
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      })
-      setFilterData(data)
-    } else {
-      setFilterData(penilaian.lists)
-    }
-  }, [search])
-
     return (
         <>
             {loading ? (
@@ -271,18 +252,8 @@ export const PenilaianPenggetahaun = () => {
                     </View>
                 </View>
 
-
-
-                <View style={{ alignItems: 'center', marginTop: 20}}>
-
-                <View style={{ width: '91%' }}>
-                    <Search
-                        placeholder={'Cari'}
-                        onSearch={filter}
-                    />
-                </View>
-
-                {/* <TouchableOpacity style={{
+                <View style={{ alignItems: 'center', marginTop: 20 }}>
+                    <TouchableOpacity style={{
                         height: 43,
                         width: "91%",
                         backgroundColor: COLORS.white,
@@ -295,7 +266,7 @@ export const PenilaianPenggetahaun = () => {
                         }}
                     >
                         <Ionicons name='search-outline' size={24} />
-                </TouchableOpacity> */}
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{ flexDirection: 'row', marginVertical: 20, marginHorizontal: 20, gap: 5 }}>
@@ -322,6 +293,21 @@ export const PenilaianPenggetahaun = () => {
                             setSelected={setQuarter}
                         />
                     </View>
+
+                    {/* <TouchableOpacity style={{
+                        height: 43,
+                        width: "12%",
+                        backgroundColor: COLORS.white,
+                        borderRadius: 8,
+                        justifyContent: 'center',
+                        paddingLeft: 10
+                    }}
+                        onPress={() => {
+                            bottomSheetAttach()
+                        }}
+                    >
+                        <Ionicons name='search-outline' size={24} />
+                    </TouchableOpacity> */}
                 </View>
 
                 <Portal>
@@ -425,19 +411,16 @@ export const PenilaianPenggetahaun = () => {
                 </View>
 
                 <View style={{ marginTop: 10 }}>
-                    
-                <FlatList
-                    data={filterData}
-                    renderItem={({ item }) =>
-                    <CardPenilaian
-                    item={item}
-                />
-                }
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={() =>
-                    <ListEmpty />
-                }
-                />
+                    <FlatList
+                        data={penilaian.lists}
+                        renderItem={({ item }) => <CardPenilaian
+                            item={item}
+                            token={token}
+                        />
+                        }
+                        style={{ height: 400 }}
+                        keyExtractor={item => item.id}
+                    />
                 </View>
             </View >
         </>

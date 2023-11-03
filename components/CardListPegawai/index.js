@@ -86,7 +86,7 @@ export const CardListPegawai = ({ item, collapse, setCollapse, token, }) => {
                         <TouchableOpacity style={{
                             width: '100%',
                             height: 50,
-                            backgroundColor: COLORS.danger,
+                            backgroundColor: COLORS.infoDanger,
                             justifyContent: 'center',
                             alignItems: 'center',
                             marginTop: 20,

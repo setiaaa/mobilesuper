@@ -87,7 +87,7 @@ export const Bankom = () => {
     }, [])
 
     useEffect(() => {
-        SetVariant('draft')
+        SetVariant('composer')
         dispatch(getListDraft({ token: token, tipe: tipe }));
     }, [tipe])
 
@@ -167,27 +167,12 @@ export const Bankom = () => {
                                     onSearch={filter} />
                             </View>
                         </View>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'center' }}>
+                        {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ backgroundColor: "yellow", }}> */}
+                            <View style={{ paddingVertical: 10, flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 20, }}>
                                 <TouchableOpacity style={{
                                     marginHorizontal: 5,
-                                    width: 60,
-                                    height: 30,
-                                    borderWidth: 1,
-                                    backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
-                                    borderRadius: 30,
-                                    borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}
-                                    onPress={() => filterHandlerDraft()}
-                                >
-                                    <Text style={{ color: variant === 'draft' ? COLORS.infoDanger : COLORS.foundation }}>Draft</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{
-                                    marginHorizontal: 5,
-                                    width: 80,
-                                    height: 30,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
                                     borderWidth: 1,
                                     backgroundColor: variant === 'composer' ? COLORS.infoDangerLight : COLORS.input,
                                     borderRadius: 30,
@@ -201,8 +186,23 @@ export const Bankom = () => {
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{
                                     marginHorizontal: 5,
-                                    width: 85,
-                                    height: 30,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
+                                    borderWidth: 1,
+                                    backgroundColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.input,
+                                    borderRadius: 30,
+                                    borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                                    onPress={() => filterHandlerDraft()}
+                                >
+                                    <Text style={{ color: variant === 'draft' ? COLORS.infoDanger : COLORS.foundation }}>Draft</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
                                     borderWidth: 1,
                                     backgroundColor: variant === 'inprogress' ? COLORS.infoDangerLight : COLORS.input,
                                     borderRadius: 30,
@@ -216,8 +216,8 @@ export const Bankom = () => {
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{
                                     marginHorizontal: 5,
-                                    width: 60,
-                                    height: 30,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
                                     borderWidth: 1,
                                     backgroundColor: variant === 'signed' ? COLORS.infoDangerLight : COLORS.input,
                                     borderRadius: 30,
@@ -231,8 +231,8 @@ export const Bankom = () => {
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{
                                     marginHorizontal: 5,
-                                    width: 60,
-                                    height: 30,
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
                                     borderWidth: 1,
                                     backgroundColor: variant === 'completed' ? COLORS.infoDangerLight : COLORS.input,
                                     borderRadius: 30,
@@ -245,7 +245,7 @@ export const Bankom = () => {
                                     <Text style={{ color: variant === 'completed' ? COLORS.infoDanger : COLORS.foundation }}>Selesai</Text>
                                 </TouchableOpacity>
                             </View>
-                        </ScrollView>
+                        {/* </ScrollView> */}
                         <FlatList
                             data={filterData}
                             renderItem={({ item }) => (
@@ -258,7 +258,8 @@ export const Bankom = () => {
                             )}
                             keyExtractor={item => item.id}
                             ListEmptyComponent={() => <ListEmpty />}
-                            style={{ height: '73%' }} />
+                            style={{ height: '90%' }} 
+                        />
                         {/* <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
                             style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}
                         >

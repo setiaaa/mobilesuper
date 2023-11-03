@@ -80,6 +80,102 @@ export const DetailProfile = () => {
                     </View>
                 </View>
 
+                <View style={{ flexDirection: 'row', gap: 7, justifyContent: 'center', marginBottom: 20 }}>
+
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        width: 177,
+                        paddingHorizontal: 20,
+                        paddingTop: 20,
+                        borderRadius: 8,
+                        //shadow ios
+                        shadowOffset: { width: -2, height: 4 },
+                        shadowColor: '#171717',
+                        shadowOpacity: 0.2,
+                        //shadow android
+                        elevation: 2,
+                    }}>
+                        <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>Absensi</Text>
+
+                        <View style={{ paddingBottom: 20 }}>
+                            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                                <Text style={{ width: 126, }}>Jumlah hari kerja</Text>
+                                <Text>{pegawai.detail.working_day}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                <Text style={{ width: 126, }}>Jumlah hadir</Text>
+                                <Text>{pegawai.detail.present_day}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                <Text style={{ width: 126, }}>Terlambat</Text>
+                                <Text>{pegawai.detail.late_day}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                <Text style={{ width: 126, }}>Dinas</Text>
+                                <Text>{pegawai.detail.outstation_day}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                <Text style={{ width: 126, }}>Cuti</Text>
+                                <Text>-</Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={{
+                        backgroundColor: COLORS.white,
+                        width: 177,
+                        paddingHorizontal: 20,
+                        paddingTop: 20,
+                        borderRadius: 8,
+                        //shadow ios
+                        shadowOffset: { width: -2, height: 4 },
+                        shadowColor: '#171717',
+                        shadowOpacity: 0.2,
+                        //shadow android
+                        elevation: 2,
+                    }}>
+                        <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>IP ASN</Text>
+
+                        <View style={{ paddingBottom: 20 }}>
+                            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                                <Text style={{ width: 91, fontSize: 30, fontWeight: FONTWEIGHT.bold }}>{pegawai.detail.ipasn_nilai}</Text>
+                                <View style={{ backgroundColor: '#CED06C', width: 60, height: 25, borderRadius: 30, justifyContent: 'center', alignItems: 'center', }}>
+                                    <Text>Tinggi</Text>
+                                </View>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
+                                <Text style={{ width: 85, }}>Kualifikasi</Text>
+                                <View style={{ width: 10, height: 10, backgroundColor: '#FF9900', borderRadius: 30 }} />
+                                <Text>{pegawai.detail.ipasn_kualifikasi}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
+                                <Text style={{ width: 85, }}>Kompetensi</Text>
+                                <View style={{ width: 10, height: 10, backgroundColor: COLORS.success, borderRadius: 30 }} />
+                                <Text>{pegawai.detail.ipasn_kompetensi}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
+                                <Text style={{ width: 85, }}>Kinerja</Text>
+                                <View style={{ width: 10, height: 10, backgroundColor: '#CED06C', borderRadius: 30 }} />
+                                <Text>{pegawai.detail.ipasn_kinerja}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
+                                <Text style={{ width: 85, }}>Disiplin</Text>
+                                <View style={{ width: 10, height: 10, backgroundColor: COLORS.success, borderRadius: 30 }} />
+                                <Text>{pegawai.detail.ipasn_disiplin}</Text>
+                            </View>
+                        </View>
+                    </View>
+
+                </View>
+
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     {loading ? (
                         <View style={{

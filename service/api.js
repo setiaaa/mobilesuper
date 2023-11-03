@@ -39,6 +39,8 @@ const GET_LIST_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_POSTINGAN_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
 
+const Cuti = "https://cuti.kubekkp.coofis.com/api/"
+
 //Login
 export const Login = createAsyncThunk(
     "auth/Login",
@@ -62,7 +64,7 @@ export const Login = createAsyncThunk(
 // kebijakan
 export const getCategory = createAsyncThunk(
     "kebijakan/getCategory",
-    async ({token, page}) => {
+    async ({ token, page }) => {
         const respon = await axios.get(`${kebijakan}category/?limit=${page}`, {
             headers: { Authorization: token },
         });
@@ -1174,7 +1176,7 @@ export const getDetailsSharedDocuments = createAsyncThunk(
 
 //postingan saya
 export const getMyPostList = createAsyncThunk("mp/mypost", async ({ token, page }) => {
-    const respon = await axios.get(`${MYPOST_LIST}/?limit=${page}`, {
+    const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
         headers: { Authorization: token },
     });
     return respon?.data.results;
@@ -1525,3 +1527,48 @@ export const getCourseDigiSign = createAsyncThunk(
         return respon?.data.results;
     }
 );
+
+//Cuti
+export const getCutiPersonal = createAsyncThunk(
+    "cuti/getCutiPersonal",
+    async (nip) => {
+        const respon = await axios.get(`${Cuti}jenis-cuti?nip=${nip}`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
+export const getKuotaCuti = createAsyncThunk(
+    "cuti/getKuotaCuti",
+    async (nip) => {
+        console.log(nip)
+        const respon = await axios.get(`${Cuti}kuota-cuti?nip=${nip}`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
+export const getTanggalLibur = createAsyncThunk(
+    "cuti/getTanggalLibur",
+    async (nip) => {
+        console.log(nip)
+        const respon = await axios.get(`${Cuti}tanggal-libur?nip=${nip}&tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
+export const getLiburKhusus = createAsyncThunk(
+    "cuti/getLiburKhusus",
+    async (nip) => {
+        console.log(nip)
+        const respon = await axios.get(`${Cuti}tanggal-libur?nip=${nip}&tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=Private Holiday`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
