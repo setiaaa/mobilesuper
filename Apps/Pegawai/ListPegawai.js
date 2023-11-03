@@ -81,7 +81,7 @@ export const ListPegawai = () => {
     // }, [search])
 
     const loadMore = () => {
-        if (pegawai.lists.length % 10 === 0) {
+        if (filterData.length % 10 === 0) {
             setPage(page + 1)
         }
     }
@@ -96,12 +96,12 @@ export const ListPegawai = () => {
 
     useEffect(() => {
         if (search !== "") {
-        const data = pegawai.lists?.filter((item) => {
-            return item.nama.toLowerCase().includes(search.toLowerCase());
-        });
-        setFilterData(data);
+            const data = pegawai.lists?.filter((item) => {
+                return item.nama.toLowerCase().includes(search.toLowerCase());
+            });
+            setFilterData(data);
         } else {
-        setFilterData(pegawai.lists);
+            setFilterData(pegawai.lists);
         }
     }, [search]);
 
@@ -133,12 +133,12 @@ export const ListPegawai = () => {
                     style={{}}
                 >
 
-            <View style={{ marginVertical: 20, paddingHorizontal: 20 }}>
-                <Search
-                    placeholder={'Cari'}
-                    onSearch={filter}
-                />
-            </View>
+                    <View style={{ marginVertical: 20, paddingHorizontal: 20 }}>
+                        <Search
+                            placeholder={'Cari'}
+                            onSearch={filter}
+                        />
+                    </View>
 
 
                     <FlatList

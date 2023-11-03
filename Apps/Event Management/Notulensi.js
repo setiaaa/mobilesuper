@@ -147,7 +147,11 @@ export const Notulensi = () => {
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4, marginVertical: 10 }} width={100} height={20} />
                         ) : (
-                            <Text style={{ marginVertical: 10 }}>{data.note}</Text>
+                            data.note === '' ? (
+                                <Text>-</Text>
+                            ) : (
+                                <Text style={{ marginVertical: 10 }}>{data.note}</Text>
+                            )
                         )}
 
 
@@ -217,28 +221,32 @@ export const Notulensi = () => {
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
                         ) : (
-                            <FlatList
-                                key={'*'}
-                                data={notu}
-                                renderItem={({ item }) =>
-                                    <View key={item.id}>
-                                        <CardLampiran
-                                            lampiran={item.pdf}
-                                            type={getFileExtension(item.pdf)}
-                                            onClick={() => {
-                                                setVisibleModal(true)
-                                                setLampiranById(item)
-                                            }}
-                                            id={item.id}
-                                        />
-                                    </View>
-                                }
-                                scrollEnabled={false}
-                                style={{ marginTop: 10 }}
-                                columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                                numColumns={3}
-                                keyExtractor={item => "*" + item.id}
-                            />
+                            notu?.lists?.length === 0 ? (
+                                <Text>-</Text>
+                            ) : (
+                                <FlatList
+                                    key={'*'}
+                                    data={notu}
+                                    renderItem={({ item }) =>
+                                        <View key={item.id}>
+                                            <CardLampiran
+                                                lampiran={item.pdf}
+                                                type={getFileExtension(item.pdf)}
+                                                onClick={() => {
+                                                    setVisibleModal(true)
+                                                    setLampiranById(item)
+                                                }}
+                                                id={item.id}
+                                            />
+                                        </View>
+                                    }
+                                    scrollEnabled={false}
+                                    style={{ marginTop: 10 }}
+                                    columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                    numColumns={3}
+                                    keyExtractor={item => "*" + item.id}
+                                />
+                            )
                         )}
 
                         {

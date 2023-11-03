@@ -171,7 +171,7 @@ export const HalamanUtama = () => {
   };
 
   const [search, setSearch] = useState("");
-  const [filterData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState(event.listsprogress);
 
   useEffect(() => {
     const item = event.listsprogress;
@@ -189,7 +189,7 @@ export const HalamanUtama = () => {
     setSearch(event);
   };
 
-  const [filterDataHariIni, setFilterDataHariIni] = useState([]);
+  const [filterDataHariIni, setFilterDataHariIni] = useState(list);
 
   useEffect(() => {
     const item = event.lists;
@@ -208,6 +208,7 @@ export const HalamanUtama = () => {
   };
 
   const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const asc = () => {
     const sortedAscending = filterData
@@ -215,6 +216,7 @@ export const HalamanUtama = () => {
       .sort((a, b) => a.title.localeCompare(b.title));
     setFilterData(sortedAscending);
     setAscending(true);
+    setIsFiltered(true);
   };
 
   const desc = () => {
@@ -223,9 +225,10 @@ export const HalamanUtama = () => {
       .sort((a, b) => b.title.localeCompare(a.title));
     setFilterData(sortedDescending);
     setAscending(false);
+    setIsFiltered(true);
   };
 
-  // console.log(filterData);
+  console.log(filterData);
   return (
     <View style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -249,13 +252,7 @@ export const HalamanUtama = () => {
                 marginLeft: 20,
               }}
             >
-              <TouchableOpacity
-                onPress={() =>
-                  variant === "hariini"
-                    ? navigation.goBack()
-                    : SetVariant("hariini")
-                }
-              >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
                   size={24}
