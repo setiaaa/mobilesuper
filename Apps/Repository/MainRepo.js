@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import { BottomTabsRepo } from "../Korespondensi/AppNavigator";
+import { BottomTabsRepo } from "../../utils/menutab";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";

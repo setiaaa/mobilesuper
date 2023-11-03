@@ -8,7 +8,7 @@ import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
-import { TopsDash } from '../Korespondensi/AppNavigator'
+import { TopsDash } from '../../utils/menutab'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { setBerita, setPengumuman } from '../../store/Dashboard'

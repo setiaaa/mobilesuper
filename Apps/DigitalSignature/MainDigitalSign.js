@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
-import { BottomTabsDigitalSign, BottomTabsKeb } from '../Korespondensi/AppNavigator'
+import { BottomTabsDigitalSign, BottomTabsKeb } from '../../utils/menutab'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'

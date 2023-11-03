@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useEffect } from 'react'
-import { BottomTabsDetailTask, BottomTabsPengetahuan, BottomTabsSPPD } from '../Korespondensi/AppNavigator'
+import { BottomTabsDetailTask, BottomTabsPengetahuan, BottomTabsSPPD } from '../../utils/menutab'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useDispatch } from 'react-redux'
 import { setTaskDetail } from '../../store/Task'
