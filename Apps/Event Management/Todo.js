@@ -90,7 +90,7 @@ export const Todo = () => {
   // }, [search])
 
   return (
-    <SafeAreaView>
+    <>
       <View
         style={{
           flexDirection: "row",
@@ -278,6 +278,6 @@ export const Todo = () => {
           </BottomSheetModal>
         </BottomSheetModalProvider>
       </Portal>
-    </SafeAreaView>
+    </>
   );
 };

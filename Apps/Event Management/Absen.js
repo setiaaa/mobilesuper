@@ -70,8 +70,8 @@ const CardListAbsen = ({ item, loading }) => {
                     item.status === "hadir"
                       ? COLORS.successLight
                       : item.status === "waiting"
-                      ? COLORS.infoLight
-                      : null,
+                        ? COLORS.infoLight
+                        : null,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -82,8 +82,8 @@ const CardListAbsen = ({ item, loading }) => {
                       item.status === "hadir"
                         ? COLORS.success
                         : item.status === "waiting"
-                        ? COLORS.info
-                        : null,
+                          ? COLORS.info
+                          : null,
                   }}
                 >
                   {item.status}
@@ -223,7 +223,7 @@ export const Absen = () => {
   // }, [search])
 
   return (
-    <SafeAreaView>
+    <>
       <View
         style={{
           flexDirection: "row",
@@ -358,6 +358,6 @@ export const Absen = () => {
         style={{ marginVertical: 20 }}
         ListEmptyComponent={() => <ListEmpty />}
       />
-    </SafeAreaView>
+    </>
   );
 };

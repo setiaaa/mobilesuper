@@ -236,7 +236,11 @@ export const DetailTodo = () => {
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
-                                        <Text>{agendaDetail.note}</Text>
+                                        agendaDetail.note === '' ? (
+                                            <Text>-</Text>
+                                        ) : (
+                                            <Text>{agendaDetail.note}</Text>
+                                        )
                                     )}
                                 </View>
 
@@ -310,30 +314,33 @@ export const DetailTodo = () => {
                                 {loading ? (
                                     <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
                                 ) : (
-                                    <FlatList
-                                        key={'*'}
-                                        data={agendaDetail.attachments}
-                                        renderItem={({ item }) =>
-                                            <View key={item.id}>
-                                                <CardLampiran
-                                                    lampiran={item.file}
-                                                    type={getFileExtension(item.name)}
-                                                    onClick={() => {
-                                                        setVisibleModal(true)
-                                                        setLampiranById(item)
-                                                    }}
-                                                    id={item.id}
-                                                />
-                                            </View>
-                                        }
-                                        scrollEnabled={false}
-                                        style={{ marginTop: 10 }}
-                                        columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                                        numColumns={3}
-                                        keyExtractor={item => "*" + item.id}
-                                    />
+                                    agendaDetail?.attachments?.length === 0 ? (
+                                        <Text>-</Text>
+                                    ) : (
+                                        <FlatList
+                                            key={'*'}
+                                            data={agendaDetail.attachments}
+                                            renderItem={({ item }) =>
+                                                <View key={item.id}>
+                                                    <CardLampiran
+                                                        lampiran={item.file}
+                                                        type={getFileExtension(item.name)}
+                                                        onClick={() => {
+                                                            setVisibleModal(true)
+                                                            setLampiranById(item)
+                                                        }}
+                                                        id={item.id}
+                                                    />
+                                                </View>
+                                            }
+                                            scrollEnabled={false}
+                                            style={{ marginTop: 10 }}
+                                            columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                            numColumns={3}
+                                            keyExtractor={item => "*" + item.id}
+                                        />
+                                    )
                                 )}
-
 
                                 {
                                     lampiranById !== null ? (
