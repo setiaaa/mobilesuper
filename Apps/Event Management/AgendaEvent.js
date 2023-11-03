@@ -93,7 +93,7 @@ export const AgendaEvent = () => {
   // }, [search])
 
   return (
-    <SafeAreaView>
+    <>
       <View
         style={{
           flexDirection: "row",
@@ -278,6 +278,6 @@ export const AgendaEvent = () => {
           </BottomSheetModal>
         </BottomSheetModalProvider>
       </Portal>
-    </SafeAreaView>
+    </>
   );
 };

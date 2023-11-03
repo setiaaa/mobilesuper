@@ -21,6 +21,7 @@ import EventReducer from "./Event";
 import AddressbookKKP from "./AddressbookKKP";
 import Satker from "./Satker";
 import LoginAuth from "./LoginAuth";
+import Cuti from "./Cuti";
 
 export const store = configureStore({
   reducer: {
@@ -44,6 +45,7 @@ export const store = configureStore({
     event: EventReducer,
     addressBookKKP: AddressbookKKP,
     satker: Satker,
-    login: LoginAuth
+    login: LoginAuth,
+    cuti: Cuti
   },
 });

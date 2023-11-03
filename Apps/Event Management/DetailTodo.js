@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { ScrollView, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import { Text } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { TouchableOpacity } from 'react-native'
@@ -236,7 +236,11 @@ export const DetailTodo = () => {
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
-                                        <Text>{agendaDetail.note}</Text>
+                                        agendaDetail.note === '' ? (
+                                            <Text>-</Text>
+                                        ) : (
+                                            <Text>{agendaDetail.note}</Text>
+                                        )
                                     )}
                                 </View>
 
@@ -248,7 +252,11 @@ export const DetailTodo = () => {
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
-                                        <Text style={{ width: 150 }}>{detail.name}</Text>
+                                        detail.name === null ? (
+                                            <Text>-</Text>
+                                        ) : (
+                                            <Text style={{ width: 150 }}>{detail.name}</Text>
+                                        )
                                     )}
                                 </View>
 
@@ -260,7 +268,11 @@ export const DetailTodo = () => {
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
-                                        <Text>{detail.due_date}</Text>
+                                        detail.due_date === null ? (
+                                            <Text>-</Text>
+                                        ) : (
+                                            <Text>{detail.due_date}</Text>
+                                        )
                                     )}
                                 </View>
 
@@ -272,7 +284,11 @@ export const DetailTodo = () => {
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
-                                        <Text>{agendaDetail.date}</Text>
+                                        agendaDetail.date === null ? (
+                                            <Text>-</Text>
+                                        ) : (
+                                            <Text>{agendaDetail.date}</Text>
+                                        )
                                     )}
                                 </View>
 
@@ -285,8 +301,18 @@ export const DetailTodo = () => {
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
                                         <View style={{ flexDirection: 'row' }}>
-                                            <Text style={{ marginTop: 5 }}>{moment(agendaDetail.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
-                                            <Text style={{ marginTop: 5 }}>{moment(agendaDetail.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                                            {agendaDetail.start_time === null ? (
+                                                <Text>/</Text>
+                                            ) : (
+                                                <Text style={{ marginTop: 5 }}>{moment(agendaDetail.start_time, 'HH:mm:ss').format('HH:mm')} - </Text>
+                                            )}
+
+                                            {agendaDetail.end_time === null ? (
+                                                <Text>/</Text>
+                                            ) : (
+                                                <Text style={{ marginTop: 5 }}>{moment(agendaDetail.end_time, 'HH:mm:ss').format('HH:mm')}</Text>
+                                            )}
+
                                         </View>
                                     )}
                                 </View>
@@ -299,7 +325,11 @@ export const DetailTodo = () => {
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
-                                        <Text>{agendaDetail.location}</Text>
+                                        agendaDetail.location === null ? (
+                                            <Text>-</Text>
+                                        ) : (
+                                            <Text>{agendaDetail.location}</Text>
+                                        )
                                     )}
                                 </View>
 
@@ -310,30 +340,33 @@ export const DetailTodo = () => {
                                 {loading ? (
                                     <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
                                 ) : (
-                                    <FlatList
-                                        key={'*'}
-                                        data={agendaDetail.attachments}
-                                        renderItem={({ item }) =>
-                                            <View key={item.id}>
-                                                <CardLampiran
-                                                    lampiran={item.file}
-                                                    type={getFileExtension(item.name)}
-                                                    onClick={() => {
-                                                        setVisibleModal(true)
-                                                        setLampiranById(item)
-                                                    }}
-                                                    id={item.id}
-                                                />
-                                            </View>
-                                        }
-                                        scrollEnabled={false}
-                                        style={{ marginTop: 10 }}
-                                        columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                                        numColumns={3}
-                                        keyExtractor={item => "*" + item.id}
-                                    />
+                                    agendaDetail?.attachments?.length === 0 ? (
+                                        <Text>-</Text>
+                                    ) : (
+                                        <FlatList
+                                            key={'*'}
+                                            data={agendaDetail.attachments}
+                                            renderItem={({ item }) =>
+                                                <View key={item.id}>
+                                                    <CardLampiran
+                                                        lampiran={item.file}
+                                                        type={getFileExtension(item.name)}
+                                                        onClick={() => {
+                                                            setVisibleModal(true)
+                                                            setLampiranById(item)
+                                                        }}
+                                                        id={item.id}
+                                                    />
+                                                </View>
+                                            }
+                                            scrollEnabled={false}
+                                            style={{ marginTop: 10 }}
+                                            columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
+                                            numColumns={3}
+                                            keyExtractor={item => "*" + item.id}
+                                        />
+                                    )
                                 )}
-
 
                                 {
                                     lampiranById !== null ? (
@@ -396,10 +429,12 @@ export const DetailTodo = () => {
                             </View>
                         </View>
 
+
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
                             <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
                                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
+
                                     <TextInput
                                         editable
                                         multiline
@@ -411,6 +446,7 @@ export const DetailTodo = () => {
                                             setMessage(e)
                                         }}
                                     />
+
                                     <TouchableOpacity onPress={() => {
                                         submitComment('')
                                     }}>
@@ -418,8 +454,8 @@ export const DetailTodo = () => {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-
                         </View>
+
                         <ScrollView style={{ flex: 1 }}>
                             <View style={{
                                 justifyContent: 'center',

@@ -165,6 +165,8 @@ export const DetailAgenda = () => {
         dispatch(deleteNotulensi(item))
     }
 
+    console.log(data.extra_attrs)
+
 
     return (
         < >
@@ -315,15 +317,12 @@ export const DetailAgenda = () => {
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
                                 data.extra_attrs.guests.length === 0 ? (
-                                    <>
-                                        <Text>-</Text>
-                                    </>
+                                    <Text>-</Text>
                                 ) : (
-
                                     data.extra_attrs?.guests?.map((data, index) =>
-                                        <View key={index} style={{ position: 'relative' }}>
-                                            <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                                        </View>
+                                    <View key={index} style={{ position: 'relative' }}>
+                                        <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
+                                    </View>
                                     )
                                 )
                             )}
@@ -341,9 +340,7 @@ export const DetailAgenda = () => {
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
                                 data.extra_attrs.guest_external.length === 0 ? (
-                                    <>
-                                        <Text>-</Text>
-                                    </>
+                                    <Text>-</Text>
                                 ) : (
                                     <View style={{ position: 'relative', flexDirection: 'column' }}>
                                         {data.extra_attrs?.guest_external?.map((data, index) =>
@@ -739,7 +736,7 @@ export const DetailAgenda = () => {
                             <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
                         ) : (
                             data.attachments.length === 0 ? (
-                                <Text style={{ marginTop: 10 }}>-</Text>
+                                <Text style={{ marginVertical: 5 }}>-</Text>
                             ) : (
                                 <FlatList
                                     key={'*'}
@@ -856,9 +853,9 @@ export const DetailAgenda = () => {
 
                 <View style={{
                     backgroundColor: COLORS.white,
-                    width: '92%',
+                    width: '90%',
                     flex: 1,
-                    marginLeft: 15,
+                    alignSelf: "center",
                     padding: 15,
                     borderRadius: 8
                 }}>
