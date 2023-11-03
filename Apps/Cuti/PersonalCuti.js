@@ -11,6 +11,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Image } from 'react-native-svg'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
+import { useEffect } from 'react'
+import { getCutiPersonal, getKuotaCuti } from '../../service/api'
+import { CardKuotaCuti } from '../../components/CardKuotaCuti'
+import { FlatList } from 'react-native'
+import ListEmpty from '../../components/ListEmpty'
+import { Loading } from '../../components/Loading';
 
 
 export const PersonalCuti = () => {
@@ -20,11 +26,25 @@ export const PersonalCuti = () => {
         nip: '',
         toggle: false
     })
+    useEffect(() => {
+        if (profile.nip !== "") {
+            dispatch(getCutiPersonal(profile?.nip))
+            dispatch(getKuotaCuti(profile?.nip))
+        }
+    }, [profile?.nip]);
+
     const navigation = useNavigation()
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-    console.log(profile)
+    const { personal, kuota, loading } = useSelector(state => state.cuti)
+    console.log(kuota)
+
     return (
         <GestureHandlerRootView>
+            {loading ? (
+                <Loading />
+            ) : (
+                null
+            )}
             <View style={{ position: 'relative' }}>
                 <ScrollView>
 
@@ -72,8 +92,8 @@ export const PersonalCuti = () => {
                             backgroundColor: COLORS.primary
                         }}>
                             <Image source={{ uri: BASE_URL + profile.avatar }} style={{ width: 61, height: 61, borderRadius: 30 }} />
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{profile.nama}</Text>
-                            <Text style={{ marginTop: 5, color: COLORS.white }}>{profile.nip}</Text>
+                            <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{personal.data_user?.nama}</Text>
+                            <Text style={{ marginTop: 5, color: COLORS.white }}>{personal.data_user?.nip}</Text>
                         </View>
                         <View style={{
                             backgroundColor: COLORS.white,
@@ -81,10 +101,10 @@ export const PersonalCuti = () => {
                             borderBottomRightRadius: 8,
                             borderBottomLeftRadius: 8,
                         }}>
-                            <TouchableOpacity onPress={() => setCollapse({ nip: profile.nip, toggle: true })}>
+                            <TouchableOpacity onPress={() => setCollapse({ nip: personal.data_user?.nip, toggle: true })}>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={{ marginRight: "80%" }}>Profil</Text>
-                                    {collapse.nip === profile.nip && collapse.toggle === true ? (
+                                    {collapse.nip === personal.data_user?.nip && collapse.toggle === true ? (
                                         <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
                                             <Ionicons name='chevron-up' size={24} />
                                         </TouchableOpacity>
@@ -94,27 +114,27 @@ export const PersonalCuti = () => {
                                 </View>
                             </TouchableOpacity>
 
-                            {collapse.nip === profile.nip && collapse.toggle === true ? (
+                            {personal.data_user?.nip === personal.data_user?.nip && collapse.toggle === true ? (
                                 <View>
 
                                     <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
                                         <Text style={{ marginTop: 10, }}>Jenis Kelamin</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.jenis_kelamin}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jenis_kelamin}</Text>
 
                                         <Text style={{ marginTop: 10, }}>Golongan</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.golongan}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.golongan}</Text>
 
                                         <Text style={{ marginTop: 10, }}>Jabatan</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.nama_jabatan}</Text>
-
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jabatan}</Text>
+                                        {/* 
                                         <Text style={{ marginTop: 10, }}>Kementrian</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}></Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}></Text> */}
 
                                         <Text style={{ marginTop: 10, }}>Unit Kerja</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.unit_kerja}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.unit_kerja}</Text>
 
                                         <Text style={{ marginTop: 10, }}>Satuan Kerja</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{profile.satuan_kerja_nama}</Text>
+                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.satuan_kerja}</Text>
 
 
                                     </TouchableOpacity>
@@ -122,110 +142,33 @@ export const PersonalCuti = () => {
                             ) : (
                                 null
                             )}
+                        </View>
                     </View>
-                </View>
-                <View style={{paddingLeft:20, gap: 10}}>
-                    <Text style={{fontWeight:FONTWEIGHT.bold}}>Form Pengajuan Cuti</Text>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-                        <View style={{gap:30, flexDirection: 'row',}}>
-                            <View style={{alignItems: 'center', gap: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('TambahCutiTahunan')} style={{
-                                    backgroundColor: COLORS.infoDanger,
-                                    padding: 15,
-                                    borderRadius: 30,
-                                    width: 55,
-                                    height: 55,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
+                    <View style={{ paddingLeft: 20, gap: 10 }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Form Pengajuan Cuti</Text>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
 
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </TouchableOpacity>
-                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Tahunan</Text>
-                                </View>
+                            {personal?.data_jenis_cuti?.map((item) => {
+                                return (
+                                    <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+                                        <View style={{ alignItems: 'center', gap: 10 }}>
+                                            <TouchableOpacity onPress={() => navigation.navigate('TambahCutiTahunan')} style={{
+                                                backgroundColor: COLORS.infoDanger,
+                                                padding: 15,
+                                                borderRadius: 30,
+                                                width: 55,
+                                                height: 55,
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
 
-                                <View style={{ alignItems: 'center', gap: 10 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiBesar')} style={{
-                                        backgroundColor: COLORS.infoDanger,
-                                        padding: 15,
-                                        width: 55,
-                                        height: 55,
-                                        borderRadius: 30,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </TouchableOpacity>
-                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Besar</Text>
-                                </View>
-
-                                <View style={{ alignItems: 'center', gap: 10 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiSakit')} style={{
-                                        backgroundColor: COLORS.infoDanger,
-                                        padding: 15,
-                                        width: 55,
-                                        height: 55,
-                                        borderRadius: 30,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </TouchableOpacity>
-                                    <Text style={{ maxWidth: 40, textAlign: 'center' }}>Cuti Sakit</Text>
-                                </View>
-
-                                <View style={{ alignItems: 'center', gap: 10 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiMelahirkan')} style={{
-                                        backgroundColor: COLORS.infoDanger,
-                                        padding: 15,
-                                        width: 55,
-                                        height: 55,
-                                        borderRadius: 30,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </TouchableOpacity>
-                                    <Text style={{ maxWidth: 90, textAlign: 'center' }}>Cuti Melahirkan</Text>
-                                </View>
-
-                                <View style={{ alignItems: 'center', gap: 10 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiAlasanPenting')} style={{
-                                        backgroundColor: COLORS.infoDanger,
-                                        padding: 15,
-                                        width: 55,
-                                        height: 55,
-                                        borderRadius: 30,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </TouchableOpacity>
-                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Alasan Penting</Text>
-                                </View>
-
-                                <View style={{ alignItems: 'center', gap: 10 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('TambahCutiDiluarTanggungan')} style={{
-                                        backgroundColor: COLORS.infoDanger,
-                                        padding: 15,
-                                        width: 55,
-                                        height: 55,
-                                        borderRadius: 30,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </TouchableOpacity>
-                                    <Text style={{ maxWidth: 60, textAlign: 'center' }}>Cuti Diluar Tanggungan Negara</Text>
-                                </View>
-
-                            </View>
-
+                                            }}>
+                                                <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                            </TouchableOpacity>
+                                            <Text style={{ maxWidth: 60, textAlign: 'center' }}>{item.nama}</Text>
+                                        </View>
+                                    </View>
+                                )
+                            })}
                         </ScrollView>
                     </View>
                     <View style={{ paddingLeft: 20 }}>
@@ -268,7 +211,19 @@ export const PersonalCuti = () => {
                     </View>
                     <View style={{ paddingLeft: 20 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <FlatList
+                            data={kuota.data_kuota_cuti}
+                            renderItem={({ item }) => (
+                                <View key={item.id}>
+                                    <CardKuotaCuti
+                                        item={item}
+                                    />
+                                </View>
+                            )}
+                            keyExtractor={(item) => item.id}
+                            ListEmptyComponent={() => <ListEmpty />}
+                        />
+                        {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             <View style={{ gap: 20, flexDirection: 'row' }}>
                                 <View style={[styles.cardKouta]}>
                                     <View style={{
@@ -350,7 +305,7 @@ export const PersonalCuti = () => {
                                     </View>
                                 </View>
                             </View>
-                        </ScrollView>
+                        </ScrollView> */}
                     </View>
 
                     <View style={{ padding: 20, rowGap: 10 }}>

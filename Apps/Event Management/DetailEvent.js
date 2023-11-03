@@ -1,55 +1,75 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { ScrollView, TouchableOpacity } from 'react-native'
-import { Text, View } from 'react-native'
-import { } from 'react-native-safe-area-context'
-import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
-import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
-import { Video } from 'expo-av';
-import { FlatList } from 'react-native';
-import { Modal } from 'react-native';
-import { StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Platform } from 'react-native';
-import moment from 'moment';
-import { Dropdown } from '../../components/DropDown';
-import { deleteEvent, updateStatus } from '../../service/api';
-import { getTokenValue } from '../../service/session';
-import { CardLampiran } from '../../components/CardLampiran';
-import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder';
-import { LinearGradient } from 'expo-linear-gradient';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ScrollView, TouchableOpacity } from "react-native";
+import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { useNavigation } from "@react-navigation/native";
+import { Image } from "react-native";
+import { Video } from "expo-av";
+import { FlatList } from "react-native";
+import { Modal } from "react-native";
+import { StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { Platform } from "react-native";
+import moment from "moment";
+import { Dropdown } from "../../components/DropDown";
+import { deleteEvent, updateStatus } from "../../service/api";
+import { getTokenValue } from "../../service/session";
+import { CardLampiran } from "../../components/CardLampiran";
+import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView,
+  useBottomSheetDynamicSnapPoints,
+} from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { CardItemMember } from "../../components/CardItemMember";
 
 export const DetailEvent = () => {
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
-  const [kategori, setKategori] = useState('')
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [kategori, setKategori] = useState("");
   const [visibleModal, setVisibleModal] = useState(false);
-  const [lampiranById, setLampiranById] = useState(null)
-  const [token, setToken] = useState('')
-  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
+  const [lampiranById, setLampiranById] = useState(null);
+  const [token, setToken] = useState("");
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+
+  const bottomSheetModalRef = useRef(null);
+  const initialSnapPoints = useMemo(() => ["95%"], []);
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+  const bottomSheetAttach = () => {
+    bottomSheetModalRef.current?.present();
+  };
   const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
 
-
   const statusEvent = [
-    { key: 'siap', value: 'persiapan' },
-    { key: 'pel', value: 'pelaksanaan' },
-    { key: 'pas', value: 'pasca' }
-  ]
+    { key: "siap", value: "persiapan" },
+    { key: "pel", value: "pelaksanaan" },
+    { key: "pas", value: "pasca" },
+  ];
 
   const [document, setDocument] = useState([]);
 
   const getFileExtension = (type) => {
-    let jenis = type.split('.')
-    jenis = jenis[jenis.length - 1]
-    return jenis
-  }
+    let jenis = type.split(".");
+    jenis = jenis[jenis.length - 1];
+    return jenis;
+  };
 
   useEffect(() => {
-    getTokenValue().then(val => {
-      setToken(val)
-    })
-  }, [])
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -58,364 +78,570 @@ export const DetailEvent = () => {
 
   const data = event.detailEvent;
 
-
-  console.log(event)
-
+  console.log(data);
   return (
-    < >
-      <ScrollView>
-        <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
-          <View style={{
-            backgroundColor: COLORS.white,
-            borderRadius: 20,
-            width: 28,
-            height: 28,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginLeft: 20
-          }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail Agenda Rapat</Text>
-          </View>
-        </View>
-
-        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
-          <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
-            <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={200} height={20} />
-              )
-                : (
-                  <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold, width: 200 }}>{data.title}</Text>
-                )}
-
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-              ) : (
-                <View
-                  style={{
-                    width: 90,
-                    height: 24,
-                    backgroundColor: COLORS.infoLight,
-                    borderRadius: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                >
-                  <Text style={{ color: COLORS.info }}>{data.status}</Text>
-                </View>
-              )}
-            </View>
-
-            <View style={{ marginTop: 10 }}>
-              <Text>{data.note}</Text>
-            </View>
-
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-
-            <View style={{ flexDirection: 'row', }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-              ) : (
-                <>
-                  <Text>{moment(data.start_date).format('d MMM yyy')} - </Text>
-                  <Text>{moment(data.end_date).format('d MMM yyy')}</Text>
-                </>
-              )}
-            </View>
-
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-
-            <View style={{ flexDirection: 'row', }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-              ) : (
-                <Text style={{ width: 156 }}>{data.location}</Text>
-              )}
-            </View>
-
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-
-            <View style={{ flexDirection: 'row', }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Pimpinan Agenda Rapat</Text>
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-              ) : (
-                <Text style={{ width: 150 }}>{data.extra_attrs?.pic.title.name}</Text>
-              )}
-            </View>
-
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat</Text>
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-              ) : (
-                data.extra_attrs?.members?.map((data, index) =>
-                  <View key={data.id} style={{ position: 'relative' }}>
-                    <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                  </View>
-                )
-              )}
-              <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }} onPress={() => setVisibleModalPeserta(true)}>
-                  <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+    <GestureHandlerRootView>
+      <BottomSheetModalProvider>
+        <ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: COLORS.primary,
+              height: 80,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: 28,
+                height: 28,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 20,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={24}
+                  color={COLORS.primary}
+                />
               </TouchableOpacity>
             </View>
+            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+              <Text
+                style={{
+                  fontSize: FONTSIZE.H1,
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.white,
+                }}
+              >
+                Detail Agenda Rapat
+              </Text>
+            </View>
+          </View>
 
-
-            <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={visibleModalPeserta}
-                            onRequestClose={() => {
-                                setVisibleModalPeserta(!visibleModalPeserta);
-                            }}
-                            >
-                            <TouchableOpacity
-                                style={[
-                                Platform.OS === "ios"
-                                    ? styles.iOSBackdrop
-                                    : styles.androidBackdrop,
-                                styles.backdrop,
-                                ]}
-                            />
-                            <View style={{ alignItems: "center", justifyContent: 'center', flex: 1 }}>
-                                <View
-                                style={{
-                                    backgroundColor: COLORS.white,
-                                    width: "90%",
-                                    height: '90%',
-                                    borderRadius: 10,
-                                    alignContent: 'center',
-                                }}
-                                >
-                                <View
-                                    style={{
-                                    marginTop: 20,
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    marginHorizontal: 20,
-                                    }}
-                                >
-                                    <View>
-                                    <Text
-                                        style={{
-                                        fontSize: FONTSIZE.Judul,
-                                        fontWeight: FONTWEIGHT.bold,
-                                        }}
-                                    >
-                                        Peserta Agenda
-                                    </Text>
-                                    </View>
-
-                                    <TouchableOpacity
-                                    style={{}}
-                                    onPress={() => {
-                                        setVisibleModalPeserta(false);
-                                    }}
-                                    >
-                                    <Ionicons
-                                        name="close-outline"
-                                        size={24}
-                                        color={COLORS.lighter}
-                                    />
-                                    </TouchableOpacity>
-                                </View>
-                                {/* custom divider */}
-                                <View
-                                    style={{
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    }}
-                                >
-                                    <View
-                                    style={{
-                                        height: 1,
-                                        width: "90%",
-                                        backgroundColor: "#DBDADE",
-                                        marginVertical: 20,
-                                    }}
-                                    />
-                                </View>
-
-                                <ScrollView style={{ marginBottom: 40 }}>
-                                    <View style={{
-                                        width: '90%',
-                                        borderRadius: 8,
-                                        marginHorizontal: 20,
-                                        marginTop: 10,
-                                        flexDirection: 'column', 
-                                        gap: 20
-                                    }}>
-                                        {loading ? (
-                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100}  />
-                                        ) : (
-                                            data.extra_attrs?.members?.map((member, index) =>
-                                                <View key={index} style={{ position: 'relative', flexDirection: 'row', alignContent: 'center', gap: 20 }}>
-                                                    <Image source={{ uri: member.avatar_url }} style={{ width: 45, height: 45, borderRadius: 50 }} />
-                                                    <Text>{member.nama}</Text>
-                                                </View>
-                                            )
-                                        )}
-                                    </View>
-
-                                    
-
-                                </ScrollView>
-                                </View>
-                            </View>
-                        </Modal>
-
-
-
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda Rapat Eksternal</Text>
-              <View>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 20,
+            }}
+          >
+            <View
+              style={{
+                width: "90%",
+                backgroundColor: COLORS.white,
+                padding: 16,
+                borderRadius: 16,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 20,
+                  alignItems: "center",
+                }}
+              >
                 {loading ? (
-                  <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={200}
+                    height={20}
+                  />
                 ) : (
-                  data.extra_attrs?.guest_external?.map((data, index) =>
-                    <View key={data.id} style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
-                      <Text>-</Text>
-                      {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                      <Text style={{ width: 150 }}>{data.name}</Text>
-                    </View>
-                  )
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.Judul,
+                      fontWeight: FONTWEIGHT.bold,
+                      width: 200,
+                    }}
+                  >
+                    {data.title}
+                  </Text>
+                )}
+
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      width: 90,
+                      height: 24,
+                      backgroundColor: COLORS.infoLight,
+                      borderRadius: 30,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={{ color: COLORS.info }}>{data.status}</Text>
+                  </View>
                 )}
               </View>
-              {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity> */}
-            </View>
 
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Notulen</Text>
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-              ) : (
-                data.extra_attrs?.notulen?.map((data, index) =>
-                  <View key={data.id} style={{ position: 'relative' }}>
-                    {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                    <Text>{data.nama}</Text>
-                  </View>
-                )
-              )}
-              {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity> */}
-            </View>
+              <View style={{ marginTop: 10 }}>
+                <Text>
+                  {data?.note !== "" && data?.note !== null ? data.note : "-"}
+                </Text>
+              </View>
 
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Petugas Absen</Text>
-              {loading ? (
-                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-              ) : (
-                data.extra_attrs?.presensi?.map((item) =>
-                  <View>
-                    <Text>{item.nama}</Text>
-                  </View>
-                )
-              )}
-              {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
-                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity> */}
-            </View>
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
 
-
-
-            {/* custom divider */}
-            <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-
-            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
-            {loading ? (
-              <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 20 }} width={100} height={100} />
-            ) : (
-              <FlatList
-                key={'*'}
-                data={data.attachments}
-                renderItem={({ item }) =>
-                <View key={item.id}>
-                {item.attachments !== 0 ? (
-                  <Text>-</Text> 
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                  Tanggal
+                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
                 ) : (
-                  <CardLampiran
-                    lampiran={item.file}
-                    type={getFileExtension(item.name)}
-                    onClick={() => {
-                      setVisibleModal(true);
-                      setLampiranById(item);
-                    }}
+                  <>
+                    {data?.start_date !== "" && data?.start_date !== null ? (
+                      <Text>
+                        {moment(data.start_date).format("d MMM yyy")} -{" "}
+                      </Text>
+                    ) : (
+                      "-"
+                    )}
+                    {data?.end_date !== "" && data?.end_date !== null ? (
+                      <Text>{moment(data.end_date).format("d MMM yyy")}</Text>
+                    ) : (
+                      ""
+                    )}
+                  </>
+                )}
+              </View>
+
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
+
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                  Tempat
+                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text style={{ width: 156 }}>
+                    {data?.location !== "" && data?.location !== null
+                      ? data.location
+                      : "-"}
+                  </Text>
+                )}
+              </View>
+
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
+
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                  Pimpinan Agenda Rapat
+                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text style={{ width: 150 }}>
+                    {data?.extra_attrs?.pic?.title?.name !== "" &&
+                    data?.extra_attrs?.pic?.title?.name !== null
+                      ? data.extra_attrs?.pic.title.name
+                      : "-"}
+                  </Text>
+                )}
+              </View>
+
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                  Peserta Agenda Rapat
+                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : data.extra_attrs?.members?.length !== 0 ? (
+                  data.extra_attrs?.members?.length >= 3 ? (
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View style={{ flexDirection: "row" }}>
+                        {data.extra_attrs?.members
+                          ?.slice(0, 3)
+                          .map((data, index) => (
+                            <View
+                              key={data.id}
+                              style={{ position: "relative" }}
+                            >
+                              <Image
+                                source={{ uri: data.avatar_url }}
+                                style={{
+                                  width: 26,
+                                  height: 26,
+                                  marginLeft: index !== 0 ? -7 : 0,
+                                  borderRadius: 50,
+                                }}
+                              />
+                            </View>
+                          ))}
+                      </View>
+                      <TouchableOpacity
+                        onPress={() => {
+                          bottomSheetAttach();
+                        }}
+                      >
+                        <Ionicons name="chevron-forward" size={24} />
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    data.extra_attrs?.members
+                      ?.slice(0, 3)
+                      .map((data, index) => (
+                        <View key={data.id} style={{ position: "relative" }}>
+                          <Image
+                            source={{ uri: data.avatar_url }}
+                            style={{
+                              width: 26,
+                              height: 26,
+                              marginLeft: index !== 0 ? -7 : 0,
+                              borderRadius: 50,
+                            }}
+                          />
+                        </View>
+                      ))
+                  )
+                ) : (
+                  "-"
+                )}
+                {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity> */}
+              </View>
+
+              <BottomSheetModal
+                ref={bottomSheetModalRef}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
                   />
                 )}
-              </View>
-              
-                }
-                scrollEnabled={false}
-                style={{ marginTop: 10 }}
-                columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 15, gap: 5 }}
-                numColumns={3}
-                keyExtractor={item => "*" + item.id}
-              />
-            )}
+              >
+                <BottomSheetView onLayout={handleContentLayout}>
+                  <View style={{ marginTop: 20, marginBottom: 40 }}>
+                    <View
+                      style={{
+                        marginBottom: 20,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: FONTSIZE.H2,
+                          fontWeight: FONTWEIGHT.bold,
+                          color: COLORS.lighter,
+                        }}
+                      >
+                        Peserta Agenda Rapat
+                      </Text>
+                    </View>
+                    <View>
+                      <FlatList
+                        data={data.extra_attrs?.members}
+                        renderItem={({ item }) => (
+                          <View key={item.nip}>
+                            <CardItemMember item={item} />
+                          </View>
+                        )}
+                        keyExtractor={(item) => item.id}
+                      />
+                    </View>
+                  </View>
+                </BottomSheetView>
+              </BottomSheetModal>
 
-            {
-              lampiranById !== null ? (
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                  Peserta Agenda Rapat Eksternal
+                </Text>
+                <View>
+                  {loading ? (
+                    <ShimmerPlaceHolder
+                      style={{ borderRadius: 4 }}
+                      width={100}
+                      height={20}
+                    />
+                  ) : data.extra_attrs?.guest_external?.length !== 0 ? (
+                    data.extra_attrs?.guest_external?.map((data, index) => (
+                      <View
+                        key={data.id}
+                        style={{
+                          flexDirection: "row",
+                          gap: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        <Text>{"-"}</Text>
+                        {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
+                        <Text style={{ width: 150 }}>{data.name}</Text>
+                      </View>
+                    ))
+                  ) : (
+                    <Text>{"-"}</Text>
+                  )}
+                </View>
+                {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity> */}
+              </View>
+
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                  Notulen
+                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : data.extra_attrs?.notulen?.length !== 0 ? (
+                  data.extra_attrs?.notulen?.map((data, index) => (
+                    <View key={data.id} style={{ position: "relative" }}>
+                      {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
+                      <Text>{data.nama}</Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text>{"-"}</Text>
+                )}
+                {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity> */}
+              </View>
+
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                  Petugas Absen
+                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : data.extra_attrs?.presensi?.length !== 0 ? (
+                  data.extra_attrs?.presensi?.map((item) => (
+                    <View>
+                      <Text>{item.nama}</Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text>{"-"}</Text>
+                )}
+                {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+                                <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
+                            </TouchableOpacity> */}
+              </View>
+
+              {/* custom divider */}
+              <View
+                style={{
+                  height: 1,
+                  width: "100%",
+                  backgroundColor: "#DBDADE",
+                  marginVertical: 10,
+                }}
+              />
+
+              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                Lampiran
+              </Text>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4, marginTop: 20 }}
+                  width={100}
+                  height={100}
+                />
+              ) : data?.attachments.length !== 0 ? (
+                <FlatList
+                  key={"*"}
+                  data={data.attachments}
+                  renderItem={({ item }) => (
+                    <View key={item.id}>
+                      <CardLampiran
+                        lampiran={item.file}
+                        type={getFileExtension(item.name)}
+                        onClick={() => {
+                          setVisibleModal(true);
+                          setLampiranById(item);
+                        }}
+                      />
+                    </View>
+                  )}
+                  scrollEnabled={false}
+                  style={{ marginTop: 10 }}
+                  columnWrapperStyle={{
+                    justifyContent: "space-between",
+                    marginHorizontal: 15,
+                    gap: 5,
+                  }}
+                  numColumns={3}
+                  keyExtractor={(item) => "*" + item.id}
+                />
+              ) : (
+                <Text>{"-"}</Text>
+              )}
+
+              {lampiranById !== null ? (
                 <Modal
                   animationType="fade"
                   transparent={true}
                   visible={visibleModal}
                   onRequestClose={() => {
                     setVisibleModal(false);
-                    setLampiranById(null)
+                    setLampiranById(null);
                   }}
-
                 >
-                  <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
-                  <View style={{ alignItems: 'center', flex: 1, display: 'flex', justifyContent: 'center' }}>
+                  <TouchableOpacity
+                    style={[
+                      Platform.OS === "ios"
+                        ? styles.iOSBackdrop
+                        : styles.androidBackdrop,
+                      styles.backdrop,
+                    ]}
+                  />
+                  <View
+                    style={{
+                      alignItems: "center",
+                      flex: 1,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
                     <TouchableOpacity
                       onPress={() => {
-                        setVisibleModal(false)
-                        setLampiranById(null)
+                        setVisibleModal(false);
+                        setLampiranById(null);
                       }}
                       style={{
-                        position: 'absolute',
-                        top: '15%',
-                        left: 20
-                      }}>
-
-                      <View style={{
-                        backgroundColor: COLORS.primary,
-                        width: 51,
-                        height: 51,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 50
-                      }}>
-                        <Ionicons name='close-outline' color={COLORS.white} size={24} />
+                        position: "absolute",
+                        top: "15%",
+                        left: 20,
+                      }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: COLORS.primary,
+                          width: 51,
+                          height: 51,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: 50,
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          color={COLORS.white}
+                          size={24}
+                        />
                       </View>
                     </TouchableOpacity>
-                    {getFileExtension(lampiranById.name) === 'png' || getFileExtension(lampiranById.name) === 'jpg' || getFileExtension(lampiranById.name) === 'jpeg' ? (
+                    {getFileExtension(lampiranById.name) === "png" ||
+                    getFileExtension(lampiranById.name) === "jpg" ||
+                    getFileExtension(lampiranById.name) === "jpeg" ? (
                       <View>
-                        <Image source={{ uri: lampiranById.file }} style={{ width: 390, height: 283 }} />
+                        <Image
+                          source={{ uri: lampiranById.file }}
+                          style={{ width: 390, height: 283 }}
+                        />
                       </View>
-                    ) : getFileExtension(lampiranById.name) === 'mp4' ? (
+                    ) : getFileExtension(lampiranById.name) === "mp4" ? (
                       <Video
                         ref={video}
                         style={{ width: 390, height: 283 }}
@@ -423,28 +649,32 @@ export const DetailEvent = () => {
                         useNativeControls
                         resizeMode={ResizeMode.CONTAIN}
                         isLooping
-                        onPlaybackStatusUpdate={status => setStatus(() => status)}
+                        onPlaybackStatusUpdate={(status) =>
+                          setStatus(() => status)
+                        }
                       />
                     ) : (
                       <></>
                     )}
                   </View>
                 </Modal>
-              ) : null
-            }
+              ) : null}
+            </View>
           </View>
-        </View>
 
-
-        {
-          data.user_role?.is_pic === true ||
-            data.user_role?.is_notulensi === false &&
+          {data.user_role?.is_pic === true ||
+          (data.user_role?.is_notulensi === false &&
             data.user_role?.is_presensi === false &&
             data.user_role?.is_member === false &&
-            data.user_role?.is_pic === false ? (
+            data.user_role?.is_pic === false) ? (
             <View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20 }}>
-
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  marginHorizontal: 20,
+                }}
+              >
                 {/* <TouchableOpacity style={{
                                     backgroundColor: COLORS.info,
                                     width: 134,
@@ -456,12 +686,18 @@ export const DetailEvent = () => {
                                         <Ionicons name='chevron-forward-outline' size={20} color={COLORS.white} />
                                     </View>
                                 </TouchableOpacity> */}
-                <View style={{ width: '50%' }}>
+                <View style={{ width: "100%" }}>
                   <Dropdown
                     data={statusEvent}
                     setSelected={setKategori}
                     handleClick={(item) => {
-                      dispatch(updateStatus({ token: token, id: data.id, status: item.value }))
+                      dispatch(
+                        updateStatus({
+                          token: token,
+                          id: data.id,
+                          status: item.value,
+                        })
+                      );
                     }}
                     borderWidth={1}
                     borderColor={COLORS.ExtraDivinder}
@@ -475,87 +711,120 @@ export const DetailEvent = () => {
                   />
                 </View>
 
-
-                <View style={{ flexDirection: 'row', gap: 10 }}>
-                  <TouchableOpacity style={{
-                    backgroundColor: COLORS.lightBrown,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 8
+                <View
+                  style={{
+                    flexDirection: "column",
+                    marginTop: 10,
+                    marginBottom: 20,
+                    rowGap: 10,
                   }}
+                >
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: COLORS.lightBrown,
+                      width: "100%",
+                      height: 50,
+                      borderRadius: 8,
+                    }}
                     onPress={() => {
-                      navigation.navigate('EditEvent')
+                      navigation.navigate("EditEvent");
                     }}
                   >
-                    <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
-                      <Ionicons name='pencil-outline' size={20} color={COLORS.white} />
+                    <View
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        flex: 1,
+                        gap: 20,
+                      }}
+                    >
+                      <Text style={{ color: COLORS.white }}>Edit Event</Text>
+                      <Ionicons
+                        name="pencil-outline"
+                        size={20}
+                        color={COLORS.white}
+                      />
                     </View>
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={{
-                    backgroundColor: COLORS.infoDanger,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 8
-                  }}
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: COLORS.infoDanger,
+                      width: "100%",
+                      height: 50,
+                      borderRadius: 8,
+                    }}
                     onPress={() => {
                       const datas = {
                         token: token,
-                        id: data.id
-                      }
-                      dispatch(deleteEvent(datas))
+                        id: data.id,
+                      };
+                      dispatch(deleteEvent(datas));
                       setTimeout(() => {
-                        navigation.navigate('HalamanUtama')
-                      }, 3000)
+                        navigation.navigate("HalamanUtama");
+                      }, 3000);
                     }}
                   >
-                    <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', flex: 1, gap: 20 }}>
-                      <Ionicons name='trash-outline' size={20} color={COLORS.white} />
+                    <View
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        flex: 1,
+                        gap: 20,
+                      }}
+                    >
+                      <Text style={{ color: COLORS.white }}>Hapus Event</Text>
+                      <Ionicons
+                        name="trash-outline"
+                        size={20}
+                        color={COLORS.white}
+                      />
                     </View>
                   </TouchableOpacity>
-
                 </View>
-
               </View>
-              <View
+              {/* <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginVertical: 10,
+              }}
+            >
+              <TouchableOpacity
                 style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginVertical: 20,
+                  backgroundColor: COLORS.foundation,
+                  width: Platform.OS === "ios" ? "90%" : "91%",
+                  height: 50,
+                  borderRadius: 8,
                 }}
               >
-                <TouchableOpacity
+                <View
                   style={{
-                    backgroundColor: COLORS.foundation,
-                    width: Platform.OS === "ios" ? "90%" : "91%",
-                    height: 50,
-                    borderRadius: 8,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    flex: 1,
+                    gap: 20,
                   }}
                 >
-                  <View
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexDirection: "row",
-                      flex: 1,
-                      gap: 20,
-                    }}
-                  >
-                    <Text style={{ color: COLORS.white }}>Kirim Notifikasi</Text>
-                    <Ionicons
-                      name="notifications-outline"
-                      size={20}
-                      color={COLORS.white}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View>
+                  <Text style={{ color: COLORS.white }}>Kirim Notifikasi</Text>
+                  <Ionicons
+                    name="notifications-outline"
+                    size={20}
+                    color={COLORS.white}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View> */}
             </View>
           ) : (
             <></>
           )}
-      </ScrollView>
-    </ >
+        </ScrollView>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 const styles = StyleSheet.create({

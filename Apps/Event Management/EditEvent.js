@@ -76,13 +76,13 @@ const CardListPeserta = ({ item, addressbook }) => {
     const deleteItem = (id, state) => {
         let data;
         if (state === "jabatan") {
-            data = addressbook.selected.filter(data => {
+            data = addressbook?.selected.filter(data => {
                 let nip = data.nip || data.officer.official.split('/')[1]
                 return nip !== id
             })
             dispatch(setAddressbookSelected(data))
         } else {
-            data = addressbook.selected.filter(data => data.nip !== id)
+            data = addressbook?.selected.filter(data => data.nip !== id)
             dispatch(setAddressbookSelected(data))
         }
     }
@@ -251,13 +251,13 @@ export const EditEvent = () => {
 
     useEffect(() => {
         if (stateConfig.title === 'Pimpinan Event') {
-            setPilihanPimpinanEvent(addressbook.selected)
+            setPilihanPimpinanEvent(addressbook?.selected)
         } else if (stateConfig.title === 'Peserta Event') {
-            setPilihanPesertaEvent(addressbook.selected)
+            setPilihanPesertaEvent(addressbook?.selected)
         } else if (stateConfig.title === 'Notulen Event') {
-            setPilihanNotulenEvent(addressbook.selected)
+            setPilihanNotulenEvent(addressbook?.selected)
         } else if (stateConfig.title === 'Petugas Absen Event') {
-            setPilihanPetugasAbsenEvent(addressbook.selected)
+            setPilihanPetugasAbsenEvent(addressbook?.selected)
         }
     }, [addressbook])
 
@@ -599,7 +599,7 @@ export const EditEvent = () => {
                                                 </View>
                                             </TouchableOpacity> */}
                                             <View style={{ width: '100%', height: '100%', padding: 16 }}>
-                                                <Addressbook />
+                                                {/* <Addressbook /> */}
 
                                                 {/* <TouchableOpacity onPress={() => setVisible(false)} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
                                                     <View style={{ backgroundColor: COLORS.primary, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>

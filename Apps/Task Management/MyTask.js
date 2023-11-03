@@ -41,6 +41,7 @@ const { width: screenWidth } = Dimensions.get('window');
 export const MyTask = () => {
     const dispatch = useDispatch()
     const [token, setToken] = useState("");
+    const [page, setPage] = useState(5);
     const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
 
     useEffect(() => {
@@ -50,9 +51,9 @@ export const MyTask = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(getListDashboardTM({ token: token }))
+        dispatch(getListDashboardTM({ token: token, page:page }))
         dispatch(getTreeTM({ token: token }))
-    }, [token]);
+    }, [token, page]);
 
     const { refresh, variant, treeView, list, loading } = useSelector(state => state.task)
     const taskLists = list.data
@@ -98,6 +99,13 @@ export const MyTask = () => {
             bottomSheetModalAddRef.current?.close()
     }
 
+    const loadMore = () => {
+        if (taskLists.length % 5 === 0) {
+          setPage(page + 5);
+        }
+        console.log(page);
+    };
+
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
 
@@ -139,6 +147,7 @@ export const MyTask = () => {
 
     useEffect(() => {
         let arrList = []
+        console.log(choiceKategori)
         const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
         treeView[index]?.list_tasks?.map(item => {
             arrList.push({
@@ -146,13 +155,16 @@ export const MyTask = () => {
                 value: item.name
             })
         })
+        console.log("index mytask"+ index)
         // setChoiceList(arrList.length > 0 ? arrList[0] : '')
         setDataList(arrList)
     }, [choiceKategori])
 
+    // console.log(choiceKategori)
+
     const handleChoiceSubmit = () => {
         if (choiceTipe.value === 'Dashboard') {
-            dispatch(getListDashboardTM({ token: token }))
+            dispatch(getListDashboardTM({ token: token, page:page }))
         } else if (choiceTipe.value === 'Korespondensi') {
 
         } else {
@@ -221,7 +233,7 @@ export const MyTask = () => {
         dispatch(setRefresh(null))
     }, [refresh])
 
-    console.log(taskLists)
+    // console.log(taskLists)
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
@@ -247,8 +259,9 @@ export const MyTask = () => {
 
                     <View style={{ flexDirection: 'row', gap: 5,  paddingHorizontal:20 }}>
                         <TouchableOpacity onPress={bottomSheetAttachSelect} style={{ width: '100%' }}>
-                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, height: 54, justifyContent: 'center', borderRadius: 8 }}>
+                            <View style={{ backgroundColor: COLORS.white, marginVertical: 20, paddingVertical:14, paddingHorizontal:10 ,justifyContent: 'space-between', alignContent:"center" , borderRadius: 8, flexDirection:"row" }}>
                                 <Text style={{ marginLeft: 20, color: COLORS.lighter }}>Pilih Project</Text>
+                                <Ionicons name='chevron-down-outline' size={24} color={COLORS.primary} />
                             </View>
                         </TouchableOpacity>
 
@@ -304,7 +317,7 @@ export const MyTask = () => {
                                                     />
                                                 </View>
 
-                                                <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
+                                                {/* <View style={{ width: '90%', marginHorizontal: 20, marginTop: 20 }}>
                                                     <Dropdown
                                                         placeHolder={'Pilih List'}
                                                         borderWidth={1}
@@ -317,12 +330,17 @@ export const MyTask = () => {
                                                         borderWidthValue={1}
                                                         borderColorValue={COLORS.ExtraDivinder}
                                                     />
-                                                </View>
+                                                </View> */}
                                             </>
                                         ) : null
                                     }
 
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                                bottomSheetSelectClose()
+                                                handleChoiceSubmit()
+                                        }}
+                                        >
                                         <View style={{
                                             marginHorizontal: 20,
                                             backgroundColor: COLORS.primary,
@@ -333,11 +351,8 @@ export const MyTask = () => {
                                             borderRadius: 6,
                                             marginVertical: 40,
                                         }}
-                                        onPress={() => {
-                                            bottomSheetSelectClose()
-                                            handleChoiceSubmit()
-                                        }}>
-                                            <Text style={{ color: COLORS.white }}>Hapus</Text>
+                                        >
+                                            <Text style={{ color: COLORS.white }}>Terapkan</Text>
                                         </View>
                                     </TouchableOpacity>
 
@@ -352,7 +367,7 @@ export const MyTask = () => {
                         </TouchableOpacity> */}
                     </View>
 
-                    <View style={{ paddingHorizontal:20, flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ paddingHorizontal:20, flexDirection: 'row', alignItems: 'center'}}>
                         <View style={{ flexDirection: 'column', gap: 4, flex: 1 }}>
                             {
                                 loading ? (
@@ -368,29 +383,24 @@ export const MyTask = () => {
                                                 (
                                                     <Text style={{ fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, color: COLORS.lighter }} numberOfLines={2}>{list.name}</Text>
                                                 )
-                                        }
+                                        }           
                                     </View>
                                 )
                             }
-                        </View>
+                            {list.type !== 'Detail Project' ? (
 
-                        {
-                            list.type !== 'Detail Project' ? (
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                                    <TouchableOpacity onPress={bottomSheetAttach}>
-                                        <View style={styles.circleList}>
-                                            <Ionicons name='filter-outline' size={24} color={variant === 'list' ? COLORS.primary : COLORS.grey} />
-                                        </View>
-                                    </TouchableOpacity>
-                                    {/* <TouchableOpacity onPress={() => dispatch(setVariant("grid"))}>
-                                        <View style={styles.circleList}>
-                                            <Ionicons name='apps-outline' size={24} color={variant === 'grid' ? COLORS.primary : COLORS.grey} />
-                                        </View>
-                                    </TouchableOpacity> */}
+                                <View style={{ backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, marginTop:10}}>
+                                    <Search
+                                        placeholder={"Cari"}
+                                        iconColor={COLORS.primary}
+                                        onSearch={filter}
+                                    />
                                 </View>
-                            ) : null
-                        }
+                            ) : null }
+                        </View>
                     </View>
+
+                    
 
                     {
                         list.type !== 'Detail Project' ? (
@@ -398,6 +408,7 @@ export const MyTask = () => {
                                 {
                                     list.type === 'Dashboard' ? (
                                         <TopsTaskDashboard />
+                                        
                                     ) : list.type === 'Korespondensi' ? (
                                         <TopsTaskKorespondensi />
                                     ) : (
@@ -406,7 +417,9 @@ export const MyTask = () => {
                                 }
                             </View>
                         ) : (
-                            <DetailProject />
+                            <DetailProject 
+                                choiceKategori={choiceKategori}
+                            />
                         )
                     }
 

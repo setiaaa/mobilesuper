@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps'
@@ -12,10 +12,43 @@ import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { CardItemMember } from '../../../components/CardItemMember'
+import { useState } from 'react'
+import ListEmpty from '../../../components/ListEmpty'
 
-export const DetailProject = () => {
-    const { detailProject } = useSelector(state => state.task)
+const CardListKategori = (id, name) => {
+    const navigation = useNavigation()
+    return (
+        <TouchableOpacity>
+            <View
+                style={{
+                    width: '100%',
+                    backgroundColor: COLORS.white,
+                    borderRadius: 8,
+                    gap: 1,
+                    marginVertical: 5,
+                    //shadow
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: '#171717',
+                    shadowOpacity: 0.2,
+                    shadowRadius: 3,
+                }}>
+                <View style={{ marginVertical: 10, marginLeft: 10 }}>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>{name}</Text>
+                </View>
+                <View style={{ marginBottom: 10, marginLeft: 10, display: 'flex', flexDirection: 'row', gap: 2 }}>
+                    <Text>Target Tanggal: </Text>
+                    <Text style={{ color: COLORS.danger }}>test</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+}
+
+export const DetailProject = (choiceKategori, dataKategori) => {
+    const { detailProject, treeView } = useSelector(state => state.task)
     const { profile } = useSelector(state => state.superApps)
+    // const [choiceKategori, setChoiceKategori] = useState('')
+    const [dataList, setDataList] = useState([])
     const navigation = useNavigation()
     const bottomSheetModalMemberRef = useRef(null);
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
@@ -29,11 +62,43 @@ export const DetailProject = () => {
     const bottomSheetMember = () => {
         bottomSheetModalMemberRef.current?.present()
     }
+
+    useEffect(() => {
+        let arrList = []
+        // console.log(choiceKategori)
+        const index = 3
+        // const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+        treeView[index]?.list_tasks?.map(item => {
+            arrList.push({
+                key: item.id,
+                value: item.name
+            })
+        })
+        // console.log(index)
+        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
+        setDataList(arrList)
+    }, [choiceKategori])
+
+    console.log(dataList)
+
     return (
         <View style={{ flex: 1 }}>
             <ScrollView>
                 <View style={{ backgroundColor: COLORS.white, marginHorizontal: 20, borderRadius: 8 }}>
-                    <View style={{ marginHorizontal: 20, marginVertical: 20, display: 'flex', flexDirection: 'column', gap: 20 }}>
+                    <View style={{ marginTop: 20 }}>
+                                <FlatList
+                                    data={dataList}
+                                    renderItem={({ item }) => <CardListKategori
+                                        id={item.id}
+                                        name={item.value}
+                                    />
+                                    }
+                                    ListEmptyComponent={() =>
+                                        <ListEmpty />
+                                    }
+                            />
+                        </View>
+                    {/* <View style={{ marginHorizontal: 20, marginVertical: 20, display: 'flex', flexDirection: 'column', gap: 20 }}>
                         <View style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                             <Text style={{ fontSize: FONTSIZE.Judul, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>{detailProject.name}</Text>
                             <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}>{detailProject.description}</Text>
@@ -173,7 +238,7 @@ export const DetailProject = () => {
                                 </View>
                             </View>
                         </View>
-                    </View>
+                    </View> */}
                 </View>
 
                 {

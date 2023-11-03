@@ -161,7 +161,7 @@ export const DetailTask = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Task</Text>
+                                <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Detail Tugas</Text>
                             </View>
                         </View>
 
@@ -178,6 +178,7 @@ export const DetailTask = () => {
                                 borderColorDrop={COLORS.ExtraDivinder}
                                 borderWidthValue={1}
                                 borderColorValue={COLORS.ExtraDivinder}
+                                textColor={COLORS.white}
                             />
                         </View>
 
