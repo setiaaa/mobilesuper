@@ -99,13 +99,31 @@ export default function Dashboard() {
     }
   }, [page, value]);
 
-  const filterData = (search) => {
-    const filter =
-      lists.results?.datas.length !== 0 &&
-      lists.results?.datas.filter((item) => {
+  // const filterData = (search) => {
+  //   const filter =
+  //     lists.results?.datas.length !== 0 &&
+  //     lists.results?.datas.filter((item) => {
+  //       return item.subjek.toLowerCase().includes(search.toLowerCase());
+  //     });
+  //   setFilterData(filter);
+  // };
+
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const item = lists.results?.datas;
+    if (search !== "") {
+      const data = item.filter((item) => {
         return item.subjek.toLowerCase().includes(search.toLowerCase());
       });
-    setFilterData(filter);
+      setFilterData(data);
+    } else {
+      setFilterData(item);
+    }
+  }, [search]);
+
+  const filterData = (event) => {
+    setSearch(event);
   };
 
   const [ascending, setAscending] = useState(false);
@@ -136,9 +154,11 @@ export default function Dashboard() {
     console.log(page);
   };
 
-  console.log("ini page dari dashboarfd" + page);
-  console.log(lists?.results?.datas);
+  // console.log("ini page dari dashboarfd" + page);
+  // console.log(lists?.results?.datas);
   const navigation = useNavigation();
+
+  console.log(dataFilter);
 
   return (
     <>
@@ -349,11 +369,7 @@ export default function Dashboard() {
               <View style={{ marginBottom: 100, paddingBottom: 30 }}>
                 {variant === "list" ? (
                   <FlatList
-                    data={
-                      dataFilter && dataFilter.length > 0 && isFiltered
-                        ? dataFilter
-                        : lists.results?.datas
-                    }
+                    data={dataFilter}
                     renderItem={({ item }) => (
                       <CardKebijakan
                         subjek={item.subjek}
