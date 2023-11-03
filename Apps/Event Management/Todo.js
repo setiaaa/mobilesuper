@@ -208,7 +208,7 @@ export const Todo = () => {
           />
         )}
         keyExtractor={(item) => item.id}
-        style={{ marginTop: 10 }}
+        style={{ marginTop: 20 }}
         ListEmptyComponent={() => <ListEmpty />}
       />
 

@@ -70,8 +70,8 @@ const CardListAbsen = ({ item, loading }) => {
                     item.status === "hadir"
                       ? COLORS.successLight
                       : item.status === "waiting"
-                        ? COLORS.infoLight
-                        : null,
+                      ? COLORS.infoLight
+                      : null,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -82,8 +82,8 @@ const CardListAbsen = ({ item, loading }) => {
                       item.status === "hadir"
                         ? COLORS.success
                         : item.status === "waiting"
-                          ? COLORS.info
-                          : null,
+                        ? COLORS.info
+                        : null,
                   }}
                 >
                   {item.status}
@@ -355,7 +355,7 @@ export const Absen = () => {
         renderItem={({ item }) => (
           <CardListAbsen item={item} loading={loading} />
         )}
-        style={{ marginVertical: 20 }}
+        style={{}}
         ListEmptyComponent={() => <ListEmpty />}
       />
     </>
