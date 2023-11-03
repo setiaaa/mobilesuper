@@ -355,7 +355,7 @@ export const Absen = () => {
         renderItem={({ item }) => (
           <CardListAbsen item={item} loading={loading} />
         )}
-        style={{ marginVertical: 20 }}
+        style={{}}
         ListEmptyComponent={() => <ListEmpty />}
       />
     </>
