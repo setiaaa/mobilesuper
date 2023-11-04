@@ -1553,7 +1553,6 @@ export const getKuotaCuti = createAsyncThunk(
 export const getTanggalLibur = createAsyncThunk(
     "cuti/getTanggalLibur",
     async (nip) => {
-        console.log(nip)
         const respon = await axios.get(`${Cuti}tanggal-libur?nip=${nip}&tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=`, {
             // headers: { Authorization: token },
         });
@@ -1564,8 +1563,27 @@ export const getTanggalLibur = createAsyncThunk(
 export const getLiburKhusus = createAsyncThunk(
     "cuti/getLiburKhusus",
     async (nip) => {
-        console.log(nip)
         const respon = await axios.get(`${Cuti}tanggal-libur?nip=${nip}&tanggal_mulai=2023-01-01&tanggal_akhir=&jenis_liburan=Private Holiday`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
+export const getArsipCuti = createAsyncThunk(
+    "cuti/getArsipCuti",
+    async (nip) => {
+        const respon = await axios.get(`${Cuti}dokumen-cutiku/?nip=${nip}&status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
+export const getDetailArsipCuti = createAsyncThunk(
+    "cuti/getDetailArsipCuti",
+    async (data) => {
+        const respon = await axios.get(`${Cuti}dokumen-detail/?nip=${data.nip}&document_id=${data.id}`, {
             // headers: { Authorization: token },
         });
         return respon?.data

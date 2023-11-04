@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search'
 import { useNavigation } from '@react-navigation/native'
@@ -11,18 +11,235 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Image } from 'react-native-svg'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
+import moment from 'moment'
+import { FlatList } from 'react-native'
+
+const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
+    const navigation = useNavigation();
+
+    // console.log(name);
+    // console.log(size);
+    return type === "png" || type === "jpg" || type === "jpeg" ? (
+        <TouchableOpacity key={id} onPress={onClick}>
+            <View
+                style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    backgroundColor: COLORS.secondaryLighter,
+                    alignItems: "center",
+                    width: 110,
+                    rowGap: 5,
+                    marginRight: 10,
+                }}
+            >
+                <Image
+                    source={{ uri: lampiran }}
+                    style={{ width: 90, height: 90, borderRadius: 8 }}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+                    {name}
+                </Text>
+                <Text style={{ color: COLORS.lighter }}>
+                    {Math.floor(size / 1000)} MB
+                </Text>
+            </View>
+        </TouchableOpacity>
+    ) : type === "mp4" ? (
+        <TouchableOpacity key={id} onPress={onClick}>
+            <View
+                style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    backgroundColor: COLORS.secondaryLighter,
+                    alignItems: "center",
+                    width: 110,
+                    rowGap: 5,
+                    marginRight: 10,
+                }}
+            >
+                <Image
+                    source={require("../../assets/superApp/mp4.png")}
+                    style={{ width: 90, height: 90 }}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+                    {name}
+                </Text>
+                <Text style={{ color: COLORS.lighter }}>
+                    {Math.floor(size / 1000)} MB
+                </Text>
+            </View>
+        </TouchableOpacity>
+    ) : type === "doc" || type === "docx" ? (
+        <TouchableOpacity
+            key={id}
+            onPress={() =>
+                navigation.navigate("FileViewer", {
+                    lampiran: lampiran,
+                    type: type,
+                })
+            }
+        >
+            <View
+                style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    backgroundColor: COLORS.secondaryLighter,
+                    alignItems: "center",
+                    width: 110,
+                    rowGap: 5,
+                    marginRight: 10,
+                }}
+            >
+                <Image
+                    source={require("../../assets/superApp/word.png")}
+                    style={{ width: 90, height: 90 }}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+                    {name}
+                </Text>
+                <Text style={{ color: COLORS.lighter }}>
+                    {Math.floor(size / 1000)} MB
+                </Text>
+            </View>
+        </TouchableOpacity>
+    ) : type === "xls" || type === "xlsx" ? (
+        <TouchableOpacity
+            key={id}
+            onPress={() =>
+                navigation.navigate("FileViewer", {
+                    lampiran: lampiran,
+                    type: type,
+                })
+            }
+        >
+            <View
+                style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    backgroundColor: COLORS.secondaryLighter,
+                    alignItems: "center",
+                    width: 110,
+                    rowGap: 5,
+                    marginRight: 10,
+                }}
+            >
+                <Image
+                    source={require("../../assets/superApp/excel.png")}
+                    style={{ width: 90, height: 90 }}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+                    {name}
+                </Text>
+                <Text style={{ color: COLORS.lighter }}>
+                    {Math.floor(size / 1000)} MB
+                </Text>
+            </View>
+        </TouchableOpacity>
+    ) : type === "pdf" ? (
+        <TouchableOpacity
+            key={id}
+            onPress={() =>
+                navigation.navigate("FileViewer", {
+                    lampiran: lampiran,
+                    type: type,
+                })
+            }
+        >
+            <View
+                style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    backgroundColor: COLORS.secondaryLighter,
+                    alignItems: "center",
+                    width: 110,
+                    rowGap: 5,
+                    marginRight: 10,
+                }}
+            >
+                <Image
+                    source={require("../../assets/superApp/pdf.png")}
+                    style={{ width: 90, height: 90 }}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+                    {name}
+                </Text>
+                <Text style={{ color: COLORS.lighter }}>
+                    {Math.floor(size / 1000)} MB
+                </Text>
+            </View>
+        </TouchableOpacity>
+    ) : type === "ppt" || type === "pptx" ? (
+        <TouchableOpacity
+            key={id}
+            onPress={() =>
+                navigation.navigate("FileViewer", {
+                    lampiran: lampiran,
+                    type: type,
+                })
+            }
+        >
+            <View
+                style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    backgroundColor: COLORS.secondaryLighter,
+                    alignItems: "center",
+                    width: 110,
+                    rowGap: 5,
+                    marginRight: 10,
+                }}
+            >
+                <Image
+                    source={require("../../assets/superApp/ppt.png")}
+                    style={{ width: 70, height: 70 }}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+                    {name}
+                </Text>
+                <Text style={{ color: COLORS.lighter }}>
+                    {Math.floor(size / 1000)} MB
+                </Text>
+            </View>
+        </TouchableOpacity>
+    ) : null;
+};
 
 
 export const DetailDokumenCuti = () => {
     const dispatch = useDispatch()
     const { profile } = useSelector(state => state.superApps)
+    const { arsip } = useSelector(state => state.cuti)
+    const arsipDetail = arsip.detail
+
     const [collapse, setCollapse] = useState({
         nip: '',
         toggle: false
     })
     const navigation = useNavigation()
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-    console.log(profile)
+    console.log(arsipDetail)
+
+    const selisih = () => {
+        let tanggalMulaiStr = (moment(arsipDetail.detail_dokumen?.dokumen?.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATE))
+        let tanggalAkhirStr = (moment(arsipDetail.detail_dokumen?.dokumen?.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATE))
+
+        let tanggalMulai = new Date(tanggalMulaiStr);
+        let tanggalAkhir = new Date(tanggalAkhirStr);
+
+        let selisih = (tanggalAkhir - tanggalMulai) / (1000 * 60 * 60 * 24)
+        console.log(tanggalMulai)
+        return selisih
+    }
+
+    const [visibleModal, setVisibleModal] = useState(false);
+    const [lampiranById, setLampiranById] = useState(null);
+
+    const getFileExtension = (lampiran) => {
+        let jenis = lampiran.split(".");
+        jenis = jenis[jenis.length - 1];
+        return jenis;
+    };
+
     return (
         <GestureHandlerRootView>
             <View style={{ position: 'relative' }}>
@@ -54,7 +271,7 @@ export const DetailDokumenCuti = () => {
 
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                 <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Jenis Cuti</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Cuti Alasan Penting - Kementrian Kelautan dan Perikanan</Text>
+                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{arsipDetail.detail_dokumen.jenis_cuti.nama}</Text>
                             </View>
 
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
@@ -97,8 +314,8 @@ export const DetailDokumenCuti = () => {
                                 <TouchableOpacity onPress={() => setCollapse({ nip: profile.nip, toggle: true })}>
                                     <View style={{ flexDirection: "row" }}>
                                         <View style={{ width: "90%" }}>
-                                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Muhammad Zaini</Text>
-                                            <Text>NIP. 1923123121213</Text>
+                                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>{arsipDetail.detail_dokumen?.dokumen?.nama_pengaju}</Text>
+                                            <Text>NIP. {arsipDetail.detail_dokumen?.dokumen?.nip_pengaju}</Text>
                                         </View>
                                         {collapse.nip === profile.nip && collapse.toggle === true ? (
                                             <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
@@ -116,13 +333,13 @@ export const DetailDokumenCuti = () => {
                                         <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
 
                                             <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>Golongan</Text>
-                                            <Text style={{ marginTop: 5, }}>IV</Text>
+                                            <Text style={{ marginTop: 5, }}>{arsipDetail.detail_dokumen?.dokumen?.golongan_pengaju}</Text>
 
                                             <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>Jabatan</Text>
-                                            <Text style={{ marginTop: 5, }}>Pengelola Produksi</Text>
+                                            <Text style={{ marginTop: 5, }}>{arsipDetail.detail_dokumen?.dokumen?.posisi_pengaju}</Text>
 
                                             <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>Unit Kerja</Text>
-                                            <Text style={{ marginTop: 5, }}>Kelompok Fungsional Direktorat</Text>
+                                            <Text style={{ marginTop: 5, }}>{arsipDetail.detail_dokumen?.dokumen?.unit_kerja}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 ) : (
@@ -133,7 +350,7 @@ export const DetailDokumenCuti = () => {
                                 <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
                                     <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                         <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Periode Cuti</Text>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>08/10/2023 - 09/10/2023</Text>
+                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{moment(arsipDetail.detail_dokumen?.dokumen?.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATE)} - {moment(arsipDetail.detail_dokumen?.dokumen?.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATE)}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
@@ -143,17 +360,17 @@ export const DetailDokumenCuti = () => {
 
                                     <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                         <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Alamat Cuti</Text>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Villa Bogor Cantik Pisan No 2</Text>
+                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{arsipDetail.detail_dokumen?.dokumen?.alamat_cuti}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                         <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>No Telepon</Text>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>+6289012931</Text>
+                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{arsipDetail.detail_dokumen?.dokumen?.nomor_telpon}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: "row", paddingVertical: 10, }}>
                                         <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Alasan Cuti</Text>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Melangsungkan Pernikahan</Text>
+                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{arsipDetail.detail_dokumen?.dokumen?.alasan_cuti}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -162,17 +379,152 @@ export const DetailDokumenCuti = () => {
                                     <Ionicons name='attach-outline' size={18} color={COLORS.primary} />
                                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
                                 </View>
-                                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                    <View style={{ flexDirection: "row" }}>
-                                        <View style={styles.cardStatus}>
-                                            <View style={{ width: "30%", alignItems: "center", rowGap: 20 }}>
-                                                <Image source={require('../../assets/superApp/pdf.png')} />
-                                                <Text>Draft</Text>
-                                                <Text>3</Text>
+
+                                {arsipDetail.detail_dokumen?.attachment?.length !== 0 ? (
+                                    <View
+                                        style={{
+                                            marginHorizontal: 20,
+                                            marginBottom: 30,
+                                            borderRadius: 16,
+                                            backgroundColor: "white",
+                                            paddingVertical: 16,
+                                            //shadow ios
+                                            shadowOffset: { width: -2, height: 4 },
+                                            shadowColor: "#171717",
+                                            shadowOpacity: 0.2,
+                                            //shadow android
+                                            elevation: 2,
+                                            paddingHorizontal: 16,
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: FONTSIZE.Judul,
+                                                fontWeight: FONTWEIGHT.bold,
+                                            }}
+                                        >
+                                            Lampiran
+                                        </Text>
+                                        <FlatList
+                                            key={"#"}
+                                            data={detail.attachments}
+                                            renderItem={({ item }) => (
+                                                <View key={item.id}>
+                                                    <CardLampiran
+                                                        lampiran={item.file}
+                                                        id={item.id}
+                                                        name={item.name}
+                                                        size={item.file_size}
+                                                        type={getFileExtension(item.name)}
+                                                        onClick={() => {
+                                                            setVisibleModal(true);
+                                                            setLampiranById(item);
+                                                        }}
+                                                    />
+                                                </View>
+                                            )}
+                                            scrollEnabled={true}
+                                            horizontal={true}
+                                            style={{ marginTop: 20 }}
+                                            // columnWrapperStyle={{ justifyContent: "space-evenly" }}
+                                            // numColumns={2}
+                                            keyExtractor={(item) => "#" + item.id}
+                                        />
+                                    </View>
+                                ) : (
+                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                        <View style={{ flexDirection: "row" }}>
+                                            <View style={styles.cardStatus}>
+                                                <View style={{ width: "30%", alignItems: "center", rowGap: 20 }}>
+                                                    <Text>-</Text>
+                                                </View>
                                             </View>
                                         </View>
-                                    </View>
-                                </ScrollView>
+                                    </ScrollView>
+                                )}
+
+
+                                {lampiranById !== null ? (
+                                    <Modal
+                                        animationType="fade"
+                                        transparent={true}
+                                        visible={visibleModal}
+                                        onRequestClose={() => {
+                                            setVisibleModal(false);
+                                            setLampiranById(null);
+                                        }}
+                                    >
+                                        <TouchableOpacity
+                                            style={[
+                                                Platform.OS === "ios"
+                                                    ? styles.iOSBackdrop
+                                                    : styles.androidBackdrop,
+                                                styles.backdrop,
+                                            ]}
+                                        />
+                                        <View
+                                            style={{
+                                                alignItems: "center",
+                                                flex: 1,
+                                                display: "flex",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    setVisibleModal(false);
+                                                    setLampiranById(null);
+                                                }}
+                                                style={{
+                                                    position: "absolute",
+                                                    top: "15%",
+                                                    left: 20,
+                                                }}
+                                            >
+                                                <View
+                                                    style={{
+                                                        backgroundColor: COLORS.primary,
+                                                        width: 51,
+                                                        height: 51,
+                                                        justifyContent: "center",
+                                                        alignItems: "center",
+                                                        borderRadius: 50,
+                                                    }}
+                                                >
+                                                    <Ionicons
+                                                        name="close-outline"
+                                                        color={COLORS.white}
+                                                        size={24}
+                                                    />
+                                                </View>
+                                            </TouchableOpacity>
+                                            {getFileExtension(lampiranById.name) === "png" ||
+                                                getFileExtension(lampiranById.name) === "jpg" ||
+                                                getFileExtension(lampiranById.name) === "jpeg" ? (
+                                                <View>
+                                                    <Image
+                                                        source={{ uri: lampiranById.file }}
+                                                        style={{ width: 390, height: 283 }}
+                                                    />
+                                                </View>
+                                            ) : getFileExtension(lampiranById.name) === "mp4" ? (
+                                                <Video
+                                                    ref={video}
+                                                    style={{ width: 390, height: 283 }}
+                                                    source={{ uri: lampiranById.file }}
+                                                    useNativeControls
+                                                    resizeMode={ResizeMode.CONTAIN}
+                                                    isLooping
+                                                    onPlaybackStatusUpdate={(status) =>
+                                                        setStatus(() => status)
+                                                    }
+                                                />
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </View>
+                                    </Modal>
+                                ) : null}
                             </View>
                         </View>
                     </View>
@@ -188,8 +540,11 @@ export const DetailDokumenCuti = () => {
                                 <View style={{ flexDirection: "row", paddingVertical: 10, }}>
                                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Yang Menyetujui</Text>
                                     <View style={{ gap: 10, width: "60%", paddingRight: 20 }}>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, }}>Admin KKP : NILAM AMALIA PUSPARANI / 198505042009122001</Text>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, }}>KETUT ADI WIRANATA / 19812312312421132122</Text>
+                                        {arsipDetail.detail_dokumen?.approver.map((item) => {
+                                            return (
+                                                <Text>- {item.nama_approver} / {item.nip_approver}</Text>
+                                            )
+                                        })}
                                     </View>
                                 </View>
                             </View>
