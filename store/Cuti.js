@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCutiPersonal, getDetailPegawai, getKuotaCuti, getLiburKhusus, getPegawai, getTanggalLibur } from "../service/api";
+import { getArsipCuti, getCutiPersonal, getDetailArsipCuti, getDetailPegawai, getKuotaCuti, getLiburKhusus, getPegawai, getTanggalLibur } from "../service/api";
 
 const CutiSlice = createSlice({
     name: 'Cuti',
@@ -9,6 +9,10 @@ const CutiSlice = createSlice({
         kuota: {},
         libur: [],
         liburKhusus: [],
+        arsip: {
+            lists: [],
+            detail: {}
+        }
     },
     reducers: {
 
@@ -53,6 +57,26 @@ const CutiSlice = createSlice({
                 state.loading = true
             })
             .addCase(getLiburKhusus.rejected, (state, action) => {
+                state.loading = false
+            })
+            .addCase(getArsipCuti.fulfilled, (state, action) => {
+                state.arsip.lists = action.payload
+                state.loading = false
+            })
+            .addCase(getArsipCuti.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getArsipCuti.rejected, (state, action) => {
+                state.loading = false
+            })
+            .addCase(getDetailArsipCuti.fulfilled, (state, action) => {
+                state.arsip.detail = action.payload
+                state.loading = false
+            })
+            .addCase(getDetailArsipCuti.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getDetailArsipCuti.rejected, (state, action) => {
                 state.loading = false
             })
     }

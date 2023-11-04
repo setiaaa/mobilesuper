@@ -151,8 +151,8 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
             {listData.child.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === listData.id) ||
-                (toggleComment.id !== listData.id &&
-                  listData.child.length > 0) ? (
+                  (toggleComment.id !== listData.id &&
+                    listData.child.length > 0) ? (
                   <TouchableOpacity
                     key={listData.id}
                     onPress={() => clickBalas(listData.id, true)}
@@ -654,7 +654,7 @@ const CardLiniMasa = ({ item, token }) => {
 
               <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>
                 {detail?.members_agenda !== "" &&
-                detail?.members_agenda !== null
+                  detail?.members_agenda !== null
                   ? detail.members_agenda
                   : "-"}
               </Text>
@@ -758,7 +758,7 @@ const CardLiniMasa = ({ item, token }) => {
                 }}
               >
                 {detail?.start_date_agenda !== "" &&
-                detail?.start_date_agenda !== null
+                  detail?.start_date_agenda !== null
                   ? detail.start_date_agenda?.slice(0, -9)
                   : "-"}
               </Text>
@@ -958,7 +958,7 @@ const CardLiniMasa = ({ item, token }) => {
           }}
         >
           <Ionicons name="chatbox-outline" size={18} />
-          <Text>Komen</Text>
+          <Text>Komentar</Text>
         </TouchableOpacity>
 
         <BottomSheetModal
