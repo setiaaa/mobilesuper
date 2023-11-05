@@ -131,7 +131,7 @@ export default function Dashboard() {
 
   const asc = () => {
     const sortedAscending = dataFilter
-      .slice()
+      ?.slice()
       .sort((a, b) => a.subjek.localeCompare(b.subjek));
     setFilterData(sortedAscending);
     setAscending(true);
@@ -140,7 +140,7 @@ export default function Dashboard() {
 
   const desc = () => {
     const sortedDescending = dataFilter
-      .slice()
+      ?.slice()
       .sort((a, b) => b.subjek.localeCompare(a.subjek));
     setFilterData(sortedDescending);
     setAscending(false);

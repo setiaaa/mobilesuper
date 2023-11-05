@@ -372,6 +372,8 @@ export const EditEvent = () => {
     };
     dispatch(updateEvent(datas));
   };
+
+  //Edit Event push fix
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
