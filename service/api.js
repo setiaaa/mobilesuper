@@ -1590,3 +1590,23 @@ export const getDetailArsipCuti = createAsyncThunk(
     }
 );
 
+export const getFormCuti = createAsyncThunk(
+    "cuti/getFormCuti",
+    async (data) => {
+        const respon = await axios.get(`${Cuti}form-cuti?nip=${data.nip}&id_jenis_cuti=${data.id}`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
+export const getPilihApproval = createAsyncThunk(
+    "cuti/getPilihApproval",
+    async ({ nip, kunci }) => {
+        const respon = await axios.get(`${Cuti}pilih-approval?nip=${nip}&kata_kunci=`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+

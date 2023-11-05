@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getArsipCuti, getCutiPersonal, getDetailArsipCuti, getDetailPegawai, getKuotaCuti, getLiburKhusus, getPegawai, getTanggalLibur } from "../service/api";
+import { getArsipCuti, getCutiPersonal, getDetailArsipCuti, getDetailPegawai, getFormCuti, getKuotaCuti, getLiburKhusus, getPegawai, getPilihApproval, getTanggalLibur } from "../service/api";
 
 const CutiSlice = createSlice({
     name: 'Cuti',
@@ -12,7 +12,9 @@ const CutiSlice = createSlice({
         arsip: {
             lists: [],
             detail: {}
-        }
+        },
+        form: {},
+        pilih: []
     },
     reducers: {
 
@@ -78,6 +80,19 @@ const CutiSlice = createSlice({
             })
             .addCase(getDetailArsipCuti.rejected, (state, action) => {
                 state.loading = false
+            })
+            .addCase(getFormCuti.fulfilled, (state, action) => {
+                state.form = action.payload
+                state.loading = false
+            })
+            .addCase(getFormCuti.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getFormCuti.rejected, (state, action) => {
+                state.loading = false
+            })
+            .addCase(getPilihApproval.fulfilled, (state, action) => {
+                state.pilih = action.payload
             })
     }
 })

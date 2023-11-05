@@ -12,7 +12,7 @@ import { Image } from 'react-native-svg'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { useEffect } from 'react'
-import { getArsipCuti, getCutiPersonal, getKuotaCuti } from '../../service/api'
+import { getArsipCuti, getCutiPersonal, getFormCuti, getKuotaCuti } from '../../service/api'
 import { CardKuotaCuti } from '../../components/CardKuotaCuti'
 import { FlatList } from 'react-native'
 import ListEmpty from '../../components/ListEmpty'
@@ -39,6 +39,12 @@ export const PersonalCuti = () => {
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
     const { personal, kuota, loading, arsip } = useSelector(state => state.cuti)
     const arsipLists = arsip.lists.data
+
+    const formCuti = (id) => {
+        const params = { nip: profile.nip, id: id };
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getFormCuti(params));
+    };
 
     return (
         <GestureHandlerRootView>
@@ -154,16 +160,22 @@ export const PersonalCuti = () => {
                                 return (
                                     <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
                                         <View style={{ alignItems: 'center', gap: 10 }}>
-                                            <TouchableOpacity onPress={() => navigation.navigate('TambahCutiTahunan')} style={{
-                                                backgroundColor: COLORS.infoDanger,
-                                                padding: 15,
-                                                borderRadius: 30,
-                                                width: 55,
-                                                height: 55,
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
+                                            <TouchableOpacity onPress={() => {
+                                                formCuti(item.id)
+                                                navigation.navigate('TambahCutiTahunan')
+                                            }
+                                            }
 
-                                            }}>
+                                                style={{
+                                                    backgroundColor: COLORS.infoDanger,
+                                                    padding: 15,
+                                                    borderRadius: 30,
+                                                    width: 55,
+                                                    height: 55,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+
+                                                }}>
                                                 <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                             </TouchableOpacity>
                                             <Text style={{ maxWidth: 60, textAlign: 'center' }}>{item.nama}</Text>
