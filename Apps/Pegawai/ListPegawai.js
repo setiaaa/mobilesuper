@@ -82,9 +82,9 @@ export const ListPegawai = () => {
 
     const loadMore = () => {
         if (filterData.length % 10 === 0) {
-            setPage(page + 1)
+            setPage(page + 1);
         }
-    }
+    };
 
     const filter = (event) => {
         setSearch(event);
@@ -100,10 +100,13 @@ export const ListPegawai = () => {
                 return item.nama.toLowerCase().includes(search.toLowerCase());
             });
             setFilterData(data);
+            if (data.length === 0) {
+
+            }
         } else {
             setFilterData(pegawai.lists);
         }
-    }, [search]);
+    }, [search, pegawai]);
 
     const navigation = useNavigation()
 
@@ -143,14 +146,15 @@ export const ListPegawai = () => {
 
                     <FlatList
                         data={filterData}
-                        renderItem={({ item }) => <CardListPegawai
-                            item={item}
-                            collapse={collapse}
-                            setCollapse={setCollapse}
-                            navigation={navigation}
-                            token={token}
-                            loading={loading}
-                        />
+                        renderItem={({ item }) =>
+                            <CardListPegawai
+                                item={item}
+                                collapse={collapse}
+                                setCollapse={setCollapse}
+                                navigation={navigation}
+                                token={token}
+                                loading={loading}
+                            />
                         }
                         // style={{ flex: 1 }}
                         ListFooterComponent={() => (
