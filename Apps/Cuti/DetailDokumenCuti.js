@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useRef } from 'react'
 import { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -8,11 +8,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Image } from 'react-native-svg'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
 import moment from 'moment'
 import { FlatList } from 'react-native'
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+    BottomSheetBackdrop,
+    BottomSheetView,
+    BottomSheetTextInput,
+    useBottomSheetDynamicSnapPoints,
+} from "@gorhom/bottom-sheet";
+import { Image } from 'react-native'
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
     const navigation = useNavigation();
@@ -204,6 +212,322 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
     ) : null;
 };
 
+const CardKomen = ({ listData, inputRef, setParentId, bottomSheetAttachCommentClose }) => {
+    const [toggleComment, setToggleComment] = useState({
+        toggle: false,
+        // id: data[0].Komentar[0].id
+    });
+    const clickBalas = (id, temp) => {
+        setToggleComment({
+            toggle: temp,
+            id: id,
+        });
+        console.log(id);
+    };
+
+    const handleClickBalas = () => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+            setParentId(listData.id);
+        }
+    };
+    const navigation = useNavigation()
+
+    return (
+        <View
+            style={{
+                justifyContent: "center",
+                flex: 1,
+                alignItems: "center",
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+            }}
+        >
+            <View
+                style={{
+                    backgroundColor: COLORS.white,
+                    borderRadius: 10,
+                    width: "90%",
+                    marginVertical: 5,
+                    elevation: 5,
+                }}
+            >
+                <View
+                    style={{
+                        flexDirection: "row",
+                        marginVertical: 10,
+                        marginHorizontal: 20,
+                    }}
+                >
+                    <View>
+                        <Image
+                            source={{ uri: listData.foto }}
+                            style={{ width: 30, height: 30, borderRadius: 20 }}
+                        />
+                    </View>
+                    <View style={{ marginLeft: 10 }}>
+                        <Text
+                            style={{
+                                fontSize: FONTSIZE.H2,
+                                fontWeight: FONTWEIGHT.bold,
+                                lineHeight: 20,
+                                wordWrap: "break-word",
+                            }}
+                        >
+                            {listData.nama}
+                        </Text>
+                        <View style={{ flexDirection: "row", gap: 5 }}>
+                            <Text
+                                style={{
+                                    color: COLORS.lighter,
+                                    fontSize: FONTSIZE.H5,
+                                    fontWeight: FONTWEIGHT.normal,
+                                    lineHeight: 18,
+                                    wordWrap: "break-word",
+                                }}
+                            >
+                                {listData.nip}
+                            </Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                            <View style={{
+                                backgroundColor: COLORS.danger,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: 100,
+                                borderRadius: 8,
+                            }}>
+                                <Text
+                                    style={{
+                                        color: COLORS.white,
+                                        fontSize: FONTSIZE.H5,
+                                        fontWeight: FONTWEIGHT.normal,
+                                        lineHeight: 18,
+                                        wordWrap: "break-word",
+                                    }}
+                                >
+                                    {listData.aksi}
+                                </Text>
+                            </View>
+
+                            <TouchableOpacity style={{ flexDirection: 'row', gap: 5, alignItems: 'center', marginLeft: 60 }}
+                                onPress={() => {
+
+                                    navigation.navigate("FileViewer", {
+                                        lampiran: listData.pdf,
+                                        type: 'pdf',
+                                    })
+                                    bottomSheetAttachCommentClose()
+                                }
+                                }
+                            >
+                                <Ionicons name='documents-outline' size={10} />
+                                <Text style={{
+                                    color: COLORS.info,
+                                    fontSize: FONTSIZE.H5,
+                                    fontWeight: FONTWEIGHT.normal,
+                                    lineHeight: 18,
+                                    wordWrap: "break-word",
+                                }}>(Lihat Dokumen)</Text>
+                            </TouchableOpacity>
+
+                        </View>
+
+                        <View style={{ flexDirection: "row", gap: 5 }}>
+                            <Text
+                                style={{
+                                    fontSize: FONTSIZE.H5,
+                                    fontWeight: FONTWEIGHT.normal,
+                                    lineHeight: 18,
+                                    wordWrap: "break-word",
+                                    marginBottom: 5,
+                                }}
+                            >
+                                {moment(listData.tanggal, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}
+                            </Text>
+                        </View>
+                        <View style={{ flexDirection: "row", gap: 5 }}>
+                            <Text
+                                style={{
+                                    color: COLORS.lighter,
+                                    fontSize: FONTSIZE.H5,
+                                    fontWeight: FONTWEIGHT.normal,
+                                    lineHeight: 18,
+                                    wordWrap: "break-word",
+                                    marginBottom: 5,
+                                }}
+                            >
+                                {listData.teks}
+                            </Text>
+                        </View>
+
+                        {/* <TouchableOpacity
+                            style={{
+                                color: COLORS.lighter,
+                                fontSize: FONTSIZE.H3,
+                                fontWeight: FONTWEIGHT.normal,
+                                wordWrap: "break-word",
+                                marginTop: 10,
+                            }}
+                            onPress={() => {
+                                handleClickBalas();
+                            }}
+                        >
+                            <Text
+                                style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+                            >
+                                Balas
+                            </Text>
+                        </TouchableOpacity> */}
+                        {/* 
+                        {listData.child.length === 0 ? null : (
+                            <View>
+                                {(!toggleComment.toggle && toggleComment.id === listData.id) ||
+                                    (toggleComment.id !== listData.id &&
+                                        listData.child.length > 0) ? (
+                                    <TouchableOpacity
+                                        key={listData.id}
+                                        onPress={() => clickBalas(listData.id, true)}
+                                    >
+                                        <View
+                                            style={{
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                                gap: 5,
+                                                marginTop: 10,
+                                            }}
+                                        >
+                                            <View
+                                                style={{
+                                                    height: 1,
+                                                    width: 20,
+                                                    backgroundColor: "#DBDADE",
+                                                }}
+                                            />
+                                            <Text
+                                                style={{
+                                                    color: COLORS.lighter,
+                                                    fontSize: FONTSIZE.H5,
+                                                    fontWeight: FONTWEIGHT.normal,
+                                                    lineHeight: 18,
+                                                    wordWrap: "break-word",
+                                                }}
+                                            >
+                                                Tampilkan {listData.child?.length} Balasan
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                ) : null}
+
+                                {listData.id === toggleComment.id && toggleComment.toggle ? (
+                                    <View>
+                                        {listData.child?.map((listKomen, index) => (
+                                            <>
+                                                <View
+                                                    style={{
+                                                        flexDirection: "row",
+                                                        marginVertical: 10,
+                                                        marginHorizontal: 20,
+                                                    }}
+                                                >
+                                                    <View>
+                                                        <Image
+                                                            source={{ uri: listData.creator_avatar }}
+                                                            style={{
+                                                                width: 30,
+                                                                height: 30,
+                                                                borderRadius: 20,
+                                                            }}
+                                                        />
+                                                    </View>
+                                                    <View style={{ marginLeft: 10 }}>
+                                                        <Text
+                                                            style={{
+                                                                fontSize: FONTSIZE.H2,
+                                                                fontWeight: FONTWEIGHT.bold,
+                                                                lineHeight: 20,
+                                                                wordWrap: "break-word",
+                                                            }}
+                                                        >
+                                                            {listKomen.creator}
+                                                        </Text>
+                                                        <View style={{ flexDirection: "row", gap: 5 }}>
+                                                            <Text
+                                                                style={{
+                                                                    color: COLORS.lighter,
+                                                                    fontSize: FONTSIZE.H5,
+                                                                    fontWeight: FONTWEIGHT.normal,
+                                                                    lineHeight: 18,
+                                                                    wordWrap: "break-word",
+                                                                    marginBottom: 10,
+                                                                }}
+                                                            >
+                                                                {listKomen.created_at}
+                                                            </Text>
+                                                        </View>
+                                                        <Text
+                                                            style={{
+                                                                color: "#999999",
+                                                                fontSize: FONTSIZE.H3,
+                                                                fontWeight: FONTWEIGHT.normal,
+                                                                lineHeight: 18,
+                                                                wordWrap: "break-word",
+                                                            }}
+                                                        >
+                                                            {listKomen.message}
+                                                        </Text>
+                                                        {listData.child.length - 1 === index ? (
+                                                            <TouchableOpacity
+                                                                key={listKomen.id}
+                                                                onPress={() => clickBalas(listData.id, false)}
+                                                            >
+                                                                <View
+                                                                    style={{
+                                                                        flexDirection: "row",
+                                                                        alignItems: "center",
+                                                                        gap: 5,
+                                                                        marginTop: 10,
+                                                                    }}
+                                                                >
+                                                                    <View
+                                                                        style={{
+                                                                            height: 1,
+                                                                            width: 20,
+                                                                            backgroundColor: "#DBDADE",
+                                                                        }}
+                                                                    />
+                                                                    <Text
+                                                                        style={{
+                                                                            color: COLORS.lighter,
+                                                                            fontSize: FONTSIZE.H5,
+                                                                            fontWeight: FONTWEIGHT.normal,
+                                                                            lineHeight: 18,
+                                                                            wordWrap: "break-word",
+                                                                        }}
+                                                                    >
+                                                                        Tutup {listData.child.length} Balasan
+                                                                    </Text>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                        ) : null}
+                                                    </View>
+                                                </View>
+                                            </>
+                                        ))}
+                                    </View>
+                                ) : null}
+                            </View>
+                        )} */}
+                    </View>
+                </View>
+            </View>
+        </View>
+    );
+};
+
 
 export const DetailDokumenCuti = () => {
     const dispatch = useDispatch()
@@ -217,7 +541,7 @@ export const DetailDokumenCuti = () => {
     })
     const navigation = useNavigation()
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-    console.log(arsipDetail)
+    console.log(arsipDetail.komentar_dokumen)
 
     const selisih = () => {
         let tanggalMulaiStr = (moment(arsipDetail.detail_dokumen?.dokumen?.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATE))
@@ -239,6 +563,26 @@ export const DetailDokumenCuti = () => {
         jenis = jenis[jenis.length - 1];
         return jenis;
     };
+
+    const inputRef = useRef(null);
+    const [parentId, setParentId] = useState("");
+    const bottomSheetModalRef = useRef(null);
+    const initialSnapPoints = useMemo(() => ["95%"], []);
+    const {
+        animatedHandleHeight,
+        animatedSnapPoints,
+        animatedContentHeight,
+        handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+    const bottomSheetAttachComment = () => {
+        bottomSheetModalRef.current?.present();
+    };
+    const bottomSheetAttachCommentClose = () => {
+        if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
+    };
+
+    const [komen, setKomen] = useState("");
 
     return (
         <GestureHandlerRootView>
@@ -271,7 +615,7 @@ export const DetailDokumenCuti = () => {
 
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                 <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Jenis Cuti</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{arsipDetail.detail_dokumen.jenis_cuti.nama}</Text>
+                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{arsipDetail.detail_dokumen?.jenis_cuti.nama}</Text>
                             </View>
 
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
@@ -407,7 +751,7 @@ export const DetailDokumenCuti = () => {
                                         </Text>
                                         <FlatList
                                             key={"#"}
-                                            data={detail.attachments}
+                                            data={arsipDetail.detail_dokumen?.attachment}
                                             renderItem={({ item }) => (
                                                 <View key={item.id}>
                                                     <CardLampiran
@@ -591,11 +935,120 @@ export const DetailDokumenCuti = () => {
                                 shadowColor: "#171717",
                                 //shadow android
                                 elevation: 2,
-                            }}>
+                            }}
+                                onPress={() => {
+                                    bottomSheetAttachComment()
+                                }}
+                            >
                                 <Text style={{ color: COLORS.primary, }}>Lihat Komentar</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
+
+                    <BottomSheetModal
+                        ref={bottomSheetModalRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View
+                                style={[
+                                    style,
+                                    { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+                                ]}
+                            />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout} style={{}}>
+                            {/* <KeyboardAvoidingView
+                                behavior={Platform.OS === "ios" ? "height" : "height"}
+                            > */}
+                            <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: "row", justifyContent: "space-between", padding: 10, borderBottomWidth: 2, borderBottomColor: COLORS.grey }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        bottomSheetAttachCommentClose()
+                                    }}
+                                >
+                                    <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                                </TouchableOpacity>
+                            </View>
+                            <FlatList
+                                data={arsipDetail?.komentar_dokumen}
+                                renderItem={({ item }) => (
+                                    <CardKomen
+                                        listData={item}
+                                        inputRef={inputRef}
+                                        setParentId={setParentId}
+                                        bottomSheetAttachCommentClose={bottomSheetAttachCommentClose}
+                                    />
+                                )}
+                                style={{ height: 500 }}
+                            />
+
+                            {/* <View style={{ justifyContent: "flex-end" }}>
+                                <View
+                                    style={{
+                                        height: 1,
+                                        width: "90%",
+                                        backgroundColor: COLORS.lighter,
+                                        opacity: 0.3,
+                                        marginTop: 10,
+                                        marginHorizontal: 20,
+                                    }}
+                                />
+                                <View
+                                    style={{
+                                        borderWidth: 1,
+                                        width: "90%",
+                                        marginLeft: 17,
+                                        borderRadius: 16,
+                                        borderColor: COLORS.ExtraDivinder,
+                                        flexDirection: "row",
+                                        backgroundColor: COLORS.ExtraDivinder,
+                                        marginTop: 10,
+                                        marginBottom: 40,
+                                    }}
+                                >
+                                    <BottomSheetTextInput
+                                        numberOfLines={1}
+                                        maxLength={40}
+                                        placeholder="Ketik Komentar Disini"
+                                        ref={inputRef}
+                                        style={{ padding: 10 }}
+                                        onChangeText={setKomen}
+                                        value={komen}
+                                    />
+                                    <View
+                                        style={{
+                                            alignItems: "flex-end",
+                                            flex: 1,
+                                            marginRight: 10,
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                handleComment();
+                                            }}
+                                        >
+                                            <Ionicons
+                                                name="send-sharp"
+                                                size={20}
+                                                color={COLORS.primary}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View> */}
+                            {/* </KeyboardAvoidingView> */}
+                        </BottomSheetView>
+                    </BottomSheetModal>
+
                     <View style={{ padding: 20, gap: 10 }}>
                         <View style={{}}>
                             <View style={{ alignItems: 'center', gap: 10, }}>
