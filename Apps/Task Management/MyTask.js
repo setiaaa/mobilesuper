@@ -239,24 +239,24 @@ export const MyTask = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
                 <BottomSheetModalProvider>
-                {loading && <Loading/>}
+                    {loading && <Loading />}
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
-                        {list.type === 'Dashboard' ? (
-                            <View style={{
-                                backgroundColor: COLORS.white,
-                                borderRadius: 20,
-                                width: 28,
-                                height: 28,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginLeft: 20
-                            }}>
+                        {/* {list.type === 'Dashboard' ? ( */}
+                        <View style={{
+                            backgroundColor: COLORS.white,
+                            borderRadius: 20,
+                            width: 28,
+                            height: 28,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginLeft: 20
+                        }}>
 
-                                <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                                    <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                                </TouchableOpacity>
-                            </View>
-                        ) : null }
+                            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
+                            </TouchableOpacity>
+                        </View>
+                        {/* ) : null } */}
                         <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
                             <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Task Management</Text>
                         </View>
