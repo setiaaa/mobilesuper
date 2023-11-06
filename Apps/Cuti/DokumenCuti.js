@@ -103,104 +103,97 @@ export const DokumenCuti = () => {
                     <View style={{ gap: 10 }}>
                         <View style={{ backgroundColor: 'white', marginTop: 10, borderRadius: 8 }}>
                             <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'center', gap: 30 }}>
-                                <TouchableOpacity style={{
-                                    maxWidth: 80,
-                                    borderColor: variant === 'Draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    gap: 10
-                                }}
+                                    <TouchableOpacity style={{
+                                        maxWidth: 80,
+                                        borderColor: variant === 'Completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        gap: 10
+                                    }}
                                     onPress={() => SetVariant('Draft')}
-                                >
-                                    <View style={{
-                                        backgroundColor: COLORS.grey,
-                                        borderRadius: 20,
-                                        width: 28,
-                                        height: 28,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        position: 'absolute',
-                                        top: 5
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </View>
-                                    <Text style={{ color: variant === 'Draft' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Draft</Text>
-                                </TouchableOpacity>
+                                    >
+                                        <View style={{
+                                            backgroundColor: COLORS.grey,
+                                            borderRadius: 20,
+                                            width: 28,
+                                            height: 28,
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                        </View>
+                                        <Text style={{ color: variant === 'Completed' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Draft</Text>
+                                    </TouchableOpacity>
 
-                                <TouchableOpacity style={{
-                                    maxWidth: 60,
-                                    borderColor: variant === 'Onprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    gap: 10
-                                }}
+                                    <TouchableOpacity style={{
+                                        maxWidth: 120,
+                                        borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        gap: 10
+                                    }}
                                     onPress={() => SetVariant('Onprogress')}
-                                >
-                                    <View style={{
-                                        backgroundColor: COLORS.orange,
-                                        borderRadius: 20,
-                                        width: 28,
-                                        height: 28,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        position: 'absolute',
-                                        top: 5
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </View>
-                                    <Text style={{ color: variant === 'Onprogress' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Sedang Proses</Text>
-                                </TouchableOpacity>
+                                    >
+                                        <View style={{
+                                            backgroundColor: COLORS.orange,
+                                            borderRadius: 20,
+                                            width: 28,
+                                            height: 28,
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                        </View>
+                                        <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Diproses</Text>
+                                    </TouchableOpacity>
 
-                                <TouchableOpacity style={{
-                                    maxWidth: 120,
-                                    borderColor: variant === 'Completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    gap: 10
-                                }}
+                                    <TouchableOpacity style={{
+                                        maxWidth: 98,
+                                        borderColor: variant === 'Returned' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        gap: 10
+
+                                    }}
                                     onPress={() => SetVariant('Completed')}
-                                >
-                                    <View style={{
-                                        backgroundColor: COLORS.success,
-                                        borderRadius: 20,
-                                        width: 28,
-                                        height: 28,
-                                        alignItems: 'center',
+                                    >
+                                        <View style={{
+                                            backgroundColor: COLORS.success,
+                                            borderRadius: 20,
+                                            width: 28,
+                                            height: 28,
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                        </View>
+                                        <Text style={{ color: variant === 'Returned' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Disetujui</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={{
+                                        maxWidth: 98,
+                                        borderColor: variant === 'Returned' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                         justifyContent: 'center',
-                                        position: 'absolute',
-                                        top: 5
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </View>
-                                    <Text style={{ color: variant === 'Completed' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Disetujui</Text>
-                                </TouchableOpacity>
+                                        alignItems: 'center',
+                                        gap: 10
 
-                                <TouchableOpacity style={{
-                                    maxWidth: 60,
-                                    borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    gap: 10
-
-                                }}
+                                    }}
                                     onPress={() => SetVariant('Rejected')}
-                                >
-                                    <View style={{
-                                        backgroundColor: COLORS.danger,
-                                        borderRadius: 20,
-                                        width: 28,
-                                        height: 28,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        position: 'absolute',
-                                        top: 5
-                                    }}>
-                                        <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                    </View>
-                                    <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Tidak Disetujui</Text>
-                                </TouchableOpacity>
+                                    >
+                                        <View style={{
+                                            backgroundColor: COLORS.danger,
+                                            borderRadius: 20,
+                                            width: 28,
+                                            height: 28,
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
+                                        </View>
+                                        <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center',  }}>Ditolak</Text>
+                                    </TouchableOpacity>
 
-                            </View>
+                                </View>
                         </View>
 
                         {variant === 'Postponed' || variant === 'Rejected' ? (
