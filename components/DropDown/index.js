@@ -76,7 +76,6 @@ export const Dropdown = ({
             setFilterData(data)
         }
     }, [cari])
-    console.log(cari)
 
     return (
         <View>
