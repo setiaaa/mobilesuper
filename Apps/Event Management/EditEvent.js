@@ -384,10 +384,9 @@ export const EditEvent = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: "flex-end",
+                  alignItems: "center",
                   backgroundColor: COLORS.primary,
                   height: 80,
-                  paddingBottom: 20,
                 }}
               >
                 <View
@@ -401,7 +400,10 @@ export const EditEvent = () => {
                     marginLeft: 20,
                   }}
                 >
-                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => navigation.goBack()}
+                  >
                     <Ionicons
                       name="chevron-back-outline"
                       size={24}
