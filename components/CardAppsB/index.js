@@ -35,7 +35,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         </View>
       </View>
 
-      <View style={{ flexDirection: 'row',  gap: 25,  }}>
+      <View style={{ flexDirection: 'row',  gap: 25,}}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
