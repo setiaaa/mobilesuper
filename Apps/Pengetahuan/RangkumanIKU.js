@@ -275,8 +275,6 @@ export const RangkumanIKU = () => {
     setSearch(event);
   };
 
-  console.log(pegawai.lists);
-  console.log(exportPegawai);
 
   const downloadFromUrl = async () => {
     const url = exportPegawai?.lists?.file;
@@ -330,7 +328,7 @@ export const RangkumanIKU = () => {
   //   shareAsync(uri);
   // };
   return (
-    <>
+    < >
       <View
         style={{
           flexDirection: "row",
@@ -360,7 +358,7 @@ export const RangkumanIKU = () => {
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
-            {switchView ? "Rangkuman IKU" : "Daftar Pegawai"}
+            Rangkuman IKU
           </Text>
         </View>
       </View>
@@ -369,25 +367,22 @@ export const RangkumanIKU = () => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          marginHorizontal: 20,
+          marginHorizontal: "10%",
           marginVertical: 20,
-          gap: 10,
         }}
       >
         <TouchableOpacity
           style={{
             backgroundColor: switchView ? COLORS.primary : COLORS.white,
             padding: 10,
-            width: "47%",
-            borderRadius: 8,
-            height: 45,
-            justifyContent: "center",
+            width: 150,
+            borderRadius: 6,
             //shadow ios
-            shadowOffset: switchView ? { width: -2, height: 4 } : { width: 0, height: 0 },
-            shadowColor: switchView ? "#8E1414" : "FFFFFF",
-            shadowOpacity: switchView ? 0.2 : 0,
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
             //shadow android
-            elevation: switchView ? 2 : 0,
+            elevation: 2,
           }}
           onPress={switchRangkumanView}
         >
@@ -395,8 +390,6 @@ export const RangkumanIKU = () => {
             style={{
               color: switchView ? COLORS.white : COLORS.primary,
               textAlign: "center",
-              fontSize: 13,
-              fontWeight: 600
             }}
           >
             Rangkuman
@@ -406,16 +399,14 @@ export const RangkumanIKU = () => {
           style={{
             backgroundColor: !switchView ? COLORS.primary : COLORS.white,
             padding: 10,
-            width: "47%",
-            borderRadius: 8,
-            height: 45,
-            justifyContent: "center",
+            width: 150,
+            borderRadius: 6,
             //shadow ios
-            shadowOffset: !switchView ? { width: -2, height: 4 } : { width: 0, height: 0 },
-            shadowColor: !switchView ? "#8E1414" : "FFFFFF",
-            shadowOpacity: !switchView ? 0.2 : 0,
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
             //shadow android
-            elevation: !switchView ? 2 : 0,
+            elevation: 2,
           }}
           onPress={switchDaftarPegawaiView}
         >
@@ -423,8 +414,6 @@ export const RangkumanIKU = () => {
             style={{
               color: !switchView ? COLORS.white : COLORS.primary,
               textAlign: "center",
-              fontSize: 13,
-              fontWeight: 600
             }}
           >
             Daftar Pegawai
@@ -434,7 +423,7 @@ export const RangkumanIKU = () => {
 
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
-          <View style={{ height: '85%', width: '100%', paddingHorizontal: 20 }}>
+          <View style={{ height: "100%", width: "100%" }}>
             <WebView
               originWhitelist={["*"]}
               source={{
@@ -451,20 +440,20 @@ export const RangkumanIKU = () => {
           <ScrollView>
             <View
               style={{
-                flexDirection: "column",
+                flexDirection: "row",
                 gap: 5,
-                paddingHorizontal: 20,
+                marginHorizontal: 15,
                 width: "100%",
               }}
             >
               <TouchableOpacity
                 onPress={bottomSheetAttachSelect}
-              // style={{ width: "46%" }}
+                style={{ width: "46%" }}
               >
                 <View
                   style={{
                     backgroundColor: COLORS.white,
-                    marginVertical: 10,
+                    marginVertical: 20,
                     height: 54,
                     justifyContent: "center",
                     borderRadius: 8,
@@ -637,7 +626,7 @@ export const RangkumanIKU = () => {
                   </View>
                 </BottomSheetView>
               </BottomSheetModal>
-              {/* 
+
               <BottomSheetModal
                 ref={bottomSheetModalRef}
                 snapPoints={animatedSnapPoints}
@@ -706,20 +695,40 @@ export const RangkumanIKU = () => {
                     />
                   </View>
                 </BottomSheetView>
-              </BottomSheetModal> */}
+              </BottomSheetModal>
 
-              <View style={{ marginVertical: 10 }}>
-                <Search
-                  placeholder={'Cari...'}
-                  iconColor={COLORS.primary}
-                  onSearch={filter}
-                />
-              </View>
+              <TouchableOpacity
+                onPress={bottomSheetAttachSearch}
+                style={{ width: "46%" }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    marginVertical: 20,
+                    height: 54,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 8,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                >
+                  <Ionicons
+                    name="search-outline"
+                    size={24}
+                    color={COLORS.primary}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
 
             <View
               style={{
-                marginHorizontal: 20,
+                marginHorizontal: 15,
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -760,7 +769,7 @@ export const RangkumanIKU = () => {
 
             <View style={{ paddingHorizontal: 20, marginVertical: 10, gap: 2 }}>
               <Text style={{ fontSize: 13, fontWeight: 500, color: COLORS.grey }}>Yang dipilih:</Text>
-              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value ? savedYear.value : "-"} / {savedQuarter.value ? savedQuarter.value : "-"} / {savedUnitKerja.value ? savedUnitKerja.value : "-"}</Text>
+              <Text style={{ fontSize: 13, fontWeight: 700 }}>{savedYear.value} / {savedQuarter.value} / {savedUnitKerja.value}</Text>
             </View>
 
             <View>
@@ -866,6 +875,6 @@ export const RangkumanIKU = () => {
           </ScrollView>
         )}
       </View>
-    </>
+    </ >
   );
 };
