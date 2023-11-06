@@ -36,6 +36,7 @@ import { CardListEvent } from "../../components/CardListEvent";
 import { CardProgresEvent } from "../../components/CardProgresEvent";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { Loading } from "../../components/Loading";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -172,18 +173,38 @@ export const HalamanUtama = () => {
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState(event.listsprogress);
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   useEffect(() => {
     const item = event.listsprogress;
     if (search !== "") {
-      const data = item.filter((item) => {
+      const data = event?.listsprogress?.filter((item) => {
         return item.title.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
     } else {
       setFilterData(item);
     }
-  }, [search]);
+  }, [search, isFiltered]);
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
+  };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.title.localeCompare(a.title));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
 
   const filter = (event) => {
     setSearch(event);
@@ -207,28 +228,7 @@ export const HalamanUtama = () => {
     setSearch(event);
   };
 
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
-
-  const asc = () => {
-    const sortedAscending = filterData
-      .slice()
-      .sort((a, b) => a.title.localeCompare(b.title));
-    setFilterData(sortedAscending);
-    setAscending(true);
-    setIsFiltered(true);
-  };
-
-  const desc = () => {
-    const sortedDescending = filterData
-      .slice()
-      .sort((a, b) => b.title.localeCompare(a.title));
-    setFilterData(sortedDescending);
-    setAscending(false);
-    setIsFiltered(true);
-  };
-
-  console.log(filterData);
+  // console.log(event.listsprogress);
   return (
     <View style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -379,6 +379,8 @@ export const HalamanUtama = () => {
                           backgroundColor: COLORS.white,
                           justifyContent: "center",
                           alignItems: "center",
+                          borderColor: COLORS.secondaryLighter,
+                          borderWidth: isFiltered ? 1 : 0,
                         }}
                       >
                         <Ionicons name="filter-outline" size={24} />
@@ -401,7 +403,12 @@ export const HalamanUtama = () => {
                 </View>
               </View>
               <FlatList
-                data={filterData}
+                data={
+                  search === "" && !isFiltered
+                    ? event.listsprogress
+                    : filterData
+                }
+                // data={event.listsprogress}
                 renderItem={({ item }) => (
                   <CardProgresEvent
                     token={token}
@@ -414,6 +421,9 @@ export const HalamanUtama = () => {
                 style={{ marginBottom: 300 }}
                 ListEmptyComponent={() => <ListEmpty />}
               />
+              {search === "" && !isFiltered
+                ? console.log("event.listprogress")
+                : console.log("filterData")}
             </View>
           )}
 

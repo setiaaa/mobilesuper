@@ -40,10 +40,9 @@ export default function DetailDashboard({ route }) {
         <View
           style={{
             flexDirection: "row",
-            alignItems: "flex-end",
+            alignItems: "center",
             backgroundColor: COLORS.primary,
             height: 80,
-            paddingBottom: 20,
           }}
         >
           <View
@@ -57,7 +56,7 @@ export default function DetailDashboard({ route }) {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
               <Ionicons
                 name="chevron-back-outline"
                 size={24}
@@ -68,8 +67,8 @@ export default function DetailDashboard({ route }) {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
-                fontWeight: FONTWEIGHT.bold,
+                fontSize: 15,
+                fontWeight: 600,
                 color: COLORS.white,
               }}
             >
