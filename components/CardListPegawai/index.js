@@ -31,6 +31,7 @@ export const CardListPegawai = ({ item, collapse, setCollapse, token, }) => {
             marginTop: 10,
             borderRadius: 8,
             marginHorizontal: 15,
+            alignSelf: "center"
         }}>
             <TouchableOpacity style={{
                 flexDirection: 'row',
