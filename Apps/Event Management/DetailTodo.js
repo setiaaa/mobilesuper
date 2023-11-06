@@ -199,6 +199,7 @@ export const DetailTodo = () => {
 
     return (
         < >
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <GestureHandlerRootView>
                 <BottomSheetModalProvider>
                     <ScrollView>
@@ -429,8 +430,7 @@ export const DetailTodo = () => {
                             </View>
                         </View>
 
-
-                        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
                             <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
                                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
@@ -456,7 +456,7 @@ export const DetailTodo = () => {
                             </View>
                         </View>
 
-                        <ScrollView style={{ flex: 1 }}>
+                        <ScrollView style={{ flex: 1, }}>
                             <View style={{
                                 justifyContent: 'center',
                                 flex: 1,
@@ -593,6 +593,7 @@ export const DetailTodo = () => {
                     </ScrollView>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>
+        </KeyboardAvoidingView>
         </  >
     )
 }
