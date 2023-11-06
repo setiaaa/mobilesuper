@@ -26,14 +26,6 @@ export const CardApps = ({ handlePressModal }) => {
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kebijakan</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('')}>
-                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/email-ikon.png')} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Email</Text>
-                </View>
-                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('GrupKalender')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                         <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kalender-ikon.png')} />
@@ -41,8 +33,6 @@ export const CardApps = ({ handlePressModal }) => {
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kalender</Text>
                 </View>
-            </View>
-            <View style={{ flexDirection: 'row', gap: 28, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -51,6 +41,9 @@ export const CardApps = ({ handlePressModal }) => {
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task</Text>
                 </View>
+            </View>
+            <View style={{ flexDirection: 'row', gap: 28, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MainDigitalSign')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -66,6 +59,14 @@ export const CardApps = ({ handlePressModal }) => {
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Agenda </Text>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ListPegawai')}>
+                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/pegawai-ikon.png')} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pegawai</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={handlePressModal}>
