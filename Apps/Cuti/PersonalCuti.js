@@ -12,11 +12,12 @@ import { Image } from 'react-native-svg'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { useEffect } from 'react'
-import { getCutiPersonal, getKuotaCuti } from '../../service/api'
+import { getArsipCuti, getCutiPersonal, getFormCuti, getKuotaCuti } from '../../service/api'
 import { CardKuotaCuti } from '../../components/CardKuotaCuti'
 import { FlatList } from 'react-native'
 import ListEmpty from '../../components/ListEmpty'
 import { Loading } from '../../components/Loading';
+import { CardArsipCuti } from '../../components/CardArsipCuti'
 
 
 export const PersonalCuti = () => {
@@ -30,13 +31,20 @@ export const PersonalCuti = () => {
         if (profile.nip !== "") {
             dispatch(getCutiPersonal(profile?.nip))
             dispatch(getKuotaCuti(profile?.nip))
+            dispatch(getArsipCuti(profile?.nip))
         }
     }, [profile?.nip]);
 
     const navigation = useNavigation()
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-    const { personal, kuota, loading } = useSelector(state => state.cuti)
-    console.log(kuota)
+    const { personal, kuota, loading, arsip } = useSelector(state => state.cuti)
+    const arsipLists = arsip.lists.data
+
+    const formCuti = (id) => {
+        const params = { nip: profile.nip, id: id };
+        // const data = event.listsprogress.find(item => item.id === id)
+        dispatch(getFormCuti(params));
+    };
 
     return (
         <GestureHandlerRootView>
@@ -152,16 +160,22 @@ export const PersonalCuti = () => {
                                 return (
                                     <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
                                         <View style={{ alignItems: 'center', gap: 10 }}>
-                                            <TouchableOpacity onPress={() => navigation.navigate('TambahCutiTahunan')} style={{
-                                                backgroundColor: COLORS.infoDanger,
-                                                padding: 15,
-                                                borderRadius: 30,
-                                                width: 55,
-                                                height: 55,
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
+                                            <TouchableOpacity onPress={() => {
+                                                formCuti(item.id)
+                                                navigation.navigate('TambahCutiTahunan')
+                                            }
+                                            }
 
-                                            }}>
+                                                style={{
+                                                    backgroundColor: COLORS.infoDanger,
+                                                    padding: 15,
+                                                    borderRadius: 30,
+                                                    width: 55,
+                                                    height: 55,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+
+                                                }}>
                                                 <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                             </TouchableOpacity>
                                             <Text style={{ maxWidth: 60, textAlign: 'center' }}>{item.nama}</Text>
@@ -351,94 +365,27 @@ export const PersonalCuti = () => {
                     <View style={{ padding: 20 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold }}>Arsip Cuti</Text>
-                            <TouchableOpacity style={{ justifyContent: 'flex-end' }}>
+                            <TouchableOpacity style={{ justifyContent: 'flex-end' }}
+                                onPress={() => {
+                                    navigation.navigate('ListArsipCuti')
+                                }}
+                            >
                                 <Text style={{ color: COLORS.info }}>Selengkapnya</Text>
                             </TouchableOpacity>
                         </View>
 
-                        <View >
-                            {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
-                            <View style={[styles.cardKouta]}>
-                                <View style={{
-                                    width: "60%",
-                                    padding: 15,
-                                    borderRadius: 8,
-                                    backgroundColor: COLORS.white,
-                                    alignItems: "center"
-                                }}>
-                                    <View style={{ rowGap: 10 }}>
-                                        <Text style={{ fontSize: 12 }}>Jenis : Cuti Tahunan</Text>
-                                        <Text style={{ fontSize: 12 }}>Periode:  N-2 </Text>
-                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai Berlaku: 01 Januari 2021</Text>
-                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Beralaku: 31 Desember 2021</Text>
-                                    </View>
+                        <FlatList
+                            data={arsipLists?.slice(0, 10)}
+                            renderItem={({ item }) => (
+                                <View key={item.id}>
+                                    <CardArsipCuti
+                                        item={item}
+                                    />
                                 </View>
-                                <View style={{
-                                    width: "40%",
-                                    borderBottomRightRadius: 8,
-                                    borderTopRightRadius: 8,
-                                    backgroundColor: "grey",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}>
-                                    <View style={{ gap: 20, }}>
-                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
-                                            <Text>Kuota Cuti</Text>
-                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
-                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
-                                            <Text>Sisa Kuota</Text>
-                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
-                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-
-                            <View style={[styles.cardKouta, { marginRight: 10 }]}>
-                                <View style={{
-                                    width: "60%",
-                                    padding: 15,
-                                    borderRadius: 8,
-                                    backgroundColor: COLORS.white,
-                                    alignItems: "center"
-                                }}>
-                                    <View style={{ rowGap: 10 }}>
-                                        <Text style={{ fontSize: 12 }}>Jenis : Cuti Tahunan</Text>
-                                        <Text style={{ fontSize: 12 }}>Periode:  N-2 </Text>
-                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai Berlaku: 01 Januari 2021</Text>
-                                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Beralaku: 31 Desember 2021</Text>
-                                    </View>
-                                </View>
-                                <View style={{
-                                    width: "40%",
-                                    borderBottomRightRadius: 8,
-                                    borderTopRightRadius: 8,
-                                    backgroundColor: "grey",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}>
-                                    <View style={{ gap: 20, }}>
-                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
-                                            <Text>Kuota Cuti</Text>
-                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
-                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
-                                            <Text>Sisa Kuota</Text>
-                                            <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
-                                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>6</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                            {/* </ScrollView> */}
-                        </View>
+                            )}
+                            keyExtractor={(item) => item.id}
+                            ListEmptyComponent={() => <ListEmpty />}
+                        />
                     </View>
                 </ScrollView>
             </View >
