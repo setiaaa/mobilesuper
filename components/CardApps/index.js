@@ -54,7 +54,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kebijakan-ikon.png')} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/preparing-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repositori</Text>
