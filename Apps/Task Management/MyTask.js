@@ -178,18 +178,18 @@ export const MyTask = () => {
         setChoiceFilter('semua')
     }
 
-    const filter = (event) => {
-        setSearch(event)
-    }
+    // const filter = (event) => {
+    //     setSearch(event)
+    // }
 
     // useEffect(() => {
     //     if (search !== '') {
     //         const status = choiceFilter == 1 ? '' : choiceFilter == 2 ? 'in progress' : choiceFilter == 3 ? 'pending' : choiceFilter == 4 ? 'completed' : 'backlog'
     //         const data = taskLists.filter((item) => {
     //             if (choiceFilter == 1) {
-    //                 return item.kegiatan.toLowerCase().includes(search.toLowerCase())
+    //                 return item.title?.toLowerCase().includes(search.toLowerCase())
     //             } else {
-    //                 return item.kegiatan.toLowerCase().includes(search.toLowerCase()) && item.status === status
+    //                 return item.title?.toLowerCase().includes(search.toLowerCase()) && item.status === status
     //             }
     //         })
     //         setFilterData(data)
@@ -392,7 +392,7 @@ export const MyTask = () => {
                                     </View>
                                 )
                             }
-                            {list.type !== 'Detail Project' ? (
+                            {/* {list.type !== 'Detail Project' ? (
 
                                 <View style={{ backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, marginTop: 10 }}>
                                     <Search
@@ -401,7 +401,7 @@ export const MyTask = () => {
                                         onSearch={filter}
                                     />
                                 </View>
-                            ) : null}
+                            ) : null} */}
                         </View>
                     </View>
 
@@ -459,11 +459,11 @@ export const MyTask = () => {
                             <View style={{ marginHorizontal: 20 }}>
                                 <View style={{ flexDirection: 'row', gap: 16 }}>
                                     <View style={{ flex: 1, backgroundColor: '#F0F0F0', borderRadius: 8, borderColor: COLORS.white, }}>
-                                        <Search
+                                        {/* <Search
                                             placeholder={"Cari"}
                                             iconColor={COLORS.primary}
                                             onSearch={filter}
-                                        />
+                                        /> */}
                                     </View>
                                     <TouchableOpacity style={{ justifyContent: 'center' }}
                                         onPress={() => {

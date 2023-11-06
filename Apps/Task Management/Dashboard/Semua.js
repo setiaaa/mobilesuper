@@ -8,9 +8,10 @@ import { CardListGridTask } from '../../../components/CardListGridTask'
 import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
-import { DATETIME } from '../../../config/SuperAppps'
+import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
 import { ActivityIndicatorBase } from 'react-native'
+import { Search } from '../../../components/Search'
 
 
 export const Semua = () => {
@@ -18,6 +19,7 @@ export const Semua = () => {
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
     const [page, setPage] = useState(5);
+    const [search, setSearch] = useState('')
 
 
     useEffect(() => {
@@ -62,15 +64,39 @@ export const Semua = () => {
         }
         return arr
     }
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        const item = taskLists
+        if (search !== '') {
+            const data = item.filter((item) => {
+                return item.title?.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(item)
+        }
+        console.log(filterData)
+    }, [search, taskLists])
     return (
         <>
+        <View style={{marginTop:20}}>
+            <Search
+                placeholder={"Cari"}
+                iconColor={COLORS.primary}
+                onSearch={filter}
+                />
+        </View>
             {variant === 'list' ? (
-                <View style={{ flex: 1, marginTop: 20}}>
+                <View style={{ flex: 1, marginTop: 0}}>
                     {
                         loading ? (
                             <Loading/>
                         ) : (
-                            <View style={{ marginTop: 20 }}>
+                            <View>
                                 <FlatList
                                     data={filterData}
                                     renderItem={({ item }) => <CardListTask
