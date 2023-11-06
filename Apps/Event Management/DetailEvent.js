@@ -759,16 +759,7 @@ export const DetailEvent = () => {
                       height: 50,
                       borderRadius: 8,
                     }}
-                    onPress={() => {
-                      const datas = {
-                        token: token,
-                        id: data.id,
-                      };
-                      dispatch(deleteEvent(datas));
-                      setTimeout(() => {
-                        navigation.navigate("HalamanUtama");
-                      }, 3000);
-                    }}
+                    onPress={() => setVisibleModal(true)}
                   >
                     <View
                       style={{
@@ -787,6 +778,119 @@ export const DetailEvent = () => {
                       />
                     </View>
                   </TouchableOpacity>
+
+                  <Modal
+                      animationType="fade"
+                      transparent={true}
+                      visible={visibleModal}
+                      onRequestClose={() => {
+                        setVisibleModal(!visibleModal);
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={[
+                          Platform.OS === "ios"
+                            ? styles.iOSBackdrop
+                            : styles.androidBackdrop,
+                          styles.backdrop,
+                        ]}
+                      />
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flex: 1,
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: COLORS.white,
+                            width: "90%",
+                            borderRadius: 10,
+                            alignContent: "center",
+                          }}
+                        >
+                          <View
+                            style={{
+                              marginTop: 20,
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              marginHorizontal: 20,
+                            }}
+                          >
+                            <View>
+                              <Text
+                                style={{
+                                  fontSize: FONTSIZE.Judul,
+                                  fontWeight: FONTWEIGHT.bold,
+                                }}
+                              >
+                                Apa anda yakin?
+                              </Text>
+                            </View>
+
+                            <TouchableOpacity
+                              style={{}}
+                              onPress={() => {
+                                setVisibleModal(false);
+                              }}
+                            >
+                              <Ionicons
+                                name="close-outline"
+                                size={24}
+                                color={COLORS.lighter}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                          {/* custom divider */}
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <View
+                              style={{
+                                height: 1,
+                                width: "90%",
+                                backgroundColor: "#DBDADE",
+                                marginVertical: 10,
+                              }}
+                            />
+                          </View>
+
+                          <ScrollView style={{ marginBottom: 40 }}>
+                            <TouchableOpacity
+                              style={{
+                                width: "90%",
+                                height: 50,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: 8,
+                                marginHorizontal: 20,
+                                marginTop: 10,
+                                backgroundColor: COLORS.danger,
+                              }}
+                              onPress={() => {
+                                const datas = {
+                                  token: token,
+                                  id: data.id,
+                                };
+                                dispatch(deleteEvent(datas));
+                                setTimeout(() => {
+                                  navigation.navigate("HalamanUtama");
+                                }, 3000);
+                              }}
+                            >
+                              <Text style={{ color: COLORS.white }}>
+                                Hapus Event
+                              </Text>
+                            </TouchableOpacity>
+                          </ScrollView>
+                        </View>
+                      </View>
+                    </Modal>
                 </View>
               </View>
               <View
