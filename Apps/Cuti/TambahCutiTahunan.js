@@ -45,7 +45,7 @@ export const TambahCutiTahunan = () => {
   const [telepon, setTelepon] = useState(form.data_user?.no_telpon)
   const [atasan, setAtasan] = useState('');
   const [pejabat, setPejabat] = useState('');
-  const [searchAtasan, setSearchAtasan] = useState('');
+  const [jenisCuti, setJenisCuti] = useState('');
 
   const [document, setDocument] = useState([])
 
@@ -71,11 +71,11 @@ export const TambahCutiTahunan = () => {
     if (profile.nip !== "") {
       dispatch(getPilihApproval({ nip: profile.nip }));
     }
-  }, [profile.nip, searchAtasan]);
+  }, [profile.nip, atasan]);
 
   const pickAtasan = () => {
     let nama = [];
-    pilih.data.map((item) => {
+    pilih.data?.map((item) => {
       nama.push({
         key: item.nip,
         value: item.nama_lengkap,
@@ -83,6 +83,20 @@ export const TambahCutiTahunan = () => {
     });
     return nama
   }
+
+  const subJenisCuti = () => {
+    let jenis = [];
+    form.data_jenis_cuti?.advancerole.map((item) => {
+      jenis.push({
+        key: item.id,
+        value: item.definisi,
+        day: item.maksimal_hari
+      });
+    });
+    return jenis
+  }
+
+  console.log(jenisCuti.day)
 
 
   return (
@@ -129,9 +143,40 @@ export const TambahCutiTahunan = () => {
                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Status Dokumen</Text>
                     <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, color: COLORS.success }}>Dokumen Baru</Text>
                   </View>
+
+                  {form.data_jenis_cuti?.advancerole?.length === 0 ? (
+                    null
+                  ) : (
+                    <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
+                      <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Maksimal</Text>
+                      <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{jenisCuti.day === undefined ? '0' : jenisCuti.day?.toString()} Hari</Text>
+                    </View>
+                  )}
                 </View>
               </View>
             </View>
+
+            {form.data_jenis_cuti?.advancerole?.length === 0 ? (
+              null
+            ) : (
+              <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ fontSize: 13, fontWeight: 600 }}>Sub jenis Cuti</Text>
+                  <Text style={{ color: COLORS.danger }}>*</Text>
+                </View>
+                <Dropdown
+                  data={subJenisCuti()}
+                  setSelected={setJenisCuti}
+                  selected={jenisCuti}
+                  borderWidth={1}
+                  borderwidthDrop={1}
+                  borderWidthValue={1}
+                  borderColor={COLORS.ExtraDivinder}
+                  borderColorDrop={COLORS.ExtraDivinder}
+                  borderColorValue={COLORS.ExtraDivinder}
+                />
+              </View>
+            )}
 
             <View>
               <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
@@ -397,65 +442,83 @@ export const TambahCutiTahunan = () => {
 
 
             </View>
-
-            <View style={{ gap: 10 }}>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
-                <Ionicons name='document-outline' size={18} color={COLORS.primary} />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Info Cuti</Text>
-              </View>
-
-              <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
-                <View style={{ gap: 5 }}>
-                  <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
-                    <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Penuh</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{form.data_kuota_cuti?.full_kuota}</Text>
+            {form.data_kuota_cuti === null ? (
+              null
+            ) : (
+              <>
+                <View style={{ gap: 10 }}>
+                  <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
+                    <Ionicons name='document-outline' size={18} color={COLORS.primary} />
+                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>Info Cuti</Text>
                   </View>
 
-                  <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
-                    <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Terpakai</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>{form.data_kuota_cuti?.kuota_terpakai}</Text>
-                  </View>
+                  <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
+                    <View style={{ gap: 5 }}>
+                      <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
+                        <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Penuh</Text>
+                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{form.data_kuota_cuti?.full_kuota}</Text>
+                      </View>
 
-                  <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
-                    <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Tersisa</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>{form.data_kuota_cuti?.kuota_sisa}</Text>
+                      <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
+                        <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Terpakai</Text>
+                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>{form.data_kuota_cuti?.kuota_terpakai}</Text>
+                      </View>
+
+                      <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
+                        <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Tersisa</Text>
+                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>{form.data_kuota_cuti?.kuota_sisa}</Text>
+                      </View>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </View>
 
-            <View style={{ gap: 10 }}>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
-                <Ionicons name='person-outline' size={18} color={COLORS.primary} />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Yang Menyetujui</Text>
-              </View>
-
-              <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
-                <View style={{ gap: 5 }}>
-                  <View style={{ flexDirection: "row", padding: 10 }}>
-                    <Text style={{ fontSize: 13, fontWeight: 600, paddingRight: 20 }}>Atasan Langsung</Text>
+                <View style={{ gap: 10 }}>
+                  <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
+                    <Ionicons name='people-outline' size={18} color={COLORS.primary} />
+                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>Yang Menyetujui</Text>
                   </View>
 
-                  <Dropdown
-                    data={pickAtasan()}
-                    setSelected={setAtasan}
-                    selected={atasan}
-                    borderWidth={1}
-                    borderwidthDrop={1}
-                    borderWidthValue={1}
-                    borderColor={COLORS.ExtraDivinder}
-                    borderColorDrop={COLORS.ExtraDivinder}
-                    borderColorValue={COLORS.ExtraDivinder}
-                    search={true}
-                  />
+                  <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
+                    <View style={{ gap: 5 }}>
+                      <View style={{ flexDirection: "row", padding: 10 }}>
+                        <Text style={{ fontSize: 13, fontWeight: 600, paddingRight: 20 }}>Atasan Langsung</Text>
+                      </View>
 
-                  <View style={{ flexDirection: "row", padding: 10 }}>
-                    <Text style={{ fontSize: 13, fontWeight: 600, paddingRight: 20 }}>Pejabat Berwenang</Text>
+                      <Dropdown
+                        data={pickAtasan()}
+                        setSelected={setAtasan}
+                        selected={atasan}
+                        borderWidth={1}
+                        borderwidthDrop={1}
+                        borderWidthValue={1}
+                        borderColor={COLORS.ExtraDivinder}
+                        borderColorDrop={COLORS.ExtraDivinder}
+                        borderColorValue={COLORS.ExtraDivinder}
+                        search={true}
+                      />
+
+                      <View style={{ flexDirection: "row", padding: 10 }}>
+                        <Text style={{ fontSize: 13, fontWeight: 600, paddingRight: 20 }}>Pejabat Berwenang</Text>
+                      </View>
+
+                      <Dropdown
+                        data={pickAtasan()}
+                        setSelected={setPejabat}
+                        selected={pejabat}
+                        borderWidth={1}
+                        borderwidthDrop={1}
+                        borderWidthValue={1}
+                        borderColor={COLORS.ExtraDivinder}
+                        borderColorDrop={COLORS.ExtraDivinder}
+                        borderColorValue={COLORS.ExtraDivinder}
+                        search={true}
+                      />
+
+                    </View>
                   </View>
-
                 </View>
-              </View>
-            </View>
+              </>
+            )}
 
           </View>
 
