@@ -96,7 +96,6 @@ export const TambahCutiTahunan = () => {
     return jenis
   }
 
-  console.log(jenisCuti.day)
 
 
   return (
@@ -289,7 +288,14 @@ export const TambahCutiTahunan = () => {
                           setModalVisiblePicker(!modalVisiblePicker);
                         }}
                       >
-                        <TouchableOpacity />
+                        <TouchableOpacity
+                          style={[
+                            Platform.OS === "ios"
+                              ? styles.iOSBackdrop
+                              : styles.androidBackdrop,
+                            styles.backdrop,
+                          ]}
+                        />
                         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                           <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: '90%', height: 500, borderRadius: 10 }}>
                             <TouchableOpacity onPress={() => setModalVisiblePicker('')} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
@@ -315,10 +321,19 @@ export const TambahCutiTahunan = () => {
                                 onSelectedChange={date => {
                                   const [year, month, day] = date.split('/').map(Number)
                                   const formattedDate = new Date(year, month - 1, day)
-                                  if (modalVisiblePicker === 'mulai') {
+                                  const [tahun, bulan, hari] = date.split('/').map(String)
+                                  const dataTanggal = (tahun + '-' + bulan + '-' + hari)
+
+                                  const dataPernahDipakai = form.data_kalender?.tanggal_pernah_dipakai?.some(item => item === dataTanggal)
+                                  const dataLibur = form.data_kalender?.tanggal_libur?.some(item => item === dataTanggal)
+                                  const dataSppd = form.data_kalender?.tanggal_sppd?.some(item => item === dataTanggal)
+                                  if (modalVisiblePicker === 'mulai' && !dataPernahDipakai && !dataLibur && !dataSppd) {
                                     setTanggalMulai(moment(formattedDate).format('YYYY-MM-DD'))
-                                  } else if (modalVisiblePicker === 'selesai') {
+                                  } else if (modalVisiblePicker === 'selesai' && !dataPernahDipakai && !dataLibur && !dataSppd) {
                                     setTanggalSelsai(moment(formattedDate).format('YYYY-MM-DD'))
+                                  } else {
+                                    alert('Tidak Dapat Memilih Tanggal Tersebut')
+                                    setTanggalMulai('')
                                   }
                                 }
                                 }
@@ -553,6 +568,21 @@ const styles = StyleSheet.create({
     // margin:10,
     marginVertical: 10,
     flexDirection: "row",
-  }
+  },
+  iOSBackdrop: {
+    backgroundColor: "#000000",
+    opacity: 0.3,
+  },
+  androidBackdrop: {
+    backgroundColor: "#232f34",
+    opacity: 0.32,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
 
 })
