@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { TouchableOpacity, View, Image, TextInput, Modal, Pressable } from 'react-native'
+import { TouchableOpacity, View, Image, TextInput, Modal, Pressable, FlatList } from 'react-native'
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
@@ -10,8 +10,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet } from 'react-native'
 import DatePicker from 'react-native-modern-datepicker'
 import moment from 'moment';
+import { Dropdown } from '../../components/DropDown'
+import { Search } from '../../components/Search'
+import { getPilihApproval } from '../../service/api'
 
+const kategories = [
+  { key: "q", value: "satu" },
+  { key: "e", value: "dua" },
+  { key: "r", value: "tiga" },
+  { key: "t", value: "empat" },
+];
 
+export const CardlPimpinan = ({ item }) => {
+  return (
+    <Text>{item.nama_lengkap}</Text>
+  )
+}
 
 export const TambahCutiTahunan = () => {
 
@@ -21,11 +35,17 @@ export const TambahCutiTahunan = () => {
     toggle: false
   })
   const { profile } = useSelector(state => state.superApps)
+  const { form, pilih } = useSelector(state => state.cuti)
 
   const [modalVisiblePicker, setModalVisiblePicker] = useState('');
 
   const [TanggalMulai, setTanggalMulai] = useState('');
   const [TanggalSelesai, setTanggalSelsai] = useState('');
+  const [alamat, setAlamat] = useState(form.data_user?.alamat);
+  const [telepon, setTelepon] = useState(form.data_user?.no_telpon)
+  const [atasan, setAtasan] = useState('');
+  const [pejabat, setPejabat] = useState('');
+  const [searchAtasan, setSearchAtasan] = useState('');
 
   const [document, setDocument] = useState([])
 
@@ -46,6 +66,24 @@ export const TambahCutiTahunan = () => {
     }
     dispatch(postAttachment(data))
   };
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (profile.nip !== "") {
+      dispatch(getPilihApproval({ nip: profile.nip }));
+    }
+  }, [profile.nip, searchAtasan]);
+
+  const pickAtasan = () => {
+    let nama = [];
+    pilih.data.map((item) => {
+      nama.push({
+        key: item.nip,
+        value: item.nama_lengkap,
+      });
+    });
+    return nama
+  }
+
 
   return (
     <GestureHandlerRootView>
@@ -62,7 +100,7 @@ export const TambahCutiTahunan = () => {
                 <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
               </TouchableOpacity>
             </View>
-            <View style={{ flex: 1, alignItems: 'center', }}>
+            <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
               <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Libur</Text>
             </View>
           </View>
@@ -70,7 +108,7 @@ export const TambahCutiTahunan = () => {
           <View style={{ padding: 20, gap: 20 }}>
 
             <View style={{ gap: 10 }}>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
+              <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
                 <Ionicons name='document-outline' size={18} color={COLORS.primary} />
                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jenis Cuti</Text>
               </View>
@@ -79,12 +117,12 @@ export const TambahCutiTahunan = () => {
                 <View style={{ gap: 5 }}>
                   <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Jenis Cuti</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Cuti Alasan Penting - Kementrian Kelautan dan Perikanan</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{form.data_jenis_cuti?.nama}</Text>
                   </View>
 
                   <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Tipe Hari</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, color: "#B745FF" }}>Hari Kerja</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, color: "#B745FF" }}>{form.data_jenis_cuti?.tipe_hari}</Text>
                   </View>
 
                   <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
@@ -96,9 +134,9 @@ export const TambahCutiTahunan = () => {
             </View>
 
             <View>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
-                <Ionicons name='document-outline' size={18} color={COLORS.primary} />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Status Dokumen Cuti</Text>
+              <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
+                <Ionicons name='person-outline' size={18} color={COLORS.primary} />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Profil Pegawai</Text>
               </View>
 
               <View>
@@ -110,8 +148,8 @@ export const TambahCutiTahunan = () => {
                   <TouchableOpacity onPress={() => setCollapse({ nip: profile.nip, toggle: true })}>
                     <View style={{ flexDirection: "row" }}>
                       <View style={{ width: "90%" }}>
-                        <Text>Muhammad Zaini</Text>
-                        <Text>NIP. 1923123121213</Text>
+                        <Text>{form.data_user?.nama}</Text>
+                        <Text>NIP. {form.data_user?.nip}</Text>
                       </View>
                       {collapse.nip === profile.nip && collapse.toggle === true ? (
                         <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
@@ -129,13 +167,13 @@ export const TambahCutiTahunan = () => {
                       <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
 
                         <Text style={{ marginTop: 10, }}>Golongan</Text>
-                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>IV</Text>
+                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{form.data_user?.golongan}</Text>
 
                         <Text style={{ marginTop: 10, }}>Jabatan</Text>
-                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>Pengelola Produksi</Text>
+                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{form.data_user?.jabatan}</Text>
 
                         <Text style={{ marginTop: 10, }}>Unit Kerja</Text>
-                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>Kelompok Fungsional Direktorat</Text>
+                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{form.data_user?.unit_kerja}</Text>
                       </TouchableOpacity>
                     </View>
                   ) : (
@@ -270,9 +308,8 @@ export const TambahCutiTahunan = () => {
                     <TextInput
                       editable
                       multiline
-                      numberOfLines={2}
-                      maxLength={50}
-                      placeholder='Ketikan Sesuatu'
+                      onChangeText={setAlamat}
+                      value={alamat}
                     />
                   </View>
                 </View>
@@ -285,9 +322,10 @@ export const TambahCutiTahunan = () => {
                     <TextInput
                       editable
                       multiline
-                      numberOfLines={2}
-                      maxLength={50}
-                      placeholder='Ketikan Sesuatu'
+                      numberOfLines={4}
+                      maxLength={40}
+                      onChangeText={setTelepon}
+                      value={telepon}
                     />
                   </View>
                 </View>
@@ -311,7 +349,7 @@ export const TambahCutiTahunan = () => {
             </View>
 
             <View>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
+              <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
                 <Ionicons name='document-outline' size={18} color={COLORS.primary} />
                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
               </View>
@@ -361,35 +399,35 @@ export const TambahCutiTahunan = () => {
             </View>
 
             <View style={{ gap: 10 }}>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
+              <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
                 <Ionicons name='document-outline' size={18} color={COLORS.primary} />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jenis Cuti</Text>
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Info Cuti</Text>
               </View>
 
               <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
                 <View style={{ gap: 5 }}>
                   <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Penuh</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>24</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{form.data_kuota_cuti?.full_kuota}</Text>
                   </View>
 
                   <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Terpakai</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>0</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>{form.data_kuota_cuti?.kuota_terpakai}</Text>
                   </View>
 
                   <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", padding: 10 }}>
                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Kuota Tersisa</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>24</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, }}>{form.data_kuota_cuti?.kuota_sisa}</Text>
                   </View>
                 </View>
               </View>
             </View>
 
             <View style={{ gap: 10 }}>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
-                <Ionicons name='document-outline' size={18} color={COLORS.primary} />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jenis Cuti</Text>
+              <View style={{ flexDirection: "row", padding: 5, columnGap: 10, alignItems: 'center' }}>
+                <Ionicons name='person-outline' size={18} color={COLORS.primary} />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Yang Menyetujui</Text>
               </View>
 
               <View style={{ backgroundColor: COLORS.white, padding: 20, borderRadius: 16 }}>
@@ -397,6 +435,19 @@ export const TambahCutiTahunan = () => {
                   <View style={{ flexDirection: "row", padding: 10 }}>
                     <Text style={{ fontSize: 13, fontWeight: 600, paddingRight: 20 }}>Atasan Langsung</Text>
                   </View>
+
+                  <Dropdown
+                    data={pickAtasan()}
+                    setSelected={setAtasan}
+                    selected={atasan}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                    search={true}
+                  />
 
                   <View style={{ flexDirection: "row", padding: 10 }}>
                     <Text style={{ fontSize: 13, fontWeight: 600, paddingRight: 20 }}>Pejabat Berwenang</Text>

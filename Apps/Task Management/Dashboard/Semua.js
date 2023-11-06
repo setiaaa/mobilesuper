@@ -1,29 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
-import { Text } from 'react-native'
-import { AVATAR, DATETIME } from '../../../config/SuperAppps'
+import { ActivityIndicator, View } from 'react-native'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../../components/CardListTask'
-import { useSelector } from 'react-redux'
+import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
+import { useDispatch, useSelector } from 'react-redux'
 import { CardListGridTask } from '../../../components/CardListGridTask'
 import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
-import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
+import { DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
+import { ActivityIndicatorBase } from 'react-native'
 
 
-export const MingguIni = () => {
+export const Semua = () => {
     const { list, variant, loading } = useSelector(state => state.task)
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
+    const [page, setPage] = useState(5);
+
 
     useEffect(() => {
         const data = taskLists.filter((item) => {
-            return item.deadline_status === 'this week'
+            return item.deadline_status
         })
         setFilterData(data)
     }, [taskLists])
+
+
+    const loadMore = () => {
+        if (taskLists % 5 === 0) {
+          setPage(page + 5);
+        }
+        console.log(page)
+        return page
+    };
+
+    // console.log(list)
 
     const renderShimmerList = () => {
         const arr = []
@@ -37,7 +50,6 @@ export const MingguIni = () => {
         return arr
     }
 
-    console.log(filterData)
     const renderShimmerGrid = () => {
         const arr = []
         for (let i = 0; i < 6; i++) {
@@ -53,7 +65,7 @@ export const MingguIni = () => {
     return (
         <>
             {variant === 'list' ? (
-                <View style={{ flex: 1, marginTop: 20 }}>
+                <View style={{ flex: 1, marginTop: 20}}>
                     {
                         loading ? (
                             <Loading/>
@@ -70,6 +82,20 @@ export const MingguIni = () => {
                                     ListEmptyComponent={() =>
                                         <ListEmpty />
                                     }
+                                    ListFooterComponent={() =>
+                                        loading === true ? (
+                                        <View
+                                            style={{
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            padding: 24,
+                                            }}
+                                        >
+                                            <ActivityIndicatorBase size="large" color={COLORS.primary} />
+                                        </View>
+                                        ) : null
+                                    }
+                                    onEndReached={loadMore}
                                 />
                             </View>
                         )

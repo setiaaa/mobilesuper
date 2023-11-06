@@ -1,8 +1,8 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { Image } from 'react-native'
 import moment from 'moment'
@@ -12,10 +12,44 @@ import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { CardItemMember } from '../../../components/CardItemMember'
+import { useState } from 'react'
+import ListEmpty from '../../../components/ListEmpty'
+import { getListTaskTM } from '../../../service/api'
 
-export const DetailProject = () => {
-    const { detailProject } = useSelector(state => state.task)
+const CardListKategori = ({ item, token, id_list, type }) => {
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
+    return (
+        <TouchableOpacity onPress={() => {
+            dispatch(getListTaskTM({ token: token, id_list: id_list, type: type.value }))
+        }}>
+            <View
+                style={{
+                    width: '90%',
+                    backgroundColor: COLORS.white,
+                    borderRadius: 8,
+                    gap: 1,
+                    marginVertical: 5,
+                    marginHorizontal: 20,
+                    //shadow
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: '#171717',
+                    shadowOpacity: 0.2,
+                    shadowRadius: 3,
+                }}>
+                <View style={{ marginVertical: 10, marginLeft: 10 }}>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>{item.value}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+}
+
+export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => {
+    const { detailProject, treeView } = useSelector(state => state.task)
     const { profile } = useSelector(state => state.superApps)
+    // const [choiceKategori, setChoiceKategori] = useState('')
+    const [dataList, setDataList] = useState([])
     const navigation = useNavigation()
     const bottomSheetModalMemberRef = useRef(null);
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
@@ -29,6 +63,43 @@ export const DetailProject = () => {
     const bottomSheetMember = () => {
         bottomSheetModalMemberRef.current?.present()
     }
+
+    // useEffect(() => {
+    //     let arrList = []
+    //     const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+    //     treeView[index]?.list_tasks?.map(item => {
+    //         arrList.push({
+    //             key: item.id,
+    //             value: item.name
+    //         })
+    //     })
+    //     console.log(index)
+    //     setChoiceList(arrList.length > 0 ? arrList[0] : '')
+    //     setDataList(arrList)
+    // }, [choiceKategori])
+
+    // console.log(choiceKategori)
+
+    let arrTask = []
+    {
+        treeView.map((item) => {
+            if (detailProject.id === item.id) {
+                // console.log('masuk')
+                item.list_tasks.map((task) => {
+                    arrTask.push({
+                        key: task.id,
+                        value: task.name
+                    })
+                    // console.log("task id", task.id)
+                    // setDataList(arrTask)
+                })
+            } else {
+            }
+        })
+    }
+
+    console.log(type)
+
     return (
         <View style={{ flex: 1 }}>
             <ScrollView>
@@ -209,6 +280,25 @@ export const DetailProject = () => {
                         </View>
                     ) : null
                 }
+
+                <View>
+                    <Text style={{ marginHorizontal: 20, marginVertical: 10, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>List Task</Text>
+                    <FlatList
+                        data={arrTask}
+                        renderItem={({ item }) => <CardListKategori
+                            item={item}
+                            token={token}
+                            id_list={item.key}
+                            type={type}
+                        />
+                        }
+                        ListEmptyComponent={() =>
+                            <ListEmpty />
+                        }
+                    />
+                </View>
+
+
                 <Portal>
                     <BottomSheetModalProvider>
                         <BottomSheetModal

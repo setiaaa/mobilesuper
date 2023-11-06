@@ -17,6 +17,8 @@ export const Terlewat = () => {
     const { list, variant, loading } = useSelector(state => state.task)
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
+    const [page, setPage] = useState(5);
+
 
     useEffect(() => {
         const data = taskLists.filter((item) => {
@@ -37,6 +39,14 @@ export const Terlewat = () => {
         return arr
     }
 
+    const loadMore = () => {
+        if (filterData % 5 === 0) {
+          setPage(page + 5);
+        }
+        // console.log(page);
+    };
+
+    console.log(filterData)
     const renderShimmerGrid = () => {
         const arr = []
         for (let i = 0; i < 6; i++) {
@@ -69,6 +79,20 @@ export const Terlewat = () => {
                                     ListEmptyComponent={() =>
                                         <ListEmpty />
                                     }
+                                    ListFooterComponent={() =>
+                                        loading === true ? (
+                                        <View
+                                            style={{
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            padding: 24,
+                                            }}
+                                        >
+                                            <ActivityIndicator size="large" color={COLORS.primary} />
+                                        </View>
+                                        ) : null
+                                    }
+                                    onEndReached={loadMore}
                                 />
                             </View>
                         )
@@ -102,6 +126,20 @@ export const Terlewat = () => {
                                 ListEmptyComponent={() =>
                                     <ListEmpty />
                                 }
+                                ListFooterComponent={() =>
+                                        loading === true ? (
+                                        <View
+                                            style={{
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            padding: 24,
+                                            }}
+                                        >
+                                            <ActivityIndicator size="large" color={COLORS.primary} />
+                                        </View>
+                                        ) : null
+                                    }
+                                onEndReached={loadMore}
                             />
                         )
                     }

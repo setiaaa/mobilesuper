@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
         height: 220,
         borderRadius: 12,
         marginLeft: 20,
-        marginTop:60,
-        padding:5,
+        marginTop: 60,
+        padding: 5,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: COLORS.primary,
