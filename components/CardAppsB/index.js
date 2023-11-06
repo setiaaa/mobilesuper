@@ -7,8 +7,8 @@ import { COLORS, FONTSIZE } from '../../config/SuperAppps';
 export const CardAppsB = ({ handlePressModal }) => {
   const navigation = useNavigation()
   return (
-    <View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
+    <View style={{ padding: 20, gap: 20}}>
+      <View style={{ flexDirection: 'row',  gap: 25 }}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('Drawer')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -35,7 +35,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         </View>
       </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 20, gap: 20 }}>
+      <View style={{ flexDirection: 'row',  gap: 25,  }}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -63,10 +63,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         </View>
       </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20, }}>
-
-        
-
+      <View style={{flexDirection: 'row',  gap: 25}}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('HalamanUtama')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -96,7 +93,7 @@ export const CardAppsB = ({ handlePressModal }) => {
       </View>
       
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 20, marginVertical: 20, paddingHorizontal: 25}}>
+      <View style={{flexDirection: 'row',  gap: 25, }}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('MainSPPD')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
