@@ -383,6 +383,7 @@ export const RangkumanIKU = () => {
   //   setIsFiltered(true);
   // };
 
+
   return (
     <>
       <View
@@ -801,8 +802,8 @@ export const RangkumanIKU = () => {
                   </TouchableOpacity>
                 ) : null}
 
-                <TouchableOpacity>
                   <TouchableOpacity
+                  onPress={!ascending ? asc : desc}
                     style={{
                       backgroundColor: "white",
                       borderRadius: 50,
@@ -815,7 +816,6 @@ export const RangkumanIKU = () => {
                       color={COLORS.grey}
                     />
                   </TouchableOpacity>
-                </TouchableOpacity>
               </View>
             </View>
 
