@@ -46,7 +46,7 @@ const CardListKategori = ({ item, token, id_list, type }) => {
 }
 
 export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => {
-    const { detailProject, treeView } = useSelector(state => state.task)
+    const { detailProject, treeView, loading } = useSelector(state => state.task)
     const { profile } = useSelector(state => state.superApps)
     // const [choiceKategori, setChoiceKategori] = useState('')
     const [dataList, setDataList] = useState([])
@@ -101,6 +101,8 @@ export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => 
     console.log(type)
 
     return (
+        <>
+        {loading === true ? null : 
         <View style={{ flex: 1 }}>
             <ScrollView>
                 <View style={{ backgroundColor: COLORS.white, marginHorizontal: 20, borderRadius: 8 }}>
@@ -340,5 +342,7 @@ export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => 
 
             </ScrollView>
         </View>
+        }
+        </>
     )
 }
