@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from "react";
 import { KeyboardAvoidingView, Modal, Text } from "react-native";
 import { View } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import {
   AVATAR,
   COLORS,
@@ -50,7 +50,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       toggle: temp,
       id: id,
     });
-    console.log(id);
+    // console.log(id);
   };
 
   const handleClickBalas = () => {
@@ -151,8 +151,8 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
             {listData.child.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === listData.id) ||
-                  (toggleComment.id !== listData.id &&
-                    listData.child.length > 0) ? (
+                (toggleComment.id !== listData.id &&
+                  listData.child.length > 0) ? (
                   <TouchableOpacity
                     key={listData.id}
                     onPress={() => clickBalas(listData.id, true)}
@@ -337,7 +337,7 @@ const CardLiniMasa = ({ item, token }) => {
   };
 
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
-  console.log(linimasa?.detail);
+  // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
 
   const [komen, setKomen] = useState("");
@@ -422,8 +422,8 @@ const CardLiniMasa = ({ item, token }) => {
                       item.category === "Video / Jurnal"
                         ? COLORS.successLight
                         : item.category === "Infografis"
-                          ? COLORS.warningLight
-                          : COLORS.infoLight,
+                        ? COLORS.warningLight
+                        : COLORS.infoLight,
                     height: 30,
                     width: 120,
                     borderRadius: 30,
@@ -458,8 +458,8 @@ const CardLiniMasa = ({ item, token }) => {
                         item.category === "Infografis"
                           ? COLORS.warning
                           : item.category === "Kegiatan"
-                            ? COLORS.info
-                            : COLORS.success,
+                          ? COLORS.info
+                          : COLORS.success,
                     }}
                   >
                     {item.category}
@@ -654,7 +654,7 @@ const CardLiniMasa = ({ item, token }) => {
 
               <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>
                 {detail?.members_agenda !== "" &&
-                  detail?.members_agenda !== null
+                detail?.members_agenda !== null
                   ? detail.members_agenda
                   : "-"}
               </Text>
@@ -758,7 +758,7 @@ const CardLiniMasa = ({ item, token }) => {
                 }}
               >
                 {detail?.start_date_agenda !== "" &&
-                  detail?.start_date_agenda !== null
+                detail?.start_date_agenda !== null
                   ? detail.start_date_agenda?.slice(0, -9)
                   : "-"}
               </Text>
@@ -1139,15 +1139,15 @@ export const LiniMasa = () => {
     if (linimasa.lists.length % 5 === 0) {
       setPage(page + 5);
     }
-    console.log(page);
+    // console.log(page);
   };
 
-  console.log(linimasa.lists);
+  // console.log(linimasa.lists);
 
   return (
     <>
       {linimasa.lists.length === 0 ? <Loading /> : null}
-      < >
+      <>
         <View
           style={{
             flexDirection: "row",
@@ -1196,7 +1196,7 @@ export const LiniMasa = () => {
               <CardLiniMasa
                 item={item}
                 token={token}
-              // setVisibleModal={setVisibleModal}
+                // setVisibleModal={setVisibleModal}
               />
             </View>
           )}
@@ -1217,7 +1217,7 @@ export const LiniMasa = () => {
           ListEmptyComponent={() => <ListEmpty />}
           onEndReached={loadMore}
         />
-      </ >
+      </>
     </>
   );
 };

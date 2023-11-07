@@ -13,6 +13,7 @@ import {
   getCategory,
   getCategoryId,
   getCategoryIdPage,
+  getDokHukum,
 } from "../../service/api";
 import { Search } from "../../components/Search";
 import { Ionicons } from "@expo/vector-icons";
@@ -79,7 +80,12 @@ export default function Dashboard() {
     }
   }, [token, page]);
 
+  // useEffect(() => {
+  //   dispatch(getDokHukum({ id: selectedList.key, page: page }));
+  // }, [token, selectedList?.key, page]);
+
   const { dokumen, lists, loading } = useSelector((state) => state.kebijakan);
+  // const { dokumenList } = useSelector((state) => state.kebijakan);
 
   useEffect(() => {
     setCategory(dokumen);
@@ -94,7 +100,6 @@ export default function Dashboard() {
   const [selectedList, setSelectedList] = useState({ key: "", value: "" });
 
   useEffect(() => {
-    dispatch(getCategoryId(selectedList.key));
     if (lists.count > 5) {
       let mdl = parseInt(lists.count / 5);
       const modulus = lists.count % 5;
@@ -105,7 +110,11 @@ export default function Dashboard() {
     } else {
       setCount(1);
     }
-  }, [page, selectedList.key]);
+  }, [page]);
+
+  useEffect(() => {
+    dispatch(getCategoryId(selectedList.key));
+  }, [selectedList.key]);
 
   // const filterData = (search) => {
   //   const filter =
@@ -158,15 +167,18 @@ export default function Dashboard() {
     if (lists.results?.datas.length % 5 === 0) {
       setPage(page + 5);
     }
-    console.log(page);
+    // console.log(page);
   };
 
   // console.log("ini page dari dashboarfd" + page);
   // console.log(lists?.results?.datas);
   const navigation = useNavigation();
 
-  console.log(selectedList);
+  // console.log(lists.results?.datas);
 
+  console.log(page);
+  console.log(selectedList.key);
+  // console.log(dokumenList);
   return (
     <>
       {loading ? <Loading /> : null}
@@ -405,12 +417,13 @@ export default function Dashboard() {
               {variant === "list" ? (
                 <FlatList
                   // data={dataFilter}
-                  // data={lists?.results?.datas}
-                  data={
-                    (dataFilter && dataFilter.length > 0) || isFiltered
-                      ? dataFilter
-                      : lists.results?.datas
-                  }
+                  data={lists?.results?.datas}
+                  // data={
+                  //   (dataFilter && dataFilter.length > 0) || isFiltered
+                  //     ? dataFilter
+                  //     : lists.results?.datas
+                  // }
+                  // data={dokumenList}
                   renderItem={({ item }) => (
                     <CardKebijakan
                       subjek={item.subjek}
