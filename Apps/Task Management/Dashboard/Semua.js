@@ -11,9 +11,6 @@ import { CardShimmerListGridTask } from '../../../components/CardListGridTask/Ca
 import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
 import { ActivityIndicatorBase } from 'react-native'
-import { Search } from '../../../components/Search'
-import { getTokenValue } from '../../../service/session'
-import { getListDashboardTM, getTreeTM } from '../../../service/api'
 
 
 export const Semua = () => {
@@ -47,13 +44,15 @@ export const Semua = () => {
     }, [taskLists])
 
 
-    // const loadMore = () => {
-    //     if (filterData.length % 10 === 0) {
-    //       setPage(page + 1);
-    //       console.log("page masuk "+ page)
-    //     }
-    //     console.log("panjangnya " + page)
-    // };
+    const loadMore = () => {
+        if (taskLists % 5 === 0) {
+            setPage(page + 5);
+        }
+        console.log(page)
+        return page
+    };
+
+    // console.log(list)
 
     const renderShimmerList = () => {
         const arr = []
@@ -98,18 +97,18 @@ export const Semua = () => {
     }, [search, taskLists])
     return (
         <>
-        <View style={{marginTop:20}}>
-            <Search
-                placeholder={"Cari"}
-                iconColor={COLORS.primary}
-                onSearch={filter}
+            <View style={{ marginTop: 20 }}>
+                <Search
+                    placeholder={"Cari"}
+                    iconColor={COLORS.primary}
+                    onSearch={filter}
                 />
-        </View>
+            </View>
             {variant === 'list' ? (
-                <View style={{ flex: 1, marginTop: 0}}>
+                <View style={{ flex: 1, marginTop: 0 }}>
                     {
                         loading ? (
-                            <Loading/>
+                            <Loading />
                         ) : (
                             <View>
                                 <FlatList
@@ -127,15 +126,15 @@ export const Semua = () => {
                                     }
                                     ListFooterComponent={() =>
                                         loading === true ? (
-                                        <View
-                                            style={{
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            padding: 24,
-                                            }}
-                                        >
-                                            <ActivityIndicatorBase size="large" color={COLORS.primary} />
-                                        </View>
+                                            <View
+                                                style={{
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    padding: 24,
+                                                }}
+                                            >
+                                                <ActivityIndicatorBase size="large" color={COLORS.primary} />
+                                            </View>
                                         ) : null
                                     }
                                 />

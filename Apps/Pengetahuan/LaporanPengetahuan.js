@@ -50,9 +50,30 @@ export const LaporanPengetahuan = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getTokenValue().then((val) => {
-      setToken(val);
+    let q = "";
+    if (1 <= month && month <= 3) {
+      q = "1";
+    } else if (4 <= month && month <= 6) {
+      q = "2";
+    } else if (7 <= month && month <= 9) {
+      q = "3";
+    } else {
+      q = "4";
+    }
+    setQuarter({
+      key: q,
+      value: q == 1 ? "TW1" : q == 2 ? "TW2" : q == 3 ? "TW3" : "TW4",
     });
+
+    let thn = [];
+    for (let i = 2023; i <= year; i++) {
+      thn.push({
+        key: i,
+        value: i,
+      });
+    }
+
+    setListYear(thn);
   }, []);
 
   useEffect(() => {

@@ -759,7 +759,7 @@ export const getListsLike = createAsyncThunk(
 export const getTreeTM = createAsyncThunk(
     "taskmanagement/getTreeTM",
     async ({ token, page }) => {
-        console.log('api tree '+ page)
+        console.log('api tree ' + page)
         const respon = await axios.get(`${taskManagement}project/tree/?limit=10&page=${page}`, {
             headers: { Authorization: token },
         });

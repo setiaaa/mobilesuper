@@ -155,17 +155,17 @@ export const PenilaianPenggetahaun = () => {
         setSearch(event)
     }
     useEffect(() => {
-        setFilterData(penilaian.lists.listPenilaian)
+        setFilterData(penilaian.lists)
     }, [penilaian])
 
     useEffect(() => {
         if (search !== '') {
-            const data = penilaian.lists.listPenilaian.filter((item) => {
-                return item.judul.toLowerCase().includes(search.toLowerCase());
+            const data = penilaian.lists.filter((item) => {
+                return item.title.toLowerCase().includes(search.toLowerCase());
             })
             setFilterData(data)
         } else {
-            setFilterData(penilaian.lists.listPenilaian)
+            setFilterData(penilaian.lists)
         }
     }, [search])
 
@@ -310,39 +310,40 @@ export const PenilaianPenggetahaun = () => {
                     </TouchableOpacity> */}
                 </View>
 
-                <Portal>
-                    <BottomSheetModalProvider>
-                        <BottomSheetModal
-                            ref={bottomSheetModalRef}
-                            snapPoints={animatedSnapPoints}
-                            handleHeight={animatedHandleHeight}
-                            contentHeight={animatedContentHeight}
-                            index={0}
-                            style={{ borderRadius: 50 }}
-                            keyboardBlurBehavior="restore"
-                            android_keyboardInputMode="adjust"
-                            backdropComponent={({ style }) => (
-                                <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                            )}
-                        >
-                            <BottomSheetView onLayout={handleContentLayout} >
-                                <View style={{ flex: 1 }}>
-                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 }}>
-                                        {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
-                <Ionicons name='chevron-back-outline' size={24} />
-            </TouchableOpacity> */}
-                                        <View style={{ width: '85%' }}>
-                                            <Search
-                                                placeholder={'Cari'}
-                                                onSearch={filter}
-                                            />
-                                        </View>
-                                        <TouchableOpacity onPress={() => {
-                                            bottomSheetAttachClose()
-                                        }}>
-                                            <Text style={{ color: COLORS.danger }}>Batal</Text>
-                                        </TouchableOpacity>
+            <Portal>
+                <BottomSheetModalProvider>
+                    <BottomSheetModal
+                        ref={bottomSheetModalRef}
+                        snapPoints={animatedSnapPoints}
+                        handleHeight={animatedHandleHeight}
+                        contentHeight={animatedContentHeight}
+                        index={0}
+                        style={{ borderRadius: 50 }}
+                        keyboardBlurBehavior="restore"
+                        android_keyboardInputMode="adjust"
+                        backdropComponent={({ style }) => (
+                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                        )}
+                    >
+                        <BottomSheetView onLayout={handleContentLayout} >
+                            <View style={{ flex: 1 }}>
+                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 }}>
+                                    {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
+                                    <Ionicons name='chevron-back-outline' size={24} />
+                                </TouchableOpacity> */}
+                                    <View style={{ width: '85%' }}>
+                                        <Search
+                                            placeholder={'Cari'}
+                                            onSearch={filter}
+                                        />
                                     </View>
+                                    
+                                    <TouchableOpacity onPress={() => {
+                                        bottomSheetAttachClose()
+                                    }}>
+                                        <Text style={{ color: COLORS.danger }}>Batal</Text>
+                                    </TouchableOpacity>
+                                </View>
 
                                     {/* custom divider */}
                                     <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />

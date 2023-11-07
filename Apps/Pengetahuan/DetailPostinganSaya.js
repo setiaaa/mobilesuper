@@ -302,7 +302,7 @@ export const DetailPostinganSaya = () => {
                     fontSize: 13,
                   }}
                 >
-                  Suka
+                  {detail?.likes_count}
                 </Text>
               </View>
               <View
@@ -318,25 +318,22 @@ export const DetailPostinganSaya = () => {
                   color={COLORS.grey}
                 />
                 <Text style={{ fontSize: 13, marginStart: 5 }}>
-                  Komen
+                  {detail?.comment_count}
                 </Text>
               </View>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginLeft: 10,
-                  }}
-                >
-                  <Ionicons name="information-circle-outline" size={18} color={COLORS.grey} />
-                  <Text style={{ fontSize: 13, marginStart: 5 }}>
-                    Info
-                  </Text>
-                </View>
-              </TouchableOpacity>
-
-              {/* <TouchableOpacity
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginLeft: 10,
+                }}
+              >
+                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {detail?.views_count}
+                </Text>
+              </View>
+              <TouchableOpacity
                 style={{
                   borderRadius: 8,
                   width: 100,
