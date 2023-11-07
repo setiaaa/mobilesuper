@@ -357,14 +357,31 @@ export const EditTodo = () => {
                                 />
                             </View> */}
                         </Pressable>
-                    </ScrollView>
-                    <TouchableOpacity onPress={() => HandleSubmit()}>
-                        <View style={{ position: 'absolute', right: 30, bottom: 100 }}>
-                            <View style={{ backgroundColor: COLORS.infoDanger, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                                <Ionicons name='checkmark-outline' size={24} color={COLORS.white} />
+                        <TouchableOpacity onPress={() => HandleSubmit()}>
+                            <View
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    width: "100%",
+                                    paddingBottom: 20,
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        backgroundColor: COLORS.primary,
+                                        flexDirection: "row",
+                                        width: "90%",
+                                        height: 50,
+                                        borderRadius: 8,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Text style={{ color: COLORS.white }}>Simpan</Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </ScrollView>
 
                     <Modal
                         animationType="fade"

@@ -68,15 +68,18 @@ const ListDokumenLain = ({ item, variant, token }) => {
                 <View style={{ flexDirection: "column" }}>
                     <Text style={{ fontSize: 13, width: 300, textAlign: 'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
                     <View style={{ backgroundColor: COLORS.lighter, height: 1, marginVertical: 5 }} />
-                    <View style={{ flexDirection: "row" }}>
-                        <Text style={{ fontSize: 13, width: 120, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penerima</Text>
-                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.receivers?.nama}</Text>
+                    <View style={{ gap: 5 }}>
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={{ fontSize: 13, width: 120, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penerima</Text>
+                            {/* <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.composer?.nama}</Text> */}
+                            <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.composer?.nama !== null ? item.composer?.nama : "-"}</Text>
+                        </View>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Text style={{ fontSize: 13, width: 120, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penandatangan</Text>
+                            <Text>: </Text>
+                            <Image source={{ uri: item.approvers[1]?.avatar_url !== null ? item.approvers[1]?.avatar_url : "-"  }} style={{ width: 20, height: 20, borderRadius: "50%" }} />
+                        </View>
                     </View>
-                    <View style={{ flexDirection: "row" }}>
-                        <Text style={{ fontSize: 13, width: 120, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penandatangan</Text>
-                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.approvers[1]?.officer?.nama !== null ? item.approvers[1]?.officer?.nama : "-"} </Text>
-                    </View>
-                    <Image source={{ uri: item.approvers[1]?.avatar_url }} />
                 </View>
             </TouchableOpacity>
         </View>

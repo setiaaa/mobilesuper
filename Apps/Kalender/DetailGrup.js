@@ -32,7 +32,7 @@ import { useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setAgendaDetail } from "../../store/GrupKalender";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import moment from "moment";
 import { deleteGrup, getDetailGrup } from "../../service/api";
 import { getTokenValue } from "../../service/session";
@@ -125,17 +125,16 @@ export const DetailGrup = () => {
   };
 
   return (
-    < >
+    <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <ScrollView>
             <View
               style={{
                 flexDirection: "row",
-                alignItems: "flex-end",
+                alignItems: "center",
                 backgroundColor: COLORS.primary,
                 height: 80,
-                paddingBottom: 20,
               }}
             >
               <View
@@ -149,7 +148,10 @@ export const DetailGrup = () => {
                   marginLeft: 20,
                 }}
               >
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => navigation.goBack()}
+                >
                   <Ionicons
                     name="chevron-back-outline"
                     size={24}
@@ -741,7 +743,7 @@ export const DetailGrup = () => {
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </ >
+    </>
   );
 };
 

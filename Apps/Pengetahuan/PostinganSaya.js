@@ -293,10 +293,13 @@ export const PostinganSaya = () => {
         return item.title.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
+      if (data.length === 0){
+
+      }
     } else {
       setFilterData(postinganSaya.lists);
     }
-  }, [search]);
+  }, [search, postinganSaya]);
 
   // console.log(postinganSaya.lists);
 

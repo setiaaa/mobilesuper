@@ -144,6 +144,7 @@ import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
 import { getTokenValue } from "../../service/session";
 import { Semua } from "../Task Management/Dashboard/Semua";
+import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 
 const Stack = createNativeStackNavigator();
 
@@ -1027,6 +1028,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="DetailDokumenCuti"
             component={DetailDokumenCuti}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListArsipCuti"
+            component={ListArsipCuti}
             options={{
               headerShown: false,
             }}

@@ -8,22 +8,25 @@ import { CardListGridTask } from '../../../components/CardListGridTask'
 import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
-import { DATETIME } from '../../../config/SuperAppps'
+import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
+import { Search } from '../../../components/Search'
 
 
 export const HariIni = () => {
     const { list, variant, loading } = useSelector(state => state.task)
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
+    const [filterDataStatus, setFilterDataStatus] = useState([])
     const [page, setPage] = useState(5);
+    const [search, setSearch] = useState('')
 
 
     useEffect(() => {
         const data = taskLists.filter((item) => {
             return item.deadline_status === 'today'
         })
-        setFilterData(data)
+        setFilterDataStatus(data)
     }, [taskLists])
 
     const loadMore = () => {
@@ -59,17 +62,42 @@ export const HariIni = () => {
         }
         return arr
     }
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        // const item = taskLists
+        if (search !== '') {
+            const data = filterDataStatus.filter((item) => {
+                return item.title?.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(filterDataStatus)
+        }
+        console.log(filterData)
+    }, [search, taskLists])
+
     return (
         <>
+        <View style={{marginTop:20}}>
+            <Search
+                placeholder={"Cari"}
+                iconColor={COLORS.primary}
+                onSearch={filter}
+                />
+        </View>
             {variant === 'list' ? (
                 <View style={{ flex: 1, marginTop: 20,}}>
                     {
                         loading ? (
                             <Loading/>
                         ) : (
-                            <View style={{ marginTop: 20 }}>
+                            <View>
                                 <FlatList
-                                    data={filterData}
+                                    data={search !== '' ? filterData : filterDataStatus}
                                     renderItem={({ item }) => <CardListTask
                                         id={item.id}
                                         title={item.title}

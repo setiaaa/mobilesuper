@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { Image } from 'react-native'
 import moment from 'moment'
@@ -14,18 +14,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { CardItemMember } from '../../../components/CardItemMember'
 import { useState } from 'react'
 import ListEmpty from '../../../components/ListEmpty'
+import { getListTaskTM } from '../../../service/api'
 
-const CardListKategori = (id, name) => {
+const CardListKategori = ({ item, token, id_list, type }) => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+            dispatch(getListTaskTM({ token: token, id_list: id_list, type: type.value }))
+        }}>
             <View
                 style={{
-                    width: '100%',
+                    width: '90%',
                     backgroundColor: COLORS.white,
                     borderRadius: 8,
                     gap: 1,
                     marginVertical: 5,
+                    marginHorizontal: 20,
                     //shadow
                     shadowOffset: { width: -2, height: 4 },
                     shadowColor: '#171717',
@@ -33,18 +38,14 @@ const CardListKategori = (id, name) => {
                     shadowRadius: 3,
                 }}>
                 <View style={{ marginVertical: 10, marginLeft: 10 }}>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>{name}</Text>
-                </View>
-                <View style={{ marginBottom: 10, marginLeft: 10, display: 'flex', flexDirection: 'row', gap: 2 }}>
-                    <Text>Target Tanggal: </Text>
-                    <Text style={{ color: COLORS.danger }}>test</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>{item.value}</Text>
                 </View>
             </View>
         </TouchableOpacity>
     )
 }
 
-export const DetailProject = (choiceKategori, dataKategori) => {
+export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => {
     const { detailProject, treeView } = useSelector(state => state.task)
     const { profile } = useSelector(state => state.superApps)
     // const [choiceKategori, setChoiceKategori] = useState('')
@@ -63,42 +64,47 @@ export const DetailProject = (choiceKategori, dataKategori) => {
         bottomSheetModalMemberRef.current?.present()
     }
 
-    useEffect(() => {
-        let arrList = []
-        // console.log(choiceKategori)
-        const index = 3
-        // const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
-        treeView[index]?.list_tasks?.map(item => {
-            arrList.push({
-                key: item.id,
-                value: item.name
-            })
-        })
-        // console.log(index)
-        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
-        setDataList(arrList)
-    }, [choiceKategori])
+    // useEffect(() => {
+    //     let arrList = []
+    //     const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+    //     treeView[index]?.list_tasks?.map(item => {
+    //         arrList.push({
+    //             key: item.id,
+    //             value: item.name
+    //         })
+    //     })
+    //     console.log(index)
+    //     setChoiceList(arrList.length > 0 ? arrList[0] : '')
+    //     setDataList(arrList)
+    // }, [choiceKategori])
 
-    console.log(dataList)
+    // console.log(choiceKategori)
+
+    let arrTask = []
+    {
+        treeView.map((item) => {
+            if (detailProject.id === item.id) {
+                // console.log('masuk')
+                item.list_tasks.map((task) => {
+                    arrTask.push({
+                        key: task.id,
+                        value: task.name
+                    })
+                    // console.log("task id", task.id)
+                    // setDataList(arrTask)
+                })
+            } else {
+            }
+        })
+    }
+
+    console.log(type)
 
     return (
         <View style={{ flex: 1 }}>
             <ScrollView>
                 <View style={{ backgroundColor: COLORS.white, marginHorizontal: 20, borderRadius: 8 }}>
-                    <View style={{ marginTop: 20 }}>
-                                <FlatList
-                                    data={dataList}
-                                    renderItem={({ item }) => <CardListKategori
-                                        id={item.id}
-                                        name={item.value}
-                                    />
-                                    }
-                                    ListEmptyComponent={() =>
-                                        <ListEmpty />
-                                    }
-                            />
-                        </View>
-                    {/* <View style={{ marginHorizontal: 20, marginVertical: 20, display: 'flex', flexDirection: 'column', gap: 20 }}>
+                    <View style={{ marginHorizontal: 20, marginVertical: 20, display: 'flex', flexDirection: 'column', gap: 20 }}>
                         <View style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                             <Text style={{ fontSize: FONTSIZE.Judul, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>{detailProject.name}</Text>
                             <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}>{detailProject.description}</Text>
@@ -238,7 +244,7 @@ export const DetailProject = (choiceKategori, dataKategori) => {
                                 </View>
                             </View>
                         </View>
-                    </View> */}
+                    </View>
                 </View>
 
                 {
@@ -274,6 +280,25 @@ export const DetailProject = (choiceKategori, dataKategori) => {
                         </View>
                     ) : null
                 }
+
+                <View>
+                    <Text style={{ marginHorizontal: 20, marginVertical: 10, fontWeight: FONTWEIGHT.bold, color: COLORS.lighter }}>List Task</Text>
+                    <FlatList
+                        data={arrTask}
+                        renderItem={({ item }) => <CardListKategori
+                            item={item}
+                            token={token}
+                            id_list={item.key}
+                            type={type}
+                        />
+                        }
+                        ListEmptyComponent={() =>
+                            <ListEmpty />
+                        }
+                    />
+                </View>
+
+
                 <Portal>
                     <BottomSheetModalProvider>
                         <BottomSheetModal

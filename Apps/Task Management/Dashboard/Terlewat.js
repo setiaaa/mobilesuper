@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
-import { AVATAR, DATETIME } from '../../../config/SuperAppps'
+import { AVATAR, COLORS, DATETIME } from '../../../config/SuperAppps'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../../components/CardListTask'
 import { useSelector } from 'react-redux'
@@ -11,20 +11,23 @@ import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
 import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
 import { Loading } from '../../../components/Loading'
+import { Search } from '../../../components/Search'
 
 
 export const Terlewat = () => {
     const { list, variant, loading } = useSelector(state => state.task)
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
+    const [filterDataStatus, setFilterDataStatus] = useState([])
     const [page, setPage] = useState(5);
+    const [search, setSearch] = useState('')
 
 
     useEffect(() => {
         const data = taskLists.filter((item) => {
             return item.deadline_status === 'overdue'
         })
-        setFilterData(data)
+        setFilterDataStatus(data)
     }, [taskLists])
 
     const renderShimmerList = () => {
@@ -59,17 +62,40 @@ export const Terlewat = () => {
         }
         return arr
     }
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = filterDataStatus.filter((item) => {
+                return item.title?.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(filterDataStatus)
+        }
+    }, [search, taskLists])
+
     return (
         <>
+        <View style={{marginTop:20}}>
+            <Search
+                placeholder={"Cari"}
+                iconColor={COLORS.primary}
+                onSearch={filter}
+                />
+        </View>
             {variant === 'list' ? (
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, marginTop: 20 }}>
                     {
                         loading ? (
                             <Loading/>
                         ) : (
-                            <View style={{ marginTop: 20 }}>
+                            <View>
                                 <FlatList
-                                    data={filterData}
+                                    data={search !== '' ? filterData : filterDataStatus}
                                     renderItem={({ item }) => <CardListTask
                                         id={item.id}
                                         title={item.title}

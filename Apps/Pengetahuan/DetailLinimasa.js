@@ -43,7 +43,7 @@ import { setRefresh } from "../../store/Pengetahuan";
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   const navigation = useNavigation();
 
-  // console.log(name);
+  console.log(lampiran);
   // console.log(size);
   return type === "png" || type === "jpg" || type === "jpeg" ? (
     <TouchableOpacity key={id} onPress={onClick}>
@@ -866,7 +866,7 @@ export const DetailLinimasa = () => {
                     onPress={bottomSheetAttachComment}
                   >
                     <Ionicons name="chatbox-outline" size={18} />
-                    <Text>Komen</Text>
+                    <Text>Komentar</Text>
                   </TouchableOpacity>
 
                   <BottomSheetModal

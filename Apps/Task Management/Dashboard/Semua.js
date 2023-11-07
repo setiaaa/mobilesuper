@@ -3,13 +3,15 @@ import { ActivityIndicator, View } from 'react-native'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../../components/CardListTask'
 import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CardListGridTask } from '../../../components/CardListGridTask'
 import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
 import { CardShimmerListGridTask } from '../../../components/CardListGridTask/CardShimmerListGridTask'
-import { DATETIME } from '../../../config/SuperAppps'
+import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
+import { ActivityIndicatorBase } from 'react-native'
+import { Search } from '../../../components/Search'
 
 
 export const Semua = () => {
@@ -17,6 +19,7 @@ export const Semua = () => {
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
     const [page, setPage] = useState(5);
+    const [search, setSearch] = useState('')
 
 
     useEffect(() => {
@@ -28,10 +31,11 @@ export const Semua = () => {
 
 
     const loadMore = () => {
-        if (filterData % 5 === 0) {
+        if (taskLists % 5 === 0) {
           setPage(page + 5);
         }
-        console.log(page);
+        console.log(page)
+        return page
     };
 
     // console.log(list)
@@ -60,15 +64,39 @@ export const Semua = () => {
         }
         return arr
     }
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        const item = taskLists
+        if (search !== '') {
+            const data = item.filter((item) => {
+                return item.title?.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(item)
+        }
+        console.log(filterData)
+    }, [search, taskLists])
     return (
         <>
+        <View style={{marginTop:20}}>
+            <Search
+                placeholder={"Cari"}
+                iconColor={COLORS.primary}
+                onSearch={filter}
+                />
+        </View>
             {variant === 'list' ? (
-                <View style={{ flex: 1, marginTop: 20}}>
+                <View style={{ flex: 1, marginTop: 0}}>
                     {
                         loading ? (
                             <Loading/>
                         ) : (
-                            <View style={{ marginTop: 20 }}>
+                            <View>
                                 <FlatList
                                     data={filterData}
                                     renderItem={({ item }) => <CardListTask
@@ -89,7 +117,7 @@ export const Semua = () => {
                                             padding: 24,
                                             }}
                                         >
-                                            <ActivityIndicator size="large" color={COLORS.primary} />
+                                            <ActivityIndicatorBase size="large" color={COLORS.primary} />
                                         </View>
                                         ) : null
                                     }
