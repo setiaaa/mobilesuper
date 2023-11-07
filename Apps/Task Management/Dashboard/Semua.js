@@ -12,15 +12,32 @@ import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
 import { ActivityIndicatorBase } from 'react-native'
 import { Search } from '../../../components/Search'
+import { getTokenValue } from '../../../service/session'
+import { getListDashboardTM, getTreeTM } from '../../../service/api'
 
 
 export const Semua = () => {
     const { list, variant, loading } = useSelector(state => state.task)
+    // const dispatch = useDispatch()
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
-    const [page, setPage] = useState(5);
+    // const [page, setPage] = useState(1);
+    // const [token, setToken] = useState("");
     const [search, setSearch] = useState('')
 
+    // useEffect(() => {
+    //     getTokenValue().then((val) => {
+    //         setToken(val);
+    //     });
+    //     setPage(1)
+    // }, []);
+
+    // useEffect(() => {
+    //     if (token !== "") {
+    //         dispatch(getListDashboardTM({ token: token, page: page }))
+    //         dispatch(getTreeTM({ token: token, page:page }))
+    //     }
+    // }, [token, page]);
 
     useEffect(() => {
         const data = taskLists.filter((item) => {
@@ -30,15 +47,13 @@ export const Semua = () => {
     }, [taskLists])
 
 
-    const loadMore = () => {
-        if (taskLists % 5 === 0) {
-          setPage(page + 5);
-        }
-        console.log(page)
-        return page
-    };
-
-    // console.log(list)
+    // const loadMore = () => {
+    //     if (filterData.length % 10 === 0) {
+    //       setPage(page + 1);
+    //       console.log("page masuk "+ page)
+    //     }
+    //     console.log("panjangnya " + page)
+    // };
 
     const renderShimmerList = () => {
         const arr = []
@@ -105,6 +120,8 @@ export const Semua = () => {
                                         duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
                                     />
                                     }
+                                    // onEndReached={loadMore}
+                                    // keyExtractor={(item) => item.id}
                                     ListEmptyComponent={() =>
                                         <ListEmpty />
                                     }
@@ -121,7 +138,6 @@ export const Semua = () => {
                                         </View>
                                         ) : null
                                     }
-                                    onEndReached={loadMore}
                                 />
                             </View>
                         )

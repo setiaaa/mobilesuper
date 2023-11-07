@@ -758,8 +758,9 @@ export const getListsLike = createAsyncThunk(
 //TASK MANAGEMENT
 export const getTreeTM = createAsyncThunk(
     "taskmanagement/getTreeTM",
-    async ({ token }) => {
-        const respon = await axios.get(`${taskManagement}project/tree/`, {
+    async ({ token, page }) => {
+        console.log('api tree '+ page)
+        const respon = await axios.get(`${taskManagement}project/tree/?limit=10&page=${page}`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -770,7 +771,7 @@ export const getListDashboardTM = createAsyncThunk(
     "taskmanagement/getListDashboardTM",
     async ({ token, page }) => {
         console.log("ini api " + page)
-        const respon = await axios.get(`${taskManagement}dashboard/list/?limit=${page}`, {
+        const respon = await axios.get(`${taskManagement}dashboard/list/?limit=10&page=${page}`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;

@@ -51,7 +51,7 @@ export const MyTask = () => {
 
     useEffect(() => {
         dispatch(getListDashboardTM({ token: token, page: page }))
-        dispatch(getTreeTM({ token: token }))
+        dispatch(getTreeTM({ token: token, page:page }))
     }, [token, page]);
 
     const { refresh, variant, treeView, list, loading } = useSelector(state => state.task)
@@ -98,12 +98,12 @@ export const MyTask = () => {
             bottomSheetModalAddRef.current?.close()
     }
 
-    const loadMore = () => {
-        if (taskLists.length % 5 === 0) {
-            setPage(page + 5);
-        }
-        console.log(page);
-    };
+    // const loadMore = () => {
+    //     if (taskLists.length % 5 === 0) {
+    //         setPage(page + 5);
+    //     }
+    //     console.log(page);
+    // };
 
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
@@ -251,7 +251,6 @@ export const MyTask = () => {
                             justifyContent: 'center',
                             marginLeft: 20
                         }}>
-
                             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                                 <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                             </TouchableOpacity>
@@ -417,7 +416,7 @@ export const MyTask = () => {
                                     ) : list.type === 'Korespondensi' ? (
                                         <TopsTaskKorespondensi />
                                     ) : (
-                                        <TopsTask />
+                                        loading === false ? <TopsTask /> : null
                                     )
                                 }
                             </View>
