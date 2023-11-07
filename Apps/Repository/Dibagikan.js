@@ -286,7 +286,7 @@ export const Dibagikan = () => {
                 marginLeft: 20,
               }}
             >
-              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                 <Ionicons
                   name="chevron-back-outline"
                   size={24}
@@ -336,7 +336,7 @@ export const Dibagikan = () => {
               )
             )}
             keyExtractor={(item) => "_" + item.id}
-            style={{ flex: 1 }}
+            style={{ height: 500 }}
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={() => {
               if (dibagikan.lists.length !== 0) {

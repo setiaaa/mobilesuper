@@ -29,6 +29,7 @@ import moment from "moment";
 import { CardListDetailAgenda } from "../../components/CardListDetailAgenda";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { Loading } from "../../components/Loading";
 
 export const AgendaEvent = () => {
   const navigation = useNavigation();
@@ -63,6 +64,10 @@ export const AgendaEvent = () => {
   const [token, setToken] = useState("");
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
 
+  const resetData = () => {
+    agenda.lists = [];
+  }
+
   const { agenda, event, loading } = useSelector((state) => state.event);
 
   useEffect(() => {
@@ -92,8 +97,11 @@ export const AgendaEvent = () => {
   //     }
   // }, [search])
 
+  console.log(agenda.lists)
+
   return (
     <>
+      {agenda.lists.length === 0 ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -114,7 +122,10 @@ export const AgendaEvent = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("HalamanUtama")}>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate("HalamanUtama")
+            resetData()
+          }}>
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -207,7 +218,7 @@ export const AgendaEvent = () => {
         )}
         style={{ marginVertical: 10, height: 440 }}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <ListEmpty />}
+        ListEmptyComponent={() => {loading !== true ? <ListEmpty /> : loading}}
       />
 
       <Portal>
