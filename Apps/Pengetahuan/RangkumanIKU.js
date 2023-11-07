@@ -58,6 +58,7 @@ const ListDaftarPegawai = ({ item, token }) => {
           backgroundColor: COLORS.white,
           borderRadius: 10,
           padding: 15,
+          marginHorizontal: 20,
           gap: 5,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
