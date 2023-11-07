@@ -310,40 +310,40 @@ export const PenilaianPenggetahaun = () => {
                     </TouchableOpacity> */}
                 </View>
 
-            <Portal>
-                <BottomSheetModalProvider>
-                    <BottomSheetModal
-                        ref={bottomSheetModalRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout} >
-                            <View style={{ flex: 1 }}>
-                                <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 }}>
-                                    {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
+                <Portal>
+                    <BottomSheetModalProvider>
+                        <BottomSheetModal
+                            ref={bottomSheetModalRef}
+                            snapPoints={animatedSnapPoints}
+                            handleHeight={animatedHandleHeight}
+                            contentHeight={animatedContentHeight}
+                            index={0}
+                            style={{ borderRadius: 50 }}
+                            keyboardBlurBehavior="restore"
+                            android_keyboardInputMode="adjust"
+                            backdropComponent={({ style }) => (
+                                <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
+                            )}
+                        >
+                            <BottomSheetView onLayout={handleContentLayout} >
+                                <View style={{ flex: 1 }}>
+                                    <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 }}>
+                                        {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
                                     <Ionicons name='chevron-back-outline' size={24} />
                                 </TouchableOpacity> */}
-                                    <View style={{ width: '85%' }}>
-                                        <Search
-                                            placeholder={'Cari'}
-                                            onSearch={filter}
-                                        />
+                                        <View style={{ width: '85%' }}>
+                                            <Search
+                                                placeholder={'Cari'}
+                                                onSearch={filter}
+                                            />
+                                        </View>
+
+                                        <TouchableOpacity onPress={() => {
+                                            bottomSheetAttachClose()
+                                        }}>
+                                            <Text style={{ color: COLORS.danger }}>Batal</Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    
-                                    <TouchableOpacity onPress={() => {
-                                        bottomSheetAttachClose()
-                                    }}>
-                                        <Text style={{ color: COLORS.danger }}>Batal</Text>
-                                    </TouchableOpacity>
-                                </View>
 
                                     {/* custom divider */}
                                     <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
@@ -384,7 +384,7 @@ export const PenilaianPenggetahaun = () => {
                             gap: 10,
                         }}>
                             <Image source={require('../../assets/superApp/unreviewed.png')} />
-                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.total.total_unreviewed}</Text>
+                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian?.total?.total_unreviewed}</Text>
                         </View>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, marginVertical: 5 }}>BELUM DINILAI</Text>
                         <Text style={{ color: COLORS.lighter }}>pada triwulan terakhir</Text>
@@ -404,7 +404,7 @@ export const PenilaianPenggetahaun = () => {
                             gap: 10,
                         }}>
                             <Image source={require('../../assets/superApp/reviewed.png')} />
-                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.total.total_reviewed}</Text>
+                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian?.total?.total_reviewed}</Text>
                         </View>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, marginVertical: 5 }}>TELAH DINILAI</Text>
                         <Text style={{ color: COLORS.lighter }}>pada triwulan terakhir</Text>

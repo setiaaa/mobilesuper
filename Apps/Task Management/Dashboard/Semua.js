@@ -11,6 +11,7 @@ import { CardShimmerListGridTask } from '../../../components/CardListGridTask/Ca
 import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
 import { ActivityIndicatorBase } from 'react-native'
+import { Search } from '../../../components/Search'
 
 
 export const Semua = () => {
