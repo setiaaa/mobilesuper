@@ -16,6 +16,7 @@ import { FlatList } from "react-native";
 import { Image } from "react-native";
 import { Modal } from "react-native";
 import { StyleSheet } from "react-native";
+import { CardItemMember } from "../../components/CardItemMember";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -51,6 +52,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export const DetailAgenda = () => {
   const navigation = useNavigation();
+  
 
     const [visibleModal, setVisibleModal] = useState(false);
     const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
@@ -63,6 +65,7 @@ export const DetailAgenda = () => {
     jenis = jenis[jenis.length - 1];
     return jenis;
   };
+
 
   const video = useRef(null);
 
@@ -96,6 +99,7 @@ export const DetailAgenda = () => {
   }, [token]);
 
   const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalRefPeserta = useRef(null);
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
@@ -107,6 +111,10 @@ export const DetailAgenda = () => {
 
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
+  };
+
+  const bottomSheetAttachPeserta = () => {
+    bottomSheetModalRefPeserta.current?.present();
   };
 
   const bottomSheetAttachClose = () => {
@@ -450,8 +458,7 @@ export const DetailAgenda = () => {
                             
                         </View> */}
 
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
+                        {/* <View style={{ flexDirection: 'row' }}>
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
@@ -462,7 +469,7 @@ export const DetailAgenda = () => {
                                 )
                             )}
                             
-                        </View> 
+                        </View>  */}
 
             <View style={{ flexDirection: "row" }}>
               <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
@@ -491,7 +498,7 @@ export const DetailAgenda = () => {
               )}
               <TouchableOpacity
                 style={{ flex: 1, alignItems: "flex-end", marginRight: 10 }}
-                onPress={() => setVisibleModalPeserta(true)}
+                onPress={() => bottomSheetAttachPeserta()}
               >
                 <Ionicons
                   name="chevron-forward-outline"
@@ -503,109 +510,54 @@ export const DetailAgenda = () => {
 
 
 
-                        <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={visibleModalPeserta}
-                            onRequestClose={() => {
-                                setVisibleModalPeserta(!visibleModalPeserta);
-                            }}
-                            >
-                            <TouchableOpacity
-                                style={[
-                                Platform.OS === "ios"
-                                    ? styles.iOSBackdrop
-                                    : styles.androidBackdrop,
-                                styles.backdrop,
-                                ]}
-                            />
-                            <View style={{ alignItems: "center", justifyContent: 'center', flex: 1 }}>
-                                <View
-                                style={{
-                                    backgroundColor: COLORS.white,
-                                    width: "90%",
-                                    height: '90%',
-                                    borderRadius: 10,
-                                    alignContent: 'center',
-                                }}
-                                >
-                                <View
-                                    style={{
-                                    marginTop: 20,
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    marginHorizontal: 20,
-                                    }}
-                                >
-                                    <View>
-                                    <Text
-                                        style={{
-                                        fontSize: FONTSIZE.Judul,
-                                        fontWeight: FONTWEIGHT.bold,
-                                        }}
-                                    >
-                                        Peserta Agenda
-                                    </Text>
-                                    </View>
-
-                                    <TouchableOpacity
-                                    style={{}}
-                                    onPress={() => {
-                                        setVisibleModalPeserta(false);
-                                    }}
-                                    >
-                                    <Ionicons
-                                        name="close-outline"
-                                        size={24}
-                                        color={COLORS.lighter}
-                                    />
-                                    </TouchableOpacity>
-                                </View>
-                                {/* custom divider */}
-                                <View
-                                    style={{
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    }}
-                                >
-                                    <View
-                                    style={{
-                                        height: 1,
-                                        width: "90%",
-                                        backgroundColor: "#DBDADE",
-                                        marginVertical: 10,
-                                    }}
-                                    />
-                                </View>
-
-                                <ScrollView style={{ marginBottom: 40 }}>
-                                    <View style={{
-                                        width: '90%',
-                                        borderRadius: 8,
-                                        marginHorizontal: 20,
-                                        marginTop: 10,
-                                        flexDirection: 'column', 
-                                        gap: 20
-                                    }}>
-                                        {loading ? (
-                                            <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100}  />
-                                        ) : (
-                                            data.extra_attrs?.members?.map((member, index) =>
-                                                <View key={index} style={{ position: 'relative', flexDirection: 'row', alignContent: 'center', gap: 20 }}>
-                                                    <Image source={{ uri: member.avatar_url }} style={{ width: 45, height: 45, borderRadius: 50 }} />
-                                                    <Text>{member.nama}</Text>
-                                                </View>
-                                            )
-                                        )}
-                                    </View>
-
-                                    
-
-                                </ScrollView>
-                                </View>
-                            </View>
-                        </Modal>
+            <BottomSheetModal
+                ref={bottomSheetModalRefPeserta}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                  />
+                )}
+              >
+                <BottomSheetView onLayout={handleContentLayout}>
+                  <View style={{ marginTop: 20, marginBottom: 40 }}>
+                    <View
+                      style={{
+                        marginBottom: 20,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: FONTSIZE.H2,
+                          fontWeight: FONTWEIGHT.bold,
+                          color: COLORS.lighter,
+                        }}
+                      >
+                        Peserta Agenda Rapat
+                      </Text>
+                    </View>
+                    <View>
+                      <FlatList
+                        data={data.extra_attrs?.members}
+                        renderItem={({ item }) => (
+                          <View key={item.nip}>
+                            <CardItemMember item={item} />
+                          </View>
+                        )}
+                        keyExtractor={(item) => item.id}
+                      />
+                    </View>
+                  </View>
+                </BottomSheetView>
+              </BottomSheetModal>
 
                         
 

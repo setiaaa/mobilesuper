@@ -49,6 +49,8 @@ export const DetailEvent = () => {
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
   };
+
+  
   const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
 
   const statusEvent = [
@@ -197,7 +199,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
@@ -235,7 +237,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
@@ -264,7 +266,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
@@ -294,7 +296,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row" }}>
@@ -424,7 +426,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -468,7 +470,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row" }}>
@@ -502,7 +504,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row" }}>
@@ -537,7 +539,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
