@@ -304,7 +304,7 @@ const CardLiniMasa = ({ item, token }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["70%"], []);
+  const initialSnapPoints = useMemo(() => ['75%'], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -359,8 +359,20 @@ const CardLiniMasa = ({ item, token }) => {
     };
     dispatch(postComment(data));
     setKomen("");
-    setParentId({ id: "", creator: "" });
+    setParentId({id:"",creator:""})
   };
+
+  useEffect(() => {
+    const data = {
+      token: token,
+      id: detail.id,
+    };
+    if (refresh) {
+      console.log("masukkkkkkk");
+      dispatch(getDetailLinimasa(data));
+      dispatch(setRefresh(false));
+    }
+  }, [refresh]);
 
   return (
     <View
@@ -1034,15 +1046,8 @@ const CardLiniMasa = ({ item, token }) => {
               />
 
               <View style={{ justifyContent: "flex-end" }}>
-                {parentId.id !== "" ? (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      paddingHorizontal: 20,
-                      paddingTop: 10,
-                    }}
-                  >
+                {parentId.id !== "" ? ( 
+                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:10, paddingTop:10}}>
                     <Text>Membalas {parentId.creator}</Text>
                     <TouchableOpacity>
                       <Ionicons

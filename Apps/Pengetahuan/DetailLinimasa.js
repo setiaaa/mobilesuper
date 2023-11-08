@@ -1092,9 +1092,9 @@ export const DetailLinimasa = () => {
                           style={{ height: 500, flex:1 }}
                         />
 
-                        <View style={{ justifyContent: "flex-end", paddingTop:10 }}>
+                        <View style={{ justifyContent: "flex-end" }}>
                         {parentId.id !== "" ? ( 
-                          <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
+                          <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20, paddingTop:10}}>
                             <Text>Membalas {parentId.creator}</Text>
                             <TouchableOpacity>
                               <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
