@@ -5,7 +5,7 @@ import {
     useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
 import React, { useMemo, useRef } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -37,6 +37,8 @@ const tipe = [
     { key: '5', value: 'Task Dari Saya' },
 ]
 
+const { width: screenWidth } = Dimensions.get('window');
+
 export const MyTask = () => {
     const dispatch = useDispatch()
     const [token, setToken] = useState("");
@@ -51,7 +53,7 @@ export const MyTask = () => {
 
     useEffect(() => {
         dispatch(getListDashboardTM({ token: token, page: page }))
-        dispatch(getTreeTM({ token: token }))
+        dispatch(getTreeTM({ token: token, page:page }))
     }, [token, page]);
 
     const { refresh, variant, treeView, list, loading } = useSelector(state => state.task)
@@ -98,12 +100,12 @@ export const MyTask = () => {
             bottomSheetModalAddRef.current?.close()
     }
 
-    const loadMore = () => {
-        if (taskLists.length % 5 === 0) {
-            setPage(page + 5);
-        }
-        console.log(page);
-    };
+    // const loadMore = () => {
+    //     if (taskLists.length % 5 === 0) {
+    //         setPage(page + 5);
+    //     }
+    //     console.log(page);
+    // };
 
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
@@ -251,7 +253,6 @@ export const MyTask = () => {
                             justifyContent: 'center',
                             marginLeft: 20
                         }}>
-
                             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                                 <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
                             </TouchableOpacity>
@@ -417,7 +418,7 @@ export const MyTask = () => {
                                     ) : list.type === 'Korespondensi' ? (
                                         <TopsTaskKorespondensi />
                                     ) : (
-                                        <TopsTask />
+                                        loading === false ? <TopsTask /> : null
                                     )
                                 }
                             </View>
@@ -465,6 +466,23 @@ export const MyTask = () => {
                                             onSearch={filter}
                                         /> */}
                                     </View>
+                                    {/* <FlatList
+                                        data={filterData}
+                                        renderItem={({ item, index }) => (
+                                            <View key={index}>
+                                            <Item
+                                                image={item.image}
+                                                tanggal={item.updated_at}
+                                                // subtitle={item.subtitle}
+                                                title={item.title}
+                                                id={item.id}
+                                                item={item}
+                                                token={token}
+                                            />
+                                            </View>
+                                        )}
+                                        keyExtractor={(item) => item.id}
+                                    /> */}
                                     <TouchableOpacity style={{ justifyContent: 'center' }}
                                         onPress={() => {
                                             bottomSheetAttachClose()
@@ -543,5 +561,13 @@ const styles = StyleSheet.create({
     },
     checkbox: {
         alignSelf: 'flex-end',
+    },
+    item: {
+        width: screenWidth - 60,
+        height: screenWidth - 60,
+    },
+    items: {
+        width: screenWidth - 60,
+        height: screenWidth - 170,
     },
 })

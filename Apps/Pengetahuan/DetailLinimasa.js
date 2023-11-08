@@ -1337,39 +1337,17 @@ export const DetailLinimasa = () => {
                         marginTop: "40%",
                       }}
                     >
-                      <TouchableOpacity
-                        style={{
-                          alignItems: "flex-end",
-                          marginHorizontal: 20,
-                          marginTop: 20,
-                        }}
-                        onPress={() => {
-                          setVisibleModalInfo(false);
-                        }}
-                      >
-                        <Ionicons
-                          name="close-outline"
-                          size={24}
-                          color={COLORS.lighter}
-                        />
-                      </TouchableOpacity>
 
-                      <View
-                        style={{
-                          backgroundColor: COLORS.primary,
-                          padding: 10,
-                          width: 179,
-                          height: 40,
-                          marginHorizontal: 20,
-                          borderTopLeftRadius: 4,
-                          borderTopRightRadius: 12,
-                          borderBottomLeftRadius: 12,
-                          borderBottomRightRadius: 4,
-                        }}
-                      >
-                        <Text style={{ color: COLORS.white }}>
-                          Informasi Pengetahuan
-                        </Text>
+                      <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: "row", justifyContent: "space-between", padding: 10, borderBottomWidth: 2, borderBottomColor: COLORS.grey }}>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => {
+                            setVisibleModalInfo(false)
+                          }}
+                        >
+                          <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                        </TouchableOpacity>
                       </View>
 
                       <View>

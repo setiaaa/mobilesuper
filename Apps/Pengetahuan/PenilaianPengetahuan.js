@@ -155,17 +155,17 @@ export const PenilaianPenggetahaun = () => {
         setSearch(event)
     }
     useEffect(() => {
-        setFilterData(penilaian.lists.listPenilaian)
+        setFilterData(penilaian.lists)
     }, [penilaian])
 
     useEffect(() => {
         if (search !== '') {
-            const data = penilaian.lists.listPenilaian.filter((item) => {
-                return item.judul.toLowerCase().includes(search.toLowerCase());
+            const data = penilaian.lists.filter((item) => {
+                return item.title.toLowerCase().includes(search.toLowerCase());
             })
             setFilterData(data)
         } else {
-            setFilterData(penilaian.lists.listPenilaian)
+            setFilterData(penilaian.lists)
         }
     }, [search])
 
@@ -329,14 +329,15 @@ export const PenilaianPenggetahaun = () => {
                                 <View style={{ flex: 1 }}>
                                     <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 }}>
                                         {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
-                <Ionicons name='chevron-back-outline' size={24} />
-            </TouchableOpacity> */}
+                                    <Ionicons name='chevron-back-outline' size={24} />
+                                </TouchableOpacity> */}
                                         <View style={{ width: '85%' }}>
                                             <Search
                                                 placeholder={'Cari'}
                                                 onSearch={filter}
                                             />
                                         </View>
+
                                         <TouchableOpacity onPress={() => {
                                             bottomSheetAttachClose()
                                         }}>
@@ -383,7 +384,7 @@ export const PenilaianPenggetahaun = () => {
                             gap: 10,
                         }}>
                             <Image source={require('../../assets/superApp/unreviewed.png')} />
-                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.total.total_unreviewed}</Text>
+                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian?.total?.total_unreviewed}</Text>
                         </View>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, marginVertical: 5 }}>BELUM DINILAI</Text>
                         <Text style={{ color: COLORS.lighter }}>pada triwulan terakhir</Text>
@@ -403,7 +404,7 @@ export const PenilaianPenggetahaun = () => {
                             gap: 10,
                         }}>
                             <Image source={require('../../assets/superApp/reviewed.png')} />
-                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian.total.total_reviewed}</Text>
+                            <Text style={{ fontSize: 25, fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>{penilaian?.total?.total_reviewed}</Text>
                         </View>
                         <Text style={{ fontWeight: FONTWEIGHT.bold, marginVertical: 5 }}>TELAH DINILAI</Text>
                         <Text style={{ color: COLORS.lighter }}>pada triwulan terakhir</Text>

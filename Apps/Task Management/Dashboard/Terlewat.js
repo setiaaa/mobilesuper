@@ -46,7 +46,7 @@ export const Terlewat = () => {
         if (filterData % 5 === 0) {
           setPage(page + 5);
         }
-        // console.log(page);
+        console.log("page dari terlewat"+ page);
     };
 
     console.log(filterData)

@@ -372,7 +372,7 @@ export const Dokumen = () => {
                 )
               )}
               keyExtractor={(item) => "_" + item.id}
-              style={{ height: 450 }}
+              style={{ height: 500 }}
               ListEmptyComponent={() => <ListEmpty />}
               onEndReached={() => {
                 if (dokumen.lists.length !== 0) {

@@ -103,7 +103,7 @@ const CardListPeserta = ({ item, addressbook }) => {
   return (
     <View key={item.nip || item.id}>
       {item.code !== undefined ||
-      (item.title !== undefined && item.title.name !== "") ? (
+        (item.title !== undefined && item.title.name !== "") ? (
         <View
           style={{
             flexDirection: "row",
@@ -372,8 +372,6 @@ export const EditEvent = () => {
     };
     dispatch(updateEvent(datas));
   };
-
-  //Edit Event push fix
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -384,9 +382,10 @@ export const EditEvent = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: "center",
+                  alignItems: "flex-end",
                   backgroundColor: COLORS.primary,
                   height: 80,
+                  paddingBottom: 20,
                 }}
               >
                 <View
@@ -400,10 +399,7 @@ export const EditEvent = () => {
                     marginLeft: 20,
                   }}
                 >
-                  <TouchableOpacity
-                    style={{}}
-                    onPress={() => navigation.goBack()}
-                  >
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons
                       name="chevron-back-outline"
                       size={24}
@@ -624,7 +620,7 @@ export const EditEvent = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                    modalVisiblePicker === "selesai"
+                      modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }
