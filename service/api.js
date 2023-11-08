@@ -758,8 +758,9 @@ export const getListsLike = createAsyncThunk(
 //TASK MANAGEMENT
 export const getTreeTM = createAsyncThunk(
     "taskmanagement/getTreeTM",
-    async ({ token }) => {
-        const respon = await axios.get(`${taskManagement}project/tree/`, {
+    async ({ token, page }) => {
+        console.log('api tree ' + page)
+        const respon = await axios.get(`${taskManagement}project/tree/?limit=10&page=${page}`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -770,7 +771,7 @@ export const getListDashboardTM = createAsyncThunk(
     "taskmanagement/getListDashboardTM",
     async ({ token, page }) => {
         console.log("ini api " + page)
-        const respon = await axios.get(`${taskManagement}dashboard/list/?limit=${page}`, {
+        const respon = await axios.get(`${taskManagement}dashboard/list/?limit=10&page=${page}`, {
             headers: { Authorization: token },
         });
         return respon?.data.result;
@@ -1542,7 +1543,6 @@ export const getCutiPersonal = createAsyncThunk(
 export const getKuotaCuti = createAsyncThunk(
     "cuti/getKuotaCuti",
     async (nip) => {
-        console.log(nip)
         const respon = await axios.get(`${Cuti}kuota-cuti?nip=${nip}`, {
             // headers: { Authorization: token },
         });
@@ -1583,9 +1583,11 @@ export const getArsipCuti = createAsyncThunk(
 export const getDetailArsipCuti = createAsyncThunk(
     "cuti/getDetailArsipCuti",
     async (data) => {
+        console.log('sebelum', data)
         const respon = await axios.get(`${Cuti}dokumen-detail/?nip=${data.nip}&document_id=${data.id}`, {
             // headers: { Authorization: token },
         });
+        console.log('sesudah', respon)
         return respon?.data
     }
 );
@@ -1604,6 +1606,16 @@ export const getPilihApproval = createAsyncThunk(
     "cuti/getPilihApproval",
     async ({ nip, kunci }) => {
         const respon = await axios.get(`${Cuti}pilih-approval?nip=${nip}&kata_kunci=`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
+);
+
+export const getDokumenPersetujuan = createAsyncThunk(
+    "cuti/getDokumenPersetujuan",
+    async (nip) => {
+        const respon = await axios.get(`${Cuti}dokumen-persetujuanku/?nip=${nip}&status=&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=1&limit=5`, {
             // headers: { Authorization: token },
         });
         return respon?.data

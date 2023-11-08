@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native"
 import { useState } from "react"
 import { View } from "react-native"
-import { COLORS, DATETIME } from "../../config/SuperAppps"
+import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps"
 import { Text } from "react-native"
 import moment from "moment"
 import { TouchableOpacity } from "react-native"
@@ -38,12 +38,12 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                 {loading ? (
                     <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                 ) : (
-                    <Text>{item.member?.nama}</Text>
+                    <Text style={{ fontWeight: FONTWEIGHT.bold}}>{item.member?.nama}</Text>
                 )}
                 <View style={{ marginTop: 10 }}>
 
                     <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                        <Text style={{ width: 110 }}>Status</Text>
+                        <Text style={{ width: 110, color: COLORS.lighter }}>Status</Text>
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                         ) : (
@@ -91,7 +91,7 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                             </TouchableOpacity>
                         ) : (
                             <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
-                                <Text style={{ width: 120, }}>Waktu Check In</Text>
+                                <Text style={{ width: 120, color: COLORS.lighter }}>Waktu Check In</Text>
                                 {loading ? (
                                     <View style={{ width: 200, }}>
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
@@ -114,14 +114,13 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                         ? (
 
                             <TouchableOpacity style={{
-                                width: '90%',
+                                width: '100%',
                                 height: 50,
                                 backgroundColor: COLORS.primary,
                                 borderRadius: 8,
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 marginTop: 20,
-                                marginHorizontal: 15
                             }}
                                 onPress={() => {
                                     setScanData(false)

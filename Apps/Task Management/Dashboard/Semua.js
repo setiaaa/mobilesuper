@@ -16,11 +16,26 @@ import { Search } from '../../../components/Search'
 
 export const Semua = () => {
     const { list, variant, loading } = useSelector(state => state.task)
+    // const dispatch = useDispatch()
     const taskLists = list.data
     const [filterData, setFilterData] = useState([])
-    const [page, setPage] = useState(5);
+    // const [page, setPage] = useState(1);
+    // const [token, setToken] = useState("");
     const [search, setSearch] = useState('')
 
+    // useEffect(() => {
+    //     getTokenValue().then((val) => {
+    //         setToken(val);
+    //     });
+    //     setPage(1)
+    // }, []);
+
+    // useEffect(() => {
+    //     if (token !== "") {
+    //         dispatch(getListDashboardTM({ token: token, page: page }))
+    //         dispatch(getTreeTM({ token: token, page:page }))
+    //     }
+    // }, [token, page]);
 
     useEffect(() => {
         const data = taskLists.filter((item) => {
@@ -32,7 +47,7 @@ export const Semua = () => {
 
     const loadMore = () => {
         if (taskLists % 5 === 0) {
-          setPage(page + 5);
+            setPage(page + 5);
         }
         console.log(page)
         return page
@@ -83,18 +98,18 @@ export const Semua = () => {
     }, [search, taskLists])
     return (
         <>
-        <View style={{marginTop:20}}>
-            <Search
-                placeholder={"Cari"}
-                iconColor={COLORS.primary}
-                onSearch={filter}
+            <View style={{ marginTop: 20 }}>
+                <Search
+                    placeholder={"Cari"}
+                    iconColor={COLORS.primary}
+                    onSearch={filter}
                 />
-        </View>
+            </View>
             {variant === 'list' ? (
-                <View style={{ flex: 1, marginTop: 0}}>
+                <View style={{ flex: 1, marginTop: 0 }}>
                     {
                         loading ? (
-                            <Loading/>
+                            <Loading />
                         ) : (
                             <View>
                                 <FlatList
@@ -105,23 +120,24 @@ export const Semua = () => {
                                         duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
                                     />
                                     }
+                                    // onEndReached={loadMore}
+                                    // keyExtractor={(item) => item.id}
                                     ListEmptyComponent={() =>
                                         <ListEmpty />
                                     }
                                     ListFooterComponent={() =>
                                         loading === true ? (
-                                        <View
-                                            style={{
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            padding: 24,
-                                            }}
-                                        >
-                                            <ActivityIndicatorBase size="large" color={COLORS.primary} />
-                                        </View>
+                                            <View
+                                                style={{
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    padding: 24,
+                                                }}
+                                            >
+                                                <ActivityIndicatorBase size="large" color={COLORS.primary} />
+                                            </View>
                                         ) : null
                                     }
-                                    onEndReached={loadMore}
                                 />
                             </View>
                         )
