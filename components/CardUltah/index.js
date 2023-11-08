@@ -1,9 +1,15 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native'
+import React, { useEffect, useState, useMemo, useRef  } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView, Modal } from 'react-native'
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { Divider } from 'react-native-paper';
 import { FlatList } from 'react-native';
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+    BottomSheetView,
+    useBottomSheetDynamicSnapPoints,
+  } from "@gorhom/bottom-sheet";
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 import moment from 'moment';
 import 'moment/locale/id'
@@ -13,7 +19,7 @@ const CardLiniMasaSatker = ({ no, nama, nama_jabatan }) => {
     return (
         <View style={{ flexDirection: 'row', marginVertical: 20, }}>
             <View style={styles.cardNo}>
-                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{no + 1}.</Text>
+                <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{no + 1}</Text>
             </View>
             <View style={{ marginLeft: 20, flex: 1, justifyContent: 'center' }}>
                 <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{nama}</Text>
@@ -25,20 +31,43 @@ const CardLiniMasaSatker = ({ no, nama, nama_jabatan }) => {
 
 export const CardUltah = ({ ultah }) => {
     const navigation = useNavigation()
+    const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
+
+    const bottomSheetModalRef = useRef(null);
+    const initialSnapPoints = useMemo(() => ["95%"], []);
+    const {
+        animatedHandleHeight,
+        animatedSnapPoints,
+        animatedContentHeight,
+        handleContentLayout,
+    } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+    const bottomSheetAttach = () => {
+        bottomSheetModalRef.current?.present();
+      };
+
     return (
         <View style={styles.card}>
             <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, justifyContent: 'center', flex: 1, marginVertical: 20 }}>
+                <View style={{  alignItems: 'center', gap: 7, justifyContent: 'center', flex: 1, marginVertical: 20 }}>
                     <View style={{ backgroundColor: COLORS.white, width: 50, height: 50, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/cake_24.png')} />
+                        <Image style={{ }} source={require('../../assets/superApp/cake_24.png')} />
                     </View>
-                    <Text style={{ textAlign: 'center', color: COLORS.white, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H1 }}>Selamat Ulang Tahun Bulan {moment(ultah.date_birth).format('MMMM')}</Text>
+                    <Text style={{ textAlign: 'center', color: COLORS.white, fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H1 }}>Ulang Tahun </Text>
+                    <Text style={{ textAlign: 'center', color: COLORS.white,  fontSize: FONTSIZE.H1 }}>pada Bulan {moment(ultah.date_birth).format('MMMM')}</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
-                    <Divider bold style={{ width: '75%', backgroundColor: COLORS.white }} />
+                    <Divider bold style={{ width: '80%', backgroundColor: COLORS.white }} />
                 </View>
-                <View style={{ height: 368 }}>
-                    <ScrollView>
+                <View style={{  }}>
+                    <View style={{ alignItems: 'center', paddingVertical: 15}}>
+                        <TouchableOpacity style={{ backgroundColor: COLORS.white, padding: 10, width: '80%', borderRadius: 8}} onPress={() => bottomSheetAttach()}>
+                            <Text style={{ textAlign: 'center', fontWeight: FONTWEIGHT.bold}}>Tinjau Siapa Saja</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                        
+                    {/* <ScrollView>
                         {
                             ultah.map((item, index) => (
                                 <View key={index}>
@@ -50,10 +79,75 @@ export const CardUltah = ({ ultah }) => {
                                 </View>
                             ))
                         }
-                    </ScrollView>
+                    </ScrollView> */}
+
+            <BottomSheetModal
+                ref={bottomSheetModalRef}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                  />
+                )}
+              >
+                <BottomSheetView onLayout={handleContentLayout}>
+                  <View style={{ marginTop: 20, marginBottom: 40 }}>
+                    <View
+                      style={{
+                        marginBottom: 20,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: FONTSIZE.H2,
+                          fontWeight: FONTWEIGHT.bold,
+                          color: COLORS.lighter,
+                        }}
+                      >
+                        Ulang Tahun saat ini
+                      </Text>
+                    </View>
+                    <View>
+                    <FlatList
+                    data={ultah}
+                    renderItem={({ item, index }) => (
+                        <View style={{
+                            width: '90%',
+                            borderRadius: 8,
+                            marginHorizontal: 20,
+                            marginTop: 10,
+                            flexDirection: 'column', 
+                        }}>
+
+                        <View key={index} style= {{ flexDirection: 'row', gap: 10 }}>
+                            <View style={{}}>
+                               <Text>{index + 1}.</Text>
+                            </View>
+                            <View style={{ }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold}}>{item.nama}</Text>
+                                <Text>{item.nama_jabatan}</Text>
+                            </View>
+                        </View>
+                        </View>
+                    )}
+                    />
+                    </View>
+                  </View>
+                </BottomSheetView>
+              </BottomSheetModal>
+
                 </View>
             </View>
         </View>
+
     )
 }
 
@@ -81,7 +175,6 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 8,
-        backgroundColor: 'white',
         marginLeft: 40,
         justifyContent: 'center',
         alignItems: 'center'

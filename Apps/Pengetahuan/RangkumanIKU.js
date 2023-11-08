@@ -256,11 +256,11 @@ export const RangkumanIKU = () => {
   };
 
   useEffect(() => {
-    setFilterData(pegawai.lists);
+    setFilterData(pegawai?.lists);
   }, [pegawai]);
 
   useEffect(() => {
-    const item = pegawai.lists;
+    const item = pegawai?.lists;
     if (search !== "") {
       const data = item.filter((item) => {
         return item.nama.toLowerCase().includes(search.toLowerCase());
@@ -274,9 +274,6 @@ export const RangkumanIKU = () => {
   const filter = (event) => {
     setSearch(event);
   };
-
-  console.log(pegawai.lists);
-  console.log(exportPegawai);
 
   const downloadFromUrl = async () => {
     const url = exportPegawai?.lists?.file;

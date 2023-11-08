@@ -50,6 +50,9 @@ export const DetailEvent = () => {
     bottomSheetModalRef.current?.present();
   };
 
+  
+  const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
+
   const statusEvent = [
     { key: "siap", value: "persiapan" },
     { key: "pel", value: "pelaksanaan" },
@@ -196,7 +199,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
@@ -234,7 +237,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
@@ -263,7 +266,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
@@ -280,7 +283,7 @@ export const DetailEvent = () => {
                 ) : (
                   <Text style={{ width: 150 }}>
                     {data?.extra_attrs?.pic?.title?.name !== "" &&
-                      data?.extra_attrs?.pic?.title?.name !== null
+                    data?.extra_attrs?.pic?.title?.name !== null
                       ? data.extra_attrs?.pic.title.name
                       : "-"}
                   </Text>
@@ -293,7 +296,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row" }}>
@@ -423,7 +426,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -467,7 +470,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row" }}>
@@ -501,7 +504,7 @@ export const DetailEvent = () => {
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
               <View style={{ flexDirection: "row" }}>
@@ -528,13 +531,15 @@ export const DetailEvent = () => {
                             </TouchableOpacity> */}
               </View>
 
+
+
               {/* custom divider */}
               <View
                 style={{
                   height: 1,
                   width: "100%",
                   backgroundColor: "#DBDADE",
-                  marginVertical: 10,
+                  marginVertical: 20,
                 }}
               />
 
@@ -632,8 +637,8 @@ export const DetailEvent = () => {
                       </View>
                     </TouchableOpacity>
                     {getFileExtension(lampiranById.name) === "png" ||
-                      getFileExtension(lampiranById.name) === "jpg" ||
-                      getFileExtension(lampiranById.name) === "jpeg" ? (
+                    getFileExtension(lampiranById.name) === "jpg" ||
+                    getFileExtension(lampiranById.name) === "jpeg" ? (
                       <View>
                         <Image
                           source={{ uri: lampiranById.file }}
@@ -662,10 +667,10 @@ export const DetailEvent = () => {
           </View>
 
           {data.user_role?.is_pic === true ||
-            (data.user_role?.is_notulensi === false &&
-              data.user_role?.is_presensi === false &&
-              data.user_role?.is_member === false &&
-              data.user_role?.is_pic === false) ? (
+          (data.user_role?.is_notulensi === false &&
+            data.user_role?.is_presensi === false &&
+            data.user_role?.is_member === false &&
+            data.user_role?.is_pic === false) ? (
             <View>
               <View
                 style={{
@@ -784,39 +789,39 @@ export const DetailEvent = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              {/* <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginVertical: 10,
-              }}
-            >
-              <TouchableOpacity
+              <View
                 style={{
-                  backgroundColor: COLORS.foundation,
-                  width: Platform.OS === "ios" ? "90%" : "91%",
-                  height: 50,
-                  borderRadius: 8,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginVertical: 20,
                 }}
               >
-                <View
+                <TouchableOpacity
                   style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "row",
-                    flex: 1,
-                    gap: 20,
+                    backgroundColor: COLORS.foundation,
+                    width: Platform.OS === "ios" ? "90%" : "91%",
+                    height: 50,
+                    borderRadius: 8,
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Kirim Notifikasi</Text>
-                  <Ionicons
-                    name="notifications-outline"
-                    size={20}
-                    color={COLORS.white}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View> */}
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexDirection: "row",
+                      flex: 1,
+                      gap: 20,
+                    }}
+                  >
+                    <Text style={{ color: COLORS.white }}>Kirim Notifikasi</Text>
+                    <Ionicons
+                      name="notifications-outline"
+                      size={20}
+                      color={COLORS.white}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           ) : (
             <></>

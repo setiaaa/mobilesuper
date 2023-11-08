@@ -26,6 +26,7 @@ import {
   getViewLinimasa,
   patchLike,
   patchUnlike,
+  postComment,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import moment from "moment";
@@ -51,12 +52,13 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
+    // console.log(toggleComment)
   };
 
   const handleClickBalas = () => {
     if (inputRef.current) {
       inputRef.current.focus();
-      setParentId(listData.id);
+      setParentId({ id: listData.id, creator: listData.creator });
     }
   };
   return (
@@ -300,9 +302,9 @@ const CardLiniMasa = ({ item, token }) => {
   const [visibleModalView, setVisibleModalView] = useState(false);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const [parentId, setParentId] = useState("");
+  const [parentId, setParentId] = useState({ id: "", creator: "" });
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["95%"], []);
+  const initialSnapPoints = useMemo(() => ["70%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -341,11 +343,14 @@ const CardLiniMasa = ({ item, token }) => {
   const detail = linimasa?.detail;
 
   const [komen, setKomen] = useState("");
-
+  const [toggleComment, setToggleComment] = useState({
+    toggle: false,
+    id: "",
+  });
   const handleComment = () => {
     const payload = {
       article_id: detail.id,
-      parent_id: parentId !== "" ? parentId : "",
+      parent_id: parentId.id !== "" ? parentId.id : "",
       message: komen,
     };
     const data = {
@@ -354,6 +359,7 @@ const CardLiniMasa = ({ item, token }) => {
     };
     dispatch(postComment(data));
     setKomen("");
+    setParentId({ id: "", creator: "" });
   };
 
   return (
@@ -566,33 +572,30 @@ const CardLiniMasa = ({ item, token }) => {
               marginTop: "40%",
             }}
           >
-            <TouchableOpacity
-              style={{
-                alignItems: "flex-end",
-                marginHorizontal: 20,
-                marginTop: 20,
-              }}
-              onPress={() => {
-                setVisibleModal(false);
-              }}
-            >
-              <Ionicons name="close-outline" size={24} color={COLORS.lighter} />
-            </TouchableOpacity>
-
             <View
               style={{
-                backgroundColor: COLORS.primary,
-                padding: 10,
-                width: 179,
-                height: 40,
                 marginHorizontal: 20,
-                borderTopLeftRadius: 4,
-                borderTopRightRadius: 12,
-                borderBottomLeftRadius: 12,
-                borderBottomRightRadius: 4,
+                marginTop: 20,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                padding: 10,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
               }}
             >
-              <Text style={{ color: COLORS.white }}>Informasi Pengetahuan</Text>
+              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  setVisibleModal(false);
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={24}
+                  color={COLORS.lighter}
+                />
+              </TouchableOpacity>
             </View>
 
             <View>
@@ -1022,12 +1025,34 @@ const CardLiniMasa = ({ item, token }) => {
                     listData={item}
                     inputRef={inputRef}
                     setParentId={setParentId}
+                    toggleComment={toggleComment}
+                    setToggleComment={setToggleComment}
                   />
                 )}
-                style={{ height: 500 }}
+                style={{ height: 400 }}
               />
 
               <View style={{ justifyContent: "flex-end" }}>
+                {parentId.id !== "" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 20,
+                      paddingTop: 10,
+                    }}
+                  >
+                    <Text>Membalas {parentId.creator}</Text>
+                    <TouchableOpacity>
+                      <Ionicons
+                        name="close"
+                        size={20}
+                        color={COLORS.primary}
+                        onPress={() => setParentId({ id: "", creator: "" })}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
                 <View
                   style={{
                     height: 1,
@@ -1048,7 +1073,7 @@ const CardLiniMasa = ({ item, token }) => {
                     flexDirection: "row",
                     backgroundColor: COLORS.ExtraDivinder,
                     marginTop: 10,
-                    marginBottom: 40,
+                    marginBottom: 10,
                   }}
                 >
                   <BottomSheetTextInput

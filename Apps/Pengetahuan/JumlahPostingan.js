@@ -65,18 +65,13 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
+          padding: 5
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
-        }}
+        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
       >
         <View
           style={{
@@ -96,9 +91,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[0]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -119,9 +112,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.disukai.like_list[0]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -142,14 +133,13 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.dilihat.avg_views_list[0]
-              : "-"}
+            0
           </Text>
         </View>
       </View>
     </View>
   );
+
   const SecondRoute = () => (
     <View style={{ marginTop: 10 }}>
       <Text
@@ -159,18 +149,13 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
+          padding: 5
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
-        }}
+        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
       >
         <View
           style={{
@@ -190,9 +175,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[1]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -213,9 +196,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.disukai.like_list[1]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -236,14 +217,13 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.dilihat.avg_views_list[1]
-              : "-"}
+            0
           </Text>
         </View>
       </View>
     </View>
   );
+
   const ThirdRoute = () => (
     <View style={{ marginTop: 10 }}>
       <Text
@@ -253,18 +233,13 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
+          padding: 5
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
-        }}
+        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
       >
         <View
           style={{
@@ -284,9 +259,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[2]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -307,9 +280,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.disukai.like_list[2]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -330,14 +301,13 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.dilihat.avg_views_list[2]
-              : "-"}
+            0
           </Text>
         </View>
       </View>
     </View>
   );
+
   const FourthRoute = () => (
     <View style={{ marginTop: 10 }}>
       <Text
@@ -347,18 +317,13 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
+          padding: 5
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{
-          flexDirection: "row",
-          marginTop: 10,
-          justifyContent: "center",
-        }}
+        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
       >
         <View
           style={{
@@ -378,9 +343,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah?.nilai.avg_point_list[3]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -401,9 +364,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah.disukai.like_list[3]
-              : "-"}
+            0
           </Text>
         </View>
         <View
@@ -424,9 +385,7 @@ export const JumlahPostingan = () => {
               marginTop: 10,
             }}
           >
-            {postinganSayaJumlah
-              ? postinganSayaJumlah.dilihat.avg_views_list[3]
-              : "-"}
+            0
           </Text>
         </View>
       </View>
@@ -444,7 +403,7 @@ export const JumlahPostingan = () => {
         shadowOpacity: 0.2,
         elevation: 2,
       }}
-      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 13 }}
+      labelStyle={{ color: COLORS.primary, fontWeight: 700, fontSize: 9 }}
     />
   );
 
@@ -457,8 +416,6 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          marginTop: 10,
-          padding: 5,
         }}
       >
         JUMLAH
@@ -544,9 +501,18 @@ export const JumlahPostingan = () => {
     fourth: FourthRoute,
   });
 
-  const renderSceneLoad = SceneMap({
-    firt: FirstRouteLoad,
-  });
+  // export const JumlahPostingan = () => {
+  //   const navigation = useNavigation();
+
+  //   const layout = useWindowDimensions();
+
+  //   const [index, setIndex] = React.useState(0);
+  //   const [routes] = React.useState([
+  //     { key: "first", title: "1" },
+  //     { key: "second", title: "2" },
+  //     { key: "third", title: "3" },
+  //     { key: "fourth", title: "4" },
+  //   ]);
 
   return (
     < >
@@ -774,3 +740,4 @@ export const JumlahPostingan = () => {
     </ >
   );
 };
+

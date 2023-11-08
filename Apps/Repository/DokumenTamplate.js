@@ -333,7 +333,7 @@ export const DokumenTamplate = () => {
                                 marginLeft: 20,
                             }}
                         >
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                                 <Ionicons
                                     name="chevron-back-outline"
                                     size={24}
@@ -475,7 +475,7 @@ export const DokumenTamplate = () => {
                                 )
                             )}
                             keyExtractor={(item) => "_" + item.id}
-                            style={{ height: 450 }}
+                            style={{ height: 500 }}
                             ListEmptyComponent={() => <ListEmpty />}
                             onEndReached={() => {
                                 if (tamplate.lists.length !== 0) {

@@ -323,7 +323,7 @@ export const Satker = () => {
                     </View>
                 </View>
 
-                <View style={[styles.containerr, { marginVertical: 20 }]}>
+                <View style={[styles.containerr, { marginTop: 10 }]}>
                     <Carousel
                         ref={carouselRef}
                         sliderWidth={screenWidth}

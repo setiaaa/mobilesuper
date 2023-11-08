@@ -35,7 +35,6 @@ import { getTokenValue } from "../../service/session";
 import { ActivityIndicator } from "react-native";
 import { Loading } from "../../components/Loading";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Dropdown } from "../../components/DropDown";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
@@ -92,13 +91,6 @@ export default function Dashboard() {
     setValue(dokumen[0]?.value);
   }, [dokumen]);
 
-  const listDokHukum = dokumen.slice(0, 34).map((item) => ({
-    key: item.value,
-    value: item.label,
-  }));
-
-  const [selectedList, setSelectedList] = useState({ key: "", value: "" });
-
   useEffect(() => {
     if (lists.count > 5) {
       let mdl = parseInt(lists.count / 5);
@@ -126,8 +118,6 @@ export default function Dashboard() {
   // };
 
   const [search, setSearch] = useState("");
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
 
   useEffect(() => {
     const item = lists.results?.datas;
@@ -139,15 +129,18 @@ export default function Dashboard() {
     } else {
       setFilterData(item);
     }
-  }, [search, isFiltered]);
+  }, [search]);
 
   const filterData = (event) => {
     setSearch(event);
   };
 
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
   const asc = () => {
     const sortedAscending = dataFilter
-      ?.slice()
+      .slice()
       .sort((a, b) => a.subjek.localeCompare(b.subjek));
     setFilterData(sortedAscending);
     setAscending(true);
@@ -156,7 +149,7 @@ export default function Dashboard() {
 
   const desc = () => {
     const sortedDescending = dataFilter
-      ?.slice()
+      .slice()
       .sort((a, b) => b.subjek.localeCompare(a.subjek));
     setFilterData(sortedDescending);
     setAscending(false);
@@ -243,37 +236,8 @@ export default function Dashboard() {
                 justifyContent: "center",
                 marginLeft: 18,
               }}
-            /> */}
-          {selectedList.key === "" ? (
-            <Dropdown
-              data={listDokHukum}
-              setSelected={setSelectedList}
-              placeHolder={"Pilih"}
-              borderWidth={1}
-              borderwidthDrop={1}
-              borderWidthValue={1}
-              borderColor={COLORS.ExtraDivinder}
-              borderColorDrop={COLORS.ExtraDivinder}
-              borderColorValue={COLORS.ExtraDivinder}
-              heightValue={150}
-              search={true}
             />
-          ) : (
-            <Dropdown
-              data={listDokHukum}
-              setSelected={setSelectedList}
-              selected={selectedList}
-              borderWidth={1}
-              borderwidthDrop={1}
-              borderWidthValue={1}
-              borderColor={COLORS.ExtraDivinder}
-              borderColorDrop={COLORS.ExtraDivinder}
-              borderColorValue={COLORS.ExtraDivinder}
-              heightValue={150}
-              search={true}
-            />
-          )}
-          {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 20, gap: 10 }} onPress={handlePressModal}>
+            {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 20, gap: 10 }} onPress={handlePressModal}>
                     <Ionicons name='filter-outline' size={25} color={'#499CD7'} />
                     <Text style={styles.judulFilter}>Pencarian lanjut</Text>
                 </TouchableOpacity>
@@ -520,7 +484,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: FONTWEIGHT.bold,
     textAlign: "left",
-    marginVertical: 20,
+    marginTop: 20,
+    marginLeft: 20,
   },
   judulFilter: {
     fontSize: 16,

@@ -541,7 +541,7 @@ export const DetailDokumenCuti = () => {
     })
     const navigation = useNavigation()
     const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-    console.log(arsipDetail.komentar_dokumen)
+    console.log(arsipDetail)
 
     const selisih = () => {
         let tanggalMulaiStr = (moment(arsipDetail.detail_dokumen?.dokumen?.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATE))
