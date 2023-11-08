@@ -246,7 +246,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
   const handleClickBalas = () => {
     if (inputRef.current) {
       inputRef.current.focus();
-      setParentId(listData.id);
+      setParentId({id:listData.id, creator:listData.creator} );
     }
   };
   return (
@@ -390,7 +390,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                         >
                           <View>
                             <Image
-                              source={{ uri: listData.creator_avatar }}
+                              source={{ uri: listKomen.creator_avatar }}
                               style={{
                                 width: 30,
                                 height: 30,
@@ -555,7 +555,7 @@ export const DetailLinimasa = () => {
   const handleComment = () => {
     const payload = {
       article_id: detail.id,
-      parent_id: parentId !== "" ? parentId : "",
+      parent_id: parentId.id !== "" ? parentId.id : "",
       message: komen,
     };
     const data = {
@@ -564,6 +564,7 @@ export const DetailLinimasa = () => {
     };
     dispatch(postComment(data));
     setKomen("");
+    setParentId({id:"",creator:""})
   };
 
   useEffect(() => {
@@ -943,6 +944,14 @@ export const DetailLinimasa = () => {
                         />
 
                         <View style={{ justifyContent: "flex-end" }}>
+                        {parentId.id !== "" ? ( 
+                          <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20, paddingTop:10}}>
+                            <Text>Membalas {parentId.creator}</Text>
+                            <TouchableOpacity>
+                              <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
+                            </TouchableOpacity>
+                          </View>
+                        ) : null }
                           <View
                             style={{
                               height: 1,
