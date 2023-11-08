@@ -222,9 +222,10 @@ export default function Dashboard() {
             </Text>
           </View>
         </View>
-
-        <View style={styles.dropdown}>
+        <View style={{ marginHorizontal: 20 }}>
           <Text style={styles.subJudul}>Dokumen Hukum</Text>
+        </View>
+        <View style={styles.dropdown}>
           {/* <DropDownPicker
               open={open}
               value={value}
@@ -353,34 +354,22 @@ export default function Dashboard() {
         <View style={styles.ContainerCard}>
           <View
             style={{
-              marginRight: 20,
               marginTop: 20,
-              flexDirection: "row",
+              // flexDirection: "row",
               gap: 10,
-              marginBottom: 10,
-              alignItems: "center",
+              marginBottom: 20,
+              alignItems: "flex-end",
             }}
           >
-            <View style={{ marginLeft: 20, width: "80%" }}>
+            <View
+              style={{
+                width: "100%",
+                backgroundColor: COLORS.white,
+                borderRadius: 8,
+              }}
+            >
               <Search placeholder={"Cari..."} onSearch={filterData} />
             </View>
-            {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                            <TouchableOpacity>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='filter-outline' size={25} color={COLORS.grey} onPress={() => handleVariant('list')} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='list-outline' size={25} color={variant === 'list' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('list')} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='apps-outline' size={25} color={variant === 'card' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('card')} />
-                                </View>
-                            </TouchableOpacity>
-                        </View> */}
             <View style={{ flexDirection: "row", gap: 10 }}>
               <TouchableOpacity onPress={!ascending ? asc : desc}>
                 <View
@@ -398,85 +387,82 @@ export default function Dashboard() {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ marginBottom: 30 }}>
-            <Divider bold />
+
+          {/* <StatusBar style="auto" /> */}
+        </View>
+        {lists.results?.datas.length === 0 ? (
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+            }}
+          >
+            <Text>Tidak ada</Text>
           </View>
-          {lists.results?.datas.length === 0 ? (
-            <View
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flex: 1,
-              }}
-            >
-              <Text>Tidak ada</Text>
-            </View>
-          ) : (
-            <View style={{ marginBottom: 100, paddingBottom: 30 }}>
-              {variant === "list" ? (
-                <FlatList
-                  // data={dataFilter}
-                  data={lists?.results?.datas}
-                  // data={
-                  //   (dataFilter && dataFilter.length > 0) || isFiltered
-                  //     ? dataFilter
-                  //     : lists.results?.datas
-                  // }
-                  // data={dokumenList}
-                  renderItem={({ item }) => (
-                    <CardKebijakan
-                      subjek={item.subjek}
-                      bentuk={item.bentuk}
-                      id_peraturan={item.id_peraturan}
-                      item={item}
-                      nomor={item.nomor}
-                      tahun={item.tahun}
-                    />
-                  )}
-                  keyExtractor={(item) => item.id_peraturan}
-                  ListFooterComponent={() =>
-                    loading === true ? (
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: 24,
-                        }}
-                      >
-                        <ActivityIndicator
-                          size="small"
-                          color={COLORS.primary}
-                        />
-                      </View>
-                    ) : null
-                  }
-                  onEndReached={loadMore}
-                />
-              ) : (
-                <FlatList
-                  data={
-                    (dataFilter && dataFilter.length > 0) || isFiltered
-                      ? dataFilter
-                      : lists.results?.datas
-                  }
-                  renderItem={({ item }) => (
-                    <CardKebijakanCard
-                      subjek={item.subjek}
-                      bentuk={item.bentuk}
-                      id_peraturan={item.id_peraturan}
-                      item={item}
-                      nomor={item.nomor}
-                      tahun={item.tahun}
-                      tgl_penetapan={item.tgl_penetapan}
-                      tgl_diundangkan={item.tgl_diundangkan}
-                      status={item.status}
-                    />
-                  )}
-                  keyExtractor={(item) => item.id_peraturan}
-                />
-              )}
-              {/* {
+        ) : (
+          <View style={{ height: "52%" }}>
+            {variant === "list" ? (
+              <FlatList
+                // data={dataFilter}
+                // data={lists?.results?.datas}
+                data={
+                  (dataFilter && dataFilter.length > 0) || isFiltered
+                    ? dataFilter
+                    : lists.results?.datas
+                }
+                // data={dokumenList}
+                renderItem={({ item }) => (
+                  <CardKebijakan
+                    subjek={item.subjek}
+                    bentuk={item.bentuk}
+                    id_peraturan={item.id_peraturan}
+                    item={item}
+                    nomor={item.nomor}
+                    tahun={item.tahun}
+                  />
+                )}
+                keyExtractor={(item) => item.id_peraturan}
+                ListFooterComponent={() =>
+                  loading === true ? (
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: 24,
+                      }}
+                    >
+                      <ActivityIndicator size="small" color={COLORS.primary} />
+                    </View>
+                  ) : null
+                }
+                onEndReached={loadMore}
+              />
+            ) : (
+              <FlatList
+                data={
+                  (dataFilter && dataFilter.length > 0) || isFiltered
+                    ? dataFilter
+                    : lists.results?.datas
+                }
+                renderItem={({ item }) => (
+                  <CardKebijakanCard
+                    subjek={item.subjek}
+                    bentuk={item.bentuk}
+                    id_peraturan={item.id_peraturan}
+                    item={item}
+                    nomor={item.nomor}
+                    tahun={item.tahun}
+                    tgl_penetapan={item.tgl_penetapan}
+                    tgl_diundangkan={item.tgl_diundangkan}
+                    status={item.status}
+                  />
+                )}
+                keyExtractor={(item) => item.id_peraturan}
+              />
+            )}
+            {/* {
                                     dataFilter.length >= 1 ? (
                                         <></>
                                     ) : (
@@ -491,11 +477,8 @@ export default function Dashboard() {
                                         </View>
                                     )
                                 } */}
-            </View>
-          )}
-
-          <StatusBar style="auto" />
-        </View>
+          </View>
+        )}
       </BottomSheetModalProvider>
     </>
   );
@@ -512,25 +495,16 @@ const styles = StyleSheet.create({
   },
   ContainerCard: {
     zIndex: -1,
-    marginTop: 20,
     width: "90%",
     marginLeft: 20,
     borderRadius: 12,
-    backgroundColor: COLORS.white,
-    paddingTop: 10,
-    height: "65%",
   },
   dropdown: {
-    borderRadius: 12,
+    borderRadius: 8,
     backgroundColor: COLORS.white,
     width: "90%",
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    // height: "20%",
-    // justifyContent: 'center',
-    // alignItems: 'center',
+
     marginLeft: 20,
-    marginTop: 20,
   },
   cardList: {
     backgroundColor: COLORS.white,
