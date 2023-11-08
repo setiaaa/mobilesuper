@@ -45,7 +45,7 @@ export const Keuangan = () => {
                 </View>
             </View>
 
-            <View style={{ flex: 1, padding: PADDING.Page }}>
+            <View style={{ flex: 1, }}>
                 <TopsKeuanganKinerja />
             </View>
         </View >
