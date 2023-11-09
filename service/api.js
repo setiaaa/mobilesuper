@@ -1621,18 +1621,13 @@ export const getArsipCuti = createAsyncThunk(
 );
 
 export const getDetailArsipCuti = createAsyncThunk(
-  "cuti/getDetailArsipCuti",
-  async (data) => {
-    console.log("sebelum", data);
-    const respon = await axios.get(
-      `${Cuti}dokumen-detail/?nip=${data.nip}&document_id=${data.id}`,
-      {
-        // headers: { Authorization: token },
-      }
-    );
-    console.log("sesudah", respon);
-    return respon?.data;
-  }
+    "cuti/getDetailArsipCuti",
+    async (data) => {
+        const respon = await axios.get(`${Cuti}dokumen-detail/?nip=${data.nip}&id_dokumen=${data.id}`, {
+            // headers: { Authorization: token },
+        });
+        return respon?.data
+    }
 );
 
 export const getFormCuti = createAsyncThunk(

@@ -12,125 +12,14 @@ import { FlatList } from 'react-native'
 import ListEmpty from '../../components/ListEmpty'
 import { getDetailArsipCuti, getDokumenPersetujuan } from '../../service/api'
 import moment from 'moment'
+import { CardListDokumenDisetujui } from '../../components/CardListDokumenDisetujui'
+import { CardListDokumenTidakDisetujui, ListDokumenTidakDisetujui } from '../../components/CardListDokumenTidakDisetujui'
+import { CardListDokumenDikembalikan } from '../../components/CardDokumenDikembalikan'
 
-const ListDokumenDisetujui = ({ item, nip }) => {
-    const dispatch = useDispatch()
-    const navigation = useNavigation()
-    const getDetail = (id) => {
-        const params = { nip, id };
-        // const data = event.listsprogress.find(item => item.id === id)
-        console.log(nip, id)
-        dispatch(getDetailArsipCuti(params));
-    };
-
-    return (
-        <>
-            {item.status === 'Completed' ? (
-                <TouchableOpacity onPress={onPress = () => {
-                    getDetail(item.id)
-                    // navigation.navigate('DetailDokumenCuti')
-                }}>
-                    <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
-                        <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: {moment(item.tanggal_pembuatan, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: {item.jenis_cuti}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Tipe Dokumen: </Text>
-                            <View style={{ backgroundColor: COLORS.success, borderRadius: 10, padding: 5, }}>
-                                <Text style={{ fontSize: 12, color: COLORS.white }}>{item.tipe_dokumen}</Text>
-                            </View>
-                        </View>
-                        <View style={{ justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 10 }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ) : (
-                null
-            )}
-        </>
-    );
-}
-
-const ListDokumenTidakDisetujui = ({ item, variant, token }) => {
-    const dispatch = useDispatch()
-    const navigation = useNavigation()
-    return (
-        <>
-            {item.status === 'Postponed' ? (
-                <TouchableOpacity onPress={onPress = () => navigation.navigate('DetailDokumenCuti')}>
-                    <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
-                        <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: {moment(item.tanggal_pembuatan, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: {item.jenis_cuti}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Tipe Dokumen: </Text>
-                            <View style={{ backgroundColor: 'red', borderRadius: 10, padding: 5, }}>
-                                <Text style={{ fontSize: 12, color: COLORS.white }}>{item.tipe_dokumen}</Text>
-                            </View>
-                        </View>
-                        <View style={{ justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 10 }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ) : (
-                null
-            )}
-        </>
-    );
-}
-
-const ListDokumenTidakDikembalikan = ({ item, variant, token }) => {
-    const dispatch = useDispatch()
-    const navigation = useNavigation()
-    return (
-        <>
-            {item.status !== 'Postponed' && item.status !== 'Completed' ? (
-                <TouchableOpacity onPress={onPress = () => navigation.navigate('DetailDokumenCuti')}>
-                    <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
-                        <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: {moment(item.tanggal_pembuatan, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: {item.jenis_cuti}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Tipe Dokumen: </Text>
-                            <View style={{ backgroundColor: 'red', borderRadius: 10, padding: 5, }}>
-                                <Text style={{ fontSize: 12, color: COLORS.white }}>{item.tipe_dokumen}</Text>
-                            </View>
-                        </View>
-                        <View style={{ justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 10 }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ) : (
-                null
-            )}
-        </>
-    );
-}
 
 export const PersetujanCuti = () => {
     const navigation = useNavigation()
-    const [variant, SetVariant] = useState('setuju')
+    const [variant, SetVariant] = useState('Completed')
     const dispatch = useDispatch()
     const { profile } = useSelector(state => state.superApps)
 
@@ -161,11 +50,10 @@ export const PersetujanCuti = () => {
             })
             setFilterData(data)
         } else {
-            setFilterData(persetujuan.lists.data)
+            setFilterData(persetujuan.lists?.data)
         }
     }, [search])
 
-    console.log(persetujuan.lists)
 
     return (
         <GestureHandlerRootView>
@@ -219,13 +107,13 @@ export const PersetujanCuti = () => {
                                 <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'center', gap: 30 }}>
                                     <TouchableOpacity style={{
                                         maxWidth: 80,
-                                        borderColor: variant === 'setuju' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                        borderColor: variant === 'Completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                         gap: 10
                                     }}
                                         onPress={() => {
-                                            SetVariant('setuju')
+                                            SetVariant('Completed')
                                         }}
                                     >
                                         <View style={{
@@ -238,17 +126,17 @@ export const PersetujanCuti = () => {
                                         }}>
                                             <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                         </View>
-                                        <Text style={{ color: variant === 'setuju' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Disetujui Anda</Text>
+                                        <Text style={{ color: variant === 'Completed' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Disetujui Anda</Text>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={{
                                         maxWidth: 120,
-                                        borderColor: variant === 'tidak setuju' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                        borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                         gap: 10
                                     }}
-                                        onPress={() => SetVariant('tidak setuju')}
+                                        onPress={() => SetVariant('Rejected')}
                                     >
                                         <View style={{
                                             backgroundColor: COLORS.danger,
@@ -260,18 +148,18 @@ export const PersetujanCuti = () => {
                                         }}>
                                             <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                         </View>
-                                        <Text style={{ color: variant === 'tidak setuju' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Tidak Disetujui Anda</Text>
+                                        <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Tidak Disetujui Anda</Text>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={{
                                         maxWidth: 98,
-                                        borderColor: variant === 'kembalikan' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                        borderColor: variant === 'Returned' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                         gap: 10
 
                                     }}
-                                        onPress={() => SetVariant('kembalikan')}
+                                        onPress={() => SetVariant('Returned')}
                                     >
                                         <View style={{
                                             backgroundColor: COLORS.orange,
@@ -283,7 +171,7 @@ export const PersetujanCuti = () => {
                                         }}>
                                             <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                         </View>
-                                        <Text style={{ color: variant === 'kembalikan' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Dikembalikan Anda</Text>
+                                        <Text style={{ color: variant === 'Returned' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Dikembalikan Anda</Text>
                                     </TouchableOpacity>
 
                                 </View>
@@ -310,12 +198,12 @@ export const PersetujanCuti = () => {
                                     </View>
                             </View>
                     </TouchableOpacity> */}
-                            {variant === 'setuju' ? (
+                            {variant === 'Completed' ? (
                                 <FlatList
                                     data={filterData}
                                     renderItem={({ item }) => (
                                         <View key={item.id}>
-                                            <ListDokumenDisetujui
+                                            <CardListDokumenDisetujui
                                                 item={item}
                                                 nip={profile.nip}
                                                 variant={variant}
@@ -326,13 +214,14 @@ export const PersetujanCuti = () => {
                                     ListEmptyComponent={() => <ListEmpty />}
                                     style={{ height: '70%' }}
                                 />
-                            ) : variant === 'tidak setuju' ? (
+                            ) : variant === 'Rejected' ? (
                                 <FlatList
                                     data={filterData}
                                     renderItem={({ item }) => (
                                         <View key={item.id}>
-                                            <ListDokumenTidakDisetujui
+                                            <CardListDokumenTidakDisetujui
                                                 item={item}
+                                                nip={profile.nip}
                                                 variant={variant}
                                             />
                                         </View>
@@ -341,13 +230,14 @@ export const PersetujanCuti = () => {
                                     ListEmptyComponent={() => <ListEmpty />}
                                     style={{ height: '70%' }}
                                 />
-                            ) : variant === 'kembalikan' ? (
+                            ) : variant === 'Returned' ? (
                                 <FlatList
                                     data={persetujuan.lists?.data}
                                     renderItem={({ item }) => (
                                         <View key={item.id}>
-                                            <ListDokumenTidakDikembalikan
+                                            <CardListDokumenDikembalikan
                                                 item={item}
+                                                nip={profile.nip}
                                                 variant={variant}
                                             />
                                         </View>
