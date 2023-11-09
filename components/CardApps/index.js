@@ -12,7 +12,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Drawer')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='document-text-outline' size={24} color={COLORS.primary} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/korespondensi-ikon3.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Korespondensi</Text>
@@ -20,7 +20,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MainKeb')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='business-outline' size={24} color={COLORS.primary} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kebijakan-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kebijakan</Text>
@@ -28,7 +28,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='mail-outline' size={24} color={COLORS.primary} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/email-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Email</Text>
@@ -36,7 +36,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MainPengetahuan')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='school-outline' size={24} color={COLORS.primary} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/pengetahuan-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pengetahuan</Text>
@@ -46,7 +46,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('GrupKalender')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kalender-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kalender</Text>
@@ -54,7 +54,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='library-outline' size={24} color={COLORS.primary} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kebijakan-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repositori</Text>
@@ -62,7 +62,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('HalamanUtama')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='clipboard-outline' size={24} color={COLORS.primary} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/agenda-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Agenda</Text>
@@ -70,7 +70,7 @@ export const CardApps = ({ handlePressModal }) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={handlePressModal}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                            <Ionicons name='ellipsis-horizontal-outline' size={24} color={'#6B7280'} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/more-ikon.png')} />
                         </View>
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>More</Text>
