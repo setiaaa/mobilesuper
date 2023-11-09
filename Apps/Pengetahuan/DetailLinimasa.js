@@ -39,11 +39,15 @@ import {
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { setRefresh } from "../../store/Pengetahuan";
+import ShimmerPlaceHolder, {
+  createShimmerPlaceHolder,
+} from "expo-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   const navigation = useNavigation();
 
-  console.log(lampiran);
+  // console.log(lampiran);
   // console.log(size);
   return type === "png" || type === "jpg" || type === "jpeg" ? (
     <TouchableOpacity key={id} onPress={onClick}>
@@ -240,7 +244,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       toggle: temp,
       id: id,
     });
-    console.log(id);
+    // console.log(id);
   };
 
   const handleClickBalas = () => {
@@ -341,8 +345,8 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
             {listData.child.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === listData.id) ||
-                  (toggleComment.id !== listData.id &&
-                    listData.child.length > 0) ? (
+                (toggleComment.id !== listData.id &&
+                  listData.child.length > 0) ? (
                   <TouchableOpacity
                     key={listData.id}
                     onPress={() => clickBalas(listData.id, true)}
@@ -483,6 +487,60 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
   );
 };
 
+const ShimmerParagraph = () => {
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+
+  return (
+    <>
+      <ShimmerPlaceHolder
+        style={{
+          borderRadius: 4,
+          marginTop: 20,
+          marginHorizontal: 100,
+        }}
+        width={250}
+        height={20}
+      />
+      <ShimmerPlaceHolder
+        style={{
+          borderRadius: 4,
+          marginTop: 5,
+          marginHorizontal: 25,
+        }}
+        width={325}
+        height={20}
+      />
+      <ShimmerPlaceHolder
+        style={{
+          borderRadius: 4,
+          marginTop: 5,
+          marginHorizontal: 25,
+        }}
+        width={325}
+        height={20}
+      />
+      <ShimmerPlaceHolder
+        style={{
+          borderRadius: 4,
+          marginTop: 5,
+          marginHorizontal: 25,
+        }}
+        width={325}
+        height={20}
+      />
+      <ShimmerPlaceHolder
+        style={{
+          borderRadius: 4,
+          marginTop: 5,
+          marginHorizontal: 25,
+        }}
+        width={325}
+        height={20}
+      />
+    </>
+  );
+};
+
 export const DetailLinimasa = () => {
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
@@ -500,6 +558,7 @@ export const DetailLinimasa = () => {
     animatedContentHeight,
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
 
   const bottomSheetAttachComment = () => {
     bottomSheetModalRef.current?.present();
@@ -534,6 +593,11 @@ export const DetailLinimasa = () => {
     (state) => state.pengetahuan
   );
   const detail = linimasa.detail;
+
+  const resetData = () => {
+    linimasa.detail = {};
+  };
+
   const listsView = linimasa.view;
   const source = {
     html: detail.content,
@@ -572,13 +636,13 @@ export const DetailLinimasa = () => {
       id: detail.id,
     };
     if (refresh) {
-      console.log("masukkkkkkk");
+      // console.log("masukkkkkkk");
       dispatch(getDetailLinimasa(data));
       dispatch(setRefresh(false));
     }
   }, [refresh]);
 
-  // console.log(loading);
+  console.log(detail.title);
 
   return (
     <View style={{ flex: 1 }}>
@@ -587,7 +651,10 @@ export const DetailLinimasa = () => {
           <ScrollView>
             <View>
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                  resetData();
+                  navigation.goBack();
+                }}
                 style={{ position: "absolute", zIndex: 1 }}
               >
                 <View
@@ -609,14 +676,25 @@ export const DetailLinimasa = () => {
                 </View>
               </TouchableOpacity>
               <View style={{ position: "relative" }}>
-                <Image
-                  source={{ uri: detail.cover }}
-                  style={
-                    Platform.OS === "ios"
-                      ? styles.imageIos
-                      : styles.imageAndroid
-                  }
-                />
+                {loading ? (
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 260,
+                      backgroundColor: COLORS.grey,
+                    }}
+                  ></View>
+                ) : (
+                  <Image
+                    source={{ uri: detail.cover }}
+                    style={
+                      Platform.OS === "ios"
+                        ? styles.imageIos
+                        : styles.imageAndroid
+                    }
+                  />
+                )}
+
                 <View
                   style={{
                     backgroundColor: COLORS.white,
@@ -649,16 +727,28 @@ export const DetailLinimasa = () => {
                 </TouchableOpacity>
               </View>
               <View style={{ backgroundColor: COLORS.white }}>
-                <Text
-                  style={{
-                    paddingBottom: 20,
-                    paddingHorizontal: 25,
-                    fontSize: FONTSIZE.H1,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  {detail.title}
-                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{
+                      borderRadius: 4,
+                      marginHorizontal: 25,
+                      marginBottom: 20,
+                    }}
+                    width={325}
+                    height={30}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      paddingBottom: 20,
+                      paddingHorizontal: 25,
+                      fontSize: FONTSIZE.H1,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    {detail.title}
+                  </Text>
+                )}
 
                 <View
                   style={{
@@ -668,24 +758,53 @@ export const DetailLinimasa = () => {
                   }}
                 >
                   <View>
-                    <Image
-                      source={{ uri: detail.creator_avatar }}
-                      style={{ borderRadius: 50, width: 50, height: 50 }}
-                    />
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{
+                          borderRadius: 50,
+                        }}
+                        width={50}
+                        height={50}
+                      />
+                    ) : (
+                      <Image
+                        source={{ uri: detail.creator_avatar }}
+                        style={{ borderRadius: 50, width: 50, height: 50 }}
+                      />
+                    )}
                   </View>
-                  <View>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                      {detail.creator?.name}
-                    </Text>
-                    <Text
-                      style={{
-                        color: COLORS.grey,
-                        marginVertical: 5,
-                        fontSize: 13,
-                      }}
-                    >
-                      {detail.published_date?.slice(0, -9)}
-                    </Text>
+                  <View style={{ rowGap: 5 }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{
+                          borderRadius: 4,
+                        }}
+                        width={150}
+                        height={20}
+                      />
+                    ) : (
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {detail.creator?.name}
+                      </Text>
+                    )}
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{
+                          borderRadius: 4,
+                        }}
+                        width={100}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          color: COLORS.grey,
+                          fontSize: 13,
+                        }}
+                      >
+                        {detail.published_date?.slice(0, -9)}
+                      </Text>
+                    )}
                   </View>
                 </View>
 
@@ -698,58 +817,78 @@ export const DetailLinimasa = () => {
                     marginTop: 20,
                   }}
                 >
-                  <View
-                    style={{
-                      backgroundColor:
-                        detail.category === "Video / Jurnal"
-                          ? COLORS.successLight
-                          : detail.category === "Infografis"
+                  {loading ? (
+                    <ShimmerPlaceHolder
+                      style={{
+                        borderRadius: 4,
+                      }}
+                      width={100}
+                      height={20}
+                    />
+                  ) : (
+                    <View
+                      style={{
+                        backgroundColor:
+                          detail.category === "Video / Jurnal"
+                            ? COLORS.successLight
+                            : detail.category === "Infografis"
                             ? COLORS.warningLight
                             : COLORS.infoLight,
-                      width: 130,
-                      height: 30,
-                      borderRadius: 30,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "row",
-                      gap: 5,
-                    }}
-                  >
-                    {detail.category === "Infografis" ? (
-                      <Ionicons
-                        name="document-outline"
-                        color={"#F6AD1D"}
-                        style={{ marginTop: 2 }}
-                      />
-                    ) : detail.category === "Kegiatan" ? (
-                      <Ionicons
-                        name="analytics-outline"
-                        color={"#1868AB"}
-                        style={{ marginTop: 3 }}
-                      />
-                    ) : (
-                      <Ionicons
-                        name="videocam-outline"
-                        color={"#11C15B"}
-                        style={{ marginTop: 2 }}
-                      />
-                    )}
-                    <Text
-                      style={{
-                        color:
-                          detail.category === "Infografis"
-                            ? COLORS.warning
-                            : detail.category === "Kegiatan"
-                              ? COLORS.info
-                              : COLORS.success,
+                        width: 130,
+                        height: 30,
+                        borderRadius: 30,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        gap: 5,
                       }}
                     >
-                      {detail.category}
-                    </Text>
-                  </View>
+                      {detail.category === "Infografis" ? (
+                        <Ionicons
+                          name="document-outline"
+                          color={"#F6AD1D"}
+                          style={{ marginTop: 2 }}
+                        />
+                      ) : detail.category === "Kegiatan" ? (
+                        <Ionicons
+                          name="analytics-outline"
+                          color={"#1868AB"}
+                          style={{ marginTop: 3 }}
+                        />
+                      ) : (
+                        <Ionicons
+                          name="videocam-outline"
+                          color={"#11C15B"}
+                          style={{ marginTop: 2 }}
+                        />
+                      )}
+                      <Text
+                        style={{
+                          color:
+                            detail.category === "Infografis"
+                              ? COLORS.warning
+                              : detail.category === "Kegiatan"
+                              ? COLORS.info
+                              : COLORS.success,
+                        }}
+                      >
+                        {detail.category}
+                      </Text>
+                    </View>
+                  )}
                 </View>
 
-                {detail.summary !== null ? (
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{
+                      borderRadius: 4,
+                      marginTop: 20,
+                      marginHorizontal: 25,
+                    }}
+                    width={325}
+                    height={40}
+                  />
+                ) : detail.summary !== null ? (
                   <View
                     style={{
                       marginTop: 20,
@@ -763,13 +902,21 @@ export const DetailLinimasa = () => {
                   </View>
                 ) : null}
 
-                <View style={{ marginHorizontal: 20, paddingVertical: -20 }}>
-                  <RenderHTML
-                    source={source}
-                    contentWidth={width}
-                    enableExperimentalMarginCollapsing={true}
-                  />
-                </View>
+                {loading ? (
+                  <View style={{ marginBottom: 20 }}>
+                    <ShimmerParagraph />
+                    <ShimmerParagraph />
+                    <ShimmerParagraph />
+                  </View>
+                ) : (
+                  <View style={{ marginHorizontal: 20, paddingVertical: -20 }}>
+                    <RenderHTML
+                      source={source}
+                      contentWidth={width}
+                      enableExperimentalMarginCollapsing={true}
+                    />
+                  </View>
+                )}
 
                 <View
                   style={{
@@ -1138,8 +1285,8 @@ export const DetailLinimasa = () => {
                         </View>
                       </TouchableOpacity>
                       {getFileExtension(lampiranById.name) === "png" ||
-                        getFileExtension(lampiranById.name) === "jpg" ||
-                        getFileExtension(lampiranById.name) === "jpeg" ? (
+                      getFileExtension(lampiranById.name) === "jpg" ||
+                      getFileExtension(lampiranById.name) === "jpeg" ? (
                         <View>
                           <Image
                             source={{ uri: lampiranById.file }}
@@ -1555,7 +1702,7 @@ export const DetailLinimasa = () => {
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </View >
+    </View>
   );
 };
 const styles = StyleSheet.create({

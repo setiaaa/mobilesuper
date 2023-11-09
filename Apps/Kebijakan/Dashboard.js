@@ -13,6 +13,7 @@ import {
   getCategory,
   getCategoryId,
   getCategoryIdPage,
+  getDokHukum,
 } from "../../service/api";
 import { Search } from "../../components/Search";
 import { Ionicons } from "@expo/vector-icons";
@@ -34,6 +35,8 @@ import { getTokenValue } from "../../service/session";
 import { ActivityIndicator } from "react-native";
 import { Loading } from "../../components/Loading";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Dropdown } from "../../components/DropDown";
+import { setRefresh } from "../../store/Kebijakan";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
@@ -75,29 +78,54 @@ export default function Dashboard() {
   useEffect(() => {
     if (token !== "") {
       dispatch(getCategory({ token: token, page: page }));
+      dispatch(setRefresh(false));
     }
   }, [token, page]);
 
-  const { dokumen, lists, loading } = useSelector((state) => state.kebijakan);
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getDokHukum({ token: token, id: selectedList.key, page: page }));
+    }
+  }, [token, selectedList?.key, page]);
+
+  const { dokumen, lists, dokumenList, refresh, loading } = useSelector(
+    (state) => state.kebijakan
+  );
+
+  useEffect(() => {
+    if (refresh) {
+      dispatch(getCategory({ token: token, page: page }));
+    }
+  }, [refresh]);
 
   useEffect(() => {
     setCategory(dokumen);
     setValue(dokumen[0]?.value);
   }, [dokumen]);
 
+  const listDokHukum = dokumen.slice(0, 34).map((item) => ({
+    key: item.value,
+    value: item.label,
+  }));
+
+  const [selectedList, setSelectedList] = useState({ key: "", value: "" });
+
+  // useEffect(() => {
+  //   if (lists.count > 5) {
+  //     let mdl = parseInt(lists.count / 5);
+  //     const modulus = lists.count % 5;
+  //     if (modulus !== 0) {
+  //       mdl += 1;
+  //     }
+  //     setCount(mdl);
+  //   } else {
+  //     setCount(1);
+  //   }
+  // }, [page]);
+
   useEffect(() => {
-    dispatch(getCategoryId(value));
-    if (lists.count > 5) {
-      let mdl = parseInt(lists.count / 5);
-      const modulus = lists.count % 5;
-      if (modulus !== 0) {
-        mdl += 1;
-      }
-      setCount(mdl);
-    } else {
-      setCount(1);
-    }
-  }, [page, value]);
+    dispatch(getCategoryId(selectedList.key));
+  }, [selectedList.key]);
 
   // const filterData = (search) => {
   //   const filter =
@@ -109,6 +137,8 @@ export default function Dashboard() {
   // };
 
   const [search, setSearch] = useState("");
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   useEffect(() => {
     const item = lists.results?.datas;
@@ -120,18 +150,15 @@ export default function Dashboard() {
     } else {
       setFilterData(item);
     }
-  }, [search]);
+  }, [search, isFiltered]);
 
   const filterData = (event) => {
     setSearch(event);
   };
 
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
-
   const asc = () => {
     const sortedAscending = dataFilter
-      .slice()
+      ?.slice()
       .sort((a, b) => a.subjek.localeCompare(b.subjek));
     setFilterData(sortedAscending);
     setAscending(true);
@@ -140,7 +167,7 @@ export default function Dashboard() {
 
   const desc = () => {
     const sortedDescending = dataFilter
-      .slice()
+      ?.slice()
       .sort((a, b) => b.subjek.localeCompare(a.subjek));
     setFilterData(sortedDescending);
     setAscending(false);
@@ -151,63 +178,66 @@ export default function Dashboard() {
     if (lists.results?.datas.length % 5 === 0) {
       setPage(page + 5);
     }
-    console.log(page);
+    // console.log(page);
   };
 
   // console.log("ini page dari dashboarfd" + page);
   // console.log(lists?.results?.datas);
   const navigation = useNavigation();
 
-  console.log(dataFilter);
+  // console.log(lists.results?.datas);
 
+  // console.log("page : " + page);
+  // console.log(selectedList.value);
+  console.log(dokumenList);
   return (
     <>
       {loading ? <Loading /> : null}
-      <>
-        <BottomSheetModalProvider>
+      <BottomSheetModalProvider>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: COLORS.primary,
+            height: 80,
+          }}
+        >
           <View
             style={{
-              flexDirection: "row",
+              backgroundColor: COLORS.white,
+              borderRadius: 20,
+              width: 28,
+              height: 28,
               alignItems: "center",
-              backgroundColor: COLORS.primary,
-              height: 80,
+              justifyContent: "center",
+              marginLeft: 20,
             }}
           >
-            <View
+            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="chevron-back-outline"
+                size={24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+            <Text
               style={{
-                backgroundColor: COLORS.white,
-                borderRadius: 20,
-                width: 28,
-                height: 28,
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: 20,
+                fontSize: 15,
+                fontWeight: 600,
+                color: COLORS.white,
               }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-                <Ionicons
-                  name="chevron-back-outline"
-                  size={24}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-              <Text
-                style={{
-                  fontSize: FONTSIZE.H1,
-                  fontWeight: FONTWEIGHT.bold,
-                  color: COLORS.white,
-                }}
-              >
-                Kebijakan
-              </Text>
-            </View>
+              Kebijakan
+            </Text>
           </View>
-
-          <View style={styles.dropdown}>
-            <Text style={styles.subJudul}>Dokumen Hukum</Text>
-            <DropDownPicker
+        </View>
+        <View style={{ marginHorizontal: 20 }}>
+          <Text style={styles.subJudul}>Dokumen Hukum</Text>
+        </View>
+        <View style={styles.dropdown}>
+          {/* <DropDownPicker
               open={open}
               value={value}
               items={category}
@@ -224,8 +254,37 @@ export default function Dashboard() {
                 justifyContent: "center",
                 marginLeft: 18,
               }}
+            /> */}
+          {selectedList.key === "" ? (
+            <Dropdown
+              data={listDokHukum}
+              setSelected={setSelectedList}
+              placeHolder={"Pilih"}
+              borderWidth={1}
+              borderwidthDrop={1}
+              borderWidthValue={1}
+              borderColor={COLORS.ExtraDivinder}
+              borderColorDrop={COLORS.ExtraDivinder}
+              borderColorValue={COLORS.ExtraDivinder}
+              heightValue={150}
+              search={true}
             />
-            {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 20, gap: 10 }} onPress={handlePressModal}>
+          ) : (
+            <Dropdown
+              data={listDokHukum}
+              setSelected={setSelectedList}
+              selected={selectedList}
+              borderWidth={1}
+              borderwidthDrop={1}
+              borderWidthValue={1}
+              borderColor={COLORS.ExtraDivinder}
+              borderColorDrop={COLORS.ExtraDivinder}
+              borderColorValue={COLORS.ExtraDivinder}
+              heightValue={150}
+              search={true}
+            />
+          )}
+          {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 20, gap: 10 }} onPress={handlePressModal}>
                     <Ionicons name='filter-outline' size={25} color={'#499CD7'} />
                     <Text style={styles.judulFilter}>Pencarian lanjut</Text>
                 </TouchableOpacity>
@@ -302,127 +361,119 @@ export default function Dashboard() {
                         <Button title='Terapkan' textColor={'white'} style={styles.button} />
                     </BottomSheetView>
                 </BottomSheetModal> */}
-          </View>
-          <View style={styles.ContainerCard}>
+        </View>
+        <View style={styles.ContainerCard}>
+          <View
+            style={{
+              marginTop: 20,
+              // flexDirection: "row",
+              gap: 10,
+              marginBottom: 20,
+              alignItems: "flex-end",
+            }}
+          >
             <View
               style={{
-                marginRight: 20,
-                marginTop: 20,
-                flexDirection: "row",
-                gap: 10,
-                marginBottom: 10,
-                alignItems: "center",
+                width: "100%",
+                backgroundColor: COLORS.white,
+                borderRadius: 8,
               }}
             >
-              <View style={{ marginLeft: 20, width: "80%" }}>
-                <Search placeholder={"Cari..."} onSearch={filterData} />
-              </View>
-              {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, gap: 5 }}>
-                            <TouchableOpacity>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='filter-outline' size={25} color={COLORS.grey} onPress={() => handleVariant('list')} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='list-outline' size={25} color={variant === 'list' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('list')} />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <View style={styles.circleList}>
-                                    <Ionicons name='apps-outline' size={25} color={variant === 'card' ? COLORS.primary : COLORS.grey} onPress={() => handleVariant('card')} />
-                                </View>
-                            </TouchableOpacity>
-                        </View> */}
-              <View style={{ flexDirection: "row", gap: 10 }}>
-                <TouchableOpacity onPress={!ascending ? asc : desc}>
-                  <View
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 30,
-                      backgroundColor: COLORS.white,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Ionicons name="filter-outline" size={24} />
-                  </View>
-                </TouchableOpacity>
-              </View>
+              <Search placeholder={"Cari..."} onSearch={filterData} />
             </View>
-            <View style={{ marginBottom: 30 }}>
-              <Divider bold />
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <TouchableOpacity onPress={!ascending ? asc : desc}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 30,
+                    backgroundColor: COLORS.white,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons name="filter-outline" size={24} />
+                </View>
+              </TouchableOpacity>
             </View>
-            {lists.results?.datas.length === 0 ? (
-              <View
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flex: 1,
-                }}
-              >
-                <Text>Tidak ada</Text>
-              </View>
-            ) : (
-              <View style={{ marginBottom: 100, paddingBottom: 30 }}>
-                {variant === "list" ? (
-                  <FlatList
-                    data={dataFilter}
-                    renderItem={({ item }) => (
-                      <CardKebijakan
-                        subjek={item.subjek}
-                        bentuk={item.bentuk}
-                        id_peraturan={item.id_peraturan}
-                        item={item}
-                        nomor={item.nomor}
-                        tahun={item.tahun}
-                      />
-                    )}
-                    keyExtractor={(item) => item.id_peraturan}
-                    ListFooterComponent={() =>
-                      loading === true ? (
-                        <View
-                          style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            padding: 24,
-                          }}
-                        >
-                          <ActivityIndicator
-                            size="small"
-                            color={COLORS.primary}
-                          />
-                        </View>
-                      ) : null
-                    }
-                    onEndReached={loadMore}
-                  />
-                ) : (
-                  <FlatList
-                    data={
-                      dataFilter && dataFilter.length > 0
-                        ? dataFilter
-                        : lists.results?.datas
-                    }
-                    renderItem={({ item }) => (
-                      <CardKebijakanCard
-                        subjek={item.subjek}
-                        bentuk={item.bentuk}
-                        id_peraturan={item.id_peraturan}
-                        item={item}
-                        nomor={item.nomor}
-                        tahun={item.tahun}
-                        tgl_penetapan={item.tgl_penetapan}
-                        tgl_diundangkan={item.tgl_diundangkan}
-                        status={item.status}
-                      />
-                    )}
-                    keyExtractor={(item) => item.id_peraturan}
+          </View>
+
+          {/* <StatusBar style="auto" /> */}
+        </View>
+        {lists.results?.datas.length === 0 ? (
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+            }}
+          >
+            <Text>Tidak ada</Text>
+          </View>
+        ) : (
+          <View style={{ height: "52%" }}>
+            {variant === "list" ? (
+              <FlatList
+                // data={dataFilter}
+                // data={lists?.results?.datas}
+                data={
+                  (dataFilter && dataFilter.length > 0) || isFiltered
+                    ? dataFilter
+                    : lists.results?.datas
+                }
+                // data={dokumenList}
+                renderItem={({ item }) => (
+                  <CardKebijakan
+                    subjek={item.subjek}
+                    bentuk={item.bentuk}
+                    id_peraturan={item.id_peraturan}
+                    item={item}
+                    nomor={item.nomor}
+                    tahun={item.tahun}
                   />
                 )}
-                {/* {
+                keyExtractor={(item) => item.id_peraturan}
+                ListFooterComponent={() =>
+                  loading === true ? (
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: 24,
+                      }}
+                    >
+                      <ActivityIndicator size="small" color={COLORS.primary} />
+                    </View>
+                  ) : null
+                }
+                onEndReached={loadMore}
+              />
+            ) : (
+              <FlatList
+                data={
+                  (dataFilter && dataFilter.length > 0) || isFiltered
+                    ? dataFilter
+                    : lists.results?.datas
+                }
+                renderItem={({ item }) => (
+                  <CardKebijakanCard
+                    subjek={item.subjek}
+                    bentuk={item.bentuk}
+                    id_peraturan={item.id_peraturan}
+                    item={item}
+                    nomor={item.nomor}
+                    tahun={item.tahun}
+                    tgl_penetapan={item.tgl_penetapan}
+                    tgl_diundangkan={item.tgl_diundangkan}
+                    status={item.status}
+                  />
+                )}
+                keyExtractor={(item) => item.id_peraturan}
+              />
+            )}
+            {/* {
                                     dataFilter.length >= 1 ? (
                                         <></>
                                     ) : (
@@ -437,13 +488,9 @@ export default function Dashboard() {
                                         </View>
                                     )
                                 } */}
-              </View>
-            )}
-
-            <StatusBar style="auto" />
           </View>
-        </BottomSheetModalProvider>
-      </>
+        )}
+      </BottomSheetModalProvider>
     </>
   );
 }
@@ -459,23 +506,16 @@ const styles = StyleSheet.create({
   },
   ContainerCard: {
     zIndex: -1,
-    marginTop: 20,
     width: "90%",
     marginLeft: 20,
     borderRadius: 12,
-    backgroundColor: COLORS.white,
-    paddingTop: 10,
-    height: "65%",
   },
   dropdown: {
-    borderRadius: 12,
+    borderRadius: 8,
     backgroundColor: COLORS.white,
     width: "90%",
-    height: "20%",
-    // justifyContent: 'center',
-    // alignItems: 'center',
+
     marginLeft: 20,
-    marginTop: 10,
   },
   cardList: {
     backgroundColor: COLORS.white,
@@ -491,8 +531,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: FONTWEIGHT.bold,
     textAlign: "left",
-    marginTop: 20,
-    marginLeft: 20,
+    marginVertical: 20,
   },
   judulFilter: {
     fontSize: 16,
