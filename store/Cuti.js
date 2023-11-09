@@ -76,6 +76,7 @@ const CutiSlice = createSlice({
             })
             .addCase(getDetailArsipCuti.fulfilled, (state, action) => {
                 state.arsip.detail = action.payload
+                console.log('masuk')
                 state.loading = false
             })
             .addCase(getDetailArsipCuti.pending, (state, action) => {
