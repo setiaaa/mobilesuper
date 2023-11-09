@@ -105,9 +105,12 @@ export const getDokHukum = createAsyncThunk(
     console.log("dari api id " + id);
     console.log("dari api page " + page);
     console.log("dari api token " + token);
-    const respon = await axios.get(`${kebijakan}category/${id}/?page=${page}`, {
-      headers: { Authorization: token },
-    });
+    const respon = await axios.get(
+      `${kebijakan}category/${id}/?limit=${page}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return respon?.data.results.datas;
   }
 );

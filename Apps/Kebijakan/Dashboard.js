@@ -37,6 +37,7 @@ import { Loading } from "../../components/Loading";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import { setRefresh } from "../../store/Kebijakan";
+import ListEmpty from "../../components/ListEmpty";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
@@ -44,7 +45,6 @@ export default function Dashboard() {
   const [openTahun, setOpenTahun] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
   const [value, setValue] = useState();
-  const [dataFilter, setFilterData] = useState([]);
   const [category, setCategory] = useState([]);
   const bottomSheetModalRef = useRef(null);
   const [variant, setVariant] = useState("list");
@@ -78,19 +78,28 @@ export default function Dashboard() {
   useEffect(() => {
     if (token !== "") {
       dispatch(getCategory({ token: token, page: page }));
-      dispatch(setRefresh(false));
     }
   }, [token, page]);
+
+  const [selectedList, setSelectedList] = useState({ key: "", value: "" });
 
   useEffect(() => {
     if (token !== "") {
       dispatch(getDokHukum({ token: token, id: selectedList.key, page: page }));
+      // dispatch(setRefresh(false));
     }
-  }, [token, selectedList?.key, page]);
+  }, [token, selectedList.key, page]);
+
+  // useEffect(() => {
+  //   if (refresh) {
+  //     dispatch(getDokHukum({ token: token, id: selectedList.key, page: page }));
+  //   }
+  // }, [refresh]);
 
   const { dokumen, lists, dokumenList, refresh, loading } = useSelector(
     (state) => state.kebijakan
   );
+  const [dataFilter, setFilterData] = useState([]);
 
   useEffect(() => {
     if (refresh) {
@@ -108,8 +117,6 @@ export default function Dashboard() {
     value: item.label,
   }));
 
-  const [selectedList, setSelectedList] = useState({ key: "", value: "" });
-
   // useEffect(() => {
   //   if (lists.count > 5) {
   //     let mdl = parseInt(lists.count / 5);
@@ -123,9 +130,9 @@ export default function Dashboard() {
   //   }
   // }, [page]);
 
-  useEffect(() => {
-    dispatch(getCategoryId(selectedList.key));
-  }, [selectedList.key]);
+  // useEffect(() => {
+  //   dispatch(getCategoryId(selectedList.key));
+  // }, [selectedList.key]);
 
   // const filterData = (search) => {
   //   const filter =
@@ -141,7 +148,7 @@ export default function Dashboard() {
   const [isFiltered, setIsFiltered] = useState(false);
 
   useEffect(() => {
-    const item = lists.results?.datas;
+    const item = dokumenList;
     if (search !== "") {
       const data = item.filter((item) => {
         return item.subjek.toLowerCase().includes(search.toLowerCase());
@@ -175,7 +182,7 @@ export default function Dashboard() {
   };
 
   const loadMore = () => {
-    if (lists.results?.datas.length % 5 === 0) {
+    if (dokumenList.length % 5 === 0) {
       setPage(page + 5);
     }
     // console.log(page);
@@ -188,8 +195,8 @@ export default function Dashboard() {
   // console.log(lists.results?.datas);
 
   // console.log("page : " + page);
-  // console.log(selectedList.value);
-  console.log(dokumenList);
+  console.log(selectedList.key);
+  console.log(dokumenList[0]?.subjek);
   return (
     <>
       {loading ? <Loading /> : null}
@@ -418,12 +425,12 @@ export default function Dashboard() {
               <FlatList
                 // data={dataFilter}
                 // data={lists?.results?.datas}
-                data={
-                  (dataFilter && dataFilter.length > 0) || isFiltered
-                    ? dataFilter
-                    : lists.results?.datas
-                }
-                // data={dokumenList}
+                // data={
+                //   (dataFilter && dataFilter.length > 0) || isFiltered
+                //     ? dataFilter
+                //     : dokumenList
+                // }
+                data={dokumenList}
                 renderItem={({ item }) => (
                   <CardKebijakan
                     subjek={item.subjek}
@@ -449,6 +456,7 @@ export default function Dashboard() {
                   ) : null
                 }
                 onEndReached={loadMore}
+                ListEmptyComponent={<ListEmpty />}
               />
             ) : (
               <FlatList
