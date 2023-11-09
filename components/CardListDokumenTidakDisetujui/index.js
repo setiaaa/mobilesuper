@@ -18,11 +18,13 @@ export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
 
     return (
         <>
-            {item.status === 'Postponed' ? (
+            {item.status === 'Postponed' || item.status === 'Rejected' ? (
                 <TouchableOpacity onPress={onPress = () => {
                     getDetail(item.id)
                     navigation.navigate('DetailDokumenCuti')
-                }}>
+                }}
+                    style={{ marginTop: 10 }}
+                >
                     <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
                         <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: {moment(item.tanggal_pembuatan, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
                         <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: {item.jenis_cuti}</Text>
