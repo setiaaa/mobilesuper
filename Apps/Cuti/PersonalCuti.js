@@ -361,7 +361,7 @@ export const PersonalCuti = () => {
                             </View>
                         </View>
                     </View>
-
+                    {/* 
                     <View style={{ padding: 20 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold }}>Arsip Cuti</Text>
@@ -386,7 +386,7 @@ export const PersonalCuti = () => {
                             keyExtractor={(item) => item.id}
                             ListEmptyComponent={() => <ListEmpty />}
                         />
-                    </View>
+                    </View> */}
                 </ScrollView>
             </View >
         </GestureHandlerRootView >
