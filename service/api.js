@@ -65,6 +65,8 @@ export const Login = createAsyncThunk(
 export const getCategory = createAsyncThunk(
   "kebijakan/getCategory",
   async ({ token, page }) => {
+    // console.log(token);
+    // console.log("page dari api " + page);
     const respon = await axios.get(`${kebijakan}category/?limit=${page}`, {
       headers: { Authorization: token },
     });
@@ -97,15 +99,15 @@ export const getCategoryIdPage = async (id, page) => {
 // ? paginasi list dokumen hukum gimana? -Ben
 export const getDokHukum = createAsyncThunk(
   "kebijakan/getDokHukum",
-  async (id, page) => {
-    console.log(id.id);
-    console.log(id.page);
-    const respon = await axios.get(
-      `${kebijakan}category/${id.id}/?page=${id.page}`,
-      {
-        headers: { Authorization: "cf50a5b6-d640-49df-a45d-29f3e7ca1f1c" },
-      }
-    );
+  async ({ token, id, page }) => {
+    // const id = "48";
+    // const page = "10";
+    console.log("dari api id " + id);
+    console.log("dari api page " + page);
+    console.log("dari api token " + token);
+    const respon = await axios.get(`${kebijakan}category/${id}/?page=${page}`, {
+      headers: { Authorization: token },
+    });
     return respon?.data.results.datas;
   }
 );

@@ -36,6 +36,7 @@ import { ActivityIndicator } from "react-native";
 import { Loading } from "../../components/Loading";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
+import { setRefresh } from "../../store/Kebijakan";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
@@ -77,15 +78,25 @@ export default function Dashboard() {
   useEffect(() => {
     if (token !== "") {
       dispatch(getCategory({ token: token, page: page }));
+      dispatch(setRefresh(false));
     }
   }, [token, page]);
 
-  // useEffect(() => {
-  //   dispatch(getDokHukum({ id: selectedList.key, page: page }));
-  // }, [token, selectedList?.key, page]);
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getDokHukum({ token: token, id: selectedList.key, page: page }));
+    }
+  }, [token, selectedList?.key, page]);
 
-  const { dokumen, lists, loading } = useSelector((state) => state.kebijakan);
-  // const { dokumenList } = useSelector((state) => state.kebijakan);
+  const { dokumen, lists, dokumenList, refresh, loading } = useSelector(
+    (state) => state.kebijakan
+  );
+
+  useEffect(() => {
+    if (refresh) {
+      dispatch(getCategory({ token: token, page: page }));
+    }
+  }, [refresh]);
 
   useEffect(() => {
     setCategory(dokumen);
@@ -99,18 +110,18 @@ export default function Dashboard() {
 
   const [selectedList, setSelectedList] = useState({ key: "", value: "" });
 
-  useEffect(() => {
-    if (lists.count > 5) {
-      let mdl = parseInt(lists.count / 5);
-      const modulus = lists.count % 5;
-      if (modulus !== 0) {
-        mdl += 1;
-      }
-      setCount(mdl);
-    } else {
-      setCount(1);
-    }
-  }, [page]);
+  // useEffect(() => {
+  //   if (lists.count > 5) {
+  //     let mdl = parseInt(lists.count / 5);
+  //     const modulus = lists.count % 5;
+  //     if (modulus !== 0) {
+  //       mdl += 1;
+  //     }
+  //     setCount(mdl);
+  //   } else {
+  //     setCount(1);
+  //   }
+  // }, [page]);
 
   useEffect(() => {
     dispatch(getCategoryId(selectedList.key));
@@ -176,9 +187,9 @@ export default function Dashboard() {
 
   // console.log(lists.results?.datas);
 
-  console.log(page);
-  console.log(selectedList.key);
-  // console.log(dokumenList);
+  // console.log("page : " + page);
+  // console.log(selectedList.value);
+  console.log(dokumenList);
   return (
     <>
       {loading ? <Loading /> : null}
