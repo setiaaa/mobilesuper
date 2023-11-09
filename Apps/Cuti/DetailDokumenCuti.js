@@ -24,6 +24,7 @@ import { Image } from 'react-native'
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
     const navigation = useNavigation();
+    console.log(lampiran)
 
     // console.log(name);
     // console.log(size);
@@ -148,8 +149,8 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
             key={id}
             onPress={() =>
                 navigation.navigate("FileViewer", {
-                    lampiran: lampiran,
-                    type: type,
+                    lampiran: 'https://' + lampiran,
+                    type: 'pdf',
                 })
             }
         >
@@ -317,7 +318,7 @@ const CardKomen = ({ listData, inputRef, setParentId, bottomSheetAttachCommentCl
                                 onPress={() => {
 
                                     navigation.navigate("FileViewer", {
-                                        lampiran: listData.pdf,
+                                        lampiran: 'https://' + listData.pdf,
                                         type: 'pdf',
                                     })
                                     bottomSheetAttachCommentClose()
@@ -559,8 +560,8 @@ export const DetailDokumenCuti = () => {
     const [lampiranById, setLampiranById] = useState(null);
 
     const getFileExtension = (lampiran) => {
-        let jenis = lampiran.split(".");
-        jenis = jenis[jenis.length - 1];
+        let jenis = lampiran?.split(".");
+        jenis = jenis[jenis?.length - 1];
         return jenis;
     };
 
@@ -583,6 +584,12 @@ export const DetailDokumenCuti = () => {
     };
 
     const [komen, setKomen] = useState("");
+
+    let maxDay = arsipDetail.detail_dokumen?.jenis_cuti?.max_day?.toString()
+    let durasiCuti = arsipDetail.detail_dokumen?.dokumen?.jumlah_cuti?.toString()
+    let durasiBatal = arsipDetail.detail_dokumen?.dokumen?.jumlah_pembatalan?.toString()
+
+    console.log(durasiBatal)
 
     return (
         <GestureHandlerRootView>
@@ -620,26 +627,26 @@ export const DetailDokumenCuti = () => {
 
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                 <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Tipe Hari</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Hari Kalender</Text>
+                                {/* <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Hari Kalender</Text> */}
                             </View>
 
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                 <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Sub Jenis Cuti</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, color: COLORS.info }}>Melangsungkan Pernikahan</Text>
+                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, color: COLORS.info }}>{arsipDetail.detail_dokumen?.jenis_cuti?.definition}</Text>
                             </View>
 
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                 <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Maksimal Hari</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>30</Text>
+                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{maxDay === undefined ? '-' : maxDay}</Text>
                             </View>
                             <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                 <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Status Dokumen</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Disetujui</Text>
+                                {/* <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Disetujui</Text> */}
                             </View>
 
                             <View style={{ flexDirection: "row", paddingVertical: 10, }}>
                                 <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Tipe Dokumen</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, color: COLORS.danger }}>Pembatalan Cuti</Text>
+                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20, color: COLORS.danger }}>{arsipDetail.detail_dokumen?.dokumen?.jenis_dokumen}</Text>
                             </View>
                         </View>
                     </View>
@@ -699,7 +706,7 @@ export const DetailDokumenCuti = () => {
 
                                     <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
                                         <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Durasi Cuti</Text>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>1</Text>
+                                        <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>{durasiCuti}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#DBDADE", paddingVertical: 10, }}>
@@ -727,8 +734,7 @@ export const DetailDokumenCuti = () => {
                                 {arsipDetail.detail_dokumen?.attachment?.length !== 0 ? (
                                     <View
                                         style={{
-                                            marginHorizontal: 20,
-                                            marginBottom: 30,
+                                            height: 184,
                                             borderRadius: 16,
                                             backgroundColor: "white",
                                             paddingVertical: 16,
@@ -747,33 +753,32 @@ export const DetailDokumenCuti = () => {
                                                 fontWeight: FONTWEIGHT.bold,
                                             }}
                                         >
-                                            Lampiran
+                                            <FlatList
+                                                key={"#"}
+                                                data={arsipDetail.detail_dokumen?.attachment}
+                                                renderItem={({ item }) => (
+                                                    <View key={item.id}>
+                                                        <CardLampiran
+                                                            lampiran={item.attachment}
+                                                            id={item.id}
+                                                            name={item.name}
+                                                            size={item.file_size}
+                                                            type={getFileExtension(item.attachment)}
+                                                            onClick={() => {
+                                                                setVisibleModal(true);
+                                                                setLampiranById(item);
+                                                            }}
+                                                        />
+                                                    </View>
+                                                )}
+                                                scrollEnabled={true}
+                                                horizontal={true}
+                                                style={{ marginTop: 20 }}
+                                                // columnWrapperStyle={{ justifyContent: "space-evenly" }}
+                                                // numColumns={2}
+                                                keyExtractor={(item) => "#" + item.id}
+                                            />
                                         </Text>
-                                        <FlatList
-                                            key={"#"}
-                                            data={arsipDetail.detail_dokumen?.attachment}
-                                            renderItem={({ item }) => (
-                                                <View key={item.id}>
-                                                    <CardLampiran
-                                                        lampiran={item.file}
-                                                        id={item.id}
-                                                        name={item.name}
-                                                        size={item.file_size}
-                                                        type={getFileExtension(item.name)}
-                                                        onClick={() => {
-                                                            setVisibleModal(true);
-                                                            setLampiranById(item);
-                                                        }}
-                                                    />
-                                                </View>
-                                            )}
-                                            scrollEnabled={true}
-                                            horizontal={true}
-                                            style={{ marginTop: 20 }}
-                                            // columnWrapperStyle={{ justifyContent: "space-evenly" }}
-                                            // numColumns={2}
-                                            keyExtractor={(item) => "#" + item.id}
-                                        />
                                     </View>
                                 ) : (
                                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -884,11 +889,15 @@ export const DetailDokumenCuti = () => {
                                 <View style={{ flexDirection: "row", paddingVertical: 10, }}>
                                     <Text style={{ fontSize: 13, fontWeight: 600, width: "40%", paddingRight: 20 }}>Yang Menyetujui</Text>
                                     <View style={{ gap: 10, width: "60%", paddingRight: 20 }}>
-                                        {arsipDetail.detail_dokumen?.approver.map((item) => {
-                                            return (
-                                                <Text>- {item.nama_approver} / {item.nip_approver}</Text>
-                                            )
-                                        })}
+                                        {arsipDetail.detail_dokumen?.approver?.length !== 0 ? (
+                                            arsipDetail.detail_dokumen?.approver.map((item) => {
+                                                return (
+                                                    <Text>- {item.nama_approver} / {item.nip_approver}</Text>
+                                                )
+                                            })
+                                        ) : (
+                                            <Text>-</Text>
+                                        )}
                                     </View>
                                 </View>
                             </View>
@@ -905,13 +914,13 @@ export const DetailDokumenCuti = () => {
                                 <View style={{ flexDirection: "row", paddingVertical: 10, borderBottomWidth: 2, borderBottomColor: "#DBDADE", }}>
                                     <Text style={{ fontSize: 13, fontWeight: 600, width: "50%", paddingRight: 20 }}>Periode Pembatalan</Text>
                                     <View style={{ gap: 1, width: "50%", paddingRight: 1, }}>
-                                        <Text style={{ fontSize: 12.5, fontWeight: 400, }}>01/01/2023 - 03/01/2023</Text>
+                                        <Text style={{ fontSize: 12.5, fontWeight: 400, }}>{moment(arsipDetail.detail_dokumen?.dokumen?.mulai_pembatalan, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)} - {moment(arsipDetail.detail_dokumen?.dokumen?.akhir_pembatalan, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: "row", paddingVertical: 10, }}>
                                     <Text style={{ fontSize: 13, fontWeight: 600, width: "50%", paddingRight: 20 }}>Durasi Pembatalan</Text>
                                     <View style={{ gap: 10, width: "50%", paddingRight: 20 }}>
-                                        <Text style={{ fontSize: 13, fontWeight: 400, }}>3</Text>
+                                        <Text style={{ fontSize: 13, fontWeight: 400, }}>{durasiBatal}</Text>
                                     </View>
                                 </View>
                             </View>
