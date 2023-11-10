@@ -304,7 +304,7 @@ const CardLiniMasa = ({ item, token }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ['75%'], []);
+  const initialSnapPoints = useMemo(() => ['95%'], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -1045,9 +1045,9 @@ const CardLiniMasa = ({ item, token }) => {
                 style={{ height: 550 }}
               />
 
-              <View style={{ justifyContent: "flex-end" }}>
+              <View style={{ justifyContent: "flex-end", paddingTop:10}}>
                 {parentId.id !== "" ? ( 
-                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:10, paddingTop:10}}>
+                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20,}}>
                     <Text>Membalas {parentId.creator}</Text>
                     <TouchableOpacity>
                       <Ionicons
