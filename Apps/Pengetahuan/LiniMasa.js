@@ -304,7 +304,7 @@ const CardLiniMasa = ({ item, token }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({id:"", creator:""});
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ['75%'], []);
+  const initialSnapPoints = useMemo(() => ['95%'], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -979,6 +979,7 @@ const CardLiniMasa = ({ item, token }) => {
           <BottomSheetView onLayout={handleContentLayout} style={{}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "height" : "height"}
+              keyboardVerticalOffset={parentId !== "" ? 120: 80}
             >
               <View
                 style={{
@@ -1028,12 +1029,12 @@ const CardLiniMasa = ({ item, token }) => {
                     setToggleComment={setToggleComment}
                   />
                 )}
-                style={{ height: 400 }}
+                style={{ height: 550 }}
               />
 
-              <View style={{ justifyContent: "flex-end" }}>
+              <View style={{ justifyContent: "flex-end", paddingTop:10}}>
                 {parentId.id !== "" ? ( 
-                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:10, paddingTop:10}}>
+                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20,}}>
                     <Text>Membalas {parentId.creator}</Text>
                     <TouchableOpacity>
                       <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
@@ -1060,12 +1061,11 @@ const CardLiniMasa = ({ item, token }) => {
                     flexDirection: "row",
                     backgroundColor: COLORS.ExtraDivinder,
                     marginTop: 10,
-                    marginBottom: 10,
                   }}
                 >
                   <BottomSheetTextInput
                     numberOfLines={1}
-                    maxLength={40}
+                    maxLength={30}
                     placeholder="Ketik Komentar Disini"
                     ref={inputRef}
                     style={{ padding: 10 }}
@@ -1077,6 +1077,7 @@ const CardLiniMasa = ({ item, token }) => {
                       alignItems: "flex-end",
                       flex: 1,
                       marginRight: 10,
+                      marginLeft:50,
                       justifyContent: "center",
                     }}
                   >

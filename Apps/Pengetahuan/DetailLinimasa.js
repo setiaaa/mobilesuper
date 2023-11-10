@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { FlatList, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { FlatList, KeyboardAvoidingView, Platform, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -39,7 +39,6 @@ import {
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { setRefresh } from "../../store/Pengetahuan";
-
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   const navigation = useNavigation();
 
@@ -491,7 +490,7 @@ export const DetailLinimasa = () => {
   const [visibleModalInfo, setVisibleModalInfo] = useState(false);
   const [visibleModalView, setVisibleModalView] = useState(false);
   const inputRef = useRef(null);
-  const [parentId, setParentId] = useState("");
+  const [parentId, setParentId] = useState({id:"", creator:""});
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
   const {
@@ -878,6 +877,7 @@ export const DetailLinimasa = () => {
                     index={0}
                     style={{ borderRadius: 50 }}
                     keyboardBlurBehavior="restore"
+                    keyboardBehavior="extend"
                     android_keyboardInputMode="adjust"
                     backdropComponent={({ style }) => (
                       <View
@@ -888,9 +888,10 @@ export const DetailLinimasa = () => {
                       />
                     )}
                   >
-                    <BottomSheetView onLayout={handleContentLayout} style={{}}>
+                    <BottomSheetView onLayout={handleContentLayout} style={{flex:1}}>
                       <KeyboardAvoidingView
                         behavior={Platform.OS === "ios" ? "height" : "height"}
+                        keyboardVerticalOffset={parentId !== "" ? 120: 80}          
                       >
                         <View
                           style={{
@@ -940,12 +941,12 @@ export const DetailLinimasa = () => {
                               setParentId={setParentId}
                             />
                           )}
-                          style={{ height: 500 }}
+                          style={{ height: 500, flex:1 }}
                         />
 
-                        <View style={{ justifyContent: "flex-end" }}>
+                        <View style={{ justifyContent: "flex-end", paddingTop:10 }}>
                         {parentId.id !== "" ? ( 
-                          <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20, paddingTop:10}}>
+                          <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
                             <Text>Membalas {parentId.creator}</Text>
                             <TouchableOpacity>
                               <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
@@ -972,18 +973,17 @@ export const DetailLinimasa = () => {
                               flexDirection: "row",
                               backgroundColor: COLORS.ExtraDivinder,
                               marginTop: 10,
-                              marginBottom: 40,
                             }}
                           >
-                            <BottomSheetTextInput
-                              numberOfLines={1}
-                              maxLength={40}
-                              placeholder="Ketik Komentar Disini"
-                              ref={inputRef}
-                              style={{ padding: 10 }}
-                              onChangeText={setKomen}
-                              value={komen}
-                            />
+                              <BottomSheetTextInput
+                                numberOfLines={1}
+                                maxLength={30}
+                                placeholder="Ketik Komentar Disini"
+                                ref={inputRef}
+                                style={{ padding: 10 }}
+                                onChangeText={setKomen}
+                                value={komen}
+                              />
                             <View
                               style={{
                                 alignItems: "flex-end",

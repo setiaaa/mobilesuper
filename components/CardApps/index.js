@@ -34,16 +34,6 @@ export const CardApps = ({ handlePressModal }) => {
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Email</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('MainPengetahuan')}>
-                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/pengetahuan-ikon.png')} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pengetahuan</Text>
-                </View>
-            </View>
-            <View style={{ flexDirection: 'row', gap: 28, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('GrupKalender')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
                         <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kalender-ikon.png')} />
@@ -51,13 +41,23 @@ export const CardApps = ({ handlePressModal }) => {
                     </TouchableOpacity>
                     <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kalender</Text>
                 </View>
+            </View>
+            <View style={{ flexDirection: 'row', gap: 28, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
                         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kebijakan-ikon.png')} />
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/task-ikon.png')} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Repositori</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task</Text>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('MainDigitalSign')}>
+                        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                        <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/digital-ikon.png')} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Digital Sign</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('HalamanUtama')}>
@@ -65,7 +65,7 @@ export const CardApps = ({ handlePressModal }) => {
                         <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/agenda-ikon.png')} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Agenda</Text>
+                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Agenda </Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                     <TouchableOpacity onPress={handlePressModal}>
