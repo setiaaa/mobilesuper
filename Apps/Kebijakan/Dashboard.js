@@ -49,7 +49,7 @@ export default function Dashboard() {
   const [category, setCategory] = useState([]);
   const bottomSheetModalRef = useRef(null);
   const [variant, setVariant] = useState("list");
-  const [page, setPage] = useState(5);
+  const [page, setPage] = useState(1);
   const [count, setCount] = useState();
   const [token, setToken] = useState("");
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -296,83 +296,6 @@ export default function Dashboard() {
               search={true}
             />
           )}
-          {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 20, gap: 10 }} onPress={handlePressModal}>
-                    <Ionicons name='filter-outline' size={25} color={'#499CD7'} />
-                    <Text style={styles.judulFilter}>Pencarian lanjut</Text>
-                </TouchableOpacity>
-                <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    snapPoints={animatedSnapPoints}
-                    handleHeight={animatedHandleHeight}
-                    contentHeight={animatedContentHeight}
-                    index={0}
-                    style={{ borderRadius: 50 }}
-                    keyboardBlurBehavior="restore"
-                    android_keyboardInputMode="adjust"
-                    backdropComponent={({ style }) => (
-                        <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                    )}
-                >
-                    <BottomSheetView onLayout={handleContentLayout}>
-                        <View style={styles.contentContainer}>
-                            <View style={{ flexDirection: "row", justifyContent: 'space-between', marginBottom: 30 }}>
-                                <Text style={{ fontSize: 20, fontWeight: 600, }}>Pencarian lanjut</Text>
-                                <TouchableOpacity>
-                                    <Text style={{ textAlign: 'left', color: '#FF5630' }}>Reset</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <BottomSheetTextInput
-                                placeholder='Tentang'
-                                style={styles.filterInput}
-                            />
-                            <BottomSheetTextInput
-                                placeholder='Nomor'
-                                style={styles.filterInput}
-                            />
-                            <DropDownPicker
-                                open={openTentang}
-                                value={value}
-                                items={category}
-                                setOpen={setOpenTentang}
-                                setValue={setValue}
-                                setItems={setItems}
-                                zIndex={5000}
-                                bottomOffset={5000}
-                                style={{ borderColor: '#959CA9' }}
-                                containerStyle={{ marginTop: 10, }}
-                                dropDownContainerStyle={{ borderColor: '#959CA9' }}
-                            />
-
-                            <DropDownPicker
-                                open={openTahun}
-                                value={value}
-                                items={category}
-                                setOpen={setOpenTahun}
-                                setValue={setValue}
-                                setItems={setItems}
-                                zIndex={5000}
-                                bottomOffset={5000}
-                                style={{ borderColor: '#959CA9' }}
-                                containerStyle={{ marginTop: 10, }}
-                                dropDownContainerStyle={{ borderColor: '#959CA9' }}
-                            />
-
-                            <DropDownPicker
-                                open={openStatus}
-                                value={value}
-                                items={category}
-                                setOpen={setOpenStatus}
-                                setValue={setValue}
-                                setItems={setItems}
-                                zIndex={5000}
-                                style={{ borderColor: '#959CA9' }}
-                                containerStyle={{ marginTop: 10, }}
-                                dropDownContainerStyle={{ borderColor: '#959CA9' }}
-                            />
-                        </View>
-                        <Button title='Terapkan' textColor={'white'} style={styles.button} />
-                    </BottomSheetView>
-                </BottomSheetModal> */}
         </View>
         <View style={styles.ContainerCard}>
           <View

@@ -76,9 +76,9 @@ export const getCategory = createAsyncThunk(
 
 export const getCategoryId = createAsyncThunk(
   "kebijakan/getCategoryId",
-  async (id) => {
+  async ({ token, id }) => {
     const respon = await axios.get(`${kebijakan}category/${id}/`, {
-      headers: { Authorization: "cf50a5b6-d640-49df-a45d-29f3e7ca1f1c" },
+      headers: { Authorization: token },
     });
     return respon?.data;
   }
