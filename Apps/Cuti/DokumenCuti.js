@@ -13,125 +13,13 @@ import { useEffect } from 'react'
 import { FlatList } from 'react-native'
 import ListEmpty from '../../components/ListEmpty'
 import moment from 'moment'
+import { CardListDokumenTidakDisetujui } from '../../components/CardListDokumenTidakDisetujui'
+import { CardListDokumenDisetujui } from '../../components/CardListDokumenDisetujui'
 
-const ListDokumenDisetujui = ({ item, nip }) => {
-    const dispatch = useDispatch()
-    const navigation = useNavigation()
-    const getDetail = (id) => {
-        const params = { nip, id };
-        // const data = event.listsprogress.find(item => item.id === id)
-        console.log(nip, id)
-        dispatch(getDetailArsipCuti(params));
-    };
-
-    return (
-        <>
-            {item.status === 'Completed' ? (
-                <TouchableOpacity onPress={onPress = () => {
-                    getDetail(item.id)
-                    // navigation.navigate('DetailDokumenCuti')
-                }}>
-                    <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
-                        <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: {moment(item.tanggal_pembuatan, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: {item.jenis_cuti}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Tipe Dokumen: </Text>
-                            <View style={{ backgroundColor: COLORS.success, borderRadius: 10, padding: 5, }}>
-                                <Text style={{ fontSize: 12, color: COLORS.white }}>{item.tipe_dokumen}</Text>
-                            </View>
-                        </View>
-                        <View style={{ justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 10 }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ) : (
-                null
-            )}
-        </>
-    );
-}
-
-const ListDokumenTidakDisetujui = ({ item, variant, token }) => {
-    const dispatch = useDispatch()
-    const navigation = useNavigation()
-    return (
-        <>
-            {item.status === 'Postponed' ? (
-                <TouchableOpacity onPress={onPress = () => navigation.navigate('DetailDokumenCuti')}>
-                    <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
-                        <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: {moment(item.tanggal_pembuatan, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: {item.jenis_cuti}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Tipe Dokumen: </Text>
-                            <View style={{ backgroundColor: 'red', borderRadius: 10, padding: 5, }}>
-                                <Text style={{ fontSize: 12, color: COLORS.white }}>{item.tipe_dokumen}</Text>
-                            </View>
-                        </View>
-                        <View style={{ justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 10 }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ) : (
-                null
-            )}
-        </>
-    );
-}
-
-const ListDokumenTidakDikembalikan = ({ item, variant, token }) => {
-    const dispatch = useDispatch()
-    const navigation = useNavigation()
-    return (
-        <>
-            {item.status !== 'Postponed' && item.status !== 'Completed' ? (
-                <TouchableOpacity onPress={onPress = () => navigation.navigate('DetailDokumenCuti')}>
-                    <View style={{ backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15 }}>
-                        <Text style={{ fontSize: 12 }}>Tanggal Pengajuan: {moment(item.tanggal_pembuatan, 'DD MMMM YYYY HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
-                        <Text style={{ fontSize: 12, color: COLORS.lighter }}>Jenis: {item.jenis_cuti}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Tipe Dokumen: </Text>
-                            <View style={{ backgroundColor: 'red', borderRadius: 10, padding: 5, }}>
-                                <Text style={{ fontSize: 12, color: COLORS.white }}>{item.tipe_dokumen}</Text>
-                            </View>
-                        </View>
-                        <View style={{ justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 10 }}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai: {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(DATETIME.LONG_DATETIME)}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ) : (
-                null
-            )}
-        </>
-    );
-}
 
 export const DokumenCuti = () => {
     const navigation = useNavigation()
-    const [variant, SetVariant] = useState('')
+    const [variant, SetVariant] = useState('Draft')
     const dispatch = useDispatch()
     const { profile } = useSelector(state => state.superApps)
     useEffect(() => {
@@ -141,6 +29,31 @@ export const DokumenCuti = () => {
     }, [profile?.nip]);
     const { arsip } = useSelector(state => state.cuti)
     const arsipLists = arsip.lists.data
+
+    const [search, setSearch] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setSearch(event)
+    }
+
+    useEffect(() => {
+        setFilterData(arsip.lists.data)
+    }, [arsip])
+
+    useEffect(() => {
+        if (search !== '') {
+            const data = arsip.lists?.data.filter((item) => {
+                return item.jenis_cuti.toLowerCase().includes(search.toLowerCase());
+            })
+            setFilterData(data)
+        } else {
+            setFilterData(arsip.lists?.data)
+        }
+    }, [search])
+
+
+
     return (
         <GestureHandlerRootView>
             < View style={{ position: 'relative' }}>
@@ -182,6 +95,7 @@ export const DokumenCuti = () => {
                             <Search
                                 placeholder={'Cari'}
                                 iconColor={COLORS.primary}
+                                onSearch={filter}
                             />
                         </View>
                     </View>
@@ -191,12 +105,12 @@ export const DokumenCuti = () => {
                             <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'center', gap: 30 }}>
                                 <TouchableOpacity style={{
                                     maxWidth: 80,
-                                    borderColor: variant === 'draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    borderColor: variant === 'Draft' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     gap: 10
                                 }}
-                                    onPress={() => SetVariant('draf')}
+                                    onPress={() => SetVariant('Draft')}
                                 >
                                     <View style={{
                                         backgroundColor: COLORS.grey,
@@ -210,17 +124,17 @@ export const DokumenCuti = () => {
                                     }}>
                                         <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                     </View>
-                                    <Text style={{ color: variant === 'draft' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Draft</Text>
+                                    <Text style={{ color: variant === 'Draft' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Draft</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={{
                                     maxWidth: 60,
-                                    borderColor: variant === 'onprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    borderColor: variant === 'Onprogress' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     gap: 10
                                 }}
-                                    onPress={() => SetVariant('onprogress')}
+                                    onPress={() => SetVariant('Onprogress')}
                                 >
                                     <View style={{
                                         backgroundColor: COLORS.orange,
@@ -234,17 +148,17 @@ export const DokumenCuti = () => {
                                     }}>
                                         <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                     </View>
-                                    <Text style={{ color: variant === 'onprogress' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Sedang Proses</Text>
+                                    <Text style={{ color: variant === 'Onprogress' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Sedang Proses</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={{
                                     maxWidth: 120,
-                                    borderColor: variant === 'postponed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    borderColor: variant === 'Completed' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     gap: 10
                                 }}
-                                    onPress={() => SetVariant('postponed')}
+                                    onPress={() => SetVariant('Completed')}
                                 >
                                     <View style={{
                                         backgroundColor: COLORS.success,
@@ -258,18 +172,18 @@ export const DokumenCuti = () => {
                                     }}>
                                         <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                     </View>
-                                    <Text style={{ color: variant === 'postponed' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Disetujui</Text>
+                                    <Text style={{ color: variant === 'Completed' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Disetujui</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={{
                                     maxWidth: 60,
-                                    borderColor: variant === 'rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
+                                    borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     gap: 10
 
                                 }}
-                                    onPress={() => SetVariant('rejected')}
+                                    onPress={() => SetVariant('Rejected')}
                                 >
                                     <View style={{
                                         backgroundColor: COLORS.danger,
@@ -283,18 +197,18 @@ export const DokumenCuti = () => {
                                     }}>
                                         <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
                                     </View>
-                                    <Text style={{ color: variant === 'rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Tidak Disetujui</Text>
+                                    <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center', marginTop: 40 }}>Tidak Disetujui</Text>
                                 </TouchableOpacity>
 
                             </View>
                         </View>
 
-                        {variant === 'postponed' ? (
+                        {variant === 'Postponed' || variant === 'Rejected' ? (
                             <FlatList
-                                data={arsipLists}
+                                data={filterData}
                                 renderItem={({ item }) => (
                                     <View key={item.id}>
-                                        <ListDokumenDisetujui
+                                        <CardListDokumenTidakDisetujui
                                             item={item}
                                             nip={profile.nip}
                                             variant={variant}
@@ -307,10 +221,10 @@ export const DokumenCuti = () => {
                             />
                         ) : variant === 'draft' ? (
                             <FlatList
-                                data={arsipLists}
+                                data={filterData}
                                 renderItem={({ item }) => (
                                     <View key={item.id}>
-                                        <ListDokumenTidakDisetujui
+                                        <CardListDokumenDisetujui
                                             item={item}
                                             variant={variant}
                                         />
@@ -320,12 +234,12 @@ export const DokumenCuti = () => {
                                 ListEmptyComponent={() => <ListEmpty />}
                                 style={{ height: '70%' }}
                             />
-                        ) : variant === 'onprogress' ? (
+                        ) : variant === 'Onprogress' ? (
                             <FlatList
-                                data={arsipLists}
+                                data={filterData}
                                 renderItem={({ item }) => (
                                     <View key={item.id}>
-                                        <ListDokumenTidakDikembalikan
+                                        <CardListDokumenDisetujui
                                             item={item}
                                             variant={variant}
                                         />
@@ -335,12 +249,12 @@ export const DokumenCuti = () => {
                                 ListEmptyComponent={() => <ListEmpty />}
                                 style={{ height: '70%' }}
                             />
-                        ) : variant === 'rejected' ? (
+                        ) : variant === 'Completed' ? (
                             <FlatList
-                                data={arsipLists}
+                                data={filterData}
                                 renderItem={({ item }) => (
                                     <View key={item.id}>
-                                        <ListDokumenTidakDikembalikan
+                                        <CardListDokumenDisetujui
                                             item={item}
                                             variant={variant}
                                         />

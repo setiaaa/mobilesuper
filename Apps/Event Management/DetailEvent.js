@@ -50,7 +50,7 @@ export const DetailEvent = () => {
     bottomSheetModalRef.current?.present();
   };
 
-  
+
   const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
 
   const statusEvent = [
@@ -283,7 +283,7 @@ export const DetailEvent = () => {
                 ) : (
                   <Text style={{ width: 150 }}>
                     {data?.extra_attrs?.pic?.title?.name !== "" &&
-                    data?.extra_attrs?.pic?.title?.name !== null
+                      data?.extra_attrs?.pic?.title?.name !== null
                       ? data.extra_attrs?.pic.title.name
                       : "-"}
                   </Text>
@@ -637,8 +637,8 @@ export const DetailEvent = () => {
                       </View>
                     </TouchableOpacity>
                     {getFileExtension(lampiranById.name) === "png" ||
-                    getFileExtension(lampiranById.name) === "jpg" ||
-                    getFileExtension(lampiranById.name) === "jpeg" ? (
+                      getFileExtension(lampiranById.name) === "jpg" ||
+                      getFileExtension(lampiranById.name) === "jpeg" ? (
                       <View>
                         <Image
                           source={{ uri: lampiranById.file }}
@@ -667,10 +667,10 @@ export const DetailEvent = () => {
           </View>
 
           {data.user_role?.is_pic === true ||
-          (data.user_role?.is_notulensi === false &&
-            data.user_role?.is_presensi === false &&
-            data.user_role?.is_member === false &&
-            data.user_role?.is_pic === false) ? (
+            (data.user_role?.is_notulensi === false &&
+              data.user_role?.is_presensi === false &&
+              data.user_role?.is_member === false &&
+              data.user_role?.is_pic === false) ? (
             <View>
               <View
                 style={{
@@ -796,7 +796,7 @@ export const DetailEvent = () => {
                   marginVertical: 20,
                 }}
               >
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     backgroundColor: COLORS.foundation,
                     width: Platform.OS === "ios" ? "90%" : "91%",
@@ -820,7 +820,7 @@ export const DetailEvent = () => {
                       color={COLORS.white}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           ) : (

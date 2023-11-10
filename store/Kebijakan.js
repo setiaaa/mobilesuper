@@ -13,6 +13,7 @@ const KebijakanSilce = createSlice({
     lists: {},
     dokumenList: [],
     loading: false,
+    refresh: false,
   },
   reducers: {
     setDokumen: (state, action) => {
@@ -20,6 +21,9 @@ const KebijakanSilce = createSlice({
     },
     setLists: (state, action) => {
       state.lists = action.payload;
+    },
+    setRefresh: (state, action) => {
+      state.refresh = action.payload;
     },
   },
   extraReducers(builder) {
@@ -66,5 +70,7 @@ const KebijakanSilce = createSlice({
       });
   },
 });
+
+export const { setRefresh } = KebijakanSilce.actions;
 
 export default KebijakanSilce.reducer;
