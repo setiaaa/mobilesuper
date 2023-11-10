@@ -38,6 +38,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import { setRefresh } from "../../store/Kebijakan";
 import ListEmpty from "../../components/ListEmpty";
+import { event } from "react-native-reanimated";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
@@ -90,22 +91,16 @@ export default function Dashboard() {
     }
   }, [token, selectedList.key, page]);
 
-  // useEffect(() => {
-  //   if (refresh) {
-  //     dispatch(getDokHukum({ token: token, id: selectedList.key, page: page }));
-  //   }
-  // }, [refresh]);
-
   const { dokumen, lists, dokumenList, refresh, loading } = useSelector(
     (state) => state.kebijakan
   );
   const [dataFilter, setFilterData] = useState([]);
 
-  useEffect(() => {
-    if (refresh) {
-      dispatch(getCategory({ token: token, page: page }));
-    }
-  }, [refresh]);
+  // useEffect(() => {
+  //   if (refresh) {
+  //     dispatch(getCategory({ token: token, page: page }));
+  //   }
+  // }, [refresh]);
 
   useEffect(() => {
     setCategory(dokumen);
@@ -142,6 +137,15 @@ export default function Dashboard() {
   //     });
   //   setFilterData(filter);
   // };
+  useEffect(() => {
+    console.log("key changed!");
+    setPage(5);
+  }, [selectedList.key]);
+
+  useEffect(() => {
+    console.log("setfilterdata");
+    setFilterData(dokumenList);
+  }, [dokumenList]);
 
   const [search, setSearch] = useState("");
   const [ascending, setAscending] = useState(false);
@@ -154,19 +158,18 @@ export default function Dashboard() {
         return item.subjek.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
-    } else {
-      setFilterData(item);
     }
-  }, [search, isFiltered]);
+  }, [search]);
 
   const filterData = (event) => {
+    // console.log(event);
     setSearch(event);
   };
 
   const asc = () => {
     const sortedAscending = dataFilter
       ?.slice()
-      .sort((a, b) => a.subjek.localeCompare(b.subjek));
+      .sort((a, b) => a.nomor - b.nomor);
     setFilterData(sortedAscending);
     setAscending(true);
     setIsFiltered(true);
@@ -175,7 +178,7 @@ export default function Dashboard() {
   const desc = () => {
     const sortedDescending = dataFilter
       ?.slice()
-      .sort((a, b) => b.subjek.localeCompare(a.subjek));
+      .sort((a, b) => b.nomor - a.nomor);
     setFilterData(sortedDescending);
     setAscending(false);
     setIsFiltered(true);
@@ -195,8 +198,10 @@ export default function Dashboard() {
   // console.log(lists.results?.datas);
 
   // console.log("page : " + page);
-  console.log(selectedList.key);
-  console.log(dokumenList[0]?.subjek);
+  // console.log(selectedList.key);
+  // console.log("search value : (" + search + ")");
+  // console.log(dokumenList[0]?.subjek);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -386,7 +391,11 @@ export default function Dashboard() {
                 borderRadius: 8,
               }}
             >
-              <Search placeholder={"Cari..."} onSearch={filterData} />
+              <Search
+                placeholder={"Cari..."}
+                onSearch={filterData}
+                iconColor={COLORS.primary}
+              />
             </View>
             <View style={{ flexDirection: "row", gap: 10 }}>
               <TouchableOpacity onPress={!ascending ? asc : desc}>
@@ -423,14 +432,14 @@ export default function Dashboard() {
           <View style={{ height: "52%" }}>
             {variant === "list" ? (
               <FlatList
-                // data={dataFilter}
+                data={dataFilter}
                 // data={lists?.results?.datas}
                 // data={
                 //   (dataFilter && dataFilter.length > 0) || isFiltered
                 //     ? dataFilter
                 //     : dokumenList
                 // }
-                data={dokumenList}
+                // data={dokumenList}
                 renderItem={({ item }) => (
                   <CardKebijakan
                     subjek={item.subjek}
@@ -455,11 +464,12 @@ export default function Dashboard() {
                     </View>
                   ) : null
                 }
-                onEndReached={loadMore}
+                onEndReached={dokumenList.length === 0 ? null : loadMore}
                 ListEmptyComponent={<ListEmpty />}
               />
             ) : (
-              <FlatList
+              {
+                /* <FlatList
                 data={
                   (dataFilter && dataFilter.length > 0) || isFiltered
                     ? dataFilter
@@ -479,7 +489,8 @@ export default function Dashboard() {
                   />
                 )}
                 keyExtractor={(item) => item.id_peraturan}
-              />
+              /> */
+              }
             )}
             {/* {
                                     dataFilter.length >= 1 ? (

@@ -100,11 +100,9 @@ export const getCategoryIdPage = async (id, page) => {
 export const getDokHukum = createAsyncThunk(
   "kebijakan/getDokHukum",
   async ({ token, id, page }) => {
-    // const id = "48";
-    // const page = "10";
-    console.log("dari api id " + id);
-    console.log("dari api page " + page);
-    console.log("dari api token " + token);
+    // console.log("dari api id " + id);
+    // console.log("dari api page " + page);
+    // console.log("dari api token " + token);
     const respon = await axios.get(
       `${kebijakan}category/${id}/?limit=${page}`,
       {
