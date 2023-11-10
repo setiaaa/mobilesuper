@@ -220,6 +220,10 @@ import { DokumenCuti } from "../Cuti/DokumenCuti";
 import { getTokenValue } from "../../service/session";
 import { Semua } from "../Task Management/Dashboard/Semua";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
+import { PLetter } from "./Pencarian/PLetter";
+import { PTodo } from "./Pencarian/PTodo";
+import { PSecretary } from "./Pencarian/PSecretary";
+import { PDelegation } from "./Pencarian/PDelegation";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -937,6 +941,54 @@ export const TopsKeuanganKinerja = () => {
           component={IKU}
           options={{
             title: "IKU",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsPencarianKorespoondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName="PLetter"
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: "auto" },
+          tabBarGap: 30
+        }}
+      >
+        <Top.Screen
+          name="PLetter"
+          component={PLetter}
+          options={{
+            title: "Letter",
+          }}
+        />
+        <Top.Screen
+          name="PTodo"
+          component={PTodo}
+          options={{
+            title: "ToDo",
+          }}
+        />
+        <Top.Screen
+          name="PSecretary"
+          component={PSecretary}
+          options={{
+            title: "Secretary",
+          }}
+        />
+        <Top.Screen
+          name="PDelegation"
+          component={PDelegation}
+          options={{
+            title: "Delegation",
           }}
         />
       </Top.Navigator>

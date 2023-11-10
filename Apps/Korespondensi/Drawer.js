@@ -24,6 +24,7 @@ import DelegationList from "./List/DelegationList";
 import Dashboard from "./Dashboard/Dasboard";
 import TermOfUse from "./TermOfUse";
 import { Profile } from "./Profile";
+import { Pencarian } from "./Pencarian/Pencarian";
 import { Config } from "../../constants/config";
 import MyDispositionList from "./List/MyDispositionList";
 import ScanLogList from "./List/ScanLogList";
@@ -37,46 +38,52 @@ import { useNavigation } from '@react-navigation/native'
 
 const DrawerItemsData = [
   {
+    label: "Pencarian",
+    name: "Pencarian",
+    icon: "feature-search",
+    key: 1,
+  },
+  {
     label: "Beranda",
     name: "Dashboard",
     icon: "home",
-    key: 1,
+    key: 2,
   },
   {
     label: "Buat Surat",
     name: "",
     icon: "file-plus",
-    key: 2,
+    key: 3,
   },
   {
     label: "Surat Masuk",
     name: "Incoming",
     icon: "email",
-    key: 3,
+    key: 4,
   },
   {
     label: "Disposisi",
     name: "Disposition",
     icon: "chat-processing",
-    key: 4
+    key: 5
   },
   {
     label: "Surat Keluar",
     name: "Outgoing",
     icon: "email-send",
-    key: 5,
+    key: 6,
   },
   {
     label: "Arsip",
     name: "Submitted",
     icon: "file-multiple",
-    key: 6,
+    key: 7,
   },
   {
     label: "Alat",
     name: "",
     icon: "toolbox",
-    key: 7,
+    key: 8,
   },
 ];
 
@@ -222,7 +229,7 @@ const CustomDrawerContent = (props) => {
           </Text>
         ))}
       </View>
-      <Drawer.Section style={{ marginHorizontal: -5 }}>
+      {/* <Drawer.Section style={{ marginHorizontal: -5 }}>
         <Drawer.Item
           style={styles.drawerItem}
           label="Cari..."
@@ -234,7 +241,7 @@ const CustomDrawerContent = (props) => {
             props.navigation.navigate("SearchGlobalList");
           }}
         />
-      </Drawer.Section>
+      </Drawer.Section> */}
       {/* <Drawer.Section style={{ marginHorizontal: -5 }} showDivider={false}>
         <Drawer.Item
           style={styles.drawerItem}
@@ -539,6 +546,14 @@ function DrawerNavigator({ navigation }) {
           navigation: navigation,
         })}
       />
+      <DrawerNav.Screen
+        name="Pencarian"
+        component={Pencarian}
+        options={defaultOptions({
+          title: "Pencarian",
+          navigation: navigation,
+        })}
+      />
     </DrawerNav.Navigator>
   );
 }
@@ -567,6 +582,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   containerProfile: {
+    marginBottom: 20,
     // marginHorizontal: 24,
     alignItems: "center"
   },

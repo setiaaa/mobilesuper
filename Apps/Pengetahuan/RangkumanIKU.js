@@ -205,9 +205,12 @@ export const RangkumanIKU = () => {
     setSavedUnitKerja(selectedUnitKerja);
   };
 
+  const [page, setPage] = useState(10);
+
   useEffect(() => {
     const param = {
       token: token,
+      page: page,
       year: savedYear.value,
       quarter: savedQuarter.key,
       unitKerja: savedUnitKerja.value,
@@ -215,7 +218,16 @@ export const RangkumanIKU = () => {
     if (token !== "") {
       dispatch(getListPegawai(param));
     }
-  }, [token, savedYear, savedQuarter, savedUnitKerja]);
+  }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
+
+  const loadMore = () => {
+    if ((filterData.length % 10 === 0) && (savedYear.value || savedQuarter.value || savedUnitKerja.value)) {
+      if (filterData.length > page) {
+        setPage(page + 10);
+      }
+    }
+    console.log(page)
+  }
 
   useEffect(() => {
     const param = {
@@ -348,6 +360,7 @@ export const RangkumanIKU = () => {
   // const save = (uri) => {
   //   shareAsync(uri);
   // };
+  console.log(pegawai.lists)
   return (
     <>
       <View
@@ -831,6 +844,7 @@ export const RangkumanIKU = () => {
                   }
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}
+                  onEndReached={loadMore}
                 />
 
                 {/* {pegawai.lists.length !== 0

@@ -1370,11 +1370,12 @@ export const getListPegawai = createAsyncThunk(
     // console.log(data.quarter);
     // console.log(data.unitKerja);
     const respon = await axios.get(
-      `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
+      `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}&limit=${data.page}`,
       {
         headers: { Authorization: data.token },
       }
     );
+    console.log(data.page)
     return respon?.data.results;
   }
 );
