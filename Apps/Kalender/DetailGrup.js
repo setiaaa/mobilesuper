@@ -128,7 +128,7 @@ export const DetailGrup = () => {
     <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
-          <ScrollView>
+          <ScrollView style={{ paddingBottom: 100 }}>
             <View
               style={{
                 flexDirection: "row",
