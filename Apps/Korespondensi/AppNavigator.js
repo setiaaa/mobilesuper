@@ -148,45 +148,7 @@ import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 
 const Stack = createNativeStackNavigator();
 
-function AuthStack() {
-  const showBg = useSelector((state) => state.auth.showbg);
-  const { width, height } = useWindowDimensions();
-  return (
-    <>
-      <StatusBar
-        barStyle={showBg ? Config.statusbarAuth : Config.statusbarAuthenticated}
-        backgroundColor="transparent"
-        translucent
-      />
-      <Stack.Navigator>
-        {/* <Stack.Screen
-              name="Onboarding"
-              component={Onboarding}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{
-                headerShown: false,
-              }}
-            /> */}
-        <Stack.Screen
-          name="LoginToken"
-          component={LoginToken}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-      </Stack.Navigator>
-    </>
-  );
-}
-
-function AuthenticatedStack() {
+function AuthenticatedStack(route) {
   const profile = useSelector((state) => state.profile.profile);
   const deviceNIK = profile?.nik;
   const [deviceName, setDeviceName] = useState(null);
@@ -259,7 +221,15 @@ function AuthenticatedStack() {
           barStyle={Config.statusbarAuthenticated}
           backgroundColor={GlobalStyles.colors.secondary}
         />
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName={route.route}>
+          <Stack.Screen
+            name="LoginToken"
+            component={LoginToken}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
           <Stack.Screen
             name="Main"
             component={Main}
@@ -1050,9 +1020,8 @@ function AppNavigator() {
   const app_version = Config.app_version;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [isToken, setIsToken] = useState(true);
   const { token } = useSelector((state) => state.login);
-
+  const [route,setRoute] = useState("");
   useEffect(() => {
     //checkversion
     // if (Platform.OS == "android") {
@@ -1060,11 +1029,15 @@ function AppNavigator() {
     // } else if (Platform.OS == "ios") {
     //   checkVersionIos();
     // }
-    getTokenValue().then((val) => {
-      setIsToken(val);
+     getTokenValue().then((val) => {
+      if (val === null) {
+        setRoute("LoginToken")
+      } else {
+        setRoute("Main");
+      }
       setIsLoading(false);
     });
-  }, [token]);
+  }, [route]);
 
   async function getToken() {
     setIsLoading(true);
@@ -1162,9 +1135,8 @@ function AppNavigator() {
       <Host>
         {/* awas lupa */}
         <NavigationContainer>
-          {/* {!isLoading && !isAuthenticated && <AuthStack />} */}
-          {!isLoading && isToken == null && <AuthStack />}
-          {!isLoading && isToken != null && <AuthenticatedStack />}
+          {/* {!isLoading && isToken == null && <AuthStack />} */}
+          {!isLoading && <AuthenticatedStack route={route} />}
         </NavigationContainer>
         {loadingOverlay}
       </Host>

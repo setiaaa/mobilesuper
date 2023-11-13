@@ -329,6 +329,10 @@ export const Profile = () => {
                     onPress: () => {
                       removeTokenValue();
                       dispatch(setLogout());
+                      navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'LoginToken' }] 
+                      })
                     },
                   },
                 ]
