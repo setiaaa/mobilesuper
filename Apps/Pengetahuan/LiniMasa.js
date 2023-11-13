@@ -52,7 +52,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    // console.log(toggleComment)
+    console.log(listData)
   };
 
   const handleClickBalas = () => {
@@ -202,7 +202,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                         >
                           <View>
                             <Image
-                              source={{ uri: listData.creator_avatar }}
+                              source={{ uri: listKomen.creator_avatar }}
                               style={{
                                 width: 30,
                                 height: 30,
@@ -980,6 +980,7 @@ const CardLiniMasa = ({ item, token }) => {
           <BottomSheetView onLayout={handleContentLayout} style={{}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "height" : "height"}
+              keyboardVerticalOffset={parentId !== "" ? 120: 80}
             >
               <View
                 style={{
@@ -1029,7 +1030,7 @@ const CardLiniMasa = ({ item, token }) => {
                     setToggleComment={setToggleComment}
                   />
                 )}
-                style={{ height: 400 }}
+                style={{ height: 550 }}
               />
 
               <View style={{ justifyContent: "flex-end" }}>
@@ -1073,12 +1074,11 @@ const CardLiniMasa = ({ item, token }) => {
                     flexDirection: "row",
                     backgroundColor: COLORS.ExtraDivinder,
                     marginTop: 10,
-                    marginBottom: 10,
                   }}
                 >
                   <BottomSheetTextInput
                     numberOfLines={1}
-                    maxLength={40}
+                    maxLength={30}
                     placeholder="Ketik Komentar Disini"
                     ref={inputRef}
                     style={{ padding: 10 }}
@@ -1090,6 +1090,7 @@ const CardLiniMasa = ({ item, token }) => {
                       alignItems: "flex-end",
                       flex: 1,
                       marginRight: 10,
+                      marginLeft:50,
                       justifyContent: "center",
                     }}
                   >

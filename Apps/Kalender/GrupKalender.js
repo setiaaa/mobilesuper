@@ -307,6 +307,8 @@ export const GrupKalender = () => {
                               gap: 10,
                               alignItems: "center",
                               justifyContent: "space-between",
+                              marginBottom: 20
+                              
                             }}
                           >
                             <TouchableOpacity
