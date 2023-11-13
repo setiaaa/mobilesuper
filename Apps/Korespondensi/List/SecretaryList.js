@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { Button, Chip, IconButton, Searchbar } from "react-native-paper";
@@ -225,7 +224,7 @@ function SecretaryList() {
           getSearch={filter}
         /> */}
         <Searchbar
-          placeholder="Search"
+          placeholder="Cari..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           onIconPress={filter}
@@ -302,7 +301,7 @@ function SecretaryList() {
       </View>
 
       <BottomSheetModalProvider>
-        <SafeAreaView>
+        < >
           <View>
             <BottomSheetModal
               name="filter"
@@ -418,7 +417,7 @@ function SecretaryList() {
               </View>
             </BottomSheetModal>
           </View>
-        </SafeAreaView>
+        </ >
       </BottomSheetModalProvider>
     </>
   );

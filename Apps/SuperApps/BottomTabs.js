@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { COLORS, FONTSIZE } from '../../config/SuperAppps';
-import { SafeAreaView } from 'react-native';
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { } from 'react-native';
 import { Modal } from 'react-native';
 
 function MyTabBar({ props, navigation }) {
@@ -13,7 +13,7 @@ function MyTabBar({ props, navigation }) {
 
     return (
         <BottomSheetModalProvider>
-            <SafeAreaView>
+            < >
                 <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
                     <TouchableOpacity
                         key={1}
@@ -292,33 +292,31 @@ function MyTabBar({ props, navigation }) {
                 >
                     <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
                     <View style={{ alignItems: 'center', flex: 1 }}>
-                        <View style={{ backgroundColor: COLORS.white, width: '90%', height: '35%', borderRadius: 10, marginTop: '70%' }}>
+                        <View style={{ backgroundColor: COLORS.white, width: '90%', height: '40%', borderRadius: 10, marginTop: '70%' }}>
+                            <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: "row", justifyContent: "space-between", padding: 10, borderBottomWidth: 2, borderBottomColor: COLORS.grey }}>
+                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
+                                <TouchableOpacity
+                                    style={{}}
+                                    onPress={() => {
+                                        setVisibleModal(false)
+                                    }}
+                                >
+                                    <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                                </TouchableOpacity>
+                            </View>
 
-                            <TouchableOpacity
-                                style={{ alignItems: 'flex-end', marginHorizontal: 20, marginTop: 20 }}
-                                onPress={() => {
-                                    setVisibleModal(false)
-                                }}
-                            >
-                                <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
-                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 20, alignItems: 'center' }}>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 30 }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
-                                        <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                                            <Ionicons name='create-outline' size={24} color={COLORS.primary} />
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('Keuangan')
+                                        setVisibleModal(false)
+                                    }}>
+                                        <View style={[styles.cardApps, { backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                                            <Image source={require('../../assets/superApp/ikon-keuangan.png')} />
                                         </View>
                                     </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Perencanaan</Text>
-                                </View>
-                                <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
-                                        <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                                            <Ionicons name='document-outline' size={24} color={COLORS.primary} />
-                                        </View>
-                                    </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Keuangan</Text>
+                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, height: 40 }}>Keuangan & Kinerja</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                                     <TouchableOpacity onPress={() => {
@@ -326,30 +324,34 @@ function MyTabBar({ props, navigation }) {
                                         setVisibleModal(false)
                                     }
                                     }>
-                                        <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                                            <Ionicons name='people-circle-outline' size={24} color={COLORS.primary} />
+                                        <View style={[styles.cardApps, { backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                                            <Image source={require('../../assets/superApp/ikon-kepagawaian.png')} />
                                         </View>
                                     </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kepegawaian</Text>
+                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, height: 40 }}>Kepegawaian</Text>
+                                </View>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
+                                    <TouchableOpacity onPress={() => {
+                                        navigation.navigate('ProduksiBudidaya')
+                                        setVisibleModal(false)
+                                    }}>
+                                        <View style={[styles.cardApps, { backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                                            <Image source={require('../../assets/superApp/ikon-budidaya.png')} />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontSize: FONTSIZE.H4, height: 40 }}>Produksi{'\n'}Budidaya</Text>
                                 </View>
                             </View>
 
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 10, marginTop: 30, marginHorizontal: 15, alignItems: 'flex-start' }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
                                     <TouchableOpacity onPress={() => {
-                                        navigation.navigate('ProduksiBudidaya')
+                                        navigation.navigate('Penangkapan')
                                         setVisibleModal(false)
-                                    }}>
-                                        <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                                            <Ionicons name='list-outline' size={24} color={COLORS.primary} />
-                                        </View>
-                                    </TouchableOpacity>
-                                    <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontSize: FONTSIZE.H4 }}>Produksi{'\n'}Budidaya</Text>
-                                </View>
-                                <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('')}>
-                                        <View style={[styles.cardApps, { backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                                            <Ionicons name='list-outline' size={24} color={COLORS.primary} />
+                                    }
+                                    }>
+                                        <View style={[styles.cardApps, { backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+                                            <Image source={require('../../assets/superApp/ikon-penangkapan.png')} />
                                         </View>
                                     </TouchableOpacity>
                                     <Text style={{ marginTop: 10, justifyContent: 'center', textAlign: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Produk Penangkapan</Text>
@@ -387,7 +389,7 @@ function MyTabBar({ props, navigation }) {
                         </View>
                     </TouchableOpacity> */}
                 </Modal>
-            </SafeAreaView>
+            </ >
         </BottomSheetModalProvider >
     )
 }

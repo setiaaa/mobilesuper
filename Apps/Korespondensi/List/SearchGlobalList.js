@@ -6,7 +6,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { Button, Chip, IconButton, Searchbar } from "react-native-paper";
@@ -264,7 +263,7 @@ function SearchGlobalList() {
           getSearch={getSearchGlobal}
         /> */}
         <Searchbar
-          placeholder="Search"
+          placeholder="Cari..."
           onChangeText={setSearchQuery}
           value={searchQuery}
           onIconPress={() => getSearchGlobal(1)}
@@ -357,7 +356,7 @@ function SearchGlobalList() {
         />
       </View>
       <BottomSheetModalProvider>
-        <SafeAreaView>
+        < >
           <View>
             <BottomSheetModal
               name="filter"
@@ -475,7 +474,7 @@ function SearchGlobalList() {
               </View>
             </BottomSheetModal>
           </View>
-        </SafeAreaView>
+        </ >
       </BottomSheetModalProvider>
     </>
   );

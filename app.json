@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "KKP SuperApps",
-    "slug": "KKP SuperApps",
+    "slug": "superapps-kkp",
     "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/logokkp.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/AvatarA.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -33,14 +33,15 @@
     },
     "extra": {
       "eas": {
-        "projectId": "67a24de0-ba05-4212-b877-20e678c71fec"
+        "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
       }
     },
     "plugins": [
       [
         "expo-document-picker",
+        "expo-barcode-scanner",
         {
-          "iCloudContainerEnvironment": "Production"
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
         }
       ]
     ]

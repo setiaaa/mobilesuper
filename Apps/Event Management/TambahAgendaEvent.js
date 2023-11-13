@@ -21,7 +21,7 @@ import { Search } from '../../components/Search';
 import { FlatList } from 'react-native';
 import DatePicker from 'react-native-modern-datepicker'
 import moment from 'moment';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { } from 'react-native-safe-area-context';
 import { Dropdown } from '../../components/DropDown';
 import * as DocumentPicker from 'expo-document-picker';
 
@@ -129,7 +129,7 @@ export const TambahAgendaEvent = () => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView>
+            < >
                 <BottomSheetModalProvider>
                     <ScrollView>
                         <Pressable onPress={() => richText.current?.dismissKeyboard()}>
@@ -697,7 +697,7 @@ export const TambahAgendaEvent = () => {
                         </Modal>
                     )}
                 </BottomSheetModalProvider>
-            </SafeAreaView>
+            </ >
         </GestureHandlerRootView>
     )
 }

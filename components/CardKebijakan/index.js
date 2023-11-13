@@ -1,50 +1,76 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export const CardKebijakan = ({ subjek, bentuk, id_peraturan, item, route, nomor, tahun }) => {
-    const navigation = useNavigation()
-    const title = subjek
-    return (
-        <View key={id_peraturan}>
-            <TouchableOpacity onPress={() => navigation.navigate('DetailDashboard', {
-                data: item
-            })}>
-                <View style={styles.card}>
-                    <Text numberOfLines={3} style={styles.nama}>{title}</Text>
-                    <Text style={styles.deskripsi}>No. {nomor} / {tahun}</Text>
-                </View>
-            </TouchableOpacity>
+export const CardKebijakan = ({
+  subjek,
+  bentuk,
+  id_peraturan,
+  item,
+  route,
+  nomor,
+  tahun,
+}) => {
+  const navigation = useNavigation();
+  const title = subjek;
+  return (
+    <View key={id_peraturan}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("DetailDashboard", {
+            data: item,
+          })
+        }
+      >
+        <View style={styles.card}>
+          <Text numberOfLines={3} style={styles.nama}>
+            {title}
+          </Text>
+          <Text style={styles.deskripsi}>
+            No. {nomor} / {tahun}
+          </Text>
         </View>
-    )
-}
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    nama: {
-        fontSize: 16,
-        fontWeight: '600',
-        textAlign: 'left',
-        paddingLeft: 10,
-        paddingTop: 10
-    },
-    deskripsi: {
-        color: 'grey',
-        fontSize: 15,
-        marginTop: 10,
-        fontWeight: '600',
-        paddingLeft: 10,
-    },
-    tanggal: {
-        fontSize: 14,
-        color: 'grey',
-        marginTop: 10
-    },
-    card: {
-        backgroundColor: "#FFFFFF",
-        flex: 1,
-        width: '100%',
-        height: 110,
-        borderBottomWidth: 1,
-        borderBottomColor: '#959CA9',
-    },
-})
+  nama: {
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "left",
+    // paddingHorizontal:20,
+    paddingTop: 10,
+  },
+  deskripsi: {
+    color: "grey",
+    fontSize: 15,
+    marginTop: 10,
+    fontWeight: "600",
+    // paddingHorizontal:20,
+  },
+  tanggal: {
+    fontSize: 14,
+    color: "grey",
+    marginTop: 10,
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    flex: 1,
+    width: "90%",
+    marginLeft: 20,
+    height: 110,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 8,
+    //shadow ios
+    shadowOffset: { width: -2, height: 4 },
+    shadowColor: "#171717",
+    shadowOpacity: 0.2,
+    //shadow android
+    elevation: 2,
+    alignContent: "center",
+    marginBottom: 10,
+  },
+});

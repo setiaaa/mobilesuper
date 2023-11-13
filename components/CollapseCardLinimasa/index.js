@@ -44,9 +44,9 @@ export const CollapseCardLinimasa = ({ linimasa }) => {
                     </TouchableOpacity>
                 </CollapseHeader>
                 <CollapseBody>
-                    {linimasa?.map((data) => {
+                    {linimasa?.map((data, index) => {
                         return (
-                            <View style={[styles.cardCollapse, { justifyContent: 'center', alignItems: 'center' }]}>
+                            <View key={index} style={[styles.cardCollapse, { justifyContent: 'center', alignItems: 'center' }]}>
                                 <View style={{ flexDirection: 'row', marginVertical: 20, marginLeft: 30 }}>
                                     <Image source={data.image} style={{ width: 80, height: 80 }} />
                                     <View style={{ marginLeft: 10 }}>

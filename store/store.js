@@ -18,6 +18,10 @@ import PengetahuanReducer from "./Pengetahuan";
 import DigitalSignReducer from "./DigitalSign";
 import PegawaiReducer from "./Pegawai";
 import EventReducer from "./Event";
+import AddressbookKKP from "./AddressbookKKP";
+import Satker from "./Satker";
+import LoginAuth from "./LoginAuth";
+import Cuti from "./Cuti";
 
 export const store = configureStore({
   reducer: {
@@ -38,6 +42,10 @@ export const store = configureStore({
     pengetahuan: PengetahuanReducer,
     digitalsign: DigitalSignReducer,
     Pegawai: PegawaiReducer,
-    event: EventReducer
+    event: EventReducer,
+    addressBookKKP: AddressbookKKP,
+    satker: Satker,
+    login: LoginAuth,
+    cuti: Cuti
   },
 });

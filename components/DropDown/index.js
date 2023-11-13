@@ -1,14 +1,31 @@
-import React from 'react'
-import { Text } from 'react-native'
+import React, { useEffect } from 'react'
+import { ScrollView, Text } from 'react-native'
 import { View } from 'react-native'
 import { COLORS } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
+import { Search } from '../Search';
 
 
-export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWidth, borderwidthDrop, borderColorDrop, borderWidthValue, borderColorValue, heightValue }) => {
+export const Dropdown = ({
+    data,
+    selected,
+    setSelected,
+    placeHolder,
+    borderColor,
+    borderWidth,
+    borderwidthDrop,
+    borderColorDrop,
+    borderWidthValue,
+    borderColorValue,
+    heightValue,
+    handleClick,
+    backgroundColor,
+    textColor,
+    search
+}) => {
     const [press, setPress] = useState(0)
     const handlePress = () => {
         if (press === 0) {
@@ -24,20 +41,55 @@ export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWi
         setPress(0)
         setSelected(item)
         setDisplayData(item.value)
+        setCari('')
+        if (handleClick) {
+            handleClick(item)
+            setFilterData(data)
+        }
     }
+
+    useEffect(() => {
+        if (selected !== undefined) {
+            setPressData(selected.key)
+            setDisplayData(selected.value)
+        }
+    }, [selected])
+
+    const [cari, setCari] = useState('')
+    const [filterData, setFilterData] = useState([])
+
+    const filter = (event) => {
+        setCari(event)
+    }
+
+    useEffect(() => {
+        setFilterData(data)
+    }, [data])
+
+    useEffect(() => {
+        if (cari !== '') {
+            const value = data.filter((item) => {
+                return item.value.toLowerCase().includes(cari.toLowerCase());
+            })
+            setFilterData(value)
+        } else {
+            setFilterData(data)
+        }
+    }, [cari])
+
     return (
         <View>
             {press === 0 ? (
-                <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8, borderColor: borderColor, borderWidth: borderWidth }}>
+                <View style={{ backgroundColor: backgroundColor, width: '100%', height: 43, borderRadius: 8, borderColor: borderColor, borderWidth: borderWidth }}>
                     <TouchableOpacity onPress={handlePress}>
                         <Animated.View
                             entering={FadeInUp}
                             exiting={FadeOutUp}
                         >
                             <View style={{ marginLeft: 20, flexDirection: 'row', marginTop: 15 }}>
-                                <Text style={{ color: COLORS.lighter }}>{displayData !== '' ? displayData : placeHolder}</Text>
+                                <Text style={{ color: textColor, width: '70%' }}>{displayData !== '' ? displayData : placeHolder}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                                    <Ionicons name='chevron-down-outline' size={14} color={COLORS.lighter} />
+                                    <Ionicons name='chevron-down-outline' size={14} color={textColor} />
                                 </View>
                             </View>
                         </Animated.View>
@@ -49,29 +101,47 @@ export const Dropdown = ({ data, setSelected, placeHolder, borderColor, borderWi
                     exiting={FadeOutUp}
                 >
                     <View>
-                        <View style={{ backgroundColor: COLORS.white, width: '100%', height: 43, borderRadius: 8, borderWidth: borderwidthDrop, borderColor: borderColorDrop }}>
+                        <View style={{ backgroundColor: backgroundColor, width: '100%', height: 43, borderRadius: 8, borderWidth: borderwidthDrop, borderColor: borderColorDrop }}>
                             <TouchableOpacity onPress={handlePress} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row' }}>
-                                <Text style={{ color: COLORS.lighter }}>{displayData !== '' ? displayData : placeHolder}</Text>
+                                <Text style={{ color: textColor }}>{displayData !== '' ? displayData : placeHolder}</Text>
                                 <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 20 }}>
-                                    <Ionicons name='chevron-up-outline' size={14} color={COLORS.lighter} />
+                                    <Ionicons name='chevron-up-outline' size={14} color={textColor} />
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 15, paddingVertical: 10, borderWidth: borderWidthValue, borderColor: borderColorValue, height: heightValue ? heightValue : 'auto' }}>
-                            {data.map(kategori => {
-                                return (
-                                    <TouchableOpacity onPress={() => handlePressData(kategori)} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row', gap: 10, marginVertical: 5 }}>
-                                        {pressData !== kategori.key ? (
-                                            <Ionicons name='radio-button-off' color={COLORS.primary} size={18} />
-                                        ) : (
-                                            <Ionicons name='radio-button-on' color={COLORS.primary} size={18} />
-                                        )}
-                                        <Text style={{ color: COLORS.lighter }}>{kategori.value}</Text>
-                                    </TouchableOpacity>
+
+                        {search === true ? (
+                            <View style={{ marginTop: 10 }}>
+                                <Search
+                                    placeholder={'Cari.....'}
+                                    onSearch={filter}
+                                />
+                            </View>
+                        ) : (
+                            null
+                        )}
+                        <ScrollView style={{ backgroundColor: COLORS.white, width: '100%', borderRadius: 8, marginTop: 10, paddingVertical: 10, borderWidth: data.length > 0 ? borderWidthValue : 0, borderColor: data.length > 0 ? borderColorValue : null, height: heightValue ? heightValue : 'auto' }}>
+                            {
+                                filterData.length > 0 ? (
+                                    filterData.map(kategori => {
+                                        return (
+                                            <TouchableOpacity onPress={() => handlePressData(kategori)} style={{ alignItems: 'center', flex: 1, marginLeft: 20, flexDirection: 'row', gap: 10, marginVertical: 5 }}>
+                                                {pressData !== kategori.key ? (
+                                                    <Ionicons name='radio-button-off' color={COLORS.primary} size={18} />
+                                                ) : (
+                                                    <Ionicons name='radio-button-on' color={COLORS.primary} size={18} />
+                                                )}
+                                                <Text style={{ width: '90%' }}>{kategori.value}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                ) : (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text>Tidak Ada Data</Text>
+                                    </View>
                                 )
                             }
-                            )}
-                        </View>
+                        </ScrollView>
                     </View>
                 </Animated.View>
             )}

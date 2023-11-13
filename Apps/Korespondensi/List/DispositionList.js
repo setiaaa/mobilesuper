@@ -7,7 +7,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
@@ -339,106 +338,104 @@ function DispositionList({ route }) {
       </View>
 
       <BottomSheetModalProvider>
-        <SafeAreaView>
-          <View>
-            <BottomSheetModal
-              name="filter"
-              ref={bottomSheetModalRef}
-              index={1}
-              snapPoints={snapPoints}
-              keyboardBehavior={
-                Platform?.OS == "android" ? "fillParent" : "interactive"
-              }
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-            >
-              <View style={styles.contentContainer}>
-                <View style={[styles.containerRow]}>
-                  <Text style={styles.titleFilter}>Filter</Text>
-                  <TouchableOpacity onPress={refresh}>
-                    <Text style={styles.titleReset}>Reset</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.bottomsheetContent}>
-                  <Text style={styles.bottomsheetLabel}>Subject</Text>
-                  <BottomSheetTextInput
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                    style={styles.bottomsheetInput}
-                  />
-                </View>
-                <View style={styles.bottomsheetContent}>
-                  <Text style={styles.bottomsheetLabel}>Tanggal Mulai</Text>
-                  <Button
-                    mode="outlined"
-                    textColor={GlobalStyles.colors.tertiery80}
-                    onPress={showStartDate}
-                  >
-                    {startDate
-                      ? moment(startDate).format("DD/MM/YYYY")
-                      : "Pilih Tanggal Mulai"}
-                  </Button>
-                  <DateTimePickerModal
-                    isVisible={isStartDateVisible}
-                    mode="date"
-                    display={Platform.OS == "android" ? "inline" : "spinner"}
-                    style={{ width: "100%", height: 300 }}
-                    onConfirm={handleConfirmStart}
-                    onCancel={hideStartDate}
-                    maximumDate={new Date()}
-                  />
-                </View>
-                <View style={styles.bottomsheetContent}>
-                  <Text style={styles.bottomsheetLabel}>Tanggal Selesai</Text>
-                  <Button
-                    mode="outlined"
-                    textColor="black"
-                    onPress={showEndDate}
-                  >
-                    {endDate
-                      ? moment(endDate).format("DD/MM/YYYY")
-                      : "Pilih Tanggal Selesai"}
-                  </Button>
-                  <DateTimePickerModal
-                    isVisible={isEndDateVisible}
-                    mode="date"
-                    display={Platform.OS == "android" ? "inline" : "spinner"}
-                    style={{ width: "100%", height: 300 }}
-                    onConfirm={handleConfirmEnd}
-                    onCancel={hideEndDate}
-                    minimumDate={startDate ? startDate : new Date()}
-                    maximumDate={new Date()}
-                  />
-                </View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    mode="contained"
-                    style={styles.button}
-                    onPress={() => {
-                      setIsSearchQuery(searchQuery);
-                      if (!isSearchFilter) {
-                        setList([]);
-                      }
-                      setIsSearchFilter(true);
-                      bottomSheetModalRef.current?.dismiss();
-                    }}
-                  >
-                    <Text style={styles.buttonText}>Apply</Text>
-                  </Button>
-                  <Button
-                    mode="outline"
-                    textColor={GlobalStyles.colors.tertiery80}
-                    onPress={() => {
-                      bottomSheetModalRef.current?.dismiss();
-                    }}
-                  >
-                    <Text style={styles.buttonText}>Cancel</Text>
-                  </Button>
-                </View>
+        <View>
+          <BottomSheetModal
+            name="filter"
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            keyboardBehavior={
+              Platform?.OS == "android" ? "fillParent" : "interactive"
+            }
+            keyboardBlurBehavior="restore"
+            android_keyboardInputMode="adjust"
+          >
+            <View style={styles.contentContainer}>
+              <View style={[styles.containerRow]}>
+                <Text style={styles.titleFilter}>Filter</Text>
+                <TouchableOpacity onPress={refresh}>
+                  <Text style={styles.titleReset}>Reset</Text>
+                </TouchableOpacity>
               </View>
-            </BottomSheetModal>
-          </View>
-        </SafeAreaView>
+              <View style={styles.bottomsheetContent}>
+                <Text style={styles.bottomsheetLabel}>Subject</Text>
+                <BottomSheetTextInput
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  style={styles.bottomsheetInput}
+                />
+              </View>
+              <View style={styles.bottomsheetContent}>
+                <Text style={styles.bottomsheetLabel}>Tanggal Mulai</Text>
+                <Button
+                  mode="outlined"
+                  textColor={GlobalStyles.colors.tertiery80}
+                  onPress={showStartDate}
+                >
+                  {startDate
+                    ? moment(startDate).format("DD/MM/YYYY")
+                    : "Pilih Tanggal Mulai"}
+                </Button>
+                <DateTimePickerModal
+                  isVisible={isStartDateVisible}
+                  mode="date"
+                  display={Platform.OS == "android" ? "inline" : "spinner"}
+                  style={{ width: "100%", height: 300 }}
+                  onConfirm={handleConfirmStart}
+                  onCancel={hideStartDate}
+                  maximumDate={new Date()}
+                />
+              </View>
+              <View style={styles.bottomsheetContent}>
+                <Text style={styles.bottomsheetLabel}>Tanggal Selesai</Text>
+                <Button
+                  mode="outlined"
+                  textColor="black"
+                  onPress={showEndDate}
+                >
+                  {endDate
+                    ? moment(endDate).format("DD/MM/YYYY")
+                    : "Pilih Tanggal Selesai"}
+                </Button>
+                <DateTimePickerModal
+                  isVisible={isEndDateVisible}
+                  mode="date"
+                  display={Platform.OS == "android" ? "inline" : "spinner"}
+                  style={{ width: "100%", height: 300 }}
+                  onConfirm={handleConfirmEnd}
+                  onCancel={hideEndDate}
+                  minimumDate={startDate ? startDate : new Date()}
+                  maximumDate={new Date()}
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <Button
+                  mode="contained"
+                  style={styles.button}
+                  onPress={() => {
+                    setIsSearchQuery(searchQuery);
+                    if (!isSearchFilter) {
+                      setList([]);
+                    }
+                    setIsSearchFilter(true);
+                    bottomSheetModalRef.current?.dismiss();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Apply</Text>
+                </Button>
+                <Button
+                  mode="outline"
+                  textColor={GlobalStyles.colors.tertiery80}
+                  onPress={() => {
+                    bottomSheetModalRef.current?.dismiss();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Cancel</Text>
+                </Button>
+              </View>
+            </View>
+          </BottomSheetModal>
+        </View>
       </BottomSheetModalProvider>
     </>
   );

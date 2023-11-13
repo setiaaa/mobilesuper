@@ -53,6 +53,7 @@ export const CardDokumenTask = ({ taskDetail }) => {
                     size={item.size}
                 />
                 }
+                scrollEnabled={false}
                 numColumns={2}
                 keyExtractor={item => "#" + item.id}
             />

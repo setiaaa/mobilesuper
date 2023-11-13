@@ -1,41 +1,21 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import { COLORS } from '../../config/SuperAppps';
+import { COLORS, PADDING } from '../../config/SuperAppps';
 import { StyleSheet } from 'react-native';
 import { TopsProduksiBudidaya } from '../Korespondensi/AppNavigator';
 import { useDispatch } from 'react-redux';
 import { setTeknologiList } from '../../store/Dashboard';
-
-const teknologi = [
-    {
-        image: require('../../assets/superApp/teknologi.png'),
-        imagedetail: require('../../assets/superApp/teknologi2.png'),
-        deskripsi: 'Larangan Pengeluaran Ikan Arwana dan Ikan Botia'
-    },
-    {
-        image: require('../../assets/superApp/teknologi.png'),
-        deskripsi: 'Pengelolaan Kesehatan Ikan dan Lingkungan Tambak Budidaya Udang Intensif'
-    },
-    {
-        image: require('../../assets/superApp/teknologi.png'),
-        imagedetail: require('../../assets/superApp/teknologi2.png'),
-        deskripsi: 'Penyakit Undang'
-    },
-]
+import { useNavigation } from '@react-navigation/native';
 
 
 export const ProduksiBudidaya = () => {
-    const dispatch = useDispatch()
+    const navigation = useNavigation()
 
-    useEffect(() => {
-        dispatch(setTeknologiList(teknologi))
-    }, []);
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: COLORS.primary, height: '10%', flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <View style={[styles.backIcon, { justifyContent: 'center', alignItems: 'center', marginTop: 25, marginLeft: 20 }]}>
@@ -47,10 +27,10 @@ export const ProduksiBudidaya = () => {
                 </View>
             </View>
 
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, }}>
                 <TopsProduksiBudidaya />
             </View>
-        </SafeAreaView>
+        </View >
     )
 }
 const styles = StyleSheet.create({

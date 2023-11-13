@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     card: {
-        backgroundColor: "#FFF",
+        backgroundColor: "grey",
         flex: 1,
         width: '95%',
         height: '90%',
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 15,
         borderColor: '#959CA9',
-        marginLeft: 10
     },
     status: {
         marginLeft: 10,

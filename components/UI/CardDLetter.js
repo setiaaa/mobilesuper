@@ -3,6 +3,8 @@ import { Avatar, Card } from "react-native-paper";
 import { Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { useDispatch } from "react-redux";
+import { COLORS } from "../../config/SuperAppps";
+import { View } from "react-native";
 
 function CardDLetter({ data, icon, navigation }) {
   const dispatch = useDispatch();
@@ -21,22 +23,23 @@ function CardDLetter({ data, icon, navigation }) {
       }}
     >
       <Card.Title
+        style={styles.cardTitle}
         title={
           data.type == "onprogress"
-            ? "Need Follow Up"
+            ? "Surat Perlu Di Proses"
             : data.type == "agenda_in"
-            ? "Incoming Letter"
+            ? "Surat Masuk"
             : data.type == "agenda_disposition"
-            ? "Disposition"
+            ? "Disposisi"
             : ""
         }
         left={(props) => (
-          <Avatar.Icon
-            {...props}
-            icon={icon.icon}
-            color={GlobalStyles.colors.textWhite}
-            style={avatarIcon}
-          />
+            <Avatar.Icon
+              {...props}
+              icon={icon.icon}
+              color={COLORS.white}
+              style={avatarIcon}
+            />
         )}
         right={() => <Text style={styles.counterText}>{data.value}</Text>}
       />
@@ -48,12 +51,19 @@ export default CardDLetter;
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 16,
+    borderRadius: 10,
     marginTop: 16,
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
     backgroundColor: GlobalStyles.colors.textWhite,
+    width: "98%",
+    alignSelf: "center",
   },
-  avatarIcon: { backgroundColor: GlobalStyles.colors.primary },
+  cardTitle: {
+    gap: 20,
+  },
+  avatarIcon: { 
+    backgroundColor: GlobalStyles.colors.primary,
+  },
   counterText: {
     fontSize: GlobalStyles.font.hd4,
     padding: 15,

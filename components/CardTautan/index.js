@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Modal, StyleSheet, TouchableOpacity } from 'react-native'
+import { Image, Linking, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 import { View } from 'react-native'
 import { Text } from 'react-native'
 import { COLORS, FONTSIZE } from '../../config/SuperAppps'
@@ -13,40 +13,50 @@ export const CardTautan = ({ setModalVisible }) => {
         <View style={styles.card}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 <View style={{ flexDirection: 'row', gap: 10, }}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/Tp1.png')} style={{ width: 48, height: 48 }} />
-                        <Text style={{ fontSize: FONTSIZE.H4 }}>Semar</Text>
-                    </View>
+                    <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}
+                        onPress={() => {
+                            Linking.openURL('https://halo-bupbj.com/')
+                        }}
+                    >
+                        <Image source={require('../../assets/superApp/BUPBJ.png')} style={{ width: 48, height: 48 }} />
+                        <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
+                    </TouchableOpacity>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/Tp2.png')} style={{ width: 48, height: 48 }} />
-                        <Text style={{ fontSize: FONTSIZE.H4 }}>Sistolik</Text>
-                    </View>
-
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/Tp3.png')} style={{ width: 48, height: 48 }} />
-                        <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Bus Jemputan</Text>
-                    </View>
-
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                    <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}
+                        onPress={() => {
+                            Linking.openURL('https://www.lapor.go.id/')
+                        }}
+                    >
+                        <Image source={require('../../assets/superApp/lapor.png')} style={{ width: 48, height: 48 }} />
                         <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Lapor.go.id</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                    <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}
+                        onPress={() => {
+                            Linking.openURL('https://wbs.kkp.go.id/registration')
+                        }}
+                    >
+                        <Image source={require('../../assets/superApp/wbs.png')} style={{ width: 48, height: 48 }} />
                         <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>WBS KKP</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                    <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}
+                        onPress={() => {
+                            Linking.openURL('https://sidak.kkp.go.id/login')
+                        }}
+                    >
+                        <Image source={require('../../assets/superApp/sidak.png')} style={{ width: 48, height: 48 }} />
                         <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>Sidak</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />
+                    <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}
+                        onPress={() => {
+                            Linking.openURL('https://jdih.kkp.go.id/')
+                        }}
+                    >
+                        <Image source={require('../../assets/superApp/JDIH.png')} style={{ width: 48, height: 48 }} />
                         <Text style={{ textAlign: 'center', fontSize: FONTSIZE.H4 }}>JDIH</Text>
-                    </View>
+                    </TouchableOpacity>
 
                     <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => setModalVisible(true)}>
                         <Image source={require('../../assets/superApp/white.png')} style={{ width: 48, height: 48 }} />

@@ -61,21 +61,103 @@ export const CollapseCardBiodata = ({ profile }) => {
                         </View>
 
                         <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Karpeg/Karis-Karsu/NPWP</Text>
+                            <Text>:</Text>
+                            {profile.Karpeg == null ? (
+                                <Text>-</Text>
+                            ) : (
+                                <Text>{profile.Karpeg}</Text>
+                            )}
+                            <Text>/</Text>
+                            {profile.Karis == null ? (
+                                <Text>-</Text>
+                            ) : (
+                                <Text>{profile.Karis}</Text>
+                            )}
+                            <Text>/</Text>
+                            {profile.npwp === "" ? (
+                                <Text>-</Text>
+                            ) : (
+                                <Text>{profile.npwp}</Text>
+                            )}
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Tempat/Tanggal lahir</Text>
+                            <Text>:</Text>
+                            <Text>{profile.place_birth}/{profile.date_birth}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Telepon Seluler</Text>
+                            <Text>:</Text>
+                            <Text>{profile.mobile}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>No KTP</Text>
+                            <Text>:</Text>
+                            <Text>{profile.ktp}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
                             <Text style={{ width: 100 }}>Email KKP</Text>
                             <Text>:</Text>
                             <Text>{profile.email}</Text>
                         </View>
 
                         <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Satker</Text>
+                            <Text style={{ width: 100 }}>Email Lain</Text>
                             <Text>:</Text>
-                            <Text style={{ width: 216 }}>{profile.unit}</Text>
+                            <Text>{profile.email_alt}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Pendidikan Terakhir</Text>
+                            <Text>:</Text>
+                            <Text>{profile.pendidikan}</Text>
                         </View>
 
                         <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
                             <Text style={{ width: 100 }}>Unit Kerja</Text>
                             <Text>:</Text>
-                            <Text style={{ width: 216 }}>{profile.unit}</Text>
+                            <Text style={{ width: 216 }}>{profile.satuan_kerja_nama}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Satker</Text>
+                            <Text>:</Text>
+                            <Text style={{ width: 216 }}>{profile.unit_kerja}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Pangkat</Text>
+                            <Text>:</Text>
+                            {profile.pangkat == null ? (
+                                <Text>-</Text>
+                            ) : (
+                                <Text>{profile.pangkat}</Text>
+                            )}
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Golongan</Text>
+                            <Text>:</Text>
+                            {profile.golongan == null ? (
+                                <Text>-</Text>
+                            ) : (
+                                <Text>{profile.golongan}</Text>
+                            )}
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
+                            <Text style={{ width: 100 }}>Alamat Kantor</Text>
+                            <Text>:</Text>
+                            {profile.office_address == null ? (
+                                <Text>-</Text>
+                            ) : (
+                                <Text style={{ width: 216 }}>{profile.office_address}</Text>
+                            )}
                         </View>
 
                         {/* custom divider */}

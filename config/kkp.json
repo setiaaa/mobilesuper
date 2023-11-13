@@ -1,9 +1,9 @@
 {
   "name": "SuperApps KKP",
-  "slug": "SuperAppsKKP",
+  "slug": "superapps-kkp",
   "version": "0.0.1",
   "orientation": "portrait",
-  "icon": "./assets/superApp/logokkp.png",
+  "icon": "./assets/superApp/kkplogo.png",
   "userInterfaceStyle": "automatic",
   "splash": {
     "image": "./assets/superApp/splash.png",
@@ -17,18 +17,18 @@
   "ios": {
     "buildNumber": "1.3.8",
     "supportsTablet": true,
-    "bundleIdentifier": "co.id.telkom.ndeostelkomgroup"
+    "bundleIdentifier": "com.kubekkp.portal"
   },
   "android": {
     "versionCode": 138,
     "adaptiveIcon": {
-      "foregroundImage": "./assets/telkom/icon.png",
+      "foregroundImage": "./assets/superApp/kkplogo.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "co.id.telkom.ndeostelkomgroup"
+    "package": "com.kubekkp.portal"
   },
   "web": {
-    "favicon": "./assets/telkom/favicon.png"
+    "favicon": "./assets/favicon.png"
   },
   "plugins": [
     [
@@ -47,7 +47,7 @@
   ],
   "extra": {
     "eas": {
-      "projectId": "10e774f1-9eb7-42c2-846e-d12afd217501"
+      "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
     },
     "id": "telkom",
     "base_url": "http://newnde.coofis.com",
@@ -58,7 +58,7 @@
     "todo": true,
     "labelTodo": "To do",
     "prefix": "Sdr. ",
-    "statusBarAuth": "light-content",
+    "statusBarAuth": "dark-content",
     "statusBarAuthtenticated": "dark-content",
     "api": {
       "auth": "/api/auth/mobile/",
