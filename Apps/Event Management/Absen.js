@@ -20,6 +20,8 @@ import { getlistAbsen } from "../../service/api";
 import moment from "moment";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { ActivityIndicator } from "react-native";
+
 
 const CardListAbsen = ({ item, loading }) => {
   const [user, setUser] = useState("member");
@@ -393,10 +395,17 @@ export const Absen = () => {
       <FlatList
         data={filterData}
         renderItem={({ item }) => (
-          <CardListAbsen item={item} loading={loading} />
+          <CardListAbsen item={item}  />
         )}
-        style={{}}
         ListEmptyComponent={() => <ListEmpty />}
+        ListFooterComponent={() => (
+          loading && (
+            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            </View>
+          )
+      )}
+        style={{}}
       />
     </>
   );

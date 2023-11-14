@@ -296,9 +296,10 @@ export default function Dashboard() {
               alignItems: "flex-end",
             }}
           >
+            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center'}}>
             <View
               style={{
-                width: "100%",
+                width: "85%",
                 backgroundColor: COLORS.white,
                 borderRadius: 8,
               }}
@@ -320,6 +321,7 @@ export default function Dashboard() {
                   <Ionicons name="filter-outline" size={24} />
                 </View>
               </TouchableOpacity>
+            </View>
             </View>
           </View>
 
