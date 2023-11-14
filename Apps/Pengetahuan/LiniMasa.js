@@ -341,6 +341,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
+  console.log(detail)
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -980,7 +981,7 @@ const CardLiniMasa = ({ item, token }) => {
           <BottomSheetView onLayout={handleContentLayout} style={{}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "height" : "height"}
-              keyboardVerticalOffset={parentId !== "" ? 120: 80}
+              keyboardVerticalOffset={parentId !== "" ? 80: 70}
             >
               <View
                 style={{
@@ -1030,7 +1031,7 @@ const CardLiniMasa = ({ item, token }) => {
                     setToggleComment={setToggleComment}
                   />
                 )}
-                style={{ height: 550 }}
+                style={{ height: 370}}
               />
 
               <View style={{ justifyContent: "flex-end" }}>
