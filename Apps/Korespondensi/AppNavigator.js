@@ -137,6 +137,7 @@ import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
 import { DetailDokumenLain } from "../DigitalSignature/DetailDokumenLain";
+import { LaporanDigitalSign } from "../DigitalSignature/LaporanDigitalSign";
 import MainDigitalSign from "../DigitalSignature/MainDigitalSign";
 import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
@@ -458,6 +459,11 @@ export const BottomTabsDigitalSign = () => {
         <Tab.Screen
           name="DokumenLain"
           component={DokumenLain}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="LaporanDigitalSign"
+          component={LaporanDigitalSign}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>

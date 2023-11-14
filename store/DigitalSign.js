@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getListSignedDigiSign, getCourseDigiSign,getListComposer, getListCompleted, getListInProgress, getDetailDigisign, getListDraft, addDocumentDigiSign } from "../service/api";
+import { getListSignedDigiSign, getCourseDigiSign,getListComposer, getListCompleted, getListInProgress, getDetailDigisign, getListDraft, addDocumentDigiSign, getSummaryCount, getSummaryList } from "../service/api";
 
 const DigitalSignSlice = createSlice({
     name: 'DigitalSign',
@@ -14,6 +14,10 @@ const DigitalSignSlice = createSlice({
         },
         courseList: [],
         status:'',
+        summary: {
+            count: {},
+            lists: [],
+        }
     },
     reducers: {
         setDigitalSignLists: (state, action) => {
@@ -25,6 +29,9 @@ const DigitalSignSlice = createSlice({
         setStatus: (state, action) => {
             state.status = action.payload
         },
+        setLaporanList: (state, action) => {
+            state.summary.lists = action.payload
+        }
     },
     extraReducers(builder) {
         builder
@@ -77,10 +84,30 @@ const DigitalSignSlice = createSlice({
                 console.log(action.payload + ' Berhasil')
                 state.status = 'berhasil'
             })
+            .addCase(getSummaryCount.fulfilled, (state, action) => {
+                state.summary.count = action.payload;
+                state.loading = false;
+            })
+            .addCase(getSummaryCount.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getSummaryCount.rejected, (state, action) => {
+                state.loading = false;
+            })
+            .addCase(getSummaryList.fulfilled, (state, action) => {
+                state.summary.lists = action.payload;
+                state.loading = false;
+            })
+            .addCase(getSummaryList.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getSummaryList.rejected, (state, action) => {
+                state.loading = false;
+            })
     }
 })
 
-export const { setDigitalSignLists,setDigitalSignCourseList,setStatus } =
+export const { setDigitalSignLists,setDigitalSignCourseList,setStatus, setLaporanList } =
     DigitalSignSlice.actions;
 
 export default DigitalSignSlice.reducer;
