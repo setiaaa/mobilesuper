@@ -649,6 +649,19 @@ export const getDetailDocument = createAsyncThunk(
   }
 );
 
+
+export const postCommentRepo = createAsyncThunk(
+  "repository/document-comment",
+  async (data, setRefresh = undefined) => {
+    const respon = await axios.post(
+      `${repository}/document-comment/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
 //profile me
 
 export const getProfileMe = createAsyncThunk(

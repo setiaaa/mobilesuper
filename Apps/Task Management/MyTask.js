@@ -378,8 +378,8 @@ export const MyTask = () => {
                             {
                                 loading ? (
                                     <>
-                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} />
+                                        {/* <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} /> */}
                                     </>
                                 ) : (
                                     <View>

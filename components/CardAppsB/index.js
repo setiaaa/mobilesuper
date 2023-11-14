@@ -7,8 +7,8 @@ import { COLORS, FONTSIZE } from '../../config/SuperAppps';
 export const CardAppsB = ({ handlePressModal }) => {
   const navigation = useNavigation()
   return (
-    <View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
+    <View style={{ padding: 20, gap: 20}}>
+      <View style={{ flexDirection: 'row',  gap: 25 }}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('Drawer')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -26,17 +26,6 @@ export const CardAppsB = ({ handlePressModal }) => {
           <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kebijakan</Text>
         </View>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('')}>
-            <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-            <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/email-ikon.png')} />
-            </View>
-          </TouchableOpacity>
-          <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Email</Text>
-        </View>
-      </View>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 20, gap: 20 }}>
-        <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('GrupKalender')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
             <Image style={{ width: 28, height: 28}} source={require('../../assets/superApp/kalender-ikon.png')} />
@@ -44,7 +33,9 @@ export const CardAppsB = ({ handlePressModal }) => {
           </TouchableOpacity>
           <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Kalender</Text>
         </View>
+      </View>
 
+      <View style={{ flexDirection: 'row',  gap: 25,}}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('MainRepo')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -62,10 +53,6 @@ export const CardAppsB = ({ handlePressModal }) => {
           </TouchableOpacity>
           <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, textAlign: 'center' }}>Pengetahuan</Text>
         </View>
-      </View>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20, }}>
-
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -74,7 +61,9 @@ export const CardAppsB = ({ handlePressModal }) => {
           </TouchableOpacity>
           <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task Management</Text>
         </View>
+      </View>
 
+      <View style={{flexDirection: 'row',  gap: 25}}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('HalamanUtama')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -93,10 +82,6 @@ export const CardAppsB = ({ handlePressModal }) => {
           </TouchableOpacity>
           <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Digital Sign</Text>
         </View>
-      </View>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20, marginVertical: 20, }}>
-
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('ListPegawai')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
@@ -105,7 +90,10 @@ export const CardAppsB = ({ handlePressModal }) => {
           </TouchableOpacity>
           <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pegawai</Text>
         </View>
+      </View>
+      
 
+      <View style={{flexDirection: 'row',  gap: 25, }}>
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
           <TouchableOpacity onPress={() => navigation.navigate('MainSPPD')}>
             <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
