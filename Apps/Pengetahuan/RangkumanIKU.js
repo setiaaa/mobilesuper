@@ -361,27 +361,27 @@ export const RangkumanIKU = () => {
   //   shareAsync(uri);
   // };
 
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
+  // const [ascending, setAscending] = useState(false);
+  // const [isFiltered, setIsFiltered] = useState(false);
 
 
-  const asc = () => {
-    const sortedAscending = filterData
-      .slice()
-      .sort((a, b) => a.nama.localeCompare(b.nama));
-    setFilterData(sortedAscending);
-    setAscending(true);
-    setIsFiltered(true);
-  };
+  // const asc = () => {
+  //   const sortedAscending = filterData
+  //     .slice()
+  //     .sort((a, b) => a.nama.localeCompare(b.nama));
+  //   setFilterData(sortedAscending);
+  //   setAscending(true);
+  //   setIsFiltered(true);
+  // };
 
-  const desc = () => {
-    const sortedDescending = filterData
-      .slice()
-      .sort((a, b) => b.nama.localeCompare(a.nama));
-    setFilterData(sortedDescending);
-    setAscending(false);
-    setIsFiltered(true);
-  };
+  // const desc = () => {
+  //   const sortedDescending = filterData
+  //     .slice()
+  //     .sort((a, b) => b.nama.localeCompare(a.nama));
+  //   setFilterData(sortedDescending);
+  //   setAscending(false);
+  //   setIsFiltered(true);
+  // };
 
   return (
     <>

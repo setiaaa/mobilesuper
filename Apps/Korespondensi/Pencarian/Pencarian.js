@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { TopsPencarianKorespoondensi } from '../AppNavigator'
+import { TopsPencarianKorespondensi } from '../../../utils/menutab'
 import { PADDING, COLORS } from '../../../config/SuperAppps'
 import { Search } from '../../../components/Search'
 
@@ -12,7 +12,7 @@ export const Pencarian = () => {
                 placeholder="Cari..."
             />
         </View>
-        <TopsPencarianKorespoondensi />
+        <TopsPencarianKorespondensi />
     </View>
   )
 }

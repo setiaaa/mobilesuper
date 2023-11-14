@@ -27,6 +27,7 @@ import { LampiranTask } from "../Apps/Task Management/DetailTask/LampiranTask";
 import MyTabDigitalSign from "../Apps/DigitalSignature/BottomTabsDigitalSign";
 import { Bankom } from "../Apps/DigitalSignature/Bankom";
 import { DokumenLain } from "../Apps/DigitalSignature/DokumenLain";
+import { LaporanDigitalSign } from "../Apps/DigitalSignature/LaporanDigitalSign";
 import MyTabBarPengetahuan from "../Apps/Pengetahuan/BottomTabsPengetahuan";
 import { LiniMasa } from "../Apps/Pengetahuan/LiniMasa";
 import { PostinganSaya } from "../Apps/Pengetahuan/PostinganSaya";
@@ -75,8 +76,12 @@ import { PNBP } from "../Apps/Dashboard/PNPB";
 import { IKU } from "../Apps/Dashboard/IKU";
 import { AddressBookJabatan } from "../Apps/AddressBookJabatan";
 import { AddressBookPegawai } from "../Apps/AddressBookPegawai";
-import { COLORS } from "../config/SuperAppps";
+import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { PLetter } from "../Apps/Korespondensi/Pencarian/PLetter";
+import { PTodo } from "../Apps/Korespondensi/Pencarian/PTodo";
+import { PSecretary } from "../Apps/Korespondensi/Pencarian/PSecretary";
+import { PDelegation } from "../Apps/Korespondensi/Pencarian/PDelegation";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -272,6 +277,11 @@ export const BottomTabsDigitalSign = () => {
         <Tab.Screen
           name="DokumenLain"
           component={DokumenLain}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="LaporanDigitalSign"
+          component={LaporanDigitalSign}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
@@ -614,6 +624,55 @@ export const TopsTaskKorespondensi = () => {
           component={BackLog}
           options={{
             title: "Minggu Depan",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsPencarianKorespondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName={"PLetter"}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: {
+            fontSize: 12,
+            textTransform: "none",
+            fontWeight: FONTWEIGHT.bold,
+          },
+        }}
+      >
+        <Top.Screen
+          name="PLetter"
+          component={PLetter}
+          options={{
+            title: "Letter",
+          }}
+        />
+        <Top.Screen
+          name="PTodo"
+          component={PTodo}
+          options={{
+            title: "Todo",
+          }}
+        />
+        <Top.Screen
+          name="PSecretary"
+          component={PSecretary}
+          options={{
+            title: "Secreatry",
+          }}
+        />
+        <Top.Screen
+          name="PDelegation"
+          component={PDelegation}
+          options={{
+            title: "Delegation",
           }}
         />
       </Top.Navigator>
