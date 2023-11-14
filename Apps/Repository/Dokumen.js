@@ -450,36 +450,39 @@ export const Dokumen = () => {
                           </Text>
                         </View>
                       </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate("MainDetailRepo");
-                          bottomSheetAttachClose();
-                        }}
-                      >
-                        <View
-                          style={{
-                            marginLeft: 30,
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 10,
-                            marginTop: 20,
+                      {type.key === 'true' ? (
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate("MainDetailRepo");
+                            bottomSheetAttachClose();
                           }}
                         >
-                          <Ionicons
-                            name="information-circle-outline"
-                            size={32}
-                            color={"#6B7280"}
-                          />
-                          <Text
+                          <View
                             style={{
-                              fontSize: FONTSIZE.H2,
-                              fontWeight: FONTWEIGHT.normal,
+                              marginLeft: 30,
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: 10,
+                              marginTop: 20,
                             }}
                           >
-                            Details & activity
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
+                            <Ionicons
+                              name="information-circle-outline"
+                              size={32}
+                              color={"#6B7280"}
+                            />
+                            <Text
+                              style={{
+                                fontSize: FONTSIZE.H2,
+                                fontWeight: FONTWEIGHT.normal,
+                              }}
+                            >
+                              Details & activity
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      ) : null}
                     </View>
                   </BottomSheetView>
                 </BottomSheetModal>
