@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { Host } from 'react-native-portalize'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { BottomTabsOutgoingKorespondensi } from '../../AppNavigator'
+import { BottomTabsOutgoingKorespondensi } from '../../../../utils/menutab'
 
 
 export default function MainOutgoingDetail() {

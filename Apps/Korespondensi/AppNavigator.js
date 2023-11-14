@@ -12,12 +12,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { setToken, setValidVersion } from "../../store/auth";
 import { GlobalStyles } from "../../constants/styles";
 import { toolbarBack } from "../../components/UI/ToolbarBack";
-import Login from "../Login";
 import DrawerNavigator from "./Drawer";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import DispositionDetail from "./Detail/DispositionDetail";
@@ -57,10 +55,6 @@ import { androidId } from "expo-application";
 import * as Device from "expo-device";
 import { setDataNotif } from "../../store/pushnotif";
 import * as Application from "expo-application";
-import { Home } from "../SuperApps/Home";
-import { Satker } from "../SuperApps/Satker";
-import { FAQ } from "../SuperApps/FAQ";
-import { Profile } from "../SuperApps/Profile";
 import Main from "../SuperApps/Main";
 import DetailDashboard from "../../Apps/Kebijakan/DetailDashboard";
 import PdfViewer from "../../Apps/Kebijakan/PdfViewer";
@@ -71,26 +65,11 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ListBerita } from "../SuperApps/ListBerita";
 import { DetailBerita } from "../SuperApps/DetailBerita";
 import { Dokumen } from "../Repository/Dokumen";
-import MyTabBarRepo from "../Repository/BottomTabsRepo";
-import { Dibagikan } from "../Repository/Dibagikan";
 import MainRepo from "../Repository/MainRepo";
-import MyTabBarKeb from "../Kebijakan/BottomtabsKeb";
 import MainKeb from "../Kebijakan/MainKeb";
-import Dashboard from "../Kebijakan/Dashboard";
-import { Tematik } from "../Kebijakan/Tematik";
 import { Tp } from "../SuperApps/Tp";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import MyTopBar from "../SuperApps/TopTabs";
-import { KRT } from "../SuperApps/KRT";
-import { Pengawasan } from "../SuperApps/Pengawasan";
-import { KPP } from "../SuperApps/KPP";
 import { DetailActivity } from "../Repository/DetailActivity";
-import MyTabBarDetailRepo from "../Repository/BottomTabsDetailRepo";
 import { MainDetailRepo } from "../Repository/MainDetailRepo";
-import { Lampiran } from "../Repository/Lampiran";
-import { Komentar } from "../Repository/Komentar";
-import MyTabBarKal from "../Kalender/BottomTabsKal";
-import { Agenda } from "../Kalender/Agenda";
 import { MainKalender } from "../Kalender/MainKalender";
 import { GrupKalender } from "../Kalender/GrupKalender";
 import { TambahGrup } from "../Kalender/TambahGrup";
@@ -98,52 +77,25 @@ import { TambahAgenda } from "../Kalender/TambahAgenda";
 import { DetailAcara } from "../Kalender/DetailAcara";
 import { ListSuka } from "../Kalender/ListSuka";
 import { MyTask } from "../Task Management/MyTask";
-import { InProgres } from "../Task Management/Task/InProgres";
-import { Pending } from "../Task Management/Task/Pending";
-import { BackLog } from "../Task Management/Task/BackLog";
-import { HariIni } from "../Task Management/Dashboard/HariIni";
-import { MingguIni } from "../Task Management/Dashboard/MingguIni";
-import { Terlewat } from "../Task Management/Dashboard/Terlewat";
-import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
-import { Complete } from "../Task Management/Task/Complete";
-import MyTabBarDetailTask from "../Task Management/DetailTask/BottmTabsDetailTask";
-import { DetailTask } from "../Task Management/DetailTask/DetailTask";
-import { LampiranTask } from "../Task Management/DetailTask/LampiranTask";
 import MainDetailTask from "../Task Management/DetailTask/MainDetailTask";
 import { AddTask } from "../Task Management/AddTask";
 import { ListGaleri } from "../SuperApps/ListGaleri";
 import { Kepegawaian } from "../Dashboard/Kepegawaian";
-import { Demografi } from "../Dashboard/Demografi";
-import { Penilaian } from "../Dashboard/Penilaian";
-import { Pelatihan } from "../Dashboard/Pelatihan";
-import { Absensi } from "../Dashboard/Absensi";
-import { Kesejahteraan } from "../Dashboard/Kesejahteraan";
-import { Perencanaan } from "../Dashboard/Perencanaan";
 import { DetailPengmuman } from "../Dashboard/DetailPengmuman";
 import { ProduksiBudidaya } from "../Dashboard/ProduksiBudidaya";
-import { Produksi } from "../Dashboard/Produksi";
-import { TeknologiTerbaru } from "../Dashboard/TeknologiTerbaru";
 import { DetailTeknologi } from "../Dashboard/DetailTeknologi";
-import { LiniMasa } from "../Pengetahuan/LiniMasa";
 import { DetailLinimasa } from "../Pengetahuan/DetailLinimasa";
-import { PostinganSaya } from "../Pengetahuan/PostinganSaya";
 import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
 import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
 import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
-import { RangkumanIKU } from "../Pengetahuan/RangkumanIKU";
 import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
-import { LaporanPengetahuan } from "../Pengetahuan/LaporanPengetahuan";
-import MyTabDigitalSign from "../DigitalSignature/BottomTabsDigitalSign";
-import { Bankom } from "../DigitalSignature/Bankom";
-import { DokumenLain } from "../DigitalSignature/DokumenLain";
 import { DetailDokumenLain } from "../DigitalSignature/DetailDokumenLain";
+import { LaporanDigitalSign } from "../DigitalSignature/LaporanDigitalSign";
 import MainDigitalSign from "../DigitalSignature/MainDigitalSign";
 import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
 import { TambahDokumenLain } from "../DigitalSignature/TambahDokumenLain";
 import MainPengetahuan from "../Pengetahuan/MainPengetahuan";
-import MyTabBarPengetahuan from "../Pengetahuan/BottomTabsPengetahuan";
-import { PenilaianPenggetahaun } from "../Pengetahuan/PenilaianPengetahuan";
 import { DetailPenilaian } from "../Pengetahuan/DetailPenilaian";
 import { ListSukaLinimasa } from "../Pengetahuan/ListSukaLinimasa";
 import { FileViewer } from "../Pengetahuan/FileViewer";
@@ -152,13 +104,7 @@ import { DetailProfile } from "../Pegawai/DetailProfile";
 import { Host } from "react-native-portalize";
 import { HalamanUtama } from "../Event Management/HalamanUtama";
 import { DetailEvent } from "../Event Management/DetailEvent";
-import MyTabDetailEvent from "../Event Management/BottomTabsDetailEvent";
-import { AgendaEvent } from "../Event Management/AgendaEvent";
 import { MainDetailEvent } from "../Event Management/MainDetailEvent";
-import { DetailAgenda } from "../Event Management/DetailAgenda";
-import { Todo } from "../Event Management/Todo";
-import { Absen } from "../Event Management/Absen";
-import MyTabDetailAgenda from "../Event Management/BottomTabsDetailAgenda";
 import { MainDetailAgenda } from "../Event Management/MainDetailAgenda";
 import { Notulensi } from "../Event Management/Notulensi";
 import { DetailTodo } from "../Event Management/DetailTodo";
@@ -169,8 +115,6 @@ import { LoginToken } from "../LoginToken";
 import { DetailAbsen } from "../Event Management/DetailAbsen";
 import { ScannerBarCode } from "../Event Management/ScannerBarCode";
 import { AddressBook } from "../AddressBook";
-import { AddressBookJabatan } from "../AddressBookJabatan";
-import { AddressBookPegawai } from "../AddressBookPegawai";
 import { EditEvent } from "../Event Management/EditEvent";
 import { TambahSubAgenda } from "../Event Management/TambahSubAgenda";
 import { EditSubAgenda } from "../Event Management/EditSubAgenda";
@@ -179,9 +123,6 @@ import { DetailAcaraAgenda } from "../Kalender/DetailAcaraAgenda";
 import { AddCategory } from "../Task Management/AddCategory";
 import { Penangkapan } from "../Dashboard/Penangkapan";
 import { Keuangan } from "../Dashboard/Keuangan";
-import { APBN } from "../Dashboard/APBN";
-import { PNBP } from "../Dashboard/PNPB";
-import { IKU } from "../Dashboard/IKU";
 import { DetailGrup } from "../Kalender/DetailGrup";
 import { EditTask } from "../Task Management/EditTask";
 import { EditCategory } from "../Task Management/EditCategory";
@@ -189,21 +130,10 @@ import { EditGrup } from "../Kalender/EditGrup";
 import { EditAgendaGrup } from "../Kalender/EditAgendaGrup";
 import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
 import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
-import { Ionicons } from "@expo/vector-icons";
-import { View } from "react-native";
-import MyTabBarSPPD from "../SPPD/BottomTabsSPPD";
 import MainSPPD from "../SPPD/MainSPPD";
-import { Personal } from "../SPPD/Personal";
-import { DokumenSPPD } from "../SPPD/DokumenSPPD";
 import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
-import MyTabBarOutgoingKorespondensi from "./Detail/Outgoing/BottomTabsOutgoingKorespondensi";
 import MainOutgoingDetail from "./Detail/Outgoing/MainOutgoingDetail";
-import { InfoOutgoindDetail } from "./Detail/Outgoing/InfoOutgoindDetail";
-import { FileOutgoingDetail } from "./Detail/Outgoing/FileOutgoingDetail";
-import { AttachmentOutgoingDetail } from "./Detail/Outgoing/AttachmentOutgoingDetail";
-import { KomentarOutgoingDetail } from "./Detail/Outgoing/KomentarOutgoingDetail";
 import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
-import { DokumenTamplate } from "../Repository/DokumenTamplate";
 import MainCuti from "../Cuti/MainCuti";
 import { Libur } from "../Cuti/Libur";
 import { TambahCutiBesar } from "../Cuti/TambahCutiBesar";
@@ -213,825 +143,19 @@ import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
 import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
-import MyTabCuti from "../Cuti/BottomTabsCuti";
-import { PersonalCuti } from "../Cuti/PersonalCuti";
-import { PersetujanCuti } from "../Cuti/PersetujanCuti";
-import { DokumenCuti } from "../Cuti/DokumenCuti";
 import { getTokenValue } from "../../service/session";
 import { Semua } from "../Task Management/Dashboard/Semua";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
+import { Pencarian } from "./Pencarian/Pencarian";
+import { PLetter } from "./Pencarian/PLetter";
+import { PTodo } from "./Pencarian/PTodo";
+import { PSecretary } from "./Pencarian/PSecretary";
+import { PDelegation } from "./Pencarian/PDelegation";
+import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
-const Top = createMaterialTopTabNavigator();
 
-function AuthStack() {
-  const showBg = useSelector((state) => state.auth.showbg);
-  const { width, height } = useWindowDimensions();
-  return (
-    <>
-      <StatusBar
-        barStyle={showBg ? Config.statusbarAuth : Config.statusbarAuthenticated}
-        backgroundColor="transparent"
-        translucent
-      />
-      <Stack.Navigator>
-        {/* <Stack.Screen
-              name="Onboarding"
-              component={Onboarding}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{
-                headerShown: false,
-              }}
-            /> */}
-        <Stack.Screen
-          name="LoginToken"
-          component={LoginToken}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-      </Stack.Navigator>
-    </>
-  );
-}
-
-export const BottomTabs = () => {
-  return (
-    <Host>
-      <BottomSheetModalProvider>
-        <Tab.Navigator
-          tabBar={(props) => <MyTabBar {...props} />}
-          initialRouteName="Home"
-        >
-          <Tab.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-          <Tab.Screen
-            name="Satker"
-            component={Satker}
-            options={{ headerShown: false }}
-          />
-          <Tab.Screen
-            name="FAQ"
-            component={FAQ}
-            options={{ headerShown: false }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={Profile}
-            options={{ headerShown: false }}
-          />
-          {/* <Tab.Screen name='Tp' component={Tp} options={{ headerShown: false }} /> */}
-          {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
-        options={{
-          headerShown: false,
-          tabBarStyle: { display: 'none' },
-          tabBarItemStyle: { display: 'none' }
-    
-      /> */}
-        </Tab.Navigator>
-      </BottomSheetModalProvider>
-    </Host>
-  );
-};
-
-export const BottomTabsRepo = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarRepo {...props} />}
-        initialRouteName="Dokumen"
-      >
-        <Tab.Screen
-          name="Dokumen"
-          component={Dokumen}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Dibagikan"
-          component={Dibagikan}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenTamplate"
-          component={DokumenTamplate}
-          options={{ headerShown: false }}
-        />
-        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
-        options={{
-          headerShown: false,
-          tabBarStyle: { display: 'none' },
-          tabBarItemStyle: { display: 'none' }
-        }}
-      /> */}
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsKeb = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarKeb {...props} />}
-        initialRouteName="Dashboard"
-      >
-        <Tab.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Tematik"
-          component={Tematik}
-          options={{ headerShown: false }}
-        />
-        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
-        options={{
-          headerShown: false,
-          tabBarStyle: { display: 'none' },
-          tabBarItemStyle: { display: 'none' }
-        }}
-      /> */}
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsDetailRepo = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarDetailRepo {...props} />}
-        initialRouteName="DetailActivity"
-      >
-        <Stack.Screen
-          name="DetailActivity"
-          component={DetailActivity}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Lampiran"
-          component={Lampiran}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Komentar"
-          component={Komentar}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsKalender = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarKal {...props} />}
-        initialRouteName="GrupKalender"
-      >
-        <Tab.Screen
-          name="GrupKalender"
-          component={GrupKalender}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Agenda"
-          component={Agenda}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsDetailTask = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarDetailTask {...props} />}
-        initialRouteName="DetailTask"
-      >
-        <Tab.Screen
-          name="DetailTask"
-          component={DetailTask}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="LampiranTask"
-          component={LampiranTask}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsDigitalSign = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabDigitalSign {...props} />}
-        initialRouteName="Bankom"
-      >
-        <Tab.Screen
-          name="Bankom"
-          component={Bankom}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenLain"
-          component={DokumenLain}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsPengetahuan = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarPengetahuan {...props} />}
-        initialRouteName="LiniMasa"
-      >
-        <Tab.Screen
-          name="LiniMasa"
-          component={LiniMasa}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="PostinganSaya"
-          component={PostinganSaya}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="RangkumanIKU"
-          component={RangkumanIKU}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="PenilaianPenggetahaun"
-          component={PenilaianPenggetahaun}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="LaporanPengetahuan"
-          component={LaporanPengetahuan}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsDetailEvent = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabDetailEvent {...props} />}
-        initialRouteName="DetailEvent"
-      >
-        <Tab.Screen
-          name="DetailEvent"
-          component={DetailEvent}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="AgendaEvent"
-          component={AgendaEvent}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsDetailAgenda = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabDetailAgenda {...props} />}
-        initialRouteName="DetailAgenda"
-      >
-        <Tab.Screen
-          name="DetailAgenda"
-          component={DetailAgenda}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Todo"
-          component={Todo}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Absen"
-          component={Absen}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsSPPD = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarSPPD {...props} />}
-        initialRouteName="Personal"
-      >
-        <Tab.Screen
-          name="Personal"
-          component={Personal}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenSPPD"
-          component={DokumenSPPD}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const BottomTabsOutgoingKorespondensi = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarOutgoingKorespondensi {...props} />}
-        initialRouteName="InfoOutgoindDetail"
-      >
-        <Tab.Screen
-          name="InfoOutgoindDetail"
-          component={InfoOutgoindDetail}
-          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
-        />
-        <Tab.Screen
-          name="FileOutgoingDetail"
-          component={FileOutgoingDetail}
-          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
-        />
-        <Tab.Screen
-          name="AttachmentOutgoingDetail"
-          component={AttachmentOutgoingDetail}
-          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
-        />
-        <Tab.Screen
-          name="KomentarOutgoingDetail"
-          component={KomentarOutgoingDetail}
-          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-export const BottomTabsCuti = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabCuti {...props} />}
-        initialRouteName="PersonalCuti"
-      >
-        <Tab.Screen
-          name="PersonalCuti"
-          component={PersonalCuti}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="PersetujuanCuti"
-          component={PersetujanCuti}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenCuti"
-          component={DokumenCuti}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopsTP = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Top.Navigator
-        initialRouteName="KRT"
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: "#800000" },
-          tabBarLabelStyle: { fontSize: 10, textTransform: "none" },
-        }}
-      >
-        <Top.Screen
-          name="KRT"
-          component={KRT}
-          options={{
-            title: "Kerumahtanggaan",
-          }}
-        />
-        <Top.Screen
-          name="Pengawasan"
-          component={Pengawasan}
-          options={{
-            title: "Pengawasan",
-          }}
-        />
-        <Top.Screen
-          name="KPP"
-          component={KPP}
-          options={{
-            title: "Kinerja dan Pengembangan Pegawai",
-          }}
-        />
-      </Top.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopsTask = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Top.Navigator
-        initialRouteName={"InProgres"}
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: {
-            fontSize: 12,
-            textTransform: "none",
-            fontWeight: FONTWEIGHT.bold,
-          },
-        }}
-      >
-        <Top.Screen
-          name="BackLog"
-          component={BackLog}
-          options={{
-            title: "Back Log",
-          }}
-        />
-        <Top.Screen
-          name="Inprogres"
-          component={InProgres}
-          options={{
-            title: "In Progress",
-          }}
-        />
-        <Top.Screen
-          name="Pending"
-          component={Pending}
-          options={{
-            title: "Pending",
-          }}
-        />
-        <Top.Screen
-          name="Complete"
-          component={Complete}
-          options={{
-            title: "Complete",
-          }}
-        />
-      </Top.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopsTaskDashboard = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Top.Navigator
-        initialRouteName={"Semua"}
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: {
-            fontSize: 12,
-            textTransform: "none",
-            fontWeight: FONTWEIGHT.bold,
-          },
-        }}
-      >
-        <Top.Screen
-          name="Semua"
-          component={Semua}
-          options={{
-            title: "Semua",
-          }}
-        />
-        <Top.Screen
-          name="HariIni"
-          component={HariIni}
-          options={{
-            title: "Hari Ini",
-          }}
-        />
-        <Top.Screen
-          name="MingguIni"
-          component={MingguIni}
-          options={{
-            title: "Minggu Ini",
-          }}
-        />
-        <Top.Screen
-          name="Terlewat"
-          component={Terlewat}
-          options={{
-            title: "Terlewat",
-          }}
-        />
-      </Top.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopsTaskKorespondensi = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Top.Navigator
-        initialRouteName={"Arsip"}
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: {
-            fontSize: 12,
-            textTransform: "none",
-            fontWeight: FONTWEIGHT.bold,
-          },
-        }}
-      >
-        <Top.Screen
-          name="Arsip"
-          component={InProgres}
-          options={{
-            title: "Arsip",
-          }}
-        />
-        <Top.Screen
-          name="Terlewat"
-          component={Pending}
-          options={{
-            title: "Terlewat",
-          }}
-        />
-        <Top.Screen
-          name="HariIni"
-          component={Complete}
-          options={{
-            title: "Hari Ini",
-          }}
-        />
-        <Top.Screen
-          name="MingguDepan"
-          component={BackLog}
-          options={{
-            title: "Minggu Depan",
-          }}
-        />
-      </Top.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopsDash = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Top.Navigator
-        initialRouteName="Demografi"
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
-          tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: "auto" },
-        }}
-      >
-        <Top.Screen
-          name="Demografi"
-          component={Demografi}
-          options={{
-            title: "Demografi",
-          }}
-        />
-        <Top.Screen
-          name="Penilaian"
-          component={Penilaian}
-          options={{
-            title: "Penilaian",
-          }}
-        />
-        <Top.Screen
-          name="Pelatihan"
-          component={Pelatihan}
-          options={{
-            title: "Pelatihan",
-          }}
-        />
-        <Top.Screen
-          name="Absensi"
-          component={Absensi}
-          options={{
-            title: "Absensi",
-          }}
-        />
-        <Top.Screen
-          name="Kesejahteraan"
-          component={Kesejahteraan}
-          options={{
-            title: "Kesejahteraan",
-          }}
-        />
-        <Top.Screen
-          name="Perencanaan"
-          component={Perencanaan}
-          options={{
-            title: "Perencanaan",
-          }}
-        />
-      </Top.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopsProduksiBudidaya = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Top.Navigator
-        initialRouteName="Produksi"
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
-          tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: "auto" },
-        }}
-      >
-        <Top.Screen
-          name="Produksi"
-          component={Produksi}
-          options={{
-            title: "Produksi",
-          }}
-        />
-        <Top.Screen
-          name="TeknologiTerbaru"
-          component={TeknologiTerbaru}
-          options={{
-            title: "Teknologi Terbaru",
-          }}
-        />
-      </Top.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopsKeuanganKinerja = () => {
-  return (
-    <BottomSheetModalProvider>
-      <Top.Navigator
-        initialRouteName="APBN"
-        screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
-          tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: "auto" },
-        }}
-      >
-        <Top.Screen
-          name="APBN"
-          component={APBN}
-          options={{
-            title: "APBN",
-          }}
-        />
-        <Top.Screen
-          name="PNBP"
-          component={PNBP}
-          options={{
-            title: "PNBP",
-          }}
-        />
-        <Top.Screen
-          name="IKU"
-          component={IKU}
-          options={{
-            title: "IKU",
-          }}
-        />
-      </Top.Navigator>
-    </BottomSheetModalProvider>
-  );
-};
-
-export const TopAddressBook = ({ config }) => {
-  return (
-    <Host>
-      <BottomSheetModalProvider>
-        <Top.Navigator
-          initialRouteName={"AddressBookJabatan"}
-          screenOptions={{
-            tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-            tabBarActiveTintColor: "#C34647",
-            tabBarInactiveTintColor: "black",
-            tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
-            tabBarScrollEnabled: true,
-            tabBarItemStyle: { width: "auto" },
-          }}
-        >
-          {config.tabs.jabatan && config.tabs.pegawai ? (
-            <>
-              <Top.Screen
-                name="AddressBookJabatan"
-                component={AddressBookJabatan}
-                options={{
-                  title: "Jabatan",
-                  tabBarItemStyle: { width: "50%" },
-                  tabBarLabelStyle: {
-                    width: 200,
-                    fontSize: 13,
-                    textTransform: "none",
-                    paddingLeft: 80,
-                  },
-                }}
-                initialParams={{ config: config }}
-              />
-              <Top.Screen
-                name="AddressBookPegawai"
-                component={AddressBookPegawai}
-                options={{
-                  title: "Pegawai",
-                  tabBarItemStyle: { width: "50%" },
-                  tabBarLabelStyle: {
-                    width: 200,
-                    fontSize: 13,
-                    textTransform: "none",
-                    paddingLeft: 50,
-                  },
-                }}
-                initialParams={{ config: config }}
-              />
-            </>
-          ) : config.tabs.jabatan ? (
-            <Top.Screen
-              name="AddressBookJabatan"
-              component={AddressBookJabatan}
-              options={{
-                title: "Jabatan",
-                tabBarItemStyle: { width: "50%" },
-                tabBarLabelStyle: {
-                  width: 200,
-                  fontSize: 13,
-                  textTransform: "none",
-                  paddingLeft: 80,
-                },
-              }}
-              initialParams={{ config: config }}
-            />
-          ) : config.tabs.pegawai ? (
-            <Top.Screen
-              name="AddressBookPegawai"
-              component={AddressBookPegawai}
-              options={{
-                title: "Pegawai",
-                tabBarItemStyle: { width: "50%" },
-                tabBarLabelStyle: {
-                  width: 200,
-                  fontSize: 13,
-                  textTransform: "none",
-                  paddingLeft: 50,
-                },
-              }}
-              initialParams={{ config: config }}
-            />
-          ) : null}
-        </Top.Navigator>
-      </BottomSheetModalProvider>
-    </Host>
-  );
-};
-
-function AuthenticatedStack() {
+function AuthenticatedStack(route) {
   const profile = useSelector((state) => state.profile.profile);
   const deviceNIK = profile?.nik;
   const [deviceName, setDeviceName] = useState(null);
@@ -1048,7 +172,7 @@ function AuthenticatedStack() {
     }
   };
 
-  const getDeviceId = async () => { };
+  const getDeviceId = async () => {};
   async function checkDevice() {
     try {
       if (
@@ -1099,12 +223,20 @@ function AuthenticatedStack() {
 
   return (
     <BottomSheetModalProvider>
-      < SafeAreaView style={styles.rootScreen}>
+      <SafeAreaView style={styles.rootScreen}>
         <StatusBar
           barStyle={Config.statusbarAuthenticated}
           backgroundColor={GlobalStyles.colors.secondary}
         />
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName={route.route}>
+          <Stack.Screen
+            name="LoginToken"
+            component={LoginToken}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
           <Stack.Screen
             name="Main"
             component={Main}
@@ -1884,9 +1016,23 @@ function AuthenticatedStack() {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="KegiatanBaru"
+            component={KegiatanBaru}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Pencarian"
+            component={Pencarian}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
-      </ SafeAreaView>
-    </BottomSheetModalProvider >
+      </SafeAreaView>
+    </BottomSheetModalProvider>
   );
 }
 
@@ -1895,9 +1041,8 @@ function AppNavigator() {
   const app_version = Config.app_version;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [isToken, setIsToken] = useState(true);
   const { token } = useSelector((state) => state.login);
-
+  const [route,setRoute] = useState("");
   useEffect(() => {
     //checkversion
     // if (Platform.OS == "android") {
@@ -1905,11 +1050,15 @@ function AppNavigator() {
     // } else if (Platform.OS == "ios") {
     //   checkVersionIos();
     // }
-    getTokenValue().then((val) => {
-      setIsToken(val);
+     getTokenValue().then((val) => {
+      if (val === null) {
+        setRoute("LoginToken")
+      } else {
+        setRoute("Main");
+      }
       setIsLoading(false);
     });
-  }, [token]);
+  }, [route]);
 
   async function getToken() {
     setIsLoading(true);
@@ -1967,8 +1116,8 @@ function AppNavigator() {
       Alert.alert(
         "Warning!",
         "You are using an old version of the " +
-        app_name +
-        ". Do you want to upgrade?",
+          app_name +
+          ". Do you want to upgrade?",
         [
           {
             text: "Upgrade",
@@ -2007,9 +1156,8 @@ function AppNavigator() {
       <Host>
         {/* awas lupa */}
         <NavigationContainer>
-          {/* {!isLoading && !isAuthenticated && <AuthStack />} */}
-          {!isLoading && isToken == null && <AuthStack />}
-          {!isLoading && isToken != null && <AuthenticatedStack />}
+          {/* {!isLoading && isToken == null && <AuthStack />} */}
+          {!isLoading && <AuthenticatedStack route={route} />}
         </NavigationContainer>
         {loadingOverlay}
       </Host>

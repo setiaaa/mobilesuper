@@ -14,7 +14,7 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet } from 'react-native'
 import { useState } from 'react'
-import { TopsTask, TopsTaskDashboard, TopsTaskKorespondensi } from '../Korespondensi/AppNavigator'
+import { TopsTask, TopsTaskDashboard, TopsTaskKorespondensi } from '../../utils/menutab'
 import { Search } from '../../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { setRefresh, setVariant } from '../../store/Task'
@@ -378,8 +378,8 @@ export const MyTask = () => {
                             {
                                 loading ? (
                                     <>
-                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} />
+                                        {/* <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
+                                        <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} /> */}
                                     </>
                                 ) : (
                                     <View>

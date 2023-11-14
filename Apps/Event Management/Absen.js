@@ -20,6 +20,8 @@ import { getlistAbsen } from "../../service/api";
 import moment from "moment";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { ActivityIndicator } from "react-native";
+
 
 const CardListAbsen = ({ item, loading }) => {
   const [user, setUser] = useState("member");
@@ -167,6 +169,9 @@ export const Absen = () => {
   const navigation = useNavigation();
   const [checkIn, setCheckin] = useState("");
   const [token, setToken] = useState("");
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
 
   const { absen, agenda, loading } = useSelector((state) => state.event);
   const idagenda = agenda.detail?.id;
@@ -205,7 +210,25 @@ export const Absen = () => {
     } else {
       setFilterData(absen.lists);
     }
-  }, [search]);
+  }, [search, isFiltered]);
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.member?.nama.localeCompare(b.member?.nama));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
+  };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.member?.nama.localeCompare(a.member?.nama));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
 
   // useEffect(() => {
   //     setFilterData(absen)
@@ -344,19 +367,45 @@ export const Absen = () => {
 
       {/* </View> */}
 
-      <View style={{ padding: 20 }}>
-        <View style={{}}>
+      <View style={{ padding: 20, flexDirection: 'row', gap: 10}}>
+        <View style={{ width: '85%'}}>
           <Search placeholder={"Cari"} onSearch={filter} />
         </View>
+
+        <TouchableOpacity onPress={!ascending ? asc : desc}>
+        <View
+          style={{
+          width: 40,
+          height: 40,
+          borderRadius: 30,
+          backgroundColor: COLORS.white,
+          justifyContent: "center",
+          alignItems: "center",
+          borderColor: COLORS.secondaryLighter,
+          borderWidth: isFiltered ? 1 : 0,
+        }}
+        >
+          <Ionicons name="filter-outline" size={24} />
+        </View>
+      </TouchableOpacity>
       </View>
+
+      
 
       <FlatList
         data={filterData}
         renderItem={({ item }) => (
-          <CardListAbsen item={item} loading={loading} />
+          <CardListAbsen item={item}  />
         )}
-        style={{}}
         ListEmptyComponent={() => <ListEmpty />}
+        ListFooterComponent={() => (
+          loading && (
+            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            </View>
+          )
+      )}
+        style={{}}
       />
     </>
   );

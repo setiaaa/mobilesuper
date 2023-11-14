@@ -155,9 +155,10 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: COLORS.info,
         flexDirection: "column",
-        width: '90%',
-        marginLeft: 20,
+        width: '86%',
+        // marginHorizontal: 20,
         borderRadius: 16,
+        alignSelf: "center"
     },
     profile: {
         color: 'black',

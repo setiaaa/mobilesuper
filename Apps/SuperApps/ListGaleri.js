@@ -114,7 +114,7 @@ export const ListGaleri = () => {
             </Text>
           </View>
         </View>
-        <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
+        <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
           <Search
             placeholder={'Cari'}
             iconColor={COLORS.primary}

@@ -2,7 +2,7 @@ import { StyleSheet, Text } from 'react-native'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-import { BottomTabsCuti } from '../Korespondensi/AppNavigator'
+import { BottomTabsCuti } from '../../utils/menutab'
 
 
 export default function MainCuti() {
