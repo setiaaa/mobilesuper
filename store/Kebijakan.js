@@ -4,6 +4,8 @@ import {
   getCategoryId,
   getCategoryIdPage,
   getDokHukum,
+  getUnitKerjaTematik,
+  getUnitKerjaTematikId,
 } from "../service/api";
 
 const KebijakanSilce = createSlice({
@@ -12,6 +14,12 @@ const KebijakanSilce = createSlice({
     dokumen: [],
     lists: {},
     dokumenList: [],
+    unitKerja: {
+      lists: [],
+    },
+    unitKerjaId: {
+      lists: [],
+    },
     loading: false,
     refresh: false,
   },
@@ -67,6 +75,20 @@ const KebijakanSilce = createSlice({
       .addCase(getDokHukum.fulfilled, (state, action) => {
         state.loading = false;
         state.dokumenList = action.payload;
+      })
+      .addCase(getUnitKerjaTematik.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getUnitKerjaTematik.fulfilled, (state, action) => {
+        state.loading = false;
+        state.unitKerja.lists = action.payload;
+      })
+      .addCase(getUnitKerjaTematikId.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getUnitKerjaTematikId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.unitKerjaId.lists = action.payload;
       });
   },
 });

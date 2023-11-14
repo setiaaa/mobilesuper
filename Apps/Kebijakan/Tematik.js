@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,179 +6,239 @@ import { ScrollView } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { getTokenValue } from "../../service/session";
+import { getUnitKerjaTematik, getUnitKerjaTematikId } from "../../service/api";
+import { useDispatch, useSelector } from "react-redux";
+import { Loading } from "../../components/Loading";
 
-const data = [
-  {
-    id: 1,
-    image: require("../../assets/superApp/gambar.png"),
-    judul: "Kesekretariatan",
-  },
-  {
-    id: 2,
-    image: require("../../assets/superApp/gambar2.png"),
-    judul: "Pengelolaan Ruang Laut",
-  },
-  {
-    id: 3,
-    image: require("../../assets/superApp/gambar3.png"),
-    judul: "Perikanan Tangkap",
-  },
-  {
-    id: 4,
-    image: require("../../assets/superApp/gambar4.png"),
-    judul: "Perikanan Budidaya",
-  },
-  {
-    id: 5,
-    image: require("../../assets/superApp/gambar5.png"),
-    judul: "Penguatan Daya Saing Produk Kelautan dan Perikanan",
-  },
-  {
-    id: 6,
-    image: require("../../assets/superApp/gambar6.png"),
-    judul: "Pengawasan Sumber Daya Kelautan dan Perikanan",
-  },
-  {
-    id: 7,
-    image: require("../../assets/superApp/gambar7.png"),
-    judul: "Pengawasan Internal",
-  },
-  {
-    id: 8,
-    image: require("../../assets/superApp/gambar8.png"),
-    judul: "Riset dan Sumber Daya Manusia Kelautan dan Perikanan",
-  },
-  {
-    id: 9,
-    image: require("../../assets/superApp/gambar9.png"),
-    judul: "Karantina Ikan, Pengendalian Mutu dan Hasil Keamanan",
-  },
-];
+const DataGrid = ({ judul, id, icon }) => {
+  var iconsPath;
 
-const DataGrid = ({ judul, item }) => {
+  switch (icon) {
+    case "gambar.svg":
+      iconsPath = require("../../assets/superApp/gambar.png");
+      break;
+    case "gambar-1.svg":
+      iconsPath = require("../../assets/superApp/gambar-1.png");
+      break;
+    case "gambar-2.svg":
+      iconsPath = require("../../assets/superApp/gambar-2.png");
+      break;
+    case "gambar-3.svg":
+      iconsPath = require("../../assets/superApp/gambar-3.png");
+      break;
+    case "gambar-4.svg":
+      iconsPath = require("../../assets/superApp/gambar-4.png");
+      break;
+    case "gambar-5.svg":
+      iconsPath = require("../../assets/superApp/gambar-5.png");
+      break;
+    case "gambar-6.svg":
+      iconsPath = require("../../assets/superApp/gambar-6.png");
+      break;
+    case "gambar-7.svg":
+      iconsPath = require("../../assets/superApp/gambar-7.png");
+      break;
+    case "gambar-8.svg":
+      iconsPath = require("../../assets/superApp/gambar-8.png");
+      break;
+    default:
+      null;
+  }
+  const navigation = useNavigation();
+
+  const [token, setToken] = useState("");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  const getId = (ids) => {
+    const params = { token, ids };
+    dispatch(getUnitKerjaTematikId(params));
+  };
+
   return (
-    <View
-      key={item.id}
+    <TouchableOpacity
       style={{
-        marginVertical: 10,
-        marginHorizontal: 5,
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "row",
-        // backgroundColor: "grey",
-        gap: 10,
+        backgroundColor: COLORS.white,
+        borderRadius: 8,
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        //shadow ios
+        shadowOffset: { width: -2, height: 4 },
+        shadowColor: "#171717",
+        shadowOpacity: 0.2,
+        //shadow android
+        elevation: 2,
+      }}
+      onPress={(e) => {
+        e.stopPropagation();
+        getId(id);
+        navigation.navigate("Dashboard");
       }}
     >
-      <View style={styles.cardNo}>
-        <Image source={item.image} />
+      <View
+        key={id}
+        style={{
+          marginTop: 10,
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "row",
+          // backgroundColor: "grey",
+          gap: 10,
+        }}
+      >
+        <View style={styles.cardNo}>
+          <Image source={iconsPath} />
+        </View>
+        <View style={{ width: "80%" }}>
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: FONTWEIGHT.normal,
+              marginBottom: 10,
+              // textAlign: "center",
+            }}
+            numberOfLines={2}
+          >
+            {judul}
+          </Text>
+        </View>
       </View>
-      <View style={{ width: "80%" }}>
-        <Text
-          style={{
-            fontSize: 13,
-            fontWeight: FONTWEIGHT.normal,
-            marginBottom: 10,
-            // textAlign: "center",
-          }}
-          numberOfLines={2}
-        >
-          {judul}
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export const Tematik = () => {
   const navigation = useNavigation();
+
+  const [token, setToken] = useState("");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getUnitKerjaTematik({ token }));
+    }
+  }, [token]);
+
+  const { unitKerja, loading } = useSelector((state) => state.kebijakan);
+
+  const unitKerjaTematik = unitKerja.lists;
+
+  // console.log(unitKerjaTematik);
+
   return (
-    <View style={{ flex: 1 }}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: COLORS.primary,
-          height: 80,
-        }}
-      >
+    <>
+      {loading ? <Loading /> : null}
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: COLORS.primary,
+            height: 80,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              borderRadius: 20,
+              width: 28,
+              height: 28,
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 20,
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="chevron-back-outline"
+                size={24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+            <Text
+              style={{
+                fontSize: FONTSIZE.H1,
+                fontWeight: FONTWEIGHT.bold,
+                color: COLORS.white,
+              }}
+            >
+              Tematik
+            </Text>
+          </View>
+        </View>
         <View
           style={{
             backgroundColor: COLORS.white,
-            borderRadius: 20,
-            width: 28,
-            height: 28,
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: 20,
+            width: "95%",
+            borderRadius: 16,
+            marginLeft: 10,
+            marginVertical: 20,
+            height: "85%",
           }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons
-              name="chevron-back-outline"
-              size={24}
-              color={COLORS.primary}
+          <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
+            <Text
+              style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}
+            >
+              Peraturan Tematik
+            </Text>
+            <Text
+              style={{
+                fontSize: FONTSIZE.H3,
+                fontWeight: FONTWEIGHT.normal,
+                marginTop: 20,
+              }}
+            >
+              Kumpulan Peraturan Perundang-undangan Bidang Kelautan dan
+              Perikanan
+            </Text>
+          </View>
+          <View
+            style={{
+              // backgroundColor: "brown",
+              display: "flex",
+              alignItems: "center",
+              // marginBottom: 120,
+              marginLeft: "5%",
+              height: "80%",
+              width: "90%",
+            }}
+          >
+            <FlatList
+              key={"#"}
+              data={unitKerjaTematik}
+              renderItem={({ item }) => (
+                <DataGrid
+                  judul={item.nama_unitkerja_eselon1}
+                  // tanggal={item.}
+                  id={item.kd_unitkerja_eselon1}
+                  icon={item.icon}
+                />
+              )}
+              // numColumns={1}
+              keyExtractor={(item) => "#" + item.id}
+              style={{}}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text
-            style={{
-              fontSize: FONTSIZE.H1,
-              fontWeight: FONTWEIGHT.bold,
-              color: COLORS.white,
-            }}
-          >
-            Tematik
-          </Text>
+          </View>
         </View>
       </View>
-      <View
-        style={{
-          backgroundColor: COLORS.white,
-          width: "95%",
-          borderRadius: 16,
-          marginLeft: 10,
-          marginVertical: 20,
-          height: "85%",
-        }}
-      >
-        <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-          <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>
-            Peraturan Tematik
-          </Text>
-          <Text
-            style={{
-              fontSize: FONTSIZE.H3,
-              fontWeight: FONTWEIGHT.normal,
-              marginTop: 20,
-            }}
-          >
-            Kumpulan Peraturan Perundang-undangan Bidang Kelautan dan Perikanan
-          </Text>
-        </View>
-        <View
-          style={{
-            // backgroundColor: "brown",
-            display: "flex",
-            alignItems: "flex-start",
-            marginHorizontal: 20,
-            // marginBottom: 120,
-            height: "80%",
-          }}
-        >
-          <FlatList
-            key={"#"}
-            data={data}
-            renderItem={({ item }) => (
-              <DataGrid judul={item.judul} tanggal={item.tanggal} item={item} />
-            )}
-            // numColumns={1}
-            keyExtractor={(item) => "#" + item.id}
-            style={{}}
-          />
-        </View>
-      </View>
-    </View  >
+    </>
   );
 };
 

@@ -39,6 +39,7 @@ import { Dropdown } from "../../components/DropDown";
 import { setRefresh } from "../../store/Kebijakan";
 import ListEmpty from "../../components/ListEmpty";
 import { event } from "react-native-reanimated";
+import { TextInput } from "react-native-gesture-handler";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
@@ -84,16 +85,25 @@ export default function Dashboard() {
 
   const [selectedList, setSelectedList] = useState({ key: "", value: "" });
 
+  const [inputValue, setInputValue] = useState("");
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDokHukum({ token: token, id: selectedList.key, page: page }));
+      dispatch(
+        getDokHukum({
+          token: token,
+          id: selectedList.key,
+          page: page,
+          search: search,
+        })
+      );
       // dispatch(setRefresh(false));
     }
-  }, [token, selectedList.key, page]);
+  }, [token, selectedList.key, page, search]);
 
-  const { dokumen, lists, dokumenList, refresh, loading } = useSelector(
-    (state) => state.kebijakan
-  );
+  const { dokumen, lists, dokumenList, unitKerjaTematikId, refresh, loading } =
+    useSelector((state) => state.kebijakan);
   const [dataFilter, setFilterData] = useState([]);
 
   // useEffect(() => {
@@ -137,6 +147,9 @@ export default function Dashboard() {
   //     });
   //   setFilterData(filter);
   // };
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
   useEffect(() => {
     console.log("key changed!");
     setPage(5);
@@ -147,23 +160,21 @@ export default function Dashboard() {
     setFilterData(dokumenList);
   }, [dokumenList]);
 
-  const [search, setSearch] = useState("");
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
+  // useEffect(() => {
+  //   const item = dokumenList;
+  //   if (search !== "") {
+  //     const data = item.filter((item) => {
+  //       return item.subjek.toLowerCase().includes(search.toLowerCase());
+  //     });
+  //     setFilterData(data);
+  //   } else {
+  //     setFilterData(item);
+  //   }
+  // }, [search]);
 
-  useEffect(() => {
-    const item = dokumenList;
-    if (search !== "") {
-      const data = item.filter((item) => {
-        return item.subjek.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
-    }
-  }, [search]);
-
-  const filterData = (event) => {
+  const filterData = () => {
     // console.log(event);
-    setSearch(event);
+    setSearch(inputValue);
   };
 
   const asc = () => {
@@ -188,6 +199,7 @@ export default function Dashboard() {
     if (dokumenList.length % 5 === 0) {
       setPage(page + 5);
     }
+
     // console.log(page);
   };
 
@@ -200,7 +212,10 @@ export default function Dashboard() {
   // console.log("page : " + page);
   // console.log(selectedList.key);
   // console.log("search value : (" + search + ")");
-  // console.log(dokumenList[0]?.subjek);
+  // console.log(dokumenList);
+  console.log(unitKerjaTematikId);
+
+  // console.log(inputValue);
 
   return (
     <>
@@ -314,11 +329,18 @@ export default function Dashboard() {
                 borderRadius: 8,
               }}
             >
-              <Search
-                placeholder={"Cari..."}
-                onSearch={filterData}
-                iconColor={COLORS.primary}
-              />
+              <View style={styles.input}>
+                <Ionicons name="search" size={20} color={COLORS.primary} />
+                <TextInput
+                  placeholder={"Cari..."}
+                  style={{ fontSize: 16, flex: 1 }}
+                  maxLength={30}
+                  value={inputValue}
+                  onChangeText={(text) => setInputValue(text)}
+                  onSubmitEditing={filterData}
+                  clearButtonMode="always"
+                />
+              </View>
             </View>
             <View style={{ flexDirection: "row", gap: 10 }}>
               <TouchableOpacity onPress={!ascending ? asc : desc}>
@@ -438,6 +460,16 @@ export default function Dashboard() {
 }
 
 const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
