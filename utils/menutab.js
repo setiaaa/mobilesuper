@@ -76,10 +76,11 @@ import { IKU } from "../Apps/Dashboard/IKU";
 import { AddressBookJabatan } from "../Apps/AddressBookJabatan";
 import { AddressBookPegawai } from "../Apps/AddressBookPegawai";
 import { COLORS } from "../config/SuperAppps";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
-
+const Stack = createNativeStackNavigator();
 export const BottomTabs = () => {
   return (
     <Host>
