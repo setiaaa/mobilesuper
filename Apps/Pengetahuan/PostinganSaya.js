@@ -271,7 +271,9 @@ export const PostinganSaya = () => {
 
   const loadMore = () => {
     if (filterData.length % 5 === 0) {
-      setPage(page + 5);
+      if (filterData.length > page) {
+        setPage(page + 5);
+      }
     }
     console.log(page);
   };

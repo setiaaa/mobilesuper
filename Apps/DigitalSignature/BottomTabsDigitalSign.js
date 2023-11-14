@@ -99,6 +99,50 @@ function MyTabDigitalSign({ props, navigation }) {
                             </View>
                         )}
                     </TouchableOpacity>
+
+                    <TouchableOpacity
+                        key={3}
+                        onPress={() => {
+                            setTabItemIndex(3)
+                            navigation.navigate('LaporanDigitalSign', { unread: false })
+                            // props.navigation.navigate('Home', { unread: false })
+                        }}>
+                        {tabItemIndex === 3 ? (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+
+                                <View style={{
+                                    width: '100%',
+                                    height: 3,
+                                    backgroundColor: COLORS.primary,
+                                    position: 'absolute',
+                                    top: 0,
+                                    //shadow ios
+                                    shadowOffset: { width: -2, height: 5 },
+                                    shadowColor: COLORS.primary,
+                                    shadowOpacity: 0.4,
+                                    //shadow android
+                                    elevation: 2,
+                                }} />
+                                <Ionicons name='chatbubbles-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
+                                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Laporan</Text>
+                            </View>
+                        ) : (
+                            <View style={{
+                                alignItems: 'center',
+                                height: 65,
+                                justifyContent: 'center',
+                                width: 80,
+                            }}>
+                                <Ionicons name='chatbubbles-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
+                                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Laporan</Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
                 </View>
             </BottomSheetModalProvider>
         </ >
