@@ -39,6 +39,8 @@ const GET_LIST_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_POSTINGAN_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
 
+const SPPD = BASE_URL + "monperdin/"
+
 const Cuti = "https://cuti.kubekkp.coofis.com/api/";
 
 //Login
@@ -1671,5 +1673,26 @@ export const getDokumenPersetujuan = createAsyncThunk(
       }
     );
     return respon?.data;
+  }
+);
+
+//SPPD
+export const getDashboardSPPD = createAsyncThunk(
+  "sppd/getDashboard",
+  async (token) => {
+    const respon = await axios.get(`${SPPD}dashboard/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data;
+  }
+);
+
+export const getDocumentListSPPD = createAsyncThunk(
+  "sppd/getDocumentListSPPD",
+  async (token) => {
+    const respon = await axios.get(`${SPPD}document/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
   }
 );

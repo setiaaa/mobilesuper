@@ -220,6 +220,7 @@ import { DokumenCuti } from "../Cuti/DokumenCuti";
 import { getTokenValue } from "../../service/session";
 import { Semua } from "../Task Management/Dashboard/Semua";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
+import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -1880,6 +1881,13 @@ function AuthenticatedStack() {
           <Stack.Screen
             name="ListArsipCuti"
             component={ListArsipCuti}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="KegiatanBaru"
+            component={KegiatanBaru}
             options={{
               headerShown: false,
             }}
