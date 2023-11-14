@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useEffect } from 'react'
-import { BottomTabsDetailTask } from '../../Korespondensi/AppNavigator'
+import { BottomTabsDetailTask } from '../../../utils/menutab'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useDispatch } from 'react-redux'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'

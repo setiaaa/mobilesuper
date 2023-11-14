@@ -1,0 +1,842 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Host } from "react-native-portalize";
+import MyTabBar from "../Apps/SuperApps/BottomTabs";
+import { Home } from "../Apps/SuperApps/Home";
+import { Satker } from "../Apps/SuperApps/Satker";
+import { FAQ } from "../Apps/SuperApps/FAQ";
+import { Profile } from "../Apps/SuperApps/Profile";
+import MyTabBarRepo from "../Apps/Repository/BottomTabsRepo";
+import { Dokumen } from "../Apps/Repository/Dokumen";
+import { Dibagikan } from "../Apps/Repository/Dibagikan";
+import { DokumenTamplate } from "../Apps/Repository/DokumenTamplate";
+import MyTabBarKeb from "../Apps/Kebijakan/BottomtabsKeb";
+import Dashboard from "../Apps/Kebijakan/Dashboard";
+import { Tematik } from "../Apps/Kebijakan/Tematik";
+import MyTabBarDetailRepo from "../Apps/Repository/BottomTabsDetailRepo";
+import { DetailActivity } from "../Apps/Repository/DetailActivity";
+import { Lampiran } from "../Apps/Repository/Lampiran";
+import { Komentar } from "../Apps/Repository/Komentar";
+import MyTabBarKal from "../Apps/Kalender/BottomTabsKal";
+import { GrupKalender } from "../Apps/Kalender/GrupKalender";
+import { Agenda } from "../Apps/Kalender/Agenda";
+import MyTabBarDetailTask from "../Apps/Task Management/DetailTask/BottmTabsDetailTask";
+import { DetailTask } from "../Apps/Task Management/DetailTask/DetailTask";
+import { LampiranTask } from "../Apps/Task Management/DetailTask/LampiranTask";
+import MyTabDigitalSign from "../Apps/DigitalSignature/BottomTabsDigitalSign";
+import { Bankom } from "../Apps/DigitalSignature/Bankom";
+import { DokumenLain } from "../Apps/DigitalSignature/DokumenLain";
+import MyTabBarPengetahuan from "../Apps/Pengetahuan/BottomTabsPengetahuan";
+import { LiniMasa } from "../Apps/Pengetahuan/LiniMasa";
+import { PostinganSaya } from "../Apps/Pengetahuan/PostinganSaya";
+import { RangkumanIKU } from "../Apps/Pengetahuan/RangkumanIKU";
+import { PenilaianPenggetahaun } from "../Apps/Pengetahuan/PenilaianPengetahuan";
+import { LaporanPengetahuan } from "../Apps/Pengetahuan/LaporanPengetahuan";
+import MyTabDetailEvent from "../Apps/Event Management/BottomTabsDetailEvent";
+import { DetailEvent } from "../Apps/Event Management/DetailEvent";
+import { AgendaEvent } from "../Apps/Event Management/AgendaEvent";
+import MyTabDetailAgenda from "../Apps/Event Management/BottomTabsDetailAgenda";
+import { DetailAgenda } from "../Apps/Event Management/DetailAgenda";
+import { Todo } from "../Apps/Event Management/Todo";
+import { Absen } from "../Apps/Event Management/Absen";
+import MyTabBarSPPD from "../Apps/SPPD/BottomTabsSPPD";
+import { Personal } from "../Apps/SPPD/Personal";
+import { DokumenSPPD } from "../Apps/SPPD/DokumenSPPD";
+import MyTabBarOutgoingKorespondensi from "../Apps/Korespondensi/Detail/Outgoing/BottomTabsOutgoingKorespondensi";
+import { InfoOutgoindDetail } from "../Apps/Korespondensi/Detail/Outgoing/InfoOutgoindDetail";
+import { FileOutgoingDetail } from "../Apps/Korespondensi/Detail/Outgoing/FileOutgoingDetail";
+import { AttachmentOutgoingDetail } from "../Apps/Korespondensi/Detail/Outgoing/AttachmentOutgoingDetail";
+import { KomentarOutgoingDetail } from "../Apps/Korespondensi/Detail/Outgoing/KomentarOutgoingDetail";
+import MyTabCuti from "../Apps/Cuti/BottomTabsCuti";
+import { PersonalCuti } from "../Apps/Cuti/PersonalCuti";
+import { PersetujanCuti } from "../Apps/Cuti/PersetujanCuti";
+import { DokumenCuti } from "../Apps/Cuti/DokumenCuti";
+import { KRT } from "../Apps/SuperApps/KRT";
+import { Pengawasan } from "../Apps/SuperApps/Pengawasan";
+import { KPP } from "../Apps/SuperApps/KPP";
+import { BackLog } from "../Apps/Task Management/Task/BackLog";
+import { InProgres } from "../Apps/Task Management/Task/InProgres";
+import { Pending } from "../Apps/Task Management/Task/Pending";
+import { Complete } from "../Apps/Task Management/Task/Complete";
+import { HariIni } from "../Apps/Task Management/Dashboard/HariIni";
+import { MingguIni } from "../Apps/Task Management/Dashboard/MingguIni";
+import { Terlewat } from "../Apps/Task Management/Dashboard/Terlewat";
+import { Demografi } from "../Apps/Dashboard/Demografi";
+import { Penilaian } from "../Apps/Dashboard/Penilaian";
+import { Pelatihan } from "../Apps/Dashboard/Pelatihan";
+import { Absensi } from "../Apps/Dashboard/Absensi";
+import { Kesejahteraan } from "../Apps/Dashboard/Kesejahteraan";
+import { Perencanaan } from "../Apps/Dashboard/Perencanaan";
+import { Produksi } from "../Apps/Dashboard/Produksi";
+import { TeknologiTerbaru } from "../Apps/Dashboard/TeknologiTerbaru";
+import { APBN } from "../Apps/Dashboard/APBN";
+import { PNBP } from "../Apps/Dashboard/PNPB";
+import { IKU } from "../Apps/Dashboard/IKU";
+import { AddressBookJabatan } from "../Apps/AddressBookJabatan";
+import { AddressBookPegawai } from "../Apps/AddressBookPegawai";
+import { COLORS } from "../config/SuperAppps";
+
+const Tab = createBottomTabNavigator();
+const Top = createMaterialTopTabNavigator();
+
+export const BottomTabs = () => {
+  return (
+    <Host>
+      <BottomSheetModalProvider>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabBar {...props} />}
+          initialRouteName="Home"
+        >
+          <Tab.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Satker"
+            component={Satker}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="FAQ"
+            component={FAQ}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Profile"
+            component={Profile}
+            options={{ headerShown: false }}
+          />
+          {/* <Tab.Screen name='Tp' component={Tp} options={{ headerShown: false }} /> */}
+          {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarItemStyle: { display: 'none' }
+      
+        /> */}
+        </Tab.Navigator>
+      </BottomSheetModalProvider>
+    </Host>
+  );
+};
+
+export const BottomTabsRepo = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarRepo {...props} />}
+        initialRouteName="Dokumen"
+      >
+        <Tab.Screen
+          name="Dokumen"
+          component={Dokumen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Dibagikan"
+          component={Dibagikan}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="DokumenTamplate"
+          component={DokumenTamplate}
+          options={{ headerShown: false }}
+        />
+        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarItemStyle: { display: 'none' }
+          }}
+        /> */}
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsKeb = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarKeb {...props} />}
+        initialRouteName="Dashboard"
+      >
+        <Tab.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Tematik"
+          component={Tematik}
+          options={{ headerShown: false }}
+        />
+        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarItemStyle: { display: 'none' }
+          }}
+        /> */}
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsDetailRepo = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarDetailRepo {...props} />}
+        initialRouteName="DetailActivity"
+      >
+        <Stack.Screen
+          name="DetailActivity"
+          component={DetailActivity}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Lampiran"
+          component={Lampiran}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Komentar"
+          component={Komentar}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsKalender = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarKal {...props} />}
+        initialRouteName="GrupKalender"
+      >
+        <Tab.Screen
+          name="GrupKalender"
+          component={GrupKalender}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Agenda"
+          component={Agenda}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsDetailTask = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarDetailTask {...props} />}
+        initialRouteName="DetailTask"
+      >
+        <Tab.Screen
+          name="DetailTask"
+          component={DetailTask}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="LampiranTask"
+          component={LampiranTask}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsDigitalSign = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabDigitalSign {...props} />}
+        initialRouteName="Bankom"
+      >
+        <Tab.Screen
+          name="Bankom"
+          component={Bankom}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="DokumenLain"
+          component={DokumenLain}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsPengetahuan = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarPengetahuan {...props} />}
+        initialRouteName="LiniMasa"
+      >
+        <Tab.Screen
+          name="LiniMasa"
+          component={LiniMasa}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="PostinganSaya"
+          component={PostinganSaya}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="RangkumanIKU"
+          component={RangkumanIKU}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="PenilaianPenggetahaun"
+          component={PenilaianPenggetahaun}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="LaporanPengetahuan"
+          component={LaporanPengetahuan}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsDetailEvent = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabDetailEvent {...props} />}
+        initialRouteName="DetailEvent"
+      >
+        <Tab.Screen
+          name="DetailEvent"
+          component={DetailEvent}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="AgendaEvent"
+          component={AgendaEvent}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsDetailAgenda = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabDetailAgenda {...props} />}
+        initialRouteName="DetailAgenda"
+      >
+        <Tab.Screen
+          name="DetailAgenda"
+          component={DetailAgenda}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Todo"
+          component={Todo}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Absen"
+          component={Absen}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsSPPD = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarSPPD {...props} />}
+        initialRouteName="Personal"
+      >
+        <Tab.Screen
+          name="Personal"
+          component={Personal}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="DokumenSPPD"
+          component={DokumenSPPD}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsOutgoingKorespondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarOutgoingKorespondensi {...props} />}
+        initialRouteName="InfoOutgoindDetail"
+      >
+        <Tab.Screen
+          name="InfoOutgoindDetail"
+          component={InfoOutgoindDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
+        <Tab.Screen
+          name="FileOutgoingDetail"
+          component={FileOutgoingDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
+        <Tab.Screen
+          name="AttachmentOutgoingDetail"
+          component={AttachmentOutgoingDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
+        <Tab.Screen
+          name="KomentarOutgoingDetail"
+          component={KomentarOutgoingDetail}
+          options={{ header: toolbarBack, title: "Detail Surat Keluar" }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+export const BottomTabsCuti = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabCuti {...props} />}
+        initialRouteName="PersonalCuti"
+      >
+        <Tab.Screen
+          name="PersonalCuti"
+          component={PersonalCuti}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="PersetujuanCuti"
+          component={PersetujanCuti}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="DokumenCuti"
+          component={DokumenCuti}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsTP = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName="KRT"
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: "#800000" },
+          tabBarLabelStyle: { fontSize: 10, textTransform: "none" },
+        }}
+      >
+        <Top.Screen
+          name="KRT"
+          component={KRT}
+          options={{
+            title: "Kerumahtanggaan",
+          }}
+        />
+        <Top.Screen
+          name="Pengawasan"
+          component={Pengawasan}
+          options={{
+            title: "Pengawasan",
+          }}
+        />
+        <Top.Screen
+          name="KPP"
+          component={KPP}
+          options={{
+            title: "Kinerja dan Pengembangan Pegawai",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsTask = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName={"InProgres"}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: {
+            fontSize: 12,
+            textTransform: "none",
+            fontWeight: FONTWEIGHT.bold,
+          },
+        }}
+      >
+        <Top.Screen
+          name="BackLog"
+          component={BackLog}
+          options={{
+            title: "Back Log",
+          }}
+        />
+        <Top.Screen
+          name="Inprogres"
+          component={InProgres}
+          options={{
+            title: "In Progress",
+          }}
+        />
+        <Top.Screen
+          name="Pending"
+          component={Pending}
+          options={{
+            title: "Pending",
+          }}
+        />
+        <Top.Screen
+          name="Complete"
+          component={Complete}
+          options={{
+            title: "Complete",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsTaskDashboard = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName={"HariIni"}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: {
+            fontSize: 12,
+            textTransform: "none",
+            fontWeight: FONTWEIGHT.bold,
+          },
+        }}
+      >
+        <Top.Screen
+          name="HariIni"
+          component={HariIni}
+          options={{
+            title: "Hari Ini",
+          }}
+        />
+        <Top.Screen
+          name="MingguIni"
+          component={MingguIni}
+          options={{
+            title: "Minggu Ini",
+          }}
+        />
+        <Top.Screen
+          name="Terlewat"
+          component={Terlewat}
+          options={{
+            title: "Terlewat",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsTaskKorespondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName={"Arsip"}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: {
+            fontSize: 12,
+            textTransform: "none",
+            fontWeight: FONTWEIGHT.bold,
+          },
+        }}
+      >
+        <Top.Screen
+          name="Arsip"
+          component={InProgres}
+          options={{
+            title: "Arsip",
+          }}
+        />
+        <Top.Screen
+          name="Terlewat"
+          component={Pending}
+          options={{
+            title: "Terlewat",
+          }}
+        />
+        <Top.Screen
+          name="HariIni"
+          component={Complete}
+          options={{
+            title: "Hari Ini",
+          }}
+        />
+        <Top.Screen
+          name="MingguDepan"
+          component={BackLog}
+          options={{
+            title: "Minggu Depan",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsDash = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName="Demografi"
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: "auto" },
+        }}
+      >
+        <Top.Screen
+          name="Demografi"
+          component={Demografi}
+          options={{
+            title: "Demografi",
+          }}
+        />
+        <Top.Screen
+          name="Penilaian"
+          component={Penilaian}
+          options={{
+            title: "Penilaian",
+          }}
+        />
+        <Top.Screen
+          name="Pelatihan"
+          component={Pelatihan}
+          options={{
+            title: "Pelatihan",
+          }}
+        />
+        <Top.Screen
+          name="Absensi"
+          component={Absensi}
+          options={{
+            title: "Absensi",
+          }}
+        />
+        <Top.Screen
+          name="Kesejahteraan"
+          component={Kesejahteraan}
+          options={{
+            title: "Kesejahteraan",
+          }}
+        />
+        <Top.Screen
+          name="Perencanaan"
+          component={Perencanaan}
+          options={{
+            title: "Perencanaan",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsProduksiBudidaya = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName="Produksi"
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: "auto" },
+        }}
+      >
+        <Top.Screen
+          name="Produksi"
+          component={Produksi}
+          options={{
+            title: "Produksi",
+          }}
+        />
+        <Top.Screen
+          name="TeknologiTerbaru"
+          component={TeknologiTerbaru}
+          options={{
+            title: "Teknologi Terbaru",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopsKeuanganKinerja = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName="APBN"
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarActiveTintColor: "#C34647",
+          tabBarInactiveTintColor: "black",
+          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: "auto" },
+        }}
+      >
+        <Top.Screen
+          name="APBN"
+          component={APBN}
+          options={{
+            title: "APBN",
+          }}
+        />
+        <Top.Screen
+          name="PNBP"
+          component={PNBP}
+          options={{
+            title: "PNBP",
+          }}
+        />
+        <Top.Screen
+          name="IKU"
+          component={IKU}
+          options={{
+            title: "IKU",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const TopAddressBook = ({ config }) => {
+  return (
+    <Host>
+      <BottomSheetModalProvider>
+        <Top.Navigator
+          initialRouteName={"AddressBookJabatan"}
+          screenOptions={{
+            tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+            tabBarActiveTintColor: "#C34647",
+            tabBarInactiveTintColor: "black",
+            tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+            tabBarScrollEnabled: true,
+            tabBarItemStyle: { width: "auto" },
+          }}
+        >
+          {config.tabs.jabatan && config.tabs.pegawai ? (
+            <>
+              <Top.Screen
+                name="AddressBookJabatan"
+                component={AddressBookJabatan}
+                options={{
+                  title: "Jabatan",
+                  tabBarItemStyle: { width: "50%" },
+                  tabBarLabelStyle: {
+                    width: 200,
+                    fontSize: 13,
+                    textTransform: "none",
+                    paddingLeft: 80,
+                  },
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookPegawai"
+                component={AddressBookPegawai}
+                options={{
+                  title: "Pegawai",
+                  tabBarItemStyle: { width: "50%" },
+                  tabBarLabelStyle: {
+                    width: 200,
+                    fontSize: 13,
+                    textTransform: "none",
+                    paddingLeft: 50,
+                  },
+                }}
+                initialParams={{ config: config }}
+              />
+            </>
+          ) : config.tabs.jabatan ? (
+            <Top.Screen
+              name="AddressBookJabatan"
+              component={AddressBookJabatan}
+              options={{
+                title: "Jabatan",
+                tabBarItemStyle: { width: "50%" },
+                tabBarLabelStyle: {
+                  width: 200,
+                  fontSize: 13,
+                  textTransform: "none",
+                  paddingLeft: 80,
+                },
+              }}
+              initialParams={{ config: config }}
+            />
+          ) : config.tabs.pegawai ? (
+            <Top.Screen
+              name="AddressBookPegawai"
+              component={AddressBookPegawai}
+              options={{
+                title: "Pegawai",
+                tabBarItemStyle: { width: "50%" },
+                tabBarLabelStyle: {
+                  width: 200,
+                  fontSize: 13,
+                  textTransform: "none",
+                  paddingLeft: 50,
+                },
+              }}
+              initialParams={{ config: config }}
+            />
+          ) : null}
+        </Top.Navigator>
+      </BottomSheetModalProvider>
+    </Host>
+  );
+};

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useEffect } from "react";
-import { BottomTabs } from "../Korespondensi/AppNavigator";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { AVATAR } from "../../config/SuperAppps";
 import { useDispatch } from "react-redux";
@@ -18,6 +17,7 @@ import {
 } from "../../store/SuperApps";
 import { Host } from "react-native-portalize";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomTabs } from "../../utils/menutab";
 
 //     id: 1,
 //     tanggal: "Senin, 5 Juni 2023",

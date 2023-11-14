@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-import { TopsTP } from '../Korespondensi/AppNavigator';
+import { TopsTP } from '../../utils/menutab';
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
 
 export const Tp = () => {

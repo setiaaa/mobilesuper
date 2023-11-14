@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { COLORS, PADDING } from '../../config/SuperAppps';
 import { StyleSheet } from 'react-native';
-import { TopsKeuanganKinerja } from '../Korespondensi/AppNavigator';
+import { TopsKeuanganKinerja } from '../../utils/menutab';
 import { useDispatch } from 'react-redux';
 import { setTeknologiList } from '../../store/Dashboard';
 import { useNavigation } from '@react-navigation/native';

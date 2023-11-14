@@ -12,7 +12,7 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints
 } from '@gorhom/bottom-sheet'
-import { TopsRangkumanIKU } from '../Korespondensi/AppNavigator';
+import { TopsRangkumanIKU } from '../../utils/menutab';
 
 const tahun = [
   { key: '1', value: '2023' },

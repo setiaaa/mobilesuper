@@ -45,6 +45,7 @@ export const LoginToken = () => {
       !loginAuth.error &&
       isSelected == true
     ) {
+      navigation.replace("Main");
     } else {
       setUserName("");
       setPassword("");

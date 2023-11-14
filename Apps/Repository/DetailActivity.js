@@ -15,7 +15,6 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { useMemo } from "react";
-import { BottomTabsDetailRepo } from "../Korespondensi/AppNavigator";
 import { useState } from "react";
 import { useEffect } from "react";
 import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";

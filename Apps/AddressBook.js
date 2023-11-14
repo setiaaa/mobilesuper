@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getTokenValue } from '../service/session'
 import { getDivision, getDivisionTree, getEmployee } from '../service/api'
 import { useNavigation } from '@react-navigation/native'
-import { TopAddressBook } from './Korespondensi/AppNavigator'
 import { setAddressbookSelected } from '../store/AddressbookKKP'
 import {
     BottomSheetModal,
@@ -21,6 +20,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import { FlatList } from 'react-native'
 import { Portal } from 'react-native-portalize'
+import { TopAddressBook } from '../utils/menutab'
 
 
 const CardListPilih = ({ item, addressbook }) => {

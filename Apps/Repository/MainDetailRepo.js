@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { BottomTabsDetailRepo } from "../Korespondensi/AppNavigator";
+import { BottomTabsDetailRepo } from "../../utils/menutab";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setDokumenDetail } from "../../store/Repository";

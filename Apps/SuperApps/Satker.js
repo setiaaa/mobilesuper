@@ -291,7 +291,7 @@ export const Satker = () => {
                         onSnapToItem={setSlide}
                     />
                     <Pagination
-                        dotsLength={gallery.results?.slice(0, 3).length}
+                        dotsLength={gallery?.results?.slice(0, 3).length}
                         dotColor={'black'}
                         inactiveDotColor={COLORS.grey}
                         dotStyle={styles.paginationDot}
@@ -335,7 +335,7 @@ export const Satker = () => {
                         onSnapToItem={setSlide2}
                     />
                     <Pagination
-                        dotsLength={pesan.length}
+                        dotsLength={pesan?.length}
                         dotColor={'black'}
                         inactiveDotColor={COLORS.grey}
                         dotStyle={styles.paginationDot}
