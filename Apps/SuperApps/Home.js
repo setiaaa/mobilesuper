@@ -853,7 +853,7 @@ export const Home = () => {
               onSnapToItem={setSlide4}
             />
             <Pagination
-              dotsLength={galeri.lists.slice(0, 3).length}
+              dotsLength={galeri?.lists?.slice(0, 3).length}
               dotColor={"black"}
               inactiveDotColor={COLORS.grey}
               dotStyle={styles.paginationDot}

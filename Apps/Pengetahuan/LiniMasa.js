@@ -52,7 +52,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    // console.log(toggleComment)
+    console.log(listData)
   };
 
   const handleClickBalas = () => {
@@ -202,7 +202,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                         >
                           <View>
                             <Image
-                              source={{ uri: listData.creator_avatar }}
+                              source={{ uri: listKomen.creator_avatar }}
                               style={{
                                 width: 30,
                                 height: 30,
@@ -304,7 +304,7 @@ const CardLiniMasa = ({ item, token }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["70%"], []);
+  const initialSnapPoints = useMemo(() => ['95%'], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -341,6 +341,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
+  console.log(detail)
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -359,8 +360,20 @@ const CardLiniMasa = ({ item, token }) => {
     };
     dispatch(postComment(data));
     setKomen("");
-    setParentId({ id: "", creator: "" });
+    setParentId({id:"",creator:""})
   };
+
+  useEffect(() => {
+    const data = {
+      token: token,
+      id: detail.id,
+    };
+    if (refresh) {
+      console.log("masukkkkkkk");
+      dispatch(getDetailLinimasa(data));
+      dispatch(setRefresh(false));
+    }
+  }, [refresh]);
 
   return (
     <View
@@ -980,6 +993,7 @@ const CardLiniMasa = ({ item, token }) => {
           <BottomSheetView onLayout={handleContentLayout} style={{}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "height" : "height"}
+              keyboardVerticalOffset={parentId !== "" ? 80: 70}
             >
               <View
                 style={{
@@ -1029,19 +1043,12 @@ const CardLiniMasa = ({ item, token }) => {
                     setToggleComment={setToggleComment}
                   />
                 )}
-                style={{ height: 400 }}
+                style={{ height: 370}}
               />
 
-              <View style={{ justifyContent: "flex-end" }}>
-                {parentId.id !== "" ? (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      paddingHorizontal: 20,
-                      paddingTop: 10,
-                    }}
-                  >
+              <View style={{ justifyContent: "flex-end", paddingTop:10}}>
+                {parentId.id !== "" ? ( 
+                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20,}}>
                     <Text>Membalas {parentId.creator}</Text>
                     <TouchableOpacity>
                       <Ionicons
@@ -1073,12 +1080,11 @@ const CardLiniMasa = ({ item, token }) => {
                     flexDirection: "row",
                     backgroundColor: COLORS.ExtraDivinder,
                     marginTop: 10,
-                    marginBottom: 10,
                   }}
                 >
                   <BottomSheetTextInput
                     numberOfLines={1}
-                    maxLength={40}
+                    maxLength={30}
                     placeholder="Ketik Komentar Disini"
                     ref={inputRef}
                     style={{ padding: 10 }}
@@ -1090,6 +1096,7 @@ const CardLiniMasa = ({ item, token }) => {
                       alignItems: "flex-end",
                       flex: 1,
                       marginRight: 10,
+                      marginLeft:50,
                       justifyContent: "center",
                     }}
                   >

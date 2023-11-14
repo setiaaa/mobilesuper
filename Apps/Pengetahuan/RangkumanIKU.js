@@ -360,7 +360,29 @@ export const RangkumanIKU = () => {
   // const save = (uri) => {
   //   shareAsync(uri);
   // };
-  console.log(pegawai.lists)
+
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.nama.localeCompare(b.nama));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
+  };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.nama.localeCompare(a.nama));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
+
   return (
     <>
       <View
@@ -779,8 +801,8 @@ export const RangkumanIKU = () => {
                   </TouchableOpacity>
                 ) : null}
 
-                {/* <TouchableOpacity> */}
-                  <TouchableOpacity onPress={!ascending ? asc : desc}
+                <TouchableOpacity>
+                  <TouchableOpacity
                     style={{
                       backgroundColor: "white",
                       borderRadius: 50,
@@ -793,7 +815,7 @@ export const RangkumanIKU = () => {
                       color={COLORS.grey}
                     />
                   </TouchableOpacity>
-                {/* </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -813,7 +835,6 @@ export const RangkumanIKU = () => {
             <View>
               <View
                 style={{
-                  marginHorizontal: 15,
                   marginTop: 15,
                   gap: 15,
                   marginBottom: "95%",

@@ -1,5 +1,5 @@
-import React from "react";
-import { TouchableOpacity } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { KeyboardAvoidingView, TextInput, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,20 +8,32 @@ import { FlatList } from "react-native";
 import { Image } from "react-native";
 import { useState } from "react";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { } from "react-native-safe-area-context";
+import ListEmpty from "../../components/ListEmpty";
+import { getTokenValue } from "../../service/session";
+import { getDetailDocument, postCommentRepo } from "../../service/api";
 
-const DaftarKomentar = ({ items }) => {
+const DaftarKomentar = ({ items, setParentId }) => {
+  
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     id: items.id,
   });
+  const handleClickBalas = () => {
+    // if (inputRef.current) {
+    //   inputRef.current.focus();
+      setParentId({id:items.id, creator:items.creator} );
+    // }
+  };
   const clickBalas = (id, temp) => {
     setToggleComment({
       toggle: temp,
       id: id,
     });
   };
+  console.log('ini items')
+  console.log(items)
 
   return (
     <View
@@ -54,7 +66,7 @@ const DaftarKomentar = ({ items }) => {
         >
           <View>
             <Image
-              style={{ width: 26, height: 26, borderRadius: 50 }}
+              style={{ width: 30, height: 30, borderRadius: 50 }}
               source={{ uri: items.creator_avatar }}
             />
           </View>
@@ -64,6 +76,7 @@ const DaftarKomentar = ({ items }) => {
                 fontSize: FONTSIZE.H2,
                 fontWeight: FONTWEIGHT.bold,
                 lineHeight: 20,
+                wordWrap: "break-word",
               }}
             >
               {items.creator}
@@ -76,6 +89,7 @@ const DaftarKomentar = ({ items }) => {
                   fontWeight: FONTWEIGHT.normal,
                   lineHeight: 18,
                   marginBottom: 10,
+                  wordWrap: "break-word",
                 }}
               >
                 {items.created_at}
@@ -87,15 +101,36 @@ const DaftarKomentar = ({ items }) => {
                 fontSize: FONTSIZE.H5,
                 fontWeight: FONTWEIGHT.normal,
                 lineHeight: 18,
+                wordWrap: "break-word",
               }}
             >
               {items.message}
             </Text>
-            {items.child === "" ? null : (
+            <TouchableOpacity
+              style={{
+                color: COLORS.lighter,
+                fontSize: FONTSIZE.H3,
+                fontWeight: FONTWEIGHT.normal,
+                wordWrap: "break-word",
+                marginTop: 10,
+              }}
+              onPress={() => {
+                handleClickBalas();
+              }}
+            >
+              <Text
+                style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+              >
+                Balas
+              </Text>
+            </TouchableOpacity>
+            {items.children?.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === items.id) ||
-                  (toggleComment.id !== items.id && items.child > 0) ? (
-                  <TouchableOpacity onPress={() => clickBalas(items.id, true)}>
+                  (toggleComment.id !== items.id && items.children > 0) ? (
+                  <TouchableOpacity 
+                    key={items.id}
+                    onPress={() => clickBalas(items.id, true)}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -117,20 +152,19 @@ const DaftarKomentar = ({ items }) => {
                           fontSize: FONTSIZE.H5,
                           fontWeight: FONTWEIGHT.normal,
                           lineHeight: 18,
+                          wordWrap: "break-word",
                         }}
                       >
-                        Tampilkan {items.child.length} Balasan
+                        Tampilkan {items.children?.length} Balasan
                       </Text>
                     </View>
                   </TouchableOpacity>
                 ) : null}
 
-                {items.id === toggleComment.id && toggleComment.toggle
-                  ? {
-                    /* <View>
-                  {items.child.map((listKomen, index) => (
+                {items.id === toggleComment.id && toggleComment.toggle ? (
+                  <View>
+                  {items.children?.map((listKomen, index) => (
                     <View
-                      key={index}
                       style={{
                         flexDirection: "row",
                         marginVertical: 10,
@@ -138,7 +172,14 @@ const DaftarKomentar = ({ items }) => {
                       }}
                     >
                       <View>
-                        <Image source={listKomen.avatarBalas} />
+                        <Image
+                              source={{ uri: listKomen.creator_avatar }}
+                              style={{
+                                width: 30,
+                                height: 30,
+                                borderRadius: 20,
+                              }}
+                            />
                       </View>
                       <View style={{ marginLeft: 10 }}>
                         <Text
@@ -148,7 +189,7 @@ const DaftarKomentar = ({ items }) => {
                             lineHeight: 20,
                           }}
                         >
-                          {listKomen.nama}
+                          {listKomen.creator}
                         </Text>
                         <View style={{ flexDirection: "row", gap: 5 }}>
                           <Text
@@ -160,7 +201,7 @@ const DaftarKomentar = ({ items }) => {
                               marginBottom: 10,
                             }}
                           >
-                            {listKomen.tanggal}
+                            {listKomen.created_at}
                           </Text>
                           <View
                             style={{
@@ -188,9 +229,9 @@ const DaftarKomentar = ({ items }) => {
                             lineHeight: 18,
                           }}
                         >
-                          {listKomen.isi}
+                          {listKomen.message}
                         </Text>
-                        {items.balas.length - 1 === index ? (
+                        {items.children?.length - 1 === index ? (
                           <TouchableOpacity
                             key={listKomen.id}
                             onPress={() => clickBalas(items.id, false)}
@@ -218,7 +259,7 @@ const DaftarKomentar = ({ items }) => {
                                   lineHeight: 18,
                                 }}
                               >
-                                Tutup {items.jmlhBalas} Balasan
+                                Tutup {items.children?.length} Balasan
                               </Text>
                             </View>
                           </TouchableOpacity>
@@ -226,8 +267,8 @@ const DaftarKomentar = ({ items }) => {
                       </View>
                     </View>
                   ))}
-                </View> */
-                  }
+                </View>
+                  )
                   : null}
               </View>
             )}
@@ -240,15 +281,48 @@ const DaftarKomentar = ({ items }) => {
 
 export const Komentar = () => {
   const navigation = useNavigation();
+  const [parentId, setParentId] = useState({ id: "", creator: "" });
+  const [komen, setKomen] = useState("");
+  const inputRef = useRef(null);
   const { dokumen } = useSelector((state) => state.repository);
+  const [token, setToken] = useState("");
   const detail = dokumen.detail;
 
   const comment = detail.comments;
+  console.log(dokumen)
+  // console.log(comment);
 
-  console.log(comment);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  const handleComment = () => {
+    const payload = {
+      document_id: detail.id,
+      parent_id: parentId.id !== "" ? parentId.id : "",
+      message: komen,
+    };
+    const data = {
+      token: token,
+      payload: payload,
+    };
+    console.log(parentId.id)
+    console.log(payload.parent_id)
+    dispatch(postCommentRepo(data));
+    setKomen("");
+    setParentId({ id: "", creator: "" });
+  };
 
   return (
     < >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "height" : "height"}
+      // keyboardVerticalOffset={parentId !== "" ? 80: 70}
+      keyboardVerticalOffset={70}
+    >
       <View
         style={{
           flexDirection: "row",
@@ -286,17 +360,99 @@ export const Komentar = () => {
         </View>
       </View>
       <View style={{ marginVertical: 20, marginLeft: 20 }}>
-        <Text>Komentar ({comment.length})</Text>
+        <Text>Komentar ({comment?.length})</Text>
       </View>
       <FlatList
         data={comment}
         renderItem={({ item }) => (
           <View key={item.id}>
-            <DaftarKomentar items={item} />
+            <DaftarKomentar 
+              items={item}
+              // inputRef={inputRef}
+              setParentId={setParentId}
+            />
           </View>
         )}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => <ListEmpty />}
+        style={{ height:'68%'}}
       />
+      <View style={{ justifyContent: "flex-end" }}>
+                {parentId.id !== "" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 20,
+                      paddingTop: 10,
+                    }}
+                  >
+                    <Text>Membalas {parentId.creator}</Text>
+                    <TouchableOpacity>
+                      <Ionicons
+                        name="close"
+                        size={20}
+                        color={COLORS.primary}
+                        onPress={() => setParentId({ id: "", creator: "" })}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
+                <View
+                  style={{
+                    height: 1,
+                    width: "90%",
+                    backgroundColor: COLORS.lighter,
+                    opacity: 0.3,
+                    marginTop: 10,
+                    marginHorizontal: 20,
+                  }}
+                />
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: "90%",
+                    marginLeft: 17,
+                    borderRadius: 16,
+                    borderColor: COLORS.ExtraDivinder,
+                    flexDirection: "row",
+                    backgroundColor: COLORS.ExtraDivinder,
+                    marginTop: 10,
+                  }}
+                >
+                  <TextInput
+                    numberOfLines={1}
+                    maxLength={30}
+                    placeholder="Ketik Komentar Disini"
+                    // ref={inputRef}
+                    style={{ padding: 10 }}
+                    onChangeText={setKomen}
+                    value={komen}
+                  />
+                  <View
+                    style={{
+                      alignItems: "flex-end",
+                      flex: 1,
+                      marginRight: 10,
+                      marginLeft:50,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleComment();
+                      }}
+                    >
+                      <Ionicons
+                        name="send-sharp"
+                        size={20}
+                        color={COLORS.primary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+      </KeyboardAvoidingView>
     </ >
   );
 };

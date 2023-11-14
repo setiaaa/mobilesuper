@@ -22,6 +22,7 @@ import AddressbookKKP from "./AddressbookKKP";
 import Satker from "./Satker";
 import LoginAuth from "./LoginAuth";
 import Cuti from "./Cuti";
+import SPPD from "./SPPD";
 
 export const store = configureStore({
   reducer: {
@@ -46,6 +47,7 @@ export const store = configureStore({
     addressBookKKP: AddressbookKKP,
     satker: Satker,
     login: LoginAuth,
-    cuti: Cuti
+    cuti: Cuti,
+    sppd: SPPD
   },
 });
