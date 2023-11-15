@@ -646,16 +646,15 @@ export const DetailLinimasa = (item) => {
     }
   }, [refresh]);
 
-  
 
-  // console.log(detail.title);
-
-  console.log(linimasa.lists.like_list)
-
+  // console.log(linimasa.detail.li)
 
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
+
+console.log(linimasa.lists?.like_list)
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -1034,33 +1033,8 @@ export const DetailLinimasa = (item) => {
                         />
                       </View>
 
-                      <FlatList 
-                        data={linimasa.listsLike}
-                        renderItem={({ item }) => (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
-                              gap: 10,
-                              marginHorizontal: 20,
-                              marginTop: 20,
-                            }}
-                          >
-                            {/* <Image
-                              source={{ uri: data.avatar_url }}
-                              style={{
-                                width: 50,
-                                height: 50,
-                                borderRadius: 30,
-                              }}
-                            /> */}
-                            <Text>{item}</Text>
-                          </View>
-                        )}
-                        keyExtractor={(item) => item.id}
-                        />
-                      {/* <ScrollView style={{ marginBottom: 40 }}>
-                        {linimasa.lists?.((data) => {
+                      <ScrollView style={{ marginBottom: 40 }}>
+                        {linimasa.detail?.like_list?.map((data) => {
                           return (
                             <View
                               style={{
@@ -1079,11 +1053,12 @@ export const DetailLinimasa = (item) => {
                                   borderRadius: 30,
                                 }}
                               />
-                              <Text>{item}</Text>
+                              <Text>{data.name}</Text>
                             </View>
                           );
                         })}
-                      </ScrollView> */}
+                      </ScrollView>
+                      
                     </View>
                   </View>
                 </Modal>

@@ -304,8 +304,6 @@ const CardLiniMasa = ({ item, token }) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
-  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
-
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
   const {
@@ -1325,7 +1323,7 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
-  console.log(linimasa.lists);
+  // console.log(linimasa.listsLike)
 
   const filter = (event) => {
     setSearch(event);
@@ -1401,7 +1399,7 @@ export const LiniMasa = () => {
         </View>
 
         <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
+        <View style={{ width: "85%", marginRight: 10, marginBottom: -30}}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
