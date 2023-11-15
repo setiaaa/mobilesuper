@@ -43,6 +43,10 @@ const GET_LIST_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_POSTINGAN_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
 
+const UNITKERJA = BASE_URL + "policy/unker/";
+const UNITKERJAID = BASE_URL + "policy/tematik/";
+const DOKGENERAL = BASE_URL + "policy/search/";
+
 const SPPD = BASE_URL + "monperdin/";
 
 const Cuti = "https://cuti.kubekkp.coofis.com/api/";
@@ -105,15 +109,55 @@ export const getCategoryIdPage = async (id, page) => {
 // ? paginasi list dokumen hukum gimana? -Ben
 export const getDokHukum = createAsyncThunk(
   "kebijakan/getDokHukum",
-  async ({ token, id, page }) => {
-    // const id = "48";
-    // const page = "10";
-    console.log("dari api id " + id);
-    console.log("dari api page " + page);
-    console.log("dari api token " + token);
-    const respon = await axios.get(`${kebijakan}category/${id}/?page=${page}`, {
+  async ({ token, id, page, search }) => {
+    // console.log("dari api id " + id);
+    // console.log("dari api page " + page);
+    // console.log("dari api token " + token);
+    const respon = await axios.get(
+      `${kebijakan}category/${id}/?limit=${page}&tentang=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results.datas;
+  }
+);
+
+export const getUnitKerjaTematik = createAsyncThunk(
+  "kebijakan/getUnitKerjaTematik",
+  async ({ token }) => {
+    // console.log(token);
+    const respon = await axios.get(`${UNITKERJA}`, {
       headers: { Authorization: token },
     });
+    return respon?.data.result;
+  }
+);
+
+export const getDokGeneral = createAsyncThunk(
+  "kebijakan/getDokGeneral",
+  async ({ token, search, page }) => {
+    const respon = await axios.get(
+      `${DOKGENERAL}?&general=${search}&limit=${page}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results.datas;
+  }
+);
+
+export const getUnitKerjaTematikId = createAsyncThunk(
+  "kebijakan/getUniteKerjaTematikId",
+  async ({ token, id, page, search }) => {
+    console.log("id dari api : " + id);
+    console.log("token dari api : " + token);
+    const respon = await axios.get(
+      `${UNITKERJAID}${id}/?&limit=${page}&tentang=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return respon?.data.results.datas;
   }
 );

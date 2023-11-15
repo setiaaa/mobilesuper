@@ -14,6 +14,7 @@ import {
   getCategoryId,
   getCategoryIdPage,
   getDokHukum,
+  getUnitKerjaTematikId,
 } from "../../service/api";
 import { Search } from "../../components/Search";
 import { Ionicons } from "@expo/vector-icons";
@@ -37,14 +38,18 @@ import { Loading } from "../../components/Loading";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import { setRefresh } from "../../store/Kebijakan";
+import ListEmpty from "../../components/ListEmpty";
+import { event } from "react-native-reanimated";
+import { TextInput } from "react-native-gesture-handler";
 
-export default function Dashboard() {
+export default function Dashboard(params) {
+  const id = params?.route.params;
+  console.log(id);
   const [open, setOpen] = useState(false);
   const [openTentang, setOpenTentang] = useState(false);
   const [openTahun, setOpenTahun] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
   const [value, setValue] = useState();
-  const [dataFilter, setFilterData] = useState([]);
   const [category, setCategory] = useState([]);
   const bottomSheetModalRef = useRef(null);
   const [variant, setVariant] = useState("list");
@@ -78,25 +83,44 @@ export default function Dashboard() {
   useEffect(() => {
     if (token !== "") {
       dispatch(getCategory({ token: token, page: page }));
-      dispatch(setRefresh(false));
     }
   }, [token, page]);
 
+  const [selectedList, setSelectedList] = useState({ key: "", value: "" });
+
+  const [inputValue, setInputValue] = useState("");
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDokHukum({ token: token, id: selectedList.key, page: page }));
+      dispatch(
+        getDokHukum({
+          token: token,
+          id: selectedList.key,
+          page: page,
+          search: search,
+        })
+      );
+      // dispatch(setRefresh(false));
     }
-  }, [token, selectedList?.key, page]);
-
-  const { dokumen, lists, dokumenList, refresh, loading } = useSelector(
-    (state) => state.kebijakan
-  );
+  }, [token, selectedList.key, page, search]);
 
   useEffect(() => {
-    if (refresh) {
-      dispatch(getCategory({ token: token, page: page }));
+    if (id !== undefined && !(id?.unread === false)) {
+      const params = { token: token, id: id, page: page, search: search };
+      dispatch(getUnitKerjaTematikId(params));
     }
-  }, [refresh]);
+  }, [token, id, page, search]);
+
+  const { dokumen, lists, dokumenList, unitKerjaId, refresh, loading } =
+    useSelector((state) => state.kebijakan);
+  const [dataFilter, setFilterData] = useState([]);
+
+  // useEffect(() => {
+  //   if (refresh) {
+  //     dispatch(getCategory({ token: token, page: page }));
+  //   }
+  // }, [refresh]);
 
   useEffect(() => {
     setCategory(dokumen);
@@ -107,8 +131,6 @@ export default function Dashboard() {
     key: item.value,
     value: item.label,
   }));
-
-  const [selectedList, setSelectedList] = useState({ key: "", value: "" });
 
   // useEffect(() => {
   //   if (lists.count > 5) {
@@ -123,9 +145,9 @@ export default function Dashboard() {
   //   }
   // }, [page]);
 
-  useEffect(() => {
-    dispatch(getCategoryId({ token: token, id: selectedList.key }));
-  }, [token, selectedList.key]);
+  // useEffect(() => {
+  //   dispatch(getCategoryId(selectedList.key));
+  // }, [selectedList.key]);
 
   // const filterData = (search) => {
   //   const filter =
@@ -135,50 +157,86 @@ export default function Dashboard() {
   //     });
   //   setFilterData(filter);
   // };
-
-  const [search, setSearch] = useState("");
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [viewDok, setViewDok] = useState(true);
+  const switchToViewDok = () => {
+    setSearch("");
+    setViewDok(true);
+  };
+  const switchToViewTematik = () => {
+    setSearch("");
+    setViewDok(false);
+  };
 
   useEffect(() => {
-    const item = lists.results?.datas;
-    if (search !== "") {
-      const data = item.filter((item) => {
-        return item.subjek.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
-    } else {
-      setFilterData(item);
-    }
-  }, [search, isFiltered]);
+    // console.log("key changed!");
+    setPage(5);
+  }, [selectedList.key]);
 
-  const filterData = (event) => {
-    setSearch(event);
+  useEffect(() => {
+    // console.log("setfilterdata");
+    setFilterData(dokumenList);
+  }, [dokumenList]);
+
+  const [filterTematik, setFilterTematik] = useState([]);
+  useEffect(() => {
+    setFilterTematik(unitKerjaId.lists);
+  }, [unitKerjaId]);
+
+  // useEffect(() => {
+  //   const item = dokumenList;
+  //   if (search !== "") {
+  //     const data = item.filter((item) => {
+  //       return item.subjek.toLowerCase().includes(search.toLowerCase());
+  //     });
+  //     setFilterData(data);
+  //   } else {
+  //     setFilterData(item);
+  //   }
+  // }, [search]);
+
+  const filterData = () => {
+    // console.log(event);
+    setSearch(inputValue);
   };
 
   const asc = () => {
-    const sortedAscending = dataFilter
-      ?.slice()
-      .sort((a, b) => a.subjek.localeCompare(b.subjek));
-    setFilterData(sortedAscending);
+    const sortedAscending = viewDok
+      ? dataFilter?.slice().sort((a, b) => a.nomor - b.nomor)
+      : filterTematik?.slice().sort((a, b) => a.nomor - b.nomor);
+    if (viewDok) {
+      setFilterData(sortedAscending);
+    } else {
+      setFilterTematik(sortedAscending);
+    }
     setAscending(true);
     setIsFiltered(true);
   };
 
   const desc = () => {
-    const sortedDescending = dataFilter
-      ?.slice()
-      .sort((a, b) => b.subjek.localeCompare(a.subjek));
-    setFilterData(sortedDescending);
+    const sortedDescending = viewDok
+      ? dataFilter?.slice().sort((a, b) => b.nomor - a.nomor)
+      : filterTematik?.slice().sort((a, b) => b.nomor - a.nomor);
+    if (viewDok) {
+      setFilterData(sortedDescending);
+    } else {
+      setFilterTematik(sortedDescending);
+    }
     setAscending(false);
     setIsFiltered(true);
   };
 
   const loadMore = () => {
-    if (lists.results?.datas.length % 10 === 0) {
-      setPage(page + 1);
+    if (dokumenList.length % 5 === 0) {
+      setPage(page + 5);
     }
-    // console.log(page);
+  };
+
+  const loadMoreTematik = () => {
+    if (unitKerjaId.lists?.length % 5 === 0) {
+      setPage(page + 5);
+    }
   };
 
   // console.log("ini page dari dashboarfd" + page);
@@ -188,8 +246,13 @@ export default function Dashboard() {
   // console.log(lists.results?.datas);
 
   // console.log("page : " + page);
-  // console.log(selectedList.value);
-  console.log(dokumenList);
+  // console.log(selectedList.key);
+  // console.log("search value : (" + search + ")");
+  // console.log(dokumenList);
+  console.log(unitKerjaId.lists);
+
+  // console.log(inputValue);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -284,7 +347,6 @@ export default function Dashboard() {
               search={true}
             />
           )}
-
         </View>
         <View style={styles.ContainerCard}>
           <View
@@ -296,77 +358,226 @@ export default function Dashboard() {
               alignItems: "flex-end",
             }}
           >
-            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center'}}>
             <View
-              style={{
-                width: "85%",
-                backgroundColor: COLORS.white,
-                borderRadius: 8,
-              }}
+              style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
             >
-              <Search placeholder={"Cari..."} onSearch={filterData} />
-            </View>
-            <View style={{ flexDirection: "row", gap: 10 }}>
-              <TouchableOpacity onPress={!ascending ? asc : desc}>
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 30,
-                    backgroundColor: COLORS.white,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Ionicons name="filter-outline" size={24} />
+              <View
+                style={{
+                  width: "85%",
+                  backgroundColor: COLORS.white,
+                  borderRadius: 8,
+                }}
+              >
+                <View style={styles.input}>
+                  <Ionicons name="search" size={20} color={COLORS.primary} />
+                  <TextInput
+                    placeholder={"Cari..."}
+                    style={{ fontSize: 16, flex: 1 }}
+                    maxLength={30}
+                    value={inputValue}
+                    onChangeText={(text) => setInputValue(text)}
+                    onSubmitEditing={filterData}
+                    clearButtonMode="always"
+                  />
                 </View>
-              </TouchableOpacity>
-            </View>
+              </View>
+              <View style={{ flexDirection: "row", gap: 10 }}>
+                <TouchableOpacity onPress={!ascending ? asc : desc}>
+                  <View
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 30,
+                      backgroundColor: COLORS.white,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Ionicons name="filter-outline" size={24} />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-
-          {/* <StatusBar style="auto" /> */}
-        </View>
-        <>
-          <FlatList
-            // data={dataFilter}
-            // data={lists?.results?.datas}
-            // data={dataFilter}
-            data={dokumenList}
-            renderItem={({ item }) => (
-              <CardKebijakan
-                subjek={item.subjek}
-                bentuk={item.bentuk}
-                id_peraturan={item.id_peraturan}
-                item={item}
-                nomor={item.nomor}
-                tahun={item.tahun}
-              />
-            )}
-            keyExtractor={(item) => item.id_peraturan}
-            ListFooterComponent={() =>
-              loading === true ? (
-                <View
+          {id === undefined || id?.unread === false ? null : (
+            <View
+              style={{
+                // backgroundColor: "red",
+                justifyContent: "space-between",
+                display: "flex",
+                flexDirection: "row",
+                gap: 10,
+                marginBottom: 20,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  borderRadius: 8,
+                  paddingVertical: 10,
+                  backgroundColor: viewDok ? COLORS.primary : COLORS.white,
+                  paddingHorizontal: 20,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  width: "48%",
+                }}
+                onPress={switchToViewDok}
+              >
+                <Text
                   style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 24,
+                    color: viewDok ? COLORS.white : COLORS.primary,
+                    textAlign: "center",
+                    fontSize: 13,
+                    fontWeight: 600,
                   }}
                 >
-                  <ActivityIndicator size="small" color={COLORS.primary} />
-                </View>
-              ) : null
-            }
-            onEndReached={loadMore}
-            style={{ height: 300 }}
-          />
-        </>
+                  Dokumen Hukum
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  borderRadius: 8,
+                  paddingVertical: 10,
+                  backgroundColor: viewDok ? COLORS.white : COLORS.primary,
+                  paddingHorizontal: 20,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  width: "48%",
+                }}
+                onPress={switchToViewTematik}
+              >
+                <Text
+                  style={{
+                    color: viewDok ? COLORS.primary : COLORS.white,
+                    textAlign: "center",
+                    fontSize: 13,
+                    fontWeight: 600,
+                  }}
+                >
+                  Tematik
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {/* <StatusBar style="auto" /> */}
+        </View>
+        {lists.results?.length === 0 ? (
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+            }}
+          >
+            <Text>Tidak ada</Text>
+          </View>
+        ) : (
+          <View
+            style={{
+              height: id === undefined || id?.unread === false ? "60%" : "52%",
+            }}
+          >
+            {variant === "list" ? (
+              !viewDok && id !== undefined && !(id?.unread === false) ? (
+                <FlatList
+                  data={filterTematik}
+                  renderItem={({ item }) => (
+                    <CardKebijakan
+                      subjek={item.subjek}
+                      bentuk={item.bentuk}
+                      id_peraturan={item.id_peraturan}
+                      item={item}
+                      nomor={item.nomor}
+                      tahun={item.tahun}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id_peraturan}
+                  ListFooterComponent={() =>
+                    loading === true ? (
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 24,
+                        }}
+                      >
+                        <ActivityIndicator
+                          size="small"
+                          color={COLORS.primary}
+                        />
+                      </View>
+                    ) : null
+                  }
+                  onEndReached={
+                    unitKerjaId.lists?.length === 0
+                      ? null
+                      : id !== undefined && !(id?.unread === false)
+                      ? loadMoreTematik
+                      : null
+                  }
+                  ListEmptyComponent={<ListEmpty />}
+                />
+              ) : (
+                <FlatList
+                  data={dataFilter}
+                  renderItem={({ item }) => (
+                    <CardKebijakan
+                      subjek={item.subjek}
+                      bentuk={item.bentuk}
+                      id_peraturan={item.id_peraturan}
+                      item={item}
+                      nomor={item.nomor}
+                      tahun={item.tahun}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id_peraturan}
+                  ListFooterComponent={() =>
+                    loading === true ? (
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 24,
+                        }}
+                      >
+                        <ActivityIndicator
+                          size="small"
+                          color={COLORS.primary}
+                        />
+                      </View>
+                    ) : null
+                  }
+                  onEndReached={dokumenList?.length === 0 ? null : loadMore}
+                  ListEmptyComponent={<ListEmpty />}
+                />
+              )
+            ) : null}
+          </View>
+        )}
       </BottomSheetModalProvider>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
