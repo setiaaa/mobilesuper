@@ -1247,7 +1247,7 @@ export const LiniMasa = () => {
     setIsFiltered(true);
   };
 
-  // console.log(linimasa)
+  // console.log(linimasa.lists.like_list[0])
 
   return (
     <>
@@ -1295,7 +1295,7 @@ export const LiniMasa = () => {
         </View>
 
         <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
+        <View style={{ width: "85%", marginRight: 10,}}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}

@@ -646,12 +646,8 @@ export const DetailLinimasa = () => {
     }
   }, [refresh]);
 
-  
-
-  // console.log(detail.title);
 
   console.log(linimasa.lists.like_list)
-
 
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
@@ -1035,7 +1031,7 @@ export const DetailLinimasa = () => {
                       </View>
 
                       <FlatList 
-                        data={linimasa.listsLike}
+                        data={linimasa.lists.like_list}
                         renderItem={({ item }) => (
                           <View
                             style={{
@@ -1054,7 +1050,7 @@ export const DetailLinimasa = () => {
                                 borderRadius: 30,
                               }}
                             /> */}
-                            <Text>{item}</Text>
+                            <Text>dsadsa</Text>
                           </View>
                         )}
                         keyExtractor={(item) => item.id}
