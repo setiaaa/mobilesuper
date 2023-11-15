@@ -43,7 +43,7 @@ const GET_LIST_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_POSTINGAN_PEGAWAI = BASE_URL + "mp/admin/iku/employee/";
 const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
 
-const SPPD = BASE_URL + "monperdin/"
+const SPPD = BASE_URL + "monperdin/";
 
 const Cuti = "https://cuti.kubekkp.coofis.com/api/";
 
@@ -652,7 +652,6 @@ export const getDetailDocument = createAsyncThunk(
     return respon?.data.result;
   }
 );
-
 
 export const postCommentRepo = createAsyncThunk(
   "repository/document-comment",
@@ -1396,7 +1395,7 @@ export const getListPegawai = createAsyncThunk(
         headers: { Authorization: data.token },
       }
     );
-    console.log(data.page)
+    console.log(data.page);
     return respon?.data.results;
   }
 );
@@ -1590,7 +1589,7 @@ export const getSummaryCount = createAsyncThunk(
     });
     return respon?.data.result;
   }
-)
+);
 
 export const getSummaryList = createAsyncThunk(
   "document/summary/list/",
@@ -1600,7 +1599,7 @@ export const getSummaryList = createAsyncThunk(
     });
     return respon?.data.results;
   }
-)
+);
 
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
@@ -1732,5 +1731,15 @@ export const getDocumentListSPPD = createAsyncThunk(
       headers: { Authorization: token },
     });
     return respon?.data.results;
+  }
+);
+
+export const getDocumentDetailSPPD = createAsyncThunk(
+  "sppd/getDocumentDetailSPPD",
+  async (data) => {
+    const respon = await axios.get(`${SPPD}document/${data.id}/`, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data;
   }
 );
