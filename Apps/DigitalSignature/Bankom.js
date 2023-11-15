@@ -256,6 +256,7 @@ export const Bankom = () => {
                         {/* </ScrollView> */}
                         <FlatList
                             data={filterData}
+                            keyExtractor={item => item.id}
                             renderItem={({ item }) => (
                                 <View key={item.id}>
                                     <ListBankom
@@ -264,7 +265,6 @@ export const Bankom = () => {
                                         variant={variant} />
                                 </View>
                             )}
-                            keyExtractor={item => item.id}
                             ListEmptyComponent={() => <ListEmpty />}
                             style={{ height: '74%', }}
                         />

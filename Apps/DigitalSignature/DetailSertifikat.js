@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { TextInput, View } from 'react-native'
 import { Image } from 'react-native'
 import { ScrollView } from 'react-native'
@@ -27,7 +27,6 @@ export const DetailSertifikat = (route) => {
     const bottomSheetModalRef = useRef(null);
     const { digitalsign } = useSelector((state) => state.digitalsign)
     const item = digitalsign.detail
-    let links = []
 
 
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
@@ -47,16 +46,16 @@ export const DetailSertifikat = (route) => {
             bottomSheetModalRef.current?.close()
     }
 
-    const getLinkPdf = () => {
-        let links = [];
-        item.attachments.map((item) => {
-            links.push({
-                link: item.file,
+    const [file,setFile] = useState()
+    useEffect(()=> {
+        if(file === undefined){
+            item.attachments?.map((item) => {
+                setFile({link:item.file})
             });
-        });
-        // console.log(links[0])
-        return links[0]
-    }
+        }
+    }, [file, item]);
+
+    console.log(file)
 
     return (
         <View style={{ flex: 1 }}>
@@ -174,13 +173,8 @@ export const DetailSertifikat = (route) => {
                     ) : ""
                     }
                     <View style={{ gap: 15, marginTop: 15 }}>
-                        {item.attachments?.map((sertif) => {
-                            links.push(
-                                { link: sertif.file }
-                            );
-                            return (
                                 <TouchableOpacity
-                                    onPress={() => navigation.navigate('PdfViewer', { data: links[0] })}
+                                    onPress={() => navigation.navigate('PdfViewer', { data: file})}
                                     style={{
                                         width: '90%',
                                         backgroundColor: COLORS.info,
@@ -191,9 +185,6 @@ export const DetailSertifikat = (route) => {
                                     }}>
                                     <Text style={{ color: COLORS.white, marginVertical: 15 }}>Lihat Sertifikat</Text>
                                 </TouchableOpacity>
-                            )
-                        })}
-
                         {/* <TouchableOpacity style={{
                         width: '90%',
                         backgroundColor: COLORS.infoDanger,

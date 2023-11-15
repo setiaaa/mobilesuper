@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { TextInput, View } from 'react-native'
 import { Image } from 'react-native'
 import { ScrollView } from 'react-native'
@@ -46,7 +46,15 @@ export const DetailDokumenLain = () => {
         if (bottomSheetModalRef.current)
             bottomSheetModalRef.current?.close()
     }
-
+    
+    const [file,setFile] = useState()
+    useEffect(()=> {
+        if(file === undefined){
+            item.attachments?.map((item) => {
+                setFile({link:item.file})
+            });
+        }
+    }, [file, item]);
 
     return (
         <View style={{ flex: 1 }}>
@@ -133,7 +141,7 @@ export const DetailDokumenLain = () => {
                                             <View style={{ alignItems: 'left', width: '98%' }}>
                                                 <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center', }}>
                                                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penandatangan</Text>
-                                                    <Image source={data.avatar_url} />
+                                                    {/* <Image source={data.avatar_url} /> */}
                                                     {index < item.logs.length ? (
                                                         <>
                                                             <View style={{ backgroundColor: COLORS.success, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
@@ -185,13 +193,8 @@ export const DetailDokumenLain = () => {
                     ) : ""}
 
                     <View style={{ gap: 15, marginTop: 15 }}>
-                        {item.attachments?.map((sertif) => {
-                            links.push(
-                                { link: sertif.file }
-                            );
-                            return (
                                 <><TouchableOpacity
-                                    onPress={() => navigation.navigate('PdfViewer', { data: links[0] })}
+                                    onPress={() => navigation.navigate('PdfViewer', { data: file })}
                                     style={{
                                         width: '90%',
                                         backgroundColor: COLORS.info,
@@ -213,8 +216,6 @@ export const DetailDokumenLain = () => {
                                 >
                                         <Text style={{ color: COLORS.white, marginVertical: 15 }}>Sign</Text>
                                     </TouchableOpacity></>
-                            )
-                        })}
                     </View>
 
                     <BottomSheetModal

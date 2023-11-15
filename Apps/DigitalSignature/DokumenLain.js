@@ -128,8 +128,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
               <Text>: </Text>
               <Image
                 source={{
-                  uri:
-                    item.approvers[1]?.avatar_url !== null
+                  uri: item.approvers[1]?.avatar_url !== null
                       ? item.approvers[1]?.avatar_url
                       : "-",
                 }}
@@ -414,12 +413,12 @@ export const DokumenLain = () => {
         {/* </ScrollView> */}
         <FlatList
           data={filterData}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View key={item.id}>
               <ListDokumenLain item={item} token={token} variant={variant} />
             </View>
           )}
-          keyExtractor={(item) => item.id}
           ListEmptyComponent={() => <ListEmpty />}
           style={{ height: "73%" }}
         />
