@@ -341,6 +341,12 @@ export const HalamanUtama = () => {
             </TouchableOpacity>
           </View>
           {variant === "hariini" ? (
+            <>
+            {loading ? (
+                <Loading />
+            ) : (
+                null
+            )}
             <FlatList
               data={filterDataHariIni}
               renderItem={({ item }) => (
@@ -350,8 +356,14 @@ export const HalamanUtama = () => {
               style={{ marginBottom: 300 }}
               ListEmptyComponent={() => <ListEmpty />}
             />
+            </>
           ) : (
             <View>
+            {loading ? (
+                <Loading />
+            ) : (
+                null
+            )}
               <View style={{ padding: 25 }}>
                 <View
                   style={{

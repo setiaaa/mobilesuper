@@ -5,9 +5,13 @@ import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { Loading } from '../../components/Loading';
 
 export const DetailDokumenSPPD = () => {
     const navigation = useNavigation();
+
+    const { loading } = useSelector(state => state.sppd)
 
     const [collapse, setCollapse] = useState({
         toggle: false
@@ -15,6 +19,11 @@ export const DetailDokumenSPPD = () => {
 
     return (
         < >
+        {loading ? (
+            <Loading />
+        ) : (
+            null
+        )}
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
                 <View style={{
                     backgroundColor: COLORS.white,

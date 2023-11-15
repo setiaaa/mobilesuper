@@ -254,7 +254,6 @@ export const DokumenLain = () => {
           <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
             <Search
               placeholder={"Cari"}
-              iconColor={COLORS.primary}
               onSearch={filter}
             />
           </View>

@@ -205,6 +205,9 @@ export const LaporanDigitalSign = () => {
                         propsForBackgroundLines: {
                           x1: 60,
                         },
+                        fillShadowGradientFromOffset:1,
+                        fillShadowGradientFrom: COLORS.info,
+                        fillShadowGradientFromOpacity:1
                     }}
                     style={{ marginHorizontal: -20, marginTop: 20 }}
                     withInnerLines={false}
@@ -304,6 +307,9 @@ export const LaporanDigitalSign = () => {
                         propsForBackgroundLines: {
                           x1: 60,
                         },
+                        fillShadowGradientFromOffset:1,
+                        fillShadowGradientFrom: COLORS.warning,
+                        fillShadowGradientFromOpacity:1
                     }}
                     style={{ marginHorizontal: -15, marginTop: 20 }}
                     withInnerLines={false}

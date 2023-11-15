@@ -9,6 +9,7 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
 import { Image } from "react-native";
 import { Modal } from "react-native-paper";
+import { Loading } from "../../components/Loading";
 
 const DataLampiran = ({ lampiran, nama, size, onClick, type }) => {
   const navigation = useNavigation();
@@ -248,7 +249,7 @@ const DataLampiran = ({ lampiran, nama, size, onClick, type }) => {
 
 export const Lampiran = () => {
   const navigation = useNavigation();
-  const { dokumen } = useSelector((state) => state.repository);
+  const { dokumen, loading } = useSelector((state) => state.repository);
   const detail = dokumen.detail;
 
   const [visibleModal, setVisibleModal] = useState(false);
@@ -266,6 +267,12 @@ export const Lampiran = () => {
 
   console.log(detail.attachments);
   return (
+    <>
+    {loading ? (
+      <Loading />
+    ) : (
+      null
+    )}
     <View style={{ flex: 1 }}>
       <View
         style={{
@@ -412,6 +419,7 @@ export const Lampiran = () => {
         ) : null
       }
     </View>
+    </>
   );
 };
 

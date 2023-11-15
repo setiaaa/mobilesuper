@@ -21,6 +21,7 @@ import ListEmpty from "../../components/ListEmpty";
 import moment from "moment";
 import { CardListDokumenTidakDisetujui } from "../../components/CardListDokumenTidakDisetujui";
 import { CardListDokumenDisetujui } from "../../components/CardListDokumenDisetujui";
+import { Loading } from "../../components/Loading";
 
 export const DokumenCuti = () => {
   const navigation = useNavigation();
@@ -32,7 +33,7 @@ export const DokumenCuti = () => {
       dispatch(getArsipCuti(profile?.nip));
     }
   }, [profile?.nip]);
-  const { arsip } = useSelector((state) => state.cuti);
+  const { arsip, loading } = useSelector((state) => state.cuti);
   const arsipLists = arsip.lists.data;
 
   const [search, setSearch] = useState("");
@@ -59,6 +60,11 @@ export const DokumenCuti = () => {
 
   return (
     <GestureHandlerRootView>
+    {loading ? (
+      <Loading />
+    ) : (
+      null
+    )}
       <View style={{ position: "relative" }}>
         <View
           style={{

@@ -15,6 +15,7 @@ import moment from 'moment'
 import { CardListDokumenDisetujui } from '../../components/CardListDokumenDisetujui'
 import { CardListDokumenTidakDisetujui, ListDokumenTidakDisetujui } from '../../components/CardListDokumenTidakDisetujui'
 import { CardListDokumenDikembalikan } from '../../components/CardDokumenDikembalikan'
+import { Loading } from '../../components/Loading'
 
 
 export const PersetujanCuti = () => {
@@ -29,7 +30,7 @@ export const PersetujanCuti = () => {
         }
     }, [profile?.nip]);
 
-    const { persetujuan } = useSelector(state => state.cuti)
+    const { persetujuan, loading } = useSelector(state => state.cuti)
 
     const [search, setSearch] = useState('')
     const [filterData, setFilterData] = useState([])
@@ -57,6 +58,11 @@ export const PersetujanCuti = () => {
 
     return (
         <GestureHandlerRootView>
+            {loading ? (
+                <Loading />
+            ) : (
+                null
+            )}
             < View style={{ position: 'relative' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
                     <View style={{
