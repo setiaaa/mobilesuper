@@ -381,6 +381,8 @@ const CardLiniMasa = ({ item, token }) => {
 
 
 
+
+
   return (
     <View
       style={{
@@ -1324,7 +1326,7 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
-  console.log(linimasa.listsLike)
+  console.log(linimasa.lists);
 
   const filter = (event) => {
     setSearch(event);
@@ -1420,7 +1422,7 @@ export const LiniMasa = () => {
         </View>
 
         <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
+        <View style={{ width: "85%", marginRight: 10, marginBottom: -30}}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
@@ -1460,7 +1462,7 @@ export const LiniMasa = () => {
             <Ionicons name="filter-outline" size={24} />
           </View>
         </TouchableOpacity>
-          </View>
+          
 
         <FlatList
           data={filterData}
