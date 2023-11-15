@@ -1324,7 +1324,7 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
-  console.log(linimasa.lists);
+  console.log(linimasa.listsLike)
 
   const filter = (event) => {
     setSearch(event);
