@@ -377,6 +377,7 @@ const CardLiniMasa = ({ item, token }) => {
       dispatch(setRefresh(false));
     }
   }, [refresh]);
+  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
 
 
 
@@ -1348,6 +1349,28 @@ export const LiniMasa = () => {
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title.nama));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
+  };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.title.localeCompare(a.title.nama));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
+
 
 
 
