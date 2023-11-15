@@ -31,6 +31,10 @@ const SUMMARY_ACCUMULATION = BASE_URL + "mp/admin/summary/accumulation/";
 const SUMMARY_REVIEW = BASE_URL + "mp/admin/summary/review/";
 const SUMMARY_BAD_USER = BASE_URL + "mp/admin/summary/bad-user/";
 
+const GET_SUMMARY_COUNT = digitalSign + "document/summary/";
+const GET_SUMMARY_LIST = digitalSign + "document/summary/list/";
+// const GET_EXPORT_SUMMARY_LIST = URL + 'export/';
+
 const GET_LIST_CATEGORY = BASE_URL + "mp/admin/category/?limit=10";
 const GET_LIST_COMPETENCE = BASE_URL + "mp/admin/competence/?limit=199";
 
@@ -1387,11 +1391,12 @@ export const getListPegawai = createAsyncThunk(
     // console.log(data.quarter);
     // console.log(data.unitKerja);
     const respon = await axios.get(
-      `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
+      `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}&limit=${data.page}`,
       {
         headers: { Authorization: data.token },
       }
     );
+    console.log(data.page)
     return respon?.data.results;
   }
 );
@@ -1576,6 +1581,26 @@ export const getCourseDigiSign = createAsyncThunk(
     return respon?.data.results;
   }
 );
+
+export const getSummaryCount = createAsyncThunk(
+  "document/summary/",
+  async (token) => {
+    const respon = await axios.get(`${GET_SUMMARY_COUNT}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+)
+
+export const getSummaryList = createAsyncThunk(
+  "document/summary/list/",
+  async (token) => {
+    const respon = await axios.get(`${GET_SUMMARY_LIST}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+)
 
 //Cuti
 export const getCutiPersonal = createAsyncThunk(

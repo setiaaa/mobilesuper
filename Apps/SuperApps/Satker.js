@@ -429,10 +429,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         flexDirection: "column",
         width: '86%',
-        marginLeft: 25,
+        // marginLeft: 25,
         opacity: 0.9,
         borderRadius: 5,
-        marginVertical: 40
+        marginVertical: 40,
+        // marginHorizontal: 20,
+        alignSelf: "center"
     },
     vertical: {
         rotation: 12

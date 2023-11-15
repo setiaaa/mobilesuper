@@ -90,6 +90,7 @@ import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
 import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
 import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
 import { DetailDokumenLain } from "../DigitalSignature/DetailDokumenLain";
+import { LaporanDigitalSign } from "../DigitalSignature/LaporanDigitalSign";
 import MainDigitalSign from "../DigitalSignature/MainDigitalSign";
 import { DetailSertifikat } from "../DigitalSignature/DetailSertifikat";
 import { TambahSertifikat } from "../DigitalSignature/TambahSertifikat";
@@ -145,6 +146,11 @@ import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
 import { getTokenValue } from "../../service/session";
 import { Semua } from "../Task Management/Dashboard/Semua";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
+import { Pencarian } from "./Pencarian/Pencarian";
+import { PLetter } from "./Pencarian/PLetter";
+import { PTodo } from "./Pencarian/PTodo";
+import { PSecretary } from "./Pencarian/PSecretary";
+import { PDelegation } from "./Pencarian/PDelegation";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 
 const Stack = createNativeStackNavigator();
@@ -1013,6 +1019,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="KegiatanBaru"
             component={KegiatanBaru}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Pencarian"
+            component={Pencarian}
             options={{
               headerShown: false,
             }}

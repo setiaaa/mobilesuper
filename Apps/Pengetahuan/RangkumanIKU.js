@@ -51,13 +51,13 @@ const ListDaftarPegawai = ({ item, token }) => {
     dispatch(getListPostPegawai(param));
   };
   return (
-    <View style={{ paddingHorizontal: "5%" }}>
+    <View>
       <TouchableOpacity
         key={item.id}
         style={{
           backgroundColor: COLORS.white,
           borderRadius: 10,
-          padding: 10,
+          padding: 15,
           gap: 5,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -180,9 +180,6 @@ export const RangkumanIKU = () => {
     bottomSheetModalSelectRef.current?.present();
   };
 
-  const [search, setSearch] = useState("");
-  const [filterData, setFilterData] = useState([]);
-
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
 
@@ -208,9 +205,12 @@ export const RangkumanIKU = () => {
     setSavedUnitKerja(selectedUnitKerja);
   };
 
+  const [page, setPage] = useState(10);
+
   useEffect(() => {
     const param = {
       token: token,
+      page: page,
       year: savedYear.value,
       quarter: savedQuarter.key,
       unitKerja: savedUnitKerja.value,
@@ -218,7 +218,16 @@ export const RangkumanIKU = () => {
     if (token !== "") {
       dispatch(getListPegawai(param));
     }
-  }, [token, savedYear, savedQuarter, savedUnitKerja]);
+  }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
+
+  const loadMore = () => {
+    if ((filterData.length % 10 === 0) && (savedYear.value || savedQuarter.value || savedUnitKerja.value)) {
+      if (filterData.length > page) {
+        setPage(page + 10);
+      }
+    }
+    console.log(page)
+  }
 
   useEffect(() => {
     const param = {
@@ -261,6 +270,11 @@ export const RangkumanIKU = () => {
     setFilterData(pegawai?.lists);
   }, [pegawai]);
 
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
   useEffect(() => {
     const item = pegawai?.lists;
     if (search !== "") {
@@ -271,11 +285,29 @@ export const RangkumanIKU = () => {
     } else {
       setFilterData(item);
     }
-  }, [search]);
+  }, [search, isFiltered]);
 
   const filter = (event) => {
     setSearch(event);
   };
+
+  const asc = () => {
+    const sortedAscending = filterData
+      ?.slice()
+      .sort((a, b) => a.nama.localeCompare(b.nama));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
+  }
+
+  const desc = () => {
+    const sortedDescending = filterData
+      ?.slice()
+      .sort((a, b) => b.nama.localeCompare(a.nama));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  }
 
   const downloadFromUrl = async () => {
     const url = exportPegawai?.lists?.file;
@@ -329,27 +361,27 @@ export const RangkumanIKU = () => {
   //   shareAsync(uri);
   // };
 
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
+  // const [ascending, setAscending] = useState(false);
+  // const [isFiltered, setIsFiltered] = useState(false);
 
 
-  const asc = () => {
-    const sortedAscending = filterData
-      .slice()
-      .sort((a, b) => a.nama.localeCompare(b.nama));
-    setFilterData(sortedAscending);
-    setAscending(true);
-    setIsFiltered(true);
-  };
+  // const asc = () => {
+  //   const sortedAscending = filterData
+  //     .slice()
+  //     .sort((a, b) => a.nama.localeCompare(b.nama));
+  //   setFilterData(sortedAscending);
+  //   setAscending(true);
+  //   setIsFiltered(true);
+  // };
 
-  const desc = () => {
-    const sortedDescending = filterData
-      .slice()
-      .sort((a, b) => b.nama.localeCompare(a.nama));
-    setFilterData(sortedDescending);
-    setAscending(false);
-    setIsFiltered(true);
-  };
+  // const desc = () => {
+  //   const sortedDescending = filterData
+  //     .slice()
+  //     .sort((a, b) => b.nama.localeCompare(a.nama));
+  //   setFilterData(sortedDescending);
+  //   setAscending(false);
+  //   setIsFiltered(true);
+  // };
 
   return (
     <>
@@ -769,8 +801,8 @@ export const RangkumanIKU = () => {
                   </TouchableOpacity>
                 ) : null}
 
+                <TouchableOpacity>
                   <TouchableOpacity
-                    onPress={!ascending ? asc : desc}
                     style={{
                       backgroundColor: "white",
                       borderRadius: 50,
@@ -783,6 +815,7 @@ export const RangkumanIKU = () => {
                       color={COLORS.grey}
                     />
                   </TouchableOpacity>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -808,7 +841,7 @@ export const RangkumanIKU = () => {
                 }}
               >
                 <FlatList
-                  data={filterData}
+                  data={(filterData && filterData.length > 0) || isFiltered ? filterData : pegawai?.lists }
                   renderItem={({ item }) => (
                     <View key={item.id} style={{ marginBottom: 10 }}>
                       <ListDaftarPegawai item={item} token={token} />
@@ -832,6 +865,7 @@ export const RangkumanIKU = () => {
                   }
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}
+                  onEndReached={loadMore}
                 />
 
                 {/* {pegawai.lists.length !== 0
