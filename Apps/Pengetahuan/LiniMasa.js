@@ -304,6 +304,8 @@ const CardLiniMasa = ({ item, token }) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
+  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
+
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
   const {
@@ -319,6 +321,8 @@ const CardLiniMasa = ({ item, token }) => {
   const bottomSheetAttachCommentClose = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
+
+// console.log(item)
 
 // console.log(item)
 
@@ -376,9 +380,6 @@ const CardLiniMasa = ({ item, token }) => {
       dispatch(setRefresh(false));
     }
   }, [refresh]);
-  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
-
-
 
 
 
@@ -1325,6 +1326,16 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
+  // console.log(linimasa.listsLike)
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(linimasa.lists);
+}, [linimasa]);
+
   useEffect(() => {
     if (search !== "") {
       const data = linimasa.lists?.filter((item) => {
@@ -1411,7 +1422,7 @@ export const LiniMasa = () => {
         </View>
 
         <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
+        <View style={{ width: "85%", marginRight: 10, marginBottom: -30}}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}

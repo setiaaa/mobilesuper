@@ -504,37 +504,46 @@ export const DetailDokumenLain = () => {
             </>
           </View>
 
-                    <BottomSheetModal
-                        ref={bottomSheetModalRef}
-                        snapPoints={animatedSnapPoints}
-                        handleHeight={animatedHandleHeight}
-                        contentHeight={animatedContentHeight}
-                        index={0}
-                        style={{ borderRadius: 50 }}
-                        keyboardBlurBehavior="restore"
-                        android_keyboardInputMode="adjust"
-                        backdropComponent={({ style }) => (
-                            <View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} />
-                        )}
-                    >
-                        <BottomSheetView onLayout={handleContentLayout} >
-                            <View style={{ flex: 1 }}>
-                                <View style={{ alignItems: 'center', flexDirection: 'row', marginHorizontal: 20, marginTop: 20, justifyContent:"space-between" }}>
-                                    <View style={{}}>
-                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold}}>Tanda Tangan Sertifikat</Text>
-                                    </View>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                        bottomSheetAttachClose();
-                                        }}
-                                    >
-                                        <Ionicons
-                                        name="close-outline"
-                                        size={24}
-                                        color={COLORS.lighter}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            snapPoints={animatedSnapPoints}
+            handleHeight={animatedHandleHeight}
+            contentHeight={animatedContentHeight}
+            index={0}
+            style={{ borderRadius: 50 }}
+            keyboardBlurBehavior="restore"
+            android_keyboardInputMode="adjust"
+            backdropComponent={({ style }) => (
+              <View
+                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+              />
+            )}
+          >
+            <BottomSheetView onLayout={handleContentLayout}>
+              <View style={{ flex: 1 }}>
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                  }}
+                >
+                  <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
+                    <Ionicons name="chevron-back-outline" size={24} />
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flex: 1,
+                    }}
+                  >
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                      Tanda Tangan Sertifikat
+                    </Text>
+                  </View>
+                </View>
 
                 <View
                   style={{
