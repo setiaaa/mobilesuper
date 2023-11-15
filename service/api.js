@@ -45,6 +45,7 @@ const GET_LIST_PEGAWAI_EXPORT = BASE_URL + "mp/admin/iku/employee/export/";
 
 const UNITKERJA = BASE_URL + "policy/unker/";
 const UNITKERJAID = BASE_URL + "policy/tematik/";
+const DOKGENERAL = BASE_URL + "policy/search/";
 
 const SPPD = BASE_URL + "monperdin/";
 
@@ -133,14 +134,31 @@ export const getUnitKerjaTematik = createAsyncThunk(
   }
 );
 
+export const getDokGeneral = createAsyncThunk(
+  "kebijakan/getDokGeneral",
+  async ({ token, search, page }) => {
+    const respon = await axios.get(
+      `${DOKGENERAL}?&general=${search}&limit=${page}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results.datas;
+  }
+);
+
 export const getUnitKerjaTematikId = createAsyncThunk(
   "kebijakan/getUniteKerjaTematikId",
-  async ({ token, id }) => {
-    console.log(id);
-    const respon = await axios.get(`${UNITKERJAID}${id}`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.result;
+  async ({ token, id, page, search }) => {
+    console.log("id dari api : " + id);
+    console.log("token dari api : " + token);
+    const respon = await axios.get(
+      `${UNITKERJAID}${id}/?&limit=${page}&tentang=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results.datas;
   }
 );
 

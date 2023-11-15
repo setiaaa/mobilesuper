@@ -3,6 +3,7 @@ import {
   getCategory,
   getCategoryId,
   getCategoryIdPage,
+  getDokGeneral,
   getDokHukum,
   getUnitKerjaTematik,
   getUnitKerjaTematikId,
@@ -20,6 +21,7 @@ const KebijakanSilce = createSlice({
     unitKerjaId: {
       lists: [],
     },
+    general: [],
     loading: false,
     refresh: false,
   },
@@ -89,6 +91,13 @@ const KebijakanSilce = createSlice({
       .addCase(getUnitKerjaTematikId.fulfilled, (state, action) => {
         state.loading = false;
         state.unitKerjaId.lists = action.payload;
+      })
+      .addCase(getDokGeneral.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDokGeneral.fulfilled, (state, action) => {
+        state.loading = false;
+        state.general = action.payload;
       });
   },
 });

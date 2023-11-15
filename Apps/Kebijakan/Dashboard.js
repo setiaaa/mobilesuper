@@ -14,6 +14,7 @@ import {
   getCategoryId,
   getCategoryIdPage,
   getDokHukum,
+  getUnitKerjaTematikId,
 } from "../../service/api";
 import { Search } from "../../components/Search";
 import { Ionicons } from "@expo/vector-icons";
@@ -41,7 +42,9 @@ import ListEmpty from "../../components/ListEmpty";
 import { event } from "react-native-reanimated";
 import { TextInput } from "react-native-gesture-handler";
 
-export default function Dashboard() {
+export default function Dashboard(params) {
+  const id = params?.route.params;
+  console.log(id);
   const [open, setOpen] = useState(false);
   const [openTentang, setOpenTentang] = useState(false);
   const [openTahun, setOpenTahun] = useState(false);
@@ -102,7 +105,14 @@ export default function Dashboard() {
     }
   }, [token, selectedList.key, page, search]);
 
-  const { dokumen, lists, dokumenList, unitKerjaTematikId, refresh, loading } =
+  useEffect(() => {
+    if (id !== undefined && !(id?.unread === false)) {
+      const params = { token: token, id: id, page: page, search: search };
+      dispatch(getUnitKerjaTematikId(params));
+    }
+  }, [token, id, page, search]);
+
+  const { dokumen, lists, dokumenList, unitKerjaId, refresh, loading } =
     useSelector((state) => state.kebijakan);
   const [dataFilter, setFilterData] = useState([]);
 
@@ -149,16 +159,30 @@ export default function Dashboard() {
   // };
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [viewDok, setViewDok] = useState(true);
+  const switchToViewDok = () => {
+    setSearch("");
+    setViewDok(true);
+  };
+  const switchToViewTematik = () => {
+    setSearch("");
+    setViewDok(false);
+  };
 
   useEffect(() => {
-    console.log("key changed!");
+    // console.log("key changed!");
     setPage(5);
   }, [selectedList.key]);
 
   useEffect(() => {
-    console.log("setfilterdata");
+    // console.log("setfilterdata");
     setFilterData(dokumenList);
   }, [dokumenList]);
+
+  const [filterTematik, setFilterTematik] = useState([]);
+  useEffect(() => {
+    setFilterTematik(unitKerjaId.lists);
+  }, [unitKerjaId]);
 
   // useEffect(() => {
   //   const item = dokumenList;
@@ -178,19 +202,27 @@ export default function Dashboard() {
   };
 
   const asc = () => {
-    const sortedAscending = dataFilter
-      ?.slice()
-      .sort((a, b) => a.nomor - b.nomor);
-    setFilterData(sortedAscending);
+    const sortedAscending = viewDok
+      ? dataFilter?.slice().sort((a, b) => a.nomor - b.nomor)
+      : filterTematik?.slice().sort((a, b) => a.nomor - b.nomor);
+    if (viewDok) {
+      setFilterData(sortedAscending);
+    } else {
+      setFilterTematik(sortedAscending);
+    }
     setAscending(true);
     setIsFiltered(true);
   };
 
   const desc = () => {
-    const sortedDescending = dataFilter
-      ?.slice()
-      .sort((a, b) => b.nomor - a.nomor);
-    setFilterData(sortedDescending);
+    const sortedDescending = viewDok
+      ? dataFilter?.slice().sort((a, b) => b.nomor - a.nomor)
+      : filterTematik?.slice().sort((a, b) => b.nomor - a.nomor);
+    if (viewDok) {
+      setFilterData(sortedDescending);
+    } else {
+      setFilterTematik(sortedDescending);
+    }
     setAscending(false);
     setIsFiltered(true);
   };
@@ -199,8 +231,12 @@ export default function Dashboard() {
     if (dokumenList.length % 5 === 0) {
       setPage(page + 5);
     }
+  };
 
-    // console.log(page);
+  const loadMoreTematik = () => {
+    if (unitKerjaId.lists?.length % 5 === 0) {
+      setPage(page + 5);
+    }
   };
 
   // console.log("ini page dari dashboarfd" + page);
@@ -213,7 +249,7 @@ export default function Dashboard() {
   // console.log(selectedList.key);
   // console.log("search value : (" + search + ")");
   // console.log(dokumenList);
-  console.log(unitKerjaTematikId);
+  console.log(unitKerjaId.lists);
 
   // console.log(inputValue);
 
@@ -322,49 +358,117 @@ export default function Dashboard() {
               alignItems: "flex-end",
             }}
           >
-            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center'}}>
             <View
-              style={{
-                width: "85%",
-                backgroundColor: COLORS.white,
-                borderRadius: 8,
-              }}
+              style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
             >
-              <View style={styles.input}>
-                <Ionicons name="search" size={20} color={COLORS.primary} />
-                <TextInput
-                  placeholder={"Cari..."}
-                  style={{ fontSize: 16, flex: 1 }}
-                  maxLength={30}
-                  value={inputValue}
-                  onChangeText={(text) => setInputValue(text)}
-                  onSubmitEditing={filterData}
-                  clearButtonMode="always"
-                />
+              <View
+                style={{
+                  width: "85%",
+                  backgroundColor: COLORS.white,
+                  borderRadius: 8,
+                }}
+              >
+                <View style={styles.input}>
+                  <Ionicons name="search" size={20} color={COLORS.primary} />
+                  <TextInput
+                    placeholder={"Cari..."}
+                    style={{ fontSize: 16, flex: 1 }}
+                    maxLength={30}
+                    value={inputValue}
+                    onChangeText={(text) => setInputValue(text)}
+                    onSubmitEditing={filterData}
+                    clearButtonMode="always"
+                  />
+                </View>
+              </View>
+              <View style={{ flexDirection: "row", gap: 10 }}>
+                <TouchableOpacity onPress={!ascending ? asc : desc}>
+                  <View
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 30,
+                      backgroundColor: COLORS.white,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Ionicons name="filter-outline" size={24} />
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
-            <View style={{ flexDirection: "row", gap: 10 }}>
-              <TouchableOpacity onPress={!ascending ? asc : desc}>
-                <View
+          </View>
+          {id === undefined || id?.unread === false ? null : (
+            <View
+              style={{
+                // backgroundColor: "red",
+                justifyContent: "space-between",
+                display: "flex",
+                flexDirection: "row",
+                gap: 10,
+                marginBottom: 20,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  borderRadius: 8,
+                  paddingVertical: 10,
+                  backgroundColor: viewDok ? COLORS.primary : COLORS.white,
+                  paddingHorizontal: 20,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  width: "48%",
+                }}
+                onPress={switchToViewDok}
+              >
+                <Text
                   style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 30,
-                    backgroundColor: COLORS.white,
-                    justifyContent: "center",
-                    alignItems: "center",
+                    color: viewDok ? COLORS.white : COLORS.primary,
+                    textAlign: "center",
+                    fontSize: 13,
+                    fontWeight: 600,
                   }}
                 >
-                  <Ionicons name="filter-outline" size={24} />
-                </View>
+                  Dokumen Hukum
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  borderRadius: 8,
+                  paddingVertical: 10,
+                  backgroundColor: viewDok ? COLORS.white : COLORS.primary,
+                  paddingHorizontal: 20,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                  width: "48%",
+                }}
+                onPress={switchToViewTematik}
+              >
+                <Text
+                  style={{
+                    color: viewDok ? COLORS.primary : COLORS.white,
+                    textAlign: "center",
+                    fontSize: 13,
+                    fontWeight: 600,
+                  }}
+                >
+                  Tematik
+                </Text>
               </TouchableOpacity>
             </View>
-            </View>
-          </View>
-
+          )}
           {/* <StatusBar style="auto" /> */}
         </View>
-        {lists.results?.datas.length === 0 ? (
+        {lists.results?.length === 0 ? (
           <View
             style={{
               display: "flex",
@@ -376,84 +480,86 @@ export default function Dashboard() {
             <Text>Tidak ada</Text>
           </View>
         ) : (
-          <View style={{ height: "52%" }}>
+          <View
+            style={{
+              height: id === undefined || id?.unread === false ? "60%" : "52%",
+            }}
+          >
             {variant === "list" ? (
-              <FlatList
-                data={dataFilter}
-                // data={lists?.results?.datas}
-                // data={
-                //   (dataFilter && dataFilter.length > 0) || isFiltered
-                //     ? dataFilter
-                //     : dokumenList
-                // }
-                // data={dokumenList}
-                renderItem={({ item }) => (
-                  <CardKebijakan
-                    subjek={item.subjek}
-                    bentuk={item.bentuk}
-                    id_peraturan={item.id_peraturan}
-                    item={item}
-                    nomor={item.nomor}
-                    tahun={item.tahun}
-                  />
-                )}
-                keyExtractor={(item) => item.id_peraturan}
-                ListFooterComponent={() =>
-                  loading === true ? (
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        padding: 24,
-                      }}
-                    >
-                      <ActivityIndicator size="small" color={COLORS.primary} />
-                    </View>
-                  ) : null
-                }
-                onEndReached={dokumenList.length === 0 ? null : loadMore}
-                ListEmptyComponent={<ListEmpty />}
-              />
-            ) : (
-              {
-                /* <FlatList
-                data={
-                  (dataFilter && dataFilter.length > 0) || isFiltered
-                    ? dataFilter
-                    : lists.results?.datas
-                }
-                renderItem={({ item }) => (
-                  <CardKebijakanCard
-                    subjek={item.subjek}
-                    bentuk={item.bentuk}
-                    id_peraturan={item.id_peraturan}
-                    item={item}
-                    nomor={item.nomor}
-                    tahun={item.tahun}
-                    tgl_penetapan={item.tgl_penetapan}
-                    tgl_diundangkan={item.tgl_diundangkan}
-                    status={item.status}
-                  />
-                )}
-                keyExtractor={(item) => item.id_peraturan}
-              /> */
-              }
-            )}
-            {/* {
-                                    dataFilter.length >= 1 ? (
-                                        <></>
-                                    ) : (
-                                        <View style={{ marginVertical: 10, marginBottom: 30, flexDirection: 'row', justifyContent: 'flex-end', display: 'flex', gap: 20, marginRight: 30 }}>
-                                            <Text style={{ fontSize: FONTSIZE.H1, marginTop: 10 }}>{page} of {count}</Text>
-                                            <TouchableOpacity onPress={() => setPage(page === 1 ? 1 : page - 1)} disabled={lists.previous === null ? true : false}>
-                                                <Ionicons name='chevron-back-outline' size={30} color={lists.previous === null ? '#D0D5DD' : COLORS.grey} />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => setPage(page + 1)} disabled={lists.next === null ? true : false}>
-                                                <Ionicons name='chevron-forward-outline' size={30} color={lists.next === null ? '#D0D5DD' : COLORS.grey} />
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                } */}
+              !viewDok && id !== undefined && !(id?.unread === false) ? (
+                <FlatList
+                  data={filterTematik}
+                  renderItem={({ item }) => (
+                    <CardKebijakan
+                      subjek={item.subjek}
+                      bentuk={item.bentuk}
+                      id_peraturan={item.id_peraturan}
+                      item={item}
+                      nomor={item.nomor}
+                      tahun={item.tahun}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id_peraturan}
+                  ListFooterComponent={() =>
+                    loading === true ? (
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 24,
+                        }}
+                      >
+                        <ActivityIndicator
+                          size="small"
+                          color={COLORS.primary}
+                        />
+                      </View>
+                    ) : null
+                  }
+                  onEndReached={
+                    unitKerjaId.lists?.length === 0
+                      ? null
+                      : id !== undefined && !(id?.unread === false)
+                      ? loadMoreTematik
+                      : null
+                  }
+                  ListEmptyComponent={<ListEmpty />}
+                />
+              ) : (
+                <FlatList
+                  data={dataFilter}
+                  renderItem={({ item }) => (
+                    <CardKebijakan
+                      subjek={item.subjek}
+                      bentuk={item.bentuk}
+                      id_peraturan={item.id_peraturan}
+                      item={item}
+                      nomor={item.nomor}
+                      tahun={item.tahun}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id_peraturan}
+                  ListFooterComponent={() =>
+                    loading === true ? (
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 24,
+                        }}
+                      >
+                        <ActivityIndicator
+                          size="small"
+                          color={COLORS.primary}
+                        />
+                      </View>
+                    ) : null
+                  }
+                  onEndReached={dokumenList?.length === 0 ? null : loadMore}
+                  ListEmptyComponent={<ListEmpty />}
+                />
+              )
+            ) : null}
           </View>
         )}
       </BottomSheetModalProvider>

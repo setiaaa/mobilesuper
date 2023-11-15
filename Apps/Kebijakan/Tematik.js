@@ -57,10 +57,11 @@ const DataGrid = ({ judul, id, icon }) => {
     });
   }, []);
 
-  const getId = (ids) => {
-    const params = { token, ids };
-    dispatch(getUnitKerjaTematikId(params));
-  };
+  // const getId = (ids) => {
+  //   const params = { token: token, id: ids, page: 10 };
+  //   console.log("ini id : " + ids);
+  //   dispatch(getUnitKerjaTematikId(params));
+  // };
 
   return (
     <TouchableOpacity
@@ -76,10 +77,9 @@ const DataGrid = ({ judul, id, icon }) => {
         //shadow android
         elevation: 2,
       }}
-      onPress={(e) => {
-        e.stopPropagation();
-        getId(id);
-        navigation.navigate("Dashboard");
+      onPress={() => {
+        // getId(id);
+        navigation.navigate("Dashboard", id);
       }}
     >
       <View

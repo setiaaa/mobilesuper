@@ -129,7 +129,7 @@ function MyTabBarKeb({ props, navigation }) {
             key={3}
             onPress={() => {
               setTabItemIndex(3);
-              // navigation.navigate('Tematik', { unread: false })
+              navigation.navigate("Pencarian", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
