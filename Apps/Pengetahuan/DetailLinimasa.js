@@ -541,7 +541,7 @@ const ShimmerParagraph = () => {
   );
 };
 
-export const DetailLinimasa = () => {
+export const DetailLinimasa = (item) => {
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
   const [token, setToken] = useState("");
@@ -647,11 +647,14 @@ export const DetailLinimasa = () => {
   }, [refresh]);
 
 
-  console.log(listsLike)
+  // console.log(linimasa.detail.li)
 
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
+
+console.log(linimasa.lists?.like_list)
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -1030,33 +1033,8 @@ export const DetailLinimasa = () => {
                         />
                       </View>
 
-                      <FlatList 
-                        data={linimasa.lists.like_list}
-                        renderItem={({ item }) => (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
-                              gap: 10,
-                              marginHorizontal: 20,
-                              marginTop: 20,
-                            }}
-                          >
-                            {/* <Image
-                              source={{ uri: data.avatar_url }}
-                              style={{
-                                width: 50,
-                                height: 50,
-                                borderRadius: 30,
-                              }}
-                            /> */}
-                            <Text>dsadsa</Text>
-                          </View>
-                        )}
-                        keyExtractor={(item) => item.id}
-                        />
-                      {/* <ScrollView style={{ marginBottom: 40 }}>
-                        {linimasa.lists?.((data) => {
+                      <ScrollView style={{ marginBottom: 40 }}>
+                        {linimasa.detail?.like_list?.map((data) => {
                           return (
                             <View
                               style={{
@@ -1075,11 +1053,12 @@ export const DetailLinimasa = () => {
                                   borderRadius: 30,
                                 }}
                               />
-                              <Text>{item}</Text>
+                              <Text>{data.name}</Text>
                             </View>
                           );
                         })}
-                      </ScrollView> */}
+                      </ScrollView>
+                      
                     </View>
                   </View>
                 </Modal>

@@ -304,6 +304,8 @@ const CardLiniMasa = ({ item, token }) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
+  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
+
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ['95%'], []);
   const {
@@ -319,6 +321,8 @@ const CardLiniMasa = ({ item, token }) => {
   const bottomSheetAttachCommentClose = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
+
+// console.log(item)
 
   const handleLike = () => {
     const data = {
@@ -375,6 +379,8 @@ const CardLiniMasa = ({ item, token }) => {
       dispatch(setRefresh(false));
     }
   }, [refresh]);
+
+
 
   return (
     <View
@@ -890,10 +896,125 @@ const CardLiniMasa = ({ item, token }) => {
         }}
       >
         <View>
+          <TouchableOpacity onPress={() => {
+                      // bottomSheetAttachCommentClose();
+                      // dispatch(
+                      //   getListsLike({ token: token, id: detail.id })
+                      // );
+                      // navigation.navigate("ListSukaLinimasa");
+                      setVisibleModalViewDisukai(true);
+                    }}>
           <Text style={{ color: COLORS.lighter }}>
             {item.likes_count} Disukai
           </Text>
+          </TouchableOpacity>
         </View>
+
+        <Modal
+                  animationType="fade"
+                  transparent={true}
+                  visible={visibleModalViewDisukai}
+                  onRequestClose={() => {
+                    setVisibleModalViewDisukai(!visibleModalViewDisukai);
+                  }}
+                >
+                  <TouchableOpacity
+                    style={[
+                      Platform.OS === "ios"
+                        ? styles.iOSBackdrop
+                        : styles.androidBackdrop,
+                      styles.backdrop,
+                    ]}
+                  />
+                  <View style={{ alignItems: "center", flex: 1 }}>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.white,
+                        width: "90%",
+                        borderRadius: 10,
+                        marginTop: "40%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          marginTop: 20,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginHorizontal: 20,
+                        }}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: FONTSIZE.Judul,
+                              fontWeight: FONTWEIGHT.bold,
+                            }}
+                          >
+                            Disukai Oleh
+                          </Text>
+                        </View>
+
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => {
+                            setVisibleModalViewDisukai(false);
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      {/* custom divider */}
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: 1,
+                            width: "90%",
+                            backgroundColor: "#DBDADE",
+                            marginVertical: 10,
+                          }}
+                        />
+                      </View>
+                      <ScrollView style={{ marginBottom: 40 }}>
+                        {item.like_list.map((data) => {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 10,
+                                marginHorizontal: 20,
+                                marginTop: 20,
+                              }}
+                            >
+                              <Image
+                                source={{ uri: data.avatar_url }}
+                                style={{
+                                  width: 50,
+                                  height: 50,
+                                  borderRadius: 30,
+                                }}
+                              />
+                              <Text>{data.name}</Text>
+                            </View>
+                          );
+                        })}
+                      </ScrollView>
+                    </View>
+                  </View>
+                </Modal>
+
+
+
         <View style={{ flexDirection: "row", gap: 10 }}>
           <Text style={{ color: COLORS.lighter }}>
             {item.comment_count} Komentar
@@ -1198,7 +1319,7 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
-  console.log(linimasa.listsLike)
+  // console.log(linimasa.listsLike)
 
   const filter = (event) => {
     setSearch(event);
@@ -1295,7 +1416,7 @@ export const LiniMasa = () => {
         </View>
 
         <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10,}}>
+        <View style={{ width: "85%", marginRight: 10, marginBottom: -30}}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
