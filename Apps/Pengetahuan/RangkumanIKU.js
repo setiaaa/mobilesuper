@@ -58,6 +58,7 @@ const ListDaftarPegawai = ({ item, token }) => {
           backgroundColor: COLORS.white,
           borderRadius: 10,
           padding: 15,
+          marginHorizontal: 20,
           gap: 5,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -382,6 +383,7 @@ export const RangkumanIKU = () => {
   //   setAscending(false);
   //   setIsFiltered(true);
   // };
+
 
   return (
     <>
@@ -801,8 +803,8 @@ export const RangkumanIKU = () => {
                   </TouchableOpacity>
                 ) : null}
 
-                <TouchableOpacity>
                   <TouchableOpacity
+                  onPress={!ascending ? asc : desc}
                     style={{
                       backgroundColor: "white",
                       borderRadius: 50,
@@ -815,7 +817,6 @@ export const RangkumanIKU = () => {
                       color={COLORS.grey}
                     />
                   </TouchableOpacity>
-                </TouchableOpacity>
               </View>
             </View>
 

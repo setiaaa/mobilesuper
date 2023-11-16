@@ -17,7 +17,8 @@ const DigitalSignSlice = createSlice({
         summary: {
             count: {},
             lists: [],
-        }
+        },
+        loading: false
     },
     reducers: {
         setDigitalSignLists: (state, action) => {

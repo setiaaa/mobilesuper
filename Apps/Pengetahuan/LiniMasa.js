@@ -973,8 +973,8 @@ const CardLiniMasa = ({ item, token }) => {
             bottomSheetAttachComment();
           }}
         >
-          <Ionicons name="chatbox-outline" size={18} />
-          <Text>Komentar</Text>
+          {/* <Ionicons name="chatbox-outline" size={18} /> */}
+          {/* <Text>Komentar</Text> */}
         </TouchableOpacity>
 
         <BottomSheetModal

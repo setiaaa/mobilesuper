@@ -11,6 +11,7 @@ import { getTokenValue } from "../../service/session";
 import { getDocumentListSPPD } from "../../service/api";
 import { CardDokumenListSPPD } from "../../components/CardDokumenListSPPD";
 import ListEmpty from "../../components/ListEmpty";
+import { Loading } from "../../components/Loading";
 
 export const DokumenSPPD = () => {
   const navigation = useNavigation();
@@ -30,7 +31,7 @@ export const DokumenSPPD = () => {
     }
   }, [token]);
 
-  const { dokumen } = useSelector((state) => state.sppd);
+  const { dokumen, loading } = useSelector((state) => state.sppd);
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
@@ -56,6 +57,11 @@ export const DokumenSPPD = () => {
 
   return (
     <>
+    {loading ? (
+      <Loading />
+    ) : (
+      null
+    )}
       <View
         style={{
           flexDirection: "row",
@@ -90,7 +96,7 @@ export const DokumenSPPD = () => {
           </Text>
         </View>
       </View>
-      <View style={{ padding: 20 }}>
+      <View style={{ padding: 20, }}>
         <Search placeholder={"Cari"} onSearch={filter} />
         <FlatList
           data={filterData}
@@ -101,6 +107,7 @@ export const DokumenSPPD = () => {
           )}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => <ListEmpty />}
+          style={{height:"83%", marginTop:6}}
         />
       </View>
     </>

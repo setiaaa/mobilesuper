@@ -172,7 +172,6 @@ export const Bankom = () => {
                             <View style={{ width: '90%', marginLeft: 20, marginTop: 20, }}>
                                 <Search
                                     placeholder={'Cari'}
-                                    iconColor={COLORS.primary}
                                     onSearch={filter} />
                             </View>
                         </View>
@@ -257,6 +256,7 @@ export const Bankom = () => {
                         {/* </ScrollView> */}
                         <FlatList
                             data={filterData}
+                            keyExtractor={item => item.id}
                             renderItem={({ item }) => (
                                 <View key={item.id}>
                                     <ListBankom
@@ -265,7 +265,6 @@ export const Bankom = () => {
                                         variant={variant} />
                                 </View>
                             )}
-                            keyExtractor={item => item.id}
                             ListEmptyComponent={() => <ListEmpty />}
                             style={{ height: '74%', }}
                         />

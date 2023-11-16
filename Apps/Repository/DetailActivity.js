@@ -26,6 +26,7 @@ import { useSelector } from "react-redux";
 import { } from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import moment from "moment/moment";
+import { Loading } from "../../components/Loading";
 
 // const item = {
 //     judul: 'Business Agility with Scrum',
@@ -77,7 +78,7 @@ export const DetailActivity = () => {
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
   };
-  const { dokumen } = useSelector((state) => state.repository);
+  const { dokumen, loading } = useSelector((state) => state.repository);
   const detail = dokumen.detail;
   const comment = dokumen.comments;
 
@@ -86,6 +87,11 @@ export const DetailActivity = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+    {loading ? (
+      <Loading />
+    ) : (
+      null
+    )}
       <View style={{ flex: 1 }}>
         <View>
           <View

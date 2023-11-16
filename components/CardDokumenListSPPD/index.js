@@ -60,7 +60,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
     dispatch(getDocumentDetailSPPD(params));
   };
   return (
-    <>
+    <View>
       <TouchableOpacity
         onPress={() => {
           getDetail(item.id);
@@ -69,21 +69,23 @@ export const CardDokumenListSPPD = ({ item, token }) => {
         style={{
           backgroundColor: COLORS.white,
           justifyContent: "center",
-          padding: 8,
+          padding: 20,
           gap: 8,
           borderRadius: 8,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
           shadowColor: "#171717",
           shadowOpacity: 0.2,
+          shadowRadius:1,
           //shadow android
           elevation: 2,
           marginTop: 10,
         }}
       >
-        <Text style={{ fontSize: 13, fontWeight: 400 }}>{item.event}</Text>
+        <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>{item.event}</Text>
+        <View style={{ backgroundColor: COLORS.lighter, height: 1, marginBottom: 5 }} />
         <View style={{}}>
-          <Text style={{ fontSize: 11, fontWeight: 400, color: "#6B7280" }}>
+          <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.grey }}>
             Tanggal Mulai:{" "}
             {moment(item.start_date, "DD-MM-YYYY").format(DATETIME.LONG_DATE)}
           </Text>
@@ -91,7 +93,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
             style={{
               fontSize: 11,
               fontWeight: 400,
-              color: "#6B7280",
+              color: COLORS.grey,
               marginTop: 5,
             }}
           >
@@ -99,15 +101,15 @@ export const CardDokumenListSPPD = ({ item, token }) => {
             {moment(item.end_date, "DD-MM-YYYY").format(DATETIME.LONG_DATE)}
           </Text>
         </View>
+        <View>
+        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: 400 }}>Tujuan :</Text>
 
-        <Text style={{ fontSize: 11, fontWeight: 400 }}>Tujuan :</Text>
-
-        {item.venue.length < 3 ? (
+        {item.venue.length <= 3 ? (
           item.venue.map((data) => {
             return (
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>
+                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                   {data.locations}
                 </Text>
               </View>
@@ -116,20 +118,20 @@ export const CardDokumenListSPPD = ({ item, token }) => {
         ) : (
           <>
             <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                 {item.venue[0].locations}
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                 {item.venue[1].locations}
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                 {item.venue[2].locations}
               </Text>
             </View>
@@ -140,46 +142,48 @@ export const CardDokumenListSPPD = ({ item, token }) => {
               }}
             >
               <Text
-                style={{ color: COLORS.info, fontSize: 11, fontWeight: 400 }}
+                style={{ color: COLORS.info, fontSize: FONTSIZE.H3, fontWeight: FONTWEIGHT.normal, marginTop:4, marginHorizontal:4 }}
               >
                 Selengkapnya
               </Text>
             </TouchableOpacity>
           </>
         )}
+        </View>
+        <View>
+        <Text style={{ fontSize: FONTSIZE.H2, fontWeight: 400 }}>Peserta :</Text>
 
-        <Text style={{ fontSize: 11, fontWeight: 400 }}>Peserta :</Text>
-
-        {item.participant.length < 3 ? (
+        {item.participant.length <= 3 ? (
           item.participant.map((data) => {
+            console.log(data)
             return (
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>
+                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                   {data.person}
                 </Text>
               </View>
             );
           })
         ) : (
-          <>
+          <View style={{marginBottom:6}}>
             <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                 {item.participant[0].person}
               </Text>
             </View>
 
             <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                 {item.participant[1].person}
               </Text>
             </View>
 
             <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>-</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400 }}>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>-</Text>
+              <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
                 {item.participant[2].person}
               </Text>
             </View>
@@ -190,13 +194,14 @@ export const CardDokumenListSPPD = ({ item, token }) => {
               }}
             >
               <Text
-                style={{ color: COLORS.info, fontSize: 11, fontWeight: 400 }}
+                style={{ color: COLORS.info, fontSize: FONTSIZE.H3, fontWeight: 400, marginTop:4, marginHorizontal:4 }}
               >
                 Selengkapnya
               </Text>
             </TouchableOpacity>
-          </>
+          </View>
         )}
+        </View>
       </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}
@@ -317,6 +322,6 @@ export const CardDokumenListSPPD = ({ item, token }) => {
           </View>
         </BottomSheetView>
       </BottomSheetModal>
-    </>
+    </View>
   );
 };

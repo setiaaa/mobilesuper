@@ -8,13 +8,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { Search } from '../../components/Search'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Image } from 'react-native-svg'
 import { ScrollView } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { useEffect } from 'react'
 import { getArsipCuti, getCutiPersonal, getFormCuti, getKuotaCuti } from '../../service/api'
 import { CardKuotaCuti } from '../../components/CardKuotaCuti'
-import { FlatList } from 'react-native'
+import { FlatList, Image } from 'react-native'
 import ListEmpty from '../../components/ListEmpty'
 import { Loading } from '../../components/Loading';
 import { CardArsipCuti } from '../../components/CardArsipCuti'
@@ -88,69 +87,102 @@ export const PersonalCuti = () => {
                         </View>
 
                     </View>
-
                     <View style={{ padding: PADDING.Page }}>
-                        <View style={{
-                            padding: 20,
-                            marginTop: 10,
-                            borderTopRightRadius: 8,
+                        <View
+                            style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            //shadow ios
+                            shadowOffset: { width: -2, height: 4 },
+                            shadowColor: "#171717",
+                            shadowOpacity: 0.2,
+                            //shadow android
+                            elevation: 2,
+                            }}
+                        >
+                        <Image
+                        source={require("../../assets/superApp/Card-Background-Red.png")}
+                        style={{
+                            width: "100%",
                             borderTopLeftRadius: 8,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: COLORS.primary
-                        }}>
-                            <Image source={{ uri: BASE_URL + profile.avatar }} style={{ width: 61, height: 61, borderRadius: 30 }} />
-                            <Text style={{ fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>{personal.data_user?.nama}</Text>
-                            <Text style={{ marginTop: 5, color: COLORS.white }}>{personal.data_user?.nip}</Text>
+                            borderTopRightRadius: 8,
+                            //shadow ios
+                            shadowOffset: { width: -2, height: 4 },
+                            shadowColor: "#171717",
+                            shadowOpacity: 0.2,
+                            //shadow android
+                            elevation: 2,
+                        }}
+                        />
+                        <View
+                        style={{ alignItems: "center", gap: 10, position: "absolute" }}
+                        >
+                        <Image
+                            source={{ uri: BASE_URL + profile.avatar }}
+                            style={{
+                            width: 75,
+                            height: 75,
+                            borderRadius: 36,
+                            borderWidth: 2,
+                            borderColor: COLORS.white,
+                            }}
+                        />
+                        <Text
+                            style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                        >
+                            {profile.nama}
+                        </Text>
+                        <Text
+                            style={{ fontSize: 13, fontWeight: 400, color: COLORS.white }}
+                        >
+                            {profile.nip}
+                        </Text>
                         </View>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            padding: 15,
-                            borderBottomRightRadius: 8,
-                            borderBottomLeftRadius: 8,
-                        }}>
-                            <TouchableOpacity onPress={() => setCollapse({ nip: personal.data_user?.nip, toggle: true })}>
-                                <View style={{ flexDirection: "row" }}>
-                                    <Text style={{ marginRight: "80%" }}>Profil</Text>
-                                    {collapse.nip === personal.data_user?.nip && collapse.toggle === true ? (
-                                        <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                                            <Ionicons name='chevron-up' size={24} />
-                                        </TouchableOpacity>
-                                    ) : (
-                                        <Ionicons name='chevron-down' size={24} />
-                                    )}
-                                </View>
+                </View>
+            <View style={{
+                backgroundColor: COLORS.white,
+                padding: 15,
+                borderBottomRightRadius: 8,
+                borderBottomLeftRadius: 8,
+                }}
+                >
+                <TouchableOpacity onPress={() => setCollapse({ nip: personal.data_user?.nip, toggle: true })}>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ marginRight: "80%" }}>Profil</Text>
+                        {collapse.nip === personal.data_user?.nip && collapse.toggle === true ? (
+                            <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
+                                <Ionicons name='chevron-up' size={24} />
                             </TouchableOpacity>
+                        ) : (
+                            <Ionicons name='chevron-down' size={24} />
+                        )}
+                    </View>
+                </TouchableOpacity>
+                {personal.data_user?.nip === personal.data_user?.nip && collapse.toggle === true ? (
+                    <View>
+                        <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
+                            <Text style={{ marginTop: 10, }}>Jenis Kelamin</Text>
+                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jenis_kelamin}</Text>
 
-                            {personal.data_user?.nip === personal.data_user?.nip && collapse.toggle === true ? (
-                                <View>
+                            <Text style={{ marginTop: 10, }}>Golongan</Text>
+                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.golongan}</Text>
 
-                                    <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                                        <Text style={{ marginTop: 10, }}>Jenis Kelamin</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jenis_kelamin}</Text>
+                            <Text style={{ marginTop: 10, }}>Jabatan</Text>
+                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jabatan}</Text>
 
-                                        <Text style={{ marginTop: 10, }}>Golongan</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.golongan}</Text>
+                            <Text style={{ marginTop: 10, }}>Unit Kerja</Text>
+                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.unit_kerja}</Text>
 
-                                        <Text style={{ marginTop: 10, }}>Jabatan</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jabatan}</Text>
-                                        {/* 
-                                        <Text style={{ marginTop: 10, }}>Kementrian</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}></Text> */}
-
-                                        <Text style={{ marginTop: 10, }}>Unit Kerja</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.unit_kerja}</Text>
-
-                                        <Text style={{ marginTop: 10, }}>Satuan Kerja</Text>
-                                        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.satuan_kerja}</Text>
+                            <Text style={{ marginTop: 10, }}>Satuan Kerja</Text>
+                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.satuan_kerja}</Text>
 
 
-                                    </TouchableOpacity>
-                                </View>
-                            ) : (
-                                null
-                            )}
-                        </View>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    null
+                )}
+            </View>
                     </View>
                     <View style={{ paddingLeft: 20, gap: 10 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Form Pengajuan Cuti</Text>

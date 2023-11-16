@@ -12,7 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-import moment from "moment/moment";
+import { Loading } from "../../components/Loading";
+import moment from "moment";
 
 export const DetailDokumenSPPD = ({ route }) => {
   const { data } = route.params;
@@ -105,7 +106,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                   paddingRight: 20,
                 }}
               >
-                {moment(dokumen.detail.start_date, "DD-MM-YYYY").format(
+                {moment(dokumen.detail?.start_date, "DD-MM-YYYY").format(
                   DATETIME.LONG_DATE
                 )}
               </Text>
@@ -137,7 +138,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                   paddingRight: 20,
                 }}
               >
-                {moment(dokumen.detail.end_date, "DD-MM-YYYY").format(
+                {moment(dokumen.detail?.end_date, "DD-MM-YYYY").format(
                   DATETIME.LONG_DATE
                 )}
               </Text>
@@ -202,7 +203,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
                   KOTA DENPASAR - Hotel Kempinsky
                 </Text> */}
-                {dokumen.detail.venue.map((item) => {
+                {dokumen.detail?.venue?.map((item) => {
                   return <Text>{item.locations}</Text>;
                 })}
               </View>
@@ -228,7 +229,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               </Text>
               <View style={{ gap: 10, width: "60%", paddingRight: 20 }}>
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                  {dokumen.detail.province}
+                  {dokumen.detail?.province}
                 </Text>
               </View>
             </View>
@@ -259,7 +260,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                   paddingRight: 20,
                 }}
               >
-                {dokumen.detail.officer.name} / {dokumen.detail.officer.nip}
+                {dokumen.detail?.officer?.name} / {dokumen.detail?.officer?.nip}
               </Text>
             </View>
 
@@ -289,7 +290,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                   paddingRight: 20,
                 }}
               >
-                {dokumen.detail.officer_unker.name}
+                {dokumen.detail?.officer_unker?.name}
               </Text>
             </View>
 
@@ -319,7 +320,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                   paddingRight: 20,
                 }}
               >
-                {dokumen.detail.officer_satker}
+                {dokumen.detail?.officer_satker}
               </Text>
             </View>
           </View>
@@ -338,7 +339,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             </Text>
           </View>
 
-          {dokumen.detail.participant.map((item) => {
+          {dokumen.detail?.participant?.map((item) => {
             return (
               <View
                 style={{

@@ -15,6 +15,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { getDashboardSPPD } from "../../service/api";
+import { Loading } from "../../components/Loading";
 
 export const Personal = () => {
   const navigation = useNavigation();
@@ -40,7 +41,7 @@ export const Personal = () => {
     }
   }, [token]);
 
-  const { dashboard } = useSelector((state) => state.sppd);
+  const { dashboard, loading } = useSelector((state) => state.sppd);
   const { profile } = useSelector((state) => state.superApps);
 
   let jmlperjalanan = dashboard.stats?.self_event?.counter.toString();
@@ -51,6 +52,11 @@ export const Personal = () => {
 
   return (
     <>
+    {loading ? (
+      <Loading />
+    ) : (
+      null
+    )}
       <View
         style={{
           flexDirection: "row",
