@@ -1446,22 +1446,6 @@ export const LiniMasa = () => {
           </View>
         </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={!ascending ? asc : desc}>
-          <View
-            style={{
-            width: 40,
-            height: 40,
-            borderRadius: 30,
-            backgroundColor: COLORS.white,
-            justifyContent: "center",
-            alignItems: "center",
-            borderColor: COLORS.secondaryLighter,
-            // borderWidth: isFiltered ? 1 : 0,
-          }}
-          >
-            <Ionicons name="filter-outline" size={24} />
-          </View>
-        </TouchableOpacity>
           
 
         <FlatList

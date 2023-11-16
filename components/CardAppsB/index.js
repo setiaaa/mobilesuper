@@ -22,9 +22,9 @@ export const CardAppsB = ({ handlePressModal }) => {
   const isRolePreShare = profile.roles_access?.some((item) =>
     rolePreShare.includes(item)
   );
-  const isRoleTaskManagement = profile.roles_access?.some((item) =>
-    roleTaskManagement.includes(item)
-  );
+  // const isRoleTaskManagement = profile.roles_access?.some((item) =>
+  //   roleTaskManagement.includes(item)
+  // );
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );

@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE } from '../../config/SuperAppps';
+import { useSelector } from 'react-redux';
 
 export const CardApps = ({ handlePressModal }) => {
     const navigation = useNavigation()
