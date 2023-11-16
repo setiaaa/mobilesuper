@@ -101,7 +101,6 @@ export const AgendaEvent = () => {
 
   return (
     <>
-      {agenda.lists.length === 0 ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -145,6 +144,12 @@ export const AgendaEvent = () => {
           </Text>
         </View>
       </View>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        agenda.lists.length === 0 ? <ListEmpty /> : null
+      )}
 
       {/* <View style={{ width: 358, marginHorizontal: 15, marginVertical: 20 }}>
                 <Search placeholder={'Cari Agenda'} onSearch={filter} />
@@ -218,7 +223,7 @@ export const AgendaEvent = () => {
         )}
         style={{ marginVertical: 10, height: 440 }}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => {loading !== true ? <ListEmpty /> : loading}}
+        // ListEmptyComponent={() => {loading ? loading : <ListEmpty />}}
       />
 
       <Portal>

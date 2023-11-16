@@ -57,8 +57,8 @@ const ListDaftarPegawai = ({ item, token }) => {
         style={{
           backgroundColor: COLORS.white,
           borderRadius: 10,
-          padding: 15,
-          marginHorizontal: 20,
+          padding: 20,
+          marginHorizontal: 17,
           gap: 5,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -220,7 +220,7 @@ export const RangkumanIKU = () => {
       dispatch(getListPegawai(param));
     }
   }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
-
+  
   const loadMore = () => {
     if ((filterData.length % 10 === 0) && (savedYear.value || savedQuarter.value || savedUnitKerja.value)) {
       if (filterData.length > page) {
@@ -384,6 +384,8 @@ export const RangkumanIKU = () => {
   //   setIsFiltered(true);
   // };
 
+  console.log(filterData)
+
 
   return (
     <>
@@ -497,13 +499,13 @@ export const RangkumanIKU = () => {
 
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
-          <View style={{ height: "85%", width: "100%", paddingHorizontal: 20 }}>
+          <View style={{ height: "85%", paddingHorizontal: 16 }}>
             <WebView
               originWhitelist={["*"]}
               source={{
                 uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
               }}
-              style={{ flex: 1 }}
+              style={{ flex: 1, borderRadius: 8 }}
               allowFileAccess={true}
               androidLayerType={"software"}
               mixedContentMode={"always"}
@@ -511,12 +513,12 @@ export const RangkumanIKU = () => {
             />
           </View>
         ) : (
-          <ScrollView>
+          <>
             <View
               style={{
                 flexDirection: "column",
                 gap: 5,
-                paddingHorizontal: 20,
+                paddingHorizontal: 17,
                 width: "100%",
               }}
             >
@@ -540,7 +542,7 @@ export const RangkumanIKU = () => {
                   }}
                 >
                   <Text style={{ marginLeft: 20, color: COLORS.lighter }}>
-                    Pilih
+                    Pilih Tahun dan Triwulan dan Unit Kerja
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -671,32 +673,34 @@ export const RangkumanIKU = () => {
                       <></>
                     ) : null}
 
-                    <TouchableOpacity
-                      style={{
-                        width: "90%",
-                        backgroundColor: COLORS.primary,
-                        height: 50,
-                        marginVertical: 40,
-                        borderRadius: 6,
-                        alignItems: "center",
-                        marginHorizontal: 20,
-                        justifyContent: "center",
-                      }}
-                      onPress={() => {
-                        handlePilihSimpan();
-                        bottomSheetAttachSelectClose();
-                      }}
-                    >
-                      <Text
+                    <View style={{ height: 200, paddingVertical: 20, justifyContent: "flex-end" }}>
+                      <TouchableOpacity
                         style={{
-                          color: COLORS.white,
-                          fontSize: FONTSIZE.H1,
-                          fontWeight: 500,
+                          width: "90%",
+                          backgroundColor: COLORS.primary,
+                          height: 50,
+                          // marginTop: ,
+                          borderRadius: 8,
+                          alignItems: "center",
+                          marginHorizontal: 20,
+                          justifyContent: "center",
+                        }}
+                        onPress={() => {
+                          handlePilihSimpan();
+                          bottomSheetAttachSelectClose();
                         }}
                       >
-                        Simpan
-                      </Text>
-                    </TouchableOpacity>
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: FONTSIZE.H1,
+                            fontWeight: 500,
+                          }}
+                        >
+                          Simpan
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </BottomSheetView>
               </BottomSheetModal>
@@ -836,7 +840,7 @@ export const RangkumanIKU = () => {
             <View>
               <View
                 style={{
-                  marginTop: 15,
+                  marginTop: 10,
                   gap: 15,
                   marginBottom: "95%",
                 }}
@@ -867,6 +871,7 @@ export const RangkumanIKU = () => {
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}
                   onEndReached={loadMore}
+                  style={{ height: 320, }}
                 />
 
                 {/* {pegawai.lists.length !== 0
@@ -940,7 +945,7 @@ export const RangkumanIKU = () => {
                   : ""} */}
               </View>
             </View>
-          </ScrollView>
+          </>
         )}
       </View>
     </>
