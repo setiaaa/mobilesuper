@@ -102,7 +102,7 @@ export const DokumenSPPD = () => {
           data={filterData}
           renderItem={({ item }) => (
             <View key={item.id}>
-              <CardDokumenListSPPD item={item} />
+              <CardDokumenListSPPD item={item} token={token} />
             </View>
           )}
           keyExtractor={(item) => item.id}

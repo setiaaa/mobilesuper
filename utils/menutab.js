@@ -82,6 +82,7 @@ import { PLetter } from "../Apps/Korespondensi/Pencarian/PLetter";
 import { PTodo } from "../Apps/Korespondensi/Pencarian/PTodo";
 import { PSecretary } from "../Apps/Korespondensi/Pencarian/PSecretary";
 import { PDelegation } from "../Apps/Korespondensi/Pencarian/PDelegation";
+import { Pencarian } from "../Apps/Kebijakan/Pencarian";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -179,7 +180,12 @@ export const BottomTabsKeb = () => {
           component={Tematik}
           options={{ headerShown: false }}
         />
-        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+        <Tab.Screen
+          name="Pencarian"
+          component={Pencarian}
+          options={{ headerShown: false }}
+        />
+        {/* <Tab.Screen name='Pencarian' component={Pencarian}
           options={{
             headerShown: false,
             tabBarStyle: { display: 'none' },

@@ -21,8 +21,10 @@ import { CardItemMember } from "../CardItemMember";
 import { CardMemberSPPD } from "../CardMemberSPPD";
 import { Ionicons } from "@expo/vector-icons";
 import { CardListTempatSPPD } from "../CardListTempatSPPD";
+import { useDispatch } from "react-redux";
+import { getDocumentDetailSPPD } from "../../service/api";
 
-export const CardDokumenListSPPD = ({ item }) => {
+export const CardDokumenListSPPD = ({ item, token }) => {
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalRefVenue = useRef(null);
@@ -49,10 +51,21 @@ export const CardDokumenListSPPD = ({ item }) => {
     if (bottomSheetModalRefVenue.current)
       bottomSheetModalRefVenue.current?.close();
   };
+
+  const dispatch = useDispatch();
+
+  const getDetail = (id) => {
+    const params = { token, id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDocumentDetailSPPD(params));
+  };
   return (
     <View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("DetailDokumenSPPD")}
+        onPress={() => {
+          getDetail(item.id);
+          navigation.navigate("DetailDokumenSPPD", { data: item.event });
+        }}
         style={{
           backgroundColor: COLORS.white,
           justifyContent: "center",
