@@ -451,8 +451,7 @@ export const CardAppsB = ({ handlePressModal }) => {
     </View>
   );
 };
-  );
-};
+
 
 const styles = StyleSheet.create({
   card: {

@@ -12,14 +12,7 @@ const dataRoleDashboardKeuangan = ["D_KK"];
 const dataRoleDashboardkepegawaian = ["D_KP"];
 const dataRoleDashboardbudidaya = ["D_BD"];
 const dataRoleDashboardpenangkapan = ["D_PK"];
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
-import {} from "react-native";
-import { Modal } from "react-native";
-import { useSelector } from "react-redux";
+
 
 
 
