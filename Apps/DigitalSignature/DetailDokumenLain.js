@@ -153,14 +153,9 @@ export const DetailDokumenLain = () => {
                                     )}
                                 </View>
                             </View>
-                            {item.logs?.map((log) => {
-                                tanggalApprove.push(
-                                    log.created_at
-                                )
-                            })}
-                            {item.approvers?.map((data, index = 0) => {
+                            {item.approvers?.map((data, index) => {
                                 return (
-                                    <View style={{ borderWidth: 1, borderRadius: 4, width: '95%', marginHorizontal: 10, marginBottom: 20, borderColor: '#DBDADE' }}>
+                                    <View style={{ borderWidth: 1, borderRadius: 4, width: '95%', marginHorizontal: 10, marginBottom: 20, borderColor: '#DBDADE', paddingBottom:10 }}>
                                         <View style={{ backgroundColor: COLORS.primary, alignItems: 'center', height: 30, justifyContent: 'center' }}>
                                             <Text style={{ color: COLORS.white, fontWeight: FONTWEIGHT.bold }}>Approval</Text>
                                         </View>
@@ -168,7 +163,7 @@ export const DetailDokumenLain = () => {
                                             <View style={{ alignItems: 'left', width: '98%' }}>
                                                 <View style={{ flexDirection: 'row', gap: 5, marginTop: 10, alignItems: 'center', }}>
                                                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>Penandatangan</Text>
-                                                    {index < item.logs.length ? (
+                                                    {item.sequence > index ? (
                                                         <>
                                                             <View style={{ backgroundColor: COLORS.success, borderRadius: 50, height: 20, width: 20, justifyContent: 'center', alignItems: 'center' }}>
                                                                 <Ionicons name='checkmark-outline' color={COLORS.white} />
@@ -215,21 +210,6 @@ export const DetailDokumenLain = () => {
                                                                     <Text style={{ marginTop: 10, color: COLORS.lighter, fontWeight: FONTWEIGHT.bold }}>{data.nama}</Text>
                                                                 )}
                                                             </View>
-                                                        )}
-                                                        {index < item.logs.length ? (
-                                                            <View style={{ flexDirection: 'row', gap: 10, marginTop: 5, marginBottom: 10 }}>
-                                                                <Text style={{ color: COLORS.lighter }}>Disetujui :</Text>
-                                                                {loading ? (
-                                                                    <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop:5 }} width={165} height={20} />
-                                                                ) : (
-                                                                    <><Text style={{ color: COLORS.lighter }}>{moment(tanggalApprove[index]).format("DD MMMM YYYY")}</Text>
-                                                                    <View style={{ height: '100%', width: 1, backgroundColor: COLORS.lighter }} />
-                                                                    <Text style={{ color: COLORS.lighter }}>{moment(tanggalApprove[index]).format("HH:mm")}</Text></>
-                                                                )}
-                                                                
-                                                            </View>
-                                                        ) : (
-                                                            <Text style={{ color: COLORS.lighter, marginVertical: 10 }}>-</Text>
                                                         )}
                                                     </View>
                                                 </View>
