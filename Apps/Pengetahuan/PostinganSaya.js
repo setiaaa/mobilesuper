@@ -103,6 +103,7 @@ const CardPostinganSaya = ({ item, token }) => {
                   textAlign: "justify",
                   marginBottom: 5,
                   maxWidth: 250,
+                  fontWeight: FONTWEIGHT.bold
                 }}
                 numberOfLines={3} // Limit the number of lines to 1
                 ellipsizeMode="tail" // Display "..." at the end if text overflows
@@ -114,7 +115,7 @@ const CardPostinganSaya = ({ item, token }) => {
                   marginVertical: 15,
                 }}
               >
-                <Text style={{ color: "#6B7280", fontSize: 13 }}>
+                <Text style={{ color: "#6B7280", fontSize: 13, }}>
                   Tanggal :{" "}
                   {moment(item.created_at, "HH:mm:ss").format(
                     DATETIME.LONG_DATE
