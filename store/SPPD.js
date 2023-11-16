@@ -3,6 +3,7 @@ import {
   getArsipCuti,
   getCutiPersonal,
   getDashboardSPPD,
+  getDocumentAttachmentSPPD,
   getDocumentDetailSPPD,
   getDocumentListSPPD,
 } from "../service/api";
@@ -16,6 +17,7 @@ const SPPDSlice = createSlice({
       lists: [],
       detail: {},
     },
+    surat: {},
   },
   reducers: {},
   extraReducers(builder) {
@@ -48,6 +50,17 @@ const SPPDSlice = createSlice({
         state.loading = true;
       })
       .addCase(getDocumentDetailSPPD.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getDocumentAttachmentSPPD.fulfilled, (state, action) => {
+        state.surat = action.payload;
+        state.loading = false;
+        console.log(action.payload);
+      })
+      .addCase(getDocumentAttachmentSPPD.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDocumentAttachmentSPPD.rejected, (state, action) => {
         state.loading = false;
       });
   },
