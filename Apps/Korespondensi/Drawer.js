@@ -3,13 +3,20 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Alert, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Alert,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { Avatar, Drawer, Text, IconButton } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerActions } from "@react-navigation/native";
 
 import { setProfile } from "../../store/profile";
-import { logout, setFirstLogin } from "../../store/auth";
+import { logout, setFirstLogin, setToken } from "../../store/auth";
 import { nde_api } from "../../utils/api.config";
 import { getHTTP, postHTTP } from "../../utils/http";
 import AlertConfirm from "../../components/UI/AlertConfirm";
@@ -34,15 +41,9 @@ import { androidId, getIosIdForVendorAsync } from "expo-application";
 import { COLORS } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { OutgoingList } from "./List/OutgoingList";
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native";
 
 const DrawerItemsData = [
-  {
-    label: "Pencarian",
-    name: "Pencarian",
-    icon: "feature-search",
-    key: 1,
-  },
   {
     label: "Beranda",
     name: "Dashboard",
@@ -65,7 +66,7 @@ const DrawerItemsData = [
     label: "Disposisi",
     name: "Disposition",
     icon: "chat-processing",
-    key: 5
+    key: 5,
   },
   {
     label: "Surat Keluar",
@@ -89,7 +90,7 @@ const DrawerItemsData = [
 
 // const DrawerItemsData = [
 //   {
-//     label: "Incoming Letter", 
+//     label: "Incoming Letter",
 //     name: "Incoming",
 //     icon: "inbox-arrow-down",
 //     key: 1,
@@ -106,10 +107,10 @@ const DrawerItemsData = [
 //     icon: "share",
 //     key: 3,
 //   },
-//   { 
-//     label: "Need Follow Up", 
-//     name: "NeedFollowUp", 
-//     icon: "email-edit", 
+//   {
+//     label: "Need Follow Up",
+//     name: "NeedFollowUp",
+//     icon: "email-edit",
 //     key: 4 },
 //   {
 //     label: "Tracking Letter",
@@ -133,11 +134,14 @@ const CustomDrawerContent = (props) => {
   const [drawerItemIndex, setDrawerItemIndex] = useState(0);
   const profileLogin = useSelector((state) => state.profile.profile);
   const device_uuid = useSelector((state) => state.profile.device_uuid);
+  const token = useSelector((state) => state.auth.token);
   const header = {};
 
   useEffect(() => {
     getProfile();
-  }, [setProfile]);
+    // ambil token dari superapps belum bisa. coba set token manual untuk testing
+    // dispatch(setToken({ token: "94c119e1ccb5ddb4a9fffa04ceb1602efd53f28f" }));
+  }, []);
 
   async function getProfile() {
     try {
@@ -149,7 +153,7 @@ const CustomDrawerContent = (props) => {
         let response = await getHTTP(nde_api.profile);
         dispatch(setProfile(response.data));
 
-        let data2 = await AsyncStorage.getItem("token");
+        let data2 = await AsyncStorage.getItem("tokenKorespondensi");
         if (data2 != null) {
           let token = JSON.parse(data2);
           header = {
@@ -193,7 +197,14 @@ const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView
+      {...props}
+      style={{
+        borderTopRightRadius: 30,
+        borderBottomRightRadius: 30,
+        backgroundColor: GlobalStyles.colors.textWhite,
+      }}
+    >
       <View style={styles.containerProfile}>
         {errorAvatarProfile && (
           <Avatar.Image
@@ -229,19 +240,25 @@ const CustomDrawerContent = (props) => {
           </Text>
         ))}
       </View>
-      {/* <Drawer.Section style={{ marginHorizontal: -5 }}>
+      <Drawer.Section style={{ marginHorizontal: -5 }}>
         <Drawer.Item
           style={styles.drawerItem}
-          label="Cari..."
-          icon={drawerItemIndex == 10 ? "magnify" : "magnify"}
-          key="10"
-          active={drawerItemIndex === 10}
+          label="Pencarian"
+          icon={drawerItemIndex == 1 ? "feature-search" : "feature-search-outline"}
+          key="1"
+          active={drawerItemIndex === 1}
           onPress={() => {
-            setDrawerItemIndex(10);
-            props.navigation.navigate("SearchGlobalList");
+            setDrawerItemIndex(1);
+            props.navigation.navigate("Pencarian");
+          }}
+          theme={{
+            colors: {
+              secondaryContainer: COLORS.infoDangerLight,
+              onSecondaryContainer: COLORS.primary,
+            },
           }}
         />
-      </Drawer.Section> */}
+      </Drawer.Section>
       {/* <Drawer.Section style={{ marginHorizontal: -5 }} showDivider={false}>
         <Drawer.Item
           style={styles.drawerItem}
@@ -267,13 +284,22 @@ const CustomDrawerContent = (props) => {
             active={drawerItemIndex === data.key}
             onPress={() => {
               setDrawerItemIndex(data.key);
-              props.navigation.navigate(data.name, { unread: false });
+              props.navigation.navigate(data.name, {
+                title: data.name,
+                unread: false,
+              });
+            }}
+            theme={{
+              colors: {
+                secondaryContainer: COLORS.infoDangerLight,
+                onSecondaryContainer: COLORS.primary,
+              },
             }}
           />
         ))}
         <Drawer.Item
           style={styles.drawerItem}
-          label="Sign Out"
+          label="Keluar"
           icon="logout"
           key="8"
           active={drawerItemIndex === 8}
@@ -289,12 +315,20 @@ const CustomDrawerContent = (props) => {
       <Drawer.Item
         style={styles.drawerItem}
         label="Profil"
-        icon={drawerItemIndex == 9 ? "account-circle" : "account-circle-outline"}
+        icon={
+          drawerItemIndex == 9 ? "account-circle" : "account-circle-outline"
+        }
         key="9"
         active={drawerItemIndex === 9}
         onPress={() => {
           setDrawerItemIndex(9);
           props.navigation.navigate("Profile");
+        }}
+        theme={{
+          colors: {
+            secondaryContainer: COLORS.infoDangerLight,
+            onSecondaryContainer: COLORS.primary,
+          },
         }}
       />
       {/* <Drawer.Section style={{ margin: -5 }} title="Tools">
@@ -372,13 +406,17 @@ const CustomDrawerContent = (props) => {
 
 //toolbar custom
 const defaultOptions = ({ title, navigation }) => ({
-  title: title,
+  headerTitle: () => {
+    return (
+      <Text style={{ textAlign: "right" }} numberOfLines={2}>
+        {title}
+      </Text>
+    );
+  },
   headerTitleContainerStyle: {
-    // flex: 1,
+    flex: 1,
     alignItems: "flex-end",
-    // backgroundColor: "red",
-    alignItems: "center",
-    paddingRight: 10
+    paddingRight: 10,
     // marginTop: 40
   },
   headerTitleStyle: {
@@ -391,27 +429,36 @@ const defaultOptions = ({ title, navigation }) => ({
     width: "50%",
     // marginHorizontal: 0,
     // backgroundColor: "yellow",
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   // headerStatusBarHeight: 0,
   headerLeft: () => (
     <SafeAreaView style={{ alignItems: "center" }}>
       {/* <View style={styles.containerHeader}> */}
       <View style={styles.containerHeaderLeft}>
-        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())} style={{ backgroundColor: "#752A2B", width: 30, height: 30, borderRadius: 15, alignItems: "center", justifyContent: "center", marginBottom: 5 }}>
+        <TouchableOpacity
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          style={{
+            backgroundColor: "#752A2B",
+            width: 30,
+            height: 30,
+            borderRadius: 15,
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 5,
+          }}
+        >
           {/* <IconButton
             icon="menu"
             size={16}
             color={COLORS.white}
             onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
           /> */}
-          <Ionicons
-            name="menu-outline"
-            size={16}
-            color={COLORS.white}
-          />
+          <Ionicons name="menu-outline" size={16} color={COLORS.white} />
         </TouchableOpacity>
-        <Image source={require("../../assets/superApp/LogoKorespondensi.png")} />
+        <Image
+          source={require("../../assets/superApp/LogoKorespondensi.png")}
+        />
         {/* <Image style={styles.logoHeader} source={Config.logoHeader} /> */}
       </View>
       {/* </View> */}
@@ -423,6 +470,7 @@ function DrawerNavigator({ navigation }) {
     <DrawerNav.Navigator
       useLegacyImplementation
       drawerContent={(props) => <CustomDrawerContent {...props} />}
+      screenOptions={{ drawerStyle: { backgroundColor: "transparent" } }}
     >
       <DrawerNav.Screen
         name="Dashboard"
@@ -457,7 +505,7 @@ function DrawerNavigator({ navigation }) {
         name="IncomingUnread"
         component={IncomingList}
         options={defaultOptions({
-          title: "Incoming Unread",
+          title: "Surat Masuk\nBelum Dibaca",
           navigation: navigation,
         })}
       />
@@ -465,7 +513,7 @@ function DrawerNavigator({ navigation }) {
         name="Disposition"
         component={DispositionList}
         options={defaultOptions({
-          title: "Disposition Letter",
+          title: "Disposisi",
           navigation: navigation,
         })}
       />
@@ -481,7 +529,7 @@ function DrawerNavigator({ navigation }) {
         name="DispositionUnread"
         component={DispositionList}
         options={defaultOptions({
-          title: "Disposition Unread",
+          title: "Disposisi\nBelum Dibaca",
           navigation: navigation,
         })}
       />
@@ -489,7 +537,7 @@ function DrawerNavigator({ navigation }) {
         name="NeedFollowUp"
         component={NeedFollowUpList}
         options={defaultOptions({
-          title: "Need Follow Up Letter",
+          title: "Surat Perlu Di Proses",
           navigation: navigation,
         })}
       />
@@ -505,7 +553,7 @@ function DrawerNavigator({ navigation }) {
         name="Submitted"
         component={SubmittedList}
         options={defaultOptions({
-          title: "Submitted Letter",
+          title: "Surat Terkirim",
           navigation: navigation,
         })}
       />
@@ -569,22 +617,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginStart: 15,
     gap: 10,
-    alignItems: "center"
+    alignItems: "center",
   },
   logoHeader: {
     height: 30,
     width: 60,
   },
   drawerItem: {
-    borderRadius: 0,
-    marginLeft: -10,
-    paddingLeft: 25,
+    borderTopLeftRadius:25,
+    borderBottomLeftRadius:25,
+    borderTopRightRadius:0,
+    borderBottomRightRadius:0,
+    marginRight:0,
     height: 40,
   },
   containerProfile: {
+    marginTop: 20,
     marginBottom: 20,
     // marginHorizontal: 24,
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     marginBottom: 8,

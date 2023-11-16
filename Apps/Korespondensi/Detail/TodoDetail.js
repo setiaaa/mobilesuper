@@ -176,7 +176,7 @@ function TodoDetail({ route }) {
         <View style={styles.screen}>
           {loadingOverlay}
           <View style={{ marginBottom: 8 }}>
-            <Text>Created by</Text>
+            <Text>Dibuat oleh</Text>
           </View>
           <Card style={styles.containerCard}>
             <Card.Title
@@ -222,7 +222,7 @@ function TodoDetail({ route }) {
           </Card>
 
           <View style={{ marginBottom: 8 }}>
-            <Text>Disposition To</Text>
+            <Text>Diteruskan Kepada</Text>
           </View>
           <Card style={styles.containerCard}>
             {detail &&
@@ -316,12 +316,12 @@ function TodoDetail({ route }) {
                 onPress={() => {
                   navigation.navigate("DispositionDetail", {
                     id: detail.disposition,
-                    title: "Disposition Letter\nDetail",
+                    title: "Detail Disposisi",
                     hideFormDispo: true,
                   });
                 }}
               >
-                View Document
+                Lihat Dokumen
               </Button>
             </View>
             {detail?.sender && detail?.sender[0]?.name == profile?.fullname && (
@@ -337,12 +337,12 @@ function TodoDetail({ route }) {
                 />
               </View>
             )}
-            <View style={styles.wrap}>
+            {/* <View style={styles.wrap}>
               <TextInput
                 mode="outlined"
                 style={styles.inputContainerStyle}
                 multiline={true}
-                label="Comment"
+                label="Komentar"
                 value={commentArray[id]}
                 onChangeText={(text) => onChangeText(id, text)}
                 theme={{
@@ -361,7 +361,7 @@ function TodoDetail({ route }) {
               />
             </View>
             <View style={styles.wrap}>
-              <Text>Comments</Text>
+              <Text>Komentar</Text>
               {detail?.message && (
                 <TreeView
                   childrenKey="submessage"
@@ -422,7 +422,7 @@ function TodoDetail({ route }) {
                                   mode="outlined"
                                   style={styles.inputContainerStyle}
                                   multiline={true}
-                                  label="Comment"
+                                  label="Komentar"
                                   value={commentArray[node.id]}
                                   onChangeText={(text) =>
                                     onChangeText(node.id, text)
@@ -466,9 +466,9 @@ function TodoDetail({ route }) {
                 />
               )}
               {detail?.message?.length == 0 && (
-                <List.Item description="There is no Comment here" />
+                <List.Item description="Tidak ada komentar" />
               )}
-            </View>
+            </View> */}
           </Card>
         </View>
       </ScrollView>
@@ -513,12 +513,10 @@ const styles = StyleSheet.create({
   },
   tindakan: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     borderRadius: 12,
     padding: 8,
     backgroundColor: GlobalStyles.colors.greylight,
-    borderWidth: 1,
-    borderColor: GlobalStyles.colors.primary,
   },
   button: {
     borderRadius: 12,

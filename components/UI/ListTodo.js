@@ -13,6 +13,9 @@ import { Avatar, Chip, List } from "react-native-paper";
 import { Config } from "../../constants/config";
 import { GlobalStyles } from "../../constants/styles";
 import { nde_api } from "../../utils/api.config";
+import { Image } from "react-native";
+import { COLORS } from "../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
 
 function ListTodo({ title, result }) {
   const [errorAvatarSender, setErrorAvatarSender] = useState(false);
@@ -22,7 +25,7 @@ function ListTodo({ title, result }) {
   useEffect(() => {
     async function getToken() {
       try {
-        let data2 = await AsyncStorage.getItem("token");
+        let data2 = await AsyncStorage.getItem("tokenKorespondensi");
         if (data2 != null) {
           let token = JSON.parse(data2);
           header = {
@@ -37,91 +40,58 @@ function ListTodo({ title, result }) {
     getToken();
   }, []);
   return (
-    <List.Accordion
-      title={title}
-      id={title}
-      key={title}
-      style={styles.listAccordion}
+    <View
+      style={[
+        title == "Searching" && styles.scrollSearch,
+        title != "Searching" && styles.scroll,
+      ]}
     >
-      <ScrollView
-        style={[
-          title == "Searching" && styles.scrollSearch,
-          title != "Searching" && styles.scroll,
-        ]}
-      >
-        {result.results &&
-          result.results.length > 0 &&
-          result.results.map((data) => (
-            <Fragment key={data.date}>
-              {data.children &&
-                data.children.map((item) => (
-                  <Pressable
-                    key={item.id}
-                    onPress={() => {
-                      navigation.navigate("TodoDetail", {
-                        id: item.id,
-                        title: Config.labelTodo + "\nDetail",
-                      });
-                    }}
-                  >
-                    <List.Section style={styles.containerTodo}>
-                      <List.Item
-                        title={() => (
-                          <>
-                            <Text style={styles.titleTodo}>{item.subject}</Text>
-                            <Text style={styles.descTodo}>
-                              {item.description}
-                            </Text>
-                          </>
-                        )}
-                        right={(props) => (
-                          <View style={{ width: 45 }}>
-                            {errorAvatarSender && (
-                              <Avatar.Image {...props} source={Config.avatar} />
-                            )}
-                            {!errorAvatarSender && (
-                              <Avatar.Image
-                                {...props}
-                                size={40}
-                                key={item.sender[0].name}
-                                source={{
-                                  uri: `${
-                                    nde_api.baseurl + item.sender[0].avatar
-                                  }`,
-                                  method: "GET",
-                                  headers: header,
-                                }}
-                                onError={(e) => setErrorAvatarSender(true)}
-                                theme={{
-                                  colors: {
-                                    primary: GlobalStyles.colors.textWhite,
-                                  },
-                                }}
-                              />
-                            )}
-                          </View>
-                        )}
-                      />
-                      <View style={styles.footer}>
-                        <View style={styles.containerAvatar}>
-                          {item.receiver &&
-                            item.receiver.map((receiver, index) => (
+      {result.results &&
+        result.results.length > 0 &&
+        result.results.map((data) => (
+          <Fragment key={data.date}>
+            {data.children &&
+              data.children.map((item) => (
+                <Pressable
+                  key={item.id}
+                  onPress={() => {
+                    navigation.navigate("TodoDetail", {
+                      id: item.id,
+                      title: "Detail " + Config.labelTodo,
+                    });
+                  }}
+                >
+                  <View style={styles.containerTodo}>
+                    <View style={{ gap: 10, width: "80%" }}>
+                      <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                        {item.subject}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 400,
+                          color: COLORS.info,
+                        }}
+                      >
+                        {item.description}
+                      </Text>
+                      <View style={{ flexDirection: "row", marginLeft: 8 }}>
+                        {item.receiver &&
+                          item.receiver.map((receiver, index) =>
+                            index <= 3 ? (
                               <Fragment key={index}>
                                 {errorAvatarReceiver && (
-                                  <Avatar.Image
-                                    {...props}
+                                  <Image
                                     source={Config.avatar}
-                                    theme={{
-                                      colors: {
-                                        primary: GlobalStyles.colors.textWhite,
-                                      },
+                                    style={{
+                                      borderRadius: 50,
+                                      width: 32,
+                                      height: 32,
                                     }}
                                   />
                                 )}
                                 {!errorAvatarReceiver && (
-                                  <Avatar.Image
-                                    size={30}
-                                    style={styles.avaReceiver}
+                                  <Image
                                     source={{
                                       uri: `${
                                         nde_api.baseurl + receiver.avatar
@@ -129,52 +99,98 @@ function ListTodo({ title, result }) {
                                       method: "GET",
                                       headers: header,
                                     }}
-                                    onError={(e) =>
-                                      setErrorAvatarReceiver(true)
-                                    }
-                                    theme={{
-                                      colors: {
-                                        primary: GlobalStyles.colors.textWhite,
-                                      },
+                                    style={{
+                                      borderRadius: 50,
+                                      width: 32,
+                                      height: 32,
+                                    }}
+                                    onError={(error) => {
+                                      setErrorAvatarReceiver(true);
                                     }}
                                   />
                                 )}
                               </Fragment>
-                            ))}
-                        </View>
-                        <Chip
-                          compact={true}
-                          style={
-                            item.prio == "Normal"
-                              ? { backgroundColor: GlobalStyles.colors.normal }
-                              : item.prio == "Low"
-                              ? { backgroundColor: GlobalStyles.colors.low }
-                              : item.prio == "High"
-                              ? { backgroundColor: GlobalStyles.colors.high }
-                              : { backgroundColor: GlobalStyles.colors.yellow }
-                          }
-                          textStyle={{ color: "white" }}
-                        >
-                          {item.duedate.substr(0, 6)}
-                        </Chip>
+                            ) : null
+                          )}
+                        {item.receiver.length > 4 && (
+                          <Ionicons
+                            name="ellipsis-horizontal-circle-outline"
+                            size={35}
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          />
+                        )}
                       </View>
-                    </List.Section>
-                  </Pressable>
-                ))}
-            </Fragment>
-          ))}
-        {result.results && result.results.length == 0 && (
-          <List.Section
-            key="search"
-            style={[styles.containerNotFound, styles.noTodo]}
-          >
-            <Text style={styles.textNotFound}>
-              You don't have a {Config.labelTodo} {title}
-            </Text>
-          </List.Section>
-        )}
-      </ScrollView>
-    </List.Accordion>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {errorAvatarSender && (
+                        <Image
+                          source={Config.avatar}
+                          style={{
+                            borderRadius: 50,
+                            width: 32,
+                            height: 32,
+                          }}
+                        />
+                      )}
+                      {!errorAvatarSender && (
+                        <Image
+                          source={{
+                            uri: `${nde_api.baseurl + item.sender[0].avatar}`,
+                            method: "GET",
+                            headers: header,
+                          }}
+                          style={{
+                            borderRadius: 50,
+                            width: 32,
+                            height: 32,
+                          }}
+                          onError={(error) => {
+                            console.log(error);
+                            setErrorAvatarSender(true);
+                          }}
+                        />
+                      )}
+                      <View
+                        style={{
+                          backgroundColor: COLORS.infoDangerLight,
+                          borderRadius: 30,
+                          width: 43,
+                          height: 24,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: COLORS.infoDanger,
+                            textAlign: "center",
+                          }}
+                        >
+                          {item.prio}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </Pressable>
+              ))}
+          </Fragment>
+        ))}
+      {result.results && result.results.length == 0 && (
+        <View key="search" style={[styles.containerTodo, styles.noTodo]}>
+          <Text style={styles.textNotFound}>
+            Anda tidak memiliki {Config.labelTodo} {title}
+          </Text>
+        </View>
+      )}
+    </View>
   );
 }
 
@@ -182,8 +198,9 @@ export default ListTodo;
 
 const styles = StyleSheet.create({
   listAccordion: {
-    padding: 0,
+    height: 30,
     margin: 0,
+    padding: 0,
     backgroundColor: GlobalStyles.colors.textWhite,
   },
   scroll: {
@@ -193,18 +210,17 @@ const styles = StyleSheet.create({
     // height: "60%",
   },
   containerTodo: {
-    borderRadius: 6,
-    backgroundColor: GlobalStyles.colors.textWhite,
-    padding: 12,
-    elevation: 1,
-    borderWidth: 1,
-    borderColor: GlobalStyles.colors.tertiery40,
-  },
-  containerNotFound: {
-    borderRadius: 6,
-    backgroundColor: GlobalStyles.colors.disabled,
-    padding: 24,
-    elevation: 1,
+    backgroundColor: COLORS.white,
+    marginVertical: 10,
+    borderRadius: 8,
+    padding: 20,
+    flexDirection: "row",
+    //shadow ios
+    shadowOffset: { width: -2, height: 4 },
+    shadowColor: "#171717",
+    shadowOpacity: 0.2,
+    //shadow android
+    elevation: 2,
   },
   titleTodo: {
     fontSize: GlobalStyles.font.lg,
@@ -229,5 +245,6 @@ const styles = StyleSheet.create({
   },
   textNotFound: {
     fontWeight: "bold",
+    fontSize: 13,
   },
 });

@@ -70,8 +70,8 @@ function DispositionList({ route }) {
       setList(data);
       setIsLoading(false);
     } catch (error) {
-      handlerError(error, "Warning!", "Disposition List not working");
       setIsLoading(false);
+      handlerError(error, "Warning!", "Disposition List not working");
     }
   }
 
@@ -169,7 +169,7 @@ function DispositionList({ route }) {
             onPress={() => {
               navigation.navigate("DispositionDetail", {
                 id: data.id,
-                title: "Disposition\nDetail",
+                title: "Detail Disposisi",
               });
             }}
           />

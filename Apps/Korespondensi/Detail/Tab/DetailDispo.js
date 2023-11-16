@@ -146,7 +146,7 @@ function DetailDispo({ data, noAgenda, preview }) {
       } catch (e) {
         throw new Error(e);
       }
-    } catch (err) { }
+    } catch (err) {}
   };
   const saveIosFile = async (fileUri) => {
     try {
@@ -178,12 +178,15 @@ function DetailDispo({ data, noAgenda, preview }) {
                   <Text key={index}>{item}</Text>
                 ))}
             </View>
+            <View>
+              <Text style={styles.title}>Petunjuk</Text>
+            </View>
             <View style={styles.container}>
               <Text>{data?.action ? data.action : data?.action_manual}</Text>
             </View>
-            <View>
+            {/* <View>
               <View>
-                <Text style={styles.title}>Attachments Disposition</Text>
+                <Text style={styles.title}>Attachments Disposisi</Text>
               </View>
               {data?.attachments?.length == 0 && <Text>-</Text>}
               {data?.attachments?.length != 0 &&
@@ -207,7 +210,7 @@ function DetailDispo({ data, noAgenda, preview }) {
                     </View>
                   </TouchableOpacity>
                 ))}
-            </View>
+            </View> */}
           </Card>
           <View style={{ marginBottom: 8 }}>
             <Text>Informasi Surat</Text>
@@ -231,11 +234,11 @@ function DetailDispo({ data, noAgenda, preview }) {
                 id: data?.obj?.id,
                 data: data?.obj,
                 preview: preview,
-                title: "Letter\nDetail",
+                title: "Detail Surat",
               });
             }}
           >
-            View Document
+            Lihat Dokumen
           </Button>
         </View>
       </ScrollView>
@@ -362,15 +365,13 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   container: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
     padding: 8,
     marginBottom: 8,
     borderRadius: 5,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     backgroundColor: GlobalStyles.colors.greylight,
-    borderWidth: 1,
-    borderColor: GlobalStyles.colors.primary,
   },
   containerColumn: {
     flexDirection: "column",

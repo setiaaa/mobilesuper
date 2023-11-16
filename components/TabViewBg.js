@@ -14,7 +14,7 @@ import { GlobalStyles } from "../constants/styles";
 import AddressbookEmployee from "../Apps/Korespondensi/Addressbook/AddressEmployee";
 import AddressbookTitle from "../Apps/Korespondensi/Addressbook/AddressTitle";
 
-import DDelegation from '../Apps/Korespondensi/Dashboard/DDelegation'
+import DDelegation from "../Apps/Korespondensi/Dashboard/DDelegation";
 import DLetter from "../Apps/Korespondensi/Dashboard/DLetter";
 import DSecretary from "../Apps/Korespondensi/Dashboard/DSecretary";
 import DTodo from "../Apps/Korespondensi/Dashboard/DTodo";
@@ -179,18 +179,21 @@ function TabViewBg({
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      renderIcon={renderIcon}
+      renderIcon={tipe == "dashboard" ? null : renderIcon}
       indicatorStyle={
         tipe == "dashboard"
           ? { backgroundColor: COLORS.danger }
           : { backgroundColor: null }
       }
-      style={{
-        color: GlobalStyles.colors.textBlack,
-        backgroundColor: GlobalStyles.colors.textWhite,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-      }}
+      style={[
+        {
+          color: GlobalStyles.colors.textBlack,
+          backgroundColor: GlobalStyles.colors.textWhite,
+        },
+        tipe == "dashboard"
+          ? { borderTopLeftRadius: 8, borderTopRightRadius: 8 }
+          : {},
+      ]}
       labelStyle={{
         color: GlobalStyles.colors.textBlack,
         fontSize: GlobalStyles.font.sm,
@@ -200,7 +203,12 @@ function TabViewBg({
     />
   );
   return (
-    <View style={styles.screen}>
+    <View
+      style={[
+        styles.screen,
+        tipe == "dashboard" ? { paddingHorizontal: 20, paddingTop: 20 } : {},
+      ]}
+    >
       {/* <ImageBackground
         source={Config.backgroundLayoutBottom}
         style={styles.container}
@@ -221,7 +229,7 @@ function TabViewBg({
 export default TabViewBg;
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, paddingHorizontal:20, paddingTop: 20 },
+  screen: { flex: 1 },
   container: {
     // position: "absolute",
     width: "100%",
