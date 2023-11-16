@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderWidth: 1,
         borderColor: COLORS.ExtraDivinder,
-        borderRadius: 8
+        borderRadius: 8,
+        backgroundColor: COLORS.white
     },
 })
