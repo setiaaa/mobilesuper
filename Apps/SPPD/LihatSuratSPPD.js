@@ -11,8 +11,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
-import { Image } from "react-native";
-import WebView from "react-native-webview";
 
 const LihatSuratSPPD = ({ route }) => {
   const { surat } = route.params;
@@ -54,9 +52,9 @@ const LihatSuratSPPD = ({ route }) => {
                   </View> */}
       </View>
       <View style={{ width: "100%", height: "100%" }}>
-        {/* <PdfReader
+        <PdfReader
           source={{
-            base64: pdfBlobData,
+            base64: surat,
           }}
           onLoadComplete={(numberOfPages, filePath) => {
             console.log(`Number of pages: ${numberOfPages}`);
@@ -68,12 +66,12 @@ const LihatSuratSPPD = ({ route }) => {
           onError={(error) => {
             console.log(`Error: ${error}`);
           }}
-        /> */}
+        />
         {/* <Image
           source={{ uri: pdfBlobData }}
           style={{ width: 100, height: 100 }}
         /> */}
-        <WebView source={{ html: surat }} />
+        {/* <WebView source={{ html: surat }} /> */}
       </View>
     </>
   );
