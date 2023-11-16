@@ -12,27 +12,42 @@ const dataRoleDashboardKeuangan = ["D_KK"];
 const dataRoleDashboardkepegawaian = ["D_KP"];
 const dataRoleDashboardbudidaya = ["D_BD"];
 const dataRoleDashboardpenangkapan = ["D_PK"];
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {} from "react-native";
+import { Modal } from "react-native";
+import { useSelector } from "react-redux";
+
+const dataRoleDashboard = ["D_KK", "D_KP", "D_BD", "D_PK"];
+const dataRoleDashboardKeuangan = ["D_KK"];
+const dataRoleDashboardkepegawaian = ["D_KP"];
+const dataRoleDashboardbudidaya = ["D_BD"];
+const dataRoleDashboardpenangkapan = ["D_PK"];
 
 function MyTabBar({ props, navigation }) {
+  const [tabItemIndex, setTabItemIndex] = useState(1);
   const [tabItemIndex, setTabItemIndex] = useState(1);
 
   const [visibleModal, setVisibleModal] = useState(false);
 
   const { profile } = useSelector((state) => state.superApps);
-
-  const isRole = profile.roles_access?.some((item) =>
+  console.log(profile);
+  const isRole = profile.roles_access.some((item) =>
     dataRoleDashboard.includes(item)
   );
-  const isRoleKeuangan = profile.roles_access?.some((item) =>
+  const isRoleKeuangan = profile.roles_access.some((item) =>
     dataRoleDashboardKeuangan.includes(item)
   );
-  const isRoleKepegawaian = profile.roles_access?.some((item) =>
+  const isRoleKepegawaian = profile.roles_access.some((item) =>
     dataRoleDashboardkepegawaian.includes(item)
   );
-  const isRoleBudidaya = profile.roles_access?.some((item) =>
+  const isRoleBudidaya = profile.roles_access.some((item) =>
     dataRoleDashboardbudidaya.includes(item)
   );
-  const isRolePenangkapan = profile.roles_access?.some((item) =>
+  const isRolePenangkapan = profile.roles_access.some((item) =>
     dataRoleDashboardpenangkapan.includes(item)
   );
   return (
