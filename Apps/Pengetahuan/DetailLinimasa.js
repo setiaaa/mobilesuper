@@ -553,6 +553,8 @@ export const DetailLinimasa = (item) => {
   const [parentId, setParentId] = useState({id:"", creator:""});
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
+  const [message, setMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -1173,58 +1175,24 @@ console.log(linimasa.lists?.like_list)
                         behavior={Platform.OS === "ios" ? "height" : "height"}
                         keyboardVerticalOffset={parentId !== "" ? 120: 80}          
                       >
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 5,
-                            marginLeft: 20,
-                          }}
-                        >
-                          <Ionicons
-                            name="thumbs-up-outline"
-                            size={20}
-                            color={COLORS.primary}
-                          />
-                          <Text style={{ color: COLORS.primary }}>
-                            {detail.likes_count}
-                          </Text>
-                          <Text style={{ color: COLORS.primary }}>Disukai</Text>
-                          <TouchableOpacity
-                            onPress={() => {
-                              bottomSheetAttachCommentClose();
-                              dispatch(
-                                getListsLike({ token: token, id: detail.id })
-                              );
-                              navigation.navigate("ListSukaLinimasa");
-                            }}
-                          >
-                            <Ionicons
-                              name="chevron-forward-outline"
-                              size={20}
-                              color={COLORS.primary}
-                            />
-                          </TouchableOpacity>
-                        </View>
                         <View style={{ marginLeft: 20, marginVertical: 20 }}>
                           <Text style={{ color: COLORS.ExtraDivinder }}>
                             Komentar({detail.comment_count})
                           </Text>
                         </View>
 
-                        <FlatList
-                          data={detail.comments}
-                          renderItem={({ item }) => (
-                            <CardKomen
-                              listData={item}
-                              inputRef={inputRef}
-                              setParentId={setParentId}
-                            />
-                          )}
-                          style={{ height: 500, flex:1 }}
-                        />
+                          <FlatList
+                            data={detail.comments}
+                            renderItem={({ item }) => (
+                              <CardKomen
+                                listData={item}
+                                inputRef={inputRef}
+                                setParentId={setParentId}
+                              />
+                            )}
+                          />
 
-                        <View style={{ justifyContent: "flex-end", paddingTop:10 }}>
+                        <View style={{ justifyContent: "flex-end", paddingTop:10, justifyContent: 'center' }}>
                         {parentId.id !== "" ? ( 
                           <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
                             <Text>Membalas {parentId.creator}</Text>
@@ -1233,6 +1201,14 @@ console.log(linimasa.lists?.like_list)
                             </TouchableOpacity>
                           </View>
                         ) : null }
+                          
+                          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20, alignItems: 'center'}}>
+                            {showMessage && 
+                            <View style={{ backgroundColor: COLORS.success, padding: 5, borderRadius: 8}}>
+                              <Text style={{color: COLORS.white}}>{message}</Text>
+                            </View>
+                            }
+                          </View>
                           <View
                             style={{
                               height: 1,
@@ -1275,6 +1251,11 @@ console.log(linimasa.lists?.like_list)
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                  setMessage('Pesan Telah Terkirim');
+                                  setShowMessage(true);
+                                  setTimeout(() => {
+                                    setShowMessage(false);
+                                  }, 5000);
                                   handleComment();
                                 }}
                               >
