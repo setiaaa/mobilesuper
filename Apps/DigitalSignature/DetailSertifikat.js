@@ -409,6 +409,30 @@ export const DetailSertifikat = (route) => {
                   </View>
                 </View>
 
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                  }}
+                >
+                  <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
+                    <Ionicons name="chevron-back-outline" size={24} />
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flex: 1,
+                    }}
+                  >
+                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                      Tanda Tangan Sertifikat
+                    </Text>
+                  </View>
+                </View>
+
                                 <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
 
                                     <TextInput
