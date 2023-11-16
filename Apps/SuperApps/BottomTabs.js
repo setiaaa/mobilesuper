@@ -35,19 +35,19 @@ function MyTabBar({ props, navigation }) {
 
   const { profile } = useSelector((state) => state.superApps);
   console.log(profile);
-  const isRole = profile.roles_access.some((item) =>
+  const isRole = profile.roles_access?.some((item) =>
     dataRoleDashboard.includes(item)
   );
-  const isRoleKeuangan = profile.roles_access.some((item) =>
+  const isRoleKeuangan = profile.roles_access?.some((item) =>
     dataRoleDashboardKeuangan.includes(item)
   );
-  const isRoleKepegawaian = profile.roles_access.some((item) =>
+  const isRoleKepegawaian = profile.roles_access?.some((item) =>
     dataRoleDashboardkepegawaian.includes(item)
   );
-  const isRoleBudidaya = profile.roles_access.some((item) =>
+  const isRoleBudidaya = profile.roles_access?.some((item) =>
     dataRoleDashboardbudidaya.includes(item)
   );
-  const isRolePenangkapan = profile.roles_access.some((item) =>
+  const isRolePenangkapan = profile.roles_access?.some((item) =>
     dataRoleDashboardpenangkapan.includes(item)
   );
   return (

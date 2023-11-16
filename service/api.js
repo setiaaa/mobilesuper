@@ -1811,7 +1811,7 @@ export const getDocumentAttachmentSPPD = createAsyncThunk(
   "sppd/getDocumentAttachmentSPPD",
   async ({ token, id }) => {
     const respon = await axios.get(
-      `${SPPD}document/attachment/${id}/?mode=file`,
+      `${SPPD}document/attachment/${id}/?mode=base64`,
       {
         headers: { Authorization: token },
       }
