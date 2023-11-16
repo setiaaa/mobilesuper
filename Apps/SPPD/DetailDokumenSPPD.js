@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, Platform } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   AVATAR,
@@ -15,13 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/Loading";
 import moment from "moment";
 import { getTokenValue } from "../../service/session";
-import {
-  getDocumentAttachmentSPPD,
-  getDocumentCetakSPPD,
-} from "../../service/api";
-import * as FileSystem from "expo-file-system";
-const { StorageAccessFramework } = FileSystem;
-import * as Sharing from "expo-sharing";
+import { getDocumentAttachmentSPPD } from "../../service/api";
 
 export const DetailDokumenSPPD = ({ route }) => {
   const { data } = route.params;
@@ -34,8 +28,6 @@ export const DetailDokumenSPPD = ({ route }) => {
 
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
-  const downloadPath =
-    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -48,143 +40,12 @@ export const DetailDokumenSPPD = ({ route }) => {
       dispatch(
         getDocumentAttachmentSPPD({ token: token, id: dokumen.detail?.id })
       );
-      getDocumentCetakSPPD({ token: token, id: dokumen.detail?.id });
     }
   }, [token, surat]);
 
-  const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
+  const { dokumen, surat } = useSelector((state) => state.sppd);
 
   const hari = dokumen.detail?.days?.toString();
-
-  // const downloadAndSaveFile = async (base64Data, fileName) => {
-  //   try {
-  //     // Decode base64 ke blob
-  //     const pdfBlob = base64Data.split(",")[1];
-
-  //     // Mendapatkan direktori dokumen
-  //     const directory = `${FileSystem.documentDirectory}${fileName}`;
-
-  //     // Menyimpan file PDF ke direktori dokumen
-  //     await FileSystem.writeAsStringAsync(directory, pdfBlob, {
-  //       encoding: FileSystem.EncodingType.Base64,
-  //     });
-
-  //     console.log("File PDF berhasil disimpan:", directory);
-
-  //     // Sekarang Anda dapat menggunakan file URL untuk merujuk ke file PDF
-  //     // Misalnya, membuka file menggunakan expo-document-viewer
-  //     // (pastikan untuk menginstal expo-document-viewer terlebih dahulu)
-
-  //     // Contoh membuka file PDF dengan expo-document-viewer
-  //     // import { openFileAsync } from 'expo-document-viewer';
-  //     // await openFileAsync({ url: directory, fileName });
-  //   } catch (error) {
-  //     console.error("Gagal mengonversi base64 ke URL:", error);
-  //   }
-  // };
-
-  const downloadFile = async (fileUrl, fileType, fileName) => {
-    //alert(fileName)
-    try {
-      const downloadResumable = FileSystem.createDownloadResumable(
-        fileUrl,
-        downloadPath + fileName,
-        { headers: { Authorization: token } }
-      );
-      try {
-        if (Platform.OS === "android") {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveAndroidFile(uri, fileName, fileType);
-        } else {
-          saveIosFile(downloadPath);
-        }
-      } catch (e) {
-        // setIsLoading(false);
-        console.error("download error:", e);
-      }
-    } catch (e) {
-      console.log("Error");
-      console.log(e);
-    }
-  };
-  const saveAndroidFile = async (fileUri, fileName, fileType) => {
-    try {
-      console.log(fileUri);
-      const fileString = await FileSystem.readAsStringAsync(fileUri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-
-      const permissions =
-        await StorageAccessFramework.requestDirectoryPermissionsAsync();
-      if (!permissions.granted) {
-        return;
-      }
-
-      try {
-        await StorageAccessFramework.createFileAsync(
-          permissions.directoryUri,
-          fileName,
-          fileType
-        )
-          .then(async (uri) => {
-            await FileSystem.writeAsStringAsync(uri, fileString, {
-              encoding: FileSystem.EncodingType.Base64,
-            });
-            Alert.alert("Success!", "Download Successfully.");
-          })
-          .catch((e) => {
-            Alert.alert(
-              "Failed!",
-              "Download Unsuccessful. Please choose another folder to download file."
-            );
-          });
-      } catch (e) {
-        throw new Error(e);
-      }
-    } catch (err) {}
-  };
-  const saveIosFile = async (fileUri) => {
-    try {
-      await Sharing.shareAsync(fileUri, {
-        mimeType: "application/pdf",
-        dialogTitle: "Share PDF",
-      });
-    } catch (error) {
-      console.error("Error sharing file:", error);
-    }
-  };
-
-  // const openFile = async () => {
-  // let remoteUrl = surat;
-  // let localPath = `${FileSystem.documentDirectory}/samplee.pdf`;
-  // FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-  //   const contentURL = await FileSystem.getContentUriAsync(uri);
-  //   try {
-  //     if (Platform.OS == "android") {
-  //       // open with android intent
-  //       await IntentLauncher.startActivityAsync(
-  //         "android.intent.action.VIEW",
-  //         {
-  //           data: contentURL,
-  //           flags: 1,
-  //           type: "application/pdf",
-  //           // change this with any type of file you want
-  //           // excel sample type
-  //           // 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  //         }
-  //       );
-  //       // or
-  //       // Sharing.shareAsync(localPath);
-  //     } else if (Platform.OS == "ios") {
-  //       Sharing.shareAsync(localPath);
-  //     }
-  //   } catch (error) {
-  //     Alert.alert("INFO", JSON.stringify(error));
-  //   }
-  // });
-  // };
-  console.log(cetak);
-  // console.log(surat)
 
   return (
     <>

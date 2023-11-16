@@ -4,7 +4,6 @@ import {
   getCutiPersonal,
   getDashboardSPPD,
   getDocumentAttachmentSPPD,
-  getDocumentCetakSPPD,
   getDocumentDetailSPPD,
   getDocumentListSPPD,
 } from "../service/api";
@@ -19,7 +18,6 @@ const SPPDSlice = createSlice({
       detail: {},
     },
     surat: {},
-    cetak: {},
   },
   reducers: {},
   extraReducers(builder) {
@@ -57,21 +55,12 @@ const SPPDSlice = createSlice({
       .addCase(getDocumentAttachmentSPPD.fulfilled, (state, action) => {
         state.surat = action.payload;
         state.loading = false;
+        console.log(action.payload);
       })
       .addCase(getDocumentAttachmentSPPD.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(getDocumentAttachmentSPPD.rejected, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getDocumentCetakSPPD.fulfilled, (state, action) => {
-        state.cetak = action.payload;
-        state.loading = false;
-      })
-      .addCase(getDocumentCetakSPPD.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(getDocumentCetakSPPD.rejected, (state, action) => {
         state.loading = false;
       });
   },
