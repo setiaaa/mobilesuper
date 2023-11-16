@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
@@ -11,9 +11,11 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/Loading";
 import moment from "moment";
+import { getTokenValue } from "../../service/session";
+import { getDocumentAttachmentSPPD } from "../../service/api";
 
 export const DetailDokumenSPPD = ({ route }) => {
   const { data } = route.params;
@@ -24,11 +26,26 @@ export const DetailDokumenSPPD = ({ route }) => {
     toggle: false,
   });
 
-  const { dokumen } = useSelector((state) => state.sppd);
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(
+        getDocumentAttachmentSPPD({ token: token, id: dokumen.detail?.id })
+      );
+    }
+  }, [token, surat]);
+
+  const { dokumen, surat } = useSelector((state) => state.sppd);
 
   const hari = dokumen.detail?.days?.toString();
-
-  console.log(dokumen.detail);
 
   return (
     <>
@@ -427,6 +444,9 @@ export const DetailDokumenSPPD = ({ route }) => {
                 height: 50,
                 borderRadius: 8,
                 justifyContent: "center",
+              }}
+              onPress={() => {
+                navigation.navigate("LihatSuratSPPD", { surat: surat });
               }}
             >
               <Text
