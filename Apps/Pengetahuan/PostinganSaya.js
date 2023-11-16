@@ -46,203 +46,418 @@ const CardPostinganSaya = ({ item, token }) => {
     dispatch(getViewLinimasa(params));
   };
 
+  // console.log(item);
+
   return (
-    <View style={{ width: "90%", alignSelf: "center", marginTop: 20 }}>
-      <TouchableOpacity
-        onPress={() => {
-          getDetail(item.id);
-          navigation.navigate("DetailLinimasa");
-        }}
-      >
-        <View
-          key={item.id}
-          style={{
-            backgroundColor: "#FFFFFF",
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
-            elevation: 2,
-            borderRadius: 8,
-            // height: 130,
+    <View style={{ width: "90%", alignSelf: "center", marginVertical: 10 }}>
+      {item.state === "draft" || item.state === "canceled" ? (
+        <TouchableOpacity disabled>
+          <View
+            key={item.id}
+            style={{
+              backgroundColor: COLORS.secondaryLighter,
+              shadowOffset: { width: -2, height: 4 },
+              shadowColor: "#171717",
+              shadowOpacity: 0.2,
+              elevation: 2,
+              borderRadius: 8,
+              // height: 130,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                paddingHorizontal: 20,
+                paddingTop: 20,
+                paddingBottom: 10,
+                marginVertical: 5,
+              }}
+            >
+              <View style={{ justifyContent: "center" }}>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    padding: 2,
+                    borderRadius: 6,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                >
+                  <Image
+                    source={{ uri: item?.cover }}
+                    style={{ height: 38, width: 70, borderRadius: 6 }}
+                  />
+                </View>
+              </View>
+              <View style={{ marginHorizontal: 10, width: "75%" }}>
+                <Text
+                  style={{
+                    // width: 270,
+                    fontSize: 13,
+                    fontWeight: FONTWEIGHT.bold,
+                    textAlign: "justify",
+                    marginBottom: 5,
+                    maxWidth: 250,
+                  }}
+                  numberOfLines={3} // Limit the number of lines to 1
+                  ellipsizeMode="tail" // Display "..." at the end if text overflows
+                >
+                  {item.title}
+                </Text>
+                <View
+                  style={{
+                    marginVertical: 15,
+                  }}
+                >
+                  <Text style={{ color: "#6B7280", fontSize: 13 }}>
+                    Tanggal : {item.created_at?.slice(0, -9)}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
+                    >
+                      Poin :
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.success,
+                        borderRadius: 8,
+                        width: 30,
+                      }}
+                    >
+                      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                        {item.score}
+                      </Text>
+                    </View>
+                  </View>
+
+                  {item?.state === "publish" ? (
+                    <View
+                      style={{
+                        backgroundColor: COLORS.successLight,
+                        borderRadius: 20,
+                        width: 79,
+                        height: 24,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{ color: COLORS.success, textAlign: "center" }}
+                      >
+                        Publish
+                      </Text>
+                    </View>
+                  ) : item?.state === "draft" ? (
+                    <View
+                      style={{
+                        backgroundColor: "#f0f0f0",
+                        borderRadius: 20,
+                        width: 79,
+                        height: 24,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                        Draft
+                      </Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        backgroundColor: COLORS.infoDangerLight,
+                        borderRadius: 20,
+                        width: 79,
+                        height: 24,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.infoDanger,
+                          textAlign: "center",
+                        }}
+                      >
+                        Canceled
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                gap: 50,
+                paddingVertical: 10,
+                borderTopWidth: 1,
+                borderColor: "#E0E0E0",
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 8,
+                    width: 33,
+                    height: 26,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="thumbs-up-outline"
+                    size={18}
+                    color="#FFFFFF"
+                  />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color: COLORS.primary,
+                    marginStart: 5,
+                  }}
+                >
+                  {item.likes_count}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons
+                  name="chatbox-ellipses-outline"
+                  size={18}
+                  color={COLORS.grey}
+                />
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {item.comment_count}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {item.views_count}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          onPress={() => {
+            getDetail(item.id);
+            navigation.navigate("DetailLinimasa");
           }}
         >
           <View
+            key={item.id}
             style={{
-              flexDirection: "row",
-              paddingHorizontal: 20,
-              paddingTop: 20,
-              paddingBottom: 10,
-              marginVertical: 5,
+              backgroundColor: COLORS.white,
+              shadowOffset: { width: -2, height: 4 },
+              shadowColor: "#171717",
+              shadowOpacity: 0.2,
+              elevation: 2,
+              borderRadius: 8,
+              // height: 130,
             }}
           >
-            <View style={{ justifyContent: "center" }}>
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  padding: 2,
-                  borderRadius: 6,
-                  //shadow ios
-                  shadowOffset: { width: -2, height: 4 },
-                  shadowColor: "#171717",
-                  shadowOpacity: 0.2,
-                  //shadow android
-                  elevation: 2,
-                }}
-              >
-                <Image
-                  source={{ uri: item?.cover }}
-                  style={{ height: 38, width: 70, borderRadius: 6 }}
-                />
+            <View
+              style={{
+                flexDirection: "row",
+                paddingHorizontal: 20,
+                paddingTop: 20,
+                paddingBottom: 10,
+                marginVertical: 5,
+              }}
+            >
+              <View style={{ justifyContent: "center" }}>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    padding: 2,
+                    borderRadius: 6,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    shadowOpacity: 0.2,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                >
+                  <Image
+                    source={{ uri: item?.cover }}
+                    style={{ height: 38, width: 70, borderRadius: 6 }}
+                  />
+                </View>
+              </View>
+              <View style={{ marginHorizontal: 10, width: "75%" }}>
+                <Text
+                  style={{
+                    // width: 270,
+                    fontSize: 13,
+                    fontWeight: FONTWEIGHT.bold,
+                    textAlign: "justify",
+                    marginBottom: 5,
+                    maxWidth: 250,
+                  }}
+                  numberOfLines={3} // Limit the number of lines to 1
+                  ellipsizeMode="tail" // Display "..." at the end if text overflows
+                >
+                  {item.title}
+                </Text>
+                <View
+                  style={{
+                    marginVertical: 15,
+                  }}
+                >
+                  <Text style={{ color: "#6B7280", fontSize: 13 }}>
+                    Tanggal : {item.created_at?.slice(0, -9)}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
+                    >
+                      Poin :
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.success,
+                        borderRadius: 8,
+                        width: 30,
+                      }}
+                    >
+                      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                        {item.score}
+                      </Text>
+                    </View>
+                  </View>
+
+                  {item?.state === "publish" ? (
+                    <View
+                      style={{
+                        backgroundColor: COLORS.successLight,
+                        borderRadius: 20,
+                        width: 79,
+                        height: 24,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{ color: COLORS.success, textAlign: "center" }}
+                      >
+                        Publish
+                      </Text>
+                    </View>
+                  ) : item?.state === "draft" ? (
+                    <View
+                      style={{
+                        backgroundColor: "#f0f0f0",
+                        borderRadius: 20,
+                        width: 79,
+                        height: 24,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                        Draft
+                      </Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        backgroundColor: COLORS.infoDangerLight,
+                        borderRadius: 20,
+                        width: 79,
+                        height: 24,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.infoDanger,
+                          textAlign: "center",
+                        }}
+                      >
+                        Canceled
+                      </Text>
+                    </View>
+                  )}
+                </View>
               </View>
             </View>
-            <View style={{ marginHorizontal: 10, width: "75%", }}>
-              <Text
-                style={{
-                  // width: 270,
-                  fontSize: 13,
-                  textAlign: "justify",
-                  marginBottom: 5,
-                  maxWidth: 250,
-                }}
-                numberOfLines={3} // Limit the number of lines to 1
-                ellipsizeMode="tail" // Display "..." at the end if text overflows
-              >
-                {item.title}
-              </Text>
-              <View
-                style={{
-                  marginVertical: 15,
-                }}
-              >
-                <Text style={{ color: "#6B7280", fontSize: 13 }}>
-                  Tanggal :{" "}
-                  {moment(item.created_at, "HH:mm:ss").format(
-                    DATETIME.LONG_DATE
-                  )}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                gap: 50,
+                paddingVertical: 10,
+                borderTopWidth: 1,
+                borderColor: "#E0E0E0",
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 8,
+                    width: 33,
+                    height: 26,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="thumbs-up-outline"
+                    size={18}
+                    color="#FFFFFF"
+                  />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color: COLORS.primary,
+                    marginStart: 5,
+                  }}
+                >
+                  {item.likes_count}
                 </Text>
               </View>
-              <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Text
-                    style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
-                  >
-                    Poin :
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: COLORS.success,
-                      borderRadius: 8,
-                      width: 30,
-                    }}
-                  >
-                    <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
-                      {item.score}
-                    </Text>
-                  </View>
-                </View>
-
-                {item?.state === "publish" ? (
-                  <View
-                    style={{
-                      backgroundColor: COLORS.successLight,
-                      borderRadius: 20,
-                      width: 79,
-                      height: 24,
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{ color: COLORS.success, textAlign: "center" }}
-                    >
-                      Publish
-                    </Text>
-                  </View>
-                ) : item?.state === "draft" ? (
-                  <View
-                    style={{
-                      backgroundColor: "#f0f0f0",
-                      borderRadius: 20,
-                      width: 79,
-                      height: 24,
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: COLORS.grey, textAlign: "center" }}>
-                      Draft
-                    </Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      backgroundColor: COLORS.infoDangerLight,
-                      borderRadius: 20,
-                      width: 79,
-                      height: 24,
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{ color: COLORS.infoDanger, textAlign: "center" }}
-                    >
-                      Canceled
-                    </Text>
-                  </View>
-                )}
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons
+                  name="chatbox-ellipses-outline"
+                  size={18}
+                  color={COLORS.grey}
+                />
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {item.comment_count}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
+                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                  {item.views_count}
+                </Text>
               </View>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              gap: 50,
-              paddingVertical: 10,
-              borderTopWidth: 1,
-              borderColor: "#E0E0E0",
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: COLORS.primary,
-                  borderRadius: 8,
-                  width: 33,
-                  height: 26,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons name="thumbs-up-outline" size={18} color="#FFFFFF" />
-              </TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: 13,
-                  color: COLORS.primary,
-                  marginStart: 5,
-                }}
-              >
-                {item.likes_count}
-              </Text>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Ionicons
-                name="chatbox-ellipses-outline"
-                size={18}
-                color={COLORS.grey}
-              />
-              <Text style={{ fontSize: 13, marginStart: 5 }}>
-                {item.comment_count}
-              </Text>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-              <Text style={{ fontSize: 13, marginStart: 5 }}>
-                {item.views_count}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -254,6 +469,8 @@ export const PostinganSaya = () => {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(5);
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -269,25 +486,13 @@ export const PostinganSaya = () => {
 
   const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
 
-  const loadMore = () => {
-    if (filterData.length % 5 === 0) {
-      if (filterData.length > page) {
-        setPage(page + 5);
-      }
-    }
-    console.log(page);
-  };
-
-  const [search, setSearch] = useState("");
-  const [filterData, setFilterData] = useState([]);
+  useEffect(() => {
+    setFilterData(postinganSaya.lists);
+  }, [postinganSaya]);
 
   const filter = (event) => {
     setSearch(event);
   };
-
-  useEffect(() => {
-    setFilterData(postinganSaya.lists);
-  }, [postinganSaya]);
 
   useEffect(() => {
     if (search !== "") {
@@ -295,19 +500,25 @@ export const PostinganSaya = () => {
         return item.title.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
-      if (data.length === 0){
-
+      if (data.length === 0) {
       }
     } else {
       setFilterData(postinganSaya.lists);
     }
-  }, [search, postinganSaya]);
+  }, [search]);
 
-  // console.log(postinganSaya.lists);
+  const loadMore = () => {
+    if (postinganSaya?.lists?.length % 5 === 0) {
+      setPage(page + 5);
+    }
+    console.log(page);
+  };
+
+  console.log(postinganSaya.lists);
 
   return (
     <>
-      {postinganSaya.lists.length === 0 ? <Loading /> : null}
+      {loading ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -339,9 +550,7 @@ export const PostinganSaya = () => {
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text
-            style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
-          >
+          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
             Postingan Saya
           </Text>
         </View>
@@ -378,7 +587,15 @@ export const PostinganSaya = () => {
             alignItems: "center",
           }}
         >
-          <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
+          <View
+            style={{
+              width: "100%",
+              marginRight: 10,
+              marginBottom: 15,
+              backgroundColor: COLORS.white,
+              borderRadius: 8,
+            }}
+          >
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
@@ -407,33 +624,33 @@ export const PostinganSaya = () => {
         </View>
       </View>
 
-      <FlatList
-        data={filterData}
-        renderItem={({ item }) => (
-          <View key={item.id}>
-            <CardPostinganSaya
-              item={item}
-              token={token}
-            />
-          </View>
-        )}
-        ListFooterComponent={() =>
-          loading === true ? (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 24,
-              }}
-            >
-              <ActivityIndicator size="large" color={COLORS.primary} />
+      <View style={{ height: "75%" }}>
+        <FlatList
+          data={filterData}
+          renderItem={({ item }) => (
+            <View key={item.id}>
+              <CardPostinganSaya item={item} token={token} />
             </View>
-          ) : null
-        }
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <ListEmpty />}
-        onEndReached={loadMore}
-      />
+          )}
+          keyExtractor={(item) => item.id}
+          ListFooterComponent={() =>
+            loading === true ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 24,
+                }}
+              >
+                <ActivityIndicator size="large" color={COLORS.primary} />
+              </View>
+            ) : null
+          }
+          ListEmptyComponent={() => <ListEmpty />}
+          onEndReached={postinganSaya.lists?.length === 0 ? null : loadMore}
+          style={{ paddingBottom: 10 }}
+        />
+      </View>
     </>
   );
 };

@@ -1000,7 +1000,7 @@ export const getListPenilaian = createAsyncThunk(
   "mp/getListPenilaian",
   async (data) => {
     const respon = await axios.get(
-      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}`,
+      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}&limit=10&ditinjau=${data.ditinjau}`,
       { headers: { Authorization: data.token } }
     );
     return respon?.data.results;
