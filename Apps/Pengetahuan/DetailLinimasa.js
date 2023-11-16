@@ -548,6 +548,7 @@ export const DetailLinimasa = () => {
   const dispatch = useDispatch();
   const [visibleModalInfo, setVisibleModalInfo] = useState(false);
   const [visibleModalView, setVisibleModalView] = useState(false);
+  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({id:"", creator:""});
   const bottomSheetModalRef = useRef(null);
@@ -645,6 +646,9 @@ export const DetailLinimasa = () => {
 
   console.log(detail.title);
 
+  const { linimasalike } = useSelector(state => state.pengetahuan)
+  const item = linimasalike.listsLike
+
   return (
     <View style={{ flex: 1 }}>
       <GestureHandlerRootView>
@@ -707,7 +711,7 @@ export const DetailLinimasa = () => {
                     borderTopRightRadius: 100,
                   }}
                 />
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     backgroundColor: COLORS.primary,
                     width: 42,
@@ -725,7 +729,7 @@ export const DetailLinimasa = () => {
                     size={24}
                     color={COLORS.white}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
               <View style={{ backgroundColor: COLORS.white }}>
                 {loading ? (
@@ -931,14 +935,134 @@ export const DetailLinimasa = () => {
                   }}
                 >
                   <View>
+                    <TouchableOpacity
+                    onPress={() => {
+                      // bottomSheetAttachCommentClose();
+                      // dispatch(
+                      //   getListsLike({ token: token, id: detail.id })
+                      // );
+                      // navigation.navigate("ListSukaLinimasa");
+                      setVisibleModalViewDisukai(true);
+                    }}
+                    >
                     <Text style={{ color: COLORS.lighter }}>
                       {detail.likes_count} Disukai
                     </Text>
+                    </TouchableOpacity>
+
+
+                  <Modal
+                  animationType="fade"
+                  transparent={true}
+                  visible={visibleModalViewDisukai}
+                  onRequestClose={() => {
+                    setVisibleModalViewDisukai(!visibleModalViewDisukai);
+                  }}
+                >
+                  <TouchableOpacity
+                    style={[
+                      Platform.OS === "ios"
+                        ? styles.iOSBackdrop
+                        : styles.androidBackdrop,
+                      styles.backdrop,
+                    ]}
+                  />
+                  <View style={{ alignItems: "center", flex: 1 }}>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.white,
+                        width: "90%",
+                        borderRadius: 10,
+                        marginTop: "40%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          marginTop: 20,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginHorizontal: 20,
+                        }}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: FONTSIZE.Judul,
+                              fontWeight: FONTWEIGHT.bold,
+                            }}
+                          >
+                            Disukai Oleh
+                          </Text>
+                        </View>
+
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => {
+                            setVisibleModalViewDisukai(false);
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      {/* custom divider */}
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: 1,
+                            width: "90%",
+                            backgroundColor: "#DBDADE",
+                            marginVertical: 10,
+                          }}
+                        />
+                      </View>
+
+                      <ScrollView style={{ marginBottom: 40 }}>
+                        {listsView?.map((data) => {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 10,
+                                marginHorizontal: 20,
+                                marginTop: 20,
+                              }}
+                            >
+                              {/* <Image
+                                source={{ uri: data.avatar_url }}
+                                style={{
+                                  width: 50,
+                                  height: 50,
+                                  borderRadius: 30,
+                                }}
+                              /> */}
+                              <Text>{item}</Text>
+                            </View>
+                          );
+                        })}
+                      </ScrollView>
+                    </View>
+                  </View>
+                </Modal>
+
+
                   </View>
                   <View style={{ flexDirection: "row", gap: 10 }}>
                     <Text style={{ color: COLORS.lighter }}>
                       {detail.comment_count} Komentar
                     </Text>
+                  </View>
+                  <View>
                     <TouchableOpacity
                       style={{
                         flexDirection: "row",
@@ -1210,6 +1334,7 @@ export const DetailLinimasa = () => {
                     >
                       Lampiran
                     </Text>
+                    
                     <FlatList
                       key={"#"}
                       data={detail.attachments}

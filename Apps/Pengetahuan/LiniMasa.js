@@ -883,9 +883,10 @@ const CardLiniMasa = ({ item, token }) => {
           flexDirection: "row",
           marginVertical: 10,
           marginHorizontal: 20,
+          justifyContent: 'center', 
+          gap: 40
           // paddingHorizontal: 16,
           // backgroundColor: "grey",
-          justifyContent: "space-between",
         }}
       >
         <View>
@@ -907,18 +908,25 @@ const CardLiniMasa = ({ item, token }) => {
               setVisibleModalView(true);
             }}
           >
-            <Ionicons
+          </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+            onPress={() => {
+              setVisibleModalView(true);
+            }}>
+            {/* <Ionicons
               name="eye-outline"
               size={18}
               style={{ color: COLORS.lighter }}
-            />
+            /> */}
             <Text style={{ color: COLORS.lighter }}>
               {item.views_count} Dilihat
             </Text>
-          </TouchableOpacity>
-        </View>
+            </TouchableOpacity>
+          </View>
       </View>
-      {/* divider custom */}
+      {/* divider custom */} 
       <View
         style={{
           height: 1,
@@ -937,9 +945,11 @@ const CardLiniMasa = ({ item, token }) => {
           marginHorizontal: 20,
           paddingHorizontal: 16,
           // backgroundColor: "grey",
-          justifyContent: "space-around",
+          justifyContent: "center",
+          gap: 30,
         }}
       >
+        <View>
         <TouchableOpacity
           style={{
             flexDirection: "row",
@@ -948,19 +958,33 @@ const CardLiniMasa = ({ item, token }) => {
           }}
           onPress={handleLike}
         >
-          <Ionicons
-            name="thumbs-up-outline"
-            size={18}
-            color={item.liked == true ? COLORS.primary : null}
-          />
-          <Text
-            style={{
-              color: item.liked == true ? COLORS.primary : null,
-            }}
-          >
-            Suka
-          </Text>
+        <Ionicons
+          name="thumbs-up-outline"
+          size={18}
+          color={detail.liked == true ? COLORS.primary : null}
+        />
+        <Text
+          style={{
+            color: detail.liked == true ? COLORS.primary : null,
+          }}
+        >
+          Suka
+        </Text>
         </TouchableOpacity>
+        </View>
+
+        
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 3,
+          }}
+          onPress={bottomSheetAttachComment}
+          >
+            <Ionicons name="chatbox-outline" size={18} />
+            <Text>Komentar</Text>
+          </TouchableOpacity>
 
         <TouchableOpacity
           style={{
@@ -1117,7 +1141,7 @@ const CardLiniMasa = ({ item, token }) => {
             </KeyboardAvoidingView>
           </BottomSheetView>
         </BottomSheetModal>
-
+        
         <TouchableOpacity
           style={{
             flexDirection: "row",
