@@ -37,45 +37,73 @@ const DigitalSignSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(getListComposer.fulfilled, (state, action) => {
+                state.loading = false;
                 if (action.payload.tipe === 'bankom') {
                     state.digitalsign.lists = action.payload.data;
                 } else {
                     state.dokumenlain.lists = action.payload.data;
                 }
+            })
+            .addCase(getListComposer.pending, (state, action) => {
+                state.loading = true;
             })
             .addCase(getListInProgress.fulfilled, (state, action) => {
+                state.loading = false;
                 if (action.payload.tipe === 'bankom') {
                     state.digitalsign.lists = action.payload.data;
                 } else {
                     state.dokumenlain.lists = action.payload.data;
                 }
+            })
+            .addCase(getListInProgress.pending, (state, action) => {
+                state.loading = true;
             })
             .addCase(getListCompleted.fulfilled, (state, action) => {
+                state.loading = false;
                 if (action.payload.tipe === 'bankom') {
                     state.digitalsign.lists = action.payload.data;
                 } else {
                     state.dokumenlain.lists = action.payload.data;
                 }
+            })
+            .addCase(getListCompleted.pending, (state, action) => {
+                state.loading = true;
             })
             .addCase(getListDraft.fulfilled, (state, action) => {
+                state.loading = false;
                 if (action.payload.tipe === 'bankom') {
                     state.digitalsign.lists = action.payload.data;
                 } else {
                     state.dokumenlain.lists = action.payload.data;
                 }
+            })
+            .addCase(getListDraft.pending, (state, action) => {
+                state.loading = true;
             })
             .addCase(getListSignedDigiSign.fulfilled, (state, action) => {
+                state.loading = false;
                 if (action.payload.tipe === 'bankom') {
                     state.digitalsign.lists = action.payload.data;
                 } else {
                     state.dokumenlain.lists = action.payload.data;
                 }
             })
+            .addCase(getListSignedDigiSign.pending, (state, action) => {
+                state.loading = true;
+            })
             .addCase(getDetailDigisign.fulfilled, (state, action) => {
+                state.loading = false;
                 state.digitalsign.detail = action.payload;
             })
+            .addCase(getDetailDigisign.pending, (state, action) => {
+                state.loading = true;
+            })
             .addCase(getCourseDigiSign.fulfilled, (state, action) => {
+                state.loading = false;
                 state.courseList = action.payload
+            })
+            .addCase(getCourseDigiSign.pending, (state, action) => {
+                state.loading = true;
             })
             .addCase(addDocumentDigiSign.rejected, (state, action) => {
                 console.log(action.payload + ' Error')
