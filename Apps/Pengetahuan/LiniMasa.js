@@ -53,7 +53,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    console.log(listData)
+    // console.log(listData)
   };
 
   const handleClickBalas = () => {
@@ -342,7 +342,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
-  console.log(detail)
+  // console.log(detail)
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -1200,6 +1200,14 @@ export const LiniMasa = () => {
 
   console.log(linimasa.lists);
 
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(linimasa.lists);
+}, [linimasa]);
+
   useEffect(() => {
     if (search !== "") {
       const data = linimasa.lists?.filter((item) => {
@@ -1212,14 +1220,14 @@ export const LiniMasa = () => {
     } else {
       setFilterData(linimasa.lists);
     }
-  }, [search, linimasa.lists]);
+  }, [search, linimasa]);
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
 
-  const filter = (event) => {
-    setSearch(event);
-  };
+
+
+  // console.log(linimasa)
 
   return (
     <>
@@ -1271,13 +1279,13 @@ export const LiniMasa = () => {
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
-              onSearch={linimasa.lists}
+              onSearch={filter}
             />
           </View>
           </View>
 
         <FlatList
-          data={linimasa.lists}
+          data={filterData}
           renderItem={({ item }) => (
             <View key={item.id}>
               <CardLiniMasa
