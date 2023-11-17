@@ -9,14 +9,11 @@ import React, { useEffect } from "react";
 import PdfReader from "rn-pdf-reader-js-improved";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 
 const LihatSuratSPPD = ({ route }) => {
   const { surat } = route.params;
   const navigation = useNavigation();
-  const pdfBlobData = "data:application/pdf;base64,%PDF-1.4," + surat;
-  useEffect(() => {}, []);
   return (
     <>
       <View
