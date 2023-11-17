@@ -1411,7 +1411,7 @@ export const LiniMasa = () => {
         </View>
 
         <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10, marginBottom: -30}}>
+        <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
