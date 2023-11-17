@@ -601,7 +601,7 @@ export const DetailLinimasa = (item) => {
 
   
   const listsView = linimasa.view;
-  const listsLike = linimasa.listsLike;
+  const listsLike = linimasa.like_list;
   const source = {
     html: detail.content,
   };
@@ -650,15 +650,12 @@ export const DetailLinimasa = (item) => {
 
   // console.log(detail.title);
 
-  // console.log(linimasa.detail.li)
+  console.log(linimasa.lists.like_list)
 
 
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
-
-console.log(linimasa.lists?.like_list)
-
 
   return (
     <View style={{ flex: 1 }}>

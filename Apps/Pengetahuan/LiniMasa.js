@@ -53,6 +53,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
+    // console.log(listData)
   };
 
   const handleClickBalas = () => {
@@ -343,6 +344,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
+  // console.log(detail)
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -1322,16 +1324,6 @@ export const LiniMasa = () => {
     }
     // console.log(page);
   };
-
-  console.log(linimasa.lists);
-
-  const filter = (event) => {
-    setSearch(event);
-  };
-
-  useEffect(() => {
-    setFilterData(linimasa.lists);
-}, [linimasa]);
 
   useEffect(() => {
     if (search !== "") {
