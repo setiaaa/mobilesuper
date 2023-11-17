@@ -15,7 +15,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/Loading";
 import moment from "moment";
 import { getTokenValue } from "../../service/session";
-import { getDocumentAttachmentSPPD } from "../../service/api";
+import {
+  getDocumentAttachmentSPPD,
+  getDocumentCetakSPPD,
+} from "../../service/api";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import * as IntentLauncher from "expo-intent-launcher";
+import * as MediaLibrary from "expo-media-library";
+import * as Permissions from "expo-permissions";
+import * as Location from "expo-location";
+import { decode, encode } from "base-64";
 
 export const DetailDokumenSPPD = ({ route }) => {
   const { data } = route.params;
@@ -40,12 +50,71 @@ export const DetailDokumenSPPD = ({ route }) => {
       dispatch(
         getDocumentAttachmentSPPD({ token: token, id: dokumen.detail?.id })
       );
+      getDocumentCetakSPPD({ token: token, id: dokumen.detail?.id });
     }
   }, [token, surat]);
 
-  const { dokumen, surat } = useSelector((state) => state.sppd);
+  const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
 
   const hari = dokumen.detail?.days?.toString();
+
+  // const downloadAndSaveFile = async (base64Data, fileName) => {
+  //   try {
+  //     // Decode base64 ke blob
+  //     const pdfBlob = base64Data.split(",")[1];
+
+  //     // Mendapatkan direktori dokumen
+  //     const directory = `${FileSystem.documentDirectory}${fileName}`;
+
+  //     // Menyimpan file PDF ke direktori dokumen
+  //     await FileSystem.writeAsStringAsync(directory, pdfBlob, {
+  //       encoding: FileSystem.EncodingType.Base64,
+  //     });
+
+  //     console.log("File PDF berhasil disimpan:", directory);
+
+  //     // Sekarang Anda dapat menggunakan file URL untuk merujuk ke file PDF
+  //     // Misalnya, membuka file menggunakan expo-document-viewer
+  //     // (pastikan untuk menginstal expo-document-viewer terlebih dahulu)
+
+  //     // Contoh membuka file PDF dengan expo-document-viewer
+  //     // import { openFileAsync } from 'expo-document-viewer';
+  //     // await openFileAsync({ url: directory, fileName });
+  //   } catch (error) {
+  //     console.error("Gagal mengonversi base64 ke URL:", error);
+  //   }
+  // };
+
+  const openFile = () => {
+    let remoteUrl = surat;
+    let localPath = `${FileSystem.documentDirectory}/samplee.pdf`;
+    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+      const contentURL = await FileSystem.getContentUriAsync(uri);
+      try {
+        if (Platform.OS == "android") {
+          // open with android intent
+          await IntentLauncher.startActivityAsync(
+            "android.intent.action.VIEW",
+            {
+              data: contentURL,
+              flags: 1,
+              type: "application/pdf",
+              // change this with any type of file you want
+              // excel sample type
+              // 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            }
+          );
+          // or
+          // Sharing.shareAsync(localPath);
+        } else if (Platform.OS == "ios") {
+          Sharing.shareAsync(localPath);
+        }
+      } catch (error) {
+        Alert.alert("INFO", JSON.stringify(error));
+      }
+    });
+  };
+  console.log(cetak);
 
   return (
     <>
@@ -468,13 +537,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                 justifyContent: "center",
               }}
               onPress={() => {
-                downloadFile(
-                  "https://apigw.kubekkp.coofis.com/monperdin/document/back-form/" +
-                    dokumen.detail?.id +
-                    "/",
-                  "application/pdf",
-                  data + ".pdf"
-                );
+                dispatch(openFile());
               }}
             >
               <Text
