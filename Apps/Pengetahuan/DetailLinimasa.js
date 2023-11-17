@@ -601,7 +601,7 @@ export const DetailLinimasa = (item) => {
 
   
   const listsView = linimasa.view;
-  const listsLike = linimasa.listsLike;
+  const listsLike = linimasa.like_list;
   const source = {
     html: detail.content,
   };
@@ -646,15 +646,16 @@ export const DetailLinimasa = (item) => {
     }
   }, [refresh]);
 
+  
 
-  // console.log(linimasa.detail.li)
+  // console.log(detail.title);
+
+  console.log(linimasa.lists.like_list)
+
 
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
-
-console.log(linimasa.lists?.like_list)
-
 
   return (
     <View style={{ flex: 1 }}>
@@ -1033,8 +1034,33 @@ console.log(linimasa.lists?.like_list)
                         />
                       </View>
 
-                      <ScrollView style={{ marginBottom: 40 }}>
-                        {linimasa.detail?.like_list?.map((data) => {
+                      <FlatList 
+                        data={linimasa.listsLike}
+                        renderItem={({ item }) => (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: 10,
+                              marginHorizontal: 20,
+                              marginTop: 20,
+                            }}
+                          >
+                            {/* <Image
+                              source={{ uri: data.avatar_url }}
+                              style={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: 30,
+                              }}
+                            /> */}
+                            <Text>{item}</Text>
+                          </View>
+                        )}
+                        keyExtractor={(item) => item.id}
+                        />
+                      {/* <ScrollView style={{ marginBottom: 40 }}>
+                        {linimasa.lists?.((data) => {
                           return (
                             <View
                               style={{
@@ -1053,12 +1079,11 @@ console.log(linimasa.lists?.like_list)
                                   borderRadius: 30,
                                 }}
                               />
-                              <Text>{data.name}</Text>
+                              <Text>{item}</Text>
                             </View>
                           );
                         })}
-                      </ScrollView>
-                      
+                      </ScrollView> */}
                     </View>
                   </View>
                 </Modal>
