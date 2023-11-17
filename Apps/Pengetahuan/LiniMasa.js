@@ -1349,6 +1349,7 @@ export const LiniMasa = () => {
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
+
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
 
@@ -1356,7 +1357,7 @@ export const LiniMasa = () => {
   const asc = () => {
     const sortedAscending = filterData
       .slice()
-      .sort((a, b) => a.title.localeCompare(b.title.nama));
+      .sort((a, b) => a.title.localeCompare(b.title));
     setFilterData(sortedAscending);
     setAscending(true);
     setIsFiltered(true);
@@ -1365,14 +1366,11 @@ export const LiniMasa = () => {
   const desc = () => {
     const sortedDescending = filterData
       .slice()
-      .sort((a, b) => b.title.localeCompare(a.title.nama));
+      .sort((a, b) => b.title.localeCompare(a.title));
     setFilterData(sortedDescending);
     setAscending(false);
     setIsFiltered(true);
   };
-
-
-
 
   // console.log(linimasa.lists.like_list[0])
 
@@ -1421,13 +1419,30 @@ export const LiniMasa = () => {
           </View>
         </View>
 
-        <View style={{ padding: 20 }}>
-          <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
+        <View style={{ padding: 20, flexDirection: 'row'}}>
+        <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
               onSearch={filter}
             />
+          </View>
+          <TouchableOpacity onPress={!ascending ? asc : desc}>
+          <View
+            style={{
+            width: 40,
+            height: 40,
+            borderRadius: 30,
+            backgroundColor: COLORS.white,
+            justifyContent: "center",
+            alignItems: "center",
+            borderColor: COLORS.secondaryLighter,
+            // borderWidth: isFiltered ? 1 : 0,
+          }}
+          >
+            <Ionicons name="filter-outline" size={24} />
+          </View>
+        </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={!ascending ? asc : desc}>
           <View
