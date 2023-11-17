@@ -23,12 +23,14 @@ import {
   getDetailLinimasa,
   getDetailPenilaian,
   getListPenilaian,
+  getListUnitKerja,
   getNilai,
   getTotalPenilaian,
 } from "../../service/api";
 import moment from "moment";
 import {} from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
+import { TextInput } from "react-native-gesture-handler";
 
 const CardPenilaian = ({ item, token }) => {
   const navigation = useNavigation();
@@ -147,16 +149,22 @@ export const PenilaianPenggetahaun = () => {
   const [listYear, setListYear] = useState();
   const [token, setToken] = useState("");
   const isFocused = useIsFocused();
+  const [inputValue, setInputValue] = useState("");
+
+  const [page, setPage] = useState(5);
 
   const bottomSheetModalRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const bottomSheetModalFilterRef = useRef(null);
+
+  const initialSnapPoints = useMemo(() => ["50%", "90%"], []);
+  const initialSnapPointsTambah = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
     animatedContentHeight,
     handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+  } = useBottomSheetDynamicSnapPoints(initialSnapPointsTambah);
 
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
@@ -166,8 +174,22 @@ export const PenilaianPenggetahaun = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
+  const bottomSheetAttachFilter = () => {
+    bottomSheetModalFilterRef.current?.present();
+  };
+
+  const bottomSheetAttachCloseFilter = () => {
+    if (bottomSheetModalFilterRef.current)
+      bottomSheetModalFilterRef.current?.close();
+  };
+
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
+
+  const [selectedUnitKerja, setSelectedUnitKerja] = useState({
+    key: "",
+    value: "",
+  });
 
   const [year, setYear] = useState({
     key: new Date().getFullYear(),
@@ -222,41 +244,95 @@ export const PenilaianPenggetahaun = () => {
   };
 
   useEffect(() => {
+    if (token !== "") {
+      dispatch(getListUnitKerja(token));
+    }
+  }, [token]);
+
+  const [savedUnitKerja, setSavedUnitKerja] = useState({ key: "", value: "" });
+
+  const handlePilihSimpan = () => {
+    setSavedUnitKerja(selectedUnitKerja);
+  };
+
+  useEffect(() => {
     if (token !== "" && isFocused) {
       let data = {
         token: token,
         tahun: year.value,
         TW: quarter.key,
         ditinjau: ditinjau,
+        unitKerja: savedUnitKerja.value,
+        page: page,
+        search: search,
       };
       // dispatch(getDivision(token))
       dispatch(getListPenilaian(data));
       dispatch(getTotalPenilaian(data));
       // dispatch(getDivisionTree({ token: token, id: kategori.key }))
     }
-  }, [token, quarter, year, isFocused, ditinjau]);
+  }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
 
-  const { penilaian, loading } = useSelector((state) => state.pengetahuan);
+  const { penilaian, unitKerja, loading } = useSelector(
+    (state) => state.pengetahuan
+  );
 
-  const filter = (event) => {
-    setSearch(event);
+  const dataUnitKerja = () => {
+    let valueUnitKerja = [];
+
+    unitKerja?.lists?.map((item) => {
+      valueUnitKerja.push({
+        key: item.id,
+        value: item.unit_kerja_nama,
+      });
+    });
+
+    return valueUnitKerja;
   };
+
+  // const dataUnitKerja = [
+  //   { key: "1", value: "KEMENTERIAN KELAUTAN DAN PERIKANAN" },
+  //   { key: "2", value: "PUSAT DATA STATISTIK DAN INFORMASI" },
+  //   { key: "3", value: "INSPEKTORAT JENDERAL" },
+  // ];
+
+  // useEffect(() => {
+  //   let valueUnitKerja = [];
+  //   unitKerja?.lists?.map((item) => {
+  //     valueUnitKerja.push({
+  //       key: item.id,
+  //       value: item.unit_kerja_nama,
+  //     });
+  //   });
+  //   setDataUnitKerja(valueUnitKerja);
+  // }, [unitKerja]);
+
   useEffect(() => {
     setFilterData(penilaian.lists);
   }, [penilaian.lists]);
 
-  useEffect(() => {
-    if (search !== "") {
-      const data = penilaian.lists.filter((item) => {
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
-    } else {
-      setFilterData(penilaian.lists);
-    }
-  }, [search]);
+  const filter = () => {
+    setSearch(inputValue);
+  };
+  // useEffect(() => {
+  //   if (search !== "") {
+  //     const data = penilaian.lists.filter((item) => {
+  //       return item.title.toLowerCase().includes(search.toLowerCase());
+  //     });
+  //     setFilterData(data);
+  //   } else {
+  //     setFilterData(penilaian.lists);
+  //   }
+  // }, [search]);
 
-  console.log("ditinjau=" + ditinjau);
+  const loadMore = () => {
+    if (penilaian?.lists.length % 5 === 0) {
+      setPage(page + 5);
+    }
+  };
+
+  // console.log("ditinjau=" + ditinjau);
+  // console.log(dataUnitKerja());
   return (
     <>
       {loading ? <Loading /> : null}
@@ -302,34 +378,38 @@ export const PenilaianPenggetahaun = () => {
 
         <View
           style={{
-            // alignItems: "center",
+            alignItems: "center",
             justifyContent: "space-between",
             marginTop: 20,
             flexDirection: "row",
-            // gap: 10,
             marginHorizontal: 20,
           }}
         >
-          <TouchableOpacity
+          <View
             style={{
-              display: "flex",
-              flexDirection: "row",
-              height: 43,
               width: "85%",
               backgroundColor: COLORS.white,
               borderRadius: 8,
-              alignItems: "center",
-              gap: 10,
-              paddingLeft: 10,
-            }}
-            onPress={() => {
-              bottomSheetAttach();
             }}
           >
-            <Ionicons name="search-outline" size={24} />
-            <Text style={{ color: COLORS.secondaryLighter }}>Cari</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
+            <View style={styles.input}>
+              <Ionicons name="search" size={20} color={COLORS.primary} />
+              <TextInput
+                placeholder={"Cari..."}
+                style={{ fontSize: 16, flex: 1 }}
+                maxLength={30}
+                value={inputValue}
+                onChangeText={(text) => setInputValue(text)}
+                onSubmitEditing={filter}
+                clearButtonMode="always"
+              />
+            </View>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetAttachFilter();
+            }}
+          >
             <View
               style={{
                 width: 40,
@@ -385,96 +465,105 @@ export const PenilaianPenggetahaun = () => {
               setSelected={setQuarter}
             />
           </View>
-
-          {/* <TouchableOpacity style={{
-                        height: 43,
-                        width: "12%",
-                        backgroundColor: COLORS.white,
-                        borderRadius: 8,
-                        justifyContent: 'center',
-                        paddingLeft: 10
-                    }}
-                        onPress={() => {
-                            bottomSheetAttach()
-                        }}
-                    >
-                        <Ionicons name='search-outline' size={24} />
-                    </TouchableOpacity> */}
         </View>
 
-        <Portal>
-          <BottomSheetModalProvider>
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              snapPoints={animatedSnapPoints}
-              handleHeight={animatedHandleHeight}
-              contentHeight={animatedContentHeight}
-              index={0}
-              style={{ borderRadius: 50 }}
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-              backdropComponent={({ style }) => (
+        <BottomSheetModal
+          ref={bottomSheetModalFilterRef}
+          snapPoints={initialSnapPoints}
+          handleHeight={animatedHandleHeight}
+          contentHeight={animatedContentHeight}
+          index={0}
+          style={{ borderRadius: 50 }}
+          keyboardBlurBehavior="restore"
+          android_keyboardInputMode="adjust"
+          backdropComponent={({ style }) => (
+            <View style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]} />
+          )}
+        >
+          <BottomSheetView onLayout={handleContentLayout}>
+            <View style={{ flex: 1 }}>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
                 <View
-                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                />
-              )}
-            >
-              <BottomSheetView onLayout={handleContentLayout}>
-                <View style={{ flex: 1 }}>
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      marginTop: 20,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 20,
-                    }}
-                  >
-                    {/* <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
-                                    <Ionicons name='chevron-back-outline' size={24} />
-                                </TouchableOpacity> */}
-                    <View style={{ width: "85%" }}>
-                      <Search placeholder={"Cari"} onSearch={filter} />
-                    </View>
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        bottomSheetAttachClose();
-                      }}
-                    >
-                      <Text style={{ color: COLORS.danger }}>Batal</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  {/* custom divider */}
-                  <View
-                    style={{
-                      height: 1,
-                      width: "100%",
-                      backgroundColor: "#DBDADE",
-                      marginVertical: 20,
-                    }}
-                  />
-
-                  <View
-                    style={{
-                      marginTop: 10,
-                      height: 400,
-                    }}
-                  >
-                    <FlatList
-                      data={filterData}
-                      renderItem={({ item }) => <CardPenilaian item={item} />}
-                      // style={{ height: 400 }}
-                      keyExtractor={(item) => item.id}
-                      ListEmptyComponent={() => <ListEmpty />}
+                  style={{
+                    width: "88%",
+                    // backgroundColor: "brown",
+                  }}
+                >
+                  {savedUnitKerja.key === "" ? (
+                    <Dropdown
+                      placeHolder={"Pilih Unit Kerja"}
+                      borderWidth={1}
+                      data={dataUnitKerja()}
+                      setSelected={setSelectedUnitKerja}
+                      borderColor={COLORS.ExtraDivinder}
+                      borderwidthDrop={1}
+                      borderColorDrop={COLORS.ExtraDivinder}
+                      borderWidthValue={1}
+                      borderColorValue={COLORS.ExtraDivinder}
                     />
-                  </View>
+                  ) : (
+                    <Dropdown
+                      borderWidth={1}
+                      data={dataUnitKerja()}
+                      selected={savedUnitKerja}
+                      setSelected={setSelectedUnitKerja}
+                      borderColor={COLORS.ExtraDivinder}
+                      borderwidthDrop={1}
+                      borderColorDrop={COLORS.ExtraDivinder}
+                      borderWidthValue={1}
+                      borderColorValue={COLORS.ExtraDivinder}
+                    />
+                  )}
                 </View>
-              </BottomSheetView>
-            </BottomSheetModal>
-          </BottomSheetModalProvider>
-        </Portal>
+              </View>
+              <View style={{ position: "absolute", right: 20, top: 30 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    bottomSheetAttachCloseFilter();
+                  }}
+                >
+                  <Text style={{ color: COLORS.danger }}>Batal</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={{ position: "relative" }}>
+              <TouchableOpacity
+                style={{
+                  width: "90%",
+                  backgroundColor: COLORS.primary,
+                  height: 50,
+                  marginVertical: 40,
+                  borderRadius: 6,
+                  alignItems: "center",
+                  marginHorizontal: 20,
+                  justifyContent: "center",
+                }}
+                onPress={() => {
+                  handlePilihSimpan();
+                  bottomSheetAttachCloseFilter();
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: FONTSIZE.H1,
+                    fontWeight: 500,
+                  }}
+                >
+                  Simpan
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </BottomSheetView>
+        </BottomSheetModal>
 
         <View style={{ flexDirection: "row", marginHorizontal: 20, gap: 5 }}>
           <TouchableOpacity
@@ -590,13 +679,14 @@ export const PenilaianPenggetahaun = () => {
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>List Penilaian</Text>
           </View>
           <FlatList
-            data={penilaian.lists}
+            data={filterData}
             renderItem={({ item }) => (
               <CardPenilaian item={item} token={token} />
             )}
             style={{ height: 400 }}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={() => <ListEmpty />}
+            onEndReached={penilaian?.lists.length === 0 ? null : loadMore}
           />
         </View>
       </View>
@@ -605,6 +695,16 @@ export const PenilaianPenggetahaun = () => {
 };
 
 const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
   backIcon: {
     backgroundColor: "white",
     height: 28,

@@ -488,7 +488,7 @@ export const PostinganSaya = () => {
 
   useEffect(() => {
     setFilterData(postinganSaya.lists);
-  }, [postinganSaya]);
+  }, [postinganSaya.lists]);
 
   const filter = (event) => {
     setSearch(event);
@@ -508,10 +508,10 @@ export const PostinganSaya = () => {
   }, [search]);
 
   const loadMore = () => {
-    if (postinganSaya?.lists?.length % 5 === 0) {
+    if (postinganSaya?.lists.length % 5 === 0) {
       setPage(page + 5);
     }
-    console.log(page);
+    // console.log(page);
   };
 
   console.log(postinganSaya.lists);
@@ -647,8 +647,8 @@ export const PostinganSaya = () => {
             ) : null
           }
           ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={postinganSaya.lists?.length === 0 ? null : loadMore}
-          style={{ paddingBottom: 10 }}
+          onEndReached={postinganSaya?.lists.length === 0 ? null : loadMore}
+          style={{ height: 400 }}
         />
       </View>
     </>

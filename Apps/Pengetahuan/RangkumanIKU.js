@@ -222,13 +222,16 @@ export const RangkumanIKU = () => {
   }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
 
   const loadMore = () => {
-    if ((filterData.length % 10 === 0) && (savedYear.value || savedQuarter.value || savedUnitKerja.value)) {
+    if (
+      filterData.length % 10 === 0 &&
+      (savedYear.value || savedQuarter.value || savedUnitKerja.value)
+    ) {
       if (filterData.length > page) {
         setPage(page + 10);
       }
     }
-    console.log(page)
-  }
+    console.log(page);
+  };
 
   useEffect(() => {
     const param = {
@@ -299,7 +302,7 @@ export const RangkumanIKU = () => {
     setFilterData(sortedAscending);
     setAscending(true);
     setIsFiltered(true);
-  }
+  };
 
   const desc = () => {
     const sortedDescending = filterData
@@ -308,7 +311,7 @@ export const RangkumanIKU = () => {
     setFilterData(sortedDescending);
     setAscending(false);
     setIsFiltered(true);
-  }
+  };
 
   const downloadFromUrl = async () => {
     const url = exportPegawai?.lists?.file;
@@ -365,7 +368,6 @@ export const RangkumanIKU = () => {
   // const [ascending, setAscending] = useState(false);
   // const [isFiltered, setIsFiltered] = useState(false);
 
-
   // const asc = () => {
   //   const sortedAscending = filterData
   //     .slice()
@@ -383,7 +385,6 @@ export const RangkumanIKU = () => {
   //   setAscending(false);
   //   setIsFiltered(true);
   // };
-
 
   return (
     <>
@@ -803,20 +804,20 @@ export const RangkumanIKU = () => {
                   </TouchableOpacity>
                 ) : null}
 
-                  <TouchableOpacity
+                <TouchableOpacity
                   onPress={!ascending ? asc : desc}
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 50,
-                      padding: 5,
-                    }}
-                  >
-                    <Ionicons
-                      name="filter-outline"
-                      size={24}
-                      color={COLORS.grey}
-                    />
-                  </TouchableOpacity>
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 50,
+                    padding: 5,
+                  }}
+                >
+                  <Ionicons
+                    name="filter-outline"
+                    size={24}
+                    color={COLORS.grey}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -842,7 +843,11 @@ export const RangkumanIKU = () => {
                 }}
               >
                 <FlatList
-                  data={(filterData && filterData.length > 0) || isFiltered ? filterData : pegawai?.lists }
+                  data={
+                    (filterData && filterData.length > 0) || isFiltered
+                      ? filterData
+                      : pegawai?.lists
+                  }
                   renderItem={({ item }) => (
                     <View key={item.id} style={{ marginBottom: 10 }}>
                       <ListDaftarPegawai item={item} token={token} />
