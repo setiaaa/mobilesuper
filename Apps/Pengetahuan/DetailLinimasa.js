@@ -646,15 +646,16 @@ export const DetailLinimasa = (item) => {
     }
   }, [refresh]);
 
+  
 
-  // console.log(linimasa.detail.li)
+  // console.log(detail.title);
+
+  console.log(linimasa.lists.like_list)
+
 
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
-
-console.log(linimasa.lists?.like_list)
-
 
   return (
     <View style={{ flex: 1 }}>
