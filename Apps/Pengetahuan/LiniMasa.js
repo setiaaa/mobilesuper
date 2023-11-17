@@ -1351,27 +1351,7 @@ export const LiniMasa = () => {
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
 
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
 
-
-  const asc = () => {
-    const sortedAscending = filterData
-      .slice()
-      .sort((a, b) => a.title.localeCompare(b.title));
-    setFilterData(sortedAscending);
-    setAscending(true);
-    setIsFiltered(true);
-  };
-
-  const desc = () => {
-    const sortedDescending = filterData
-      .slice()
-      .sort((a, b) => b.title.localeCompare(a.title));
-    setFilterData(sortedDescending);
-    setAscending(false);
-    setIsFiltered(true);
-  };
 
   // console.log(linimasa.lists.like_list[0])
 
@@ -1421,7 +1401,7 @@ export const LiniMasa = () => {
         </View>
 
         <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10, marginBottom: -30}}>
+        <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
