@@ -1800,3 +1800,14 @@ export const getDocumentAttachmentSPPD = createAsyncThunk(
     return respon?.data;
   }
 );
+
+export const getDocumentCetakSPPD = createAsyncThunk(
+  "sppd/getDocumentCetakSPPD",
+  async ({ token, id }) => {
+    console.log(id);
+    const respon = await axios.get(`${SPPD}document/back-form/${id}/`, {
+      headers: { Authorization: token },
+    });
+    return respon.data;
+  }
+);

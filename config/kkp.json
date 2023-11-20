@@ -17,10 +17,15 @@
   "ios": {
     "buildNumber": "1.3.8",
     "supportsTablet": true,
-    "bundleIdentifier": "com.kubekkp.portal"
+    "bundleIdentifier": "com.kubekkp.portal",
+    "infoPlist": {
+    "NSLocationWhenInUseUsageDescription": "Our app needs access to your location",
+    "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library"
+    }
   },
   "android": {
     "versionCode": 138,
+    "permissions": ["ACCESS_FINE_LOCATION", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"],
     "adaptiveIcon": {
       "foregroundImage": "./assets/superApp/kkp-ikon.png",
       "backgroundColor": "#FFFFFF"
