@@ -23,6 +23,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
 import { setDigitalSignLists } from "../../store/DigitalSign";
+import { Loading } from "../../components/Loading";
 
 const ListDokumenLain = ({ item, variant, token }) => {
   const dispatch = useDispatch();
@@ -183,7 +184,7 @@ export const DokumenLain = () => {
     dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
   };
 
-  const { dokumenlain } = useSelector((state) => state.digitalsign);
+  const { dokumenlain,loading } = useSelector((state) => state.digitalsign);
 
   const filter = (event) => {
     setSearch(event);
@@ -209,6 +210,11 @@ export const DokumenLain = () => {
   // console.log(filterData)
   return (
     <GestureHandlerRootView>
+      {loading ? (
+            <Loading />
+        ) : (
+            null
+        )}
       <View style={{ position: "relative" }}>
         <View
           style={{

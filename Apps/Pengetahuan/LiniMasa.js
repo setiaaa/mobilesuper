@@ -19,6 +19,7 @@ import { FlatList } from "react-native";
 import { Image } from "react-native";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
+import { Search } from "../../components/Search";
 import {
   getDetailLinimasa,
   getLinimasa,
@@ -391,7 +392,7 @@ const CardLiniMasa = ({ item, token }) => {
         //shadow android
         elevation: 2,
         alignContent: "center",
-        marginBottom: 20,
+        marginBottom: 5,
       }}
     >
       <TouchableOpacity
@@ -421,7 +422,6 @@ const CardLiniMasa = ({ item, token }) => {
               <View
                 style={{
                   display: "flex",
-                  flexDirection: "row",
                   width: "100%",
                   gap: 14,
                 }}
@@ -429,7 +429,7 @@ const CardLiniMasa = ({ item, token }) => {
                 <Text
                   style={{
                     color: COLORS.grey,
-                    marginVertical: 5,
+                    marginVertical: 1,
                     fontSize: 13,
                   }}
                 >
@@ -852,7 +852,7 @@ const CardLiniMasa = ({ item, token }) => {
               />
             </View>
 
-            <ScrollView style={{ marginBottom: 40 }}>
+            <ScrollView style={{ marginBottom: 20 }}>
               {item.view_list.map((data) => {
                 return (
                   <View
@@ -1176,6 +1176,27 @@ export const LiniMasa = () => {
 
   console.log(linimasa.lists);
 
+  useEffect(() => {
+    if (search !== "") {
+      const data = linimasa.lists?.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+      if (data.length === 0){
+
+      }
+    } else {
+      setFilterData(linimasa.lists);
+    }
+  }, [search, linimasa.lists]);
+
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
   return (
     <>
       {linimasa.lists.length === 0 ? <Loading /> : null}
@@ -1220,6 +1241,16 @@ export const LiniMasa = () => {
             </Text>
           </View>
         </View>
+
+        <View style={{ padding: 20}}>
+        <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
+            <Search
+              placeholder={"Cari..."}
+              iconColor={COLORS.primary}
+              onSearch={linimasa.lists}
+            />
+          </View>
+          </View>
 
         <FlatList
           data={linimasa.lists}

@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { getTokenValue } from '../../service/session'
 import { setDigitalSignLists } from '../../store/DigitalSign'
+import { Loading } from "../../components/Loading";
 
 
 const ListBankom = ({ item, variant, token }) => {
@@ -65,14 +66,19 @@ const ListBankom = ({ item, variant, token }) => {
                 )}
                 <View style={{ flexDirection: 'column', }}>
                     <Text style={{ fontSize: 16, width: 300, textAlign: 'justify', fontWeight: FONTWEIGHT.bold, }}>{item.subject}</Text>
-                    <View style={{ backgroundColor: COLORS.lighter, height: 1, marginVertical: 5 }} />
+                    <View style={{ backgroundColor: COLORS.lighter, height: 1, marginVertical: 5, width:"56%" }} />
                     <View style={{ flexDirection: "row" }}>
                         <Text style={{ fontSize: 13, width: 120, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penerima</Text>
+                        {item.receivers[0]?.display_title !== undefined ? (
+                            <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.receivers[0]?.officer?.nama !== undefined ? item.receivers[0]?.officer?.nama : null}</Text>
+                        ) : 
+                            <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.receivers[0]?.nama !== undefined ? item.receivers[0]?.nama : "-"}</Text>
+                        }
                         <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.receivers[0]?.nama}</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
                         <Text style={{ fontSize: 13, width: 120, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penandatangan</Text>
-                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.approvers[1]?.officer?.nama !== null ? item.approvers[1]?.officer?.nama : "-"} </Text>
+                        <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.approvers[1]?.officer!== undefined ? item.approvers[1]?.officer?.nama : item.approvers[1]?.nama} </Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -121,7 +127,7 @@ export const Bankom = () => {
         dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
     }
 
-    const { digitalsign } = useSelector((state) => state.digitalsign)
+    const { digitalsign, loading } = useSelector((state) => state.digitalsign)
 
     const filter = (event) => {
         setSearch(event)
@@ -147,6 +153,11 @@ export const Bankom = () => {
 
     return (
         <GestureHandlerRootView>
+        {loading ? (
+            <Loading />
+        ) : (
+            null
+        )}
             <View style={{ position: 'relative' }}>
                 {filterData !== null ? (
                     <>

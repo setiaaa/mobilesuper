@@ -152,6 +152,7 @@ import { PTodo } from "./Pencarian/PTodo";
 import { PSecretary } from "./Pencarian/PSecretary";
 import { PDelegation } from "./Pencarian/PDelegation";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
+import LihatSuratSPPD from "../SPPD/LihatSuratSPPD";
 
 const Stack = createNativeStackNavigator();
 
@@ -1030,6 +1031,13 @@ function AuthenticatedStack(route) {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="LihatSuratSPPD"
+            component={LihatSuratSPPD}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </SafeAreaView>
     </BottomSheetModalProvider>
@@ -1042,7 +1050,7 @@ function AppNavigator() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useSelector((state) => state.login);
-  const [route,setRoute] = useState("");
+  const [route, setRoute] = useState("");
   useEffect(() => {
     //checkversion
     // if (Platform.OS == "android") {
@@ -1050,9 +1058,9 @@ function AppNavigator() {
     // } else if (Platform.OS == "ios") {
     //   checkVersionIos();
     // }
-     getTokenValue().then((val) => {
+    getTokenValue().then((val) => {
       if (val === null) {
-        setRoute("LoginToken")
+        setRoute("LoginToken");
       } else {
         setRoute("Main");
       }
