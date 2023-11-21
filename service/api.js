@@ -1787,3 +1787,27 @@ export const getDocumentDetailSPPD = createAsyncThunk(
     return respon?.data;
   }
 );
+
+export const getDocumentAttachmentSPPD = createAsyncThunk(
+  "sppd/getDocumentAttachmentSPPD",
+  async ({ token, id }) => {
+    const respon = await axios.get(
+      `${SPPD}document/attachment/${id}/?mode=base64`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data;
+  }
+);
+
+export const getDocumentCetakSPPD = createAsyncThunk(
+  "sppd/getDocumentCetakSPPD",
+  async ({ token, id }) => {
+    console.log(id);
+    const respon = await axios.get(`${SPPD}document/back-form/${id}/`, {
+      headers: { Authorization: token },
+    });
+    return respon.data;
+  }
+);

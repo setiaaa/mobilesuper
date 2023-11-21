@@ -53,7 +53,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    console.log(listData)
+    // console.log(listData)
   };
 
   const handleClickBalas = () => {
@@ -342,7 +342,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
-  console.log(detail)
+  // console.log(detail)
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -883,9 +883,10 @@ const CardLiniMasa = ({ item, token }) => {
           flexDirection: "row",
           marginVertical: 10,
           marginHorizontal: 20,
+          justifyContent: 'center', 
+          gap: 40
           // paddingHorizontal: 16,
           // backgroundColor: "grey",
-          justifyContent: "space-between",
         }}
       >
         <View>
@@ -907,18 +908,25 @@ const CardLiniMasa = ({ item, token }) => {
               setVisibleModalView(true);
             }}
           >
-            <Ionicons
+          </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+            onPress={() => {
+              setVisibleModalView(true);
+            }}>
+            {/* <Ionicons
               name="eye-outline"
               size={18}
               style={{ color: COLORS.lighter }}
-            />
+            /> */}
             <Text style={{ color: COLORS.lighter }}>
               {item.views_count} Dilihat
             </Text>
-          </TouchableOpacity>
-        </View>
+            </TouchableOpacity>
+          </View>
       </View>
-      {/* divider custom */}
+      {/* divider custom */} 
       <View
         style={{
           height: 1,
@@ -937,9 +945,11 @@ const CardLiniMasa = ({ item, token }) => {
           marginHorizontal: 20,
           paddingHorizontal: 16,
           // backgroundColor: "grey",
-          justifyContent: "space-around",
+          justifyContent: "center",
+          gap: 30,
         }}
       >
+        <View>
         <TouchableOpacity
           style={{
             flexDirection: "row",
@@ -948,19 +958,33 @@ const CardLiniMasa = ({ item, token }) => {
           }}
           onPress={handleLike}
         >
-          <Ionicons
-            name="thumbs-up-outline"
-            size={18}
-            color={item.liked == true ? COLORS.primary : null}
-          />
-          <Text
-            style={{
-              color: item.liked == true ? COLORS.primary : null,
-            }}
-          >
-            Suka
-          </Text>
+        <Ionicons
+          name="thumbs-up-outline"
+          size={18}
+          color={detail.liked == true ? COLORS.primary : null}
+        />
+        <Text
+          style={{
+            color: detail.liked == true ? COLORS.primary : null,
+          }}
+        >
+          Suka
+        </Text>
         </TouchableOpacity>
+        </View>
+
+        
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 3,
+          }}
+          onPress={bottomSheetAttachComment}
+          >
+            <Ionicons name="chatbox-outline" size={18} />
+            <Text>Komentar</Text>
+          </TouchableOpacity>
 
         <TouchableOpacity
           style={{
@@ -1117,7 +1141,7 @@ const CardLiniMasa = ({ item, token }) => {
             </KeyboardAvoidingView>
           </BottomSheetView>
         </BottomSheetModal>
-
+        
         <TouchableOpacity
           style={{
             flexDirection: "row",
@@ -1176,6 +1200,14 @@ export const LiniMasa = () => {
 
   console.log(linimasa.lists);
 
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(linimasa.lists);
+}, [linimasa]);
+
   useEffect(() => {
     if (search !== "") {
       const data = linimasa.lists?.filter((item) => {
@@ -1188,14 +1220,34 @@ export const LiniMasa = () => {
     } else {
       setFilterData(linimasa.lists);
     }
-  }, [search, linimasa.lists]);
+  }, [search, linimasa]);
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
 
-  const filter = (event) => {
-    setSearch(event);
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
   };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.title.localeCompare(a.title));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
+
+  // console.log(linimasa.lists.like_list[0])
 
   return (
     <>
@@ -1242,18 +1294,34 @@ export const LiniMasa = () => {
           </View>
         </View>
 
-        <View style={{ padding: 20}}>
-        <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
+        <View style={{ padding: 20, flexDirection: 'row'}}>
+        <View style={{ width: "85%", marginRight: 10,}}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
-              onSearch={linimasa.lists}
+              onSearch={filter}
             />
           </View>
+          <TouchableOpacity onPress={!ascending ? asc : desc}>
+          <View
+            style={{
+            width: 40,
+            height: 40,
+            borderRadius: 30,
+            backgroundColor: COLORS.white,
+            justifyContent: "center",
+            alignItems: "center",
+            borderColor: COLORS.secondaryLighter,
+            // borderWidth: isFiltered ? 1 : 0,
+          }}
+          >
+            <Ionicons name="filter-outline" size={24} />
+          </View>
+        </TouchableOpacity>
           </View>
 
         <FlatList
-          data={linimasa.lists}
+          data={filterData}
           renderItem={({ item }) => (
             <View key={item.id}>
               <CardLiniMasa
