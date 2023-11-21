@@ -30,6 +30,8 @@ const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
 const SUMMARY_ACCUMULATION = BASE_URL + "mp/admin/summary/accumulation/";
 const SUMMARY_REVIEW = BASE_URL + "mp/admin/summary/review/";
 const SUMMARY_BAD_USER = BASE_URL + "mp/admin/summary/bad-user/";
+const EXPORT_FILE_BY_QUARTER = BASE_URL + 'mp/admin/summary/export/users-by-quarter/';
+const EXPORT_FILE_BY_EMPLOYEE = BASE_URL + 'mp/admin/summary/export/pegawai/';
 
 const GET_SUMMARY_COUNT = digitalSign + "document/summary/";
 const GET_SUMMARY_LIST = digitalSign + "document/summary/list/";
@@ -1392,6 +1394,26 @@ export const getSummaryReview = createAsyncThunk(
         headers: { Authorization: data.token },
       }
     );
+    return respon?.data.result;
+  }
+);
+
+export const getExportFileEmployee = createAsyncThunk(
+  "mp/admin/summary/export/pegawai/",
+  async ({ token }) => {
+    const respon = await axios.get(`${EXPORT_FILE_BY_EMPLOYEE}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const getExportFileQuarter = createAsyncThunk(
+  "mp/admin/summary/export/users-by-quarter/",
+  async ({ token }) => {
+    const respon = await axios.get(`${EXPORT_FILE_BY_QUARTER}`, {
+      headers: { Authorization: token },
+    });
     return respon?.data.result;
   }
 );
