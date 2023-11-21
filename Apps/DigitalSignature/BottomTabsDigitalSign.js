@@ -4,57 +4,68 @@ import { useState } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { COLORS } from '../../config/SuperAppps';
 import { } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 
 function MyTabDigitalSign({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);
+    const { profile } = useSelector(state => state.superApps);
+
+    const roleBankom = ['USER_BSRE'];
+    const roleLaporan = ['LAPORAN_BSRE'];
+
+    const hasRequiredRoles = (userRoles, appRoles) => {
+        return appRoles.some(role => userRoles.includes(role));
+    };
 
     return (
         < >
             <BottomSheetModalProvider>
                 <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16, }}>
-                    <TouchableOpacity
-                        key={1}
-                        onPress={() => {
-                            setTabItemIndex(1)
-                            navigation.navigate('Bankom', { unread: false })
-                            // props.navigation.navigate('Home', { unread: false })
-                        }}>
-                        {tabItemIndex === 1 ? (
-                            <View style={{
-                                alignItems: 'center',
-                                height: 65,
-                                justifyContent: 'center',
-                                width: 80,
+                    {hasRequiredRoles(profile?.roles_access, roleBankom) ? (
+                        <TouchableOpacity
+                            key={1}
+                            onPress={() => {
+                                setTabItemIndex(1)
+                                navigation.navigate('Bankom', { unread: false })
+                                // props.navigation.navigate('Home', { unread: false })
                             }}>
-
+                            {tabItemIndex === 1 ? (
                                 <View style={{
-                                    width: '100%',
-                                    height: 3,
-                                    backgroundColor: COLORS.primary,
-                                    position: 'absolute',
-                                    top: 0,
-                                    //shadow ios
-                                    shadowOffset: { width: -2, height: 5 },
-                                    shadowColor: COLORS.primary,
-                                    shadowOpacity: 0.4,
-                                    //shadow android
-                                    elevation: 2,
-                                }} />
-                                <Ionicons name='briefcase-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
-                                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Bankom</Text>
-                            </View>
-                        ) : (
-                            <View style={{
-                                alignItems: 'center',
-                                height: 65,
-                                justifyContent: 'center',
-                                width: 80,
-                            }}>
-                                <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
-                                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Bankom</Text>
-                            </View>
-                        )}
-                    </TouchableOpacity>
+                                    alignItems: 'center',
+                                    height: 65,
+                                    justifyContent: 'center',
+                                    width: 80,
+                                }}>
+
+                                    <View style={{
+                                        width: '100%',
+                                        height: 3,
+                                        backgroundColor: COLORS.primary,
+                                        position: 'absolute',
+                                        top: 0,
+                                        //shadow ios
+                                        shadowOffset: { width: -2, height: 5 },
+                                        shadowColor: COLORS.primary,
+                                        shadowOpacity: 0.4,
+                                        //shadow android
+                                        elevation: 2,
+                                    }} />
+                                    <Ionicons name='briefcase-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
+                                    <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Bankom</Text>
+                                </View>
+                            ) : (
+                                <View style={{
+                                    alignItems: 'center',
+                                    height: 65,
+                                    justifyContent: 'center',
+                                    width: 80,
+                                }}>
+                                    <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
+                                    <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Bankom</Text>
+                                </View>
+                            )}
+                        </TouchableOpacity>
+                    ) : null}
 
                     <TouchableOpacity
                         key={2}
@@ -100,49 +111,51 @@ function MyTabDigitalSign({ props, navigation }) {
                         )}
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        key={3}
-                        onPress={() => {
-                            setTabItemIndex(3)
-                            navigation.navigate('LaporanDigitalSign', { unread: false })
-                            // props.navigation.navigate('Home', { unread: false })
-                        }}>
-                        {tabItemIndex === 3 ? (
-                            <View style={{
-                                alignItems: 'center',
-                                height: 65,
-                                justifyContent: 'center',
-                                width: 80,
+                    {hasRequiredRoles(profile?.roles_access, roleLaporan) ? (
+                        <TouchableOpacity
+                            key={3}
+                            onPress={() => {
+                                setTabItemIndex(3)
+                                navigation.navigate('LaporanDigitalSign', { unread: false })
+                                // props.navigation.navigate('Home', { unread: false })
                             }}>
-
+                            {tabItemIndex === 3 ? (
                                 <View style={{
-                                    width: '100%',
-                                    height: 3,
-                                    backgroundColor: COLORS.primary,
-                                    position: 'absolute',
-                                    top: 0,
-                                    //shadow ios
-                                    shadowOffset: { width: -2, height: 5 },
-                                    shadowColor: COLORS.primary,
-                                    shadowOpacity: 0.4,
-                                    //shadow android
-                                    elevation: 2,
-                                }} />
-                                <Ionicons name='chatbubbles-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
-                                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Laporan</Text>
-                            </View>
-                        ) : (
-                            <View style={{
-                                alignItems: 'center',
-                                height: 65,
-                                justifyContent: 'center',
-                                width: 80,
-                            }}>
-                                <Ionicons name='chatbubbles-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
-                                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Laporan</Text>
-                            </View>
-                        )}
-                    </TouchableOpacity>
+                                    alignItems: 'center',
+                                    height: 65,
+                                    justifyContent: 'center',
+                                    width: 80,
+                                }}>
+
+                                    <View style={{
+                                        width: '100%',
+                                        height: 3,
+                                        backgroundColor: COLORS.primary,
+                                        position: 'absolute',
+                                        top: 0,
+                                        //shadow ios
+                                        shadowOffset: { width: -2, height: 5 },
+                                        shadowColor: COLORS.primary,
+                                        shadowOpacity: 0.4,
+                                        //shadow android
+                                        elevation: 2,
+                                    }} />
+                                    <Ionicons name='chatbubbles-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
+                                    <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Laporan</Text>
+                                </View>
+                            ) : (
+                                <View style={{
+                                    alignItems: 'center',
+                                    height: 65,
+                                    justifyContent: 'center',
+                                    width: 80,
+                                }}>
+                                    <Ionicons name='chatbubbles-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
+                                    <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Laporan</Text>
+                                </View>
+                            )}
+                        </TouchableOpacity>
+                    ) : null}
                 </View>
             </BottomSheetModalProvider>
         </ >

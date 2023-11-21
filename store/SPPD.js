@@ -67,7 +67,6 @@ const SPPDSlice = createSlice({
       .addCase(getDocumentCetakSPPD.fulfilled, (state, action) => {
         state.cetak = action.payload;
         state.loading = false;
-        console.log("masul", action.payload);
       })
       .addCase(getDocumentCetakSPPD.pending, (state, action) => {
         state.loading = true;
