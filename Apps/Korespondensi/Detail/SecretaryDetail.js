@@ -4,15 +4,17 @@ import { useState } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 import { useSelector } from "react-redux";
-import AlertConfirm from "../../../components/UI/AlertConfirm";
 import Button from "../../../components/UI/Button";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
-import { getHTTP } from "../../../utils/http";
+import { getHTTP, headerToken } from "../../../utils/http";
+import { Config } from "../../../constants/config";
 
 function SecretaryDetail({ route }) {
   const profile = useSelector((state) => state.profile.profile);
+  const [errorAvatarTitle, setErrorAvatarTitle] = useState(false);
+  const [errorAvatarSekre, setErrorAvatarSekre] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   let hak;
@@ -21,8 +23,17 @@ function SecretaryDetail({ route }) {
   const [detail, setDetail] = useState([]);
   useEffect(() => {
     getDetail();
+    getHeader();
   }, []);
 
+  let header = {};
+  async function getHeader() {
+    try {
+      header = await headerToken();
+    } catch (error) {
+      Alert.alert("Warning!", "Get Header not working!");
+    }
+  }
   async function getDetail() {
     setIsLoading(true);
     try {
@@ -44,22 +55,25 @@ function SecretaryDetail({ route }) {
         nde_api.secretarydeactivate.replace("{$id}", id)
       );
       if (response.status == "Error") {
-        Alert.alert("Warning!", "Deactvate Secretary not working!");
+        Alert.alert("Peringatan!", "Deaktif sekretaris tidak berfungsi!");
       } else {
-        Alert.alert("Success!", "Deactivate Secretary was success!");
+        Alert.alert("Berhasil!", "Deaktif sekretaris berhasil!");
         navigation.goBack();
       }
     } catch (error) {
-      Alert.alert("Warning!", "Deactvate Secretary not working!");
+      Alert.alert("Peringatan!", "Deaktif sekretaris tidak berfungsi!");
     }
     setIsLoading(false);
   }
   function confirm() {
-    AlertConfirm(
-      "Confirm",
-      "Are you sure to deactivate this secretary?",
-      deactivate
-    );
+    Alert.alert("Konfirmasi", "Anda yakin untuk deaktif sekretaris ini?", [
+      {
+        text: "Tidak",
+        onPress: () => null,
+        style: "cancel",
+      },
+      { text: "YA", onPress: () => deactivate() },
+    ]);
   }
   const loadingOverlay = (
     <>
@@ -88,13 +102,21 @@ function SecretaryDetail({ route }) {
             subtitleNumberOfLines={5}
             left={(props) => (
               <View>
-                <Avatar.Image
-                  {...props}
-                  source={{
-                    uri: `${nde_api.baseurl + detail?.title?.avatar}`,
-                    method: "GET",
-                  }}
-                />
+                {errorAvatarTitle && (
+                  <Avatar.Image {...props} source={Config.avatar} />
+                )}
+
+                {!errorAvatarTitle && (
+                  <Avatar.Image
+                    {...props}
+                    source={{
+                      uri: `${nde_api.baseurl + detail?.title?.avatar}`,
+                      method: "GET",
+                      headers: header,
+                    }}
+                    onError={(e) => setErrorAvatarTitle(true)}
+                  />
+                )}
               </View>
             )}
           />
@@ -102,7 +124,7 @@ function SecretaryDetail({ route }) {
         <Card style={styles.containerCard}>
           <View style={styles.headerCard}>
             <View style={styles.header}>
-              <Text style={styles.badgeText}>Secretary</Text>
+              <Text style={styles.badgeText}>Sekretaris</Text>
             </View>
             <View
               style={[
@@ -121,7 +143,7 @@ function SecretaryDetail({ route }) {
                   styles.badgeText,
                 ]}
               >
-                Active
+                Aktif
               </Text>
             </View>
           </View>
@@ -129,21 +151,34 @@ function SecretaryDetail({ route }) {
             key={id}
             style={styles.containerCardTitle}
             title={
-              <View style={{ flexDirection: "column" }}>
-                <Text>{detail?.profile?.nik}</Text>
-                <Text style={styles.title}>{detail?.profile?.name}</Text>
-              </View>
+              <>
+                <Text>
+                  {detail?.profile?.nik}
+                  {"\n"}
+                </Text>
+                <Text style={styles.title} numberOfLines={5}>
+                  {detail?.profile?.name}
+                </Text>
+              </>
             }
             titleNumberOfLines={5}
             left={(props) => (
               <View>
-                <Avatar.Image
-                  {...props}
-                  source={{
-                    uri: `${nde_api.baseurl + detail?.profile?.avatar}`,
-                    method: "GET",
-                  }}
-                />
+                {errorAvatarSekre && (
+                  <Avatar.Image {...props} source={Config.avatar} />
+                )}
+
+                {!errorAvatarSekre && (
+                  <Avatar.Image
+                    {...props}
+                    source={{
+                      uri: `${nde_api.baseurl + detail?.profile?.avatar}`,
+                      method: "GET",
+                      headers: header,
+                    }}
+                    onError={(e) => setErrorAvatarSekre(true)}
+                  />
+                )}
               </View>
             )}
           />
@@ -167,8 +202,7 @@ function SecretaryDetail({ route }) {
               <Fragment key={index}>
                 {(item.biasa || item.rahasia || item.rahasia_prib) && (
                   <Text style={styles.title}>
-                    {count++}.
-                    {item.biasa ? " Biasa" : ""}
+                    {count++}.{item.biasa ? " Biasa" : ""}
                     {item.rahasia ? " Rahasia" : ""}
                     {item.rahasia_prib ? " Rhs-Prib" : ""}
                   </Text>
@@ -179,7 +213,7 @@ function SecretaryDetail({ route }) {
         </Card>
         {detail?.title?.nik == profile?.nik && (
           <Button style={styles.button} onPress={confirm}>
-            Deactivate
+            Deaktif
           </Button>
         )}
       </View>
@@ -225,6 +259,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "bold",
+    flexWrap: "wrap",
   },
   button: {
     borderRadius: 10,

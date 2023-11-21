@@ -13,8 +13,9 @@ import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { Dropdown } from "react-native-element-dropdown";
 import { GlobalStyles } from "../../../constants/styles";
-import { handlerError, postHTTP } from "../../../utils/http";
+import { handlerError, headerToken, postHTTP } from "../../../utils/http";
 import { useNavigation } from "@react-navigation/native";
+import { Config } from "../../../constants/config";
 
 function SecretaryForm() {
   const profile = useSelector((state) => state.profile.profile);
@@ -27,6 +28,8 @@ function SecretaryForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSifat, setSelectedSifat] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [errorAvatarTitle, setErrorAvatarTitle] = useState(false);
+  let header = {};
   const navigation = useNavigation();
   const dataSifat = [
     { name: "Secretary", code: "s" },
@@ -48,8 +51,14 @@ function SecretaryForm() {
   });
 
   useEffect(() => {
+    getHeader();
     return refresh;
   }, [employee, disabled]);
+
+  async function getHeader() {
+    header = await headerToken();
+  }
+
   function handlerEmployee() {
     navigation.navigate("AddressbookEmployee", {
       title: "Addressbook\nEmployee",
@@ -74,15 +83,18 @@ function SecretaryForm() {
         }
       });
       if (selectedTitle == null || selectedTitle == "") {
-        Alert.alert("Warning!", "Please choose a 'Jabatan' field");
+        Alert.alert("Peringatan!", "Silakan pilih Jabatan");
       } else if (selectedEmployee.length == 0) {
-        Alert.alert("Warning!", "Please choose a 'Sekretaris' field");
+        Alert.alert("Peringatan!", "Silakan pilih Sekretaris");
       } else if (selectedEmployee[0].fullname == profile?.fullname) {
-        Alert.alert("Warning!", "You have to choose someone else");
+        Alert.alert(
+          "Peringatan!",
+          "Anda tidak dapat memilih diri sendiri sebagai sekretaris. Silakan pilih sekretaris lain"
+        );
       } else if (selectedSifat == undefined || selectedSifat == "") {
-        Alert.alert("Warning!", "Please choose a 'Sifat' field");
+        Alert.alert("Peringatan!", "Silakan pilih Sifat");
       } else if (hak.length == 0) {
-        Alert.alert("Warning!", "Please choose a 'Hak' field");
+        Alert.alert("Peringatan!", "Silakan pilih Hak");
       } else {
         let dataEmployee;
         selectedEmployee.map((item) => {
@@ -98,15 +110,15 @@ function SecretaryForm() {
         //send data
         const response = await postHTTP(nde_api.secretaryactive, data);
         if (response.data.status == "Error") {
-          Alert.alert("Warning!", response.data.msg);
+          Alert.alert("Peringatan!", response.data.msg);
         } else {
-          Alert.alert("Success!", "Activation of secretary was successfull!");
+          Alert.alert("Berhasil!", "Sekretaris berhasil diaktifkan!");
           navigation.goBack();
         }
       }
       setIsLoading(false);
     } catch (error) {
-      Alert.alert("Warning!", "Activation of secretary not working");
+      Alert.alert("Peringatan!", "Aktivasi sekretaris tidak berfungsi");
       setIsLoading(false);
     }
   }
@@ -121,7 +133,7 @@ function SecretaryForm() {
         setDisabled(true);
       }
     } catch (error) {
-      handlerError(error, "Warning!", "Check Secretary not working!");
+      handlerError(error, "Peringatan!", "Check Secretary not working!");
     }
   }
   return (
@@ -135,28 +147,41 @@ function SecretaryForm() {
           <Card style={styles.containerCard}>
             <Card.Title
               style={styles.containerCardTitle}
-              title={
-                <View style={{ flexDirection: "column" }}>
-                  <Text style={styles.title}>{profile?.fullname}</Text>
-                </View>
-              }
+              title={<Text style={styles.title}>{profile?.fullname}</Text>}
               titleNumberOfLines={5}
               subtitle={profile?.department}
               subtitleNumberOfLines={5}
               left={(props) => (
                 <View>
-                  <Avatar.Image
-                    {...props}
-                    source={{
-                      uri: `${profile && nde_api.baseurl + profile?.avatar}`,
-                      method: "GET",
-                    }}
-                    theme={{
-                      colors: {
-                        primary: GlobalStyles.colors.textWhite,
-                      },
-                    }}
-                  />
+                  {errorAvatarTitle && (
+                    <Avatar.Image
+                      size={40}
+                      source={Config.avatar}
+                      theme={{
+                        colors: {
+                          primary: GlobalStyles.colors.textWhite,
+                        },
+                      }}
+                    />
+                  )}
+                  {!errorAvatarTitle && (
+                    <Avatar.Image
+                      {...props}
+                      source={{
+                        uri: `${
+                          profile && nde_api.baseurl + profile?.avatar[0]
+                        }`,
+                        method: "GET",
+                        headers: header,
+                      }}
+                      onError={() => setErrorAvatarTitle(true)}
+                      theme={{
+                        colors: {
+                          primary: GlobalStyles.colors.textWhite,
+                        },
+                      }}
+                    />
+                  )}
                 </View>
               )}
             />
@@ -196,13 +221,13 @@ function SecretaryForm() {
                 <>
                   {selectedEmployee.map((item) => (
                     <Text style={styles.title} key={item.nik}>
-                      {item?.fullname ? item.fullname : "Name/NIK"}
+                      {item?.fullname ? item.fullname : "Nama/NIK"}
                     </Text>
                   ))}
                   {(selectedEmployee == undefined ||
                     selectedEmployee.length == 0) && (
-                      <Text style={styles.title}>Name/NIK</Text>
-                    )}
+                    <Text style={styles.title}>Nama/NIK</Text>
+                  )}
                 </>
               }
               titleNumberOfLines={5}
@@ -268,7 +293,7 @@ function SecretaryForm() {
             onPress={activate}
             disabled={disabled}
           >
-            Activate
+            Aktifkan
           </Button>
         </View>
       </KeyboardAvoidingView>
