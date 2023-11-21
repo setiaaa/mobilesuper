@@ -15,6 +15,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import {
+  getExportFileEmployee,
+  getExportFileQuarter,
   getSummaryAccumulation,
   getSummaryBadUser,
   getSummaryGraph,
@@ -26,6 +28,9 @@ import PieChart from "react-native-pie-chart";
 import { StatusBar } from "expo-status-bar";
 import * as Progress from "react-native-progress";
 import ProgressCircle from "react-native-progress-circle";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import * as IntentLauncher from "expo-intent-launcher";
 
 export const LaporanPengetahuan = () => {
   const navigation = useNavigation();
@@ -79,7 +84,67 @@ export const LaporanPengetahuan = () => {
     }
   }, [token, year, quarter]);
 
-  const { summary } = useSelector((state) => state.pengetahuan);
+  useEffect(() => {
+    const param = {
+      token: token,
+      year: year.value, 
+      quarter: quarter.key
+    };
+    if (token !== "") {
+      dispatch(getExportFileQuarter(param));
+      dispatch(getExportFileEmployee(param))
+    }
+  }, [token, year, quarter, download])
+
+  const { summary, exportLaporan, download } = useSelector((state) => state.pengetahuan);
+
+  const openFileEmployee = () => {
+    let remoteUrl = exportLaporan?.employee?.file;
+    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
+      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+        const contentURL = await FileSystem.getContentUriAsync(uri);
+        try {
+          if (Platform.OS == 'android') {
+            await IntentLauncher.startActivityAsync(
+              "android.intent.action.VIEW",
+              {
+                data: contentURL,
+                flags: 1,
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+              }
+            );
+          } else if (Platform.OS == 'ios') {
+            Sharing.shareAsync(localPath);
+          }
+        } catch (error) {
+          Alert.alert("INFO", JSON.stringify(error));
+        }
+      });
+  };
+
+  const openFileQuarter = () => {
+    let remoteUrl = exportLaporan?.quarter?.file;
+    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
+      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+        const contentURL = await FileSystem.getContentUriAsync(uri);
+        try {
+          if (Platform.OS == 'android') {
+            await IntentLauncher.startActivityAsync(
+              "android.intent.action.VIEW",
+              {
+                data: contentURL,
+                flags: 1,
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+              }
+            );
+          } else if (Platform.OS == 'ios') {
+            Sharing.shareAsync(localPath);
+          }
+        } catch (error) {
+          Alert.alert("INFO", JSON.stringify(error));
+        }
+      });
+  };
 
   const totalPost = summary?.total_post.total_post_per_quarter;
   const badUser = summary?.bad_user;
@@ -417,7 +482,7 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Pegawai</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {openFileEmployee()}}>
                 <View
                   style={{
                     width: 24,
@@ -445,7 +510,7 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Triwulan</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {openFileQuarter()}}>
                 <View
                   style={{
                     width: 24,

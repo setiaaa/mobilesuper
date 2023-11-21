@@ -314,7 +314,7 @@ export const RangkumanIKU = () => {
     setIsFiltered(true);
   }
 
-  console.log(exportPegawai.lists.file)
+  // console.log(exportPegawai.lists.file)
 
   const openFile = () => {
     let remoteUrl = exportPegawai?.lists?.file;
@@ -594,10 +594,35 @@ export const RangkumanIKU = () => {
               >
                 <BottomSheetView onLayout={handleContentLayout}>
                   <View style={{ flex: 1 }}>
-                    <View style={{ alignItems: "center", marginVertical: 20 }}>
-                      <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                  <View
+                      style={{
+                        marginHorizontal: 20,
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        padding: 14,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: FONTSIZE.H1,
+                        }}
+                      >
                         Pilih
                       </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          console.log();
+                          closeBottomSheet();
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          size={24}
+                          color={COLORS.lighter}
+                        />
+                      </TouchableOpacity>
                     </View>
 
                     <View
