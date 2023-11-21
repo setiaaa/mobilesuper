@@ -231,7 +231,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
                 style={{
                   fontSize: FONTSIZE.H2,
                   fontWeight: FONTWEIGHT.bold,
-                  color: COLORS.lighter,
+                  color: COLORS.normal,
                 }}
               >
                 Peserta

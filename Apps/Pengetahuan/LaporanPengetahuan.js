@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import {
+  getExportFileQuarter,
   getSummaryAccumulation,
   getSummaryBadUser,
   getSummaryGraph,
@@ -76,10 +77,11 @@ export const LaporanPengetahuan = () => {
       dispatch(getSummaryGraph(param));
       dispatch(getSummaryAccumulation(param));
       dispatch(getSummaryReview(param));
+      dispatch(getExportFileQuarter(token));
     }
   }, [token, year, quarter]);
 
-  const { summary } = useSelector((state) => state.pengetahuan);
+  const { summary, exportLaporan } = useSelector((state) => state.pengetahuan);
 
   const totalPost = summary?.total_post.total_post_per_quarter;
   const badUser = summary?.bad_user;
@@ -106,7 +108,7 @@ export const LaporanPengetahuan = () => {
 
   const sliceColorHandle = [COLORS.grey];
 
-  console.log(review);
+  console.log(exportLaporan);
 
   return (
     <View style={{ flex: 1 }}>

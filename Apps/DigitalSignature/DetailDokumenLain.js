@@ -268,13 +268,21 @@ export const DetailDokumenLain = () => {
                     >
                         <BottomSheetView onLayout={handleContentLayout} >
                             <View style={{ flex: 1 }}>
-                                <View style={{ alignItems: 'center', flexDirection: 'row', marginHorizontal: 20, marginTop: 20 }}>
-                                    <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
-                                        <Ionicons name='chevron-back-outline' size={24} />
-                                    </TouchableOpacity>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Tanda Tangan Sertifikat</Text>
+                                <View style={{ alignItems: 'center', flexDirection: 'row', marginHorizontal: 20, marginTop: 20, justifyContent:"space-between" }}>
+                                    <View style={{}}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold}}>Tanda Tangan Sertifikat</Text>
                                     </View>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                        bottomSheetAttachClose();
+                                        }}
+                                    >
+                                        <Ionicons
+                                        name="close-outline"
+                                        size={24}
+                                        color={COLORS.lighter}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
 
                                 <View style={{ marginBottom: 10, justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: 20 }}>
