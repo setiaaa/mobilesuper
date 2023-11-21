@@ -53,7 +53,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    // console.log(listData)
+    console.log(listData);
   };
 
   const handleClickBalas = () => {
@@ -344,7 +344,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
-  // console.log(detail)
+  console.log(item.like_list);
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -1421,8 +1421,8 @@ export const LiniMasa = () => {
           </View>
         </View>
 
-        <View style={{ padding: 20, flexDirection: 'row'}}>
-        <View style={{ width: "85%", marginRight: 10, marginBottom: -30}}>
+        <View style={{ padding: 20 }}>
+          <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
