@@ -75,8 +75,9 @@ const PengetahuanSlice = createSlice({
       lists: [],
     },
     exportPegawai: {
-      lists: [],
+      lists: {},
     },
+    download: {},
     penilaian: {
       lists: [],
       total: {},
