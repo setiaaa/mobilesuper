@@ -53,7 +53,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    // console.log(listData)
+    console.log(listData);
   };
 
   const handleClickBalas = () => {
@@ -307,7 +307,7 @@ const CardLiniMasa = ({ item, token }) => {
   const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
 
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ['95%'], []);
+  const initialSnapPoints = useMemo(() => ["95%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -346,7 +346,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
-  // console.log(detail)
+  console.log(item.like_list);
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -365,7 +365,7 @@ const CardLiniMasa = ({ item, token }) => {
     };
     dispatch(postComment(data));
     setKomen("");
-    setParentId({id:"",creator:""})
+    setParentId({ id: "", creator: "" });
   };
 
   useEffect(() => {
@@ -1138,7 +1138,7 @@ const CardLiniMasa = ({ item, token }) => {
           <BottomSheetView onLayout={handleContentLayout} style={{}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "height" : "height"}
-              keyboardVerticalOffset={parentId !== "" ? 80: 70}
+              keyboardVerticalOffset={parentId !== "" ? 80 : 70}
             >
               <View
                 style={{
@@ -1188,12 +1188,18 @@ const CardLiniMasa = ({ item, token }) => {
                     setToggleComment={setToggleComment}
                   />
                 )}
-                style={{ height: 370}}
+                style={{ height: 370 }}
               />
 
-              <View style={{ justifyContent: "flex-end", paddingTop:10}}>
-                {parentId.id !== "" ? ( 
-                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20,}}>
+              <View style={{ justifyContent: "flex-end", paddingTop: 10 }}>
+                {parentId.id !== "" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 20,
+                    }}
+                  >
                     <Text>Membalas {parentId.creator}</Text>
                     <TouchableOpacity>
                       <Ionicons
@@ -1241,7 +1247,7 @@ const CardLiniMasa = ({ item, token }) => {
                       alignItems: "flex-end",
                       flex: 1,
                       marginRight: 10,
-                      marginLeft:50,
+                      marginLeft: 50,
                       justifyContent: "center",
                     }}
                   >
@@ -1335,8 +1341,7 @@ export const LiniMasa = () => {
         return item.title.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
-      if (data.length === 0){
-
+      if (data.length === 0) {
       }
     } else {
       setFilterData(linimasa.lists);
