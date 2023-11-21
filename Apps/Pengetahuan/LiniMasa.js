@@ -53,7 +53,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    // console.log(listData)
+    console.log(listData);
   };
 
   const handleClickBalas = () => {
@@ -344,7 +344,7 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
-  // console.log(detail)
+  console.log(item.like_list);
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
