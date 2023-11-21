@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   TextInput,
   Image,
+  StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -469,6 +470,7 @@ export const PostinganSaya = () => {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(5);
+  const [inputValue, setInputValue] = useState("");
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
 
@@ -478,43 +480,45 @@ export const PostinganSaya = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (token !== "") {
-      dispatch(getMyPostList({ token: token, page: page }));
-    }
-  }, [token, page]);
-
-  const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
-
-  useEffect(() => {
-    setFilterData(postinganSaya.lists);
-  }, [postinganSaya.lists]);
-
-  const filter = (event) => {
-    setSearch(event);
+  const filter = () => {
+    setSearch(inputValue);
   };
 
   useEffect(() => {
-    if (search !== "") {
-      const data = postinganSaya.lists?.filter((item) => {
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
-      if (data.length === 0) {
-      }
-    } else {
-      setFilterData(postinganSaya.lists);
+    if (token !== "") {
+      dispatch(getMyPostList({ token: token, page: page, search: search }));
     }
-  }, [search]);
+  }, [token, page, search]);
+
+  const { postinganSaya, loading } = useSelector((state) => state.pengetahuan);
+
+  // useEffect(() => {
+  //   setFilterData(postinganSaya.lists);
+  // }, [postinganSaya.lists]);
+
+  // useEffect(() => {
+  //   if (search !== "") {
+  //     const data = postinganSaya.lists?.filter((item) => {
+  //       return item.title.toLowerCase().includes(search.toLowerCase());
+  //     });
+  //     setFilterData(data);
+  //     if (data.length === 0) {
+  //     }
+  //   } else {
+  //     setFilterData(postinganSaya.lists);
+  //   }
+  // }, [search]);
 
   const loadMore = () => {
     if (postinganSaya?.lists.length % 5 === 0) {
-      setPage(page + 5);
+      if (postinganSaya?.lists.length === page) {
+        setPage(page + 5);
+      }
     }
     // console.log(page);
   };
 
-  console.log(postinganSaya.lists);
+  // console.log(postinganSaya.lists);
 
   return (
     <>
@@ -596,11 +600,18 @@ export const PostinganSaya = () => {
               borderRadius: 8,
             }}
           >
-            <Search
-              placeholder={"Cari..."}
-              iconColor={COLORS.primary}
-              onSearch={filter}
-            />
+            <View style={styles.input}>
+              <Ionicons name="search" size={20} color={COLORS.primary} />
+              <TextInput
+                placeholder={"Cari..."}
+                style={{ fontSize: 16, flex: 1 }}
+                maxLength={30}
+                value={inputValue}
+                onChangeText={(text) => setInputValue(text)}
+                onSubmitEditing={filter}
+                clearButtonMode="always"
+              />
+            </View>
           </View>
           {/* <TouchableOpacity
             style={{
@@ -626,7 +637,7 @@ export const PostinganSaya = () => {
 
       <View style={{ height: "75%" }}>
         <FlatList
-          data={filterData}
+          data={postinganSaya.lists}
           renderItem={({ item }) => (
             <View key={item.id}>
               <CardPostinganSaya item={item} token={token} />
@@ -654,3 +665,16 @@ export const PostinganSaya = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
+});
