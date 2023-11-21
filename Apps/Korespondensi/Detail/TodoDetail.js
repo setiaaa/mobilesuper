@@ -60,8 +60,12 @@ function TodoDetail({ route }) {
     try {
       //get detail
       const response = await getHTTP(nde_api.todobyid.replace("{$id}", id));
-      setDetail(response.data);
-      setIsLoading(false);
+      if (response?.data?.status == "Error") {
+        Alert.alert("Peringatan!", response.data.msg);
+      } else {
+        setDetail(response.data);
+        setIsLoading(false);
+      }
     } catch (error) {
       if (error.response.status === 401) {
         dispatch(logout);
@@ -88,11 +92,11 @@ function TodoDetail({ route }) {
           if (mark) {
             //jika terceklis mark as complete
             data = { mark: mark, message: commentArray[id] };
-            prefix = "Mark as complete ";
+            prefix = "Telah selesai ";
           } else {
             //jika tidak terceklis mark as complete
             data = { message: commentArray[id] };
-            prefix = "Comment ";
+            prefix = "Komentar ";
           }
           const response = await postHTTP(
             nde_api.todomarkcomplete.replace("{$id}", id),
@@ -101,15 +105,12 @@ function TodoDetail({ route }) {
           if (response.data.status == "Success") {
             commentArray[id] = "";
             getDetail();
-            Alert.alert(
-              "Success!",
-              prefix + Config.labelTodo + " was successfull!"
-            );
+            Alert.alert("Berhasil!", prefix + Config.labelTodo + " berhasil!");
             if (mark) navigation.goBack();
           } else {
             Alert.alert(
-              "Warning!",
-              prefix + Config.labelTodo + " not working!"
+              "Peringatan!",
+              prefix + Config.labelTodo + " tidak berfungsi!"
             );
           }
           setIsLoading(false);
@@ -124,20 +125,20 @@ function TodoDetail({ route }) {
             commentArray[id] = "";
             getDetail();
             Alert.alert(
-              "Success!",
-              "Comment " + Config.labelTodo + " was successfull!"
+              "Berhasil!",
+              "Komentar " + Config.labelTodo + " berhasil!"
             );
           } else {
             Alert.alert(
-              "Warning!",
-              "Comment " + Config.labelTodo + " not working!"
+              "Peringatan!",
+              "Komentar " + Config.labelTodo + " tidak berfungsi!"
             );
           }
           setIsLoading(false);
         }
       }
     } catch (error) {
-      Alert.alert("Warning!", "Mark as Complete not working!");
+      Alert.alert("Peringatan!", "Telah selesai tidak berfungsi!");
     }
     setIsLoading(false);
   }
@@ -274,7 +275,7 @@ function TodoDetail({ route }) {
             <View style={[styles.headerCard, styles.rowBetween]}>
               <View style={styles.wrap}>
                 <Text style={{ color: GlobalStyles.colors.textWhite }}>
-                  Duedate: {detail.duedate}
+                  Tenggat waktu: {detail.duedate}
                 </Text>
               </View>
               <Chip
@@ -282,15 +283,15 @@ function TodoDetail({ route }) {
                 style={[
                   detail.priority == "nr"
                     ? {
-                      backgroundColor: GlobalStyles.colors.tertiery,
-                    }
+                        backgroundColor: GlobalStyles.colors.tertiery,
+                      }
                     : detail.priority == "lo"
-                      ? { backgroundColor: GlobalStyles.colors.blue }
-                      : detail.priority == "hi"
-                        ? {
-                          backgroundColor: GlobalStyles.colors.error500,
-                        }
-                        : { backgroundColor: GlobalStyles.colors.yellow },
+                    ? { backgroundColor: GlobalStyles.colors.blue }
+                    : detail.priority == "hi"
+                    ? {
+                        backgroundColor: GlobalStyles.colors.error500,
+                      }
+                    : { backgroundColor: GlobalStyles.colors.yellow },
                   styles.wrap,
                 ]}
                 textStyle={{ color: GlobalStyles.colors.textWhite }}
@@ -298,10 +299,10 @@ function TodoDetail({ route }) {
                 {detail.priority == "nr"
                   ? "Normal"
                   : detail.priority == "lo"
-                    ? "Low"
-                    : detail.priority == "hi"
-                      ? "High"
-                      : ""}
+                  ? "Low"
+                  : detail.priority == "hi"
+                  ? "High"
+                  : ""}
               </Chip>
             </View>
             <View style={styles.wrap}>
@@ -328,7 +329,7 @@ function TodoDetail({ route }) {
               <View style={styles.section}>
                 <Checkbox.Item
                   mode="android"
-                  label="Mark as Complete"
+                  label="Telah selesai"
                   status={mark ? "checked" : "unchecked"}
                   color={GlobalStyles.colors.tertiery}
                   onPress={handlerMark}
@@ -337,7 +338,7 @@ function TodoDetail({ route }) {
                 />
               </View>
             )}
-            {/* <View style={styles.wrap}>
+            <View style={styles.wrap}>
               <TextInput
                 mode="outlined"
                 style={styles.inputContainerStyle}
@@ -352,7 +353,6 @@ function TodoDetail({ route }) {
                 right={
                   <TextInput.Icon
                     icon="send"
-                    color={GlobalStyles.colors.textWhite}
                     onPress={() => {
                       sendMsg(id);
                     }}
@@ -414,7 +414,7 @@ function TodoDetail({ route }) {
                                   handlerReplyButton(node.id);
                                 }}
                               >
-                                Reply
+                                Balas
                               </Button>
                               {reply.find((obj) => obj.id === node.id)
                                 ?.visible ? (
@@ -436,7 +436,6 @@ function TodoDetail({ route }) {
                                   right={
                                     <TextInput.Icon
                                       icon="send"
-                                      color={GlobalStyles.colors.textWhite}
                                       onPress={(text) => {
                                         sendMsg(id, node.id);
                                       }}
@@ -468,7 +467,7 @@ function TodoDetail({ route }) {
               {detail?.message?.length == 0 && (
                 <List.Item description="Tidak ada komentar" />
               )}
-            </View> */}
+            </View>
           </Card>
         </View>
       </ScrollView>

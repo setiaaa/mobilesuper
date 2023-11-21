@@ -11,7 +11,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import { Avatar, Drawer, Text, IconButton } from "react-native-paper";
+import { Avatar, Drawer, Text, IconButton, List } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerActions } from "@react-navigation/native";
 
@@ -19,7 +19,6 @@ import { setProfile } from "../../store/profile";
 import { logout, setFirstLogin, setToken } from "../../store/auth";
 import { nde_api } from "../../utils/api.config";
 import { getHTTP, postHTTP } from "../../utils/http";
-import AlertConfirm from "../../components/UI/AlertConfirm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import IncomingList from "./List/IncomingList";
 import DispositionList from "./List/DispositionList";
@@ -38,53 +37,82 @@ import ScanLogList from "./List/ScanLogList";
 import SearchGlobalList from "./List/SearchGlobalList";
 import { GlobalStyles } from "../../constants/styles";
 import { androidId, getIosIdForVendorAsync } from "expo-application";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, FONTSIZE } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { OutgoingList } from "./List/OutgoingList";
 import { useNavigation } from "@react-navigation/native";
 
-const DrawerItemsData = [
+const DrawerItemsData1 = [
   {
     label: "Beranda",
     name: "Dashboard",
     icon: "home",
     key: 2,
   },
-  {
-    label: "Buat Surat",
-    name: "",
-    icon: "file-plus",
-    key: 3,
-  },
+  // {
+  //   label: "Buat Surat",
+  //   name: "",
+  //   icon: "file-plus",
+  //   key: 3,
+  // },
   {
     label: "Surat Masuk",
     name: "Incoming",
     icon: "email",
     key: 4,
   },
+];
+
+const DrawerItemsData2 = [
   {
     label: "Disposisi",
     name: "Disposition",
     icon: "chat-processing",
     key: 5,
   },
+];
+
+const DrawerItemsData3 = [
   {
-    label: "Surat Keluar",
-    name: "Outgoing",
-    icon: "email-send",
+    label: "Perlu Di Proses",
+    name: "NeedFollowUp",
+    icon: "",
     key: 6,
   },
+  {
+    label: "Lacak",
+    name: "Tracking",
+    icon: "",
+    key: 7,
+  },
+  {
+    label: "Terkirim",
+    name: "Submitted",
+    icon: "",
+    key: 8,
+  },
+];
+
+const DrawerItemsData4 = [
   {
     label: "Arsip",
     name: "Submitted",
     icon: "file-multiple",
-    key: 7,
+    key: 9,
+  },
+];
+const DrawerItemsData5 = [
+  {
+    label: "Delegasi",
+    name: "Delegation",
+    icon: "",
+    key: 10,
   },
   {
-    label: "Alat",
-    name: "",
-    icon: "toolbox",
-    key: 8,
+    label: "Sekretaris",
+    name: "Secretary",
+    icon: "",
+    key: 11,
   },
 ];
 
@@ -140,7 +168,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     getProfile();
     // ambil token dari superapps belum bisa. coba set token manual untuk testing
-    // dispatch(setToken({ token: "94c119e1ccb5ddb4a9fffa04ceb1602efd53f28f" }));
+    // dispatch(setToken({ token: "caccafd4e30bd6dced336c52014a9721fc15911d" }));
   }, []);
 
   async function getProfile() {
@@ -233,7 +261,10 @@ const CustomDrawerContent = (props) => {
             }}
           />
         )}
-        <Text style={styles.fullname}>{profileLogin?.fullname}</Text>
+        <Text style={styles.fullname}>
+          {profileLogin?.fullname?.split("/")[0]}
+        </Text>
+        <Text>{profileLogin?.fullname?.split("/")[1]}</Text>
         {profileLogin?.title?.map((data) => (
           <Text key={data.code} style={styles.title}>
             {data.name}
@@ -244,7 +275,9 @@ const CustomDrawerContent = (props) => {
         <Drawer.Item
           style={styles.drawerItem}
           label="Pencarian"
-          icon={drawerItemIndex == 1 ? "feature-search" : "feature-search-outline"}
+          icon={
+            drawerItemIndex == 1 ? "feature-search" : "feature-search-outline"
+          }
           key="1"
           active={drawerItemIndex === 1}
           onPress={() => {
@@ -273,7 +306,7 @@ const CustomDrawerContent = (props) => {
         />
       </Drawer.Section> */}
       <Drawer.Section>
-        {DrawerItemsData.map((data, index) => (
+        {DrawerItemsData1.map((data, index) => (
           <Drawer.Item
             style={styles.drawerItem}
             {...data}
@@ -297,12 +330,126 @@ const CustomDrawerContent = (props) => {
             }}
           />
         ))}
+        {/* surat disposisi */}
+        {DrawerItemsData2.map((data, index) => (
+          <Drawer.Item
+            style={styles.drawerItem}
+            {...data}
+            icon={
+              drawerItemIndex == data.key ? data.icon : data.icon + "-outline"
+            }
+            key={data.key}
+            active={drawerItemIndex === data.key}
+            onPress={() => {
+              setDrawerItemIndex(data.key);
+              props.navigation.navigate(data.name, {
+                title: data.name,
+                unread: false,
+              });
+            }}
+            theme={{
+              colors: {
+                secondaryContainer: COLORS.infoDangerLight,
+                onSecondaryContainer: COLORS.primary,
+              },
+            }}
+          />
+        ))}
+        {/* surat keluar */}
+        <List.Section>
+          <List.Accordion
+            title="Surat Keluar"
+            titleStyle={{fontSize:FONTSIZE.H2}}
+            left={(props) => <List.Icon {...props} icon="email-send-outline"/>}
+            style={[styles.drawerItem,{backgroundColor:GlobalStyles.colors.textWhite,
+              height: 55, left:10}]}
+          >
+            {DrawerItemsData3.map((data, index) => (
+              <Drawer.Item
+                style={styles.drawerItem}
+                {...data}
+                key={data.key}
+                active={drawerItemIndex === data.key}
+                onPress={() => {
+                  setDrawerItemIndex(data.key);
+                  props.navigation.navigate(data.name, {
+                    title: data.name,
+                    unread: false,
+                  });
+                }}
+                theme={{
+                  colors: {
+                    secondaryContainer: COLORS.infoDangerLight,
+                    onSecondaryContainer: COLORS.primary,
+                  },
+                }}
+              />
+            ))}
+          </List.Accordion>
+        </List.Section>
+        {DrawerItemsData4.map((data, index) => (
+          <Drawer.Item
+            style={styles.drawerItem}
+            {...data}
+            icon={
+              drawerItemIndex == data.key ? data.icon : data.icon + "-outline"
+            }
+            key={data.key}
+            active={drawerItemIndex === data.key}
+            onPress={() => {
+              setDrawerItemIndex(data.key);
+              props.navigation.navigate(data.name, {
+                title: data.name,
+                unread: false,
+              });
+            }}
+            theme={{
+              colors: {
+                secondaryContainer: COLORS.infoDangerLight,
+                onSecondaryContainer: COLORS.primary,
+              },
+            }}
+          />
+        ))}
+        
+        {/* Alat */}
+        <List.Section>
+          <List.Accordion
+            title="Alat"
+            titleStyle={{fontSize:FONTSIZE.H2}}
+            left={(props) => <List.Icon {...props} icon="cog-outline"/>}
+            style={[styles.drawerItem,{backgroundColor:GlobalStyles.colors.textWhite,
+              height: 55, left:10}]}
+          >
+            {DrawerItemsData5.map((data, index) => (
+              <Drawer.Item
+                style={styles.drawerItem}
+                {...data}
+                key={data.key}
+                active={drawerItemIndex === data.key}
+                onPress={() => {
+                  setDrawerItemIndex(data.key);
+                  props.navigation.navigate(data.name, {
+                    title: data.name,
+                    unread: false,
+                  });
+                }}
+                theme={{
+                  colors: {
+                    secondaryContainer: COLORS.infoDangerLight,
+                    onSecondaryContainer: COLORS.primary,
+                  },
+                }}
+              />
+            ))}
+          </List.Accordion>
+        </List.Section>
         <Drawer.Item
           style={styles.drawerItem}
           label="Keluar"
           icon="logout"
-          key="8"
-          active={drawerItemIndex === 8}
+          key="12"
+          active={drawerItemIndex === 12}
           // onPress={() => {
           //   AlertConfirm("Confirm", "Are you sure to Sign Out?", () => {
           //     setDrawerItemIndex(8);
@@ -318,10 +465,10 @@ const CustomDrawerContent = (props) => {
         icon={
           drawerItemIndex == 9 ? "account-circle" : "account-circle-outline"
         }
-        key="9"
-        active={drawerItemIndex === 9}
+        key="13"
+        active={drawerItemIndex === 13}
         onPress={() => {
-          setDrawerItemIndex(9);
+          setDrawerItemIndex(13);
           props.navigation.navigate("Profile");
         }}
         theme={{
@@ -537,7 +684,7 @@ function DrawerNavigator({ navigation }) {
         name="NeedFollowUp"
         component={NeedFollowUpList}
         options={defaultOptions({
-          title: "Surat Perlu Di Proses",
+          title: "Surat Keluar\nPerlu Di Proses",
           navigation: navigation,
         })}
       />
@@ -545,7 +692,7 @@ function DrawerNavigator({ navigation }) {
         name="Tracking"
         component={TrackingList}
         options={defaultOptions({
-          title: "Tracking Letter",
+          title: "Surat Keluar\nLacak",
           navigation: navigation,
         })}
       />
@@ -553,7 +700,7 @@ function DrawerNavigator({ navigation }) {
         name="Submitted"
         component={SubmittedList}
         options={defaultOptions({
-          title: "Surat Terkirim",
+          title: "Surat Keluar\nTerkirim",
           navigation: navigation,
         })}
       />
@@ -561,14 +708,14 @@ function DrawerNavigator({ navigation }) {
         name="Delegation"
         component={DelegationList}
         options={defaultOptions({
-          title: "Delegation",
+          title: "Delegasi",
           navigation: navigation,
         })}
       />
       <DrawerNav.Screen
         name="Secretary"
         component={SecretaryList}
-        options={defaultOptions({ title: "Secretary", navigation: navigation })}
+        options={defaultOptions({ title: "Sekretaris", navigation: navigation })}
       />
       <DrawerNav.Screen
         name="ScanLogList"
@@ -624,12 +771,12 @@ const styles = StyleSheet.create({
     width: 60,
   },
   drawerItem: {
-    borderTopLeftRadius:25,
-    borderBottomLeftRadius:25,
-    borderTopRightRadius:0,
-    borderBottomRightRadius:0,
-    marginRight:0,
-    height: 40,
+    borderTopLeftRadius: 25,
+    borderBottomLeftRadius: 25,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    marginRight: 0,
+    height: 50,
   },
   containerProfile: {
     marginTop: 20,
