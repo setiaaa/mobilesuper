@@ -2936,27 +2936,6 @@
     xcode "^3.0.1"
     xml2js "0.4.23"
 
-"@expo/config-plugins@~7.3.0":
-  version "7.3.1"
-  resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-7.3.1.tgz"
-  integrity sha512-TkDtAP3P/rrjhr7GBQtyYH/l1SQUGAO/gByBCwHjfRa4RIPFs+iiq7hocytAl+oSmVsB28ipZCC3O1IPg1OZ7g==
-  dependencies:
-    "@expo/config-types" "^49.0.0-alpha.1"
-    "@expo/json-file" "~8.2.37"
-    "@expo/plist" "^0.0.20"
-    "@expo/sdk-runtime-versions" "^1.0.0"
-    "@react-native/normalize-color" "^2.0.0"
-    chalk "^4.1.2"
-    debug "^4.3.1"
-    find-up "~5.0.0"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    resolve-from "^5.0.0"
-    semver "^7.5.3"
-    slash "^3.0.0"
-    xcode "^3.0.1"
-    xml2js "0.6.0"
-
 "@expo/config-types@^40.0.0-beta.2":
   version "40.0.0-beta.2"
   resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-40.0.0-beta.2.tgz"
@@ -2967,6 +2946,7 @@
   resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-48.0.0.tgz"
   integrity sha512-DwyV4jTy/+cLzXGAo1xftS6mVlSiLIWZjl9DjTCLPFVgNYQxnh7htPilRv4rBhiNs7KaznWqKU70+4zQoKVT9A==
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 "@expo/config-types@^49.0.0-alpha.1":
   version "49.0.0"
@@ -2996,6 +2976,8 @@
     "slugify" "^1.3.4"
     "sucrase" "^3.20.0"
 
+=======
+>>>>>>> a1522e9 (fix depedencis)
 "@expo/config@^3.3.18":
   version "3.3.43"
   resolved "https://registry.npmjs.org/@expo/config/-/config-3.3.43.tgz"
@@ -3035,6 +3017,7 @@
     slugify "^1.3.4"
     sucrase "^3.20.0"
 
+<<<<<<< HEAD
 >>>>>>> 91a7917 (hide role task)
 "@expo/config@~8.2.0":
   version "8.2.1"
@@ -3055,6 +3038,8 @@
 
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> a1522e9 (fix depedencis)
 "@expo/configure-splash-screen@^0.6.0":
   version "0.6.0"
   resolved "https://registry.npmjs.org/@expo/configure-splash-screen/-/configure-splash-screen-0.6.0.tgz"
@@ -4471,11 +4456,6 @@
   version "15.7.10"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.10.tgz"
   integrity sha512-mxSnDQxPqsZxmeShFH+uwQ4kO4gcJcGahjjMFeLbKE95IAZiiZyiEepGZjtXJ7hN/yfu0bu9xN2ajcU0JcxX6A==
-
-"@types/qs@^6.9.7":
-  version "6.9.10"
-  resolved "https://registry.npmjs.org/@types/qs/-/qs-6.9.10.tgz"
-  integrity sha512-3Gnx08Ns1sEoCrWssEgTSJs/rsT2vhGP+Ja9cnnk9k4ALxinORlQneLXFeFKOTJMOeZUFD1s7w+w2AphTpvzZw==
 
 "@types/ramda@^0.27.40", "@types/ramda@^0.27.44":
   version "0.27.66"
@@ -7065,6 +7045,7 @@ expo-constants@~14.3.0:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 91a7917 (hide role task)
 =======
@@ -7075,6 +7056,14 @@ expo-constants@~14.5.0:
   integrity sha512-06OKXQmKI0vuje++6lm7w1kO3rKsZAHio/4d9hwQuVAtExJ6RM92BnpzkDAV16ZheVN/FHKzNyY1BYLqXfujMw==
   dependencies:
     "@expo/config" "~8.2.0"
+=======
+expo-constants@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-10.0.0.tgz"
+  integrity sha512-UA+mCQlwdqKTR/ND6qs+Cezabq7eXrurz8vh7tHBew72tQ2mNcuq/MNIEO4RjHg1El0f2C6LwZcm01hcpZ3w5A==
+  dependencies:
+    "@expo/config" "^3.3.18"
+>>>>>>> a1522e9 (fix depedencis)
     uuid "^3.3.2"
 
 expo-dev-client@~2.2.1:
@@ -7274,6 +7263,7 @@ expo-linear-gradient@~12.1.2:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 91a7917 (hide role task)
 =======
@@ -7289,6 +7279,8 @@ expo-linking@^6.0.0:
     qs "^6.11.0"
     url-parse "^1.5.9"
 
+=======
+>>>>>>> a1522e9 (fix depedencis)
 expo-local-authentication@~13.3.0:
   version "13.3.0"
   resolved "https://registry.npmjs.org/expo-local-authentication/-/expo-local-authentication-13.3.0.tgz"
@@ -11606,6 +11598,7 @@ qrcode@^1.5.1:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 qs@6.11.0, qs@^6.11.0:
   version "6.11.0"
   resolved "https://registry.npmjs.org/qs/-/qs-6.11.0.tgz"
@@ -11623,6 +11616,9 @@ qs@6.11.0, qs@^6.11.0:
 =======
 >>>>>>> 91a7917 (hide role task)
 qs@^6.11.0, qs@6.11.0:
+=======
+qs@6.11.0:
+>>>>>>> a1522e9 (fix depedencis)
   version "6.11.0"
   resolved "https://registry.npmjs.org/qs/-/qs-6.11.0.tgz"
   integrity sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==
@@ -13074,6 +13070,7 @@ semver@^7.3.5:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 send@0.18.0, send@^0.18.0:
   version "0.18.0"
   resolved "https://registry.npmjs.org/send/-/send-0.18.0.tgz"
@@ -13099,6 +13096,12 @@ semver@^7.5.3, semver@7.5.3:
 >>>>>>> 900c151 (cicil role apps menu)
 =======
 >>>>>>> 91a7917 (hide role task)
+=======
+semver@^7.5.3:
+  version "7.5.4"
+  resolved "https://registry.npmjs.org/semver/-/semver-7.5.4.tgz"
+  integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
+>>>>>>> a1522e9 (fix depedencis)
   dependencies:
     lru-cache "^6.0.0"
 
@@ -15057,6 +15060,7 @@ xml2js@0.4.23, xml2js@^0.4.23, xml2js@^0.4.5:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 91a7917 (hide role task)
 xml2js@0.6.0:
@@ -15083,6 +15087,8 @@ xml2js@0.6.0:
     xmlbuilder "~11.0.0"
 
 >>>>>>> 91a7917 (hide role task)
+=======
+>>>>>>> a1522e9 (fix depedencis)
 xmlbuilder@^14.0.0:
   version "14.0.0"
   resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-14.0.0.tgz"
