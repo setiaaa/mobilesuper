@@ -13,7 +13,7 @@ export const CardAppsB = ({ handlePressModal }) => {
 
   const roleKalender = ["CALENDAR.USER"];
   const rolePreShare = ["PRESHARE.USER"];
-  // const roleTaskManagement = ["TASK.USER"];
+  const roleTaskManagement = ["TASK.USER"];
   const roleEvent = ["EVENT.USER"];
 
   const isRoleKalender = profile.roles_access?.some((item) =>
@@ -22,9 +22,9 @@ export const CardAppsB = ({ handlePressModal }) => {
   const isRolePreShare = profile.roles_access?.some((item) =>
     rolePreShare.includes(item)
   );
-  // const isRoleTaskManagement = profile.roles_access?.some((item) =>
-  //   roleTaskManagement.includes(item)
-  // );
+  const isRoleTaskManagement = profile.roles_access?.some((item) =>
+    roleTaskManagement.includes(item)
+  );
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
@@ -55,15 +55,7 @@ export const CardAppsB = ({ handlePressModal }) => {
           </View>
         </TouchableOpacity>
         <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4, textAlign: 'center' }}>Pengetahuan</Text>
-      </View>,
-      <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-      <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
-        <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-          <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/task-ikon.png')} />
-        </View>
-      </TouchableOpacity>
-      <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task Management</Text>
-    </View>
+      </View>
     )
     if (isRolePreShare) {
       tmpMenu.push(
@@ -89,18 +81,18 @@ export const CardAppsB = ({ handlePressModal }) => {
         </View>
       )
     }
-    // if (isRoleTaskManagement) {
-    //   tmpMenu.push(
-    //     <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-    //       <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
-    //         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-    //           <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/task-ikon.png')} />
-    //         </View>
-    //       </TouchableOpacity>
-    //       <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task Management</Text>
-    //     </View>
-    //   )
-    // }
+    if (isRoleTaskManagement) {
+      tmpMenu.push(
+        <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
+          <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
+            <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
+              <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/task-ikon.png')} />
+            </View>
+          </TouchableOpacity>
+          <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task Management</Text>
+        </View>
+      )
+    }
     if (isRoleEvent) {
       tmpMenu.push(
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
