@@ -357,9 +357,9 @@ export const DetailPenilaian = () => {
                 <View style={{
                     backgroundColor: COLORS.white,
                     paddingHorizontal: 20,
-                    paddingVertical: 10,
                     borderRadius: 8,
                     marginBottom: 20,
+                    marginTop: -30
                 }}>
                     <View style={{ gap: 20, paddingVertical: 20,}}>
                         <View style={{ gap: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 40 }}>
@@ -459,12 +459,13 @@ export const DetailPenilaian = () => {
                         borderRadius: 8,
                         marginHorizontal: 20,
                         marginTop: 10,
+                        backgroundColor: COLORS.infoDanger,
                         borderColor: COLORS.infoDanger,
                         borderWidth: 1
                     }}
                     onPress={() => setVisibleModal(true)}
                   >
-                    <Text style={{ color: COLORS.infoDanger }}>Take Down Artikel</Text>
+                    <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
                 </TouchableOpacity>
 
                 <Modal
