@@ -115,6 +115,7 @@ export const DetailDokumenSPPD = ({ route }) => {
     });
   };
   console.log(cetak);
+  // console.log(surat)
 
   return (
     <>

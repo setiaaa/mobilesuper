@@ -9,6 +9,8 @@ import {
   Text,
   TextInput,
   KeyboardAvoidingView,
+  Platform,
+  Alert,
 } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -34,12 +36,14 @@ import {
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
 import { shareAsync } from "expo-sharing";
-import * as FileSystem from "expo-file-system";
 // import { FileSystem } from "expo";
 import * as DocumentPicker from "expo-document-picker";
 import { ActivityIndicator } from "react-native";
 // import { shareAsync } from "expo-sharing";
 // import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import * as IntentLauncher from "expo-intent-launcher";
 
 const ListDaftarPegawai = ({ item, token }) => {
   const navigation = useNavigation();
@@ -119,7 +123,7 @@ export const RangkumanIKU = () => {
     setSwitchView(false);
   };
 
-  const initialSnapPoints = useMemo(() => ["50%", "90%"], []);
+  const initialSnapPoints = useMemo(() => ["90%", "90%"], []);
   const initialSnapPointsTambah = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
@@ -196,8 +200,8 @@ export const RangkumanIKU = () => {
     }
   }, [token]);
 
-  const [savedYear, setSavedYear] = useState({ key: "", value: "" });
-  const [savedQuarter, setSavedQuarter] = useState({ key: "", value: "" });
+  const [savedYear, setSavedYear] = useState({ key: "year1", value: "2023" });
+  const [savedQuarter, setSavedQuarter] = useState({ key: "q3", value: "TW 3" });
   const [savedUnitKerja, setSavedUnitKerja] = useState({ key: "", value: "" });
 
   const handlePilihSimpan = () => {
@@ -240,7 +244,7 @@ export const RangkumanIKU = () => {
     if (token !== "") {
       dispatch(getListPegawaiExport(param));
     }
-  }, [token, savedYear, savedQuarter, savedUnitKerja]);
+  }, [token, savedYear, savedQuarter, savedUnitKerja, download]);
 
   const { pegawai, refresh, loading } = useSelector(
     (state) => state.pengetahuan
@@ -254,7 +258,7 @@ export const RangkumanIKU = () => {
 
   const { unitKerja } = useSelector((state) => state.pengetahuan);
 
-  const { exportPegawai } = useSelector((state) => state.pengetahuan);
+  const { exportPegawai, download } = useSelector((state) => state.pengetahuan);
 
   const dataUnitKerja = () => {
     let valueUnitKerja = [];
@@ -309,6 +313,32 @@ export const RangkumanIKU = () => {
     setAscending(false);
     setIsFiltered(true);
   }
+
+  console.log(exportPegawai.lists.file)
+
+  const openFile = () => {
+    let remoteUrl = exportPegawai?.lists?.file;
+    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
+      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+        const contentURL = await FileSystem.getContentUriAsync(uri);
+        try {
+          if (Platform.OS == 'android') {
+            await IntentLauncher.startActivityAsync(
+              "android.intent.action.VIEW",
+              {
+                data: contentURL,
+                flags: 1,
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+              }
+            );
+          } else if (Platform.OS == 'ios') {
+            Sharing.shareAsync(localPath);
+          }
+        } catch (error) {
+          Alert.alert("INFO", JSON.stringify(error));
+        }
+      });
+  };
 
   const downloadFromUrl = async () => {
     const url = exportPegawai?.lists?.file;
@@ -673,7 +703,7 @@ export const RangkumanIKU = () => {
                       <></>
                     ) : null}
 
-                    <View style={{ height: 200, paddingVertical: 20, justifyContent: "flex-end" }}>
+                    <View style={{ height: 190, paddingVertical: 20, justifyContent: "flex-end" }}>
                       <TouchableOpacity
                         style={{
                           width: "90%",
@@ -801,7 +831,7 @@ export const RangkumanIKU = () => {
                       borderRadius: 50,
                       padding: 5,
                     }}
-                    onPress={downloadFromUrl}
+                    onPress={() => {openFile()}}
                   >
                     <Icon name="get-app" size={24} color={COLORS.grey} />
                   </TouchableOpacity>

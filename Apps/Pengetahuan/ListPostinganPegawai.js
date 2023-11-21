@@ -13,7 +13,7 @@ import { Loading } from "../../components/Loading";
 const CardListPostingan = ({ item }) => {
   // console.log(item);
   return (
-    <View style={{ alignSelf: "center", padding: PADDING.Page }}>
+    <View style={{ alignSelf: "center", width: "100%", padding: PADDING.Page }}>
       <View
         style={{
           height: 120,
@@ -26,7 +26,7 @@ const CardListPostingan = ({ item }) => {
           //shadow ios
           //shadow android
           elevation: 2,
-          backgroundColor: COLORS.white
+          backgroundColor: COLORS.white,
         }}
       >
         <View style={{ marginVertical: 20 }}>
@@ -133,7 +133,7 @@ export const ListPostinganPegawai = (param) => {
           )}
           style={{ marginBottom: 80 }}
           keyExtractor={(item) => item.id}
-          // ListEmptyComponent={() => <ListEmpty />}
+          ListEmptyComponent={() => <ListEmpty />}
         />
       </View>
     </View>
