@@ -87,150 +87,7 @@ export const LaporanPengetahuan = () => {
     }
   }, [token, year, quarter]);
 
-  useEffect(() => {
-    const param = {
-      token: token,
-      year: year.value,
-      quarter: quarter.key,
-    };
-    if (token !== "") {
-      dispatch(getExportFileQuarter(param));
-      dispatch(getExportFileEmployee(param));
-    }
-  }, [token, year, quarter, download]);
-
-  const { summary, exportLaporan, download } = useSelector(
-    (state) => state.pengetahuan
-  );
-
-  console.log(exportLaporan?.quarter?.file);
-
-  const downloadPath =
-    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
-
-  const downloadFile = async (fileUrl, fileType, type) => {
-    //alert(fileName)
-
-    const namafile =
-      type === "employe"
-        ? exportLaporan?.employee?.file.split("/")
-        : exportLaporan?.quarter?.file.split("/");
-    try {
-      const downloadResumable = FileSystem.createDownloadResumable(
-        fileUrl,
-        downloadPath + namafile[namafile.length - 1],
-        { headers: { Authorization: token } }
-      );
-      try {
-        if (Platform.OS === "android") {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveAndroidFile(uri, namafile[namafile?.length - 1], fileType);
-        } else {
-          saveIosFile(downloadPath);
-        }
-      } catch (e) {
-        // setIsLoading(false);
-        console.error("download error:", e);
-      }
-    } catch (e) {
-      console.log("Error");
-      console.log(e);
-    }
-  };
-  const saveAndroidFile = async (fileUri, fileName, fileType) => {
-    try {
-      console.log(fileUri);
-      const fileString = await FileSystem.readAsStringAsync(fileUri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-
-      const permissions =
-        await StorageAccessFramework.requestDirectoryPermissionsAsync();
-      if (!permissions.granted) {
-        return;
-      }
-
-      try {
-        await StorageAccessFramework.createFileAsync(
-          permissions.directoryUri,
-          fileName,
-          fileType
-        )
-          .then(async (uri) => {
-            await FileSystem.writeAsStringAsync(uri, fileString, {
-              encoding: FileSystem.EncodingType.Base64,
-            });
-            Alert.alert("Success!", "Download Successfully.");
-          })
-          .catch((e) => {
-            Alert.alert(
-              "Failed!",
-              "Download Unsuccessful. Please choose another folder to download file."
-            );
-          });
-      } catch (e) {
-        throw new Error(e);
-      }
-    } catch (err) {}
-  };
-  const saveIosFile = async (fileUri) => {
-    try {
-      await Sharing.shareAsync(fileUri, {
-        mimeType: "application/pdf",
-        dialogTitle: "Share PDF",
-      });
-    } catch (error) {
-      console.error("Error sharing file:", error);
-    }
-  };
-
-  const openFileEmployee = () => {
-    let remoteUrl = exportLaporan?.employee?.file;
-    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
-    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-      const contentURL = await FileSystem.getContentUriAsync(uri);
-      try {
-        if (Platform.OS == "android") {
-          await IntentLauncher.startActivityAsync(
-            "android.intent.action.VIEW",
-            {
-              data: contentURL,
-              flags: 1,
-              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            }
-          );
-        } else if (Platform.OS == "ios") {
-          Sharing.shareAsync(localPath);
-        }
-      } catch (error) {
-        Alert.alert("INFO", JSON.stringify(error));
-      }
-    });
-  };
-
-  const openFileQuarter = () => {
-    let remoteUrl = exportLaporan?.quarter?.file;
-    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
-    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-      const contentURL = await FileSystem.getContentUriAsync(uri);
-      try {
-        if (Platform.OS == "android") {
-          await IntentLauncher.startActivityAsync(
-            "android.intent.action.VIEW",
-            {
-              data: contentURL,
-              flags: 1,
-              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            }
-          );
-        } else if (Platform.OS == "ios") {
-          Sharing.shareAsync(localPath);
-        }
-      } catch (error) {
-        Alert.alert("INFO", JSON.stringify(error));
-      }
-    });
-  };
+  const { summary, exportLaporan } = useSelector((state) => state.pengetahuan);
 
   const totalPost = summary?.total_post.total_post_per_quarter;
   const badUser = summary?.bad_user;
@@ -256,6 +113,8 @@ export const LaporanPengetahuan = () => {
   ];
 
   const sliceColorHandle = [COLORS.grey];
+
+  console.log(review);
 
   return (
     <View style={{ flex: 1 }}>
