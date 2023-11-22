@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, Image,  , ScrollView, StyleSheet, TouchableOpacity, View, Text, TextInput, KeyboardAvoidingView } from 'react-native'
+import { Pressable, Image, ScrollView, StyleSheet, TouchableOpacity, View, Text, TextInput, KeyboardAvoidingView } from 'react-native'
 import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
 import { Dropdown } from '../../components/DropDown';
@@ -86,7 +86,7 @@ export const DaftarPegawai = () => {
 
   return (
     <ScrollView>
-      <  style={{ flex: 1 }}>
+      <View  style={{ flex: 1 }}>
       <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
         <View style={{
           backgroundColor: COLORS.white,
@@ -320,7 +320,7 @@ export const DaftarPegawai = () => {
       </View>
 
 
-    </ >
+    </View >
     </ScrollView >
   );
 };

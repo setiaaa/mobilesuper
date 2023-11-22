@@ -49,6 +49,9 @@ export const DetailEvent = () => {
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
   };
+  const bottomSheetClose = () => {
+    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
+  };
 
 
   const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
@@ -390,20 +393,33 @@ export const DetailEvent = () => {
                   <View style={{ marginTop: 20, marginBottom: 40 }}>
                     <View
                       style={{
-                        marginBottom: 20,
+                        margin: 20,
                         justifyContent: "center",
                         alignItems: "center",
+                        flexDirection:"row",
+                        justifyContent:"space-between"
                       }}
                     >
                       <Text
                         style={{
                           fontSize: FONTSIZE.H2,
                           fontWeight: FONTWEIGHT.bold,
-                          color: COLORS.lighter,
+                          color: COLORS.normal,
                         }}
                       >
                         Peserta Agenda Rapat
                       </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          bottomSheetClose();
+                        }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                            />
+                      </TouchableOpacity>
                     </View>
                     <View>
                       <FlatList
