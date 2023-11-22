@@ -1003,7 +1003,7 @@ export const getListPenilaian = createAsyncThunk(
   "mp/getListPenilaian",
   async (data) => {
     const respon = await axios.get(
-      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}`,
+      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}&limit=${data.page}&ditinjau=${data.ditinjau}&unker=${data.unitKerja}&general=${data.search}`,
       { headers: { Authorization: data.token } }
     );
     return respon?.data.results;
@@ -1273,10 +1273,13 @@ export const getDetailsSharedDocuments = createAsyncThunk(
 //postingan saya
 export const getMyPostList = createAsyncThunk(
   "mp/mypost",
-  async ({ token, page }) => {
-    const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
-      headers: { Authorization: token },
-    });
+  async ({ token, page, search }) => {
+    const respon = await axios.get(
+      `${MYPOST_LIST}?limit=${page}&search=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return respon?.data.results;
   }
 );
