@@ -3,6 +3,8 @@ import {
   getDetailLinimasa,
   getDetailPegawai,
   getDetailPenilaian,
+  getExportFileEmployee,
+  getExportFileQuarter,
   getLinimasa,
   getListCategory,
   getListCompetence,
@@ -75,7 +77,12 @@ const PengetahuanSlice = createSlice({
       lists: [],
     },
     exportPegawai: {
-      lists: [],
+      lists: {},
+    },
+    download: {},
+    exportLaporan: {
+      quarter:{},
+      employee:{},
     },
     penilaian: {
       lists: [],
@@ -382,7 +389,27 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListPegawaiExport.rejected, (state, action) => {
         state.loading = false;
-      });
+      })
+      .addCase(getExportFileQuarter.fulfilled, (state, action) => {
+        state.exportLaporan.quarter = action.payload;
+        state.loading = false;
+      })
+      .addCase(getExportFileQuarter.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getExportFileQuarter.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getExportFileEmployee.fulfilled, (state, action) => {
+        state.exportLaporan.employee = action.payload;
+        state.loading = false;
+      })
+      .addCase(getExportFileEmployee.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getExportFileEmployee.rejected, (state, action) => {
+        state.loading = false;
+      })
   },
 });
 

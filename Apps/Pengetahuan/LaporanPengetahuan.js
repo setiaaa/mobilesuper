@@ -7,6 +7,7 @@ import {
   ScrollView,
   screenWidth,
   Dimensions,
+  Alert,
 } from "react-native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import {
+  getExportFileEmployee,
   getExportFileQuarter,
   getSummaryAccumulation,
   getSummaryBadUser,
@@ -27,6 +29,10 @@ import PieChart from "react-native-pie-chart";
 import { StatusBar } from "expo-status-bar";
 import * as Progress from "react-native-progress";
 import ProgressCircle from "react-native-progress-circle";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import * as IntentLauncher from "expo-intent-launcher";
+const { StorageAccessFramework } = FileSystem;
 
 export const LaporanPengetahuan = () => {
   const navigation = useNavigation();
@@ -67,10 +73,10 @@ export const LaporanPengetahuan = () => {
           quarter.key === "1"
             ? "q1"
             : quarter.key === "2"
-              ? "q2"
-              : quarter.key === "3"
-                ? "q3"
-                : "q4",
+            ? "q2"
+            : quarter.key === "3"
+            ? "q3"
+            : "q4",
       };
       dispatch(getSummaryTotalPost(param));
       dispatch(getSummaryBadUser(paramBad));
@@ -108,7 +114,7 @@ export const LaporanPengetahuan = () => {
 
   const sliceColorHandle = [COLORS.grey];
 
-  console.log(exportLaporan);
+  console.log(review);
 
   return (
     <View style={{ flex: 1 }}>
@@ -134,7 +140,10 @@ export const LaporanPengetahuan = () => {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
+            <TouchableOpacity
+              style={{}}
+              onPress={() => navigation.navigate("Home")}
+            >
               <Ionicons
                 name="chevron-back-outline"
                 size={24}
@@ -419,7 +428,16 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Pegawai</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  // openFileEmployee();
+                  downloadFile(
+                    exportLaporan?.employee?.file,
+                    "application/vnd.ms-excel",
+                    "employe"
+                  );
+                }}
+              >
                 <View
                   style={{
                     width: 24,
@@ -447,7 +465,15 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Triwulan</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  downloadFile(
+                    exportLaporan?.quarter?.file,
+                    "application/vnd.ms-excel",
+                    "triwulan"
+                  );
+                }}
+              >
                 <View
                   style={{
                     width: 24,
@@ -489,8 +515,8 @@ export const LaporanPengetahuan = () => {
             Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
           {Object.keys(summary.graph).length !== 0 &&
-            Object.keys(summary.total_post).length !== 0 &&
-            Object.keys(summary.bad_user).length !== 0 ? (
+          Object.keys(summary.total_post).length !== 0 &&
+          Object.keys(summary.bad_user).length !== 0 ? (
             <StackedBarChart
               data={{
                 labels: [
@@ -512,62 +538,62 @@ export const LaporanPengetahuan = () => {
                   [
                     graph?.article_unreviewed_count[0],
                     graph?.article_unreviewed_count[0] +
-                    graph?.article_reviewed_count[0],
+                      graph?.article_reviewed_count[0],
                   ],
                   [
                     graph?.article_unreviewed_count[1],
                     graph?.article_unreviewed_count[1] +
-                    graph?.article_reviewed_count[1],
+                      graph?.article_reviewed_count[1],
                   ],
                   [
                     graph?.article_unreviewed_count[2],
                     graph?.article_unreviewed_count[2] +
-                    graph?.article_reviewed_count[2],
+                      graph?.article_reviewed_count[2],
                   ],
                   [
                     graph?.article_unreviewed_count[3],
                     graph?.article_unreviewed_count[3] +
-                    graph?.article_reviewed_count[3],
+                      graph?.article_reviewed_count[3],
                   ],
                   [
                     graph?.article_unreviewed_count[4],
                     graph?.article_unreviewed_count[4] +
-                    graph?.article_reviewed_count[4],
+                      graph?.article_reviewed_count[4],
                   ],
                   [
                     graph?.article_unreviewed_count[5],
                     graph?.article_unreviewed_count[5] +
-                    graph?.article_reviewed_count[5],
+                      graph?.article_reviewed_count[5],
                   ],
                   [
                     graph?.article_unreviewed_count[6],
                     graph?.article_unreviewed_count[6] +
-                    graph?.article_reviewed_count[6],
+                      graph?.article_reviewed_count[6],
                   ],
                   [
                     graph?.article_unreviewed_count[7],
                     graph?.article_unreviewed_count[7] +
-                    graph?.article_reviewed_count[7],
+                      graph?.article_reviewed_count[7],
                   ],
                   [
                     graph?.article_unreviewed_count[8],
                     graph?.article_unreviewed_count[8] +
-                    graph?.article_reviewed_count[8],
+                      graph?.article_reviewed_count[8],
                   ],
                   [
                     graph?.article_unreviewed_count[9],
                     graph?.article_unreviewed_count[9] +
-                    graph?.article_reviewed_count[9],
+                      graph?.article_reviewed_count[9],
                   ],
                   [
                     graph?.article_unreviewed_count[10],
                     graph?.article_unreviewed_count[10] +
-                    graph?.article_reviewed_count[10],
+                      graph?.article_reviewed_count[10],
                   ],
                   [
                     graph?.article_unreviewed_count[11],
                     graph?.article_unreviewed_count[11] +
-                    graph?.article_reviewed_count[11],
+                      graph?.article_reviewed_count[11],
                   ],
                 ],
                 barColors: [COLORS.primary, COLORS.warning],
@@ -717,7 +743,7 @@ export const LaporanPengetahuan = () => {
             <TouchableOpacity
               style={{
                 backgroundColor: COLORS.primary,
-                width: '100%',
+                width: "100%",
                 height: 40,
                 borderRadius: 8,
                 justifyContent: "center",

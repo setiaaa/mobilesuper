@@ -29,6 +29,8 @@
     "base-64": "^1.0.0",
     "base64-js": "^1.5.1",
     "buffer": "^6.0.3",
+    "base64-js": "^1.5.1",
+    "buffer": "^6.0.3",
     "dayjs": "^1.11.10",
     "deprecated-react-native-prop-types": "^4.2.1",
     "expo": "^48.0.17",
@@ -116,6 +118,10 @@
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "babel-plugin-inline-import": "^3.0.0"
+  },
+  "overrides": {
+    "@expo/config-plugins": "~6.0.0",
+    "@expo/prebuild-config": "~6.0.0"
   },
   "private": true
 }

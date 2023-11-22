@@ -304,6 +304,8 @@ const CardLiniMasa = ({ item, token }) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
+  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
+
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
   const {
@@ -319,6 +321,8 @@ const CardLiniMasa = ({ item, token }) => {
   const bottomSheetAttachCommentClose = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
+
+// console.log(item)
 
 // console.log(item)
 
@@ -372,14 +376,10 @@ const CardLiniMasa = ({ item, token }) => {
       id: detail.id,
     };
     if (refresh) {
-      console.log("masukkkkkkk");
       dispatch(getDetailLinimasa(data));
       dispatch(setRefresh(false));
     }
   }, [refresh]);
-  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
-
-
 
 
 
@@ -1326,7 +1326,7 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
-  console.log(linimasa.lists);
+  // console.log(linimasa.listsLike)
 
   const filter = (event) => {
     setSearch(event);
