@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Platform } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   AVATAR,
@@ -20,12 +20,13 @@ import {
   getDocumentCetakSPPD,
 } from "../../service/api";
 import * as FileSystem from "expo-file-system";
+const { StorageAccessFramework } = FileSystem;
 import * as Sharing from "expo-sharing";
-import * as IntentLauncher from "expo-intent-launcher";
-import * as MediaLibrary from "expo-media-library";
-import * as Permissions from "expo-permissions";
-import * as Location from "expo-location";
-import { decode, encode } from "base-64";
+// import * as IntentLauncher from "expo-intent-launcher";
+// import * as MediaLibrary from "expo-media-library";
+// import * as Permissions from "expo-permissions";
+// import * as Location from "expo-location";
+// import { decode, encode } from "base-64";
 
 export const DetailDokumenSPPD = ({ route }) => {
   const { data } = route.params;
@@ -38,6 +39,8 @@ export const DetailDokumenSPPD = ({ route }) => {
 
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -85,35 +88,106 @@ export const DetailDokumenSPPD = ({ route }) => {
   //   }
   // };
 
-  const openFile = () => {
-    let remoteUrl = surat;
-    let localPath = `${FileSystem.documentDirectory}/samplee.pdf`;
-    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-      const contentURL = await FileSystem.getContentUriAsync(uri);
+  const downloadFile = async (fileUrl, fileType, fileName) => {
+    //alert(fileName)
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + fileName,
+        { headers: { Authorization: token } }
+      );
       try {
-        if (Platform.OS == "android") {
-          // open with android intent
-          await IntentLauncher.startActivityAsync(
-            "android.intent.action.VIEW",
-            {
-              data: contentURL,
-              flags: 1,
-              type: "application/pdf",
-              // change this with any type of file you want
-              // excel sample type
-              // 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            }
-          );
-          // or
-          // Sharing.shareAsync(localPath);
-        } else if (Platform.OS == "ios") {
-          Sharing.shareAsync(localPath);
+        if (Platform.OS === "android") {
+          const { uri } = await downloadResumable.downloadAsync();
+          saveAndroidFile(uri, fileName, fileType);
+        } else {
+          saveIosFile(downloadPath);
         }
-      } catch (error) {
-        Alert.alert("INFO", JSON.stringify(error));
+      } catch (e) {
+        // setIsLoading(false);
+        console.error("download error:", e);
       }
-    });
+    } catch (e) {
+      console.log("Error");
+      console.log(e);
+    }
   };
+  const saveAndroidFile = async (fileUri, fileName, fileType) => {
+    try {
+      console.log(fileUri);
+      const fileString = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      const permissions =
+        await StorageAccessFramework.requestDirectoryPermissionsAsync();
+      if (!permissions.granted) {
+        return;
+      }
+
+      try {
+        await StorageAccessFramework.createFileAsync(
+          permissions.directoryUri,
+          fileName,
+          fileType
+        )
+          .then(async (uri) => {
+            await FileSystem.writeAsStringAsync(uri, fileString, {
+              encoding: FileSystem.EncodingType.Base64,
+            });
+            Alert.alert("Success!", "Download Successfully.");
+          })
+          .catch((e) => {
+            Alert.alert(
+              "Failed!",
+              "Download Unsuccessful. Please choose another folder to download file."
+            );
+          });
+      } catch (e) {
+        throw new Error(e);
+      }
+    } catch (err) {}
+  };
+  const saveIosFile = async (fileUri) => {
+    try {
+      await Sharing.shareAsync(fileUri, {
+        mimeType: "application/pdf",
+        dialogTitle: "Share PDF",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
+  };
+
+  // const openFile = async () => {
+  // let remoteUrl = surat;
+  // let localPath = `${FileSystem.documentDirectory}/samplee.pdf`;
+  // FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+  //   const contentURL = await FileSystem.getContentUriAsync(uri);
+  //   try {
+  //     if (Platform.OS == "android") {
+  //       // open with android intent
+  //       await IntentLauncher.startActivityAsync(
+  //         "android.intent.action.VIEW",
+  //         {
+  //           data: contentURL,
+  //           flags: 1,
+  //           type: "application/pdf",
+  //           // change this with any type of file you want
+  //           // excel sample type
+  //           // 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  //         }
+  //       );
+  //       // or
+  //       // Sharing.shareAsync(localPath);
+  //     } else if (Platform.OS == "ios") {
+  //       Sharing.shareAsync(localPath);
+  //     }
+  //   } catch (error) {
+  //     Alert.alert("INFO", JSON.stringify(error));
+  //   }
+  // });
+  // };
   console.log(cetak);
 
   return (
@@ -537,7 +611,13 @@ export const DetailDokumenSPPD = ({ route }) => {
                 justifyContent: "center",
               }}
               onPress={() => {
-                dispatch(openFile());
+                downloadFile(
+                  "https://apigw.kubekkp.coofis.com/monperdin/document/back-form/" +
+                    dokumen.detail?.id +
+                    "/",
+                  "application/pdf",
+                  data + ".pdf"
+                );
               }}
             >
               <Text

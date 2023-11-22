@@ -68,10 +68,12 @@ export const DetailGrup = () => {
   const { agenda, acara, detailGrup, loading } = useSelector(
     (state) => state.grupKalender
   );
+  const { profile } = useSelector((state) => state.superApps);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
 
-  const detail = acara.detail;
-  const gambar = agenda.detail.gambar;
+  const isRoleMember = detailGrup?.extra_attributes?.members_list.includes(
+    profile?.nip
+  );
 
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
@@ -118,8 +120,6 @@ export const DetailGrup = () => {
 
     const date = new Date(year, month, day, hour, minute, second);
     const formatedDate = moment(date).format(DATETIME.LONG_DATE);
-
-    console.log(detailGrup);
 
     return formatedDate;
   };
@@ -699,47 +699,53 @@ export const DetailGrup = () => {
                 </BottomSheetModal>
               </View>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                let data = {
-                  token: token,
-                  id: detailGrup.id,
-                };
-                dispatch(deleteGrup(data));
-                navigation.navigate("GrupKalender");
-              }}
-              style={{
-                backgroundColor: COLORS.primary,
-                width: "90%",
-                marginHorizontal: 20,
-                marginVertical: 20,
-                padding: 15,
-                borderRadius: 8,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: COLORS.white }}>Hapus</Text>
-            </TouchableOpacity>
+            {isRoleMember === false ? (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    let data = {
+                      token: token,
+                      id: detailGrup.id,
+                    };
+                    dispatch(deleteGrup(data));
+                    navigation.navigate("GrupKalender");
+                  }}
+                  style={{
+                    backgroundColor: COLORS.primary,
+                    width: "90%",
+                    marginHorizontal: 20,
+                    marginVertical: 20,
+                    padding: 15,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => {
-                dispatch(getDetailGrup({ token: token, id: detailGrup.id }));
-                navigation.navigate("EditGrup");
-              }}
-              style={{
-                borderColor: COLORS.primary,
-                width: "90%",
-                marginHorizontal: 20,
-                padding: 15,
-                borderRadius: 8,
-                justifyContent: "center",
-                alignItems: "center",
-                borderWidth: 1,
-              }}
-            >
-              <Text>Edit</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(
+                      getDetailGrup({ token: token, id: detailGrup.id })
+                    );
+                    navigation.navigate("EditGrup");
+                  }}
+                  style={{
+                    borderColor: COLORS.primary,
+                    width: "90%",
+                    marginHorizontal: 20,
+                    padding: 15,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderWidth: 1,
+                  }}
+                >
+                  <Text>Edit</Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
           </ScrollView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
