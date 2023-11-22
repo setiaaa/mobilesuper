@@ -452,6 +452,7 @@ export const CardAppsB = ({ handlePressModal }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   card: {
     flexDirection: "column",

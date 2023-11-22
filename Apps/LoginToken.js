@@ -182,9 +182,8 @@ export const LoginToken = () => {
                     )}
                   </View>
                 </View>
-              </View>
 
-              <View
+                <View
                 style={{
                   flexDirection: "row",
                   gap: 10,
@@ -202,6 +201,10 @@ export const LoginToken = () => {
                   BSrE
                 </Text>
               </View>
+
+              </View>
+
+              
 
               <TouchableOpacity
                 style={{

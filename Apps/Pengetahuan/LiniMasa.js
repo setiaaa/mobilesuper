@@ -303,6 +303,8 @@ const CardLiniMasa = ({ item, token }) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
+  const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
+
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
   const {
@@ -318,6 +320,10 @@ const CardLiniMasa = ({ item, token }) => {
   const bottomSheetAttachCommentClose = () => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
+
+  // console.log(item)
+
+  // console.log(item)
 
   const handleLike = () => {
     const data = {
@@ -880,16 +886,132 @@ const CardLiniMasa = ({ item, token }) => {
           flexDirection: "row",
           marginVertical: 10,
           marginHorizontal: 20,
+          justifyContent: "center",
+          gap: 40,
           // paddingHorizontal: 16,
           // backgroundColor: "grey",
-          justifyContent: "space-between",
         }}
       >
         <View>
-          <Text style={{ color: COLORS.lighter }}>
-            {item.likes_count} Disukai
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              // bottomSheetAttachCommentClose();
+              // dispatch(
+              //   getListsLike({ token: token, id: detail.id })
+              // );
+              // navigation.navigate("ListSukaLinimasa");
+              setVisibleModalViewDisukai(true);
+            }}
+          >
+            <Text style={{ color: COLORS.lighter }}>
+              {item.likes_count} Disukai
+            </Text>
+          </TouchableOpacity>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={visibleModalViewDisukai}
+          onRequestClose={() => {
+            setVisibleModalViewDisukai(!visibleModalViewDisukai);
+          }}
+        >
+          <TouchableOpacity
+            style={[
+              Platform.OS === "ios"
+                ? styles.iOSBackdrop
+                : styles.androidBackdrop,
+              styles.backdrop,
+            ]}
+          />
+          <View style={{ alignItems: "center", flex: 1 }}>
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                width: "90%",
+                borderRadius: 10,
+                marginTop: "40%",
+              }}
+            >
+              <View
+                style={{
+                  marginTop: 20,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginHorizontal: 20,
+                }}
+              >
+                <View>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.Judul,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Disukai Oleh
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    setVisibleModalViewDisukai(false);
+                  }}
+                >
+                  <Ionicons
+                    name="close-outline"
+                    size={24}
+                    color={COLORS.lighter}
+                  />
+                </TouchableOpacity>
+              </View>
+              {/* custom divider */}
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    height: 1,
+                    width: "90%",
+                    backgroundColor: "#DBDADE",
+                    marginVertical: 10,
+                  }}
+                />
+              </View>
+              <ScrollView style={{ marginBottom: 40 }}>
+                {item.like_list.map((data) => {
+                  return (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 10,
+                        marginHorizontal: 20,
+                        marginTop: 20,
+                      }}
+                    >
+                      <Image
+                        source={{ uri: data.avatar_url }}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          borderRadius: 30,
+                        }}
+                      />
+                      <Text>{data.name}</Text>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
+
         <View style={{ flexDirection: "row", gap: 10 }}>
           <Text style={{ color: COLORS.lighter }}>
             {item.comment_count} Komentar
@@ -903,12 +1025,19 @@ const CardLiniMasa = ({ item, token }) => {
             onPress={() => {
               setVisibleModalView(true);
             }}
+          ></TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              setVisibleModalView(true);
+            }}
           >
-            <Ionicons
+            {/* <Ionicons
               name="eye-outline"
               size={18}
               style={{ color: COLORS.lighter }}
-            />
+            /> */}
             <Text style={{ color: COLORS.lighter }}>
               {item.views_count} Dilihat
             </Text>
@@ -934,30 +1063,45 @@ const CardLiniMasa = ({ item, token }) => {
           marginHorizontal: 20,
           paddingHorizontal: 16,
           // backgroundColor: "grey",
-          justifyContent: "space-around",
+          justifyContent: "center",
+          gap: 30,
         }}
       >
-        <TouchableOpacity
+        <View>
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              gap: 3,
+              alignItems: "center",
+            }}
+            onPress={handleLike}
+          >
+            <Ionicons
+              name="thumbs-up-outline"
+              size={18}
+              color={detail.liked == true ? COLORS.primary : null}
+            />
+            <Text
+              style={{
+                color: detail.liked == true ? COLORS.primary : null,
+              }}
+            >
+              Suka
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* <TouchableOpacity
           style={{
             flexDirection: "row",
-            gap: 3,
             alignItems: "center",
+            gap: 3,
           }}
-          onPress={handleLike}
-        >
-          <Ionicons
-            name="thumbs-up-outline"
-            size={18}
-            color={item.liked == true ? COLORS.primary : null}
-          />
-          <Text
-            style={{
-              color: item.liked == true ? COLORS.primary : null,
-            }}
+          onPress={bottomSheetAttachComment}
           >
-            Suka
-          </Text>
-        </TouchableOpacity>
+            <Ionicons name="chatbox-outline" size={18} />
+            <Text>Komentar</Text>
+          </TouchableOpacity> */}
 
         <TouchableOpacity
           style={{
@@ -1177,6 +1321,16 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
+  // console.log(linimasa.listsLike)
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(linimasa.lists);
+  }, [linimasa]);
+
   useEffect(() => {
     if (search !== "") {
       const data = linimasa.lists?.filter((item) => {
@@ -1188,14 +1342,33 @@ export const LiniMasa = () => {
     } else {
       setFilterData(linimasa.lists);
     }
-  }, [search, linimasa.lists]);
+  }, [search, linimasa]);
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
 
-  const filter = (event) => {
-    setSearch(event);
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
   };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.title.localeCompare(a.title));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
+
+  // console.log(linimasa.lists.like_list[0])
 
   return (
     <>
@@ -1242,18 +1415,34 @@ export const LiniMasa = () => {
           </View>
         </View>
 
-        <View style={{ padding: 20 }}>
-          <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
+        <View style={{ padding: 20, flexDirection: "row" }}>
+          <View style={{ width: "85%", marginRight: 10, marginBottom: -30 }}>
             <Search
               placeholder={"Cari..."}
               iconColor={COLORS.primary}
-              onSearch={linimasa.lists}
+              onSearch={filter}
             />
           </View>
+          <TouchableOpacity onPress={!ascending ? asc : desc}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+                backgroundColor: COLORS.white,
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: COLORS.secondaryLighter,
+                // borderWidth: isFiltered ? 1 : 0,
+              }}
+            >
+              <Ionicons name="filter-outline" size={24} />
+            </View>
+          </TouchableOpacity>
         </View>
 
         <FlatList
-          data={linimasa.lists}
+          data={filterData}
           renderItem={({ item }) => (
             <View key={item.id}>
               <CardLiniMasa

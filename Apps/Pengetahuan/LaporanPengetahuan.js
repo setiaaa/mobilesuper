@@ -83,6 +83,7 @@ export const LaporanPengetahuan = () => {
       dispatch(getSummaryGraph(param));
       dispatch(getSummaryAccumulation(param));
       dispatch(getSummaryReview(param));
+      dispatch(getExportFileQuarter(token));
     }
   }, [token, year, quarter]);
 
