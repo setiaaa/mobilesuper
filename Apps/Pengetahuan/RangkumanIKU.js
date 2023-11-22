@@ -9,6 +9,8 @@ import {
   Text,
   TextInput,
   KeyboardAvoidingView,
+  Platform,
+  Alert,
 } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -34,12 +36,15 @@ import {
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
 import { shareAsync } from "expo-sharing";
-import * as FileSystem from "expo-file-system";
 // import { FileSystem } from "expo";
 import * as DocumentPicker from "expo-document-picker";
 import { ActivityIndicator } from "react-native";
 // import { shareAsync } from "expo-sharing";
 // import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import * as IntentLauncher from "expo-intent-launcher";
+const { StorageAccessFramework } = FileSystem;
 
 const ListDaftarPegawai = ({ item, token }) => {
   const navigation = useNavigation();
@@ -57,8 +62,8 @@ const ListDaftarPegawai = ({ item, token }) => {
         style={{
           backgroundColor: COLORS.white,
           borderRadius: 10,
-          padding: 15,
-          marginHorizontal: 20,
+          padding: 20,
+          marginHorizontal: 17,
           gap: 5,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -119,7 +124,7 @@ export const RangkumanIKU = () => {
     setSwitchView(false);
   };
 
-  const initialSnapPoints = useMemo(() => ["50%", "90%"], []);
+  const initialSnapPoints = useMemo(() => ["90%", "90%"], []);
   const initialSnapPointsTambah = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
@@ -196,8 +201,11 @@ export const RangkumanIKU = () => {
     }
   }, [token]);
 
-  const [savedYear, setSavedYear] = useState({ key: "", value: "" });
-  const [savedQuarter, setSavedQuarter] = useState({ key: "", value: "" });
+  const [savedYear, setSavedYear] = useState({ key: "year1", value: "2023" });
+  const [savedQuarter, setSavedQuarter] = useState({
+    key: "q3",
+    value: "TW 3",
+  });
   const [savedUnitKerja, setSavedUnitKerja] = useState({ key: "", value: "" });
 
   const handlePilihSimpan = () => {
@@ -230,7 +238,6 @@ export const RangkumanIKU = () => {
         setPage(page + 10);
       }
     }
-    console.log(page);
   };
 
   useEffect(() => {
@@ -243,7 +250,7 @@ export const RangkumanIKU = () => {
     if (token !== "") {
       dispatch(getListPegawaiExport(param));
     }
-  }, [token, savedYear, savedQuarter, savedUnitKerja]);
+  }, [token, savedYear, savedQuarter, savedUnitKerja, download]);
 
   const { pegawai, refresh, loading } = useSelector(
     (state) => state.pengetahuan
@@ -257,7 +264,7 @@ export const RangkumanIKU = () => {
 
   const { unitKerja } = useSelector((state) => state.pengetahuan);
 
-  const { exportPegawai } = useSelector((state) => state.pengetahuan);
+  const { exportPegawai, download } = useSelector((state) => state.pengetahuan);
 
   const dataUnitKerja = () => {
     let valueUnitKerja = [];
@@ -283,7 +290,7 @@ export const RangkumanIKU = () => {
     const item = pegawai?.lists;
     if (search !== "") {
       const data = item.filter((item) => {
-        return item.nama.toLowerCase().includes(search.toLowerCase());
+        return item?.nama?.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
     } else {
@@ -313,78 +320,81 @@ export const RangkumanIKU = () => {
     setIsFiltered(true);
   };
 
-  const downloadFromUrl = async () => {
-    const url = exportPegawai?.lists?.file;
-    const parts = url?.split("/");
-    const fileName = parts[parts?.length - 1];
-    console.log(fileName);
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
 
-    //
+  const downloadFile = async (fileUrl, fileType, fileName) => {
+    //alert(fileName)
 
-    // const result = await FileSystem.downloadAsync(
-    //   url,
-    //   FileSystem.documentDirectory + fileName
-    // );
-    // console.log(result);
-
-    // await AsyncStorage.setItem("downloadedFile", result.uri);
-
-    // save(result.uri);
-
-    // try {
-    //   const document = await DocumentPicker.getDocumentAsync({
-    //     type: "*/*", // Allow the user to pick any type of file
-    //   });
-
-    //   if (document.type === "success") {
-    //     const directoryPath = document.uri; // Use this path to save the file
-    //     console.log("Selected directory:", directoryPath);
-
-    //     const url = exportPegawai?.lists?.file;
-    //     if (url) {
-    //       const parts = url.split("/");
-    //       const fileName = parts[parts.length - 1];
-    //       const filePath = `${directoryPath}/${fileName}`;
-
-    //       const result = await FileSystem.downloadAsync(url, filePath);
-
-    //       if (result.status === 200) {
-    //         console.log("Downloaded file saved to:", filePath);
-    //       } else {
-    //         console.error("Download failed");
-    //       }
-    //     }
-    //   } else {
-    //     console.log("Document picker canceled or failed.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error selecting directory:", error);
-    // }
+    const namafile = exportPegawai?.lists?.file.split("/");
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + namafile[namafile.length - 1],
+        { headers: { Authorization: token } }
+      );
+      try {
+        if (Platform.OS === "android") {
+          const { uri } = await downloadResumable.downloadAsync();
+          saveAndroidFile(uri, namafile[namafile.length - 1], fileType);
+        } else {
+          saveIosFile(downloadPath);
+        }
+      } catch (e) {
+        // setIsLoading(false);
+        console.error("download error:", e);
+      }
+    } catch (e) {
+      console.log("Error");
+      console.log(e);
+    }
   };
-  // const save = (uri) => {
-  //   shareAsync(uri);
-  // };
+  const saveAndroidFile = async (fileUri, fileName, fileType) => {
+    try {
+      console.log(fileUri);
+      const fileString = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
 
-  // const [ascending, setAscending] = useState(false);
-  // const [isFiltered, setIsFiltered] = useState(false);
+      const permissions =
+        await StorageAccessFramework.requestDirectoryPermissionsAsync();
+      if (!permissions.granted) {
+        return;
+      }
 
-  // const asc = () => {
-  //   const sortedAscending = filterData
-  //     .slice()
-  //     .sort((a, b) => a.nama.localeCompare(b.nama));
-  //   setFilterData(sortedAscending);
-  //   setAscending(true);
-  //   setIsFiltered(true);
-  // };
-
-  // const desc = () => {
-  //   const sortedDescending = filterData
-  //     .slice()
-  //     .sort((a, b) => b.nama.localeCompare(a.nama));
-  //   setFilterData(sortedDescending);
-  //   setAscending(false);
-  //   setIsFiltered(true);
-  // };
+      try {
+        await StorageAccessFramework.createFileAsync(
+          permissions.directoryUri,
+          fileName,
+          fileType
+        )
+          .then(async (uri) => {
+            await FileSystem.writeAsStringAsync(uri, fileString, {
+              encoding: FileSystem.EncodingType.Base64,
+            });
+            Alert.alert("Success!", "Download Successfully.");
+          })
+          .catch((e) => {
+            Alert.alert(
+              "Failed!",
+              "Download Unsuccessful. Please choose another folder to download file."
+            );
+          });
+      } catch (e) {
+        throw new Error(e);
+      }
+    } catch (err) {}
+  };
+  const saveIosFile = async (fileUri) => {
+    try {
+      await Sharing.shareAsync(fileUri, {
+        mimeType: "application/pdf",
+        dialogTitle: "Share PDF",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
+  };
 
   return (
     <>
@@ -498,13 +508,13 @@ export const RangkumanIKU = () => {
 
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
-          <View style={{ height: "85%", width: "100%", paddingHorizontal: 20 }}>
+          <View style={{ height: "85%", paddingHorizontal: 16 }}>
             <WebView
               originWhitelist={["*"]}
               source={{
                 uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
               }}
-              style={{ flex: 1 }}
+              style={{ flex: 1, borderRadius: 8 }}
               allowFileAccess={true}
               androidLayerType={"software"}
               mixedContentMode={"always"}
@@ -512,12 +522,12 @@ export const RangkumanIKU = () => {
             />
           </View>
         ) : (
-          <ScrollView>
+          <>
             <View
               style={{
                 flexDirection: "column",
                 gap: 5,
-                paddingHorizontal: 20,
+                paddingHorizontal: 17,
                 width: "100%",
               }}
             >
@@ -541,7 +551,7 @@ export const RangkumanIKU = () => {
                   }}
                 >
                   <Text style={{ marginLeft: 20, color: COLORS.lighter }}>
-                    Pilih
+                    Pilih Tahun dan Triwulan dan Unit Kerja
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -563,10 +573,34 @@ export const RangkumanIKU = () => {
               >
                 <BottomSheetView onLayout={handleContentLayout}>
                   <View style={{ flex: 1 }}>
-                    <View style={{ alignItems: "center", marginVertical: 20 }}>
-                      <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                    <View
+                      style={{
+                        marginHorizontal: 20,
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        padding: 14,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: FONTSIZE.H1,
+                        }}
+                      >
                         Pilih
                       </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          closeBottomSheet();
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          size={24}
+                          color={COLORS.lighter}
+                        />
+                      </TouchableOpacity>
                     </View>
 
                     <View
@@ -672,32 +706,40 @@ export const RangkumanIKU = () => {
                       <></>
                     ) : null}
 
-                    <TouchableOpacity
+                    <View
                       style={{
-                        width: "90%",
-                        backgroundColor: COLORS.primary,
-                        height: 50,
-                        marginVertical: 40,
-                        borderRadius: 6,
-                        alignItems: "center",
-                        marginHorizontal: 20,
-                        justifyContent: "center",
-                      }}
-                      onPress={() => {
-                        handlePilihSimpan();
-                        bottomSheetAttachSelectClose();
+                        height: 190,
+                        paddingVertical: 20,
+                        justifyContent: "flex-end",
                       }}
                     >
-                      <Text
+                      <TouchableOpacity
                         style={{
-                          color: COLORS.white,
-                          fontSize: FONTSIZE.H1,
-                          fontWeight: 500,
+                          width: "90%",
+                          backgroundColor: COLORS.primary,
+                          height: 50,
+                          // marginTop: ,
+                          borderRadius: 8,
+                          alignItems: "center",
+                          marginHorizontal: 20,
+                          justifyContent: "center",
+                        }}
+                        onPress={() => {
+                          handlePilihSimpan();
+                          bottomSheetAttachSelectClose();
                         }}
                       >
-                        Simpan
-                      </Text>
-                    </TouchableOpacity>
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: FONTSIZE.H1,
+                            fontWeight: 500,
+                          }}
+                        >
+                          Simpan
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </BottomSheetView>
               </BottomSheetModal>
@@ -798,7 +840,14 @@ export const RangkumanIKU = () => {
                       borderRadius: 50,
                       padding: 5,
                     }}
-                    onPress={downloadFromUrl}
+                    onPress={() => {
+                      downloadFile(
+                        exportPegawai?.lists?.file,
+                        "application/vnd.ms-excel",
+                        "sample.xls"
+                      );
+                      // openFile();
+                    }}
                   >
                     <Icon name="get-app" size={24} color={COLORS.grey} />
                   </TouchableOpacity>
@@ -837,7 +886,7 @@ export const RangkumanIKU = () => {
             <View>
               <View
                 style={{
-                  marginTop: 15,
+                  marginTop: 10,
                   gap: 15,
                   marginBottom: "95%",
                 }}
@@ -872,6 +921,7 @@ export const RangkumanIKU = () => {
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}
                   onEndReached={loadMore}
+                  style={{ height: 320 }}
                 />
 
                 {/* {pegawai.lists.length !== 0
@@ -945,7 +995,7 @@ export const RangkumanIKU = () => {
                   : ""} */}
               </View>
             </View>
-          </ScrollView>
+          </>
         )}
       </View>
     </>

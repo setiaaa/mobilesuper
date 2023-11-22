@@ -19,6 +19,7 @@ import { FlatList } from "react-native";
 import { Image } from "react-native";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
+import { Search } from "../../components/Search";
 import {
   getDetailLinimasa,
   getLinimasa,
@@ -52,7 +53,6 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
       id: id,
     });
     // console.log(id);
-    console.log(listData)
   };
 
   const handleClickBalas = () => {
@@ -304,7 +304,7 @@ const CardLiniMasa = ({ item, token }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState({ id: "", creator: "" });
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ['95%'], []);
+  const initialSnapPoints = useMemo(() => ["95%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -341,7 +341,6 @@ const CardLiniMasa = ({ item, token }) => {
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
   // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
-  console.log(detail)
 
   const [komen, setKomen] = useState("");
   const [toggleComment, setToggleComment] = useState({
@@ -360,7 +359,7 @@ const CardLiniMasa = ({ item, token }) => {
     };
     dispatch(postComment(data));
     setKomen("");
-    setParentId({id:"",creator:""})
+    setParentId({ id: "", creator: "" });
   };
 
   useEffect(() => {
@@ -369,7 +368,6 @@ const CardLiniMasa = ({ item, token }) => {
       id: detail.id,
     };
     if (refresh) {
-      console.log("masukkkkkkk");
       dispatch(getDetailLinimasa(data));
       dispatch(setRefresh(false));
     }
@@ -391,7 +389,7 @@ const CardLiniMasa = ({ item, token }) => {
         //shadow android
         elevation: 2,
         alignContent: "center",
-        marginBottom: 20,
+        marginBottom: 5,
       }}
     >
       <TouchableOpacity
@@ -421,7 +419,6 @@ const CardLiniMasa = ({ item, token }) => {
               <View
                 style={{
                   display: "flex",
-                  flexDirection: "row",
                   width: "100%",
                   gap: 14,
                 }}
@@ -429,7 +426,7 @@ const CardLiniMasa = ({ item, token }) => {
                 <Text
                   style={{
                     color: COLORS.grey,
-                    marginVertical: 5,
+                    marginVertical: 1,
                     fontSize: 13,
                   }}
                 >
@@ -852,7 +849,7 @@ const CardLiniMasa = ({ item, token }) => {
               />
             </View>
 
-            <ScrollView style={{ marginBottom: 40 }}>
+            <ScrollView style={{ marginBottom: 20 }}>
               {item.view_list.map((data) => {
                 return (
                   <View
@@ -993,7 +990,7 @@ const CardLiniMasa = ({ item, token }) => {
           <BottomSheetView onLayout={handleContentLayout} style={{}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "height" : "height"}
-              keyboardVerticalOffset={parentId !== "" ? 80: 70}
+              keyboardVerticalOffset={parentId !== "" ? 80 : 70}
             >
               <View
                 style={{
@@ -1043,12 +1040,18 @@ const CardLiniMasa = ({ item, token }) => {
                     setToggleComment={setToggleComment}
                   />
                 )}
-                style={{ height: 370}}
+                style={{ height: 370 }}
               />
 
-              <View style={{ justifyContent: "flex-end", paddingTop:10}}>
-                {parentId.id !== "" ? ( 
-                  <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20,}}>
+              <View style={{ justifyContent: "flex-end", paddingTop: 10 }}>
+                {parentId.id !== "" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 20,
+                    }}
+                  >
                     <Text>Membalas {parentId.creator}</Text>
                     <TouchableOpacity>
                       <Ionicons
@@ -1096,7 +1099,7 @@ const CardLiniMasa = ({ item, token }) => {
                       alignItems: "flex-end",
                       flex: 1,
                       marginRight: 10,
-                      marginLeft:50,
+                      marginLeft: 50,
                       justifyContent: "center",
                     }}
                   >
@@ -1174,7 +1177,25 @@ export const LiniMasa = () => {
     // console.log(page);
   };
 
-  console.log(linimasa.lists);
+  useEffect(() => {
+    if (search !== "") {
+      const data = linimasa.lists?.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+      if (data.length === 0) {
+      }
+    } else {
+      setFilterData(linimasa.lists);
+    }
+  }, [search, linimasa.lists]);
+
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
 
   return (
     <>
@@ -1218,6 +1239,16 @@ export const LiniMasa = () => {
             >
               Linimasa Pengetahuan
             </Text>
+          </View>
+        </View>
+
+        <View style={{ padding: 20 }}>
+          <View style={{ width: "100%", marginRight: 10, marginBottom: 15 }}>
+            <Search
+              placeholder={"Cari..."}
+              iconColor={COLORS.primary}
+              onSearch={linimasa.lists}
+            />
           </View>
         </View>
 

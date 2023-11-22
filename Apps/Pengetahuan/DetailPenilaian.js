@@ -560,26 +560,23 @@ export const DetailPenilaian = () => {
           style={{
             backgroundColor: COLORS.white,
             paddingHorizontal: 20,
-            paddingVertical: 10,
             borderRadius: 8,
             marginBottom: 20,
+            marginTop: -30,
           }}
         >
-          <View style={{ gap: 5, paddingVertical: 5 }}>
+          <View style={{ gap: 20, paddingVertical: 20 }}>
             <View
               style={{
                 gap: 10,
                 alignItems: "center",
-                justifyContent: "flex-start",
+                justifyContent: "center",
                 flexDirection: "row",
-                gap: 20,
+                gap: 40,
               }}
             >
               <View style={{ flexDirection: "row" }}>
-                <View style={{ width: 100 }}>
-                  <Text style={{ fontWeight: FONTWEIGHT.bold }}>Nilai</Text>
-                </View>
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>:</Text>
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Nilai:</Text>
               </View>
 
               <View style={{ width: "65%" }}>
@@ -703,12 +700,13 @@ export const DetailPenilaian = () => {
             borderRadius: 8,
             marginHorizontal: 20,
             marginTop: 10,
+            backgroundColor: COLORS.infoDanger,
             borderColor: COLORS.infoDanger,
             borderWidth: 1,
           }}
           onPress={() => setVisibleModal(true)}
         >
-          <Text style={{ color: COLORS.infoDanger }}>Take Down Artikel</Text>
+          <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
         </TouchableOpacity>
 
         <Modal

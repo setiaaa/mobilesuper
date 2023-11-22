@@ -11,6 +11,7 @@ import { getSummaryCount, getSummaryList } from '../../service/api';
 import { useEffect } from 'react';
 import { getTokenValue } from '../../service/session';
 import moment from 'moment';
+import { Loading } from '../../components/Loading';
 
 const CardLaporanList = ( {item, token} ) => {
     return (
@@ -49,7 +50,7 @@ export const LaporanDigitalSign = () => {
         }
     }, [token]);
 
-    const { summary } = useSelector((state) => state.digitalsign)
+    const { summary,loading } = useSelector((state) => state.digitalsign)
 
     let charA = 0;
     const klasikal = summary?.count?.pelatihan_klasikal_counts;
@@ -94,6 +95,11 @@ export const LaporanDigitalSign = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+        {loading ? (
+            <Loading />
+        ) : (
+            null
+        )}
         <View
           style={{
             flexDirection: "row",

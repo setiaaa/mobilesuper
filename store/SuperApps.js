@@ -29,7 +29,7 @@ const SuperAppsSlice = createSlice({
       misi: [],
     },
     banner: [],
-    loading: false
+    loading: false,
   },
   reducers: {
     setProfile: (state, action) => {
@@ -72,63 +72,70 @@ const SuperAppsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getProfileMe.fulfilled, (state, action) => {
-        state.profile = action.payload;
-        state.loading = false
+        state.loading = false;
+        let roles_access = [];
+
+        if (action.payload.roles_coofis) {
+          roles_access = action.payload.roles_coofis.map((item) => {
+            return item.state;
+          });
+        }
+        state.profile = { ...action.payload, roles_access };
       })
       .addCase(getProfileMe.pending, (state, action) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(getProfileMe.rejected, (state, action) => {
-        state.loading = false
+        state.loading = false;
       })
       .addCase(getBanner.fulfilled, (state, action) => {
         state.banner = action.payload;
-        state.loading = false
+        state.loading = false;
       })
       .addCase(getBanner.pending, (state, action) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(getBanner.rejected, (state, action) => {
-        state.loading = false
+        state.loading = false;
       })
       .addCase(getGaleri.fulfilled, (state, action) => {
         // state.galeri.lists = action.payload;
         // state.loading = false
-        let dataPrev = state.galeri.lists
-        let dataNext = action.payload
-        let gabung = dataPrev.concat(dataNext)
-        state.galeri.lists = gabung
-        state.loading = false
+        let dataPrev = state.galeri.lists;
+        let dataNext = action.payload;
+        let gabung = dataPrev.concat(dataNext);
+        state.galeri.lists = gabung;
+        state.loading = false;
       })
       .addCase(getGaleri.pending, (state, action) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(getGaleri.rejected, (state, action) => {
-        state.loading = false
+        state.loading = false;
       })
       .addCase(getBerita.fulfilled, (state, action) => {
-        let dataPrev = state.berita.lists
-        let dataNext = action.payload
-        let gabung = dataPrev.concat(dataNext)
-        state.berita.lists = gabung
-        state.loading = false
+        let dataPrev = state.berita.lists;
+        let dataNext = action.payload;
+        let gabung = dataPrev.concat(dataNext);
+        state.berita.lists = gabung;
+        state.loading = false;
       })
       .addCase(getBerita.pending, (state, action) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(getBerita.rejected, (state, action) => {
-        state.loading = false
+        state.loading = false;
       })
       .addCase(getDetailBerita.fulfilled, (state, action) => {
         state.berita.detail = action.payload;
-        state.loading = false
+        state.loading = false;
       })
       .addCase(getDetailBerita.pending, (state, action) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(getDetailBerita.rejected, (state, action) => {
-        state.loading = false
-      })
+        state.loading = false;
+      });
   },
 });
 

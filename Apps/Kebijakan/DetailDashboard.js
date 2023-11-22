@@ -10,6 +10,9 @@ import { Button } from "../../components/Button";
 import { CollapseCard } from "../../components/CollapseCard";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
+import * as Sharing from "expo-sharing";
+import * as IntentLauncher from "expo-intent-launcher";
+import { Alert } from "react-native";
 
 export default function DetailDashboard({ route }) {
   const { data } = route.params;
@@ -19,18 +22,30 @@ export default function DetailDashboard({ route }) {
 
   let judul = data.subjek.replace(/\s/g, "-");
 
-  const downloadFromUrl = async () => {
-    const filename = judul + ".pdf";
-    const result = await FileSystem.downloadAsync(
-      data.link,
-      FileSystem.documentDirectory + filename
-    );
-    console.log(result);
+  console.log(data)
 
-    save(result.uri);
-  };
-  const save = (uri) => {
-    shareAsync(uri);
+  const downloadFromUrl = () => {
+    let remoteUrl = data.link;
+    let localPath = `${FileSystem.documentDirectory}/${judul}.pdf`;
+      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+        const contentURL = await FileSystem.getContentUriAsync(uri);
+        try {
+          if (Platform.OS == 'android') {
+            await IntentLauncher.startActivityAsync(
+              "android.intent.action.VIEW",
+              {
+                data: contentURL,
+                flags: 1,
+                type: 'application/pdf',
+              }
+            );
+          } else if (Platform.OS == 'ios') {
+            Sharing.shareAsync(localPath);
+          }
+        } catch (error) {
+          Alert.alert("INFO", JSON.stringify(error));
+        }
+      });
   };
 
   return (
@@ -145,11 +160,14 @@ export default function DetailDashboard({ route }) {
 
         <View style={{ alignItems: "center" }}>
           <View>
-            <Button
+            <TouchableOpacity style={ styles.buttonUnduh } onPress={() => {downloadFromUrl()}}>
+              <Text style={{ textAlign: "center", margin: 15, fontSize: 18 }}>Unduh File PDF</Text>
+            </TouchableOpacity>
+            {/* <Button
               title="Unduh File PDF"
               style={styles.buttonUnduh}
-              onClick={downloadFromUrl}
-            />
+              onClick={downloadFromUrl()}
+            /> */}
           </View>
           <View>
             <Button

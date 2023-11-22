@@ -8,14 +8,16 @@ import { useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
 import { StatusBar } from "expo-status-bar";
+import { Loading } from "../../components/Loading";
 
 const CardListPostingan = ({ item }) => {
   // console.log(item);
   return (
-    <View style={{ width: "90%", alignSelf: "center", marginVertical: 20, padding: PADDING.Page }}>
+    <View style={{ alignSelf: "center", width: "100%", padding: PADDING.Page }}>
       <View
         style={{
-          height: 90,
+          height: 120,
+          padding: 20,
           borderBottomWidth: 10,
           borderColor: COLORS.lighter,
           alignItems: "center",
@@ -24,16 +26,17 @@ const CardListPostingan = ({ item }) => {
           //shadow ios
           //shadow android
           elevation: 2,
+          backgroundColor: COLORS.white,
         }}
       >
-        <View>
+        <View style={{ marginVertical: 20 }}>
           <Text style={{ fontSize: 13, fontWeight: 600 }}>{item?.title}</Text>
           <View
             style={{
               display: "flex",
               // justifyContent: "space-between",
               marginVertical: 10,
-              gap: 10,
+              gap: 12,
               paddingBottom: 10
             }}
           >
@@ -61,13 +64,19 @@ const CardListPostingan = ({ item }) => {
 export const ListPostinganPegawai = (param) => {
   const navigation = useNavigation();
 
-  const { postinganPegawai } = useSelector((state) => state.pengetahuan);
+  const { postinganPegawai, loading } = useSelector((state) => state.pengetahuan);
 
   // console.log(postinganPegawai);
 
   // console.log(param.route.params);
 
   const nama = param?.route?.params;
+
+  const resetData = () => {
+    postinganPegawai.lists = [];
+  }
+
+  console.log(postinganPegawai.lists)
 
   return (
     <View style={{ flex: 1 }}>
@@ -92,7 +101,10 @@ export const ListPostinganPegawai = (param) => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
+          <TouchableOpacity style={{}} onPress={() => {
+            navigation.goBack()
+            resetData()
+          }}>
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -106,6 +118,11 @@ export const ListPostinganPegawai = (param) => {
           </Text>
         </View>
       </View>
+      {loading ? (
+        <Loading />
+      ) : (
+        postinganPegawai.lists.length === 0 ? <ListEmpty /> : null
+      )}
       <View style={{ marginBottom: 130 }}>
         <FlatList
           data={postinganPegawai?.lists}
