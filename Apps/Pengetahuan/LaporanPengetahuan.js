@@ -7,6 +7,7 @@ import {
   ScrollView,
   screenWidth,
   Dimensions,
+  Alert,
 } from "react-native";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -31,6 +32,7 @@ import ProgressCircle from "react-native-progress-circle";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import * as IntentLauncher from "expo-intent-launcher";
+const { StorageAccessFramework } = FileSystem;
 
 export const LaporanPengetahuan = () => {
   const navigation = useNavigation();
@@ -71,10 +73,10 @@ export const LaporanPengetahuan = () => {
           quarter.key === "1"
             ? "q1"
             : quarter.key === "2"
-              ? "q2"
-              : quarter.key === "3"
-                ? "q3"
-                : "q4",
+            ? "q2"
+            : quarter.key === "3"
+            ? "q3"
+            : "q4",
       };
       dispatch(getSummaryTotalPost(param));
       dispatch(getSummaryBadUser(paramBad));
@@ -88,63 +90,146 @@ export const LaporanPengetahuan = () => {
   useEffect(() => {
     const param = {
       token: token,
-      year: year.value, 
-      quarter: quarter.key
+      year: year.value,
+      quarter: quarter.key,
     };
     if (token !== "") {
       dispatch(getExportFileQuarter(param));
-      dispatch(getExportFileEmployee(param))
+      dispatch(getExportFileEmployee(param));
     }
-  }, [token, year, quarter, download])
+  }, [token, year, quarter, download]);
 
-  const { summary, exportLaporan, download } = useSelector((state) => state.pengetahuan);
+  const { summary, exportLaporan, download } = useSelector(
+    (state) => state.pengetahuan
+  );
+
+  console.log(exportLaporan?.quarter?.file);
+
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
+
+  const downloadFile = async (fileUrl, fileType, type) => {
+    //alert(fileName)
+
+    const namafile =
+      type === "employe"
+        ? exportLaporan?.employee?.file.split("/")
+        : exportLaporan?.quarter?.file.split("/");
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + namafile[namafile.length - 1],
+        { headers: { Authorization: token } }
+      );
+      try {
+        if (Platform.OS === "android") {
+          const { uri } = await downloadResumable.downloadAsync();
+          saveAndroidFile(uri, namafile[namafile?.length - 1], fileType);
+        } else {
+          saveIosFile(downloadPath);
+        }
+      } catch (e) {
+        // setIsLoading(false);
+        console.error("download error:", e);
+      }
+    } catch (e) {
+      console.log("Error");
+      console.log(e);
+    }
+  };
+  const saveAndroidFile = async (fileUri, fileName, fileType) => {
+    try {
+      console.log(fileUri);
+      const fileString = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      const permissions =
+        await StorageAccessFramework.requestDirectoryPermissionsAsync();
+      if (!permissions.granted) {
+        return;
+      }
+
+      try {
+        await StorageAccessFramework.createFileAsync(
+          permissions.directoryUri,
+          fileName,
+          fileType
+        )
+          .then(async (uri) => {
+            await FileSystem.writeAsStringAsync(uri, fileString, {
+              encoding: FileSystem.EncodingType.Base64,
+            });
+            Alert.alert("Success!", "Download Successfully.");
+          })
+          .catch((e) => {
+            Alert.alert(
+              "Failed!",
+              "Download Unsuccessful. Please choose another folder to download file."
+            );
+          });
+      } catch (e) {
+        throw new Error(e);
+      }
+    } catch (err) {}
+  };
+  const saveIosFile = async (fileUri) => {
+    try {
+      await Sharing.shareAsync(fileUri, {
+        mimeType: "application/pdf",
+        dialogTitle: "Share PDF",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
+  };
 
   const openFileEmployee = () => {
     let remoteUrl = exportLaporan?.employee?.file;
     let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
-      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-        const contentURL = await FileSystem.getContentUriAsync(uri);
-        try {
-          if (Platform.OS == 'android') {
-            await IntentLauncher.startActivityAsync(
-              "android.intent.action.VIEW",
-              {
-                data: contentURL,
-                flags: 1,
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-              }
-            );
-          } else if (Platform.OS == 'ios') {
-            Sharing.shareAsync(localPath);
-          }
-        } catch (error) {
-          Alert.alert("INFO", JSON.stringify(error));
+    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+      const contentURL = await FileSystem.getContentUriAsync(uri);
+      try {
+        if (Platform.OS == "android") {
+          await IntentLauncher.startActivityAsync(
+            "android.intent.action.VIEW",
+            {
+              data: contentURL,
+              flags: 1,
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            }
+          );
+        } else if (Platform.OS == "ios") {
+          Sharing.shareAsync(localPath);
         }
-      });
+      } catch (error) {
+        Alert.alert("INFO", JSON.stringify(error));
+      }
+    });
   };
 
   const openFileQuarter = () => {
     let remoteUrl = exportLaporan?.quarter?.file;
     let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
-      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-        const contentURL = await FileSystem.getContentUriAsync(uri);
-        try {
-          if (Platform.OS == 'android') {
-            await IntentLauncher.startActivityAsync(
-              "android.intent.action.VIEW",
-              {
-                data: contentURL,
-                flags: 1,
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-              }
-            );
-          } else if (Platform.OS == 'ios') {
-            Sharing.shareAsync(localPath);
-          }
-        } catch (error) {
-          Alert.alert("INFO", JSON.stringify(error));
+    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+      const contentURL = await FileSystem.getContentUriAsync(uri);
+      try {
+        if (Platform.OS == "android") {
+          await IntentLauncher.startActivityAsync(
+            "android.intent.action.VIEW",
+            {
+              data: contentURL,
+              flags: 1,
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            }
+          );
+        } else if (Platform.OS == "ios") {
+          Sharing.shareAsync(localPath);
         }
-      });
+      } catch (error) {
+        Alert.alert("INFO", JSON.stringify(error));
+      }
+    });
   };
 
   const totalPost = summary?.total_post.total_post_per_quarter;
@@ -172,8 +257,6 @@ export const LaporanPengetahuan = () => {
 
   const sliceColorHandle = [COLORS.grey];
 
-  console.log(exportLaporan);
-
   return (
     <View style={{ flex: 1 }}>
       <StatusBar />
@@ -198,7 +281,10 @@ export const LaporanPengetahuan = () => {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
+            <TouchableOpacity
+              style={{}}
+              onPress={() => navigation.navigate("Home")}
+            >
               <Ionicons
                 name="chevron-back-outline"
                 size={24}
@@ -483,7 +569,16 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Pegawai</Text>
-              <TouchableOpacity onPress={() => {openFileEmployee()}}>
+              <TouchableOpacity
+                onPress={() => {
+                  // openFileEmployee();
+                  downloadFile(
+                    exportLaporan?.employee?.file,
+                    "application/vnd.ms-excel",
+                    "employe"
+                  );
+                }}
+              >
                 <View
                   style={{
                     width: 24,
@@ -511,7 +606,15 @@ export const LaporanPengetahuan = () => {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: 400 }}>Triwulan</Text>
-              <TouchableOpacity onPress={() => {openFileQuarter()}}>
+              <TouchableOpacity
+                onPress={() => {
+                  downloadFile(
+                    exportLaporan?.quarter?.file,
+                    "application/vnd.ms-excel",
+                    "triwulan"
+                  );
+                }}
+              >
                 <View
                   style={{
                     width: 24,
@@ -553,8 +656,8 @@ export const LaporanPengetahuan = () => {
             Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
           {Object.keys(summary.graph).length !== 0 &&
-            Object.keys(summary.total_post).length !== 0 &&
-            Object.keys(summary.bad_user).length !== 0 ? (
+          Object.keys(summary.total_post).length !== 0 &&
+          Object.keys(summary.bad_user).length !== 0 ? (
             <StackedBarChart
               data={{
                 labels: [
@@ -576,62 +679,62 @@ export const LaporanPengetahuan = () => {
                   [
                     graph?.article_unreviewed_count[0],
                     graph?.article_unreviewed_count[0] +
-                    graph?.article_reviewed_count[0],
+                      graph?.article_reviewed_count[0],
                   ],
                   [
                     graph?.article_unreviewed_count[1],
                     graph?.article_unreviewed_count[1] +
-                    graph?.article_reviewed_count[1],
+                      graph?.article_reviewed_count[1],
                   ],
                   [
                     graph?.article_unreviewed_count[2],
                     graph?.article_unreviewed_count[2] +
-                    graph?.article_reviewed_count[2],
+                      graph?.article_reviewed_count[2],
                   ],
                   [
                     graph?.article_unreviewed_count[3],
                     graph?.article_unreviewed_count[3] +
-                    graph?.article_reviewed_count[3],
+                      graph?.article_reviewed_count[3],
                   ],
                   [
                     graph?.article_unreviewed_count[4],
                     graph?.article_unreviewed_count[4] +
-                    graph?.article_reviewed_count[4],
+                      graph?.article_reviewed_count[4],
                   ],
                   [
                     graph?.article_unreviewed_count[5],
                     graph?.article_unreviewed_count[5] +
-                    graph?.article_reviewed_count[5],
+                      graph?.article_reviewed_count[5],
                   ],
                   [
                     graph?.article_unreviewed_count[6],
                     graph?.article_unreviewed_count[6] +
-                    graph?.article_reviewed_count[6],
+                      graph?.article_reviewed_count[6],
                   ],
                   [
                     graph?.article_unreviewed_count[7],
                     graph?.article_unreviewed_count[7] +
-                    graph?.article_reviewed_count[7],
+                      graph?.article_reviewed_count[7],
                   ],
                   [
                     graph?.article_unreviewed_count[8],
                     graph?.article_unreviewed_count[8] +
-                    graph?.article_reviewed_count[8],
+                      graph?.article_reviewed_count[8],
                   ],
                   [
                     graph?.article_unreviewed_count[9],
                     graph?.article_unreviewed_count[9] +
-                    graph?.article_reviewed_count[9],
+                      graph?.article_reviewed_count[9],
                   ],
                   [
                     graph?.article_unreviewed_count[10],
                     graph?.article_unreviewed_count[10] +
-                    graph?.article_reviewed_count[10],
+                      graph?.article_reviewed_count[10],
                   ],
                   [
                     graph?.article_unreviewed_count[11],
                     graph?.article_unreviewed_count[11] +
-                    graph?.article_reviewed_count[11],
+                      graph?.article_reviewed_count[11],
                   ],
                 ],
                 barColors: [COLORS.primary, COLORS.warning],
@@ -781,7 +884,7 @@ export const LaporanPengetahuan = () => {
             <TouchableOpacity
               style={{
                 backgroundColor: COLORS.primary,
-                width: '100%',
+                width: "100%",
                 height: 40,
                 borderRadius: 8,
                 justifyContent: "center",
