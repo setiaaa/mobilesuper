@@ -1267,6 +1267,7 @@ console.log(linimasa.lists?.like_list)
                                 style={{ padding: 10 }}
                                 onChangeText={setKomen}
                                 value={komen}
+                                placeholderTextColor={COLORS.grey}
                               />
                             <View
                               style={{

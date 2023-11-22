@@ -344,7 +344,7 @@ export const DetailPostinganSaya = () => {
                 }}
               >
                 <Ionicons name="information-circle-outline" size={18} />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
             <View
               style={{

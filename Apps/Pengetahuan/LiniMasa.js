@@ -1096,7 +1096,7 @@ const CardLiniMasa = ({ item, token }) => {
         </View>
 
         
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -1106,7 +1106,7 @@ const CardLiniMasa = ({ item, token }) => {
           >
             <Ionicons name="chatbox-outline" size={18} />
             <Text>Komentar</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
         <TouchableOpacity
           style={{
