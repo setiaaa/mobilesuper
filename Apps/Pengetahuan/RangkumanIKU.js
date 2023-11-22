@@ -44,6 +44,7 @@ import { ActivityIndicator } from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import * as IntentLauncher from "expo-intent-launcher";
+const { StorageAccessFramework } = FileSystem;
 
 const ListDaftarPegawai = ({ item, token }) => {
   const navigation = useNavigation();
@@ -201,7 +202,10 @@ export const RangkumanIKU = () => {
   }, [token]);
 
   const [savedYear, setSavedYear] = useState({ key: "year1", value: "2023" });
-  const [savedQuarter, setSavedQuarter] = useState({ key: "q3", value: "TW 3" });
+  const [savedQuarter, setSavedQuarter] = useState({
+    key: "q3",
+    value: "TW 3",
+  });
   const [savedUnitKerja, setSavedUnitKerja] = useState({ key: "", value: "" });
 
   const handlePilihSimpan = () => {
@@ -224,15 +228,17 @@ export const RangkumanIKU = () => {
       dispatch(getListPegawai(param));
     }
   }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
-  
+
   const loadMore = () => {
-    if ((filterData.length % 10 === 0) && (savedYear.value || savedQuarter.value || savedUnitKerja.value)) {
+    if (
+      filterData.length % 10 === 0 &&
+      (savedYear.value || savedQuarter.value || savedUnitKerja.value)
+    ) {
       if (filterData.length > page) {
         setPage(page + 10);
       }
     }
-    console.log(page)
-  }
+  };
 
   useEffect(() => {
     const param = {
@@ -284,7 +290,7 @@ export const RangkumanIKU = () => {
     const item = pegawai?.lists;
     if (search !== "") {
       const data = item.filter((item) => {
-        return item.nama.toLowerCase().includes(search.toLowerCase());
+        return item?.nama?.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
     } else {
@@ -303,7 +309,7 @@ export const RangkumanIKU = () => {
     setFilterData(sortedAscending);
     setAscending(true);
     setIsFiltered(true);
-  }
+  };
 
   const desc = () => {
     const sortedDescending = filterData
@@ -312,110 +318,83 @@ export const RangkumanIKU = () => {
     setFilterData(sortedDescending);
     setAscending(false);
     setIsFiltered(true);
-  }
+  };
 
-  // console.log(exportPegawai.lists.file)
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
 
-  const openFile = () => {
-    let remoteUrl = exportPegawai?.lists?.file;
-    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
-      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-        const contentURL = await FileSystem.getContentUriAsync(uri);
-        try {
-          if (Platform.OS == 'android') {
-            await IntentLauncher.startActivityAsync(
-              "android.intent.action.VIEW",
-              {
-                data: contentURL,
-                flags: 1,
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-              }
-            );
-          } else if (Platform.OS == 'ios') {
-            Sharing.shareAsync(localPath);
-          }
-        } catch (error) {
-          Alert.alert("INFO", JSON.stringify(error));
+  const downloadFile = async (fileUrl, fileType, fileName) => {
+    //alert(fileName)
+
+    const namafile = exportPegawai?.lists?.file.split("/");
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + namafile[namafile.length - 1],
+        { headers: { Authorization: token } }
+      );
+      try {
+        if (Platform.OS === "android") {
+          const { uri } = await downloadResumable.downloadAsync();
+          saveAndroidFile(uri, namafile[namafile.length - 1], fileType);
+        } else {
+          saveIosFile(downloadPath);
         }
+      } catch (e) {
+        // setIsLoading(false);
+        console.error("download error:", e);
+      }
+    } catch (e) {
+      console.log("Error");
+      console.log(e);
+    }
+  };
+  const saveAndroidFile = async (fileUri, fileName, fileType) => {
+    try {
+      console.log(fileUri);
+      const fileString = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.Base64,
       });
+
+      const permissions =
+        await StorageAccessFramework.requestDirectoryPermissionsAsync();
+      if (!permissions.granted) {
+        return;
+      }
+
+      try {
+        await StorageAccessFramework.createFileAsync(
+          permissions.directoryUri,
+          fileName,
+          fileType
+        )
+          .then(async (uri) => {
+            await FileSystem.writeAsStringAsync(uri, fileString, {
+              encoding: FileSystem.EncodingType.Base64,
+            });
+            Alert.alert("Success!", "Download Successfully.");
+          })
+          .catch((e) => {
+            Alert.alert(
+              "Failed!",
+              "Download Unsuccessful. Please choose another folder to download file."
+            );
+          });
+      } catch (e) {
+        throw new Error(e);
+      }
+    } catch (err) {}
   };
-
-  const downloadFromUrl = async () => {
-    const url = exportPegawai?.lists?.file;
-    const parts = url?.split("/");
-    const fileName = parts[parts?.length - 1];
-    console.log(fileName);
-
-    //
-
-    // const result = await FileSystem.downloadAsync(
-    //   url,
-    //   FileSystem.documentDirectory + fileName
-    // );
-    // console.log(result);
-
-    // await AsyncStorage.setItem("downloadedFile", result.uri);
-
-    // save(result.uri);
-
-    // try {
-    //   const document = await DocumentPicker.getDocumentAsync({
-    //     type: "*/*", // Allow the user to pick any type of file
-    //   });
-
-    //   if (document.type === "success") {
-    //     const directoryPath = document.uri; // Use this path to save the file
-    //     console.log("Selected directory:", directoryPath);
-
-    //     const url = exportPegawai?.lists?.file;
-    //     if (url) {
-    //       const parts = url.split("/");
-    //       const fileName = parts[parts.length - 1];
-    //       const filePath = `${directoryPath}/${fileName}`;
-
-    //       const result = await FileSystem.downloadAsync(url, filePath);
-
-    //       if (result.status === 200) {
-    //         console.log("Downloaded file saved to:", filePath);
-    //       } else {
-    //         console.error("Download failed");
-    //       }
-    //     }
-    //   } else {
-    //     console.log("Document picker canceled or failed.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error selecting directory:", error);
-    // }
+  const saveIosFile = async (fileUri) => {
+    try {
+      await Sharing.shareAsync(fileUri, {
+        mimeType: "application/pdf",
+        dialogTitle: "Share PDF",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
   };
-  // const save = (uri) => {
-  //   shareAsync(uri);
-  // };
-
-  // const [ascending, setAscending] = useState(false);
-  // const [isFiltered, setIsFiltered] = useState(false);
-
-
-  // const asc = () => {
-  //   const sortedAscending = filterData
-  //     .slice()
-  //     .sort((a, b) => a.nama.localeCompare(b.nama));
-  //   setFilterData(sortedAscending);
-  //   setAscending(true);
-  //   setIsFiltered(true);
-  // };
-
-  // const desc = () => {
-  //   const sortedDescending = filterData
-  //     .slice()
-  //     .sort((a, b) => b.nama.localeCompare(a.nama));
-  //   setFilterData(sortedDescending);
-  //   setAscending(false);
-  //   setIsFiltered(true);
-  // };
-
-  console.log(filterData)
-
 
   return (
     <>
@@ -594,7 +573,7 @@ export const RangkumanIKU = () => {
               >
                 <BottomSheetView onLayout={handleContentLayout}>
                   <View style={{ flex: 1 }}>
-                  <View
+                    <View
                       style={{
                         marginHorizontal: 20,
                         marginTop: 10,
@@ -613,7 +592,6 @@ export const RangkumanIKU = () => {
                       </Text>
                       <TouchableOpacity
                         onPress={() => {
-                          console.log();
                           closeBottomSheet();
                         }}
                       >
@@ -728,7 +706,13 @@ export const RangkumanIKU = () => {
                       <></>
                     ) : null}
 
-                    <View style={{ height: 190, paddingVertical: 20, justifyContent: "flex-end" }}>
+                    <View
+                      style={{
+                        height: 190,
+                        paddingVertical: 20,
+                        justifyContent: "flex-end",
+                      }}
+                    >
                       <TouchableOpacity
                         style={{
                           width: "90%",
@@ -856,26 +840,33 @@ export const RangkumanIKU = () => {
                       borderRadius: 50,
                       padding: 5,
                     }}
-                    onPress={() => {openFile()}}
+                    onPress={() => {
+                      downloadFile(
+                        exportPegawai?.lists?.file,
+                        "application/vnd.ms-excel",
+                        "sample.xls"
+                      );
+                      // openFile();
+                    }}
                   >
                     <Icon name="get-app" size={24} color={COLORS.grey} />
                   </TouchableOpacity>
                 ) : null}
 
-                  <TouchableOpacity
+                <TouchableOpacity
                   onPress={!ascending ? asc : desc}
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 50,
-                      padding: 5,
-                    }}
-                  >
-                    <Ionicons
-                      name="filter-outline"
-                      size={24}
-                      color={COLORS.grey}
-                    />
-                  </TouchableOpacity>
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 50,
+                    padding: 5,
+                  }}
+                >
+                  <Ionicons
+                    name="filter-outline"
+                    size={24}
+                    color={COLORS.grey}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -901,7 +892,11 @@ export const RangkumanIKU = () => {
                 }}
               >
                 <FlatList
-                  data={(filterData && filterData.length > 0) || isFiltered ? filterData : pegawai?.lists }
+                  data={
+                    (filterData && filterData.length > 0) || isFiltered
+                      ? filterData
+                      : pegawai?.lists
+                  }
                   renderItem={({ item }) => (
                     <View key={item.id} style={{ marginBottom: 10 }}>
                       <ListDaftarPegawai item={item} token={token} />
@@ -926,7 +921,7 @@ export const RangkumanIKU = () => {
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}
                   onEndReached={loadMore}
-                  style={{ height: 320, }}
+                  style={{ height: 320 }}
                 />
 
                 {/* {pegawai.lists.length !== 0

@@ -42,7 +42,6 @@
     "expo-dev-client": "~2.2.1",
     "expo-device": "~5.2.1",
     "expo-document-picker": "~11.2.2",
-    "expo-file-dl": "^2.0.0",
     "expo-file-system": "~15.2.2",
     "expo-font": "~11.1.1",
     "expo-image-picker": "~14.1.1",
@@ -72,7 +71,6 @@
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-element-dropdown": "^2.3.1",
-    "react-native-fetch-blob": "^0.10.8",
     "react-native-final-tree-view": "^3.0.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "~2.9.0",
@@ -116,6 +114,10 @@
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "babel-plugin-inline-import": "^3.0.0"
+  },
+  "overrides": {
+    "@expo/config-plugins": "~6.0.0",
+    "@expo/prebuild-config": "~6.0.0"
   },
   "private": true
 }

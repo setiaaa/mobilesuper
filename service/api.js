@@ -30,8 +30,9 @@ const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
 const SUMMARY_ACCUMULATION = BASE_URL + "mp/admin/summary/accumulation/";
 const SUMMARY_REVIEW = BASE_URL + "mp/admin/summary/review/";
 const SUMMARY_BAD_USER = BASE_URL + "mp/admin/summary/bad-user/";
-const EXPORT_FILE_BY_QUARTER = BASE_URL + 'mp/admin/summary/export/users-by-quarter/';
-const EXPORT_FILE_BY_EMPLOYEE = BASE_URL + 'mp/admin/summary/export/pegawai/';
+const EXPORT_FILE_BY_QUARTER =
+  BASE_URL + "mp/admin/summary/export/users-by-quarter/";
+const EXPORT_FILE_BY_EMPLOYEE = BASE_URL + "mp/admin/summary/export/pegawai/";
 
 const GET_SUMMARY_COUNT = digitalSign + "document/summary/";
 const GET_SUMMARY_LIST = digitalSign + "document/summary/list/";
@@ -1481,10 +1482,6 @@ export const getListPostPegawai = createAsyncThunk(
 export const getListPegawaiExport = createAsyncThunk(
   "admin/iku/employee/export",
   async (data) => {
-    console.log(data.token);
-    console.log(data.year);
-    console.log(data.quarter);
-    console.log(data.unitKerja);
     const respon = await axios.get(
       `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
       {
