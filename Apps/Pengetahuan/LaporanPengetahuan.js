@@ -183,54 +183,6 @@ export const LaporanPengetahuan = () => {
     }
   };
 
-  const openFileEmployee = () => {
-    let remoteUrl = exportLaporan?.employee?.file;
-    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
-    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-      const contentURL = await FileSystem.getContentUriAsync(uri);
-      try {
-        if (Platform.OS == "android") {
-          await IntentLauncher.startActivityAsync(
-            "android.intent.action.VIEW",
-            {
-              data: contentURL,
-              flags: 1,
-              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            }
-          );
-        } else if (Platform.OS == "ios") {
-          Sharing.shareAsync(localPath);
-        }
-      } catch (error) {
-        Alert.alert("INFO", JSON.stringify(error));
-      }
-    });
-  };
-
-  const openFileQuarter = () => {
-    let remoteUrl = exportLaporan?.quarter?.file;
-    let localPath = `${FileSystem.documentDirectory}/samplee.xls`;
-    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-      const contentURL = await FileSystem.getContentUriAsync(uri);
-      try {
-        if (Platform.OS == "android") {
-          await IntentLauncher.startActivityAsync(
-            "android.intent.action.VIEW",
-            {
-              data: contentURL,
-              flags: 1,
-              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            }
-          );
-        } else if (Platform.OS == "ios") {
-          Sharing.shareAsync(localPath);
-        }
-      } catch (error) {
-        Alert.alert("INFO", JSON.stringify(error));
-      }
-    });
-  };
-
   const totalPost = summary?.total_post.total_post_per_quarter;
   const badUser = summary?.bad_user;
   const graph = summary?.graph;
