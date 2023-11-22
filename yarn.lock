@@ -25,40 +25,6 @@
     "@babel/highlight" "^7.22.13"
     chalk "^2.4.2"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-"@babel/compat-data@^7.12.13", "@babel/compat-data@^7.20.5", "@babel/compat-data@^7.22.6", "@babel/compat-data@^7.22.9", "@babel/compat-data@^7.23.3":
-  version "7.23.3"
-  resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.23.3.tgz"
-  integrity sha512-BmR4bWbDIoFJmJ9z2cZ8Gmm2MXgEDgjdWgpKmKWUt54UGFJdlj31ECtbaDvCG/qVdG3AQ1SfpZEs01lUFbzLOQ==
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-"@babel/code-frame@~7.10.4":
-  "integrity" "sha512-vG6SvB6oYEhvgisZNFRmRCUkLz11c7rp+tbNTynGqc6mS1d5ATd/sGyV6W0KZZnXRKMTzZDRgQT3Ou9jhpAfUg=="
-  "resolved" "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.10.4.tgz"
-  "version" "7.10.4"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 91a7917 (hide role task)
-=======
-=======
->>>>>>> fefcc3e (hide role task)
 "@babel/code-frame@^7.8.3", "@babel/code-frame@~7.10.4":
   version "7.10.4"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.10.4.tgz"
@@ -97,42 +63,10 @@
   dependencies:
     "@babel/highlight" "^7.10.4"
 
-"@babel/compat-data@^7.20.5", "@babel/compat-data@^7.22.6", "@babel/compat-data@^7.22.9", "@babel/compat-data@^7.23.3":
-  "integrity" "sha512-BmR4bWbDIoFJmJ9z2cZ8Gmm2MXgEDgjdWgpKmKWUt54UGFJdlj31ECtbaDvCG/qVdG3AQ1SfpZEs01lUFbzLOQ=="
-  "resolved" "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.23.3.tgz"
-  "version" "7.23.3"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 900c151 (cicil role apps menu)
->>>>>>> 0c60e0c (cicil role apps menu)
-
-"@babel/core@7.9.0":
-  version "7.9.0"
-  resolved "https://registry.npmjs.org/@babel/core/-/core-7.9.0.tgz"
-  integrity sha512-kWc7L0fw1xwvI0zi8OKVBuxRVefwGOrKSQMvrQ3dW+bIIavBY3/NpXmpjMy7bQnLgwgzWQZ8TlM57YHpHNHz4w==
-  dependencies:
-    "@babel/code-frame" "^7.8.3"
-    "@babel/generator" "^7.9.0"
-    "@babel/helper-module-transforms" "^7.9.0"
-    "@babel/helpers" "^7.9.0"
-    "@babel/parser" "^7.9.0"
-    "@babel/template" "^7.8.6"
-    "@babel/traverse" "^7.9.0"
-    "@babel/types" "^7.9.0"
-    convert-source-map "^1.7.0"
-    debug "^4.1.0"
-    gensync "^1.0.0-beta.1"
-    json5 "^2.1.2"
-    lodash "^4.17.13"
-    resolve "^1.3.2"
-    semver "^5.4.1"
-    source-map "^0.5.0"
-=======
->>>>>>> 900c151 (cicil role apps menu)
+"@babel/compat-data@^7.12.13", "@babel/compat-data@^7.20.5", "@babel/compat-data@^7.22.6", "@babel/compat-data@^7.22.9", "@babel/compat-data@^7.23.3":
+  version "7.23.3"
+  resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.23.3.tgz"
+  integrity sha512-BmR4bWbDIoFJmJ9z2cZ8Gmm2MXgEDgjdWgpKmKWUt54UGFJdlj31ECtbaDvCG/qVdG3AQ1SfpZEs01lUFbzLOQ==
 
 "@babel/core@^7.13.16", "@babel/core@^7.18.9", "@babel/core@^7.20.0":
   version "7.23.3"
@@ -155,19 +89,6 @@
     json5 "^2.2.3"
     semver "^6.3.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 91a7917 (hide role task)
-=======
-=======
->>>>>>> fefcc3e (hide role task)
 "@babel/core@7.9.0":
   version "7.9.0"
   resolved "https://registry.npmjs.org/@babel/core/-/core-7.9.0.tgz"
@@ -190,14 +111,6 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
->>>>>>> 91a7917 (hide role task)
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
 "@babel/generator@^7.20.0", "@babel/generator@^7.23.3", "@babel/generator@^7.9.0":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/generator/-/generator-7.23.3.tgz"
@@ -253,22 +166,6 @@
   dependencies:
     "@babel/types" "^7.22.15"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/helper-compilation-targets@^7.12.17", "@babel/helper-compilation-targets@^7.20.7", "@babel/helper-compilation-targets@^7.22.15", "@babel/helper-compilation-targets@^7.22.6":
   version "7.22.15"
   resolved "https://registry.npmjs.org/@babel/helper-compilation-targets/-/helper-compilation-targets-7.22.15.tgz"
@@ -311,22 +208,6 @@
     lru-cache "^5.1.1"
     semver "^6.3.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/helper-create-class-features-plugin@^7.12.13", "@babel/helper-create-class-features-plugin@^7.18.6", "@babel/helper-create-class-features-plugin@^7.22.15":
   version "7.22.15"
   resolved "https://registry.npmjs.org/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.22.15.tgz"
@@ -420,22 +301,6 @@
   dependencies:
     "@babel/types" "^7.23.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.22.15":
   version "7.22.15"
   resolved "https://registry.npmjs.org/@babel/helper-module-imports/-/helper-module-imports-7.22.15.tgz"
@@ -508,22 +373,6 @@
   dependencies:
     "@babel/types" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.12.13", "@babel/helper-plugin-utils@^7.14.5", "@babel/helper-plugin-utils@^7.18.6", "@babel/helper-plugin-utils@^7.18.9", "@babel/helper-plugin-utils@^7.20.2", "@babel/helper-plugin-utils@^7.22.5", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
   version "7.22.5"
   resolved "https://registry.npmjs.org/@babel/helper-plugin-utils/-/helper-plugin-utils-7.22.5.tgz"
@@ -609,22 +458,6 @@
   resolved "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.22.20.tgz"
   integrity sha512-Y4OZ+ytlatR8AI+8KZfKuL5urKp7qey08ha31L8b3BwewJAoJamTzyvxPR/5D+KkdJCGPq/+8TukHBlY10FX9A==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/helper-validator-option@^7.12.17", "@babel/helper-validator-option@^7.22.15":
   version "7.22.15"
   resolved "https://registry.npmjs.org/@babel/helper-validator-option/-/helper-validator-option-7.22.15.tgz"
@@ -670,22 +503,6 @@
     "@babel/template" "^7.22.15"
     "@babel/types" "^7.22.19"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/helpers@^7.23.2", "@babel/helpers@^7.9.0":
   version "7.23.2"
   resolved "https://registry.npmjs.org/@babel/helpers/-/helpers-7.23.2.tgz"
@@ -735,22 +552,6 @@
     chalk "^2.4.2"
     js-tokens "^4.0.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/parser@^7.13.16", "@babel/parser@^7.14.0", "@babel/parser@^7.20.0", "@babel/parser@^7.22.15", "@babel/parser@^7.23.3", "@babel/parser@^7.9.0":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.23.3.tgz"
@@ -811,22 +612,6 @@
     "@babel/helper-environment-visitor" "^7.22.20"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-proposal-async-generator-functions@^7.0.0", "@babel/plugin-proposal-async-generator-functions@^7.12.13":
   version "7.20.7"
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-async-generator-functions/-/plugin-proposal-async-generator-functions-7.20.7.tgz"
@@ -911,22 +696,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-export-default-from" "^7.23.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-proposal-export-namespace-from@^7.12.13":
   version "7.18.9"
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-export-namespace-from/-/plugin-proposal-export-namespace-from-7.18.9.tgz"
@@ -1009,22 +778,6 @@
     "@babel/plugin-syntax-object-rest-spread" "^7.8.3"
     "@babel/plugin-transform-parameters" "^7.20.7"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-proposal-optional-catch-binding@^7.0.0", "@babel/plugin-proposal-optional-catch-binding@^7.12.13":
   version "7.18.6"
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-optional-catch-binding/-/plugin-proposal-optional-catch-binding-7.18.6.tgz"
@@ -1064,22 +817,6 @@
     "@babel/helper-plugin-utils" "^7.18.6"
     "@babel/plugin-syntax-optional-catch-binding" "^7.8.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-proposal-optional-chaining@^7.0.0", "@babel/plugin-proposal-optional-chaining@^7.12.17", "@babel/plugin-proposal-optional-chaining@^7.13.12":
   version "7.21.0"
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.21.0.tgz"
@@ -1133,22 +870,6 @@
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-private-property-in-object/-/plugin-proposal-private-property-in-object-7.21.0-placeholder-for-preset-env.2.tgz"
   integrity sha512-SOSkfJDddaM7mak6cPEpswyTRnuRltl429hMraQEglW+OkovnCzsiszTmsrlY//qLFjCpQDFRvjdm2wA5pPm9w==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-proposal-unicode-property-regex@^7.12.13", "@babel/plugin-proposal-unicode-property-regex@^7.4.4":
   version "7.18.6"
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-unicode-property-regex/-/plugin-proposal-unicode-property-regex-7.18.6.tgz"
@@ -1216,22 +937,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-syntax-dynamic-import@^7.0.0", "@babel/plugin-syntax-dynamic-import@^7.8.0", "@babel/plugin-syntax-dynamic-import@^7.8.3":
   version "7.8.3"
   resolved "https://registry.npmjs.org/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.8.3.tgz"
@@ -1312,22 +1017,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-syntax-json-strings@^7.8.0", "@babel/plugin-syntax-json-strings@^7.8.3":
   version "7.8.3"
   resolved "https://registry.npmjs.org/@babel/plugin-syntax-json-strings/-/plugin-syntax-json-strings-7.8.3.tgz"
@@ -1380,22 +1069,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-syntax-nullish-coalescing-operator@^7.0.0", "@babel/plugin-syntax-nullish-coalescing-operator@^7.8.0", "@babel/plugin-syntax-nullish-coalescing-operator@^7.8.3":
   version "7.8.3"
   resolved "https://registry.npmjs.org/@babel/plugin-syntax-nullish-coalescing-operator/-/plugin-syntax-nullish-coalescing-operator-7.8.3.tgz"
@@ -1441,22 +1114,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-syntax-object-rest-spread@^7.0.0", "@babel/plugin-syntax-object-rest-spread@^7.8.0", "@babel/plugin-syntax-object-rest-spread@^7.8.3":
   version "7.8.3"
   resolved "https://registry.npmjs.org/@babel/plugin-syntax-object-rest-spread/-/plugin-syntax-object-rest-spread-7.8.3.tgz"
@@ -1546,22 +1203,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-syntax-top-level-await@^7.12.13", "@babel/plugin-syntax-top-level-await@^7.14.5":
   version "7.14.5"
   resolved "https://registry.npmjs.org/@babel/plugin-syntax-top-level-await/-/plugin-syntax-top-level-await-7.14.5.tgz"
@@ -1615,22 +1256,6 @@
     "@babel/helper-create-regexp-features-plugin" "^7.18.6"
     "@babel/helper-plugin-utils" "^7.18.6"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-arrow-functions@^7.0.0", "@babel/plugin-transform-arrow-functions@^7.12.13", "@babel/plugin-transform-arrow-functions@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.23.3.tgz"
@@ -1679,22 +1304,6 @@
     "@babel/helper-remap-async-to-generator" "^7.22.20"
     "@babel/plugin-syntax-async-generators" "^7.8.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-async-to-generator@^7.0.0", "@babel/plugin-transform-async-to-generator@^7.12.13", "@babel/plugin-transform-async-to-generator@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-async-to-generator/-/plugin-transform-async-to-generator-7.23.3.tgz"
@@ -1735,22 +1344,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/helper-remap-async-to-generator" "^7.22.20"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-block-scoped-functions@^7.0.0", "@babel/plugin-transform-block-scoped-functions@^7.12.13", "@babel/plugin-transform-block-scoped-functions@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-block-scoped-functions/-/plugin-transform-block-scoped-functions-7.23.3.tgz"
@@ -1829,22 +1422,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-class-static-block" "^7.14.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-classes@^7.0.0", "@babel/plugin-transform-classes@^7.12.13", "@babel/plugin-transform-classes@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-classes/-/plugin-transform-classes-7.23.3.tgz"
@@ -1891,22 +1468,6 @@
     "@babel/helper-split-export-declaration" "^7.22.6"
     globals "^11.1.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-computed-properties@^7.0.0", "@babel/plugin-transform-computed-properties@^7.12.13", "@babel/plugin-transform-computed-properties@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-computed-properties/-/plugin-transform-computed-properties-7.23.3.tgz"
@@ -1946,22 +1507,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/template" "^7.22.15"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-destructuring@^7.0.0", "@babel/plugin-transform-destructuring@^7.12.13", "@babel/plugin-transform-destructuring@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-destructuring/-/plugin-transform-destructuring-7.23.3.tgz"
@@ -2024,22 +1569,6 @@
     "@babel/helper-create-regexp-features-plugin" "^7.22.15"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-duplicate-keys@^7.12.13", "@babel/plugin-transform-duplicate-keys@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-duplicate-keys/-/plugin-transform-duplicate-keys-7.23.3.tgz"
@@ -2086,22 +1615,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-dynamic-import" "^7.8.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-exponentiation-operator@^7.12.13", "@babel/plugin-transform-exponentiation-operator@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-exponentiation-operator/-/plugin-transform-exponentiation-operator-7.23.3.tgz"
@@ -2157,22 +1670,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-flow" "^7.23.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-for-of@^7.0.0", "@babel/plugin-transform-for-of@^7.12.13", "@babel/plugin-transform-for-of@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-for-of/-/plugin-transform-for-of-7.23.3.tgz"
@@ -2244,22 +1741,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-json-strings" "^7.8.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-literals@^7.0.0", "@babel/plugin-transform-literals@^7.12.13", "@babel/plugin-transform-literals@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-literals/-/plugin-transform-literals-7.23.3.tgz"
@@ -2306,22 +1787,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-logical-assignment-operators" "^7.10.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-member-expression-literals@^7.0.0", "@babel/plugin-transform-member-expression-literals@^7.12.13", "@babel/plugin-transform-member-expression-literals@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-member-expression-literals/-/plugin-transform-member-expression-literals-7.23.3.tgz"
@@ -2384,22 +1849,6 @@
     "@babel/helper-module-transforms" "^7.23.3"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-modules-commonjs@^7.0.0", "@babel/plugin-transform-modules-commonjs@^7.12.13", "@babel/plugin-transform-modules-commonjs@^7.13.8", "@babel/plugin-transform-modules-commonjs@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-modules-commonjs/-/plugin-transform-modules-commonjs-7.23.3.tgz"
@@ -2440,22 +1889,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/helper-simple-access" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-modules-systemjs@^7.12.13", "@babel/plugin-transform-modules-systemjs@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-modules-systemjs/-/plugin-transform-modules-systemjs-7.23.3.tgz"
@@ -2497,22 +1930,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/helper-validator-identifier" "^7.22.20"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-modules-umd@^7.12.13", "@babel/plugin-transform-modules-umd@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-modules-umd/-/plugin-transform-modules-umd-7.23.3.tgz"
@@ -2552,22 +1969,6 @@
     "@babel/helper-module-transforms" "^7.23.3"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-named-capturing-groups-regex@^7.0.0", "@babel/plugin-transform-named-capturing-groups-regex@^7.12.13", "@babel/plugin-transform-named-capturing-groups-regex@^7.22.5":
   version "7.22.5"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-named-capturing-groups-regex/-/plugin-transform-named-capturing-groups-regex-7.22.5.tgz"
@@ -2607,22 +2008,6 @@
     "@babel/helper-create-regexp-features-plugin" "^7.22.5"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-new-target@^7.12.13", "@babel/plugin-transform-new-target@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-new-target/-/plugin-transform-new-target-7.23.3.tgz"
@@ -2695,22 +2080,6 @@
     "@babel/plugin-syntax-object-rest-spread" "^7.8.3"
     "@babel/plugin-transform-parameters" "^7.23.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-object-super@^7.0.0", "@babel/plugin-transform-object-super@^7.12.13", "@babel/plugin-transform-object-super@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-object-super/-/plugin-transform-object-super-7.23.3.tgz"
@@ -2767,22 +2136,6 @@
     "@babel/helper-skip-transparent-expression-wrappers" "^7.22.5"
     "@babel/plugin-syntax-optional-chaining" "^7.8.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-parameters@^7.0.0", "@babel/plugin-transform-parameters@^7.12.13", "@babel/plugin-transform-parameters@^7.20.7", "@babel/plugin-transform-parameters@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-parameters/-/plugin-transform-parameters-7.23.3.tgz"
@@ -2839,22 +2192,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-private-property-in-object" "^7.14.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-property-literals@^7.0.0", "@babel/plugin-transform-property-literals@^7.12.13", "@babel/plugin-transform-property-literals@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-property-literals/-/plugin-transform-property-literals-7.23.3.tgz"
@@ -2925,22 +2262,6 @@
     "@babel/plugin-syntax-jsx" "^7.22.5"
     "@babel/types" "^7.22.15"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-regenerator@^7.12.13", "@babel/plugin-transform-regenerator@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.23.3.tgz"
@@ -2980,22 +2301,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     regenerator-transform "^0.15.2"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-reserved-words@^7.12.13", "@babel/plugin-transform-reserved-words@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-reserved-words/-/plugin-transform-reserved-words-7.23.3.tgz"
@@ -3046,22 +2351,6 @@
     babel-plugin-polyfill-regenerator "^0.5.3"
     semver "^6.3.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-shorthand-properties@^7.0.0", "@babel/plugin-transform-shorthand-properties@^7.12.13", "@babel/plugin-transform-shorthand-properties@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-shorthand-properties/-/plugin-transform-shorthand-properties-7.23.3.tgz"
@@ -3124,22 +2413,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/helper-skip-transparent-expression-wrappers" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-sticky-regex@^7.0.0", "@babel/plugin-transform-sticky-regex@^7.12.13", "@babel/plugin-transform-sticky-regex@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-sticky-regex/-/plugin-transform-sticky-regex-7.23.3.tgz"
@@ -3246,22 +2519,6 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-typescript" "^7.23.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-unicode-escapes@^7.12.13", "@babel/plugin-transform-unicode-escapes@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-unicode-escapes/-/plugin-transform-unicode-escapes-7.23.3.tgz"
@@ -3308,22 +2565,6 @@
     "@babel/helper-create-regexp-features-plugin" "^7.22.15"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/plugin-transform-unicode-regex@^7.0.0", "@babel/plugin-transform-unicode-regex@^7.12.13", "@babel/plugin-transform-unicode-regex@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-unicode-regex/-/plugin-transform-unicode-regex-7.23.3.tgz"
@@ -3538,6 +2779,17 @@
     "@babel/helper-validator-option" "^7.22.15"
     "@babel/plugin-transform-flow-strip-types" "^7.23.3"
 
+"@babel/preset-modules@^0.1.3":
+  version "0.1.6"
+  resolved "https://registry.npmjs.org/@babel/preset-modules/-/preset-modules-0.1.6.tgz"
+  integrity sha512-ID2yj6K/4lKfhuU3+EX4UvNbIt7eACFbHmNUjzA+ep+B5971CknnA/9DEWKbRokfbbtblxxxXFJJrH47UEAMVg==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/plugin-proposal-unicode-property-regex" "^7.4.4"
+    "@babel/plugin-transform-dotall-regex" "^7.4.4"
+    "@babel/types" "^7.4.4"
+    esutils "^2.0.2"
+
 "@babel/preset-modules@0.1.6-no-external-plugins":
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3644,22 +2896,6 @@
   resolved "https://registry.npmjs.org/@babel/regjsgen/-/regjsgen-0.8.0.tgz"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.20.0", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.23.2"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.23.2.tgz"
@@ -3698,22 +2934,6 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/template@^7.0.0", "@babel/template@^7.22.15", "@babel/template@^7.8.6":
   version "7.22.15"
   resolved "https://registry.npmjs.org/@babel/template/-/template-7.22.15.tgz"
@@ -3754,22 +2974,6 @@
     "@babel/parser" "^7.22.15"
     "@babel/types" "^7.22.15"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/traverse@^7.20.0", "@babel/traverse@^7.23.2", "@babel/traverse@^7.23.3", "@babel/traverse@^7.9.0":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/traverse/-/traverse-7.23.3.tgz"
@@ -3817,22 +3021,6 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@babel/types@^7.12.17", "@babel/types@^7.20.0", "@babel/types@^7.22.15", "@babel/types@^7.22.19", "@babel/types@^7.22.5", "@babel/types@^7.23.0", "@babel/types@^7.23.3", "@babel/types@^7.4.4", "@babel/types@^7.9.0":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/types/-/types-7.23.3.tgz"
@@ -4020,15 +3208,7 @@
     node-forge "^1.2.1"
     nullthrows "^1.1.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"@expo/config-plugins@1.0.33", "@expo/config-plugins@^1.0.14", "@expo/config-plugins@~1.0.13":
+"@expo/config-plugins@^1.0.14", "@expo/config-plugins@1.0.33":
   version "1.0.33"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-1.0.33.tgz"
   integrity sha512-YQJop0c69LKD/6ZJJto7klS7TDmzgs44TI0Z5RBqesOjYlDwNFcQk2Rl2BaA1wlAYkH+rRrhN2+WjjSyD9HiPg==
@@ -4047,11 +3227,25 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
-"@expo/config-plugins@6.0.2", "@expo/config-plugins@~6.0.0":
-  version "6.0.2"
-  resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-6.0.2.tgz"
-  integrity sha512-Cn01fXMHwjU042EgO9oO3Mna0o/UCrW91MQLMbJa4pXM41CYGjNgVy1EVXiuRRx/upegHhvltBw5D+JaUm8aZQ==
-=======
+"@expo/config-plugins@~1.0.13":
+  version "1.0.33"
+  resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-1.0.33.tgz"
+  integrity sha512-YQJop0c69LKD/6ZJJto7klS7TDmzgs44TI0Z5RBqesOjYlDwNFcQk2Rl2BaA1wlAYkH+rRrhN2+WjjSyD9HiPg==
+  dependencies:
+    "@expo/config-types" "^40.0.0-beta.2"
+    "@expo/configure-splash-screen" "0.4.0"
+    "@expo/image-utils" "0.3.14"
+    "@expo/json-file" "8.2.30"
+    "@expo/plist" "0.0.13"
+    find-up "~5.0.0"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    resolve-from "^5.0.0"
+    slash "^3.0.0"
+    xcode "^3.0.1"
+    xml2js "^0.4.23"
+
 "@expo/config-plugins@~6.0.0", "@expo/config-plugins@6.0.2":
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4117,55 +3311,6 @@
   resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-48.0.0.tgz"
   integrity sha512-DwyV4jTy/+cLzXGAo1xftS6mVlSiLIWZjl9DjTCLPFVgNYQxnh7htPilRv4rBhiNs7KaznWqKU70+4zQoKVT9A==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"@expo/config-types@^49.0.0-alpha.1":
-  version "49.0.0"
-  resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-49.0.0.tgz"
-  integrity sha512-8eyREVi+K2acnMBe/rTIu1dOfyR2+AMnTLHlut+YpMV9OZPdeKV0Bs9BxAewGqBA2slslbQ9N39IS2CuTKpXkA==
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"@expo/config@8.0.5", "@expo/config@~8.0.0":
-  version "8.0.5"
-  resolved "https://registry.npmjs.org/@expo/config/-/config-8.0.5.tgz"
-  integrity sha512-3CnLmtAQUWqLZwTRliS23QoFwdyhg4AWtp6gZ0qfcXthR84RvlZKcCDQQIyPiRUgu8dZa+gQDcdRJtgE+GM5XQ==
-=======
-"@expo/config@~8.0.0", "@expo/config@8.0.5":
-  "integrity" "sha512-3CnLmtAQUWqLZwTRliS23QoFwdyhg4AWtp6gZ0qfcXthR84RvlZKcCDQQIyPiRUgu8dZa+gQDcdRJtgE+GM5XQ=="
-  "resolved" "https://registry.npmjs.org/@expo/config/-/config-8.0.5.tgz"
-  "version" "8.0.5"
->>>>>>> 900c151 (cicil role apps menu)
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "~6.0.0"
-    "@expo/config-types" "^48.0.0"
-    "@expo/json-file" "^8.2.37"
-    "getenv" "^1.0.0"
-    "glob" "7.1.6"
-    "require-from-string" "^2.0.2"
-    "resolve-from" "^5.0.0"
-    "semver" "7.3.2"
-    "slugify" "^1.3.4"
-    "sucrase" "^3.20.0"
-
-<<<<<<< HEAD
-=======
->>>>>>> a1522e9 (fix depedencis)
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 11ed1d4 (cicil role apps menu)
->>>>>>> 0c60e0c (cicil role apps menu)
 "@expo/config@^3.3.18":
   version "3.3.43"
   resolved "https://registry.npmjs.org/@expo/config/-/config-3.3.43.tgz"
@@ -4186,14 +3331,6 @@
     semver "7.3.2"
     slugify "^1.3.4"
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 1206c4f (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@expo/config@~8.0.0", "@expo/config@8.0.5":
   version "8.0.5"
   resolved "https://registry.npmjs.org/@expo/config/-/config-8.0.5.tgz"
@@ -4269,12 +3406,10 @@
     xcode "^3.0.0"
     xml-js "^1.6.11"
 
->>>>>>> 91a7917 (hide role task)
 "@expo/configure-splash-screen@0.4.0":
   version "0.4.0"
   resolved "https://registry.npmjs.org/@expo/configure-splash-screen/-/configure-splash-screen-0.4.0.tgz"
   integrity sha512-IDPnr2/DW1tYpDHqedFYNCDzRTf9HYinWFQ7fOelNZLuOCMoErLbSStA5zfkv46o69AgcCpteqgKHSoxsIBz5g==
->>>>>>> 1206c4f (hide role task)
   dependencies:
     color-string "^1.5.3"
     commander "^5.1.0"
@@ -4284,48 +3419,6 @@
     pngjs "^5.0.0"
     xcode "^3.0.0"
     xml-js "^1.6.11"
-
-<<<<<<< HEAD
->>>>>>> 91a7917 (hide role task)
-"@expo/configure-splash-screen@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/@expo/configure-splash-screen/-/configure-splash-screen-0.4.0.tgz"
-  integrity sha512-IDPnr2/DW1tYpDHqedFYNCDzRTf9HYinWFQ7fOelNZLuOCMoErLbSStA5zfkv46o69AgcCpteqgKHSoxsIBz5g==
-=======
-"@expo/configure-splash-screen@^0.6.0":
-<<<<<<< HEAD
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/@expo/configure-splash-screen/-/configure-splash-screen-0.6.0.tgz"
-  integrity sha512-4DyPoNXJqx9bN4nEwF3HQreo//ECu7gDe1Xor3dnnzFm9P/VDxAKdbEhA0n+R6fgkNfT2onVHWijqvdpTS3Xew==
->>>>>>> 0263688 (linimasa)
-=======
-  "integrity" "sha512-4DyPoNXJqx9bN4nEwF3HQreo//ECu7gDe1Xor3dnnzFm9P/VDxAKdbEhA0n+R6fgkNfT2onVHWijqvdpTS3Xew=="
-  "resolved" "https://registry.npmjs.org/@expo/configure-splash-screen/-/configure-splash-screen-0.6.0.tgz"
-  "version" "0.6.0"
->>>>>>> 0c60e0c (cicil role apps menu)
-  dependencies:
-    "color-string" "^1.5.3"
-    "commander" "^5.1.0"
-    "fs-extra" "^9.0.0"
-    "glob" "^7.1.6"
-    "lodash" "^4.17.15"
-    "pngjs" "^5.0.0"
-    "xcode" "^3.0.0"
-    "xml-js" "^1.6.11"
-
-"@expo/configure-splash-screen@^0.6.0":
-  "integrity" "sha512-4DyPoNXJqx9bN4nEwF3HQreo//ECu7gDe1Xor3dnnzFm9P/VDxAKdbEhA0n+R6fgkNfT2onVHWijqvdpTS3Xew=="
-  "resolved" "https://registry.npmjs.org/@expo/configure-splash-screen/-/configure-splash-screen-0.6.0.tgz"
-  "version" "0.6.0"
-  dependencies:
-    "color-string" "^1.5.3"
-    "commander" "^5.1.0"
-    "fs-extra" "^9.0.0"
-    "glob" "^7.1.6"
-    "lodash" "^4.17.15"
-    "pngjs" "^5.0.0"
-    "xcode" "^3.0.0"
-    "xml-js" "^1.6.11"
 
 "@expo/dev-server@0.3.0":
   version "0.3.0"
@@ -4368,7 +3461,7 @@
     tmp "^0.0.33"
     tslib "^2.4.0"
 
-"@expo/image-utils@0.3.14", "@expo/image-utils@^0.3.10":
+"@expo/image-utils@^0.3.10", "@expo/image-utils@0.3.14":
   version "0.3.14"
   resolved "https://registry.npmjs.org/@expo/image-utils/-/image-utils-0.3.14.tgz"
   integrity sha512-n+JkLZ71CWuNKLVVsPTzMGRwmbeKiVQw/2b99Ro7znCKzJy3tyE5T2C6WBvYh/5h/hjg8TqEODjXXWucRIzMXA==
@@ -4417,12 +3510,6 @@
     json5 "^2.2.2"
     write-file-atomic "^2.3.0"
 
->>>>>>> 91a7917 (hide role task)
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> fefcc3e (hide role task)
 "@expo/json-file@8.2.30":
   version "8.2.30"
   resolved "https://registry.npmjs.org/@expo/json-file/-/json-file-8.2.30.tgz"
@@ -4432,35 +3519,6 @@
     fs-extra "9.0.0"
     json5 "^1.0.1"
     write-file-atomic "^2.3.0"
-
-"@expo/json-file@^8.2.37", "@expo/json-file@~8.2.37":
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "integrity" "sha512-YaH6rVg11JoTS2P6LsW7ybS2CULjf40AbnAHw2F1eDPuheprNjARZMnyHFPkKv7GuxCy+B9GPcbOKgc4cgA80Q=="
-  "resolved" "https://registry.npmjs.org/@expo/json-file/-/json-file-8.2.37.tgz"
-  "version" "8.2.37"
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    "json5" "^2.2.2"
-    "write-file-atomic" "^2.3.0"
-=======
-  version "8.2.37"
-  resolved "https://registry.npmjs.org/@expo/json-file/-/json-file-8.2.37.tgz"
-  integrity sha512-YaH6rVg11JoTS2P6LsW7ybS2CULjf40AbnAHw2F1eDPuheprNjARZMnyHFPkKv7GuxCy+B9GPcbOKgc4cgA80Q==
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    json5 "^2.2.2"
-    write-file-atomic "^2.3.0"
->>>>>>> 0263688 (linimasa)
-=======
-  "integrity" "sha512-YaH6rVg11JoTS2P6LsW7ybS2CULjf40AbnAHw2F1eDPuheprNjARZMnyHFPkKv7GuxCy+B9GPcbOKgc4cgA80Q=="
-  "resolved" "https://registry.npmjs.org/@expo/json-file/-/json-file-8.2.37.tgz"
-  "version" "8.2.37"
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    "json5" "^2.2.2"
-    "write-file-atomic" "^2.3.0"
->>>>>>> 0c60e0c (cicil role apps menu)
 
 "@expo/metro-config@~0.7.0":
   version "0.7.1"
@@ -4562,12 +3620,6 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
->>>>>>> 91a7917 (hide role task)
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> fefcc3e (hide role task)
 "@expo/plist@0.0.13":
   version "0.0.13"
   resolved "https://registry.npmjs.org/@expo/plist/-/plist-0.0.13.tgz"
@@ -4576,35 +3628,6 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
     xmldom "~0.5.0"
-
-"@expo/plist@^0.0.20":
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "integrity" "sha512-UXQ4LXCfTZ580LDHGJ5q62jSTwJFFJ1GqBu8duQMThiHKWbMJ+gajJh6rsB6EJ3aLUr9wcauxneL5LVRFxwBEA=="
-  "resolved" "https://registry.npmjs.org/@expo/plist/-/plist-0.0.20.tgz"
-  "version" "0.0.20"
-  dependencies:
-    "@xmldom/xmldom" "~0.7.7"
-    "base64-js" "^1.2.3"
-    "xmlbuilder" "^14.0.0"
-=======
-  version "0.0.20"
-  resolved "https://registry.npmjs.org/@expo/plist/-/plist-0.0.20.tgz"
-  integrity sha512-UXQ4LXCfTZ580LDHGJ5q62jSTwJFFJ1GqBu8duQMThiHKWbMJ+gajJh6rsB6EJ3aLUr9wcauxneL5LVRFxwBEA==
-  dependencies:
-    "@xmldom/xmldom" "~0.7.7"
-    base64-js "^1.2.3"
-    xmlbuilder "^14.0.0"
->>>>>>> 0263688 (linimasa)
-=======
-  "integrity" "sha512-UXQ4LXCfTZ580LDHGJ5q62jSTwJFFJ1GqBu8duQMThiHKWbMJ+gajJh6rsB6EJ3aLUr9wcauxneL5LVRFxwBEA=="
-  "resolved" "https://registry.npmjs.org/@expo/plist/-/plist-0.0.20.tgz"
-  "version" "0.0.20"
-  dependencies:
-    "@xmldom/xmldom" "~0.7.7"
-    "base64-js" "^1.2.3"
-    "xmlbuilder" "^14.0.0"
->>>>>>> 0c60e0c (cicil role apps menu)
 
 "@expo/prebuild-config@6.0.1":
   version "6.0.1"
@@ -5311,22 +4334,6 @@
   dependencies:
     serve-static "^1.13.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@react-native-community/cli-doctor@^10.2.4":
   version "10.2.5"
   resolved "https://registry.npmjs.org/@react-native-community/cli-doctor/-/cli-doctor-10.2.5.tgz"
@@ -5476,56 +4483,10 @@
     glob "^7.1.3"
     ora "^5.4.1"
 
-"@react-native-community/cli-platform-ios@^10.2.5":
-  version "10.2.5"
-  resolved "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.5.tgz"
-  integrity sha512-hq+FZZuSBK9z82GLQfzdNDl8vbFx5UlwCLFCuTtNCROgBoapFtVZQKRP2QBftYNrQZ0dLAb01gkwxagHsQCFyg==
-  dependencies:
-    "@react-native-community/cli-tools" "^10.1.1"
-    chalk "^4.1.2"
-    execa "^1.0.0"
-    fast-xml-parser "^4.0.12"
-    glob "^7.1.3"
-    ora "^5.4.1"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-"@react-native-community/cli-plugin-metro@^10.2.3":
-  version "10.2.3"
-  resolved "https://registry.npmjs.org/@react-native-community/cli-plugin-metro/-/cli-plugin-metro-10.2.3.tgz"
-  integrity sha512-jHi2oDuTePmW4NEyVT8JEGNlIYcnFXCSV2ZMp4rnDrUk4TzzyvS3IMvDlESEmG8Kry8rvP0KSUx/hTpy37Sbkw==
-=======
-"@react-native-community/cli-platform-ios@10.2.1":
-  "integrity" "sha512-hz4zu4Y6eyj7D0lnZx8Mf2c2si8y+zh/zUTgCTaPPLzQD8jSZNNBtUUiA1cARm2razpe8marCZ1QbTMAGbf3mg=="
-  "resolved" "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.1.tgz"
-  "version" "10.2.1"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 91a7917 (hide role task)
-=======
-=======
->>>>>>> fefcc3e (hide role task)
 "@react-native-community/cli-platform-ios@10.2.4":
   version "10.2.4"
   resolved "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.4.tgz"
   integrity sha512-/6K+jeRhcGojFIJMWMXV2eY5n/In+YUzBr/DKWQOeHBOHkESRNheG310xSAIjgB46YniSSUKhSyeuhalTbm9OQ==
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
   dependencies:
     "@react-native-community/cli-tools" "^10.1.1"
     chalk "^4.1.2"
@@ -5534,38 +4495,6 @@
     glob "^7.1.3"
     ora "^5.4.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
-  dependencies:
-    "@react-native-community/cli-tools" "^10.1.1"
-    chalk "^4.1.2"
-    execa "^1.0.0"
-    fast-xml-parser "^4.0.12"
-    glob "^7.1.3"
-    ora "^5.4.1"
-
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-<<<<<<< HEAD
->>>>>>> fefcc3e (hide role task)
-"@react-native-community/cli-plugin-metro@^10.2.2":
-  "integrity" "sha512-jHi2oDuTePmW4NEyVT8JEGNlIYcnFXCSV2ZMp4rnDrUk4TzzyvS3IMvDlESEmG8Kry8rvP0KSUx/hTpy37Sbkw=="
-  "resolved" "https://registry.npmjs.org/@react-native-community/cli-plugin-metro/-/cli-plugin-metro-10.2.3.tgz"
-  "version" "10.2.3"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> fefcc3e (hide role task)
 "@react-native-community/cli-plugin-metro@^10.2.3":
   version "10.2.3"
   resolved "https://registry.npmjs.org/@react-native-community/cli-plugin-metro/-/cli-plugin-metro-10.2.3.tgz"
@@ -5633,53 +4562,10 @@
   dependencies:
     joi "^17.2.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 "@react-native-community/cli@10.2.4":
   version "10.2.4"
   resolved "https://registry.npmjs.org/@react-native-community/cli/-/cli-10.2.4.tgz"
   integrity sha512-E9BUDHfLEsnjkjeJqECuCjl4E/1Ox9Nl6hkQBhEqjZm4AaQxgU7M6AyFfOgaXn5v3am16/R4ZOUTrJnGJWS3GA==
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-=======
-"@react-native-community/cli@10.2.2":
-  "integrity" "sha512-aZVcVIqj+OG6CrliR/Yn8wHxrvyzbFBY9cj7n0MvRw/P54QUru2nNqUTSSbqv0Qaa297yHJbe6kFDojDMSTM8Q=="
-  "resolved" "https://registry.npmjs.org/@react-native-community/cli/-/cli-10.2.2.tgz"
-  "version" "10.2.2"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 900c151 (cicil role apps menu)
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
   dependencies:
     "@react-native-community/cli-clean" "^10.1.1"
     "@react-native-community/cli-config" "^10.1.1"
@@ -5716,42 +4602,7 @@
   resolved "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-"@react-native/normalize-color@*", "@react-native/normalize-color@2.1.0", "@react-native/normalize-color@^2.0.0", "@react-native/normalize-color@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/@react-native/normalize-color/-/normalize-color-2.1.0.tgz"
-  integrity sha512-Z1jQI2NpdFJCVgpY+8Dq/Bt3d+YUi1928Q+/CZm/oh66fzM0RUl54vvuXlPJKybH4pdCZey1eDTPaLHkMPNgWA==
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"@react-native/normalize-color@^2.0.0", "@react-native/normalize-color@^2.1.0", "@react-native/normalize-color@2.1.0":
-  "integrity" "sha512-Z1jQI2NpdFJCVgpY+8Dq/Bt3d+YUi1928Q+/CZm/oh66fzM0RUl54vvuXlPJKybH4pdCZey1eDTPaLHkMPNgWA=="
-  "resolved" "https://registry.npmjs.org/@react-native/normalize-color/-/normalize-color-2.1.0.tgz"
-  "version" "2.1.0"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
 "@react-native/normalize-color@*", "@react-native/normalize-color@^2.0.0", "@react-native/normalize-color@^2.1.0", "@react-native/normalize-color@2.1.0":
-=======
-"@react-native/normalize-color@*", "@react-native/normalize-color@2.1.0", "@react-native/normalize-color@^2.0.0", "@react-native/normalize-color@^2.1.0":
->>>>>>> 0263688 (linimasa)
   version "2.1.0"
   resolved "https://registry.npmjs.org/@react-native/normalize-color/-/normalize-color-2.1.0.tgz"
   integrity sha512-Z1jQI2NpdFJCVgpY+8Dq/Bt3d+YUi1928Q+/CZm/oh66fzM0RUl54vvuXlPJKybH4pdCZey1eDTPaLHkMPNgWA==
@@ -6328,11 +5179,6 @@ ansi-styles@^5.0.0:
   resolved "https://registry.npmjs.org/ansi-styles/-/ansi-styles-5.2.0.tgz"
   integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 any-base@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/any-base/-/any-base-1.1.0.tgz"
@@ -6424,22 +5270,6 @@ asap@~2.0.3, asap@~2.0.6:
   resolved "https://registry.npmjs.org/asap/-/asap-2.0.6.tgz"
   integrity sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 assert@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/assert/-/assert-2.1.0.tgz"
@@ -6514,22 +5344,6 @@ at-least-node@^1.0.0:
   resolved "https://registry.npmjs.org/at-least-node/-/at-least-node-1.0.0.tgz"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 available-typed-arrays@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
@@ -6677,22 +5491,6 @@ babel-preset-fbjs@^3.4.0:
     "@babel/plugin-transform-template-literals" "^7.0.0"
     babel-plugin-syntax-trailing-function-commas "^7.0.0-beta.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 badgin@^1.1.5:
   version "1.2.3"
   resolved "https://registry.npmjs.org/badgin/-/badgin-1.2.3.tgz"
@@ -6815,12 +5613,6 @@ base-64@^1.0.0:
   resolved "https://registry.npmjs.org/base-64/-/base-64-1.0.0.tgz"
   integrity sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==
 
-<<<<<<< HEAD
-"base64-js@^1.0.2", "base64-js@^1.1.2", "base64-js@^1.2.3", "base64-js@^1.3.1", "base64-js@^1.5.1":
-  "integrity" "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA=="
-  "resolved" "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz"
-  "version" "1.5.1"
-=======
 base-64@0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/base-64/-/base-64-0.1.0.tgz"
@@ -6858,22 +5650,6 @@ blueimp-md5@^2.10.0:
   resolved "https://registry.npmjs.org/blueimp-md5/-/blueimp-md5-2.19.0.tgz"
   integrity sha512-DRQrD6gJyy8FbiE4s+bDoXS9hiW3Vbx5uCdwvcCf3zLHL+Iv7LtGHLpr+GZV8rHG8tK766FGYBwRbu8pELTt+w==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 bmp-js@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/bmp-js/-/bmp-js-0.1.0.tgz"
@@ -7154,22 +5930,6 @@ buffer-alloc@^1.1.0:
     buffer-alloc-unsafe "^1.1.0"
     buffer-fill "^1.0.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 buffer-equal@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/buffer-equal/-/buffer-equal-0.0.1.tgz"
@@ -7216,75 +5976,14 @@ buffer-from@^1.0.0:
   resolved "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz"
   integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-buffer@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/buffer/-/buffer-5.1.0.tgz"
-  integrity sha512-YkIRgwsZwJWTnyQrsBTWefizHh+8GYj3kbL1BTiAQ/9pwpino0G7B2gp5tx/FUBqUlvtxV85KNR3mwfAtv15Yw==
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"buffer@^5.5.0":
-  "integrity" "sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ=="
-  "resolved" "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz"
-  "version" "5.7.1"
-<<<<<<< HEAD
-<<<<<<< HEAD
-  dependencies:
-    "base64-js" "^1.3.1"
-    "ieee754" "^1.1.13"
-
-"buffer@5.1.0":
-  "integrity" "sha512-YkIRgwsZwJWTnyQrsBTWefizHh+8GYj3kbL1BTiAQ/9pwpino0G7B2gp5tx/FUBqUlvtxV85KNR3mwfAtv15Yw=="
-  "resolved" "https://registry.npmjs.org/buffer/-/buffer-5.1.0.tgz"
-  "version" "5.1.0"
->>>>>>> 900c151 (cicil role apps menu)
-  dependencies:
-    "base64-js" "^1.0.2"
-    "ieee754" "^1.1.4"
-
-<<<<<<< HEAD
-buffer@^5.2.0, buffer@^5.5.0:
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> fefcc3e (hide role task)
 buffer@^5.2.0:
->>>>>>> 91a7917 (hide role task)
   version "5.7.1"
   resolved "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
   dependencies:
-    "base64-js" "^1.3.1"
-    "ieee754" "^1.1.13"
+    base64-js "^1.3.1"
+    ieee754 "^1.1.13"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 buffer@^5.5.0:
 =======
 =======
@@ -7313,23 +6012,6 @@ buffer@^5.2.0, buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 91a7917 (hide role task)
-=======
-=======
-=======
-buffer@^5.5.0:
-  version "5.7.1"
-  resolved "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz"
-  integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
-  dependencies:
-    base64-js "^1.3.1"
-    ieee754 "^1.1.13"
-
->>>>>>> fefcc3e (hide role task)
->>>>>>> 91a7917 (hide role task)
 buffer@^6.0.3:
   version "6.0.3"
   resolved "https://registry.npmjs.org/buffer/-/buffer-6.0.3.tgz"
@@ -7338,12 +6020,6 @@ buffer@^6.0.3:
     base64-js "^1.3.1"
     ieee754 "^1.2.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fefcc3e (hide role task)
-=======
 buffer@5.1.0:
   version "5.1.0"
   resolved "https://registry.npmjs.org/buffer/-/buffer-5.1.0.tgz"
@@ -7450,22 +6126,6 @@ calendarize@^1.1.1:
   resolved "https://registry.npmjs.org/calendarize/-/calendarize-1.1.1.tgz"
   integrity sha512-C2JyBAtNp2NG4DX4fA1EILggLt/5PlYzvQR0crHktoAPBc9TlIfdhzg7tWekCbe+pH6+9qoK+FhPbi+vYJJlqw==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 call-bind@^1.0.0, call-bind@^1.0.2, call-bind@^1.0.4:
   version "1.0.5"
   resolved "https://registry.npmjs.org/call-bind/-/call-bind-1.0.5.tgz"
@@ -8013,22 +6673,6 @@ convert-source-map@^2.0.0:
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 core-js-compat@^3.31.0, core-js-compat@^3.33.1, core-js-compat@^3.8.0:
   version "3.33.2"
   resolved "https://registry.npmjs.org/core-js-compat/-/core-js-compat-3.33.2.tgz"
@@ -8686,14 +7330,6 @@ defaults@^1.0.3:
   dependencies:
     clone "^1.0.2"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 define-data-property@^1.0.1, define-data-property@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.1.tgz"
@@ -8739,22 +7375,6 @@ define-lazy-prop@^2.0.0:
   resolved "https://registry.npmjs.org/define-lazy-prop/-/define-lazy-prop-2.0.0.tgz"
   integrity sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 define-properties@^1.1.3, define-properties@^1.1.4:
   version "1.2.1"
   resolved "https://registry.npmjs.org/define-properties/-/define-properties-1.2.1.tgz"
@@ -8824,22 +7444,6 @@ depd@2.0.0:
   resolved "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz"
   integrity sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 deprecated-react-native-prop-types@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-2.3.0.tgz"
@@ -8933,22 +7537,6 @@ dom-serializer@^2.0.0:
     domhandler "^5.0.2"
     entities "^4.2.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 dom-walk@^0.1.0:
   version "0.1.2"
   resolved "https://registry.npmjs.org/dom-walk/-/dom-walk-0.1.2.tgz"
@@ -9302,22 +7890,6 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 exif-parser@^0.1.12:
   version "0.1.12"
   resolved "https://registry.npmjs.org/exif-parser/-/exif-parser-0.1.12.tgz"
@@ -9492,45 +8064,12 @@ expo-constants@~14.3.0:
     "@expo/config" "~8.0.0"
     uuid "^3.3.2"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
-expo-constants@~14.5.0:
-  version "14.5.1"
-  resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-14.5.1.tgz"
-  integrity sha512-06OKXQmKI0vuje++6lm7w1kO3rKsZAHio/4d9hwQuVAtExJ6RM92BnpzkDAV16ZheVN/FHKzNyY1BYLqXfujMw==
-  dependencies:
-    "@expo/config" "~8.2.0"
-<<<<<<< HEAD
-=======
-=======
-    uuid "^3.3.2"
-
->>>>>>> 0263688 (linimasa)
 expo-constants@10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-10.0.0.tgz"
   integrity sha512-UA+mCQlwdqKTR/ND6qs+Cezabq7eXrurz8vh7tHBew72tQ2mNcuq/MNIEO4RjHg1El0f2C6LwZcm01hcpZ3w5A==
   dependencies:
     "@expo/config" "^3.3.18"
->>>>>>> a1522e9 (fix depedencis)
     uuid "^3.3.2"
 
 expo-dev-client@~2.2.1:
@@ -9614,22 +8153,6 @@ expo-eas-client@~0.5.0:
   resolved "https://registry.npmjs.org/expo-eas-client/-/expo-eas-client-0.5.1.tgz"
   integrity sha512-i3L/iwhI6cFhSUpVsCxSU5qehNznL/rQFYoof6qUIh3CMyijCuTEwjEhwbw2a5W6obPBzQUXbomMSFDO6D5/0Q==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 expo-file-dl@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/expo-file-dl/-/expo-file-dl-2.0.0.tgz"
@@ -9712,22 +8235,6 @@ expo-image-picker@~14.1.1:
   dependencies:
     expo-image-loader "~4.1.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 expo-intent-launcher@~10.5.2:
   version "10.5.2"
   resolved "https://registry.npmjs.org/expo-intent-launcher/-/expo-intent-launcher-10.5.2.tgz"
@@ -9863,22 +8370,6 @@ expo-local-authentication@~13.3.0:
   dependencies:
     invariant "^2.2.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 expo-location@~15.1.1:
   version "15.1.1"
   resolved "https://registry.npmjs.org/expo-location/-/expo-location-15.1.1.tgz"
@@ -9922,22 +8413,6 @@ expo-manifests@~0.5.0:
   dependencies:
     expo-json-utils "~0.5.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 expo-media-library@^11.0.0:
   version "11.0.0"
   resolved "https://registry.npmjs.org/expo-media-library/-/expo-media-library-11.0.0.tgz"
@@ -9992,39 +8467,10 @@ expo-modules-autolinking@1.2.0:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-"expo-modules-core@1.2.7":
-  "integrity" "sha512-sulqn2M8+tIdxi6QFkKppDEzbePAscgE2LEHocYoQOgHxJpeT7axE0Hkzc+81EeviQilZzGeFZMtNMGh3c9yJg=="
-  "resolved" "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-1.2.7.tgz"
-  "version" "1.2.7"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 91a7917 (hide role task)
-=======
-  dependencies:
-    "compare-versions" "^3.4.0"
-    "invariant" "^2.2.4"
-=======
-=======
 expo-modules-core@~0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.2.0.tgz"
   integrity sha512-inpfZ5X/BaTtbj2wG9PA9AC0MN8VyId6KSRlVuEg7+ziurHBy/kKDFxpOddUokhwiln2uhoYPSStJjR/tKypdw==
->>>>>>> fefcc3e (hide role task)
 
 expo-modules-core@1.2.7:
   version "1.2.7"
@@ -10035,53 +8481,6 @@ expo-modules-core@1.2.7:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-expo-modules-core@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.2.0.tgz"
-  integrity sha512-inpfZ5X/BaTtbj2wG9PA9AC0MN8VyId6KSRlVuEg7+ziurHBy/kKDFxpOddUokhwiln2uhoYPSStJjR/tKypdw==
-
-=======
-<<<<<<< HEAD
->>>>>>> 0263688 (linimasa)
-expo-modules-core@1.2.7:
-  version "1.2.7"
-  resolved "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-1.2.7.tgz"
-  integrity sha512-sulqn2M8+tIdxi6QFkKppDEzbePAscgE2LEHocYoQOgHxJpeT7axE0Hkzc+81EeviQilZzGeFZMtNMGh3c9yJg==
-<<<<<<< HEAD
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-  dependencies:
-    compare-versions "^3.4.0"
-    invariant "^2.2.4"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-expo-modules-core@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.2.0.tgz"
-  integrity sha512-inpfZ5X/BaTtbj2wG9PA9AC0MN8VyId6KSRlVuEg7+ziurHBy/kKDFxpOddUokhwiln2uhoYPSStJjR/tKypdw==
-
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 expo-notifications@^0.9.0:
   version "0.9.0"
   resolved "https://registry.npmjs.org/expo-notifications/-/expo-notifications-0.9.0.tgz"
@@ -10317,22 +8716,6 @@ fetch-retry@^4.1.1:
   resolved "https://registry.npmjs.org/fetch-retry/-/fetch-retry-4.1.1.tgz"
   integrity sha512-e6eB7zN6UBSwGVwrbWVH+gdLnkW9WwHhmq2YDK1Sh30pzx1onRVGBvogTlUeWxwTa+L86NYdo4hFkh7O8ZjSnA==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 file-type@^9.0.0:
   version "9.0.0"
   resolved "https://registry.npmjs.org/file-type/-/file-type-9.0.0.tgz"
@@ -10507,22 +8890,6 @@ fontfaceobserver@^2.1.0:
   resolved "https://registry.npmjs.org/fontfaceobserver/-/fontfaceobserver-2.3.0.tgz"
   integrity sha512-6FPvD/IVyT4ZlNe7Wcn5Fb/4ChigpucKYSvD6a+0iMoLn2inpo711eyIcKjmDtE5XNcgAkSH9uN/nfAeZzHEfg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 for-each@^0.3.3:
   version "0.3.3"
   resolved "https://registry.npmjs.org/for-each/-/for-each-0.3.3.tgz"
@@ -10639,19 +9006,6 @@ fs-extra@^8.1.0, fs-extra@~8.1.0:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-"fs-extra@^9.0.0":
-  "integrity" "sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ=="
-  "resolved" "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
-  "version" "9.1.0"
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 91a7917 (hide role task)
 fs-extra@^9.0.0, fs-extra@^9.0.1:
   version "9.1.0"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
@@ -11034,13 +9388,10 @@ glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 glob@7.0.6:
   version "7.0.6"
   resolved "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
   integrity sha512-f8c0rE8JiCxpa52kWPAOa3ZaYEnzofDzCQLCn3Vdk0Z5OVLq3BsRFJI4S4ykpeVW6QMGBUkMeUpoEgWnMTnw5Q==
->>>>>>> 0263688 (linimasa)
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
@@ -11049,83 +9400,6 @@ glob@7.0.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@7.1.6, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
-  version "7.1.6"
-  resolved "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz"
-  integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.0.4"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-glob@7.0.6:
-  version "7.0.6"
-  resolved "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
-  integrity sha512-f8c0rE8JiCxpa52kWPAOa3ZaYEnzofDzCQLCn3Vdk0Z5OVLq3BsRFJI4S4ykpeVW6QMGBUkMeUpoEgWnMTnw5Q==
-=======
-glob@^6.0.1:
-  version "6.0.4"
-  resolved "https://registry.npmjs.org/glob/-/glob-6.0.4.tgz"
-  integrity sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A==
-<<<<<<< HEAD
->>>>>>> 0263688 (linimasa)
-=======
-=======
-"glob@^6.0.1":
-  "integrity" "sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A=="
-  "resolved" "https://registry.npmjs.org/glob/-/glob-6.0.4.tgz"
-  "version" "6.0.4"
->>>>>>> 900c151 (cicil role apps menu)
->>>>>>> 0c60e0c (cicil role apps menu)
-  dependencies:
-    "inflight" "^1.0.4"
-    "inherits" "2"
-    "minimatch" "2 || 3"
-    "once" "^1.3.0"
-    "path-is-absolute" "^1.0.0"
-
-<<<<<<< HEAD
-glob@7.1.6, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
-  version "7.1.6"
-  resolved "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz"
-  integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.0.4"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
-glob@^6.0.1:
-  version "6.0.4"
-  resolved "https://registry.npmjs.org/glob/-/glob-6.0.4.tgz"
-  integrity sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A==
-=======
-"glob@^6.0.1":
-  "integrity" "sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A=="
-  "resolved" "https://registry.npmjs.org/glob/-/glob-6.0.4.tgz"
-  "version" "6.0.4"
->>>>>>> 900c151 (cicil role apps menu)
-  dependencies:
-    "inflight" "^1.0.4"
-    "inherits" "2"
-    "minimatch" "2 || 3"
-    "once" "^1.3.0"
-    "path-is-absolute" "^1.0.0"
-
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-<<<<<<< HEAD
 global@~4.4.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/global/-/global-4.4.0.tgz"
@@ -11133,30 +9407,7 @@ global@~4.4.0:
   dependencies:
     min-document "^2.19.0"
     process "^0.11.10"
-=======
-"glob@^7.1.2", "glob@^7.1.3", "glob@^7.1.4", "glob@^7.1.6", "glob@7.1.6":
-  "integrity" "sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA=="
-  "resolved" "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz"
-  "version" "7.1.6"
-<<<<<<< HEAD
-  dependencies:
-    "fs.realpath" "^1.0.0"
-    "inflight" "^1.0.4"
-    "inherits" "2"
-    "minimatch" "^3.0.4"
-    "once" "^1.3.0"
-    "path-is-absolute" "^1.0.0"
->>>>>>> 900c151 (cicil role apps menu)
 
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-"globals@^11.1.0":
-  "integrity" "sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA=="
-  "resolved" "https://registry.npmjs.org/globals/-/globals-11.12.0.tgz"
-  "version" "11.12.0"
-<<<<<<< HEAD
-=======
 globals@^11.1.0:
   version "11.12.0"
   resolved "https://registry.npmjs.org/globals/-/globals-11.12.0.tgz"
@@ -11270,14 +9521,6 @@ has-proto@^1.0.1:
   resolved "https://registry.npmjs.org/has-proto/-/has-proto-1.0.1.tgz"
   integrity sha512-7qE+iP+O+bgF9clE5+UoBFzE65mlBiVj3tKCrlNQ0Ogwm0BjpT/gK4SlLYDMybDh5I3TCTKnPPa0oMG7JDYrhg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 has-symbols@^1.0.2, has-symbols@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/has-symbols/-/has-symbols-1.0.3.tgz"
@@ -11462,67 +9705,6 @@ iconv-lite@0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-<<<<<<< HEAD
->>>>>>> fefcc3e (hide role task)
-iconv-lite@^0.6.2:
-  version "0.6.3"
-  resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz"
-  integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
-<<<<<<< HEAD
->>>>>>> 91a7917 (hide role task)
-  dependencies:
-    safer-buffer ">= 2.1.2 < 3.0.0"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-"iconv-lite@0.4.24":
-  "integrity" "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA=="
-  "resolved" "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz"
-  "version" "0.4.24"
->>>>>>> 900c151 (cicil role apps menu)
-=======
-iconv-lite@0.4.24:
-  version "0.4.24"
-  resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz"
-  integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
->>>>>>> 91a7917 (hide role task)
-  dependencies:
-    safer-buffer ">= 2.1.2 < 3"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-iconv-lite@^0.6.2:
-  version "0.6.3"
-  resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz"
-  integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-  dependencies:
-    safer-buffer ">= 2.1.2 < 3.0.0"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
-  dependencies:
-    safer-buffer ">= 2.1.2 < 3.0.0"
-
->>>>>>> 0263688 (linimasa)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 ieee754@^1.1.13, ieee754@^1.1.4, ieee754@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz"
@@ -11691,18 +9873,7 @@ internal-ip@4.3.0:
     default-gateway "^4.2.0"
     ipaddr.js "^1.9.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
+invariant@*, invariant@^2.2.2, invariant@^2.2.4, invariant@2.2.4:
   version "2.2.4"
   resolved "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -11764,22 +9935,6 @@ ipaddr.js@^1.9.0:
   resolved "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz"
   integrity sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 is-arguments@^1.0.4:
   version "1.1.1"
   resolved "https://registry.npmjs.org/is-arguments/-/is-arguments-1.1.1.tgz"
@@ -11834,22 +9989,6 @@ is-buffer@~1.1.1, is-buffer@~1.1.6:
   resolved "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.6.tgz"
   integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 is-callable@^1.1.3:
   version "1.2.7"
   resolved "https://registry.npmjs.org/is-callable/-/is-callable-1.2.7.tgz"
@@ -11923,22 +10062,6 @@ is-fullwidth-code-point@^3.0.0:
   resolved "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz"
   integrity sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 is-function@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/is-function/-/is-function-1.0.2.tgz"
@@ -12008,22 +10131,6 @@ is-invalid-path@^0.1.0:
   dependencies:
     is-glob "^2.0.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 is-nan@^1.3.2:
   version "1.3.2"
   resolved "https://registry.npmjs.org/is-nan/-/is-nan-1.3.2.tgz"
@@ -12105,22 +10212,6 @@ is-stream@^2.0.0:
   resolved "https://registry.npmjs.org/is-stream/-/is-stream-2.0.1.tgz"
   integrity sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 is-typed-array@^1.1.3:
   version "1.1.12"
   resolved "https://registry.npmjs.org/is-typed-array/-/is-typed-array-1.1.12.tgz"
@@ -12315,22 +10406,6 @@ jimp-compact@0.16.1:
   resolved "https://registry.npmjs.org/jimp-compact/-/jimp-compact-0.16.1.tgz"
   integrity sha512-dZ6Ra7u1G8c4Letq/B5EzAxj4tLFHL+cGtdpR+PVm4yzPDj+lCk+AbivWt1eOM+ikzkowtyV7qSqX6qr3t71Ww==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 jimp@0.12.1:
   version "0.12.1"
   resolved "https://registry.npmjs.org/jimp/-/jimp-0.12.1.tgz"
@@ -12389,22 +10464,6 @@ join-component@^1.1.0:
   resolved "https://registry.npmjs.org/join-component/-/join-component-1.1.0.tgz"
   integrity sha512-bF7vcQxbODoGK1imE2P9GS9aw4zD0Sd+Hni68IMZLj7zRnquH7dXUmMw9hDI5S/Jzt7q+IyTXN0rSg2GI0IKhQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 jpeg-js@^0.4.0:
   version "0.4.4"
   resolved "https://registry.npmjs.org/jpeg-js/-/jpeg-js-0.4.4.tgz"
@@ -12547,22 +10606,6 @@ json5@^0.5.1:
   resolved "https://registry.npmjs.org/json5/-/json5-0.5.1.tgz"
   integrity sha512-4xrs1aW+6N5DalkqSVA8fxh458CXvR99WU8WLKmq4v8eWAL86Xo3BVqyd3SkA9wEVjCMqyvvRRkshAdOnBp5rw==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 json5@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/json5/-/json5-1.0.2.tgz"
@@ -12570,31 +10613,10 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.1.2, json5@^2.2.2, json5@^2.2.3:
-<<<<<<< HEAD
+json5@^2.1.2:
   version "2.2.3"
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fefcc3e (hide role task)
-=======
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"json5@^2.2.2", "json5@^2.2.3":
-  "integrity" "sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg=="
-  "resolved" "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
-  "version" "2.2.3"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-=======
-<<<<<<< HEAD
 
 json5@^2.2.2, json5@^2.2.3:
 =======
@@ -12673,22 +10695,6 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 load-bmfont@^1.3.1, load-bmfont@^1.4.0:
   version "1.4.1"
   resolved "https://registry.npmjs.org/load-bmfont/-/load-bmfont-1.4.1.tgz"
@@ -13009,22 +11015,6 @@ metro-babel-transformer@0.73.10:
     metro-source-map "0.73.10"
     nullthrows "^1.1.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 metro-cache-key@0.73.10:
   version "0.73.10"
   resolved "https://registry.npmjs.org/metro-cache-key/-/metro-cache-key-0.73.10.tgz"
@@ -13264,22 +11254,6 @@ metro-react-native-babel-transformer@0.73.10:
     metro-source-map "0.73.10"
     nullthrows "^1.1.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 metro-resolver@0.73.10:
   version "0.73.10"
   resolved "https://registry.npmjs.org/metro-resolver/-/metro-resolver-0.73.10.tgz"
@@ -13351,22 +11325,6 @@ metro-runtime@0.73.10:
     "@babel/runtime" "^7.0.0"
     react-refresh "^0.4.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 metro-source-map@0.73.10:
   version "0.73.10"
   resolved "https://registry.npmjs.org/metro-source-map/-/metro-source-map-0.73.10.tgz"
@@ -13420,22 +11378,6 @@ metro-source-map@0.73.10:
     source-map "^0.5.6"
     vlq "^1.0.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 metro-symbolicate@0.73.10:
   version "0.73.10"
   resolved "https://registry.npmjs.org/metro-symbolicate/-/metro-symbolicate-0.73.10.tgz"
@@ -13467,63 +11409,6 @@ metro-symbolicate@0.73.10:
     "source-map" "^0.5.6"
     "vlq" "^1.0.0"
 
-"metro-symbolicate@0.73.10":
-  "integrity" "sha512-PmCe3TOe1c/NVwMlB+B17me951kfkB3Wve5RqJn+ErPAj93od1nxicp6OJe7JT4QBRnpUP8p9tw2sHKqceIzkA=="
-  "resolved" "https://registry.npmjs.org/metro-symbolicate/-/metro-symbolicate-0.73.10.tgz"
-  "version" "0.73.10"
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-  dependencies:
-    "@babel/traverse" "^7.20.0"
-    "@babel/types" "^7.20.0"
-    "invariant" "^2.2.4"
-    "metro-symbolicate" "0.73.9"
-    "nullthrows" "^1.1.1"
-    "ob1" "0.73.9"
-    "source-map" "^0.5.6"
-    "vlq" "^1.0.0"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
-"metro-symbolicate@0.73.10":
-  "integrity" "sha512-PmCe3TOe1c/NVwMlB+B17me951kfkB3Wve5RqJn+ErPAj93od1nxicp6OJe7JT4QBRnpUP8p9tw2sHKqceIzkA=="
-  "resolved" "https://registry.npmjs.org/metro-symbolicate/-/metro-symbolicate-0.73.10.tgz"
-  "version" "0.73.10"
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-  dependencies:
-    invariant "^2.2.4"
-    metro-source-map "0.73.10"
-    nullthrows "^1.1.1"
-    source-map "^0.5.6"
-    through2 "^2.0.1"
-    vlq "^1.0.0"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 metro-transform-plugins@0.73.10:
   version "0.73.10"
   resolved "https://registry.npmjs.org/metro-transform-plugins/-/metro-transform-plugins-0.73.10.tgz"
@@ -13725,30 +11610,7 @@ mime-types@^2.1.12, mime-types@^2.1.27, mime-types@~2.1.24, mime-types@~2.1.34:
   dependencies:
     mime-db "1.52.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-mime@1.6.0, mime@^1.3.4:
-=======
-=======
->>>>>>> 91a7917 (hide role task)
 mime@^1.3.4:
->>>>>>> 91a7917 (hide role task)
-=======
-mime@1.6.0, mime@^1.3.4:
->>>>>>> 0263688 (linimasa)
-=======
-mime@1.6.0, mime@^1.3.4:
-=======
-mime@^1.3.4:
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
   version "1.6.0"
   resolved "https://registry.npmjs.org/mime/-/mime-1.6.0.tgz"
   integrity sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
@@ -13861,14 +11723,6 @@ mimic-fn@^2.1.0:
   resolved "https://registry.npmjs.org/mimic-fn/-/mimic-fn-2.1.0.tgz"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 min-document@^2.19.0:
   version "2.19.0"
   resolved "https://registry.npmjs.org/min-document/-/min-document-2.19.0.tgz"
@@ -13876,7 +11730,7 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-"minimatch@2 || 3", minimatch@^3.0.2, minimatch@^3.0.4:
+minimatch@^3.0.2, minimatch@^3.0.4, "minimatch@2 || 3":
   version "3.1.2"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-3.1.2.tgz"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -14389,22 +12243,6 @@ ob1@0.73.10:
   resolved "https://registry.npmjs.org/ob1/-/ob1-0.73.10.tgz"
   integrity sha512-aO6EYC+QRRCkZxVJhCWhLKgVjhNuD6Gu1riGjxrIm89CqLsmKgxzYDDEsktmKsoDeRdWGQM5EdMzXDl5xcVfsw==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
@@ -14474,11 +12312,6 @@ object-inspect@^1.9.0:
   resolved "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.1.tgz"
   integrity sha512-5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 object-is@^1.1.5:
   version "1.1.5"
   resolved "https://registry.npmjs.org/object-is/-/object-is-1.1.5.tgz"
@@ -14506,29 +12339,7 @@ omggif@^1.0.9:
   version "1.0.10"
   resolved "https://registry.npmjs.org/omggif/-/omggif-1.0.10.tgz"
   integrity sha512-LMJTtvgc/nugXj0Vcrrs68Mn2D1r0zf630VNtqtpI1FEO7e+O9FP4gqs9AcnBaSEeoHIPm28u6qgPR0oyEpGSw==
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fefcc3e (hide role task)
-=======
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"on-finished@~2.3.0":
-  "integrity" "sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww=="
-  "resolved" "https://registry.npmjs.org/on-finished/-/on-finished-2.3.0.tgz"
-  "version" "2.3.0"
-<<<<<<< HEAD
-<<<<<<< HEAD
-  dependencies:
-    "ee-first" "1.1.1"
->>>>>>> 900c151 (cicil role apps menu)
-=======
 
-<<<<<<< HEAD
 on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/on-finished/-/on-finished-2.3.0.tgz"
@@ -15092,11 +12903,6 @@ p-try@^2.0.0:
   resolved "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 pako@^1.0.5:
   version "1.0.11"
   resolved "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz"
@@ -15260,22 +13066,6 @@ paths-js@^0.4.10:
   resolved "https://registry.npmjs.org/paths-js/-/paths-js-0.4.11.tgz"
   integrity sha512-3mqcLomDBXOo7Fo+UlaenG6f71bk1ZezPQy2JCmYHy2W2k5VKpP+Jbin9H0bjXynelTbglCqdFhSEkeIkKTYUA==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 phin@^2.9.1:
   version "2.9.3"
   resolved "https://registry.npmjs.org/phin/-/phin-2.9.3.tgz"
@@ -15332,22 +13122,6 @@ pirates@^4.0.1, pirates@^4.0.5:
   resolved "https://registry.npmjs.org/pirates/-/pirates-4.0.6.tgz"
   integrity sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 pixelmatch@^4.0.2:
   version "4.0.2"
   resolved "https://registry.npmjs.org/pixelmatch/-/pixelmatch-4.0.2.tgz"
@@ -15409,50 +13183,10 @@ plist@^3.0.5:
     base64-js "^1.5.1"
     xmlbuilder "^15.1.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-pngjs@^3.0.0, pngjs@^3.3.0, pngjs@^3.3.3:
-  version "3.4.0"
-  resolved "https://registry.npmjs.org/pngjs/-/pngjs-3.4.0.tgz"
-  integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"pngjs@^3.3.0":
-  "integrity" "sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w=="
-  "resolved" "https://registry.npmjs.org/pngjs/-/pngjs-3.4.0.tgz"
-  "version" "3.4.0"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-
-"pngjs@^5.0.0":
-  "integrity" "sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw=="
-  "resolved" "https://registry.npmjs.org/pngjs/-/pngjs-5.0.0.tgz"
-  "version" "5.0.0"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> fefcc3e (hide role task)
 pngjs@^3.0.0:
   version "3.4.0"
   resolved "https://registry.npmjs.org/pngjs/-/pngjs-3.4.0.tgz"
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
-<<<<<<< HEAD
 
 pngjs@^3.3.0:
   version "3.4.0"
@@ -15460,9 +13194,6 @@ pngjs@^3.3.0:
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
 
 pngjs@^3.3.3:
-=======
-pngjs@^3.0.0, pngjs@^3.3.0, pngjs@^3.3.3:
->>>>>>> 0263688 (linimasa)
   version "3.4.0"
   resolved "https://registry.npmjs.org/pngjs/-/pngjs-3.4.0.tgz"
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
@@ -15547,22 +13278,6 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.npmjs.org/process/-/process-0.11.10.tgz"
@@ -15631,18 +13346,7 @@ prompts@^2.3.2, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-prop-types@*, prop-types@15.8.1, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.0, prop-types@^15.8.1:
+prop-types@*, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.0, prop-types@^15.8.1, prop-types@15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -15874,22 +13578,6 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 react-native-base64@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/react-native-base64/-/react-native-base64-0.2.1.tgz"
@@ -15958,22 +13646,6 @@ react-native-chart-kit@^6.12.0:
     paths-js "^0.4.10"
     point-in-polygon "^1.0.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 react-native-codegen@^0.71.6:
   version "0.71.6"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.71.6.tgz"
@@ -16039,22 +13711,6 @@ react-native-element-dropdown@^2.3.1:
   dependencies:
     lodash "^4.17.21"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 react-native-fetch-blob@^0.10.8:
   version "0.10.8"
   resolved "https://registry.npmjs.org/react-native-fetch-blob/-/react-native-fetch-blob-0.10.8.tgz"
@@ -16120,22 +13776,6 @@ react-native-gesture-handler@~2.9.0:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 react-native-gradle-plugin@^0.71.19:
   version "0.71.19"
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.19.tgz"
@@ -16259,22 +13899,6 @@ react-native-paper@^5.0.0-rc.5:
     color "^3.1.2"
     use-latest-callback "^0.1.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 react-native-pdf@^6.7.2:
   version "6.7.2"
   resolved "https://registry.npmjs.org/react-native-pdf/-/react-native-pdf-6.7.2.tgz"
@@ -16827,57 +14451,10 @@ react-native-youtube-iframe@^2.3.0:
   dependencies:
     events "^3.2.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 react-native@^0.71.14:
   version "0.71.14"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.71.14.tgz"
   integrity sha512-7uhzas8aKpU2EARhlONt7yiclh+7PXEOJk469ewpQyId8Owq5WNtZvQm/z3k4mHUriMeQ37vgSGkOInSKcCazw==
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fefcc3e (hide role task)
-=======
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"react-native@0.71.8":
-  "integrity" "sha512-ftMAuhpgTkbHU9brrqsEyxcNrpYvXKeATY+if22Nfhhg1zW+6wn95w9otwTnA3xHkljPCbng8mUhmmERjGEl7g=="
-  "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.71.8.tgz"
-  "version" "0.71.8"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 900c151 (cicil role apps menu)
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
   dependencies:
     "@jest/create-cache-key-function" "^29.2.1"
     "@react-native-community/cli" "10.2.4"
@@ -17138,12 +14715,8 @@ regenerator-runtime@^0.13.2:
   version "0.13.11"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz"
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
-<<<<<<< HEAD
 
 regenerator-runtime@^0.13.3:
-=======
-regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.3:
->>>>>>> 0263688 (linimasa)
   version "0.13.11"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz"
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
@@ -17266,22 +14839,6 @@ resolve-from@^5.0.0:
   resolved "https://registry.npmjs.org/resolve-from/-/resolve-from-5.0.0.tgz"
   integrity sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 resolve@^1.13.1, resolve@^1.14.2, resolve@^1.3.2:
   version "1.22.8"
   resolved "https://registry.npmjs.org/resolve/-/resolve-1.22.8.tgz"
@@ -17383,22 +14940,6 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 rn-fetch-blob@^0.12.0:
   version "0.12.0"
   resolved "https://registry.npmjs.org/rn-fetch-blob/-/rn-fetch-blob-0.12.0.tgz"
@@ -17583,57 +15124,6 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
->>>>>>> fefcc3e (hide role task)
-semver@7.3.2:
-  version "7.3.2"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.3.2.tgz"
-  integrity sha512-OrOb32TeeambH6UrhtShmF7CRDqhL6/5XpPNp2DuRH6+9QLw/orhp72j87v8Qa1ScDkvrrBNpZcDejAirJmfXQ==
-<<<<<<< HEAD
-
-semver@7.5.3, semver@^7.5.3:
-  version "7.5.3"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.5.3.tgz"
-  integrity sha512-QBlUtyVk/5EeHbi7X0fw6liDZc7BBmEaSYn01fMU1OUYbf6GPsbTtd8WmnqbI20SeycoHSeiybkE/q1Q+qlThQ==
-  dependencies:
-    lru-cache "^6.0.0"
-
-semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
-  version "5.7.2"
-  resolved "https://registry.npmjs.org/semver/-/semver-5.7.2.tgz"
-  integrity sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"semver@^5.5.0":
-  "integrity" "sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g=="
-  "resolved" "https://registry.npmjs.org/semver/-/semver-5.7.2.tgz"
-  "version" "5.7.2"
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-"semver@^5.6.0":
-  "integrity" "sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g=="
-  "resolved" "https://registry.npmjs.org/semver/-/semver-5.7.2.tgz"
-  "version" "5.7.2"
->>>>>>> 900c151 (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
 semver@^5.4.1:
   version "5.7.2"
   resolved "https://registry.npmjs.org/semver/-/semver-5.7.2.tgz"
@@ -18142,59 +15632,11 @@ source-map-support@^0.5.16, source-map-support@~0.5.20:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-source-map@^0.5.0, source-map@^0.5.6:
-=======
-=======
->>>>>>> 91a7917 (hide role task)
 source-map@^0.5.0:
->>>>>>> 91a7917 (hide role task)
-=======
-source-map@^0.5.0, source-map@^0.5.6:
->>>>>>> 0263688 (linimasa)
-=======
-source-map@^0.5.0, source-map@^0.5.6:
-=======
-source-map@^0.5.0:
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
   version "0.5.7"
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz"
   integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fefcc3e (hide role task)
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
-  version "0.6.1"
-  resolved "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
-  integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-"source-map@^0.5.6":
-  "integrity" "sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ=="
-  "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz"
-  "version" "0.5.7"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fefcc3e (hide role task)
-=======
 source-map@^0.5.6:
   version "0.5.7"
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz"
@@ -19530,65 +16972,6 @@ through2@^2.0.1:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 0c60e0c (cicil role apps menu)
-through@2:
-  version "2.3.8"
-  resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
-  integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
-
-=======
-<<<<<<< HEAD
-through@2:
-  version "2.3.8"
-  resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
-  integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
-
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0263688 (linimasa)
-through2@^2.0.1:
-  version "2.0.5"
-  resolved "https://registry.npmjs.org/through2/-/through2-2.0.5.tgz"
-  integrity sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==
-<<<<<<< HEAD
->>>>>>> 91a7917 (hide role task)
-=======
-
-"through2@^2.0.1":
-  "integrity" "sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ=="
-  "resolved" "https://registry.npmjs.org/through2/-/through2-2.0.5.tgz"
-  "version" "2.0.5"
->>>>>>> 900c151 (cicil role apps menu)
-=======
->>>>>>> 91a7917 (hide role task)
-  dependencies:
-    readable-stream "~2.3.6"
-    xtend "~4.0.1"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0263688 (linimasa)
-through@2:
-  version "2.3.8"
-  resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
-  integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
-
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0263688 (linimasa)
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 timm@^1.6.1:
   version "1.7.1"
   resolved "https://registry.npmjs.org/timm/-/timm-1.7.1.tgz"
@@ -19930,22 +17313,6 @@ utf8@^3.0.0:
   resolved "https://registry.npmjs.org/utf8/-/utf8-3.0.0.tgz"
   integrity sha512-E8VjFIQ/TyQgp+TZfS6l8yp/xWppSAHzidGiRrqe4bK4XP9pTRyKFgGJpO3SN7zdX4DeomTrwaseCHovfpFcqQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 utif@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/utif/-/utif-2.0.1.tgz"
@@ -20232,22 +17599,6 @@ which-module@^2.0.0:
   resolved "https://registry.npmjs.org/which-module/-/which-module-2.0.1.tgz"
   integrity sha512-iBdZ57RDvnOR9AGBhML2vFZf7h8vmBjhoaZqODJBFWHVtKkDmKuHai3cx5PgVMrX5YDNp27AofYbAwctSS+vhQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 which-typed-array@^1.1.11, which-typed-array@^1.1.2:
   version "1.1.13"
   resolved "https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.13.tgz"
@@ -20457,22 +17808,6 @@ xdate@^0.8.0:
   resolved "https://registry.npmjs.org/xdate/-/xdate-0.8.2.tgz"
   integrity sha512-sNBlLfOC8S3V0vLDEUianQOXcTsc9j4lfeKU/klHe0RjHAYn0CXsSttumTot8dzalboV8gZbH38B+WcCIBjhFQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 xhr@^2.0.1:
   version "2.6.0"
   resolved "https://registry.npmjs.org/xhr/-/xhr-2.6.0.tgz"
@@ -20521,28 +17856,12 @@ xml-js@^1.6.11:
   dependencies:
     sax "^1.2.4"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 xml-parse-from-string@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/xml-parse-from-string/-/xml-parse-from-string-1.0.1.tgz"
   integrity sha512-ErcKwJTF54uRzzNMXq2X5sMIy88zJvfN2DmdoQvy7PAFJ+tPRU6ydWuOKNMyfmOjdyBQTFREi60s0Y0SyI0G0g==
 
-xml2js@0.4.23, xml2js@^0.4.23, xml2js@^0.4.5:
+xml2js@^0.4.23, xml2js@^0.4.5, xml2js@0.4.23:
   version "0.4.23"
   resolved "https://registry.npmjs.org/xml2js/-/xml2js-0.4.23.tgz"
   integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==
@@ -20674,22 +17993,6 @@ xmlbuilder@~11.0.0:
   resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-11.0.1.tgz"
   integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 91a7917 (hide role task)
-=======
->>>>>>> 0c60e0c (cicil role apps menu)
-=======
-=======
->>>>>>> 91a7917 (hide role task)
->>>>>>> fefcc3e (hide role task)
 xmldom@~0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/xmldom/-/xmldom-0.5.0.tgz"

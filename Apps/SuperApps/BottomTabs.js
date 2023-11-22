@@ -19,7 +19,7 @@ function MyTabBar({ props, navigation }) {
   const [visibleModal, setVisibleModal] = useState(false);
 
   const { profile } = useSelector((state) => state.superApps);
-  
+
   const isRole = profile.roles_access?.some((item) =>
     dataRoleDashboard.includes(item)
   );
