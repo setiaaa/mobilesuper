@@ -16,6 +16,7 @@ import { getKesejahteraan, getTeknologi } from '../../service/api'
 import { Linking } from 'react-native'
 import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
 import { LinearGradient } from 'expo-linear-gradient'
+import { RefreshControl } from 'react-native'
 
 const ListTeknologi = ({ item, loading }) => {
     const navigation = useNavigation()
@@ -94,6 +95,24 @@ export const TeknologiTerbaru = () => {
     const { teknologi, loading } = useSelector(state => state.dashboard)
     console.log(teknologi.lists)
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== '') {
+                dispatch(getTeknologi(token))
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [token]);
+
     return (
         <View style={{ flex: 1 }}>
             {/* <View style={{ width: '90%', marginLeft: 20, marginTop: 20 }}>
@@ -109,6 +128,9 @@ export const TeknologiTerbaru = () => {
                 />
                 }
                 keyExtractor={item => item.id}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
             />
         </View>
     )

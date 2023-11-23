@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import { View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
@@ -228,6 +228,28 @@ export const HalamanUtama = () => {
     setSearch(event);
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            if (variant === 'hariini') {
+              dispatch(getEventToday(token));
+            } else {
+              dispatch(getEventProgress(token));
+            }
+              console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token]);
+
   // console.log(event.listsprogress);
   return (
     <View style={{ flex: 1 }}>
@@ -355,6 +377,9 @@ export const HalamanUtama = () => {
               keyExtractor={(item) => item.id}
               style={{ marginBottom: 300 }}
               ListEmptyComponent={() => <ListEmpty />}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             />
             </>
           ) : (
@@ -432,6 +457,9 @@ export const HalamanUtama = () => {
                 keyExtractor={(item) => item.id}
                 style={{ marginBottom: 300 }}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
               />
               {search === "" && !isFiltered
                 ? console.log("event.listprogress")

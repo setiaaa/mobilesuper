@@ -23,6 +23,7 @@ import { getDetailLinimasa, getDetailPenilaian, getListPenilaian, getNilai, getT
 import moment from 'moment';
 import { } from 'react-native-safe-area-context';
 import { Loading } from '../../components/Loading';
+import { RefreshControl } from 'react-native';
 
 
 const CardPenilaian = ({ item, token }) => {
@@ -224,6 +225,32 @@ export const PenilaianPenggetahaun = () => {
 
     const { penilaian, loading } = useSelector(state => state.pengetahuan)
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== '' && isFocused) {
+                let data = {
+                    token: token,
+                    tahun: year.value,
+                    TW: quarter.key
+                }
+                // dispatch(getDivision(token))
+                dispatch(getListPenilaian(data))
+                dispatch(getTotalPenilaian(data))
+                // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+            }
+            console.log('Refresh Berhasil')
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [token, quarter, year, isFocused]);
+
     return (
         <>
             {loading ? (
@@ -418,6 +445,9 @@ export const PenilaianPenggetahaun = () => {
                             item={item}
                             token={token}
                         />
+                        }
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                         }
                         style={{ height: 400 }}
                         keyExtractor={item => item.id}

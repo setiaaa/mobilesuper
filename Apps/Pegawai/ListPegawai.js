@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, Pressable, Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, FlatList, Pressable, RefreshControl, Text, TouchableOpacity } from 'react-native'
 import { } from 'react-native-safe-area-context'
 import { AVATAR, COLORS, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
 import { Ionicons } from '@expo/vector-icons';
@@ -108,6 +108,25 @@ export const ListPegawai = () => {
         }
     }, [search, pegawai]);
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== '') {
+                dispatch(getPegawai({ token, page }))
+                console.log(page, 'page')
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [token, page]);
+
     const navigation = useNavigation()
 
     return (
@@ -167,6 +186,9 @@ export const ListPegawai = () => {
                         keyExtractor={item => item.id}
                         scrollEnabled={true}
                         onEndReached={loadMore}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
                         ListEmptyComponent={() => (
                             <ListEmpty />
                         )}

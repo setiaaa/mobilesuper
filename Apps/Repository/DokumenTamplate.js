@@ -36,6 +36,7 @@ import { Portal } from "react-native-portalize";
 import { Divider } from "react-native-paper";
 import moment from "moment";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
 
 const DataList = ({ token, item, bottomSheetAttach }) => {
   const dispatch = useDispatch();
@@ -317,6 +318,33 @@ export const DokumenTamplate = () => {
     return judulSatker;
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(
+              getDocumentTamplate({
+                token: token,
+                page: page,
+                general: search,
+                by_title: type.key,
+                unker: filterUnker ? filterUnker.value : "",
+                satker: filterSatker ? filterSatker.value : "",
+              })
+            );
+              console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page, type, search, filterUnker, filterSatker]);
+
   return (
     <GestureHandlerRootView>
       {loading === true && tamplate.lists.length === 0 ? <Loading /> : null}
@@ -540,6 +568,9 @@ export const DokumenTamplate = () => {
                   loadMore();
                 }
               }}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             />
             <Portal>
               <BottomSheetModalProvider>

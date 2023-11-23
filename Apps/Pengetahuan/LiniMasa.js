@@ -41,6 +41,7 @@ import {
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
+import { RefreshControl } from "react-native";
 
 const CardKomen = ({ listData, inputRef, setParentId }) => {
   const [toggleComment, setToggleComment] = useState({
@@ -1197,6 +1198,25 @@ export const LiniMasa = () => {
     setSearch(event);
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+        if (token !== "") {
+          dispatch(getLinimasa({ token: token, page: page }));
+          dispatch(setRefresh(false));
+          console.log('Refresh Berhasil')
+        }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page]);
+
   return (
     <>
       {linimasa.lists.length === 0 ? <Loading /> : null}
@@ -1279,6 +1299,9 @@ export const LiniMasa = () => {
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => <ListEmpty />}
           onEndReached={loadMore}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       </>
     </>

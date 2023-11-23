@@ -20,6 +20,7 @@ import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native'
 import ListEmpty from '../../components/ListEmpty'
+import { RefreshControl } from 'react-native'
 
 const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
     const source = {
@@ -159,6 +160,24 @@ export const Perencanaan = () => {
         }
     }
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            getTokenValue().then(val => {
+                setToken(val)
+                dispatch(getPerencanaan({ token: val, value: 'ropeg', page: page }))
+            })
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, []);
+
     return (
         // <View style={styles.card}>
         //     <Image source={require('../../assets/superApp/logoKecil.png')} />
@@ -166,7 +185,7 @@ export const Perencanaan = () => {
         // </View>
         <View>
             {detail === '' ? (
-                <ScrollView>
+                <>
                     <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom:10 }}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
                         {/* custom divider */}
@@ -194,8 +213,11 @@ export const Perencanaan = () => {
                         )}
                         ListEmptyComponent={() => <ListEmpty />}
                         onEndReached={loadMore}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
                     />
-                </ScrollView>
+                </>
             ) : (
                 <ScrollView>
                     <View style={{ marginTop: 20, marginHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
