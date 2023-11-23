@@ -608,7 +608,7 @@ export const PostinganSaya = () => {
                 maxLength={30}
                 value={inputValue}
                 onChangeText={(text) => setInputValue(text)}
-                onSubmitEditing={filter}
+                onEndEditing={filter}
                 clearButtonMode="always"
               />
             </View>

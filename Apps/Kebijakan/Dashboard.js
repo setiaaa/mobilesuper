@@ -376,7 +376,7 @@ export default function Dashboard(params) {
                     maxLength={30}
                     value={inputValue}
                     onChangeText={(text) => setInputValue(text)}
-                    onSubmitEditing={filterData}
+                    onEndEditing={filterData}
                     clearButtonMode="always"
                   />
                 </View>
