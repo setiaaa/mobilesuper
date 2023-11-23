@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { Alert, Text, StyleSheet, View } from "react-native";
-import { Avatar, Card, Chip, IconButton } from "react-native-paper";
+import { Alert, Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { nde_api } from "../../utils/api.config";
 import { headerToken } from "../../utils/http";
 import moment from "moment";
 import { Config } from "../../constants/config";
+import { COLORS, DATETIME } from "../../config/SuperAppps";
+import { Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Chip } from "react-native-paper";
 
 function CardDelegation({ data, onPress }) {
   const [errorAvatarTitle, setErrorAvatarTitle] = useState(false);
@@ -20,127 +23,208 @@ function CardDelegation({ data, onPress }) {
   }
   useEffect(() => {
     getHeader();
-  });
+  }, []);
   return (
-    <Card style={styles.container} onPress={onPress}>
-      <Card.Content style={styles.cardContent}>
-        {errorAvatarTitle && (
-          <Avatar.Image
-            {...props}
-            source={Config.avatar}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
+    <TouchableOpacity onPress={onPress}>
+      <View>
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            borderRadius: 8,
+            marginBottom: 20,
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "#7B570F",
+              padding: 20,
+              flexDirection: "column",
+              borderTopRightRadius: 8,
+              borderTopLeftRadius: 8,
             }}
-          />
-        )}
-        {!errorAvatarTitle && (
-          <Avatar.Image
-            size={40}
-            source={{
-              uri: `${nde_api.baseurl + data.title?.avatar}`,
-              method: "GET",
-              headers: header,
+          >
+            <View style={{ marginBottom: 10 }}>
+              <Text
+                style={{ fontSize: 13, fontWeight: 700, color: COLORS.white }}
+              >
+                {data.title.name}
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: "#7B570F",
+                flexDirection: "row",
+                gap: 10,
+                borderTopRightRadius: 8,
+                borderTopLeftRadius: 8,
+              }}
+            >
+              {errorAvatarTitle && (
+                <Image
+                  source={Config.avatar}
+                  style={{
+                    borderRadius: 50,
+                    width: 32,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: COLORS.white,
+                  }}
+                />
+              )}
+              {!errorAvatarTitle && (
+                <Image
+                  source={{
+                    uri: `${nde_api.baseurl + data.title?.avatar}`,
+                    method: "GET",
+                    headers: header,
+                  }}
+                  style={{
+                    borderRadius: 50,
+                    width: 32,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: COLORS.white,
+                  }}
+                  onError={() => setErrorAvatarTitle(true)}
+                />
+              )}
+              {errorAvatarDelegasi && (
+                <Image
+                  source={Config.avatar}
+                  style={{
+                    borderRadius: 50,
+                    width: 32,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: COLORS.white,
+                    marginLeft: -30,
+                    marginTop: 20,
+                  }}
+                />
+              )}
+              {!errorAvatarDelegasi && (
+                <Image
+                  source={{
+                    uri: `${nde_api.baseurl + data.delegasi?.avatar}`,
+                    method: "GET",
+                    headers: header,
+                  }}
+                  style={{
+                    borderRadius: 50,
+                    width: 32,
+                    height: 32,
+                    borderWidth: 1,
+                    borderColor: COLORS.white,
+                    marginLeft: -30,
+                    marginTop: 20,
+                  }}
+                  onError={() => setErrorAvatarDelegasi(true)}
+                />
+              )}
+              <View style={{ gap: 2, width:"90%" }}>
+                <Text
+                  style={{ fontSize: 11, fontWeight: 400, color: COLORS.white }}
+                >
+                  {data.title.label}
+                </Text>
+                <Ionicons
+                  name="return-down-back-outline"
+                  size={16}
+                  color={COLORS.white}
+                />
+                <Text
+                  style={{ fontSize: 11, fontWeight: 400, color: COLORS.white }}
+                >
+                  {data.delegasi.fullname}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              paddingHorizontal: 20,
+              paddingVertical: 5,
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
-            onError={(e) => setErrorAvatarTitle(true)}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
-            }}
-          />
-        )}
-        {errorAvatarDelegasi && (
-          <Avatar.Image
-            {...props}
-            source={Config.avatar}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
-            }}
-          />
-        )}
-        {!errorAvatarDelegasi && (
-          <Avatar.Image
-            size={40}
-            source={{
-              uri: `${nde_api.baseurl + data.delegasi.avatar}`,
-              method: "GET",
-              headers: header,
-            }}
-            onError={(e) => setErrorAvatarDelegasi(true)}
-            style={styles.avaDelegasi}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
-            }}
-          />
-        )}
-        <View style={styles.containerTitle}>
-          <Text style={styles.title}>{data.title.name}</Text>
-          <Text style={styles.subtitle}>{data.title.label}</Text>
-          <View style={styles.subtitleDele}>
-            <IconButton
-              icon="arrow-right-bottom"
-              size={14}
-              iconColor={GlobalStyles.colors.textWhite}
-              style={{ marginLeft: 0 }}
-            />
-            <Text style={styles.subtitle}>{data.delegasi.fullname}</Text>
+          >
+            <View>
+              <View style={{ flexDirection: "row", gap: 10 }}>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 400,
+                    color: COLORS.lighter,
+                    textAlign: "right",
+                    width: 60,
+                  }}
+                >
+                  Mulai :{" "}
+                </Text>
+                <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                  {moment(data.start_date).format(DATETIME.LONG_DATE)}
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", gap: 10 }}>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 400,
+                    color: COLORS.lighter,
+                    textAlign: "right",
+                    width: 60,
+                  }}
+                >
+                  Selesai :{" "}
+                </Text>
+                <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  {moment(data.end_date).format(DATETIME.LONG_DATE)}
+                </Text>
+              </View>
+            </View>
+            <Chip
+              compact={true}
+              textStyle={
+                data.status == "activate"
+                  ? {
+                      color: GlobalStyles.colors.green,
+                    }
+                  : data.status == "waiting"
+                  ? {
+                      color: GlobalStyles.colors.yellow,
+                    }
+                  : ""
+              }
+              style={[
+                data.status == "activate"
+                  ? {
+                      backgroundColor: GlobalStyles.colors.greenlight,
+                    }
+                  : data.status == "waiting"
+                  ? {
+                      backgroundColor: GlobalStyles.colors.yellowlight,
+                    }
+                  : "",
+                { borderRadius: 50 },
+              ]}
+            >
+              {data.status == "activate"
+                ? "Aktif"
+                : data.status == "waiting"
+                ? "Menunggu"
+                : ""}
+            </Chip>
           </View>
         </View>
-      </Card.Content>
-      <View style={styles.footer}>
-        <View>
-          <Text
-            style={[styles.subtitle, { color: GlobalStyles.colors.textBlack }]}
-          >
-            Start : {moment(data.start_date).format(DATETIME.LONG_DATE)}
-          </Text>
-          <Text
-            style={[
-              styles.subtitle,
-              { color: GlobalStyles.colors.textBlack, marginTop: 4 },
-            ]}
-          >
-            End :{" "}
-            <Text style={{ fontWeight: "600" }}>
-              {moment(data.end_date).format(DATETIME.LONG_DATE)}
-            </Text>
-          </Text>
-        </View>
-        <Chip
-          compact={true}
-          textStyle={
-            data.status == "activate"
-              ? {
-                color: GlobalStyles.colors.green,
-              }
-              : data.status == "waiting"
-                ? {
-                  color: GlobalStyles.colors.yellow,
-                }
-                : ""
-          }
-          style={
-            data.status == "activate"
-              ? {
-                backgroundColor: GlobalStyles.colors.greenlight,
-              }
-              : data.status == "waiting"
-                ? {
-                  backgroundColor: GlobalStyles.colors.yellowlight,
-                }
-                : ""
-          }
-        >
-          {data.status}
-        </Chip>
       </View>
-    </Card>
+    </TouchableOpacity>
   );
 }
 

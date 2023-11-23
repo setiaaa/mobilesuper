@@ -77,7 +77,7 @@ export const Profile = () => {
                 textAlign: "center",
               }}
             >
-              {profile?.profile?.fullname}
+              {profile?.profile?.fullname?.split("/")[0]}
             </Text>
             {profile?.title?.map((data) => (
               <Text
