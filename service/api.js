@@ -30,6 +30,9 @@ const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
 const SUMMARY_ACCUMULATION = BASE_URL + "mp/admin/summary/accumulation/";
 const SUMMARY_REVIEW = BASE_URL + "mp/admin/summary/review/";
 const SUMMARY_BAD_USER = BASE_URL + "mp/admin/summary/bad-user/";
+const EXPORT_FILE_BY_QUARTER =
+  BASE_URL + "mp/admin/summary/export/users-by-quarter/";
+const EXPORT_FILE_BY_EMPLOYEE = BASE_URL + "mp/admin/summary/export/pegawai/";
 
 const GET_SUMMARY_COUNT = digitalSign + "document/summary/";
 const GET_SUMMARY_LIST = digitalSign + "document/summary/list/";
@@ -1000,7 +1003,7 @@ export const getListPenilaian = createAsyncThunk(
   "mp/getListPenilaian",
   async (data) => {
     const respon = await axios.get(
-      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}`,
+      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}&limit=${data.page}&ditinjau=${data.ditinjau}&unker=${data.unitKerja}&general=${data.search}`,
       { headers: { Authorization: data.token } }
     );
     return respon?.data.results;
@@ -1270,10 +1273,13 @@ export const getDetailsSharedDocuments = createAsyncThunk(
 //postingan saya
 export const getMyPostList = createAsyncThunk(
   "mp/mypost",
-  async ({ token, page }) => {
-    const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
-      headers: { Authorization: token },
-    });
+  async ({ token, page, search }) => {
+    const respon = await axios.get(
+      `${MYPOST_LIST}?limit=${page}&search=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return respon?.data.results;
   }
 );
@@ -1396,6 +1402,26 @@ export const getSummaryReview = createAsyncThunk(
   }
 );
 
+export const getExportFileEmployee = createAsyncThunk(
+  "mp/admin/summary/export/pegawai/",
+  async ({ token }) => {
+    const respon = await axios.get(`${EXPORT_FILE_BY_EMPLOYEE}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const getExportFileQuarter = createAsyncThunk(
+  "mp/admin/summary/export/users-by-quarter/",
+  async ({ token }) => {
+    const respon = await axios.get(`${EXPORT_FILE_BY_QUARTER}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
 export const getListCategory = createAsyncThunk(
   "mp/admin/category/",
   async (token) => {
@@ -1459,10 +1485,6 @@ export const getListPostPegawai = createAsyncThunk(
 export const getListPegawaiExport = createAsyncThunk(
   "admin/iku/employee/export",
   async (data) => {
-    console.log(data.token);
-    console.log(data.year);
-    console.log(data.quarter);
-    console.log(data.unitKerja);
     const respon = await axios.get(
       `${GET_LIST_PEGAWAI_EXPORT}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}`,
       {

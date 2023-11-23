@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +28,7 @@ export const DetailPostinganSaya = () => {
   console.log(postinganSaya?.detail);
 
   return (
-    < >
+    <>
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Image
@@ -256,19 +256,38 @@ export const DetailPostinganSaya = () => {
                 style={{ width: 180, height: 97, borderRadius: 6 }}
               />
             </View>
-            <View style={{ flexDirection: 'row', gap: 5, justifyContent: 'space-between', marginTop: 20 }}>
-              <View style={{ flexDirection: 'row', gap: 5 }}>
-                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>{detail?.likes_count}</Text>
-                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>Disukai</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 5,
+                justifyContent: "space-between",
+                marginTop: 20,
+              }}
+            >
+              <View style={{ flexDirection: "row", gap: 5 }}>
+                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>
+                  {detail?.likes_count}
+                </Text>
+                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>
+                  Disukai
+                </Text>
               </View>
-              <View style={{ flexDirection: 'row', gap: 5 }}>
-                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>{detail?.comment_count}</Text>
-                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>Komentar</Text>
+              <View style={{ flexDirection: "row", gap: 5 }}>
+                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>
+                  {detail?.comment_count}
+                </Text>
+                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>
+                  Komentar
+                </Text>
               </View>
-              <View style={{ flexDirection: 'row', gap: 5 }}>
+              <View style={{ flexDirection: "row", gap: 5 }}>
                 <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>{detail?.views_count}</Text>
-                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>Dilihat</Text>
+                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>
+                  {detail?.views_count}
+                </Text>
+                <Text style={{ color: COLORS.lighter, fontSize: 13 }}>
+                  Dilihat
+                </Text>
               </View>
             </View>
 
@@ -280,7 +299,13 @@ export const DetailPostinganSaya = () => {
                 marginTop: 20,
               }}
             />
-            <View style={{ flexDirection: "row", marginTop: 10, justifyContent: 'space-between' }}>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 10,
+                justifyContent: "space-between",
+              }}
+            >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TouchableOpacity
                   style={{
@@ -344,7 +369,7 @@ export const DetailPostinganSaya = () => {
                 }}
               >
                 <Ionicons name="information-circle-outline" size={18} />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
             <View
               style={{
@@ -389,12 +414,11 @@ export const DetailPostinganSaya = () => {
                   size={18}
                   color={COLORS.grey}
                 />
-
               </View>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
-    </ >
+    </>
   );
 };
