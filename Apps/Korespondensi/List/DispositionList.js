@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import { useMemo, useRef, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useEffect } from "react";
 import {
   FlatList,
@@ -7,7 +7,11 @@ import {
   Text,
   StyleSheet,
   Platform,
+  SafeAreaView,
   TouchableOpacity,
+  TextInput,
+  Image,
+  Modal,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -20,12 +24,24 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetTextInput,
+  useBottomSheetDynamicSnapPoints,
+  BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 import SearchFilter from "../../../components/UI/SearchFilter";
 import { Config } from "../../../constants/config";
 import LottieView from "lottie-react-native";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+} from "../../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
+import { logout } from "../../../store/auth";
+import { useDispatch } from "react-redux";
+import DatePicker from "react-native-modern-datepicker";
 
 function DispositionList({ route }) {
   const [list, setList] = useState([]);
@@ -38,21 +54,45 @@ function DispositionList({ route }) {
   const [isSearchQuery, setIsSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const unread = route.params.unread;
   const animation = useRef(null);
   // ref
   const bottomSheetModalRef = useRef(null);
 
   // variables
-  const snapPoints = useMemo(() => [50, "100%"], []);
+  // const snapPoints = useMemo(() => [50, "100%"], []);
 
-  const willFocusSubscription = navigation.addListener("focus", () => {
-    filter(1);
-  });
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+  const bottomSheetAttach = () => {
+    bottomSheetModalRef.current?.present();
+  };
+
+  const bottomSheetAttachClose = () => {
+    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
+  };
+
+  //Pilih Tanggal
+  const [modalVisiblePicker, setModalVisiblePicker] = useState("");
+  const [TanggalMulai, setTanggalMulai] = useState("");
+  const [TanggalSelesai, setTanggalSelsai] = useState("");
+
+  useFocusEffect(
+    useCallback(() => {
+      setList([]);
+      refresh();
+    }, [])
+  );
 
   useEffect(() => {
     filter(1);
-    return willFocusSubscription;
   }, [startDate, endDate, isSearchQuery, isSearchFilter]);
 
   async function getAgendaDispo(page) {
@@ -71,11 +111,15 @@ function DispositionList({ route }) {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      handlerError(error, "Warning!", "Disposition List not working");
+      if (error?.response?.status == 401 || error?.status == 401) {
+        dispatch(logout());
+      } else {
+        handlerError(error, "Peringatan!", "List disposisi tidak berfungsi");
+      }
     }
   }
 
-  async function filter(page) {
+  const filter = async (page) => {
     setIsLoading(true);
     try {
       if (startDate == null && endDate == null && searchQuery.length == 0) {
@@ -127,39 +171,43 @@ function DispositionList({ route }) {
       setIsLoading(false);
     } catch (error) {
       setIsSearchFilter(false);
-      bottomSheetModalRef.current?.dismiss();
-      console.log(JSON.stringify(error.response));
       setIsLoading(false);
+      bottomSheetModalRef.current?.dismiss();
+      if (error?.response?.status == 401 || error?.status == 401) {
+        dispatch(logout());
+      } else {
+        handlerError(error, "Peringatan!", "List disposisi tidak berfungsi");
+      }
     }
-  }
+  };
 
-  const listEmpty = (
-    <View style={styles.notFound}>
-      <LottieView
-        autoPlay
-        ref={animation}
-        style={[styles.titleNotFound, { width: "100%", height: 200 }]}
-        // Find more Lottie files at https://lottiefiles.com/featured
-        source={Config.notFound}
-      />
-      <Text style={styles.titleNotFound}>
-        {isLoading
-          ? "Loading..."
-          : isSearchFilter && unread
-            ? "Disposition Unread not found"
-            : isSearchFilter && !unread
-              ? "Disposition Letter not found"
-              : list?.count == 0 && unread
-                ? "You don't have Disposition Unread"
-                : list?.count == 0 && !unread
-                  ? "You don't have Disposition Letter"
-                  : "Loading..."}
-      </Text>
-    </View>
-  );
   const renderItem = ({ item }) => (
     <>
-      <Text style={styles.headerList}>{item.date}</Text>
+      <View style={{ flexDirection: "row", gap: 10 }}>
+        <View
+          style={{
+            backgroundColor: "#5C5E61",
+            height: 25,
+            width: 5,
+            borderBottomRightRadius: 2,
+            borderTopRightRadius: 2,
+          }}
+        />
+        <View
+          style={{
+            backgroundColor: "#5C5E61",
+            width: "100%",
+            paddingVertical: 3,
+            paddingHorizontal: 10,
+            borderBottomLeftRadius: 2,
+            borderTopLeftRadius: 2,
+          }}
+        >
+          <Text style={{ fontSize: 13, fontWeight: 600, color: COLORS.white }}>
+            {item.date}
+          </Text>
+        </View>
+      </View>
       <View style={{ marginBottom: 16 }}>
         {item.children.map((data) => (
           <CardList
@@ -178,6 +226,31 @@ function DispositionList({ route }) {
     </>
   );
 
+  const listEmpty = (
+    <View style={styles.notFound}>
+      <LottieView
+        autoPlay
+        ref={animation}
+        style={[styles.titleNotFound, { width: "100%", height: 200 }]}
+        // Find more Lottie files at https://lottiefiles.com/featured
+        source={Config.notFound}
+      />
+      <Text style={styles.titleNotFound}>
+        {isLoading
+          ? "Pencarian..."
+          : isSearchFilter && unread
+          ? "Disposisi belum dibaca tidak titemukan"
+          : isSearchFilter && !unread
+          ? "Disposisi tidak ditemukan"
+          : list?.count == 0 && unread
+          ? "Anda tidak memiliki disposisi belum dibaca"
+          : list?.count == 0 && !unread
+          ? "Anda tidak memilki disposisi"
+          : "Pencarian..."}
+      </Text>
+    </View>
+  );
+
   function loadMore() {
     if (list?.next != null) {
       if (isSearchFilter) {
@@ -193,6 +266,9 @@ function DispositionList({ route }) {
     setEndDate();
     setSearchQuery("");
     setIsSearchFilter(false);
+    if (!isSearchFilter) {
+      getAgendaDispo(1);
+    }
     bottomSheetModalRef.current?.dismiss();
     setIsLoading(false);
   }
@@ -252,7 +328,7 @@ function DispositionList({ route }) {
     <>
       {/* {isLoading && loadingOverlay} */}
       <View
-        style={{ flex: 1, backgroundColor: GlobalStyles.colors.tertiery10 }}
+        style={{ flex: 1, backgroundColor: GlobalStyles.colors.tertiery20 }}
       >
         <SearchFilter
           searchQuery={searchQuery}
@@ -276,7 +352,6 @@ function DispositionList({ route }) {
               style={[
                 styles.headerList,
                 {
-                  borderLeftWidth: 0,
                   backgroundColor: GlobalStyles.colors.textWhite,
                   color: GlobalStyles.colors.textBlack,
                   marginBottom: 8,
@@ -284,10 +359,10 @@ function DispositionList({ route }) {
               ]}
             >
               {isSearchQuery.length != 0 && startDate == null
-                ? "Search: "
-                : "Filter : "}
+                ? "Cari: "
+                : "Saring : "}
             </Text>
-            <View>
+            <View style={styles.filter}>
               {startDate && (
                 <Chip
                   style={styles.badge}
@@ -338,104 +413,274 @@ function DispositionList({ route }) {
       </View>
 
       <BottomSheetModalProvider>
-        <View>
+        <SafeAreaView>
           <BottomSheetModal
             name="filter"
             ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
+            snapPoints={animatedSnapPoints}
+            handleHeight={animatedHandleHeight}
+            contentHeight={animatedContentHeight}
+            index={0}
+            style={{ borderRadius: 50 }}
             keyboardBehavior={
               Platform?.OS == "android" ? "fillParent" : "interactive"
             }
             keyboardBlurBehavior="restore"
             android_keyboardInputMode="adjust"
+            backdropComponent={({ style }) => (
+              <View
+                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+              />
+            )}
           >
-            <View style={styles.contentContainer}>
-              <View style={[styles.containerRow]}>
-                <Text style={styles.titleFilter}>Filter</Text>
-                <TouchableOpacity onPress={refresh}>
-                  <Text style={styles.titleReset}>Reset</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.bottomsheetContent}>
-                <Text style={styles.bottomsheetLabel}>Subject</Text>
-                <BottomSheetTextInput
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                  style={styles.bottomsheetInput}
-                />
-              </View>
-              <View style={styles.bottomsheetContent}>
-                <Text style={styles.bottomsheetLabel}>Tanggal Mulai</Text>
-                <Button
-                  mode="outlined"
-                  textColor={GlobalStyles.colors.tertiery80}
-                  onPress={showStartDate}
-                >
-                  {startDate
-                    ? moment(startDate).format("DD/MM/YYYY")
-                    : "Pilih Tanggal Mulai"}
-                </Button>
-                <DateTimePickerModal
-                  isVisible={isStartDateVisible}
-                  mode="date"
-                  display={Platform.OS == "android" ? "inline" : "spinner"}
-                  style={{ width: "100%", height: 300 }}
-                  onConfirm={handleConfirmStart}
-                  onCancel={hideStartDate}
-                  maximumDate={new Date()}
-                />
-              </View>
-              <View style={styles.bottomsheetContent}>
-                <Text style={styles.bottomsheetLabel}>Tanggal Selesai</Text>
-                <Button
-                  mode="outlined"
-                  textColor="black"
-                  onPress={showEndDate}
-                >
-                  {endDate
-                    ? moment(endDate).format("DD/MM/YYYY")
-                    : "Pilih Tanggal Selesai"}
-                </Button>
-                <DateTimePickerModal
-                  isVisible={isEndDateVisible}
-                  mode="date"
-                  display={Platform.OS == "android" ? "inline" : "spinner"}
-                  style={{ width: "100%", height: 300 }}
-                  onConfirm={handleConfirmEnd}
-                  onCancel={hideEndDate}
-                  minimumDate={startDate ? startDate : new Date()}
-                  maximumDate={new Date()}
-                />
-              </View>
-              <View style={styles.buttonContainer}>
-                <Button
-                  mode="contained"
-                  style={styles.button}
-                  onPress={() => {
-                    setIsSearchQuery(searchQuery);
-                    if (!isSearchFilter) {
-                      setList([]);
-                    }
-                    setIsSearchFilter(true);
-                    bottomSheetModalRef.current?.dismiss();
+            <BottomSheetView onLayout={handleContentLayout}>
+              <View style={{ flex: 1, padding: 25 }}>
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                   }}
                 >
-                  <Text style={styles.buttonText}>Apply</Text>
-                </Button>
-                <Button
-                  mode="outline"
-                  textColor={GlobalStyles.colors.tertiery80}
-                  onPress={() => {
-                    bottomSheetModalRef.current?.dismiss();
+                  <Text style={{ fontSize: 15, fontWeight: 500 }}>
+                    Menyaring Disposisi
+                  </Text>
+                  <TouchableOpacity onPress={refresh}>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        color: COLORS.danger,
+                      }}
+                    >
+                      Reset
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View
+                  style={{
+                    marginBottom: 10,
+                    flex: 1,
+                    marginTop: 20,
+                    gap: 10,
                   }}
                 >
-                  <Text style={styles.buttonText}>Cancel</Text>
-                </Button>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    Rentang Tanggal
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View>
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          width: 155,
+                          borderRadius: 4,
+                          borderColor: COLORS.ExtraDivinder,
+                          flexDirection: "row",
+                        }}
+                      >
+                        <TextInput
+                          multiline
+                          numberOfLines={4}
+                          maxLength={40}
+                          placeholder="Mulai"
+                          style={{ padding: 10, height: 40 }}
+                          value={
+                            startDate
+                              ? moment(startDate).format("DD/MM/YYYY")
+                              : "Mulai"
+                          }
+                          disabled
+                        />
+                        <View
+                          style={{
+                            alignItems: "flex-end",
+                            flex: 1,
+                            marginRight: 10,
+                            justifyContent: "center",
+                          }}
+                        >
+                          <TouchableOpacity onPress={showStartDate}>
+                            <Ionicons
+                              name="calendar-outline"
+                              size={24}
+                              color={COLORS.grey}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View>
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          width: 155,
+                          borderRadius: 4,
+                          borderColor: COLORS.ExtraDivinder,
+                          flexDirection: "row",
+                        }}
+                      >
+                        <TextInput
+                          multiline
+                          numberOfLines={4}
+                          maxLength={40}
+                          placeholder="Selesai"
+                          style={{ padding: 10, height: 40 }}
+                          value={
+                            endDate
+                              ? moment(endDate).format("DD/MM/YYYY")
+                              : "Selesai"
+                          }
+                          disabled
+                        />
+                        <View
+                          style={{
+                            alignItems: "flex-end",
+                            flex: 1,
+                            marginRight: 10,
+                            justifyContent: "center",
+                          }}
+                        >
+                          <TouchableOpacity onPress={showEndDate}>
+                            <Ionicons
+                              name="calendar-outline"
+                              size={24}
+                              color={COLORS.grey}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+
+                  <DateTimePickerModal
+                    isVisible={isEndDateVisible || isStartDateVisible}
+                    mode="date"
+                    display={Platform.OS == "android" ? "inline" : "spinner"}
+                    style={{ width: "100%", height: 300 }}
+                    onConfirm={(date) => {
+                      isStartDateVisible
+                        ? handleConfirmStart(date)
+                        : isEndDateVisible
+                        ? handleConfirmEnd(date)
+                        : {};
+                    }}
+                    onCancel={() => {
+                      isStartDateVisible
+                        ? hideStartDate()
+                        : isEndDateVisible
+                        ? hideEndDate()
+                        : {};
+                    }}
+                    maximumDate={new Date()}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    marginBottom: 10,
+                    flex: 1,
+                    marginTop: 10,
+                    gap: 10,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    Perihal
+                  </Text>
+                  <TextInput
+                    editable
+                    multiline
+                    numberOfLines={4}
+                    maxLength={40}
+                    placeholder="Masukan Perihal"
+                    style={{
+                      borderWidth: 1,
+                      height: 40,
+                      width: "100%",
+                      padding: 5,
+                      borderRadius: 6,
+                      borderColor: "#D0D5DD",
+                    }}
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                  />
+                </View>
+                <View style={{ flexDirection: "column" }}>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: COLORS.infoDanger,
+                      height: 50,
+                      marginVertical: 20,
+                      borderRadius: 6,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    onPress={() => {
+                      setIsSearchQuery(searchQuery);
+                      if (!isSearchFilter) {
+                        setList([]);
+                      }
+                      setIsSearchFilter(true);
+                      bottomSheetAttachClose();
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: FONTSIZE.H1,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Terapkan
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: GlobalStyles.colors.tertiery80,
+                      height: 50,
+                      borderRadius: 6,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    onPress={() => {
+                      bottomSheetAttachClose();
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: FONTSIZE.H1,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Tutup
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            </BottomSheetView>
           </BottomSheetModal>
-        </View>
+        </SafeAreaView>
       </BottomSheetModalProvider>
     </>
   );
