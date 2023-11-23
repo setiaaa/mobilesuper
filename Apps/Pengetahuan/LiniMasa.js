@@ -1623,7 +1623,8 @@ export const LiniMasa = () => {
                   maxLength={30}
                   value={inputValue}
                   onChangeText={(text) => setInputValue(text)}
-                  onSubmitEditing={filterSearch}
+                  // onSubmitEditing={filterSearch}
+                  onEndEditing={filterSearch}
                   clearButtonMode="always"
                 />
               </View>
