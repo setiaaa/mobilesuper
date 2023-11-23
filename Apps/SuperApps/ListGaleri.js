@@ -21,60 +21,60 @@ import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import { RefreshControl } from "react-native";
 
-
-
 export const ListGaleri = () => {
   const { galeri, loading } = useSelector((state) => state.superApps);
 
   const navigation = useNavigation();
   const [visibleModal, setVisibleModal] = useState(false);
   const [galeriById, setGaleriById] = useState({});
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   const [token, setToken] = useState("");
-  const [filterData, setFilterData] = useState([])
-  const [search, setSearch] = useState('')
-  const dispatch = useDispatch()
+  const [filterData, setFilterData] = useState([]);
+  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
     });
-    dispatch(setGaleri([]))
-    setPage(1)
+    dispatch(setGaleri([]));
+    setPage(1);
   }, []);
 
   useEffect(() => {
     if (token !== "") {
       dispatch(getGaleri({ token, page }));
-      console.log('page', page)
+      console.log("page", page);
     }
   }, [token, page]);
 
   const loadMore = () => {
-    if (galeri.lists.length % 10 === 0) {
-      setPage(page + 1)
+    if (galeri.lists.length !== 0) {
+      if (galeri.lists.length % 10 === 0) {
+        setPage(page + 1);
+      }
     }
-  }
+  };
 
   const filter = (event) => {
-    setSearch(event)
-  }
+    setSearch(event);
+  };
 
   useEffect(() => {
-    setFilterData(galeri.lists)
-  }, [galeri])
+    setFilterData(galeri.lists);
+  }, [galeri]);
 
   useEffect(() => {
-    const item = galeri.lists
-    if (search !== '') {
+    const item = galeri.lists;
+    if (search !== "") {
       const data = item.filter((item) => {
         return item.title.toLowerCase().includes(search.toLowerCase());
-      })
-      setFilterData(data)
+      });
+      setFilterData(data);
     } else {
-      setFilterData(item)
+      setFilterData(item);
     }
-  }, [search])
+  }, [search]);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -137,7 +137,7 @@ export const ListGaleri = () => {
         </View>
         <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
           <Search
-            placeholder={'Cari'}
+            placeholder={"Cari"}
             iconColor={COLORS.primary}
             onSearch={filter}
           />
@@ -156,16 +156,24 @@ export const ListGaleri = () => {
             />
           )}
           ListEmptyComponent={() => <ListEmpty />}
-          ListFooterComponent={() => (
+          ListFooterComponent={() =>
             loading && (
-              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 24,
+                }}
+              >
                 <ActivityIndicator size="large" color={COLORS.primary} />
               </View>
             )
-          )}
+          }
           numColumns={2}
           keyExtractor={(item) => "#" + item.id}
-          onEndReached={loadMore}
+          onEndReached={
+            search === "" && galeri.lists.length !== 0 ? loadMore : null
+          }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }

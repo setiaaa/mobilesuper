@@ -286,9 +286,21 @@ export const MyTask = () => {
                         >
                             <BottomSheetView onLayout={handleContentLayout} >
                                 <View style={{ flex: 1 }}>
-                                    <View style={{ alignItems: 'center', marginVertical: 20 }}>
-                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>Pilih</Text>
+                                    <View style={{ alignItems: 'center', margin: 20, flexDirection:"row", justifyContent:"space-between" }}>
+                                        <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}>Pilih</Text>
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                            bottomSheetAttachClose();
+                                            }}
+                                        >
+                                            <Ionicons
+                                            name="close-outline"
+                                            size={24}
+                                            color={COLORS.lighter}
+                                            />
+                                        </TouchableOpacity>
                                     </View>
+                                    
 
                                     <View style={{ width: '90%', marginHorizontal: 20 }}>
                                         <Dropdown

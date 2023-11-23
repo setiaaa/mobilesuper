@@ -25,7 +25,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { setDokumentlists, setLoadMore } from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
@@ -89,12 +89,11 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   fontSize: 13,
                   fontWeight: FONTWEIGHT.bold,
                   marginBottom: 10,
-                  width: 300
+                  width: 300,
                 }}
               >
                 {item.title}
               </Text>
-
 
               <View
                 style={{
@@ -109,7 +108,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     fontSize: 11,
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100
+                    width: 100,
                   }}
                 >
                   Jumlah File
@@ -131,7 +130,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   display: "flex",
                   flexDirection: "row",
                   paddingRight: 10,
-                  marginVertical: 10
+                  marginVertical: 10,
                 }}
               >
                 <Text
@@ -139,7 +138,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     fontSize: 11,
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100
+                    width: 100,
                   }}
                 >
                   Perubahan
@@ -160,7 +159,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   // backgroundColor: "brown",
                   display: "flex",
                   flexDirection: "row",
-                  paddingRight: 10
+                  paddingRight: 10,
                 }}
               >
                 <Text
@@ -168,7 +167,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     fontSize: 11,
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100
+                    width: 100,
                   }}
                 >
                   Perubahan
@@ -205,17 +204,16 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
   );
 };
 
-
 const dropdownFilter = [
   {
-    key: 'false',
-    value: 'Draft'
+    key: "false",
+    value: "Draft",
   },
   {
-    key: 'true',
-    value: 'Published'
+    key: "true",
+    value: "Published",
   },
-]
+];
 
 export const Dokumen = () => {
   const [variant, setVariant] = useState("list");
@@ -223,8 +221,8 @@ export const Dokumen = () => {
   const [token, setToken] = useState("");
   const [page, setPage] = useState(10);
   const [type, setType] = useState({
-    key: 'false',
-    value: 'Draft'
+    key: "false",
+    value: "Draft",
   });
   const dispatch = useDispatch();
 
@@ -289,11 +287,12 @@ export const Dokumen = () => {
   }, [search]);
 
   const loadMore = () => {
-    if (dokumen.lists.length % 10 === 0) {
-      setPage(page + 10)
+    if (dokumen.length !== 0) {
+      if (dokumen.lists.length % 10 === 0) {
+        setPage(page + 10);
+      }
     }
-  }
-
+  };
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -315,12 +314,8 @@ export const Dokumen = () => {
 
   return (
     <GestureHandlerRootView>
-      {loading === true && dokumen.lists.length === 0 ? (
-        <Loading />
-      ) : (
-        null
-      )}
-      < >
+      {loading === true && dokumen.lists.length === 0 ? <Loading /> : null}
+      <>
         <View style={{ marginBottom: 20 }}>
           <View
             style={{
@@ -356,14 +351,11 @@ export const Dokumen = () => {
             </View>
           </View>
           <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
-            <Search
-              placeholder={"Cari"}
-              onSearch={filter}
-            />
+            <Search placeholder={"Cari"} onSearch={filter} />
             <View style={{ marginTop: 20 }}>
               <Dropdown
                 data={dropdownFilter}
-                placeHolder={'Filter'}
+                placeHolder={"Filter"}
                 backgroundColor={COLORS.white}
                 selected={type}
                 setSelected={setType}
@@ -381,21 +373,25 @@ export const Dokumen = () => {
                   token={token}
                 />
               )}
-              ListFooterComponent={() => (
+              ListFooterComponent={() =>
                 load === true ? (
-                  <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 24,
+                    }}
+                  >
                     <ActivityIndicator size="large" color={COLORS.primary} />
                   </View>
-                ) : (
-                  null
-                )
-              )}
+                ) : null
+              }
               keyExtractor={(item) => "_" + item.id}
               style={{ height: 500 }}
               ListEmptyComponent={() => <ListEmpty />}
               onEndReached={() => {
                 if (dokumen.lists.length !== 0) {
-                  loadMore()
+                  search === "" ? loadMore() : null;
                 }
               }}
               refreshControl={
@@ -438,7 +434,7 @@ export const Dokumen = () => {
                           style={{
                             fontSize: FONTSIZE.H2,
                             fontWeight: FONTWEIGHT.normal,
-                            width: 300
+                            width: 300,
                           }}
                         >
                           {dataM.title}
@@ -472,8 +468,7 @@ export const Dokumen = () => {
                           </Text>
                         </View>
                       </TouchableOpacity>
-                      {type.key === 'true' ? (
-
+                      {type.key === "true" ? (
                         <TouchableOpacity
                           onPress={() => {
                             navigation.navigate("MainDetailRepo");
@@ -512,7 +507,7 @@ export const Dokumen = () => {
             </Portal>
           </View>
         </View>
-      </ >
+      </>
     </GestureHandlerRootView>
   );
 };

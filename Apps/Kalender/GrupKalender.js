@@ -275,16 +275,27 @@ export const GrupKalender = () => {
                   )}
                 >
                   <BottomSheetView onLayout={handleContentLayout}>
-                    <View style={{ marginVertical: 20, marginLeft: 20 }}>
+                    <View style={{ margin:20, flexDirection:"row", justifyContent:"space-between" }}>
                       <Text
                         style={{
                           fontSize: FONTSIZE.H2,
                           fontWeight: FONTWEIGHT.bold,
-                          color: COLORS.lighter,
+                          color: COLORS.normal,
                         }}
                       >
                         Pilih Grup
                       </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          bottomSheetCloseGrup();
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          size={24}
+                          color={COLORS.normal}
+                        />
+                      </TouchableOpacity>
                     </View>
                     <View style={{ width: "90%", marginLeft: 20 }}>
                       <Dropdown

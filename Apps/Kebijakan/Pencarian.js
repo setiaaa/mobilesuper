@@ -105,8 +105,10 @@ export const Pencarian = () => {
   };
 
   const loadMore = () => {
-    if (general?.length % 5 === 0) {
-      setPage(page + 5);
+    if (general.length !== 0) {
+      if (general?.length % 5 === 0) {
+        setPage(page + 5);
+      }
     }
   };
 
@@ -206,7 +208,7 @@ export const Pencarian = () => {
                     maxLength={30}
                     value={inputValue}
                     onChangeText={(text) => setInputValue(text)}
-                    onSubmitEditing={filter}
+                    onEndEditing={filter}
                     clearButtonMode="always"
                   />
                 </View>

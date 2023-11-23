@@ -73,7 +73,7 @@ export const DetailTask = () => {
     const [komen, setKomen] = useState('')
     const dispatch = useDispatch()
     const inputRef = useRef(null)
-    const [parentId, setParentId] = useState('')
+    const [parentId, setParentId] = useState({id:"", creator:""});
     const [status, setStatus] = useState('')
     const { list, refresh, loading } = useSelector(state => state.task)
     const { profile } = useSelector(state => state.superApps)
@@ -89,7 +89,7 @@ export const DetailTask = () => {
     const handleComment = () => {
         const payload = {
             task_id: taskDetail.id,
-            parent_id: parentId !== '' ? parentId : '',
+            parent_id: parentId.id !== "" ? parentId.id : "",
             message: komen
         }
         const data = {
@@ -98,6 +98,7 @@ export const DetailTask = () => {
         }
         dispatch(postCommentTM(data))
         setKomen('')
+        setParentId({id:"",creator:""})
     }
 
     useEffect(() => {
@@ -141,6 +142,7 @@ export const DetailTask = () => {
 
         return titleCase
     }
+    console.log(taskDetail)
     return (
         <>
             {taskDetail !== null ? (
@@ -453,6 +455,7 @@ export const DetailTask = () => {
                                         <BottomSheetView onLayout={handleContentLayout} style={{}}>
                                             <KeyboardAvoidingView
                                                 behavior={Platform.OS === 'ios' ? 'height' : 'height'}
+                                                keyboardVerticalOffset={parentId !== "" ? 120: 80}          
                                             >
                                                 <View style={{ marginLeft: 20, marginVertical: 20 }}>
                                                     <Text style={{ color: COLORS.ExtraDivinder }}>Komentar({taskDetail.comments.length})</Text>
@@ -470,6 +473,14 @@ export const DetailTask = () => {
                                                 />
 
                                                 <View style={{ justifyContent: 'flex-end' }}>
+                                                    {parentId.id !== "" ? ( 
+                                                    <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
+                                                        <Text>Membalas {parentId.creator}</Text>
+                                                        <TouchableOpacity>
+                                                        <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    ) : null }
                                                     <View style={{ height: 1, width: '90%', backgroundColor: COLORS.lighter, opacity: 0.3, marginTop: 10, marginHorizontal: 20 }} />
                                                     <View style={{
                                                         borderWidth: 1,
@@ -491,6 +502,7 @@ export const DetailTask = () => {
                                                             style={{ padding: 10 }}
                                                             onChangeText={setKomen}
                                                             value={komen}
+                                                            placeholderTextColor={COLORS.grey}
                                                         />
                                                         <View style={{ alignItems: 'flex-end', flex: 1, marginRight: 10, justifyContent: 'center' }}>
                                                             <TouchableOpacity onPress={() => {
@@ -531,7 +543,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
     const handleClickBalas = () => {
         if (inputRef.current) {
             inputRef.current.focus()
-            setParentId(listData.id)
+            setParentId({id:listData.id, creator:listData.creator} );    
         }
     }
     return (
