@@ -334,6 +334,36 @@ export const PenilaianPenggetahaun = () => {
     }
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '' && isFocused) {
+              let data = {
+                token: token,
+                tahun: year.value,
+                TW: quarter.key,
+                ditinjau: ditinjau,
+                unitKerja: savedUnitKerja.value,
+                page: page,
+                search: search,
+              }
+              // dispatch(getDivision(token))
+              dispatch(getListPenilaian(data))
+              dispatch(getTotalPenilaian(data))
+              // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+          }
+          console.log('Refresh Berhasil')
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
+
   // console.log("ditinjau=" + ditinjau);
   // console.log(dataUnitKerja());
   return (
