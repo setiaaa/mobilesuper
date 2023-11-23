@@ -326,8 +326,10 @@ export const PenilaianPenggetahaun = () => {
   // }, [search]);
 
   const loadMore = () => {
-    if (penilaian?.lists.length % 5 === 0) {
-      setPage(page + 5);
+    if (penilaian?.lists.length !== 0) {
+      if (penilaian?.lists.length % 5 === 0) {
+        setPage(page + 5);
+      }
     }
   };
 
@@ -400,7 +402,7 @@ export const PenilaianPenggetahaun = () => {
                 maxLength={30}
                 value={inputValue}
                 onChangeText={(text) => setInputValue(text)}
-                onSubmitEditing={filter}
+                onEndEditing={filter}
                 clearButtonMode="always"
               />
             </View>

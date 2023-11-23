@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import { KeyboardAvoidingView, Modal, Text } from "react-native";
+import { KeyboardAvoidingView, Modal, Text, TextInput } from "react-native";
 import { View } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
@@ -22,8 +22,10 @@ import { StyleSheet } from "react-native";
 import { Search } from "../../components/Search";
 import {
   getDetailLinimasa,
+  getDivisionFilter,
   getLinimasa,
   getListsLike,
+  getSubDivisionFilter,
   getViewLinimasa,
   patchLike,
   patchUnlike,
@@ -37,10 +39,16 @@ import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import {
   BottomSheetModal,
-  BottomSheetTextInput,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
   BottomSheetView,
+  BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
+  BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
+import { Portal } from "react-native-portalize";
+import { Divider } from "react-native-paper";
+import { Dropdown } from "../../components/DropDown";
 
 const CardKomen = ({ listData, inputRef, setParentId }) => {
   const [toggleComment, setToggleComment] = useState({
@@ -1291,6 +1299,119 @@ export const LiniMasa = () => {
   const [token, setToken] = useState("");
   const [page, setPage] = useState(5);
 
+  const [kegiatan, setKegiatan] = useState(false);
+  const [infografis, setInfografis] = useState(false);
+  const [videoJurnal, setVideoJurnal] = useState(false);
+
+  const [kepemimpinan, setKepemimpinan] = useState(false);
+  const [manajerial, setManajerial] = useState(false);
+  const [sosialKultural, setSosialKultural] = useState(false);
+  const [teknisFungsional, setTeknisFungsional] = useState(false);
+
+  const handleKegiatan = () => {
+    kegiatan ? setKegiatan(false) : setKegiatan(true);
+  };
+
+  const handleInfografis = () => {
+    infografis ? setInfografis(false) : setInfografis(true);
+  };
+
+  const handleVideoJurnal = () => {
+    videoJurnal ? setVideoJurnal(false) : setVideoJurnal(true);
+  };
+
+  const handleKepemimpinan = () => {
+    kepemimpinan ? setKepemimpinan(false) : setKepemimpinan(true);
+  };
+
+  const handleManajerial = () => {
+    manajerial ? setManajerial(false) : setManajerial(true);
+  };
+
+  const handleSosialKultural = () => {
+    sosialKultural ? setSosialKultural(false) : setSosialKultural(true);
+  };
+
+  const handleTeknisFungsional = () => {
+    teknisFungsional ? setTeknisFungsional(false) : setTeknisFungsional(true);
+  };
+
+  const [category, setCategory] = useState("");
+  const [competence, setCompetence] = useState("");
+
+  const clearBadge = () => {
+    setKegiatan(false);
+    setInfografis(false);
+    setVideoJurnal(false);
+
+    setKepemimpinan(false);
+    setManajerial(false);
+    setSosialKultural(false);
+    setTeknisFungsional(false);
+
+    setCategory("");
+    setCompetence("");
+  };
+
+  useEffect(() => {
+    let category = "";
+
+    if (kegiatan) {
+      category += "Kegiatan";
+    }
+
+    if (infografis) {
+      category += category.length > 0 ? ",Infografis" : "Infografis";
+    }
+
+    if (videoJurnal) {
+      category += category.length > 0 ? ",Video / Jurnal" : "Video / Jurnal";
+    }
+
+    setCategory(category);
+
+    console.log(category);
+  }, [kegiatan, infografis, videoJurnal]);
+
+  useEffect(() => {
+    let competence = "";
+
+    if (kepemimpinan) {
+      competence += "Kepemimpinan";
+    }
+
+    if (manajerial) {
+      competence += competence.length > 0 ? ",Manajerial" : "Manajerial";
+    }
+
+    if (sosialKultural) {
+      competence +=
+        competence.length > 0 ? ",Sosial Kultural" : "Sosial Kultural";
+    }
+
+    if (teknisFungsional) {
+      competence +=
+        competence.length > 0 ? ",Teknis Fungsional" : "Teknis Fungsional";
+    }
+
+    setCompetence(competence);
+
+    console.log(competence);
+  }, [kepemimpinan, manajerial, sosialKultural, teknisFungsional]);
+
+  const [filterUnker, setFilterUnker] = useState();
+  const [filterSatker, setFilterSatker] = useState();
+
+  const [inputValue, setInputValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  useEffect(() => {
+    if (filterUnker && filterUnker.key) {
+      dispatch(getSubDivisionFilter({ token: token, id: filterUnker.key }));
+    }
+  }, [filterUnker]);
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -1299,14 +1420,26 @@ export const LiniMasa = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getLinimasa({ token: token, page: page }));
+      dispatch(
+        getLinimasa({
+          token: token,
+          page: page,
+          category: category,
+          competence: competence,
+          unker: filterUnker ? filterUnker.value : "",
+          satker: filterSatker ? filterSatker.value : "",
+          search: search,
+        })
+      );
       dispatch(setRefresh(false));
     }
-  }, [token, page]);
+  }, [token, page, category, competence, filterUnker, filterSatker, search]);
 
   const { linimasa, refresh, loading } = useSelector(
     (state) => state.pengetahuan
   );
+
+  const { filter } = useSelector((state) => state.repository);
 
   useEffect(() => {
     if (refresh) {
@@ -1316,63 +1449,104 @@ export const LiniMasa = () => {
 
   const loadMore = () => {
     if (linimasa.lists.length % 5 === 0) {
-      setPage(page + 5);
+      if (linimasa.lists.length === page) {
+        setPage(page + 5);
+      }
     }
     // console.log(page);
   };
 
   // console.log(linimasa.listsLike)
 
-  const filter = (event) => {
-    setSearch(event);
+  const filterSearch = () => {
+    setSearch(inputValue);
   };
 
   useEffect(() => {
     setFilterData(linimasa.lists);
   }, [linimasa]);
 
-  useEffect(() => {
-    if (search !== "") {
-      const data = linimasa.lists?.filter((item) => {
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
-      if (data.length === 0) {
-      }
-    } else {
-      setFilterData(linimasa.lists);
-    }
-  }, [search, linimasa]);
+  // useEffect(() => {
+  //   if (search !== "") {
+  //     const data = linimasa.lists?.filter((item) => {
+  //       return item.title.toLowerCase().includes(search.toLowerCase());
+  //     });
+  //     setFilterData(data);
+  //     if (data.length === 0) {
+  //     }
+  //   } else {
+  //     setFilterData(linimasa.lists);
+  //   }
+  // }, [search, linimasa]);
 
-  const [search, setSearch] = useState("");
-  const [filterData, setFilterData] = useState([]);
+  // const [ascending, setAscending] = useState(false);
+  // const [isFiltered, setIsFiltered] = useState(false);
 
-  const [ascending, setAscending] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
+  // const asc = () => {
+  //   const sortedAscending = filterData
+  //     .slice()
+  //     .sort((a, b) => a.title.localeCompare(b.title));
+  //   setFilterData(sortedAscending);
+  //   setAscending(true);
+  //   setIsFiltered(true);
+  // };
 
-  const asc = () => {
-    const sortedAscending = filterData
-      .slice()
-      .sort((a, b) => a.title.localeCompare(b.title));
-    setFilterData(sortedAscending);
-    setAscending(true);
-    setIsFiltered(true);
-  };
-
-  const desc = () => {
-    const sortedDescending = filterData
-      .slice()
-      .sort((a, b) => b.title.localeCompare(a.title));
-    setFilterData(sortedDescending);
-    setAscending(false);
-    setIsFiltered(true);
-  };
+  // const desc = () => {
+  //   const sortedDescending = filterData
+  //     .slice()
+  //     .sort((a, b) => b.title.localeCompare(a.title));
+  //   setFilterData(sortedDescending);
+  //   setAscending(false);
+  //   setIsFiltered(true);
+  // };
 
   // console.log(linimasa.lists.like_list[0])
 
+  const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalFilterRef = useRef(null);
+
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+  const bottomSheetAttachFilter = (item) => {
+    bottomSheetModalFilterRef.current?.present();
+  };
+
+  const bottomSheetAttachFilterClose = () => {
+    if (bottomSheetModalFilterRef.current)
+      bottomSheetModalFilterRef.current?.close();
+  };
+
+  const unker = () => {
+    let judulUnker = [];
+    filter.unker.map((item) => {
+      judulUnker.push({
+        key: item.id,
+        value: item.name,
+      });
+    });
+    return judulUnker;
+  };
+
+  const satker = () => {
+    let judulSatker = [];
+    filter.satker.map((item) => {
+      judulSatker.push({
+        key: item.id,
+        value: item.name,
+      });
+    });
+    return judulSatker;
+  };
+
   return (
     <>
-      {linimasa.lists.length === 0 ? <Loading /> : null}
+      {loading ? <Loading /> : null}
       <>
         <View
           style={{
@@ -1415,30 +1589,294 @@ export const LiniMasa = () => {
           </View>
         </View>
 
-        <View style={{ padding: 20, flexDirection: "row" }}>
-          <View style={{ width: "85%", marginRight: 10, marginBottom: -30 }}>
-            <Search
-              placeholder={"Cari..."}
-              iconColor={COLORS.primary}
-              onSearch={filter}
-            />
-          </View>
-          <TouchableOpacity onPress={!ascending ? asc : desc}>
+        <View
+          style={{
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            paddingBottom: 10,
+            rowGap: 5,
+            // backgroundColor: "brown",
+            borderBottomColor: COLORS.secondaryLighter,
+            borderBottomWidth: 1,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              // alignContent: "center",
+            }}
+          >
             <View
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: 30,
+                width: "85%",
+                marginRight: 10,
                 backgroundColor: COLORS.white,
-                justifyContent: "center",
-                alignItems: "center",
-                borderColor: COLORS.secondaryLighter,
-                // borderWidth: isFiltered ? 1 : 0,
+                borderRadius: 8,
               }}
             >
-              <Ionicons name="filter-outline" size={24} />
+              <View style={styles.input}>
+                <Ionicons name="search" size={20} color={COLORS.primary} />
+                <TextInput
+                  placeholder={"Cari..."}
+                  style={{ fontSize: 16, flex: 1 }}
+                  maxLength={30}
+                  value={inputValue}
+                  onChangeText={(text) => setInputValue(text)}
+                  onEndEditing={filterSearch}
+                  clearButtonMode="always"
+                />
+              </View>
             </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                bottomSheetAttachFilter();
+                dispatch(getDivisionFilter({ token: token }));
+              }}
+            >
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 30,
+                  backgroundColor: COLORS.white,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderColor: COLORS.secondaryLighter,
+                  // borderWidth: isFiltered ? 1 : 0,
+                }}
+              >
+                <Ionicons name="filter-outline" size={24} />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <Portal>
+            <BottomSheetModalProvider>
+              <BottomSheetModal
+                ref={bottomSheetModalFilterRef}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                  />
+                )}
+              >
+                <BottomSheetView onLayout={handleContentLayout}>
+                  <View style={{ marginVertical: 20 }}>
+                    <View
+                      style={{
+                        marginHorizontal: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        padding: 10,
+                        borderBottomWidth: 2,
+                        borderBottomColor: COLORS.grey,
+                      }}
+                    >
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        Filter Satuan dan Unit Kerja
+                      </Text>
+                      <TouchableOpacity
+                        style={{}}
+                        onPress={() => {
+                          bottomSheetAttachFilterClose();
+                        }}
+                      >
+                        <Ionicons
+                          name="close-outline"
+                          size={24}
+                          color={COLORS.lighter}
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                      <Text
+                        style={{
+                          marginHorizontal: 10,
+                          marginBottom: 10,
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Unit Kerja
+                      </Text>
+                      <Dropdown
+                        search={true}
+                        data={unker()}
+                        placeHolder={"Pilih Unit Kerja"}
+                        backgroundColor={COLORS.white}
+                        selected={filterUnker}
+                        setSelected={setFilterUnker}
+                        borderWidth={1}
+                        borderWidthValue={1}
+                        borderwidthDrop={1}
+                        borderColor={COLORS.ExtraDivinder}
+                        borderColorValue={COLORS.ExtraDivinder}
+                        borderColorDrop={COLORS.ExtraDivinder}
+                      />
+                    </View>
+
+                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                      <Text
+                        style={{
+                          marginHorizontal: 10,
+                          marginBottom: 10,
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Satuan Kerja
+                      </Text>
+                      {filterUnker && filterUnker.key ? (
+                        <Dropdown
+                          data={satker()}
+                          search={true}
+                          placeHolder={"Pilih Satuan Kerja"}
+                          backgroundColor={COLORS.white}
+                          selected={filterSatker}
+                          setSelected={setFilterSatker}
+                          borderWidth={1}
+                          borderWidthValue={1}
+                          borderwidthDrop={1}
+                          borderColor={COLORS.ExtraDivinder}
+                          borderColorValue={COLORS.ExtraDivinder}
+                          borderColorDrop={COLORS.ExtraDivinder}
+                          heightValue={300}
+                        />
+                      ) : (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            marginHorizontal: 10,
+                            marginBottom: 10,
+                            gap: 5,
+                          }}
+                        >
+                          <Text style={{ color: COLORS.infoDanger }}>*</Text>
+                          <Text style={{ color: COLORS.lighter }}>
+                            Daftar satuan kerja akan muncul setelah memilih unit
+                            kerja
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                </BottomSheetView>
+              </BottomSheetModal>
+            </BottomSheetModalProvider>
+          </Portal>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              // backgroundColor: "brown",
+            }}
+          >
+            <ScrollView
+              horizontal
+              style={{
+                // backgroundColor: "black",
+                paddingVertical: 10,
+                flexDirection: "row",
+                width: "85%",
+              }}
+            >
+              <TouchableOpacity
+                style={kegiatan ? styles.badgeActive : styles.badge}
+                onPress={handleKegiatan}
+              >
+                <Text
+                  style={kegiatan ? styles.badgeTextActive : styles.badgeText}
+                >
+                  Kegiatan
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={infografis ? styles.badgeActive : styles.badge}
+                onPress={handleInfografis}
+              >
+                <Text
+                  style={infografis ? styles.badgeTextActive : styles.badgeText}
+                >
+                  Infografis
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={videoJurnal ? styles.badgeActive : styles.badge}
+                onPress={handleVideoJurnal}
+              >
+                <Text
+                  style={
+                    videoJurnal ? styles.badgeTextActive : styles.badgeText
+                  }
+                >
+                  Video / Jurnal
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={kepemimpinan ? styles.badgeActive : styles.badge}
+                onPress={handleKepemimpinan}
+              >
+                <Text
+                  style={
+                    kepemimpinan ? styles.badgeTextActive : styles.badgeText
+                  }
+                >
+                  Kepemimpinan
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={manajerial ? styles.badgeActive : styles.badge}
+                onPress={handleManajerial}
+              >
+                <Text
+                  style={manajerial ? styles.badgeTextActive : styles.badgeText}
+                >
+                  Manajerial
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={sosialKultural ? styles.badgeActive : styles.badge}
+                onPress={handleSosialKultural}
+              >
+                <Text
+                  style={
+                    sosialKultural ? styles.badgeTextActive : styles.badgeText
+                  }
+                >
+                  Sosial Kultural
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={teknisFungsional ? styles.badgeActive : styles.badge}
+                onPress={handleTeknisFungsional}
+              >
+                <Text
+                  style={
+                    teknisFungsional ? styles.badgeTextActive : styles.badgeText
+                  }
+                >
+                  Teknis Fungsional
+                </Text>
+              </TouchableOpacity>
+            </ScrollView>
+            <View style={{ width: "15%", alignItems: "center" }}>
+              <TouchableOpacity onPress={clearBadge}>
+                <Ionicons
+                  name="close-outline"
+                  size={24}
+                  color={COLORS.lighter}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
 
         <FlatList
@@ -1467,7 +1905,7 @@ export const LiniMasa = () => {
           }
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={loadMore}
+          onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
         />
       </>
     </>
@@ -1475,6 +1913,46 @@ export const LiniMasa = () => {
 };
 
 const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
+  badge: {
+    // marginHorizontal: 5,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+    borderWidth: 1,
+    // backgroundColor: COLORS.secondary,
+    marginRight: 5,
+    borderRadius: 30,
+    borderColor: COLORS.secondaryLighter,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  badgeActive: {
+    // marginHorizontal: 5,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+    borderWidth: 1,
+    backgroundColor: COLORS.primary,
+    marginRight: 5,
+    borderRadius: 30,
+    borderColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  badgeText: {
+    color: COLORS.lighter,
+  },
+  badgeTextActive: {
+    color: COLORS.white,
+  },
   iOSBackdrop: {
     backgroundColor: "#000000",
     opacity: 0.3,

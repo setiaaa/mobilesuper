@@ -48,8 +48,10 @@ export const ListGaleri = () => {
   }, [token, page]);
 
   const loadMore = () => {
-    if (galeri.lists.length % 10 === 0) {
-      setPage(page + 1);
+    if (galeri.lists.length !== 0) {
+      if (galeri.lists.length % 10 === 0) {
+        setPage(page + 1);
+      }
     }
   };
 

@@ -286,8 +286,10 @@ export const Dokumen = () => {
   }, [search]);
 
   const loadMore = () => {
-    if (dokumen.lists.length % 10 === 0) {
-      setPage(page + 10);
+    if (dokumen.length !== 0) {
+      if (dokumen.lists.length % 10 === 0) {
+        setPage(page + 10);
+      }
     }
   };
 

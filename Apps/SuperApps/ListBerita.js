@@ -36,8 +36,10 @@ export const ListBerita = () => {
   }, [token, page]);
 
   const loadMore = () => {
-    if (berita.lists.length % 10 === 0) {
-      setPage(page + 1);
+    if (berita?.lists.length !== 0) {
+      if (berita.lists.length % 10 === 0) {
+        setPage(page + 1);
+      }
     }
   };
 
