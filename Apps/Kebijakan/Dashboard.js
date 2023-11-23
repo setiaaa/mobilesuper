@@ -228,14 +228,18 @@ export default function Dashboard(params) {
   };
 
   const loadMore = () => {
-    if (dokumenList.length % 5 === 0) {
-      setPage(page + 5);
+    if (dokumenList.length !== 0) {
+      if (dokumenList.length % 5 === 0) {
+        setPage(page + 5);
+      }
     }
   };
 
   const loadMoreTematik = () => {
-    if (unitKerjaId.lists?.length % 5 === 0) {
-      setPage(page + 5);
+    if (unitKerjaId.lists.length !== 0) {
+      if (unitKerjaId.lists?.length % 5 === 0) {
+        setPage(page + 5);
+      }
     }
   };
 
@@ -376,7 +380,7 @@ export default function Dashboard(params) {
                     maxLength={30}
                     value={inputValue}
                     onChangeText={(text) => setInputValue(text)}
-                    onSubmitEditing={filterData}
+                    onEndEditing={filterData}
                     clearButtonMode="always"
                   />
                 </View>

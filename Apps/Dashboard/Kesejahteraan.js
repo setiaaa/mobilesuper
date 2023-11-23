@@ -1,30 +1,29 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { Image } from 'react-native'
-import { View } from 'react-native'
-import { Text } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { getTokenValue } from '../../service/session'
-import { TouchableOpacity } from 'react-native'
-import { getKesejahteraan } from '../../service/api'
-import { FlatList } from 'react-native'
-import moment from 'moment'
-import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
-import { Ionicons } from '@expo/vector-icons';
-import RenderHTML from 'react-native-render-html'
-import { useWindowDimensions } from 'react-native'
-import { ScrollView } from 'react-native'
-import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder'
-import { LinearGradient } from 'expo-linear-gradient'
-import { ActivityIndicator } from 'react-native'
-import { setKesejahteraanEmpty } from '../../store/Dashboard'
-import ListEmpty from '../../components/ListEmpty'
-
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { Image } from "react-native";
+import { View } from "react-native";
+import { Text } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { getTokenValue } from "../../service/session";
+import { TouchableOpacity } from "react-native";
+import { getKesejahteraan } from "../../service/api";
+import { FlatList } from "react-native";
+import moment from "moment";
+import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
+import RenderHTML from "react-native-render-html";
+import { useWindowDimensions } from "react-native";
+import { ScrollView } from "react-native";
+import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+import { ActivityIndicator } from "react-native";
+import { setKesejahteraanEmpty } from "../../store/Dashboard";
+import ListEmpty from "../../components/ListEmpty";
 
 const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
-    const source = {
-        html: `<section id="services" className="services">
+  const source = {
+    html: `<section id="services" className="services">
         <div className="container">
             <header className="section-header wow fadeInUp col-md-8" style={{ margin: '0px auto', visibility: 'visible', animationName: 'fadeInUp' }}>
                 <h3 className="text-center">Layanan untuk ASN</h3>
@@ -89,199 +88,325 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
                 </div>
             </div>
         </div>
-    </section>`
-    };
-    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
-    const { width } = useWindowDimensions();
-    console.log(item)
-    return (
-        <View>
-            {/* {value === 'taspen' ? (
+    </section>`,
+  };
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+  const { width } = useWindowDimensions();
+  console.log(item);
+  return (
+    <View>
+      {/* {value === 'taspen' ? (
                 <RenderHTML
                     source={source}
                     contentWidth={width}
                 />
             ) : ( */}
 
-            <TouchableOpacity style={{ backgroundColor: COLORS.white, marginTop: 20, marginHorizontal: 20, padding: 10, borderRadius: 8 }}
-                onPress={() => {
-                    setDetail('detail')
-                    setDetailContent(item)
-                }}
-            >
-                {loading ? (
-                    <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={330} height={20} />
-                ) : (
-                    <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
-                )}
+      <TouchableOpacity
+        style={{
+          backgroundColor: COLORS.white,
+          marginTop: 20,
+          marginHorizontal: 20,
+          padding: 10,
+          borderRadius: 8,
+        }}
+        onPress={() => {
+          setDetail("detail");
+          setDetailContent(item);
+        }}
+      >
+        {loading ? (
+          <ShimmerPlaceHolder
+            style={{ borderRadius: 4 }}
+            width={330}
+            height={20}
+          />
+        ) : (
+          <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
+        )}
 
-                {loading ? (
-                    <ShimmerPlaceHolder style={{ borderRadius: 4, marginTop: 10 }} width={330} height={20} />
-                ) : (
-                    <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
-                )}
-            </TouchableOpacity>
-            {/* )} */}
-        </View>
-    )
-}
+        {loading ? (
+          <ShimmerPlaceHolder
+            style={{ borderRadius: 4, marginTop: 10 }}
+            width={330}
+            height={20}
+          />
+        ) : (
+          <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>
+            {item.title}
+          </Text>
+        )}
+      </TouchableOpacity>
+      {/* )} */}
+    </View>
+  );
+};
 
 export const Kesejahteraan = () => {
-    const [token, setToken] = useState('')
-    const [value, setValue] = useState('tapera')
-    const [detail, setDetail] = useState('')
-    const [detailContent, setDetailContent] = useState({})
-    const [page, setPage] = useState(1)
+  const [token, setToken] = useState("");
+  const [value, setValue] = useState("tapera");
+  const [detail, setDetail] = useState("");
+  const [detailContent, setDetailContent] = useState({});
+  const [page, setPage] = useState(1);
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getKesejahteraan({ token: token, value: value, page: page }))
-    }, [value, page, token])
+  useEffect(() => {
+    dispatch(getKesejahteraan({ token: token, value: value, page: page }));
+  }, [value, page, token]);
 
-    useEffect(() => {
-        getTokenValue().then(val => {
-            setToken(val)
-        })
-        setPage(1)
-    }, [token])
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+    setPage(1);
+  }, [token]);
 
-    const { kesejahteraan, loading } = useSelector(state => state.dashboard)
-    const [lists, setLists] = useState([])
+  const { kesejahteraan, loading } = useSelector((state) => state.dashboard);
+  const [lists, setLists] = useState([]);
 
-    const { width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
-    const DATE_OPTIONS = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+  const DATE_OPTIONS = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  };
 
-    const formatDate = (date) => {
-        return new Date(date).toLocaleDateString('ID', DATE_OPTIONS);
-    };
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("ID", DATE_OPTIONS);
+  };
 
-    useEffect(() => {
-        setLists(kesejahteraan.lists.results)
-    }, [kesejahteraan])
+  useEffect(() => {
+    setLists(kesejahteraan.lists.results);
+  }, [kesejahteraan]);
 
-    const loadMore = () => {
-        if (lists.length % 5 === 0) {
-            setPage(page + 1)
-        }
+  const loadMore = () => {
+    if (lists.length !== 0) {
+      if (lists.length % 5 === 0) {
+        setPage(page + 1);
+      }
     }
+  };
 
-    const filterHandleTapera = () => {
-        dispatch(setKesejahteraanEmpty())
-        setPage(1)
-        setValue('tapera')
-    }
-    const filterHandleBpjs = () => {
-        dispatch(setKesejahteraanEmpty())
-        setPage(1)
-        setValue('bpjs')
-    }
-    const filterHandleTaspen = () => {
-        dispatch(setKesejahteraanEmpty())
-        setPage(1)
-        setValue('taspen')
-    }
+  const filterHandleTapera = () => {
+    dispatch(setKesejahteraanEmpty());
+    setPage(1);
+    setValue("tapera");
+  };
+  const filterHandleBpjs = () => {
+    dispatch(setKesejahteraanEmpty());
+    setPage(1);
+    setValue("bpjs");
+  };
+  const filterHandleTaspen = () => {
+    dispatch(setKesejahteraanEmpty());
+    setPage(1);
+    setValue("taspen");
+  };
 
-    return (
+  return (
+    <View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          gap: 30,
+          marginTop: 20,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            width: 100,
+            paddingBottom: 10,
+            borderBottomWidth: 2,
+            borderBottomColor:
+              value === "tapera" ? COLORS.primary : COLORS.grey,
+          }}
+          onPress={() => {
+            filterHandleTapera();
+          }}
+        >
+          <Image source={require("../../assets/superApp/Tapera.png")} />
+          <Text
+            style={{
+              color: value === "tapera" ? COLORS.primary : COLORS.foundation,
+            }}
+          >
+            Tapera
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            width: 100,
+            paddingBottom: 10,
+            borderBottomWidth: 2,
+            borderBottomColor: value === "bpjs" ? COLORS.primary : COLORS.grey,
+          }}
+          onPress={() => {
+            filterHandleBpjs();
+          }}
+        >
+          <Image source={require("../../assets/superApp/BPJS.png")} />
+          <Text
+            style={{
+              color: value === "bpjs" ? COLORS.primary : COLORS.foundation,
+            }}
+          >
+            BPJS
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            width: 100,
+            paddingBottom: 10,
+            borderBottomWidth: 2,
+            borderBottomColor:
+              value === "taspen" ? COLORS.primary : COLORS.grey,
+          }}
+          onPress={() => {
+            filterHandleTaspen();
+          }}
+        >
+          <Image source={require("../../assets/superApp/Taspen.png")} />
+          <Text
+            style={{
+              color: value === "taspen" ? COLORS.primary : COLORS.foundation,
+            }}
+          >
+            Taspen
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {detail === "" ? (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 30, marginTop: 20 }}>
-
-                <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'tapera' ? COLORS.primary : COLORS.grey }}
-                    onPress={() => {
-                        filterHandleTapera()
+          <View
+            style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 10 }}
+          >
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
+            {/* custom divider */}
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: "#DBDADE",
+                marginTop: 10,
+              }}
+            />
+          </View>
+          {lists.length !== 0 ? (
+            <FlatList
+              data={lists}
+              renderItem={({ item }) => (
+                <CardLists
+                  item={item}
+                  setDetail={setDetail}
+                  setDetailContent={setDetailContent}
+                  value={value}
+                  loading={loading}
+                  enableExperimentalMarginCollapsing={true}
+                />
+              )}
+              ListFooterComponent={() =>
+                loading && (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 24,
                     }}
-                >
-                    <Image source={require('../../assets/superApp/Tapera.png')} />
-                    <Text style={{ color: value === 'tapera' ? COLORS.primary : COLORS.foundation }}>Tapera</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'bpjs' ? COLORS.primary : COLORS.grey }}
-                    onPress={() => {
-                        filterHandleBpjs()
-                    }}
-                >
-                    <Image source={require('../../assets/superApp/BPJS.png')} />
-                    <Text style={{ color: value === 'bpjs' ? COLORS.primary : COLORS.foundation }}>BPJS</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{ alignItems: 'center', width: 100, paddingBottom:10, borderBottomWidth:2, borderBottomColor: value === 'taspen' ? COLORS.primary : COLORS.grey }}
-                    onPress={() => {
-                        filterHandleTaspen()
-                    }}
-                >
-                    <Image source={require('../../assets/superApp/Taspen.png')} />
-                    <Text style={{ color: value === 'taspen' ? COLORS.primary : COLORS.foundation }}>Taspen</Text>
-                </TouchableOpacity>
-            </View>
-
-
-            {detail === '' ? (
-                <View>
-                    <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom:10 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginTop: 10 }} />
-                    </View>
-                    {lists.length !== 0 ? (
-                        <FlatList
-                            data={lists}
-                            renderItem={({ item }) => <CardLists
-                                item={item}
-                                setDetail={setDetail}
-                                setDetailContent={setDetailContent}
-                                value={value}
-                                loading={loading}
-                                enableExperimentalMarginCollapsing={true}
-                            />
-                            }
-                            ListFooterComponent={() => (
-                                loading && (
-                                    <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
-                                        <ActivityIndicator size="large" color={COLORS.primary} />
-                                    </View>
-                                )
-                            )}
-                            style={{ height: 500 }}
-                            keyExtractor={item => item.id}
-                            onEndReached={loadMore}
-                        />
-                    ) : (
-                        <ListEmpty />
-                    )}
-
-                </View>
-
-            ) : (
-                <ScrollView>
-                    <View style={{ marginTop: 20, marginHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                        <TouchableOpacity onPress={() => {
-                            setDetail('')
-                        }}>
-                            <Ionicons name='chevron-back-outline' size={24} />
-                        </TouchableOpacity>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Detail Berita</Text>
-                    </View>
-                    {/* custom divider */}
-                    <View style={{ height: 1, width: '90%', backgroundColor: '#DBDADE', marginTop: 10, marginHorizontal: 20 }} />
-
-                    <View style={{ marginHorizontal: 20, backgroundColor: COLORS.white, padding: 20, marginTop: 20, borderRadius: 8 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>{detailContent.title}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 5 }}>
-                            <Ionicons name='time-outline' size={20} color={COLORS.grey} />
-                            {/* <Text>{moment(detailContent.created_date).format(DATETIME.LONG_DATE)}</Text> */}
-                            <Text>{formatDate(detailContent.created_date)}</Text>
-                        </View>
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginTop: 10 }} />
-
-                        <RenderHTML
-                            source={{ html: detailContent.content }}
-                            contentWidth={width}
-                        />
-                    </View>
-                </ScrollView>
-            )}
+                  >
+                    <ActivityIndicator size="large" color={COLORS.primary} />
+                  </View>
+                )
+              }
+              style={{ height: 500 }}
+              keyExtractor={(item) => item.id}
+              onEndReached={loadMore}
+            />
+          ) : (
+            <ListEmpty />
+          )}
         </View>
-    )
-}
+      ) : (
+        <ScrollView>
+          <View
+            style={{
+              marginTop: 20,
+              marginHorizontal: 20,
+              flexDirection: "row",
+              gap: 10,
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                setDetail("");
+              }}
+            >
+              <Ionicons name="chevron-back-outline" size={24} />
+            </TouchableOpacity>
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Detail Berita</Text>
+          </View>
+          {/* custom divider */}
+          <View
+            style={{
+              height: 1,
+              width: "90%",
+              backgroundColor: "#DBDADE",
+              marginTop: 10,
+              marginHorizontal: 20,
+            }}
+          />
+
+          <View
+            style={{
+              marginHorizontal: 20,
+              backgroundColor: COLORS.white,
+              padding: 20,
+              marginTop: 20,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              {detailContent.title}
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 5,
+                marginTop: 5,
+              }}
+            >
+              <Ionicons name="time-outline" size={20} color={COLORS.grey} />
+              {/* <Text>{moment(detailContent.created_date).format(DATETIME.LONG_DATE)}</Text> */}
+              <Text>{formatDate(detailContent.created_date)}</Text>
+            </View>
+            {/* custom divider */}
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: "#DBDADE",
+                marginTop: 10,
+              }}
+            />
+
+            <RenderHTML
+              source={{ html: detailContent.content }}
+              contentWidth={width}
+            />
+          </View>
+        </ScrollView>
+      )}
+    </View>
+  );
+};

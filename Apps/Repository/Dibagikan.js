@@ -7,7 +7,12 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
@@ -23,7 +28,7 @@ import { Dropdown } from "../../components/DropDown";
 import { getDetailDocument, getDocumentDibagikan } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import moment from "moment";
-import { Loading } from '../../components/Loading';
+import { Loading } from "../../components/Loading";
 
 const DataList = ({ token, item, bottomSheetAttach }) => {
   const dispatch = useDispatch();
@@ -77,12 +82,11 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   fontSize: 13,
                   fontWeight: FONTWEIGHT.bold,
                   marginBottom: 10,
-                  width: 300
+                  width: 300,
                 }}
               >
                 {item.title}
               </Text>
-
 
               <View
                 style={{
@@ -97,7 +101,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     fontSize: 11,
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100
+                    width: 100,
                   }}
                 >
                   Jumlah File
@@ -119,7 +123,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   display: "flex",
                   flexDirection: "row",
                   paddingRight: 10,
-                  marginVertical: 10
+                  marginVertical: 10,
                 }}
               >
                 <Text
@@ -127,7 +131,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     fontSize: 11,
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100
+                    width: 100,
                   }}
                 >
                   Perubahan
@@ -148,7 +152,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                   // backgroundColor: "brown",
                   display: "flex",
                   flexDirection: "row",
-                  paddingRight: 10
+                  paddingRight: 10,
                 }}
               >
                 <Text
@@ -156,7 +160,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                     fontSize: 11,
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100
+                    width: 100,
                   }}
                 >
                   Perubahan
@@ -193,24 +197,23 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
   );
 };
 
-
 const dropdownFilter = [
   {
-    key: 'false',
-    value: 'Draft'
+    key: "false",
+    value: "Draft",
   },
   {
-    key: 'true',
-    value: 'Published'
+    key: "true",
+    value: "Published",
   },
-]
+];
 
 export const Dibagikan = () => {
   const [variant, setVariant] = useState("list");
   const [dataM, setDataM] = useState([]);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(10);
-  const [general, setGeneral] = useState('')
+  const [general, setGeneral] = useState("");
 
   const dispatch = useDispatch();
 
@@ -220,10 +223,11 @@ export const Dibagikan = () => {
     });
   }, []);
 
-
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDocumentDibagikan({ token: token, page: page, general: general }));
+      dispatch(
+        getDocumentDibagikan({ token: token, page: page, general: general })
+      );
     }
   }, [token, page]);
 
@@ -250,20 +254,18 @@ export const Dibagikan = () => {
   const { dibagikan, loading, load } = useSelector((state) => state.repository);
 
   const loadMore = () => {
-    if (dibagikan.lists.length % 10 === 0) {
-      setPage(page + 10)
+    if (dibagikan.length !== 0) {
+      if (dibagikan.lists.length % 10 === 0) {
+        setPage(page + 10);
+      }
     }
-  }
+  };
 
-  console.log(load)
+  console.log(load);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {loading === true && dibagikan.lists.length === 0 ? (
-        <Loading />
-      ) : (
-        null
-      )}
+      {loading === true && dibagikan.lists.length === 0 ? <Loading /> : null}
       <BottomSheetModalProvider>
         <View style={{ flex: 1 }}>
           <View
@@ -272,7 +274,7 @@ export const Dibagikan = () => {
               alignItems: "center",
               backgroundColor: COLORS.primary,
               height: 80,
-              alignItems: 'center'
+              alignItems: "center",
             }}
           >
             <View
@@ -304,7 +306,7 @@ export const Dibagikan = () => {
           <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
             <Search
               placeholder={"Cari"}
-            // onSearch={setGeneral}
+              // onSearch={setGeneral}
             />
           </View>
 
@@ -328,23 +330,29 @@ export const Dibagikan = () => {
                 token={token}
               />
             )}
-            ListFooterComponent={() => (
+            ListFooterComponent={() =>
               load && (
-                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 24,
+                  }}
+                >
                   <ActivityIndicator size="large" color={COLORS.primary} />
                 </View>
               )
-            )}
+            }
             keyExtractor={(item) => "_" + item.id}
             style={{ height: 500 }}
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={() => {
               if (dibagikan.lists.length !== 0) {
-                loadMore()
+                loadMore();
               }
             }}
           />
-        </View >
+        </View>
         <BottomSheetModal
           ref={bottomSheetModalRef}
           snapPoints={animatedSnapPoints}
@@ -355,9 +363,7 @@ export const Dibagikan = () => {
           keyboardBlurBehavior="restore"
           android_keyboardInputMode="adjust"
           backdropComponent={({ style }) => (
-            <View
-              style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-            />
+            <View style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]} />
           )}
         >
           <BottomSheetView onLayout={handleContentLayout}>
@@ -379,7 +385,7 @@ export const Dibagikan = () => {
                   style={{
                     fontSize: FONTSIZE.H2,
                     fontWeight: FONTWEIGHT.normal,
-                    width: 300
+                    width: 300,
                   }}
                 >
                   {dataM.title}
@@ -444,7 +450,7 @@ export const Dibagikan = () => {
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
-    </GestureHandlerRootView >
+    </GestureHandlerRootView>
   );
 };
 

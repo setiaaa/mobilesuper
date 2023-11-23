@@ -261,8 +261,10 @@ export const DokumenTamplate = () => {
   );
 
   const loadMore = () => {
-    if (tamplate.lists.length % 10 === 0) {
-      setPage(page + 10);
+    if (tamplate?.lists.length !== 0) {
+      if (tamplate?.lists.length % 10 === 0) {
+        setPage(page + 10);
+      }
     }
   };
 
