@@ -24,6 +24,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../service/session";
 import { setDigitalSignLists } from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
 
 const ListDokumenLain = ({ item, variant, token }) => {
   const dispatch = useDispatch();
@@ -205,6 +206,38 @@ export const DokumenLain = () => {
       setFilterData(item);
     }
   }, [search]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== '') {
+                if (variant === ' composer'){
+                    dispatch(getListComposer({ token: token, tipe: tipe }));
+                }
+                if (variant === 'inprogress') {
+                    dispatch(getListInProgress({ token: token, tipe: tipe }));
+                } 
+                if (variant === 'completed') {
+                    dispatch(getListCompleted({ token: token, tipe: tipe }));
+                } 
+                if (variant === 'draft') {
+                    dispatch(getListDraft({ token: token, tipe: tipe }));
+                } 
+                if (variant === 'signed') {
+                    dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
+                }
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [token, tipe]);
 
   // console.log(dokumenlain.lists)
   // console.log(filterData)
@@ -426,6 +459,9 @@ export const DokumenLain = () => {
             </View>
           )}
           ListEmptyComponent={() => <ListEmpty />}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
           style={{ height: "73%" }}
         />
 

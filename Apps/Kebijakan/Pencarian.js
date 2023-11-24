@@ -42,6 +42,7 @@ import { setRefresh } from "../../store/Kebijakan";
 import ListEmpty from "../../components/ListEmpty";
 import { event } from "react-native-reanimated";
 import { TextInput } from "react-native-gesture-handler";
+import { RefreshControl } from "react-native";
 
 export const Pencarian = () => {
   const navigation = useNavigation();
@@ -110,6 +111,32 @@ export const Pencarian = () => {
       }
     }
   };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+          if (token !== "") {
+            const params = {
+              token: token,
+              search: search,
+              page: page,
+            };
+            dispatch(getDokGeneral(params));
+            console.log('Refresh Berhasil')
+          }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [token, search, page]);
+
+  console.log(general);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -234,6 +261,9 @@ export const Pencarian = () => {
             }
             onEndReached={general?.length === 0 ? null : loadMore}
             ListEmptyComponent={<ListEmpty />}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         </View>
       </BottomSheetModalProvider>

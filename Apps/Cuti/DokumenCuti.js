@@ -22,6 +22,7 @@ import moment from "moment";
 import { CardListDokumenTidakDisetujui } from "../../components/CardListDokumenTidakDisetujui";
 import { CardListDokumenDisetujui } from "../../components/CardListDokumenDisetujui";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
 
 export const DokumenCuti = () => {
   const navigation = useNavigation();
@@ -57,6 +58,24 @@ export const DokumenCuti = () => {
       setFilterData(arsip.lists?.data);
     }
   }, [search]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+        if (profile.nip !== "") {
+          dispatch(getArsipCuti(profile?.nip));
+          console.log('Refresh Berhasil')
+        }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [profile?.nip]);
 
   return (
     <GestureHandlerRootView>
@@ -438,6 +457,9 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
                 style={{ height: "70%" }}
               />
             ) : variant === "draft" ? (
@@ -454,6 +476,9 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
                 style={{ height: "70%" }}
               />
             ) : variant === "Onprogress" ? (
@@ -470,6 +495,9 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
                 style={{ height: "70%" }}
               />
             ) : variant === "Completed" ? (
@@ -486,6 +514,9 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
                 style={{ height: "70%" }}
               />
             ) : null}

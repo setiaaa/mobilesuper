@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  Pressable,
+  Pressable, RefreshControl,
   Text,
   TouchableOpacity,
 } from "react-native";
@@ -110,6 +110,25 @@ export const ListPegawai = () => {
     }
   }, [search, pegawai]);
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== '') {
+                dispatch(getPegawai({ token, page }))
+                console.log(page, 'page')
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [token, page]);
+
   const navigation = useNavigation();
 
   return (
@@ -181,6 +200,9 @@ export const ListPegawai = () => {
             keyExtractor={(item) => item.id}
             scrollEnabled={true}
             onEndReached={loadMore}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
             ListEmptyComponent={() => <ListEmpty />}
           />
           {/* {loading && <Loading />} */}

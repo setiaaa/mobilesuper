@@ -19,7 +19,8 @@ import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator } from "react-native";
 import { setKesejahteraanEmpty } from "../../store/Dashboard";
-import ListEmpty from "../../components/ListEmpty";
+import ListEmpty from "../../components/ListEmpty";import { RefreshControl } from 'react-native'
+
 
 const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
   const source = {
@@ -206,6 +207,24 @@ export const Kesejahteraan = () => {
     setValue("taspen");
   };
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== '') {
+                dispatch(getKesejahteraan({ token: token, value: value, page: page }))
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [value, token, page]);
+
   return (
     <View>
       <View
@@ -330,6 +349,9 @@ export const Kesejahteraan = () => {
               style={{ height: 500 }}
               keyExtractor={(item) => item.id}
               onEndReached={loadMore}
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                            }
             />
           ) : (
             <ListEmpty />

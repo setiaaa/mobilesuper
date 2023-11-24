@@ -16,6 +16,7 @@ import { CardListDokumenDisetujui } from '../../components/CardListDokumenDisetu
 import { CardListDokumenTidakDisetujui, ListDokumenTidakDisetujui } from '../../components/CardListDokumenTidakDisetujui'
 import { CardListDokumenDikembalikan } from '../../components/CardDokumenDikembalikan'
 import { Loading } from '../../components/Loading'
+import { RefreshControl } from 'react-native'
 
 
 export const PersetujanCuti = () => {
@@ -54,6 +55,24 @@ export const PersetujanCuti = () => {
             setFilterData(persetujuan.lists?.data)
         }
     }, [search])
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (profile.nip !== "") {
+                dispatch(getDokumenPersetujuan(profile?.nip))
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [profile?.nip]);
 
 
     return (
@@ -218,6 +237,9 @@ export const PersetujanCuti = () => {
                                     )}
                                     keyExtractor={item => item.id}
                                     ListEmptyComponent={() => <ListEmpty />}
+                                    refreshControl={
+                                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                                    }
                                     style={{ height: '70%' }}
                                 />
                             ) : variant === 'Rejected' ? (
@@ -234,6 +256,9 @@ export const PersetujanCuti = () => {
                                     )}
                                     keyExtractor={item => item.id}
                                     ListEmptyComponent={() => <ListEmpty />}
+                                    refreshControl={
+                                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                                    }
                                     style={{ height: '70%' }}
                                 />
                             ) : variant === 'Returned' ? (
@@ -250,6 +275,9 @@ export const PersetujanCuti = () => {
                                     )}
                                     keyExtractor={item => item.id}
                                     ListEmptyComponent={() => <ListEmpty />}
+                                    refreshControl={
+                                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                                    }
                                     style={{ height: '70%' }}
                                 />
                             ) : (

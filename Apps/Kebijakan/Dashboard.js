@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { CardKebijakan } from "../../components/CardKebijakan/";
@@ -242,6 +243,32 @@ export default function Dashboard(params) {
       }
     }
   };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+          if (token !== "") {
+            dispatch(
+              getDokHukum({
+                token: token,
+                id: selectedList.key,
+                page: page,
+                search: search,
+              })
+            );
+            // dispatch(setRefresh(false));
+            console.log('Refresh berhasil')
+          }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [token, selectedList.key, page, search]);
 
   // console.log("ini page dari dashboarfd" + page);
   // console.log(lists?.results?.datas);
@@ -528,6 +555,9 @@ export default function Dashboard(params) {
                       : null
                   }
                   ListEmptyComponent={<ListEmpty />}
+                  refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                  }
                 />
               ) : (
                 <FlatList
@@ -561,6 +591,9 @@ export default function Dashboard(params) {
                   }
                   onEndReached={dokumenList?.length === 0 ? null : loadMore}
                   ListEmptyComponent={<ListEmpty />}
+                  refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                  }
                 />
               )
             ) : null}

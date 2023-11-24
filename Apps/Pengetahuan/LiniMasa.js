@@ -46,6 +46,7 @@ import {
   useBottomSheetDynamicSnapPoints,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
+import { RefreshControl } from "react-native";
 import { Portal } from "react-native-portalize";
 import { Divider } from "react-native-paper";
 import { Dropdown } from "../../components/DropDown";
@@ -1544,6 +1545,25 @@ export const LiniMasa = () => {
     return judulSatker;
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+        if (token !== "") {
+          dispatch(getLinimasa({ token: token, page: page }));
+          dispatch(setRefresh(false));
+          console.log('Refresh Berhasil')
+        }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page]);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -1906,6 +1926,9 @@ export const LiniMasa = () => {
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => <ListEmpty />}
           onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       </>
     </>

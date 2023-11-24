@@ -29,6 +29,7 @@ import { getDetailDocument, getDocumentDibagikan } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import moment from "moment";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
 
 const DataList = ({ token, item, bottomSheetAttach }) => {
   const dispatch = useDispatch();
@@ -259,6 +260,24 @@ export const Dibagikan = () => {
         setPage(page + 10);
       }
     }
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getDocumentDibagikan({ token: token, page: page, general: general }));
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page]);
   };
 
   console.log(load);
@@ -351,6 +370,9 @@ export const Dibagikan = () => {
                 loadMore();
               }
             }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         </View>
         <BottomSheetModal

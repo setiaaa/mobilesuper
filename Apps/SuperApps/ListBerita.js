@@ -12,6 +12,7 @@ import { CardListBeritaHome } from "../../components/CardListBeritaHome";
 import { ActivityIndicator } from "react-native";
 import { setBerita } from "../../store/SuperApps";
 import ListEmpty from "../../components/ListEmpty";
+import { RefreshControl } from "react-native";
 
 export const ListBerita = () => {
   const navigation = useNavigation();
@@ -64,6 +65,25 @@ export const ListBerita = () => {
       setFilterData(berita.lists);
     }
   }, [search]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getBerita({ token, page }));
+            console.log(page, 'page')
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -144,6 +164,9 @@ export const ListBerita = () => {
             keyExtractor={(item) => item.id}
             onEndReached={
               search === "" && berita.lists.length !== 0 ? loadMore : null
+            }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           />
         </View>

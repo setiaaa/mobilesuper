@@ -17,6 +17,7 @@ import { FlatList, Image } from 'react-native'
 import ListEmpty from '../../components/ListEmpty'
 import { Loading } from '../../components/Loading';
 import { CardArsipCuti } from '../../components/CardArsipCuti'
+import { RefreshControl } from 'react-native'
 
 
 export const PersonalCuti = () => {
@@ -44,6 +45,26 @@ export const PersonalCuti = () => {
         // const data = event.listsprogress.find(item => item.id === id)
         dispatch(getFormCuti(params));
     };
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (profile.nip !== "") {
+                dispatch(getCutiPersonal(profile?.nip))
+                dispatch(getKuotaCuti(profile?.nip))
+                dispatch(getArsipCuti(profile?.nip))
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
+        }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, [profile?.nip]);
 
     return (
         <GestureHandlerRootView>
@@ -268,6 +289,9 @@ export const PersonalCuti = () => {
                             )}
                             keyExtractor={(item) => item.id}
                             ListEmptyComponent={() => <ListEmpty />}
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                            }
                         />
                         {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             <View style={{ gap: 20, flexDirection: 'row' }}>

@@ -12,6 +12,7 @@ import { getDocumentListSPPD } from "../../service/api";
 import { CardDokumenListSPPD } from "../../components/CardDokumenListSPPD";
 import ListEmpty from "../../components/ListEmpty";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
 
 export const DokumenSPPD = () => {
   const navigation = useNavigation();
@@ -54,6 +55,24 @@ export const DokumenSPPD = () => {
       setFilterData(dokumen.lists);
     }
   }, [search]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getDocumentListSPPD(token));
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token]);
 
   return (
     <>
@@ -107,6 +126,9 @@ export const DokumenSPPD = () => {
           )}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => <ListEmpty />}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           style={{height:"83%", marginTop:6}}
         />
       </View>

@@ -35,6 +35,7 @@ import ListEmpty from "../../components/ListEmpty";
 import { setRefresh } from "../../store/Pengetahuan";
 import { Loading } from "../../components/Loading";
 import { ActivityIndicator } from "react-native";
+import { RefreshControl } from "react-native";
 
 const CardPostinganSaya = ({ item, token }) => {
   const navigation = useNavigation();
@@ -521,6 +522,24 @@ export const PostinganSaya = () => {
     // console.log(page);
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getMyPostList({ token: token, page: page }));
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page]);
+
   // console.log(postinganSaya.lists);
 
   return (
@@ -662,6 +681,9 @@ export const PostinganSaya = () => {
           }
           ListEmptyComponent={() => <ListEmpty />}
           onEndReached={postinganSaya?.lists.length === 0 ? null : loadMore}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
           style={{ height: 400 }}
         />
       </View>
