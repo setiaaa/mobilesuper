@@ -1,6 +1,8 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { IconButton, Searchbar, Text } from "react-native-paper";
+import { IconButton, Searchbar, Text, TextInput } from "react-native-paper";
 import { GlobalStyles } from "../../constants/styles";
+import { COLORS } from "../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
 
 function SearchFilter({
   searchQuery,
@@ -14,8 +16,8 @@ function SearchFilter({
       <View style={{ width: "85%" }}>
         <Searchbar
           style={{
+            backgroundColor: COLORS.white,
             borderRadius: 12,
-            backgroundColor: GlobalStyles.colors.textWhite,
           }}
           placeholder="Cari..."
           onChangeText={setSearchQuery}
@@ -23,14 +25,28 @@ function SearchFilter({
           onIconPress={getSearch}
           onSubmitEditing={getSearch}
           clearIcon={clearSearch}
+          elevation={2}
         />
       </View>
       <TouchableOpacity
         onPress={showBottomFilter}
-        style={{ flexDirection: "column", alignItems: "center" }}
+        style={{
+          backgroundColor: COLORS.white,
+          borderRadius: 8,
+          height: 54,
+          width: "12%",
+          left: 15,
+          justifyContent: "center",
+          alignItems: "center",
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
       >
-        <IconButton style={{ marginVertical: -5 }} icon="filter" />
-        <Text style={{ fontSize: GlobalStyles.font.sm }}>Filter</Text>
+        <Ionicons name="filter-outline" size={24} color={COLORS.lighter} />
       </TouchableOpacity>
     </View>
   );
