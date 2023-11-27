@@ -30,7 +30,8 @@ import {
 import moment from "moment";
 import {} from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput } from "react-native-gesture-handler";import { RefreshControl } from 'react-native';
+
 
 const CardPenilaian = ({ item, token }) => {
   const navigation = useNavigation();
@@ -326,10 +327,42 @@ export const PenilaianPenggetahaun = () => {
   // }, [search]);
 
   const loadMore = () => {
-    if (penilaian?.lists.length % 5 === 0) {
-      setPage(page + 5);
+    if (penilaian?.lists.length !== 0) {
+      if (penilaian?.lists.length % 5 === 0) {
+        setPage(page + 5);
+      }
     }
   };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '' && isFocused) {
+              let data = {
+                token: token,
+                tahun: year.value,
+                TW: quarter.key,
+                ditinjau: ditinjau,
+                unitKerja: savedUnitKerja.value,
+                page: page,
+                search: search,
+              }
+              // dispatch(getDivision(token))
+              dispatch(getListPenilaian(data))
+              dispatch(getTotalPenilaian(data))
+              // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+          }
+          console.log('Refresh Berhasil')
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
 
   // console.log("ditinjau=" + ditinjau);
   // console.log(dataUnitKerja());
@@ -683,6 +716,9 @@ export const PenilaianPenggetahaun = () => {
             renderItem={({ item }) => (
               <CardPenilaian item={item} token={token} />
             )}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
             style={{ height: 400 }}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={() => <ListEmpty />}

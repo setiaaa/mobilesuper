@@ -103,7 +103,7 @@ export const LaporanPengetahuan = () => {
     (state) => state.pengetahuan
   );
 
-  console.log(exportLaporan?.quarter?.file);
+  // console.log(exportLaporan?.quarter?.file);
 
   const downloadPath =
     FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");

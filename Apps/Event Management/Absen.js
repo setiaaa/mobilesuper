@@ -21,6 +21,7 @@ import moment from "moment";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator } from "react-native";
+import { RefreshControl } from "react-native";
 
 
 const CardListAbsen = ({ item, loading }) => {
@@ -230,6 +231,24 @@ export const Absen = () => {
     setIsFiltered(true);
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getlistAbsen({ token, idagenda }));
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token]);
+
   // useEffect(() => {
   //     setFilterData(absen)
   // }, [absen])
@@ -405,6 +424,9 @@ export const Absen = () => {
             </View>
           )
       )}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
         style={{}}
       />
     </>

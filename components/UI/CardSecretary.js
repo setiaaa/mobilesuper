@@ -1,10 +1,13 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Text, StyleSheet, View } from "react-native";
-import { Avatar, Card, IconButton } from "react-native-paper";
 import { Config } from "../../constants/config";
 import { GlobalStyles } from "../../constants/styles";
 import { nde_api } from "../../utils/api.config";
 import { headerToken } from "../../utils/http";
+import { COLORS } from "../../config/SuperAppps";
+import { Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
 function CardSecretary({ data, onPress }) {
   const [errorAvatarTitle, setErrorAvatarTitle] = useState(false);
@@ -19,95 +22,108 @@ function CardSecretary({ data, onPress }) {
   }
   useEffect(() => {
     getHeader();
-  });
+  }, []);
   return (
-    <Card style={styles.container} onPress={onPress}>
-      <Card.Content style={styles.cardContent}>
-        {errorAvatarTitle && (
-          <Avatar.Image
-            {...props}
-            source={Config.avatar}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
-            }}
-          />
-        )}
-        {!errorAvatarTitle && (
-          <Avatar.Image
-            size={40}
-            source={{
-              uri: `${nde_api.baseurl + data.title.avatar}`,
-              method: "GET",
-              headers: header,
-            }}
-            onError={(e) => setErrorAvatarTitle(true)}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
-            }}
-          />
-        )}
-        {errorAvatarSekre && (
-          <Avatar.Image
-            {...props}
-            source={Config.avatar}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
-            }}
-          />
-        )}
-        {!errorAvatarSekre && (
-          <Avatar.Image
-            size={40}
-            source={{
-              uri: `${nde_api.baseurl + data.profile.avatar}`,
-              method: "GET",
-              headers: header,
-            }}
-            style={styles.avaSecre}
-            onError={(e) => setErrorAvatarSekre(true)}
-            theme={{
-              colors: {
-                primary: GlobalStyles.colors.textWhite,
-              },
-            }}
-          />
-        )}
-        <View style={styles.containerTitle}>
-          <Text style={styles.title}>{data.title.name}</Text>
-          <Text style={styles.subtitle}>{data.title.fullname}</Text>
-          <View style={styles.subtitleSecre}>
-            <IconButton
-              icon="arrow-right-bottom"
-              size={14}
-              iconColor={GlobalStyles.colors.textWhite}
-              style={{ marginLeft: 0 }}
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={{
+          backgroundColor: COLORS.white,
+          borderRadius: 8,
+          marginBottom: 20,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: COLORS.primary,
+            padding: 20,
+            flexDirection: "row",
+            gap: 10,
+            borderTopRightRadius: 8,
+            borderTopLeftRadius: 8,
+          }}
+        >
+          {errorAvatarSekre && (
+            <Image
+              source={Config.avatar}
+              style={{
+                borderRadius: 50,
+                width: 32,
+                height: 32,
+                borderWidth: 1,
+                borderColor: COLORS.white,
+              }}
             />
-            <Text style={[styles.subtitle, styles.subtitleArrow]}>
+          )}
+          {!errorAvatarSekre && (
+            <Image
+              source={{
+                uri: `${nde_api.baseurl + data.profile.avatar}`,
+                method: "GET",
+                headers: header,
+              }}
+              onError={(e) => setErrorAvatarSekre(true)}
+              style={{
+                borderRadius: 50,
+                width: 32,
+                height: 32,
+                borderWidth: 1,
+                borderColor: COLORS.white,
+              }}
+            />
+          )}
+          <View style={{ gap: 2, width: "90%" }}>
+            <Text
+              style={{
+                fontSize: 13,
+                fontWeight: 700,
+                color: COLORS.white,
+              }}
+            >
               {data.profile.fullname}
+            </Text>
+            <Text
+              style={{
+                fontSize: 11,
+                fontWeight: 400,
+                color: COLORS.white,
+              }}
+            >
+              {data.title.name}
             </Text>
           </View>
         </View>
-      </Card.Content>
-      <View style={styles.footer}>
-        <View>
-          <Text variant="bodySmall">
-            Diaktifkan:{" "}
-            <Text style={{ fontWeight: "600" }}>{data.created_date}</Text>
-          </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            padding: 20,
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <Text
+              style={{ fontSize: 13, fontWeight: 400, color: COLORS.lighter }}
+            >
+              Diaktifkan :{" "}
+            </Text>
+            <Text style={{ fontSize: 13, fontWeight: 600 }}>
+              {data.created_date}
+            </Text>
+          </View>
+          <Ionicons
+            name="chevron-forward-outline"
+            size={16}
+            color={COLORS.lighter}
+          />
         </View>
-        <IconButton
-          icon="arrow-right"
-          mode="outlined"
-          size={GlobalStyles.font.md}
-        />
       </View>
-    </Card>
+    </TouchableOpacity>
   );
 }
 
@@ -151,6 +167,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: GlobalStyles.font.lg,
     fontWeight: "bold",
+    width: "75%",
     color: GlobalStyles.colors.textWhite,
   },
   subtitle: {

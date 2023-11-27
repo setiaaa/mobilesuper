@@ -35,6 +35,7 @@ import moment from "moment/moment";
 import { ActivityIndicator } from "react-native";
 import { Dropdown } from "../../components/DropDown";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
 
 const DataList = ({ token, item, bottomSheetAttach }) => {
   const dispatch = useDispatch();
@@ -286,10 +287,30 @@ export const Dokumen = () => {
   }, [search]);
 
   const loadMore = () => {
-    if (dokumen.lists.length % 10 === 0) {
-      setPage(page + 10);
+    if (dokumen.length !== 0) {
+      if (dokumen.lists.length % 10 === 0) {
+        setPage(page + 10);
+      }
     }
   };
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getDocument({ token: token, page: page, type: type.key }));
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page, type]);
+
 
   return (
     <GestureHandlerRootView>
@@ -373,6 +394,9 @@ export const Dokumen = () => {
                   search === "" ? loadMore() : null;
                 }
               }}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             />
             <Portal>
               <BottomSheetModalProvider>

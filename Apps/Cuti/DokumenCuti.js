@@ -22,6 +22,9 @@ import moment from "moment";
 import { CardListDokumenTidakDisetujui } from "../../components/CardListDokumenTidakDisetujui";
 import { CardListDokumenDisetujui } from "../../components/CardListDokumenDisetujui";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
+import { CardListDokumenOnProgress } from "../../components/CardListDokumenOnProgress";
+import { CardListDokumenDraft } from "../../components/CardListDokumenDraft";
 
 export const DokumenCuti = () => {
   const navigation = useNavigation();
@@ -58,13 +61,27 @@ export const DokumenCuti = () => {
     }
   }, [search]);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (profile.nip !== "") {
+        dispatch(getArsipCuti(profile?.nip));
+        console.log("Refresh Berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
+
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [profile?.nip]);
+
   return (
     <GestureHandlerRootView>
-    {loading ? (
-      <Loading />
-    ) : (
-      null
-    )}
+      {loading ? <Loading /> : null}
       <View style={{ position: "relative" }}>
         <View
           style={{
@@ -333,94 +350,173 @@ export const DokumenCuti = () => {
                   </Text>
                 </TouchableOpacity> */}
 
-                <TouchableOpacity style={{
-                  maxWidth: 120,
-                  borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 10
-                }}
+                <TouchableOpacity
+                  style={{
+                    maxWidth: 120,
+                    borderColor:
+                      variant === "Draft"
+                        ? COLORS.infoDangerLight
+                        : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
                   onPress={() => SetVariant("Draft")}
                 >
-                <View style={{
-                  backgroundColor: COLORS.grey,
-                  borderRadius: 20,
-                  width: 28,
-                  height: 28,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                </View>
-                  <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Draft</Text>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.grey,
+                      borderRadius: 20,
+                      width: 28,
+                      height: 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color:
+                        variant === "Draft"
+                          ? COLORS.infoDanger
+                          : COLORS.foundation,
+                      textAlign: "center",
+                    }}
+                  >
+                    Draft
+                  </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{
-                  maxWidth: 120,
-                  borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 10
-                }}
+                <TouchableOpacity
+                  style={{
+                    maxWidth: 120,
+                    borderColor:
+                      variant === "Onprogress"
+                        ? COLORS.infoDangerLight
+                        : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
                   onPress={() => SetVariant("Onprogress")}
                 >
-                <View style={{
-                  backgroundColor: COLORS.orange,
-                  borderRadius: 20,
-                  width: 28,
-                  height: 28,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                </View>
-                  <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Proses</Text>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.orange,
+                      borderRadius: 20,
+                      width: 28,
+                      height: 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color:
+                        variant === "Onprogress"
+                          ? COLORS.infoDanger
+                          : COLORS.foundation,
+                      textAlign: "center",
+                    }}
+                  >
+                    Proses
+                  </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{
-                  maxWidth: 120,
-                  borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 10
-                }}
-                onPress={() => SetVariant("Completed")}
+                <TouchableOpacity
+                  style={{
+                    maxWidth: 120,
+                    borderColor:
+                      variant === "Completed"
+                        ? COLORS.infoDangerLight
+                        : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                  onPress={() => SetVariant("Completed")}
                 >
-                <View style={{
-                  backgroundColor: COLORS.success,
-                  borderRadius: 20,
-                  width: 28,
-                  height: 28,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                </View>
-                  <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Disetujui</Text>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.success,
+                      borderRadius: 20,
+                      width: 28,
+                      height: 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color:
+                        variant === "Completed"
+                          ? COLORS.infoDanger
+                          : COLORS.foundation,
+                      textAlign: "center",
+                    }}
+                  >
+                    Disetujui
+                  </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{
-                  maxWidth: 120,
-                  borderColor: variant === 'Rejected' ? COLORS.infoDangerLight : COLORS.ExtraDivinder,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 10
-                }}
-                onPress={() => SetVariant("Rejected")}
+                <TouchableOpacity
+                  style={{
+                    maxWidth: 120,
+                    borderColor:
+                      variant === "Rejected"
+                        ? COLORS.infoDangerLight
+                        : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                  onPress={() => SetVariant("Rejected")}
                 >
-                <View style={{
-                  backgroundColor: COLORS.danger,
-                  borderRadius: 20,
-                  width: 28,
-                  height: 28,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                </View>
-                  <Text style={{ color: variant === 'Rejected' ? COLORS.infoDanger : COLORS.foundation, textAlign: 'center' }}>Ditolak</Text>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.danger,
+                      borderRadius: 20,
+                      width: 28,
+                      height: 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color:
+                        variant === "Rejected"
+                          ? COLORS.infoDanger
+                          : COLORS.foundation,
+                      textAlign: "center",
+                    }}
+                  >
+                    Ditolak
+                  </Text>
                 </TouchableOpacity>
-
               </View>
             </View>
 
@@ -438,6 +534,12 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
                 style={{ height: "70%" }}
               />
             ) : variant === "draft" ? (
@@ -445,7 +547,7 @@ export const DokumenCuti = () => {
                 data={filterData}
                 renderItem={({ item }) => (
                   <View key={item.id}>
-                    <CardListDokumenDisetujui
+                    <CardListDokumenDraft
                       item={item}
                       variant={variant}
                       nip={profile.nip}
@@ -454,6 +556,12 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
                 style={{ height: "70%" }}
               />
             ) : variant === "Onprogress" ? (
@@ -461,7 +569,7 @@ export const DokumenCuti = () => {
                 data={filterData}
                 renderItem={({ item }) => (
                   <View key={item.id}>
-                    <CardListDokumenDisetujui
+                    <CardListDokumenOnProgress
                       item={item}
                       variant={variant}
                       nip={profile.nip}
@@ -470,6 +578,12 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
                 style={{ height: "70%" }}
               />
             ) : variant === "Completed" ? (
@@ -486,6 +600,12 @@ export const DokumenCuti = () => {
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
                 style={{ height: "70%" }}
               />
             ) : null}

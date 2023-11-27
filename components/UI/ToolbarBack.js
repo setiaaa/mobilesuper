@@ -5,17 +5,30 @@ import { GlobalStyles } from "../../constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
 //toolbar custom
 export const toolbarBack = ({ navigation, title, route, options, back }) => {
-
   return (
-    <SafeAreaView style={{ height: 95, backgroundColor: COLORS.white }}>
-      <View style={{ paddingHorizontal: 20, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <SafeAreaView
+      style={{
+        height: 55,
+        backgroundColor: COLORS.white,
+        justifyContent: "center",
+      }}
+    >
+      <View
+        style={{
+          paddingHorizontal: 20,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <View style={styles.containerHeaderLeft}>
-          <TouchableOpacity onPress={() => navigation.goBack()}
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
             style={{
               backgroundColor: COLORS.white,
               width: 30,
@@ -30,17 +43,22 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
               shadowOpacity: 0.2,
               //shadow android
               elevation: 2,
-            }}>
+            }}
+          >
             <Ionicons
               name="chevron-back-outline"
               size={16}
-            // color={COLORS.white} 
+              // color={COLORS.white}
             />
           </TouchableOpacity>
-          <Image source={require("../../assets/superApp/LogoKorespondensi.png")} />
+          <Image
+            source={require("../../assets/superApp/LogoKorespondensi.png")}
+          />
         </View>
 
-        <Text style={{ fontSize: 15, fontWeight: 600 }}>{title}</Text>
+        <Text style={{ fontSize: 15, fontWeight: 600, textAlign:"right" }}>
+          {title ? title : route?.params?.title}
+        </Text>
       </View>
     </SafeAreaView>
     // <View style={styles.containerHeader}>
@@ -71,7 +89,7 @@ const styles = StyleSheet.create({
   containerHeaderLeft: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10
+    gap: 10,
   },
   titleHeader: {
     textAlign: "right",

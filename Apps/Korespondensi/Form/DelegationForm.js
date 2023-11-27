@@ -17,15 +17,17 @@ import {
   Button,
 } from "react-native-paper";
 import { useSelector } from "react-redux";
-import { postHTTP } from "../../../utils/http";
+import { headerToken, postHTTP } from "../../../utils/http";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { Dropdown } from "react-native-element-dropdown";
 import { GlobalStyles } from "../../../constants/styles";
+import { Config } from "../../../constants/config";
 
 function DelegationForm() {
+  const [errorAvatarTitle, setErrorAvatarTitle] = useState(false);
   const profile = useSelector((state) => state.profile.profile);
   const employee = useSelector((state) => state.addressbook.receivers);
   const [selectedEmployee, setSelectedEmployee] = useState(employee);
@@ -43,8 +45,17 @@ function DelegationForm() {
   });
 
   useEffect(() => {
+    getHeader();
     return refresh;
   }, [employee]);
+  let header = {};
+  async function getHeader() {
+    try {
+      header = await headerToken();
+    } catch (error) {
+      Alert.alert("Warning!", "Get Header not working!");
+    }
+  }
   const showStartDate = () => {
     setStartDateVisibility(true);
   };
@@ -93,22 +104,25 @@ function DelegationForm() {
         selectedTitle?.code == undefined ||
         selectedTitle?.code == undefined
       ) {
-        Alert.alert("Warning!", "Please choose a 'Jabatan' field");
+        Alert.alert("Peringatan!", "Silakan pilih 'Jabatan'");
       } else if (startDate == null) {
-        Alert.alert("Warning!", "Please choose a 'Tgl Mulai' field");
+        Alert.alert("Peringatan!", "Silakan pilih 'Tgl Mulai'");
       } else if (endDate == null) {
-        Alert.alert("Warning!", "Please choose a 'Tgl Selesai' field");
+        Alert.alert("Peringatan!", "Silakan pilih 'Tgl Selesai'");
       } else if (new Date(endDate).getTime() < new Date(startDate).getTime()) {
         Alert.alert(
-          "Warning!",
-          "'Tgl Selesai' must be more than 'Tgl Mulai' field"
+          "Peringatan!",
+          "'Tgl Selesai' harus lebih atau sama dengan 'Tgl Mulai'"
         );
       } else if (dataEmployee == undefined) {
-        Alert.alert("Warning!", "Please choose a 'Pejabat Pengganti' field");
+        Alert.alert("Peringatan!", "Silakan pilih 'Pejabat Pengganti'");
       } else if (dataEmployee == profile?.fullname) {
-        Alert.alert("Warning!", "You have to choose someone else");
+        Alert.alert(
+          "Peringatan!",
+          "Anda tidak dapat memilih diri sendiri sebagai delegasi. Silakan pilih delegasi lain."
+        );
       } else if (reason == null || reason == "") {
-        Alert.alert("Warning!", "Please fill in 'Alasan' field");
+        Alert.alert("Peringatan!", "Silakan isi 'Alasan'");
       } else {
         let data = {
           alasan: reason,
@@ -121,19 +135,18 @@ function DelegationForm() {
         //send data
         const response = await postHTTP(nde_api.delegationactive, data);
         if (response.data.status == "Error") {
-          Alert.alert("Warning!", response.data.msg);
+          Alert.alert("Peringatan!", response.data.msg);
         } else {
-          Alert.alert("Success!", "Activation of delegation was successfull!");
+          Alert.alert("Berhasil!", "Aktivasi delegasi berhasil!");
           navigation.goBack();
         }
       }
       setIsLoading(false);
     } catch (error) {
-      Alert.alert("Warning!", "Activation of delegation not working");
+      Alert.alert("Peringatan!", "Aktivasi delegasi tidak berfungsi");
       setIsLoading(false);
     }
   }
-
   return (
     <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps={"handled"}>
       <KeyboardAvoidingView style={styles.keyboard} behavior="position">
@@ -145,27 +158,40 @@ function DelegationForm() {
           <Card style={styles.containerCard}>
             <Card.Title
               style={styles.containerCardTitle}
-              title={
-                <View style={{ flexDirection: "column" }}>
-                  <Text style={styles.title}>{profile?.fullname}</Text>
-                </View>
-              }
+              title={<Text style={styles.title}>{profile?.fullname}</Text>}
               titleNumberOfLines={5}
               subtitle={profile?.department}
               subtitleNumberOfLines={5}
               left={(props) => (
-                <Avatar.Image
-                  {...props}
-                  source={{
-                    uri: `${profile && nde_api.baseurl + profile?.avatar}`,
-                    method: "GET",
-                  }}
-                  theme={{
-                    colors: {
-                      primary: GlobalStyles.colors.textWhite,
-                    },
-                  }}
-                />
+                <>
+                  {errorAvatarTitle && (
+                    <Avatar.Image
+                      size={40}
+                      source={Config.avatar}
+                      theme={{
+                        colors: {
+                          primary: GlobalStyles.colors.textWhite,
+                        },
+                      }}
+                    />
+                  )}
+                  {!errorAvatarTitle && (
+                    <Avatar.Image
+                      {...props}
+                      source={{
+                        uri: `${profile && nde_api.baseurl + profile?.avatar}`,
+                        method: "GET",
+                        headers: header,
+                      }}
+                      onError={(e) => setErrorAvatarTitle(true)}
+                      theme={{
+                        colors: {
+                          primary: GlobalStyles.colors.textWhite,
+                        },
+                      }}
+                    />
+                  )}
+                </>
               )}
             />
           </Card>
@@ -260,13 +286,13 @@ function DelegationForm() {
                 <>
                   {selectedEmployee?.map((item) => (
                     <Text style={styles.title} key={item.nik}>
-                      {item?.fullname ? item.fullname : "Name/NIK"}
+                      {item?.fullname ? item.fullname : "Nama/NIK"}
                     </Text>
                   ))}
                   {(selectedEmployee == undefined ||
                     selectedEmployee.length == 0) && (
-                      <Text style={styles.title}>Name/NIK</Text>
-                    )}
+                    <Text style={styles.title}>Nama/NIK</Text>
+                  )}
                 </>
               }
               titleNumberOfLines={5}
@@ -287,13 +313,13 @@ function DelegationForm() {
           <TextInput
             theme={{ roundness: 12 }}
             mode="outlined"
-            style={{ marginBottom: 8 }}
+            style={{ marginBottom: 8, paddingVertical: 16 }}
             multiline={true}
             value={reason}
             onChangeText={setReason}
           />
           <Button mode="contained" style={styles.button} onPress={activate}>
-            Activate
+            Aktifkan
           </Button>
         </View>
       </KeyboardAvoidingView>

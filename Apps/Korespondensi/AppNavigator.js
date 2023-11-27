@@ -144,13 +144,8 @@ import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
 import { getTokenValue } from "../../service/session";
-import { Semua } from "../Task Management/Dashboard/Semua";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 import { Pencarian } from "./Pencarian/Pencarian";
-import { PLetter } from "./Pencarian/PLetter";
-import { PTodo } from "./Pencarian/PTodo";
-import { PSecretary } from "./Pencarian/PSecretary";
-import { PDelegation } from "./Pencarian/PDelegation";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 import LihatSuratSPPD from "../SPPD/LihatSuratSPPD";
 

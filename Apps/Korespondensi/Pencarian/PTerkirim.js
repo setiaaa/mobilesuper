@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { COLORS } from '../../../config/SuperAppps'
 
-export const PLetter = () => {
+export const PTerkirim = () => {
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.white }}>
         {/* <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>

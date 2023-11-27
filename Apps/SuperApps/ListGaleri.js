@@ -19,6 +19,7 @@ import { setGaleri } from "../../store/SuperApps";
 import { getGaleri } from "../../service/api";
 import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
+import { RefreshControl } from "react-native";
 
 export const ListGaleri = () => {
   const { galeri, loading } = useSelector((state) => state.superApps);
@@ -48,8 +49,10 @@ export const ListGaleri = () => {
   }, [token, page]);
 
   const loadMore = () => {
-    if (galeri.lists.length % 10 === 0) {
-      setPage(page + 1);
+    if (galeri.lists.length !== 0) {
+      if (galeri.lists.length % 10 === 0) {
+        setPage(page + 1);
+      }
     }
   };
 
@@ -72,6 +75,26 @@ export const ListGaleri = () => {
       setFilterData(item);
     }
   }, [search]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getGaleri({ token, page }));
+            console.log(page, 'page')
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page]);
+
   // console.log(visibleModal);
   console.log(galeri.lists);
   return (
@@ -150,6 +173,9 @@ export const ListGaleri = () => {
           keyExtractor={(item) => "#" + item.id}
           onEndReached={
             search === "" && galeri.lists.length !== 0 ? loadMore : null
+          }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         />
       </View>

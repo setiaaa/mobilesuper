@@ -34,12 +34,12 @@ function CardDLetter({ data, icon, navigation }) {
             : ""
         }
         left={(props) => (
-            <Avatar.Icon
-              {...props}
-              icon={icon.icon}
-              color={COLORS.white}
-              style={avatarIcon}
-            />
+          <Avatar.Icon
+            {...props}
+            icon={icon.icon}
+            color={COLORS.white}
+            style={avatarIcon}
+          />
         )}
         right={() => <Text style={styles.counterText}>{data.value}</Text>}
       />
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     gap: 20,
   },
-  avatarIcon: { 
+  avatarIcon: {
     backgroundColor: GlobalStyles.colors.primary,
   },
   counterText: {

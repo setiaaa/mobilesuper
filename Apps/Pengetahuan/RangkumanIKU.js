@@ -44,6 +44,7 @@ import { ActivityIndicator } from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import * as IntentLauncher from "expo-intent-launcher";
+import { RefreshControl } from "react-native";
 const { StorageAccessFramework } = FileSystem;
 
 const ListDaftarPegawai = ({ item, token }) => {
@@ -395,6 +396,31 @@ export const RangkumanIKU = () => {
       console.error("Error sharing file:", error);
     }
   };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+        const param = {
+          token: token,
+          page: page,
+          year: savedYear.value,
+          quarter: savedQuarter.key,
+          unitKerja: savedUnitKerja.value,
+        };
+        if (token !== "") {
+          dispatch(getListPegawai(param));
+          console.log('Refresh Berhasil')
+        }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
 
   return (
     <>
@@ -921,6 +947,9 @@ export const RangkumanIKU = () => {
                   keyExtractor={(item) => item.id}
                   ListEmptyComponent={() => <ListEmpty />}
                   onEndReached={loadMore}
+                  refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                  }
                   style={{ height: 320 }}
                 />
 

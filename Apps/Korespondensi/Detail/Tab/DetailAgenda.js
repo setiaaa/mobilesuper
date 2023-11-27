@@ -502,7 +502,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
         <View style={styles.containerLabel}>
           <View>
             <Text style={styles.titleLabel}>Dari</Text>
-            {data && data.komentar.length <= 1 && !loading ? (
+            {data && data.senders.length != 0 && !loading ? (
               <Text style={styles.subtitleLabel}>
                 {data && data?.senders[0].title
                   ? data.senders[0].title
@@ -511,7 +511,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
             ) : (
               <ShimmerPlaceholder width={350} shimmerStyle={{ borderRadius: 40 }} />
             )}
-            {data && data.komentar.length > 1 && (
+            {/* {data && data.komentar.length > 1 && (
               <Text>
                 {data.komentar[0].poh == true && data.senders[0]?.title != ""
                   ? "POH " + data.senders[0].title
@@ -519,7 +519,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                     ? data.senders[0].title
                     : data.komentar[0].creator}
               </Text>
-            )}
+            )} */}
           </View>
         </View>
         {showBody != false && data?.state != "sps" && (

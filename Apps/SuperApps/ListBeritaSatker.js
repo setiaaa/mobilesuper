@@ -13,152 +13,180 @@ import { CardListBeritaSatker } from "../../components/CardListBeritaSatker";
 import { setBeritaSatker } from "../../store/Satker";
 import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
-
-
+import { RefreshControl } from "react-native";
 
 export const ListBeritaSatker = () => {
-    const { berita, loading } = useSelector(state => state.satker)
-    const navigation = useNavigation();
-    const [token, setToken] = useState("");
-    const [search, setSearch] = useState('')
-    const [page, setPage] = useState(1)
-    const dispatch = useDispatch()
-    const [filterData, setFilterData] = useState([])
+  const { berita, loading } = useSelector((state) => state.satker);
+  const navigation = useNavigation();
+  const [token, setToken] = useState("");
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+  const [filterData, setFilterData] = useState([]);
 
-    useEffect(() => {
-        getTokenValue().then((val) => {
-            setToken(val);
-        })
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
 
-        dispatch(setBeritaSatker([]))
-        setPage(1)
-    }, []);
+    dispatch(setBeritaSatker([]));
+    setPage(1);
+  }, []);
 
-    useEffect(() => {
-        if (token !== "") {
-            dispatch(getSatkerNews({ token, page }))
-            console.log('page', page)
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getSatkerNews({ token, page }));
+      console.log("page", page);
+    }
+  }, [token, page]);
+
+  const loadMore = () => {
+    if (berita.lists.length !== 0) {
+      if (berita.lists.length % 10 === 0) {
+        setPage(page + 1);
+      }
+    }
+  };
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(berita.lists);
+  }, [berita]);
+
+  useEffect(() => {
+    const item = berita.lists;
+    if (search !== "") {
+      const data = item.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(item);
+    }
+  }, [search]);
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== '') {
+                dispatch(getSatkerNews({ token, page }))
+                console.log(page, 'page')
+                console.log('Refresh Berhasil')
+            }
+        } catch (error) {
+            console.log('Refresh gagal:', error)
         }
+
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
     }, [token, page]);
 
-    const loadMore = () => {
-        if (berita.lists.length % 10 === 0) {
-            setPage(page + 1)
-        }
-    }
-
-    const filter = (event) => {
-        setSearch(event)
-    }
-
-    useEffect(() => {
-        setFilterData(berita.lists)
-    }, [berita])
-
-    useEffect(() => {
-        const item = berita.lists
-        if (search !== '') {
-            const data = item.filter((item) => {
-                return item.title.toLowerCase().includes(search.toLowerCase());
-            })
-            setFilterData(data)
-        } else {
-            setFilterData(item)
-        }
-    }, [search])
-
-    return (
-        <View style={{ flex: 1 }}>
-            <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
-                <View
-                    style={{
-                        backgroundColor: COLORS.primary,
-                        height: "10%",
-                        flexDirection: "row",
-                    }}
-                >
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <View
-                            style={[
-                                styles.backIcon,
-                                {
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginTop: 25,
-                                    marginLeft: 20,
-                                },
-                            ]}
-                        >
-                            <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
-                        </View>
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginRight: 40,
-                        }}
-                    >
-                        <Text style={{ color: "white", fontSize: 15, fontWeight: 600 }}>
-                            Berita
-                        </Text>
-                    </View>
-                </View>
-                <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-                    <Search
-                        placeholder={'Cari'}
-                        iconColor={COLORS.primary}
-                        onSearch={filter}
-                    />
-                </View>
-                <FlatList
-                    data={filterData}
-                    renderItem={({ item, index }) => (
-                        <View key={index}>
-                            <CardListBeritaSatker
-                                image={item.image}
-                                tanggal={item.updated_at}
-                                // subtitle={item.subtitle}
-                                title={item.title}
-                                id={item.id}
-                                item={item}
-                                token={token}
-                            />
-                        </View>
-                    )}
-                    ListEmptyComponent={() => <ListEmpty />}
-                    ListFooterComponent={() => (
-                        loading && (
-                            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
-                                <ActivityIndicator size="large" color={COLORS.primary} />
-                            </View>
-                        )
-                    )}
-
-                    keyExtractor={(item) => item.id}
-                    onEndReached={loadMore}
-                />
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
+        <View
+          style={{
+            backgroundColor: COLORS.primary,
+            height: "10%",
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View
+              style={[
+                styles.backIcon,
+                {
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 25,
+                  marginLeft: 20,
+                },
+              ]}
+            >
+              <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
             </View>
-        </View  >
-    );
+          </TouchableOpacity>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: 40,
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 15, fontWeight: 600 }}>
+              Berita
+            </Text>
+          </View>
+        </View>
+        <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
+          <Search
+            placeholder={"Cari"}
+            iconColor={COLORS.primary}
+            onSearch={filter}
+          />
+        </View>
+        <FlatList
+          data={filterData}
+          renderItem={({ item, index }) => (
+            <View key={index}>
+              <CardListBeritaSatker
+                image={item.image}
+                tanggal={item.updated_at}
+                // subtitle={item.subtitle}
+                title={item.title}
+                id={item.id}
+                item={item}
+                token={token}
+              />
+            </View>
+          )}
+          ListEmptyComponent={() => <ListEmpty />}
+          ListFooterComponent={() =>
+            loading && (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 24,
+                }}
+              >
+                <ActivityIndicator size="large" color={COLORS.primary} />
+              </View>
+            )
+          }
+          keyExtractor={(item) => item.id}
+          onEndReached={loadMore}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
+        />
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    backIcon: {
-        backgroundColor: "white",
-        height: 28,
-        width: 28,
-        borderRadius: 50,
-    },
-    imageIos: {
-        height: 193,
-        width: 350,
-        borderRadius: 16,
-    },
-    imageAndroid: {
-        height: 193,
-        width: 369,
-        borderRadius: 16,
-    },
+  backIcon: {
+    backgroundColor: "white",
+    height: 28,
+    width: 28,
+    borderRadius: 50,
+  },
+  imageIos: {
+    height: 193,
+    width: 350,
+    borderRadius: 16,
+  },
+  imageAndroid: {
+    height: 193,
+    width: 369,
+    borderRadius: 16,
+  },
 });
