@@ -78,10 +78,10 @@ import { AddressBookJabatan } from "../Apps/AddressBookJabatan";
 import { AddressBookPegawai } from "../Apps/AddressBookPegawai";
 import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { PLetter } from "../Apps/Korespondensi/Pencarian/PLetter";
-import { PTodo } from "../Apps/Korespondensi/Pencarian/PTodo";
-import { PSecretary } from "../Apps/Korespondensi/Pencarian/PSecretary";
-import { PDelegation } from "../Apps/Korespondensi/Pencarian/PDelegation";
+import { PSemua } from "../Apps/Korespondensi/Pencarian/PSemua";
+import { PSuratMasuk } from "../Apps/Korespondensi/Pencarian/PSuratMasuk";
+import { PDisposisi } from "../Apps/Korespondensi/Pencarian/PDisposisi";
+import { PTerkirim } from "../Apps/Korespondensi/Pencarian/PTerkirim";
 import { Pencarian } from "../Apps/Kebijakan/Pencarian";
 
 const Tab = createBottomTabNavigator();
@@ -641,7 +641,7 @@ export const TopsPencarianKorespondensi = () => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
-        initialRouteName={"PLetter"}
+        initialRouteName={"PSemua"}
         screenOptions={{
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
@@ -654,31 +654,31 @@ export const TopsPencarianKorespondensi = () => {
         }}
       >
         <Top.Screen
-          name="PLetter"
-          component={PLetter}
+          name="PSemua"
+          component={PSemua}
           options={{
-            title: "Letter",
+            title: "Semua",
           }}
         />
         <Top.Screen
-          name="PTodo"
-          component={PTodo}
+          name="PSuratMasuk"
+          component={PSuratMasuk}
           options={{
-            title: "Todo",
+            title: "Surat Masuk",
           }}
         />
         <Top.Screen
-          name="PSecretary"
-          component={PSecretary}
+          name="PDisposisi"
+          component={PDisposisi}
           options={{
-            title: "Secreatry",
+            title: "Disposisi",
           }}
         />
         <Top.Screen
-          name="PDelegation"
-          component={PDelegation}
+          name="PTerkirim"
+          component={PTerkirim}
           options={{
-            title: "Delegation",
+            title: "Terkirim",
           }}
         />
       </Top.Navigator>
