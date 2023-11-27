@@ -1782,6 +1782,32 @@ export const getDokumenPersetujuan = createAsyncThunk(
   }
 );
 
+export const postPengajuanCuti = createAsyncThunk(
+  "cuti/postPengajuanCuti",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Cuti}pengajuan-cuti/`,
+      data.payload
+      // headers: { Authorization: token },
+    );
+    return respon?.data;
+  }
+);
+
+export const postApproval = createAsyncThunk(
+  "cuti/postApproval",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Cuti}approval-cuti/`,
+      data.payload
+      // headers: { Authorization: token },
+    );
+    return respon?.data;
+  }
+);
+
 //SPPD
 export const getDashboardSPPD = createAsyncThunk(
   "sppd/getDashboard",
