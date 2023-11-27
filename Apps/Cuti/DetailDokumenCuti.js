@@ -855,7 +855,7 @@ export const DetailDokumenCuti = () => {
               </View>
             </View>
           </View>
-          <View style={{ padding: 20 }}>
+          <View style={{ paddingHorizontal: 20 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -1110,7 +1110,7 @@ export const DetailDokumenCuti = () => {
                     flexDirection: "row",
                     padding: 5,
                     paddingBottom: 10,
-                    paddingTop: 30,
+                    paddingTop: 20,
                     columnGap: 10,
                   }}
                 >
@@ -1394,7 +1394,7 @@ export const DetailDokumenCuti = () => {
               </View>
             </View> */}
           </View>
-          <View style={{ padding: 20 }}>
+          <View style={{ paddingHorizontal: 20, paddingBottom: 10 }}>
             <View
               style={{
                 flexDirection: "row",
