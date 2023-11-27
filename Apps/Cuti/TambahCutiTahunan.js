@@ -23,7 +23,9 @@ import DatePicker from "react-native-modern-datepicker";
 import moment from "moment";
 import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
-import { getPilihApproval } from "../../service/api";
+import { getPilihApproval, postPengajuanCuti } from "../../service/api";
+import { ModalSubmit } from "../../components/ModalSubmit";
+import { setStatus } from "../../store/Cuti";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -43,7 +45,7 @@ export const TambahCutiTahunan = () => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih } = useSelector((state) => state.cuti);
+  const { form, pilih, status } = useSelector((state) => state.cuti);
 
   const [modalVisiblePicker, setModalVisiblePicker] = useState("");
 
@@ -54,6 +56,7 @@ export const TambahCutiTahunan = () => {
   const [atasan, setAtasan] = useState("");
   const [pejabat, setPejabat] = useState("");
   const [jenisCuti, setJenisCuti] = useState("");
+  const [alasanCuti, setAlasanCuti] = useState("");
 
   const [document, setDocument] = useState([]);
 
@@ -101,11 +104,29 @@ export const TambahCutiTahunan = () => {
         day: item.maksimal_hari,
       });
     });
-    return jenis
-  }
+    return jenis;
+  };
 
-
-  console.log(jenisCuti.day);
+  const handleSubmit = () => {
+    const payload = {
+      nip_pengaju: profile?.nip,
+      id_dokumen: "",
+      id_jenis_cuti: form.data_jenis_cuti?.id,
+      id_sub_jenis_cuti: "",
+      mulai_cuti: TanggalMulai,
+      akhir_cuti: TanggalSelesai,
+      alasan_cuti: alasanCuti,
+      alamat_cuti: alasanCuti,
+      nomor_telpon: telepon,
+      nip_approval1: atasan.key,
+      nip_approval2: pejabat.key,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postPengajuanCuti(data));
+  };
 
   return (
     <GestureHandlerRootView>
@@ -371,7 +392,7 @@ export const TambahCutiTahunan = () => {
                         <Text>NIP. {form.data_user?.nip}</Text>
                       </View>
                       {collapse.nip === profile.nip &&
-                        collapse.toggle === true ? (
+                      collapse.toggle === true ? (
                         <TouchableOpacity
                           onPress={() =>
                             setCollapse({ nip: "", toggle: false })
@@ -515,7 +536,7 @@ export const TambahCutiTahunan = () => {
                         transparent={true}
                         visible={
                           modalVisiblePicker === "mulai" ||
-                            modalVisiblePicker === "selesai"
+                          modalVisiblePicker === "selesai"
                             ? true
                             : false
                         }
@@ -531,11 +552,46 @@ export const TambahCutiTahunan = () => {
                             styles.backdrop,
                           ]}
                         />
-                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                          <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: '90%', height: 500, borderRadius: 10 }}>
-                            <TouchableOpacity onPress={() => setModalVisiblePicker('')} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
-                              <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 35, height: 35, justifyContent: 'center', alignItems: 'center' }}>
-                                <Ionicons name='close-outline' size={24} color={COLORS.white} />
+                        <View
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flex: 1,
+                          }}
+                        >
+                          <View
+                            style={{
+                              backgroundColor: COLORS.white,
+                              alignItems: "center",
+                              justifyContent: "center",
+                              width: "90%",
+                              height: 500,
+                              borderRadius: 10,
+                            }}
+                          >
+                            <TouchableOpacity
+                              onPress={() => setModalVisiblePicker("")}
+                              style={{
+                                paddingRight: "85%",
+                                marginBottom: 3,
+                                marginLeft: 20,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  backgroundColor: COLORS.primary,
+                                  borderRadius: 50,
+                                  width: 35,
+                                  height: 35,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Ionicons
+                                  name="close-outline"
+                                  size={24}
+                                  color={COLORS.white}
+                                />
                               </View>
                             </TouchableOpacity>
                             <View style={{ width: "100%" }}>
@@ -555,22 +611,56 @@ export const TambahCutiTahunan = () => {
                                 mode="calendar"
                                 minuteInterval={30}
                                 style={{ borderRadius: 10 }}
-                                onSelectedChange={date => {
-                                  const [year, month, day] = date.split('/').map(Number)
-                                  const formattedDate = new Date(year, month - 1, day)
-                                  const [tahun, bulan, hari] = date.split('/').map(String)
-                                  const dataTanggal = (tahun + '-' + bulan + '-' + hari)
+                                onSelectedChange={(date) => {
+                                  const [year, month, day] = date
+                                    .split("/")
+                                    .map(Number);
+                                  const formattedDate = new Date(
+                                    year,
+                                    month - 1,
+                                    day
+                                  );
+                                  const [tahun, bulan, hari] = date
+                                    .split("/")
+                                    .map(String);
+                                  const dataTanggal =
+                                    tahun + "-" + bulan + "-" + hari;
 
-                                  const dataPernahDipakai = form.data_kalender?.tanggal_pernah_dipakai?.some(item => item === dataTanggal)
-                                  const dataLibur = form.data_kalender?.tanggal_libur?.some(item => item === dataTanggal)
-                                  const dataSppd = form.data_kalender?.tanggal_sppd?.some(item => item === dataTanggal)
-                                  if (modalVisiblePicker === 'mulai' && !dataPernahDipakai && !dataLibur && !dataSppd) {
-                                    setTanggalMulai(moment(formattedDate).format('YYYY-MM-DD'))
-                                  } else if (modalVisiblePicker === 'selesai' && !dataPernahDipakai && !dataLibur && !dataSppd) {
-                                    setTanggalSelsai(moment(formattedDate).format('YYYY-MM-DD'))
+                                  const dataPernahDipakai =
+                                    form.data_kalender?.tanggal_pernah_dipakai?.some(
+                                      (item) => item === dataTanggal
+                                    );
+                                  const dataLibur =
+                                    form.data_kalender?.tanggal_libur?.some(
+                                      (item) => item === dataTanggal
+                                    );
+                                  const dataSppd =
+                                    form.data_kalender?.tanggal_sppd?.some(
+                                      (item) => item === dataTanggal
+                                    );
+                                  if (
+                                    modalVisiblePicker === "mulai" &&
+                                    !dataPernahDipakai &&
+                                    !dataLibur &&
+                                    !dataSppd
+                                  ) {
+                                    setTanggalMulai(
+                                      moment(formattedDate).format("YYYY-MM-DD")
+                                    );
+                                  } else if (
+                                    modalVisiblePicker === "selesai" &&
+                                    !dataPernahDipakai &&
+                                    !dataLibur &&
+                                    !dataSppd
+                                  ) {
+                                    setTanggalSelsai(
+                                      moment(formattedDate).format("YYYY-MM-DD")
+                                    );
                                   } else {
-                                    alert('Tidak Dapat Memilih Tanggal Tersebut')
-                                    setTanggalMulai('')
+                                    alert(
+                                      "Tidak Dapat Memilih Tanggal Tersebut"
+                                    );
+                                    setTanggalMulai("");
                                   }
                                 }}
                               />
@@ -686,6 +776,7 @@ export const TambahCutiTahunan = () => {
                       numberOfLines={2}
                       maxLength={50}
                       placeholder="Ketikan Sesuatu"
+                      onChangeText={setAlasanCuti}
                     />
                   </View>
                 </View>
@@ -897,88 +988,88 @@ export const TambahCutiTahunan = () => {
                     </View>
                   </View>
                 </View>
+              </>
+            )}
 
-                <View style={{ gap: 10 }}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      padding: 5,
-                      columnGap: 10,
-                      alignItems: "center",
-                    }}
-                  >
-                    <Ionicons
-                      name="people-outline"
-                      size={18}
-                      color={COLORS.primary}
-                    />
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                      Yang Menyetujui
+            <View style={{ gap: 10 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  padding: 5,
+                  columnGap: 10,
+                  alignItems: "center",
+                }}
+              >
+                <Ionicons
+                  name="people-outline"
+                  size={18}
+                  color={COLORS.primary}
+                />
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  Yang Menyetujui
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 20,
+                  borderRadius: 16,
+                }}
+              >
+                <View style={{ gap: 5 }}>
+                  <View style={{ flexDirection: "row", padding: 10 }}>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        paddingRight: 20,
+                      }}
+                    >
+                      Atasan Langsung
                     </Text>
                   </View>
 
-                  <View
-                    style={{
-                      backgroundColor: COLORS.white,
-                      padding: 20,
-                      borderRadius: 16,
-                    }}
-                  >
-                    <View style={{ gap: 5 }}>
-                      <View style={{ flexDirection: "row", padding: 10 }}>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            paddingRight: 20,
-                          }}
-                        >
-                          Atasan Langsung
-                        </Text>
-                      </View>
+                  <Dropdown
+                    data={pickAtasan()}
+                    setSelected={setAtasan}
+                    selected={atasan}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                    search={true}
+                  />
 
-                      <Dropdown
-                        data={pickAtasan()}
-                        setSelected={setAtasan}
-                        selected={atasan}
-                        borderWidth={1}
-                        borderwidthDrop={1}
-                        borderWidthValue={1}
-                        borderColor={COLORS.ExtraDivinder}
-                        borderColorDrop={COLORS.ExtraDivinder}
-                        borderColorValue={COLORS.ExtraDivinder}
-                        search={true}
-                      />
-
-                      <View style={{ flexDirection: "row", padding: 10 }}>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            paddingRight: 20,
-                          }}
-                        >
-                          Pejabat Berwenang
-                        </Text>
-                      </View>
-
-                      <Dropdown
-                        data={pickAtasan()}
-                        setSelected={setPejabat}
-                        selected={pejabat}
-                        borderWidth={1}
-                        borderwidthDrop={1}
-                        borderWidthValue={1}
-                        borderColor={COLORS.ExtraDivinder}
-                        borderColorDrop={COLORS.ExtraDivinder}
-                        borderColorValue={COLORS.ExtraDivinder}
-                        search={true}
-                      />
-                    </View>
+                  <View style={{ flexDirection: "row", padding: 10 }}>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        paddingRight: 20,
+                      }}
+                    >
+                      Pejabat Berwenang
+                    </Text>
                   </View>
+
+                  <Dropdown
+                    data={pickAtasan()}
+                    setSelected={setPejabat}
+                    selected={pejabat}
+                    borderWidth={1}
+                    borderwidthDrop={1}
+                    borderWidthValue={1}
+                    borderColor={COLORS.ExtraDivinder}
+                    borderColorDrop={COLORS.ExtraDivinder}
+                    borderColorValue={COLORS.ExtraDivinder}
+                    search={true}
+                  />
                 </View>
-              </>
-            )}
+              </View>
+            </View>
           </View>
 
           <View
@@ -998,6 +1089,7 @@ export const TambahCutiTahunan = () => {
                 height: 50,
                 justifyContent: "center",
               }}
+              onPress={handleSubmit}
             >
               <Text style={{ textAlign: "center", color: COLORS.white }}>
                 Kirim
@@ -1020,6 +1112,11 @@ export const TambahCutiTahunan = () => {
           </View>
         </ScrollView>
       </View>
+      <ModalSubmit
+        status={status}
+        setStatus={setStatus}
+        navigate={"MainCuti"}
+      />
     </GestureHandlerRootView>
   );
 };
@@ -1057,5 +1154,4 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-
-})
+});

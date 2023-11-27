@@ -6,7 +6,7 @@ import { COLORS, DATETIME } from "../../config/SuperAppps";
 import moment from "moment";
 import { Ionicons } from "@expo/vector-icons";
 
-export const CardListDokumenDisetujui = ({ item, nip }) => {
+export const CardListDokumenOnProgress = ({ item, nip }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
@@ -18,7 +18,7 @@ export const CardListDokumenDisetujui = ({ item, nip }) => {
 
   return (
     <>
-      {item.status === "Completed" ? (
+      {item.status === "On Progress" ? (
         <TouchableOpacity
           onPress={
             (onPress = () => {
@@ -51,7 +51,7 @@ export const CardListDokumenDisetujui = ({ item, nip }) => {
               </Text>
               <View
                 style={{
-                  backgroundColor: COLORS.success,
+                  backgroundColor: COLORS.orange,
                   borderRadius: 10,
                   padding: 5,
                 }}

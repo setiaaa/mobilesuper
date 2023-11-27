@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TextInput, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
 import {
@@ -26,6 +26,9 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { Image } from "react-native";
+import { postApproval } from "../../service/api";
+import { ModalSubmit } from "../../components/ModalSubmit";
+import { setStatus } from "../../store/Cuti";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   const navigation = useNavigation();
@@ -559,7 +562,7 @@ const CardKomen = ({
 export const DetailDokumenCuti = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
-  const { arsip } = useSelector((state) => state.cuti);
+  const { arsip, status } = useSelector((state) => state.cuti);
   const arsipDetail = arsip.detail;
 
   const [collapse, setCollapse] = useState({
@@ -590,6 +593,8 @@ export const DetailDokumenCuti = () => {
 
   const [visibleModal, setVisibleModal] = useState(false);
   const [lampiranById, setLampiranById] = useState(null);
+  const [komentarApproval, setKomentarApproval] = useState("");
+  const [passphrase, setPassphrase] = useState("");
 
   const getFileExtension = (lampiran) => {
     let jenis = lampiran?.split(".");
@@ -622,7 +627,20 @@ export const DetailDokumenCuti = () => {
   let durasiBatal =
     arsipDetail.detail_dokumen?.dokumen?.jumlah_pembatalan?.toString();
 
-  console.log(arsipDetail);
+  const handleSubmit = ({ status_approval }) => {
+    const payload = {
+      id_dokumen: arsipDetail.detail_dokumen?.dokumen?.id,
+      nip_approval: profile?.nip,
+      status_approval: status_approval,
+      komentar: komentarApproval,
+      passphrase: passphrase,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postApproval(data));
+  };
 
   return (
     <GestureHandlerRootView>
@@ -1306,7 +1324,7 @@ export const DetailDokumenCuti = () => {
             </View>
           </View>
           <View>
-            <View style={{ padding: 20, gap: 10 }}>
+            {/* <View style={{ padding: 20, gap: 10 }}>
               <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
                 <Ionicons
                   name="calendar-outline"
@@ -1374,7 +1392,7 @@ export const DetailDokumenCuti = () => {
                   </View>
                 </View>
               </View>
-            </View>
+            </View> */}
           </View>
           <View style={{ padding: 20 }}>
             <View
@@ -1391,7 +1409,9 @@ export const DetailDokumenCuti = () => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  Histori Komentar
+                </Text>
               </View>
               <TouchableOpacity
                 style={{
@@ -1445,7 +1465,9 @@ export const DetailDokumenCuti = () => {
                   borderBottomColor: COLORS.grey,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  Histori Komentar
+                </Text>
                 <TouchableOpacity
                   onPress={() => {
                     bottomSheetAttachCommentClose();
@@ -1532,11 +1554,11 @@ export const DetailDokumenCuti = () => {
             </BottomSheetView>
           </BottomSheetModal>
 
-          <View style={{ padding: 20, gap: 10 }}>
+          {/* <View style={{ padding: 20, gap: 10 }}>
             <View style={{}}>
               <View style={{ alignItems: "center", gap: 10 }}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("TambahCutiTahunan")}
+                  // onPress={() => navigation.navigate("TambahCutiTahunan")}
                   style={{
                     backgroundColor: COLORS.infoDanger,
                     padding: 15,
@@ -1558,7 +1580,184 @@ export const DetailDokumenCuti = () => {
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </View> */}
+          {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress" ? (
+            <>
+              <View style={{ padding: 20, gap: 10 }}>
+                <View
+                  style={{ flexDirection: "row", padding: 5, columnGap: 10 }}
+                >
+                  <Ionicons
+                    name="chatbox-outline"
+                    size={18}
+                    color={COLORS.primary}
+                  />
+                  <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                    Komentar Yang Menyetujui
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    padding: 20,
+                    borderRadius: 16,
+                  }}
+                >
+                  <Text>Komentar</Text>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 4,
+                      borderColor: COLORS.ExtraDivinder,
+                      borderRadius: 16,
+                      marginTop: 10,
+                    }}
+                  >
+                    <TextInput
+                      editable
+                      multiline
+                      numberOfLines={4}
+                      maxLength={40}
+                      placeholder="Masukan Komentar"
+                      onChangeText={setKomentarApproval}
+                      style={{ padding: 10, height: 40 }}
+                    />
+                  </View>
+
+                  <Text style={{ marginTop: 10 }}>Passphrase</Text>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 4,
+                      borderColor: COLORS.ExtraDivinder,
+                      borderRadius: 16,
+                      marginTop: 10,
+                    }}
+                  >
+                    <TextInput
+                      editable
+                      multiline
+                      numberOfLines={4}
+                      maxLength={40}
+                      placeholder="Masukan Passphrase"
+                      onChangeText={setPassphrase}
+                      style={{ padding: 10, height: 40 }}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={{ padding: 20, gap: 10 }}>
+                <View style={{}}>
+                  <View style={{ alignItems: "center", gap: 10 }}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleSubmit({ status_approval: "approve" })
+                      }
+                      style={{
+                        backgroundColor: COLORS.success,
+                        padding: 15,
+                        borderRadius: 5,
+                        height: 55,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Ionicons
+                        name="checkmark-outline"
+                        size={18}
+                        color={COLORS.white}
+                        paddingRight={10}
+                      />
+                      <Text style={{ color: COLORS.white }}>Disetujui</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleSubmit({ status_approval: "returned" })
+                      }
+                      style={{
+                        backgroundColor: COLORS.info,
+                        padding: 15,
+                        borderRadius: 5,
+                        height: 55,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Ionicons
+                        name="arrow-undo-outline"
+                        size={18}
+                        color={COLORS.white}
+                        paddingRight={10}
+                      />
+                      <Text style={{ color: COLORS.white }}>Perubahan</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleSubmit({ status_approval: "postponed" })
+                      }
+                      style={{
+                        backgroundColor: COLORS.foundation,
+                        padding: 15,
+                        borderRadius: 5,
+                        height: 55,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Ionicons
+                        name="alert-outline"
+                        size={18}
+                        color={COLORS.white}
+                        paddingRight={10}
+                      />
+                      <Text style={{ color: COLORS.white }}>Ditangguhkan</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleSubmit({ status_approval: "rejected" })
+                      }
+                      style={{
+                        backgroundColor: COLORS.infoDanger,
+                        padding: 15,
+                        borderRadius: 5,
+                        height: 55,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Ionicons
+                        name="close-outline"
+                        size={18}
+                        color={COLORS.white}
+                        paddingRight={10}
+                      />
+                      <Text style={{ color: COLORS.white }}>
+                        Tidak Disetujui
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </>
+          ) : null}
+
+          <ModalSubmit
+            status={status}
+            setStatus={setStatus}
+            navigate={"MainCuti"}
+          />
         </ScrollView>
       </View>
     </GestureHandlerRootView>
