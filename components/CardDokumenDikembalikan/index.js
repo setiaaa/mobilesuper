@@ -23,7 +23,7 @@ export const CardListDokumenDikembalikan = ({ item, nip, token }) => {
           onPress={
             (onPress = () => {
               getDetail(item.id);
-              navigation.navigate("DetailDokumenCuti");
+              navigation.navigate("DetailDokumenCuti", { id: "view" });
             })
           }
         >
