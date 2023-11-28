@@ -5,6 +5,7 @@ import { COLORS } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 
 function SearchFilter({
+  tipe,
   searchQuery,
   setSearchQuery,
   getSearch,
@@ -13,7 +14,9 @@ function SearchFilter({
 }) {
   return (
     <View style={styles.containerRow}>
-      <View style={{ width: "85%" }}>
+      <View
+        style={tipe != "searchGlobal" ? { width: "85%" } : { width: "100%" }}
+      >
         <Searchbar
           style={{
             backgroundColor: COLORS.white,
@@ -28,26 +31,28 @@ function SearchFilter({
           elevation={2}
         />
       </View>
-      <TouchableOpacity
-        onPress={showBottomFilter}
-        style={{
-          backgroundColor: COLORS.white,
-          borderRadius: 8,
-          height: 54,
-          width: "12%",
-          left: 15,
-          justifyContent: "center",
-          alignItems: "center",
-          //shadow ios
-          shadowOffset: { width: -2, height: 4 },
-          shadowColor: "#171717",
-          shadowOpacity: 0.2,
-          //shadow android
-          elevation: 2,
-        }}
-      >
-        <Ionicons name="filter-outline" size={24} color={COLORS.lighter} />
-      </TouchableOpacity>
+      {tipe != "searchGlobal" && (
+        <TouchableOpacity
+          onPress={showBottomFilter}
+          style={{
+            backgroundColor: COLORS.white,
+            borderRadius: 8,
+            height: 54,
+            width: "12%",
+            left: 15,
+            justifyContent: "center",
+            alignItems: "center",
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}
+        >
+          <Ionicons name="filter-outline" size={24} color={COLORS.lighter} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

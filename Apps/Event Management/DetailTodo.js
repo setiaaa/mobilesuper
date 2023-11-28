@@ -106,7 +106,7 @@ export const DetailTodo = () => {
     const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
     const bottomSheetModalRef = useRef(null);
     const bottomSheetModalCommetRef = useRef(null);
-
+    const [parentId, setParentId] = useState({id:"", creator:""});
     const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
     const {
         animatedHandleHeight,
@@ -145,6 +145,9 @@ export const DetailTodo = () => {
         })
         console.log(id)
     }
+    const handleClickBalas = (id, creator) => {
+        setParentId({id:id, creator:creator} );
+      };
 
     const handleLike = () => {
         if (like === 0) {
@@ -199,7 +202,7 @@ export const DetailTodo = () => {
 
     return (
         < >
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <GestureHandlerRootView>
                 <BottomSheetModalProvider>
                     <ScrollView>
@@ -222,7 +225,7 @@ export const DetailTodo = () => {
                             </View>
                         </View>
 
-                        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20, flex:2}}>
                             <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
 
                                 <View style={{ flexDirection: 'row', gap: 20 }}>
@@ -430,9 +433,17 @@ export const DetailTodo = () => {
                             </View>
                         </View>
 
-                        <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, flex:1}}>
                             <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
+                                {parentId.id !== "" ? ( 
+                                    <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
+                                        <Text>Membalas {parentId.creator}</Text>
+                                        <TouchableOpacity>
+                                        <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                ) : null }
                                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
 
                                     <TextInput
@@ -441,14 +452,14 @@ export const DetailTodo = () => {
                                         numberOfLines={4}
                                         maxLength={40}
                                         placeholder='Pilih member'
-                                        style={{ padding: 10, borderWidth: 1, borderRadius: 8, borderColor: COLORS.ExtraDivinder, flex: 1 }}
+                                        style={{ padding: 10, borderWidth: 1, borderRadius: 8, borderColor: COLORS.ExtraDivinder, flex: 2 }}
                                         onChangeText={(e) => {
                                             setMessage(e)
                                         }}
                                     />
 
                                     <TouchableOpacity onPress={() => {
-                                        submitComment('')
+                                        submitComment(parentId.id)
                                     }}>
                                         <Ionicons name='send-outline' size={24} color={COLORS.primary} />
                                     </TouchableOpacity>
@@ -499,8 +510,27 @@ export const DetailTodo = () => {
                                                     {listData.message}
                                                 </Text>
                                                 <View>
-                                                    {
-                                                        (!toggleComment.toggle && toggleComment.id === listData.id) || toggleComment.id !== listData.id ? (
+                                                    <TouchableOpacity
+                                                        style={{
+                                                            color: COLORS.lighter,
+                                                            fontSize: FONTSIZE.H3,
+                                                            fontWeight: FONTWEIGHT.normal,
+                                                            wordWrap: "break-word",
+                                                            marginTop: 10,
+                                                        }}
+                                                        onPress={() => {
+                                                            handleClickBalas(listData.id, listData.creator.nama);
+                                                        }}
+                                                        >
+                                                        <Text
+                                                            style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+                                                        >
+                                                            Balas
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                    {listData.children.length === 0 ? null : (
+                                                    <View>
+                                                        {(!toggleComment.toggle && toggleComment.id === listData.id) || toggleComment.id !== listData.id ? (
                                                             <TouchableOpacity
                                                                 onPress={() => clickBalas(listData.id, true)}>
                                                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 10 }}>
@@ -517,8 +547,7 @@ export const DetailTodo = () => {
                                                             </TouchableOpacity>
                                                         ) : (
                                                             null
-                                                        )
-                                                    }
+                                                        )}
 
                                                     {listData.id === toggleComment.id && toggleComment.toggle ? (
                                                         <View>
@@ -581,6 +610,9 @@ export const DetailTodo = () => {
                                                     ) : (
                                                         null
                                                     )}
+                                                    </View>
+                                                    )}
+                                                
                                                 </View>
                                             </View>
                                         </View>
