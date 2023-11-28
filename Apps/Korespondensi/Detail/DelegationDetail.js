@@ -5,23 +5,33 @@ import { useState } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 import { useSelector } from "react-redux";
-import AlertConfirm from "../../../components/UI/AlertConfirm";
 import Button from "../../../components/UI/Button";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
-import { getHTTP } from "../../../utils/http";
+import { getHTTP, headerToken } from "../../../utils/http";
+import { Config } from "../../../constants/config";
 
 function DelegationDetail({ route }) {
   const profile = useSelector((state) => state.profile.profile);
+  const [errorAvatarTitle, setErrorAvatarTitle] = useState(true);
+  const [errorAvatarDele, setErrorAvatarDele] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   let id = route.params.id;
   const [detail, setDetail] = useState([]);
   useEffect(() => {
     getDetail();
+    getHeader();
   }, []);
-
+  let header = {};
+  async function getHeader() {
+    try {
+      header = await headerToken();
+    } catch (error) {
+      Alert.alert("Warning!", "Get Header not working!");
+    }
+  }
   async function getDetail() {
     setIsLoading(true);
     try {
@@ -32,7 +42,7 @@ function DelegationDetail({ route }) {
       setDetail(response.data);
       setIsLoading(false);
     } catch (error) {
-      Alert.alert("Warning!", "Delegation Detail not working!");
+      Alert.alert("Peringatan!", "Detail delegasi tidak berfungsi!");
     }
     setIsLoading(false);
   }
@@ -43,22 +53,25 @@ function DelegationDetail({ route }) {
         nde_api.delegationdeactivate.replace("{$id}", id)
       );
       if (response.status == "Error") {
-        Alert.alert("Warning!", "Deactvate Delegation not working!");
+        Alert.alert("Peringatan!", "Deaktif delegasi tidak berfungsi!");
       } else {
-        Alert.alert("Success!", "Deactivate Delegation was success!");
+        Alert.alert("Berhasil!", "Deaktif delegasi berhasil!");
         navigation.goBack();
       }
     } catch (error) {
-      Alert.alert("Warning!", "Deactvate Delegation not working!");
+      Alert.alert("Peringatan!", "Deaktif delegasi tidak berfungsi!");
     }
     setIsLoading(false);
   }
   function confirm() {
-    AlertConfirm(
-      "Confirm",
-      "Are you sure to deactivate this delegation?",
-      deactivate
-    );
+    Alert.alert("Konfirmasi", "Anda yakin untuk deaktif delegasi ini?", [
+      {
+        text: "Tidak",
+        onPress: () => null,
+        style: "cancel",
+      },
+      { text: "Ya", onPress: () => deactivate() },
+    ]);
   }
   const loadingOverlay = (
     <>
@@ -87,13 +100,28 @@ function DelegationDetail({ route }) {
             subtitleNumberOfLines={5}
             left={(props) => (
               <View>
-                <Avatar.Image
-                  {...props}
-                  source={{
-                    uri: `${nde_api.baseurl + detail?.title?.avatar}`,
-                    method: "GET",
-                  }}
-                />
+                {errorAvatarTitle && (
+                  <Avatar.Image
+                    size={40}
+                    source={Config.avatar}
+                    theme={{
+                      colors: {
+                        primary: GlobalStyles.colors.textWhite,
+                      },
+                    }}
+                  />
+                )}
+                {!errorAvatarTitle && (
+                  <Avatar.Image
+                    {...props}
+                    source={{
+                      uri: `${nde_api.baseurl + detail?.title?.avatar}`,
+                      method: "GET",
+                      headers: header,
+                    }}
+                    onError={(e) => setErrorAvatarTitle(true)}
+                  />
+                )}
               </View>
             )}
           />
@@ -120,7 +148,11 @@ function DelegationDetail({ route }) {
                   styles.badgeText,
                 ]}
               >
-                {detail?.status}
+                {detail.status == "activate"
+                  ? "Aktif"
+                  : detail.status == "waiting"
+                  ? "Menunggu"
+                  : ""}
               </Text>
             </View>
           </View>
@@ -136,13 +168,28 @@ function DelegationDetail({ route }) {
             titleNumberOfLines={5}
             left={(props) => (
               <View>
-                <Avatar.Image
-                  {...props}
-                  source={{
-                    uri: `${nde_api.baseurl + detail?.delegasi?.avatar}`,
-                    method: "GET",
-                  }}
-                />
+                {errorAvatarDele && (
+                  <Avatar.Image
+                    size={40}
+                    source={Config.avatar}
+                    theme={{
+                      colors: {
+                        primary: GlobalStyles.colors.textWhite,
+                      },
+                    }}
+                  />
+                )}
+                {!errorAvatarDele && (
+                  <Avatar.Image
+                    {...props}
+                    source={{
+                      uri: `${nde_api.baseurl + detail?.delegasi?.avatar}`,
+                      method: "GET",
+                      headers: header,
+                    }}
+                    onError={() => setErrorAvatarDele(true)}
+                  />
+                )}
               </View>
             )}
           />
@@ -167,7 +214,7 @@ function DelegationDetail({ route }) {
         </Card>
         {detail?.title?.nik == profile?.nik && (
           <Button style={styles.button} onPress={confirm}>
-            Deactivate
+            Deaktif
           </Button>
         )}
       </View>

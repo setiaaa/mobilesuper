@@ -88,23 +88,23 @@ function Dashboard() {
     if (profile?.is_pejabat == "true") {
       //jika punya jabatan
       routes = [
-        { key: "dletter", title: "Letter" },
+        { key: "dletter", title: "Surat" },
         { key: "dtodo", title: Config.labelTodo },
         {
           key: "dsecretary",
-          title: "Secretary",
+          title: "Sekretaris",
           data: listMySecre,
           add: addDeleSekre,
         },
-        { key: "ddelegation", title: "Delegation", add: addDeleSekre },
+        { key: "ddelegation", title: "Delegasi", add: addDeleSekre },
       ];
     } else if (listMySecre.results?.length != 0) {
       //jika tidak punya jabatan, namun di-assign sebagai sekretaris
       routes = [
-        { key: "dletter", title: "Letter" },
+        { key: "dletter", title: "Surat" },
         { key: "dtodo", title: Config.labelTodo },
-        { key: "dsecretary", title: "Secretary", data: listMySecre },
-        { key: "ddelegation", title: "Delegation", add: addDeleSekre },
+        { key: "dsecretary", title: "Sekretaris", data: listMySecre },
+        { key: "ddelegation", title: "Delegasi", add: addDeleSekre },
       ];
     } else {
       //jika tidak punya jabatan

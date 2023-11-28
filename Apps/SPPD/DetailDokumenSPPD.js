@@ -22,11 +22,6 @@ import {
 import * as FileSystem from "expo-file-system";
 const { StorageAccessFramework } = FileSystem;
 import * as Sharing from "expo-sharing";
-// import * as IntentLauncher from "expo-intent-launcher";
-// import * as MediaLibrary from "expo-media-library";
-// import * as Permissions from "expo-permissions";
-// import * as Location from "expo-location";
-// import { decode, encode } from "base-64";
 
 export const DetailDokumenSPPD = ({ route }) => {
   const { data } = route.params;
@@ -189,6 +184,7 @@ export const DetailDokumenSPPD = ({ route }) => {
   // });
   // };
   console.log(cetak);
+  // console.log(surat)
 
   return (
     <>

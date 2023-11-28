@@ -770,10 +770,13 @@ export const getDetailBerita = createAsyncThunk(
 //mp
 export const getLinimasa = createAsyncThunk(
   "mp/getLinimasa",
-  async ({ token, page }) => {
-    const respon = await axios.get(`${Linimasa}linimasa/?limit=${page}`, {
-      headers: { Authorization: token },
-    });
+  async ({ token, page, category, competence, unker, satker, search }) => {
+    const respon = await axios.get(
+      `${Linimasa}linimasa/?limit=${page}&category=${category}&competence=${competence}&unker=${unker}&satker=${satker}&type=&search=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return respon?.data.results;
   }
 );
@@ -1003,7 +1006,7 @@ export const getListPenilaian = createAsyncThunk(
   "mp/getListPenilaian",
   async (data) => {
     const respon = await axios.get(
-      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}`,
+      `${Linimasa}admin/evaluation/?year=${data.tahun}&quarter=${data.TW}&limit=${data.page}&ditinjau=${data.ditinjau}&unker=${data.unitKerja}&general=${data.search}`,
       { headers: { Authorization: data.token } }
     );
     return respon?.data.results;
@@ -1273,10 +1276,13 @@ export const getDetailsSharedDocuments = createAsyncThunk(
 //postingan saya
 export const getMyPostList = createAsyncThunk(
   "mp/mypost",
-  async ({ token, page }) => {
-    const respon = await axios.get(`${MYPOST_LIST}?limit=${page}`, {
-      headers: { Authorization: token },
-    });
+  async ({ token, page, search }) => {
+    const respon = await axios.get(
+      `${MYPOST_LIST}?limit=${page}&search=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
     return respon?.data.results;
   }
 );
@@ -1771,6 +1777,32 @@ export const getDokumenPersetujuan = createAsyncThunk(
       {
         // headers: { Authorization: token },
       }
+    );
+    return respon?.data;
+  }
+);
+
+export const postPengajuanCuti = createAsyncThunk(
+  "cuti/postPengajuanCuti",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Cuti}pengajuan-cuti/`,
+      data.payload
+      // headers: { Authorization: token },
+    );
+    return respon?.data;
+  }
+);
+
+export const postApproval = createAsyncThunk(
+  "cuti/postApproval",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Cuti}approval-cuti/`,
+      data.payload
+      // headers: { Authorization: token },
     );
     return respon?.data;
   }

@@ -81,7 +81,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe }) {
     }
     getTindakan();
     return refresh;
-  }, [dispatch, data]);
+  }, [data]);
 
   async function getTindakan() {
     setIsLoading(true);

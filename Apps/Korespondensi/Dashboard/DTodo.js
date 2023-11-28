@@ -148,234 +148,51 @@ function DTodo() {
           </>
         )}
       />
+      
+      {listTodoSearch.length == 0 && (<>
       <View style={{ marginBottom: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
-          <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
+            <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
             <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
-              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Over Due</Text>
-            </View>
+            <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Over Due</Text>
           </View>
-          
-          <View style={{ 
-            backgroundColor: COLORS.white, 
-            marginVertical: 10, 
-            borderRadius: 8, 
-            padding: 20, 
-            flexDirection: "row",
-            //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
-            //shadow android
-            elevation: 2,
-          }}>
-            <View style={{ gap: 10, width: "80%" }}>
-              <Text style={{ fontSize: 13,fontWeight: 600 }}>Permohonan Pengembangan Dashboard</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.info }}>Harap menjadi perhatian Sdr.</Text>
-              <View style={{ flexDirection: 'row', marginLeft: 8 }}>
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-              </View>
-            </View>
-            <View style={{ width: "20%", alignItems: "center", justifyContent: "space-between" }}>
-              <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  borderRadius: 50,
-                  width: 32,
-                  height: 32
-                }} />
-                <View
-                  style={{
-                    backgroundColor: COLORS.infoDangerLight,
-                    borderRadius: 30,
-                    width: 43,
-                    height: 24,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{ color: COLORS.infoDanger, textAlign: "center" }}
-                  >
-                    High
-                  </Text>
-                </View>
-            </View>
-          </View>
+        </View>
+        <ListTodo title="Overdue" result={listTodoOverdue} />
       </View>
       
-      <View>
+      <View style={{ marginBottom: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
           <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
             <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
               <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Today</Text>
             </View>
           </View>
-          
-          <View style={{ 
-            backgroundColor: COLORS.white, 
-            marginVertical: 10, 
-            borderRadius: 8, 
-            padding: 20, 
-            flexDirection: "row",
-            //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
-            //shadow android
-            elevation: 2,
-          }}>
-            <View style={{ gap: 10, width: "80%" }}>
-              <Text style={{ fontSize: 13,fontWeight: 600 }}>Permohonan Pengembangan Dashboard</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.info }}>Harap menjadi perhatian Sdr.</Text>
-              <View style={{ flexDirection: 'row', marginLeft: 8 }}>
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-              </View>
-            </View>
-            <View style={{ width: "20%", alignItems: "center", justifyContent: "space-between" }}>
-              <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  borderRadius: 50,
-                  width: 32,
-                  height: 32
-                }} />
-                <View
-                  style={{
-                    backgroundColor: COLORS.infoDangerLight,
-                    borderRadius: 30,
-                    width: 43,
-                    height: 24,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{ color: COLORS.infoDanger, textAlign: "center" }}
-                  >
-                    High
-                  </Text>
-                </View>
-            </View>
-          </View>
+          <ListTodo title="Today" result={listTodoToday} />
       </View>
 
-      <View>
+      <View style={{ marginBottom: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
           <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
             <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
-              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>This Week</Text>
+              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Next Week</Text>
             </View>
           </View>
-          
-          <View style={{ 
-            backgroundColor: COLORS.white, 
-            marginVertical: 10, 
-            borderRadius: 8, 
-            padding: 20, 
-            flexDirection: "row",
-            //shadow ios
-            shadowOffset: { width: -2, height: 4 },
-            shadowColor: "#171717",
-            shadowOpacity: 0.2,
-            //shadow android
-            elevation: 2,
-          }}>
-            <View style={{ gap: 10, width: "80%" }}>
-              <Text style={{ fontSize: 13,fontWeight: 600 }}>Permohonan Pengembangan Dashboard</Text>
-              <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.info }}>Harap menjadi perhatian Sdr.</Text>
-              <View style={{ flexDirection: 'row', marginLeft: 8 }}>
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-                <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  marginLeft: -8,
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: COLORS.white,
-                  width: 26,
-                  height: 26
-                }} />
-              </View>
-            </View>
-            <View style={{ width: "20%", alignItems: "center", justifyContent: "space-between" }}>
-              <Image source={require("../../../assets/superApp/AvatarKomen1.png")} style={{
-                  borderRadius: 50,
-                  width: 32,
-                  height: 32
-                }} />
-                <View
-                  style={{
-                    backgroundColor: COLORS.infoDangerLight,
-                    borderRadius: 30,
-                    width: 43,
-                    height: 24,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{ color: COLORS.infoDanger, textAlign: "center" }}
-                  >
-                    High
-                  </Text>
-                </View>
-            </View>
-          </View>
+          <ListTodo title="Next Week" result={listTodoNextweek} />
       </View>
+      </>
+      )}
 
+      {listTodoSearch.length != 0 && (
+        <>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
+            <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
+            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
+            <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Searching</Text>
+          </View>
+        </View>
+          <ListTodo title="Searching" result={listTodoSearch} />
+          </>
+        )}
       {/* <List.AccordionGroup
         expandedId={expanded}
         onAccordionPress={(item) => setExpandedList(item)}

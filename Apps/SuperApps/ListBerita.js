@@ -12,59 +12,78 @@ import { CardListBeritaHome } from "../../components/CardListBeritaHome";
 import { ActivityIndicator } from "react-native";
 import { setBerita } from "../../store/SuperApps";
 import ListEmpty from "../../components/ListEmpty";
-
-
+import { RefreshControl } from "react-native";
 
 export const ListBerita = () => {
   const navigation = useNavigation();
   const [token, setToken] = useState("");
-  const dispatch = useDispatch()
-  const [page, setPage] = useState(1)
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
   const { berita, loading } = useSelector((state) => state.superApps);
 
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
     });
-    dispatch(setBerita([]))
-    setPage(1)
+    dispatch(setBerita([]));
+    setPage(1);
   }, []);
 
   useEffect(() => {
     if (token !== "") {
       dispatch(getBerita({ token, page }));
-      console.log('page', page)
+      console.log("page", page);
     }
   }, [token, page]);
 
   const loadMore = () => {
-    if (berita.lists.length % 10 === 0) {
-      setPage(page + 1)
+    if (berita?.lists.length !== 0) {
+      if (berita.lists.length % 10 === 0) {
+        setPage(page + 1);
+      }
     }
-  }
+  };
 
-  const [search, setSearch] = useState('')
-  const [filterData, setFilterData] = useState([])
-
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
 
   const filter = (event) => {
-    setSearch(event)
-  }
+    setSearch(event);
+  };
 
   useEffect(() => {
-    setFilterData(berita.lists)
-  }, [berita])
+    setFilterData(berita.lists);
+  }, [berita]);
 
   useEffect(() => {
-    if (search !== '') {
+    if (search !== "") {
       const data = berita.lists?.filter((item) => {
         return item.title.toLowerCase().includes(search.toLowerCase());
-      })
-      setFilterData(data)
+      });
+      setFilterData(data);
     } else {
-      setFilterData(berita.lists)
+      setFilterData(berita.lists);
     }
-  }, [search])
+  }, [search]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getBerita({ token, page }));
+            console.log(page, 'page')
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
+  }, [token, page]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -106,11 +125,10 @@ export const ListBerita = () => {
         </View>
         <View style={{ padding: PADDING.Page }}>
           <Search
-            placeholder={'Cari'}
+            placeholder={"Cari"}
             iconColor={COLORS.primary}
             onSearch={filter}
           />
-
         </View>
         <View style={{ flex: 1, paddingBottom: 24 }}>
           <FlatList
@@ -130,15 +148,26 @@ export const ListBerita = () => {
             )}
             ListEmptyComponent={() => <ListEmpty />}
             style={{ flex: 1 }}
-            ListFooterComponent={() => (
+            ListFooterComponent={() =>
               loading && (
-                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 24,
+                  }}
+                >
                   <ActivityIndicator size="large" color={COLORS.primary} />
                 </View>
               )
-            )}
+            }
             keyExtractor={(item) => item.id}
-            onEndReached={loadMore}
+            onEndReached={
+              search === "" && berita.lists.length !== 0 ? loadMore : null
+            }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         </View>
         {/* <FlatList
@@ -159,7 +188,7 @@ export const ListBerita = () => {
           keyExtractor={(item) => item.id}
         /> */}
       </View>
-    </View >
+    </View>
   );
 };
 

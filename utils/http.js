@@ -8,7 +8,7 @@ import { nde_api } from "./api.config";
 
 export async function headerToken() {
   let token;
-  await AsyncStorage.getItem("token").then((data) => {
+  await AsyncStorage.getItem("tokenKorespondensi").then((data) => {
     token = JSON.parse(data);
   });
   return { Authorization: "token " + token };
@@ -28,7 +28,8 @@ export async function getHTTP(url) {
 }
 
 export const handlerError = (error, title, msg) => {
-  const dispatch = useDispatch();
+  console.log(title+msg)
+  // const dispatch = useDispatch();
   // function showError(error, title, msg) {
   if (error?.response?.status == null) {
     Alert.alert("Warning!", "Please check your connection");
@@ -43,10 +44,10 @@ export const handlerError = (error, title, msg) => {
       },
     ]);
   } else if (error?.response?.status === 401) {
-    dispatch(setFirstLogin(false));
-    dispatch(logout());
+    // dispatch(setFirstLogin(false));
+    // dispatch(logout());
   } else {
-    Alert.alert({ title }, { msg }, [
+    Alert.alert(title, msg, [
       {
         text: "Ok",
         onPress: () => {

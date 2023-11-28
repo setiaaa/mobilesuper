@@ -30,6 +30,7 @@ import { CardListDetailAgenda } from "../../components/CardListDetailAgenda";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { Loading } from "../../components/Loading";
+import { RefreshControl } from "react-native";
 
 export const AgendaEvent = () => {
   const navigation = useNavigation();
@@ -80,6 +81,24 @@ export const AgendaEvent = () => {
     if (token !== "") {
       dispatch(getEventAgenda({ token: token, id: event.detailEvent.id }));
     }
+  }, [token]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+      try {
+          if (token !== '') {
+            dispatch(getEventAgenda({ token: token, id: event.detailEvent.id }));
+            console.log('Refresh Berhasil')
+          }
+      } catch (error) {
+          console.log('Refresh gagal:', error)
+      }
+
+      setRefreshing(true);
+      setTimeout(() => {
+      setRefreshing(false);
+      }, 2000);
   }, [token]);
 
   // useEffect(() => {
@@ -223,6 +242,9 @@ export const AgendaEvent = () => {
         )}
         style={{ marginVertical: 10, height: 440 }}
         keyExtractor={(item) => item.id}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         // ListEmptyComponent={() => {loading ? loading : <ListEmpty />}}
       />
 

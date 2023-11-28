@@ -7,7 +7,7 @@
   "userInterfaceStyle": "automatic",
   "splash": {
     "image": "./assets/superApp/splashkkp.png",
-    "resizeMode": "contain",
+    "resizeMode": "cover",
     "backgroundColor": "#ffffff"
   },
   "updates": {
@@ -19,13 +19,17 @@
     "supportsTablet": true,
     "bundleIdentifier": "com.kubekkp.portal",
     "infoPlist": {
-    "NSLocationWhenInUseUsageDescription": "Our app needs access to your location",
-    "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library"
+      "NSLocationWhenInUseUsageDescription": "Our app needs access to your location",
+      "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library"
     }
   },
   "android": {
     "versionCode": 138,
-    "permissions": ["ACCESS_FINE_LOCATION", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"],
+    "permissions": [
+      "ACCESS_FINE_LOCATION",
+      "WRITE_EXTERNAL_STORAGE",
+      "READ_EXTERNAL_STORAGE"
+    ],
     "adaptiveIcon": {
       "foregroundImage": "./assets/superApp/kkp-ikon.png",
       "backgroundColor": "#FFFFFF"
@@ -55,11 +59,11 @@
       "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
     },
     "id": "telkom",
-    "base_url": "http://newnde.coofis.com",
+    "base_url": "https://crsfe.kubekkp.coofis.com",
     "upgrade_url": "https://portal.telkom.co.id/store/experience/apps/8",
     "loginSSO": false,
     "termOfUse": true,
-    "editInpro": true,
+    "editInpro": false,
     "todo": true,
     "labelTodo": "To do",
     "prefix": "Sdr. ",
