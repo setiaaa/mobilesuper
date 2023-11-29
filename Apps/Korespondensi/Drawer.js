@@ -168,7 +168,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     getProfile();
     // ambil token dari superapps belum bisa. coba set token manual untuk testing
-    // dispatch(setToken({ token: "caccafd4e30bd6dced336c52014a9721fc15911d" }));
+    dispatch(setToken({ token: "f2388c837c7e5c41f613695189545ee0eba032b3" }));
   }, []);
 
   async function getProfile() {
@@ -555,7 +555,7 @@ const CustomDrawerContent = (props) => {
 const defaultOptions = ({ title, navigation }) => ({
   headerTitle: () => {
     return (
-      <Text style={{ textAlign: "right" }} numberOfLines={2}>
+      <Text style={{ textAlign: "right", fontWeight:"bold" }} numberOfLines={2}>
         {title}
       </Text>
     );
