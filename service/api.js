@@ -1808,6 +1808,22 @@ export const postApproval = createAsyncThunk(
   }
 );
 
+export const postAttachmentCuti = createAsyncThunk(
+  "cuti/postAttachmentCuti",
+  async (data) => {
+    let formData = new FormData();
+    formData.append("file", {
+      uri: data.result.uri,
+      type: data.result.mimeType,
+      name: data.result.name,
+    });
+    const respon = await axios.post(`${Cuti}unggah-berkas/`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return respon?.data;
+  }
+);
+
 //SPPD
 export const getDashboardSPPD = createAsyncThunk(
   "sppd/getDashboard",
@@ -1862,6 +1878,6 @@ export const getDocumentCetakSPPD = createAsyncThunk(
         headers: { Authorization: token },
       }
     );
-    return respon.data;
+    return respon?.data;
   }
 );

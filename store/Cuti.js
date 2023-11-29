@@ -12,6 +12,7 @@ import {
   getPilihApproval,
   getTanggalLibur,
   postApproval,
+  postAttachmentCuti,
   postPengajuanCuti,
 } from "../service/api";
 
@@ -33,10 +34,14 @@ const CutiSlice = createSlice({
       lists: [],
     },
     status: "",
+    attachment: [],
   },
   reducers: {
     setStatus: (state, action) => {
       state.status = action.payload;
+    },
+    setAttachmentCuti: (state, action) => {
+      state.attachment = action.payload;
     },
   },
   extraReducers(builder) {
@@ -153,10 +158,26 @@ const CutiSlice = createSlice({
         console.log("error");
         state.status = "error";
         state.loading = false;
+      })
+      .addCase(postAttachmentCuti.fulfilled, (state, action) => {
+        let id_attachment = [...state.attachment];
+        id_attachment.push({ id: action.payload.data.id });
+        console.log("berhasil");
+        state.attachment = id_attachment;
+        state.loading = false;
+      })
+      .addCase(postAttachmentCuti.pending, (state, action) => {
+        console.log("pending");
+        state.loading = true;
+      })
+      .addCase(postAttachmentCuti.rejected, (state, action) => {
+        console.log("error");
+        console.log(action.payload);
+        state.loading = false;
       });
   },
 });
 
-export const { setStatus } = CutiSlice.actions;
+export const { setStatus, setAttachmentCuti } = CutiSlice.actions;
 
 export default CutiSlice.reducer;
