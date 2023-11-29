@@ -559,7 +559,8 @@ const CardKomen = ({
   );
 };
 
-export const DetailDokumenCuti = () => {
+export const DetailDokumenCuti = ({ route }) => {
+  const id = route.params;
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
   const { arsip, status } = useSelector((state) => state.cuti);
@@ -642,6 +643,7 @@ export const DetailDokumenCuti = () => {
     dispatch(postApproval(data));
   };
 
+  console.log(id);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -1581,7 +1583,8 @@ export const DetailDokumenCuti = () => {
               </View>
             </View>
           </View> */}
-          {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress" ? (
+          {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress" &&
+          id === "approval" ? (
             <>
               <View style={{ padding: 20, gap: 10 }}>
                 <View
