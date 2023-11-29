@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import CardDLetter from "../../../components/UI/CardDLetter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
-import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
 
@@ -14,18 +13,23 @@ function DLetter() {
   const icon = [
     {
       icon: "email-edit-outline",
-      color: "rgba(24, 104, 171, 0.6)",
+      color: "rgba(73, 189, 101, 0.6)",
       navName: "NeedFollowUp",
     },
     {
       icon: "inbox-arrow-down",
-      color: "rgba(73, 189, 101, 0.6)",
+      color: "rgba(24, 104, 171, 0.6)",
       navName: "IncomingUnread",
     },
     {
       icon: "email-send-outline",
-      color: "rgba(244, 152, 32, 0.6)",
+      color: "rgba(244, 32, 32, 0.6)",
       navName: "DispositionUnread",
+    },
+    {
+      icon: "email-outline",
+      color: "rgba(180, 179, 179, 0.6)",
+      navName: "ConceptNumb",
     },
   ];
 
@@ -42,6 +46,11 @@ function DLetter() {
         type: "agenda_disposition",
         value: "-",
       },
+      {
+        count: 4,
+        type: "draft",
+        value: "-",
+      },
     ]);
     getisCounter();
   });
@@ -56,6 +65,11 @@ function DLetter() {
       {
         count: 3,
         type: "agenda_disposition",
+        value: "-",
+      },
+      {
+        count: 4,
+        type: "draft",
         value: "-",
       },
     ]);
@@ -85,6 +99,11 @@ function DLetter() {
             type: "agenda_disposition",
             value: "-",
           },
+          {
+            count: 4,
+            type: "draft",
+            value: "-",
+          },
         ]);
       } else {
         handlerError(error, "Warning!", "Counter DLetter not working!");
@@ -101,14 +120,34 @@ function DLetter() {
   return (
     <View>
       {/* {loadingOverlay} */}
-      {isCounter.map((data, index) => (
-        <CardDLetter
-          key={data.count}
-          data={data}
-          icon={icon[index]}
-          navigation={navigation}
-        />
-      ))}
+      {isCounter?.length != 0 && (
+        <>
+          <CardDLetter
+            key={3}
+            data={isCounter[3]}
+            icon={icon[3]}
+            navigation={navigation}
+          />
+          <CardDLetter
+            key={0}
+            data={isCounter[0]}
+            icon={icon[0]}
+            navigation={navigation}
+          />
+          <CardDLetter
+            key={1}
+            data={isCounter[1]}
+            icon={icon[1]}
+            navigation={navigation}
+          />
+          <CardDLetter
+            key={2}
+            data={isCounter[2]}
+            icon={icon[2]}
+            navigation={navigation}
+          />
+        </>
+      )}
     </View>
   );
 }
