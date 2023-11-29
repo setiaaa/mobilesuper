@@ -144,7 +144,6 @@ import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
 import { getTokenValue } from "../../service/session";
-import { Semua } from "../Task Management/Dashboard/Semua";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 import { Pencarian } from "./Pencarian/Pencarian";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";

@@ -808,7 +808,11 @@ export const EditGrup = () => {
               </View>
             </TouchableOpacity>
 
-            <ModalSubmit />
+            <ModalSubmit
+              status={status}
+              setStatus={setStatus}
+              navigate={"GrupKalender"}
+            />
           </ScrollView>
         </BottomSheetModalProvider>
       </>

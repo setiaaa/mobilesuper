@@ -168,7 +168,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     getProfile();
     // ambil token dari superapps belum bisa. coba set token manual untuk testing
-    dispatch(setToken({ token: "f2388c837c7e5c41f613695189545ee0eba032b3" }));
+    dispatch(setToken({ token: "3b9c4486dc7ae84fd13a6ac584a9ddf919d0f2ff" }));
   }, []);
 
   async function getProfile() {
@@ -359,10 +359,16 @@ const CustomDrawerContent = (props) => {
         <List.Section>
           <List.Accordion
             title="Surat Keluar"
-            titleStyle={{fontSize:FONTSIZE.H2}}
-            left={(props) => <List.Icon {...props} icon="email-send-outline"/>}
-            style={[styles.drawerItem,{backgroundColor:GlobalStyles.colors.textWhite,
-              height: 55, left:10}]}
+            titleStyle={{ fontSize: FONTSIZE.H2 }}
+            left={(props) => <List.Icon {...props} icon="email-send-outline" />}
+            style={[
+              styles.drawerItem,
+              {
+                backgroundColor: GlobalStyles.colors.textWhite,
+                height: 55,
+                left: 10,
+              },
+            ]}
           >
             {DrawerItemsData3.map((data, index) => (
               <Drawer.Item
@@ -411,15 +417,21 @@ const CustomDrawerContent = (props) => {
             }}
           />
         ))}
-        
+
         {/* Alat */}
         <List.Section>
           <List.Accordion
             title="Alat"
-            titleStyle={{fontSize:FONTSIZE.H2}}
-            left={(props) => <List.Icon {...props} icon="cog-outline"/>}
-            style={[styles.drawerItem,{backgroundColor:GlobalStyles.colors.textWhite,
-              height: 55, left:10}]}
+            titleStyle={{ fontSize: FONTSIZE.H2 }}
+            left={(props) => <List.Icon {...props} icon="cog-outline" />}
+            style={[
+              styles.drawerItem,
+              {
+                backgroundColor: GlobalStyles.colors.textWhite,
+                height: 55,
+                left: 10,
+              },
+            ]}
           >
             {DrawerItemsData5.map((data, index) => (
               <Drawer.Item
@@ -715,7 +727,10 @@ function DrawerNavigator({ navigation }) {
       <DrawerNav.Screen
         name="Secretary"
         component={SecretaryList}
-        options={defaultOptions({ title: "Sekretaris", navigation: navigation })}
+        options={defaultOptions({
+          title: "Sekretaris",
+          navigation: navigation,
+        })}
       />
       <DrawerNav.Screen
         name="ScanLogList"

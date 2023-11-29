@@ -6,7 +6,7 @@ import { COLORS, DATETIME } from "../../config/SuperAppps";
 import moment from "moment";
 import { Ionicons } from "@expo/vector-icons";
 
-export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
+export const CardListDokumenOnProgress = ({ item, nip }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
@@ -18,7 +18,7 @@ export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
 
   return (
     <>
-      {item.status === "Postponed" || item.status === "Rejected" ? (
+      {item.status === "On Progress" ? (
         <TouchableOpacity
           onPress={
             (onPress = () => {
@@ -50,7 +50,11 @@ export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
                 Tipe Dokumen:{" "}
               </Text>
               <View
-                style={{ backgroundColor: "red", borderRadius: 10, padding: 5 }}
+                style={{
+                  backgroundColor: COLORS.orange,
+                  borderRadius: 10,
+                  padding: 5,
+                }}
               >
                 <Text style={{ fontSize: 12, color: COLORS.white }}>
                   {item.tipe_dokumen}
