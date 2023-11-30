@@ -1,299 +1,407 @@
-import React from 'react'
-import { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { Text } from 'react-native-paper'
-import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from '../../config/SuperAppps'
-import { Ionicons } from '@expo/vector-icons';
-import { Search } from '../../components/Search'
-import { useNavigation } from '@react-navigation/native'
-import { useDispatch, useSelector } from 'react-redux'
-import { ScrollView } from 'react-native'
-import { StyleSheet } from 'react-native'
-import { useEffect } from 'react'
-import { getArsipCuti, getCutiPersonal, getFormCuti, getKuotaCuti } from '../../service/api'
-import { CardKuotaCuti } from '../../components/CardKuotaCuti'
-import { FlatList, Image } from 'react-native'
-import ListEmpty from '../../components/ListEmpty'
-import { Loading } from '../../components/Loading';
-import { CardArsipCuti } from '../../components/CardArsipCuti'
-import { RefreshControl } from 'react-native'
-
+import React from "react";
+import { useState } from "react";
+import { TouchableOpacity, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Text } from "react-native-paper";
+import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
+import { Search } from "../../components/Search";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { ScrollView } from "react-native";
+import { StyleSheet } from "react-native";
+import { useEffect } from "react";
+import {
+  getArsipCuti,
+  getCutiPersonal,
+  getFormCuti,
+  getKuotaCuti,
+} from "../../service/api";
+import { CardKuotaCuti } from "../../components/CardKuotaCuti";
+import { FlatList, Image } from "react-native";
+import ListEmpty from "../../components/ListEmpty";
+import { Loading } from "../../components/Loading";
+import { CardArsipCuti } from "../../components/CardArsipCuti";
+import { RefreshControl } from "react-native";
 
 export const PersonalCuti = () => {
-    const dispatch = useDispatch()
-    const { profile } = useSelector(state => state.superApps)
-    const [collapse, setCollapse] = useState({
-        nip: '',
-        toggle: false
-    })
-    useEffect(() => {
-        if (profile.nip !== "") {
-            dispatch(getCutiPersonal(profile?.nip))
-            dispatch(getKuotaCuti(profile?.nip))
-            dispatch(getArsipCuti(profile?.nip))
-        }
-    }, [profile?.nip]);
+  const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.superApps);
+  const [collapse, setCollapse] = useState({
+    nip: "",
+    toggle: false,
+  });
+  useEffect(() => {
+    if (profile.nip !== "") {
+      dispatch(getCutiPersonal(profile?.nip));
+      dispatch(getKuotaCuti(profile?.nip));
+      dispatch(getArsipCuti(profile?.nip));
+    }
+  }, [profile?.nip]);
 
-    const navigation = useNavigation()
-    const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge"
-    const { personal, kuota, loading, arsip } = useSelector(state => state.cuti)
-    const arsipLists = arsip.lists.data
+  const navigation = useNavigation();
+  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const { personal, kuota, loading, arsip } = useSelector(
+    (state) => state.cuti
+  );
+  const arsipLists = arsip.lists.data;
 
-    const formCuti = (id) => {
-        const params = { nip: profile.nip, id: id };
-        // const data = event.listsprogress.find(item => item.id === id)
-        dispatch(getFormCuti(params));
-    };
+  const formCuti = (id) => {
+    const params = { nip: profile.nip, id: id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getFormCuti(params));
+  };
 
-    const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [jumlahDraft, setJumlahDraft] = useState();
+  const [jumlahOnProgress, setJumlahOnProsess] = useState();
+  const [jumlahComplete, setJumlahCompete] = useState();
+  const [jumlahReject, setJumlahReject] = useState();
 
-    const onRefresh = React.useCallback(() => {
-        try {
-            if (profile.nip !== "") {
-                dispatch(getCutiPersonal(profile?.nip))
-                dispatch(getKuotaCuti(profile?.nip))
-                dispatch(getArsipCuti(profile?.nip))
-                console.log('Refresh Berhasil')
-            }
-        } catch (error) {
-            console.log('Refresh gagal:', error)
-        }
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (profile.nip !== "") {
+        dispatch(getCutiPersonal(profile?.nip));
+        dispatch(getKuotaCuti(profile?.nip));
+        dispatch(getArsipCuti(profile?.nip));
+        console.log("Refresh Berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, [profile?.nip]);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [profile?.nip]);
 
-    return (
-        <GestureHandlerRootView>
-            {loading ? (
-                <Loading />
-            ) : (
-                null
-            )}
-            <View style={{ position: 'relative' }}>
-                <ScrollView>
+  useEffect(() => {
+    if (arsipLists) {
+      const rejectedData = arsipLists.filter((item) => {
+        return item.status === "Rejected";
+      });
+      const draftData = arsipLists.filter((item) => {
+        return item.status === "Draft";
+      });
+      const onProgressData = arsipLists.filter((item) => {
+        return item.status === "On Progress";
+      });
+      const CompleteData = arsipLists.filter((item) => {
+        return item.status === "Completed";
+      });
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.primary, height: 80, }}>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            borderRadius: 20,
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginLeft: 20
-                        }}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flex: 1, alignItems: 'center', }}>
-                            <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Cuti</Text>
-                        </View>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            borderRadius: 20,
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginRight: 20
-                        }}>
-                            <TouchableOpacity onPress={() => navigation.navigate('Libur')}>
-                                <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                            </TouchableOpacity>
-                        </View>
+      setJumlahCompete(CompleteData.length);
+      setJumlahOnProsess(onProgressData.length);
+      setJumlahDraft(draftData.length);
+      setJumlahReject(rejectedData.length);
+    } else {
+      console.log("Tidak dapat membaca properti 'status' dari arsipLists.");
+    }
+  }, []);
 
-                    </View>
-                    <View style={{ padding: PADDING.Page }}>
-                        <View
-                            style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            //shadow ios
-                            shadowOffset: { width: -2, height: 4 },
-                            shadowColor: "#171717",
-                            shadowOpacity: 0.2,
-                            //shadow android
-                            elevation: 2,
-                            }}
-                        >
-                        <Image
-                        source={require("../../assets/superApp/Card-Background-Red.png")}
-                        style={{
-                            width: "100%",
-                            borderTopLeftRadius: 8,
-                            borderTopRightRadius: 8,
-                            //shadow ios
-                            shadowOffset: { width: -2, height: 4 },
-                            shadowColor: "#171717",
-                            shadowOpacity: 0.2,
-                            //shadow android
-                            elevation: 2,
-                        }}
-                        />
-                        <View
-                        style={{ alignItems: "center", gap: 10, position: "absolute" }}
-                        >
-                        <Image
-                            source={{ uri: BASE_URL + profile.avatar }}
-                            style={{
-                            width: 75,
-                            height: 75,
-                            borderRadius: 36,
-                            borderWidth: 2,
-                            borderColor: COLORS.white,
-                            }}
-                        />
-                        <Text
-                            style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
-                        >
-                            {profile.nama}
-                        </Text>
-                        <Text
-                            style={{ fontSize: 13, fontWeight: 400, color: COLORS.white }}
-                        >
-                            {profile.nip}
-                        </Text>
-                        </View>
-                </View>
-            <View style={{
+  return (
+    <GestureHandlerRootView>
+      {loading ? <Loading /> : null}
+      <View style={{ position: "relative" }}>
+        <ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: COLORS.primary,
+              height: 80,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: 28,
+                height: 28,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 20,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1, alignItems: "center" }}>
+              <Text
+                style={{
+                  fontSize: FONTSIZE.H1,
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.white,
+                }}
+              >
+                Cuti
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: 28,
+                height: 28,
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: 20,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.navigate("Libur")}>
+                <Ionicons
+                  name="calendar-outline"
+                  size={18}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ padding: PADDING.Page }}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
+              }}
+            >
+              <Image
+                source={require("../../assets/superApp/Card-Background-Red.png")}
+                style={{
+                  width: "100%",
+                  borderTopLeftRadius: 8,
+                  borderTopRightRadius: 8,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                }}
+              />
+              <View
+                style={{ alignItems: "center", gap: 10, position: "absolute" }}
+              >
+                <Image
+                  source={{ uri: BASE_URL + profile.avatar }}
+                  style={{
+                    width: 75,
+                    height: 75,
+                    borderRadius: 36,
+                    borderWidth: 2,
+                    borderColor: COLORS.white,
+                  }}
+                />
+                <Text
+                  style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                >
+                  {profile.nama}
+                </Text>
+                <Text
+                  style={{ fontSize: 13, fontWeight: 400, color: COLORS.white }}
+                >
+                  {profile.nip}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
                 backgroundColor: COLORS.white,
                 padding: 15,
                 borderBottomRightRadius: 8,
                 borderBottomLeftRadius: 8,
-                }}
-                >
-                <TouchableOpacity onPress={() => setCollapse({ nip: personal.data_user?.nip, toggle: true })}>
-                    <View style={{ flexDirection: "row" }}>
-                        <Text style={{ marginRight: "80%" }}>Profil</Text>
-                        {collapse.nip === personal.data_user?.nip && collapse.toggle === true ? (
-                            <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                                <Ionicons name='chevron-up' size={24} />
-                            </TouchableOpacity>
-                        ) : (
-                            <Ionicons name='chevron-down' size={24} />
-                        )}
-                    </View>
-                </TouchableOpacity>
-                {personal.data_user?.nip === personal.data_user?.nip && collapse.toggle === true ? (
-                    <View>
-                        <TouchableOpacity onPress={() => setCollapse({ nip: '', toggle: false })}>
-                            <Text style={{ marginTop: 10, }}>Jenis Kelamin</Text>
-                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jenis_kelamin}</Text>
+              }}
+            >
+              <TouchableOpacity
+                onPress={() =>
+                  setCollapse({ nip: personal.data_user?.nip, toggle: true })
+                }
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ marginRight: "80%" }}>Profil</Text>
+                  {collapse.nip === personal.data_user?.nip &&
+                  collapse.toggle === true ? (
+                    <TouchableOpacity
+                      onPress={() => setCollapse({ nip: "", toggle: false })}
+                    >
+                      <Ionicons name="chevron-up" size={24} />
+                    </TouchableOpacity>
+                  ) : (
+                    <Ionicons name="chevron-down" size={24} />
+                  )}
+                </View>
+              </TouchableOpacity>
+              {personal.data_user?.nip === personal.data_user?.nip &&
+              collapse.toggle === true ? (
+                <View>
+                  <TouchableOpacity
+                    onPress={() => setCollapse({ nip: "", toggle: false })}
+                  >
+                    <Text style={{ marginTop: 10 }}>Jenis Kelamin</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {personal.data_user?.jenis_kelamin}
+                    </Text>
 
-                            <Text style={{ marginTop: 10, }}>Golongan</Text>
-                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.golongan}</Text>
+                    <Text style={{ marginTop: 10 }}>Golongan</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {personal.data_user?.golongan}
+                    </Text>
 
-                            <Text style={{ marginTop: 10, }}>Jabatan</Text>
-                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.jabatan}</Text>
+                    <Text style={{ marginTop: 10 }}>Jabatan</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {personal.data_user?.jabatan}
+                    </Text>
 
-                            <Text style={{ marginTop: 10, }}>Unit Kerja</Text>
-                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.unit_kerja}</Text>
+                    <Text style={{ marginTop: 10 }}>Unit Kerja</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {personal.data_user?.unit_kerja}
+                    </Text>
 
-                            <Text style={{ marginTop: 10, }}>Satuan Kerja</Text>
-                            <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>{personal.data_user?.satuan_kerja}</Text>
-
-
-                        </TouchableOpacity>
-                    </View>
-                ) : (
-                    null
-                )}
+                    <Text style={{ marginTop: 10 }}>Satuan Kerja</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {personal.data_user?.satuan_kerja}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
             </View>
-                    </View>
-                    <View style={{ paddingLeft: 20, gap: 10 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Form Pengajuan Cuti</Text>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-
-                            {personal?.data_jenis_cuti?.map((item) => {
-                                return (
-                                    <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
-                                        <View style={{ alignItems: 'center', gap: 10 }}>
-                                            <TouchableOpacity onPress={() => {
-                                                formCuti(item.id)
-                                                navigation.navigate('TambahCutiTahunan')
-                                            }
-                                            }
-
-                                                style={{
-                                                    backgroundColor: COLORS.infoDanger,
-                                                    padding: 15,
-                                                    borderRadius: 30,
-                                                    width: 55,
-                                                    height: 55,
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center'
-
-                                                }}>
-                                                <Ionicons name='calendar-outline' size={18} color={COLORS.white} />
-                                            </TouchableOpacity>
-                                            <Text style={{ maxWidth: 60, textAlign: 'center' }}>{item.nama}</Text>
-                                        </View>
-                                    </View>
-                                )
-                            })}
-                        </ScrollView>
-                    </View>
-                    <View style={{ paddingLeft: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Status Dokumen Cuti</Text>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            <View style={{ flexDirection: "row" }}>
-                                <View style={styles.cardStatus}>
-                                    <View style={{ width: "70%", alignItems: "center", rowGap: 20 }}>
-                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                        <Text>Draft</Text>
-                                        <Text>3</Text>
-                                    </View>
-                                </View>
-
-                                <View style={styles.cardStatus}>
-                                    <View style={{ width: "70%", alignItems: "center", rowGap: 10 }}>
-                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                        <Text>Sedang Proses</Text>
-                                        <Text>3</Text>
-                                    </View>
-                                </View>
-
-                                <View style={styles.cardStatus}>
-                                    <View style={{ width: "70%", alignItems: "center", rowGap: 10 }}>
-                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                        <Text>Dokumen Disetujui</Text>
-                                        <Text>3</Text>
-                                    </View>
-                                </View>
-
-                                <View style={styles.cardStatus}>
-                                    <View style={{ width: "70%", alignItems: "center", rowGap: 2 }}>
-                                        <Ionicons name='document-outline' size={50} color={COLORS.grey} />
-                                        <Text>Dokumen Tidak Disetujui</Text>
-                                        <Text>3</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </ScrollView>
-                    </View>
-                    <View style={{ paddingLeft: 20 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
-                        <FlatList
-                            data={kuota.data_kuota_cuti}
-                            renderItem={({ item }) => (
-                                <View key={item.id}>
-                                    <CardKuotaCuti
-                                        item={item}
-                                    />
-                                </View>
-                            )}
-                            keyExtractor={(item) => item.id}
-                            ListEmptyComponent={() => <ListEmpty />}
-                            refreshControl={
-                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                            }
+          </View>
+          <View style={{ paddingLeft: 20, gap: 10 }}>
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              Form Pengajuan Cuti
+            </Text>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              {personal?.data_jenis_cuti?.map((item) => {
+                return (
+                  <View style={{ flexDirection: "row", marginHorizontal: 10 }}>
+                    <View style={{ alignItems: "center", gap: 10 }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          formCuti(item.id);
+                          navigation.navigate("TambahCutiTahunan");
+                        }}
+                        style={{
+                          backgroundColor: COLORS.infoDanger,
+                          padding: 15,
+                          borderRadius: 30,
+                          width: 55,
+                          height: 55,
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Ionicons
+                          name="calendar-outline"
+                          size={18}
+                          color={COLORS.white}
                         />
-                        {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                      </TouchableOpacity>
+                      <Text style={{ maxWidth: 60, textAlign: "center" }}>
+                        {item.nama}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </View>
+          <View style={{ paddingLeft: 20 }}>
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              Status Dokumen Cuti
+            </Text>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.cardStatus}>
+                  <View
+                    style={{ width: "70%", alignItems: "center", rowGap: 20 }}
+                  >
+                    <Ionicons
+                      name="document-outline"
+                      size={50}
+                      color={COLORS.grey}
+                    />
+                    <Text>Draft</Text>
+                    <Text>{jumlahDraft}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.cardStatus}>
+                  <View
+                    style={{ width: "70%", alignItems: "center", rowGap: 10 }}
+                  >
+                    <Ionicons
+                      name="document-outline"
+                      size={50}
+                      color={COLORS.grey}
+                    />
+                    <Text>Sedang Proses</Text>
+                    <Text>{jumlahOnProgress}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.cardStatus}>
+                  <View
+                    style={{ width: "70%", alignItems: "center", rowGap: 10 }}
+                  >
+                    <Ionicons
+                      name="document-outline"
+                      size={50}
+                      color={COLORS.grey}
+                    />
+                    <Text>Dokumen Disetujui</Text>
+                    <Text>{jumlahComplete}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.cardStatus}>
+                  <View
+                    style={{ width: "70%", alignItems: "center", rowGap: 2 }}
+                  >
+                    <Ionicons
+                      name="document-outline"
+                      size={50}
+                      color={COLORS.grey}
+                    />
+                    <Text>Dokumen Tidak Disetujui</Text>
+                    <Text>{jumlahReject}</Text>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          </View>
+          <View style={{ paddingLeft: 20 }}>
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
+            <FlatList
+              data={kuota.data_kuota_cuti}
+              renderItem={({ item }) => (
+                <View key={item.id}>
+                  <CardKuotaCuti item={item} />
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+              ListEmptyComponent={() => <ListEmpty />}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+            {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                             <View style={{ gap: 20, flexDirection: 'row' }}>
                                 <View style={[styles.cardKouta]}>
                                     <View style={{
@@ -376,48 +484,104 @@ export const PersonalCuti = () => {
                                 </View>
                             </View>
                         </ScrollView> */}
-                    </View>
+          </View>
 
-                    <View style={{ padding: 20, rowGap: 10 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Monitoring Kuota</Text>
-                        <View style={{ backgroundColor: "white", borderRadius: 8 }}>
-                            <View style={{ flexDirection: "row", gap: 70, padding: 10, justifyContent: 'center' }}>
-                                <TouchableOpacity>
-                                    <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                                </TouchableOpacity>
-                                <Text>Cuti Tahunan 2021</Text>
-                                <TouchableOpacity>
-                                    <Ionicons name='chevron-forward-outline' size={24} color={COLORS.primary} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{ padding: 10, marginHorizontal: 15, marginBottom: 15, flexDirection: 'row' }}>
-                                <View style={{ gap: 20, position: 'relative' }}>
-                                    <View style={{ flexDirection: 'row', }}>
-                                        <Text>Kuota</Text>
-                                        <View style={{ backgroundColor: "#1868AB", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal: 130, position: 'absolute' }}>
-                                            <Text style={{ color: "white", fontWeight: FONTWEIGHT.bold }}>6</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text>Penggunaan</Text>
-                                        <View style={{ backgroundColor: "#F6AD1D", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal: 130, position: 'absolute' }}>
-                                            <Text style={{ color: "white", }}>6</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text>Sisa</Text>
-                                        <View style={{ backgroundColor: "#11C15B", width: 20, height: 20, alignItems: 'center', borderRadius: 3, marginHorizontal: 130, position: 'absolute' }}>
-                                            <Text style={{ color: "white" }}>6</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <View>
-                                    {/* Masukan diagram pie disini */}
-                                </View>
-                            </View>
-                        </View>
+          <View style={{ padding: 20, rowGap: 10 }}>
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              Monitoring Kuota
+            </Text>
+            <View style={{ backgroundColor: "white", borderRadius: 8 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 70,
+                  padding: 10,
+                  justifyContent: "center",
+                }}
+              >
+                <TouchableOpacity>
+                  <Ionicons
+                    name="chevron-back-outline"
+                    size={24}
+                    color={COLORS.primary}
+                  />
+                </TouchableOpacity>
+                <Text>Cuti Tahunan 2021</Text>
+                <TouchableOpacity>
+                  <Ionicons
+                    name="chevron-forward-outline"
+                    size={24}
+                    color={COLORS.primary}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  padding: 10,
+                  marginHorizontal: 15,
+                  marginBottom: 15,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ gap: 20, position: "relative" }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text>Kuota</Text>
+                    <View
+                      style={{
+                        backgroundColor: "#1868AB",
+                        width: 20,
+                        height: 20,
+                        alignItems: "center",
+                        borderRadius: 3,
+                        marginHorizontal: 130,
+                        position: "absolute",
+                      }}
+                    >
+                      <Text
+                        style={{ color: "white", fontWeight: FONTWEIGHT.bold }}
+                      >
+                        6
+                      </Text>
                     </View>
-                    {/* 
+                  </View>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text>Penggunaan</Text>
+                    <View
+                      style={{
+                        backgroundColor: "#F6AD1D",
+                        width: 20,
+                        height: 20,
+                        alignItems: "center",
+                        borderRadius: 3,
+                        marginHorizontal: 130,
+                        position: "absolute",
+                      }}
+                    >
+                      <Text style={{ color: "white" }}>6</Text>
+                    </View>
+                  </View>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text>Sisa</Text>
+                    <View
+                      style={{
+                        backgroundColor: "#11C15B",
+                        width: 20,
+                        height: 20,
+                        alignItems: "center",
+                        borderRadius: 3,
+                        marginHorizontal: 130,
+                        position: "absolute",
+                      }}
+                    >
+                      <Text style={{ color: "white" }}>6</Text>
+                    </View>
+                  </View>
+                </View>
+                <View>{/* Masukan diagram pie disini */}</View>
+              </View>
+            </View>
+          </View>
+          {/* 
                     <View style={{ padding: 20 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontWeight: FONTWEIGHT.bold }}>Arsip Cuti</Text>
@@ -443,30 +607,29 @@ export const PersonalCuti = () => {
                             ListEmptyComponent={() => <ListEmpty />}
                         />
                     </View> */}
-                </ScrollView>
-            </View >
-        </GestureHandlerRootView >
-    )
-}
+        </ScrollView>
+      </View>
+    </GestureHandlerRootView>
+  );
+};
 
 const styles = StyleSheet.create({
-    cardStatus: {
-        width: "23%",
-        padding: 15,
-        borderRadius: 8,
-        marginHorizontal: 5,
-        margin: 10,
-        backgroundColor: COLORS.white,
-        alignItems: "center",
-    },
-    cardKouta: {
-        width: 360,
-        // padding: 1,
-        borderRadius: 8,
-        // marginHorizontal: 5,
-        // margin:10,
-        marginVertical: 10,
-        flexDirection: "row",
-    }
-
-})
+  cardStatus: {
+    width: "23%",
+    padding: 15,
+    borderRadius: 8,
+    marginHorizontal: 5,
+    margin: 10,
+    backgroundColor: COLORS.white,
+    alignItems: "center",
+  },
+  cardKouta: {
+    width: 360,
+    // padding: 1,
+    borderRadius: 8,
+    // marginHorizontal: 5,
+    // margin:10,
+    marginVertical: 10,
+    flexDirection: "row",
+  },
+});
