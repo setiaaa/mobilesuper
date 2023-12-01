@@ -472,8 +472,7 @@ export const PostinganSaya = () => {
 
   const [page, setPage] = useState(5);
   const [inputValue, setInputValue] = useState("");
-  const [search, setSearch] = useState("");
-  const [filterData, setFilterData] = useState([]);
+
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -481,9 +480,6 @@ export const PostinganSaya = () => {
     });
   }, []);
 
-  const filter = () => {
-    setSearch(inputValue);
-  };
 
   useEffect(() => {
     if (token !== "") {
@@ -519,8 +515,33 @@ export const PostinganSaya = () => {
         setPage(page + 5);
       }
     }
-    // console.log(page);
+    console.log(page);
   };
+
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(postinganSaya.lists);
+  }, [postinganSaya]);
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = postinganSaya.lists?.filter((item) => {
+        return item.title.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+      if (data.length === 0){
+
+      }
+    } else {
+      setFilterData(postinganSaya.lists);
+    }
+  }, [search, postinganSaya]);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -541,6 +562,28 @@ export const PostinganSaya = () => {
   }, [token, page]);
 
   // console.log(postinganSaya.lists);
+
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
+  };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.title.localeCompare(a.title));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
 
   return (
     <>
@@ -613,28 +656,31 @@ export const PostinganSaya = () => {
             alignItems: "center",
           }}
         >
+          <View style={{ flexDirection: 'row', }}>
+          <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
+            <Search
+              placeholder={"Cari..."}
+              iconColor={COLORS.primary}
+              onSearch={filter}
+            />
+          </View>
+          <TouchableOpacity onPress={!ascending ? asc : desc}>
           <View
             style={{
-              width: "100%",
-              marginRight: 10,
-              marginBottom: 15,
-              backgroundColor: COLORS.white,
-              borderRadius: 8,
-            }}
+            width: 40,
+            height: 40,
+            borderRadius: 30,
+            backgroundColor: COLORS.white,
+            justifyContent: "center",
+            alignItems: "center",
+            borderColor: COLORS.secondaryLighter,
+            // borderWidth: isFiltered ? 1 : 0,
+          }}
           >
-            <View style={styles.input}>
-              <Ionicons name="search" size={20} color={COLORS.primary} />
-              <TextInput
-                placeholder={"Cari..."}
-                style={{ fontSize: 16, flex: 1 }}
-                maxLength={30}
-                value={inputValue}
-                onChangeText={(text) => setInputValue(text)}
-                onEndEditing={filter}
-                clearButtonMode="always"
-              />
-            </View>
+            <Ionicons name="filter-outline" size={24} />
           </View>
+        </TouchableOpacity>
+        </View>
           {/* <TouchableOpacity
             style={{
               backgroundColor: "#C34647",
@@ -657,36 +703,36 @@ export const PostinganSaya = () => {
         </View>
       </View>
 
-      <View style={{ height: "75%" }}>
-        <FlatList
-          data={postinganSaya.lists}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <CardPostinganSaya item={item} token={token} />
+      <FlatList
+        data={filterData}
+        renderItem={({ item }) => (
+          <View key={item.id}>
+            <CardPostinganSaya
+              item={item}
+              token={token}
+            />
+          </View>
+        )}
+        ListFooterComponent={() =>
+          loading === true ? (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 24,
+              }}
+            >
+              <ActivityIndicator size="large" color={COLORS.primary} />
             </View>
-          )}
-          keyExtractor={(item) => item.id}
-          ListFooterComponent={() =>
-            loading === true ? (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
-                }}
-              >
-                <ActivityIndicator size="large" color={COLORS.primary} />
-              </View>
-            ) : null
-          }
-          ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={postinganSaya?.lists.length === 0 ? null : loadMore}
+          ) : null
+        }
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => <ListEmpty />}
+        onEndReached={loadMore}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
-          style={{ height: 400 }}
-        />
-      </View>
+      />
     </>
   );
 };

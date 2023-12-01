@@ -40,7 +40,7 @@ export const CardAppsB = ({ handlePressModal }) => {
     let tmpMenu = [];
     tmpMenu.push(
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14}}
       >
         <TouchableOpacity onPress={() => navigation.navigate("Drawer")}>
           <View
@@ -139,7 +139,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14 }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MyTask")}>
           <View
@@ -165,9 +165,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             justifyContent: "center",
             alignItems: "center",
             fontSize: FONTSIZE.H4,
+            textAlign: 'center'
           }}
         >
-          Task Management
+          Task{"\n"}Management
         </Text>
       </View>
     );
@@ -200,9 +201,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               justifyContent: "center",
               alignItems: "center",
               fontSize: FONTSIZE.H4,
+              textAlign: 'center'
             }}
           >
-            Preparing dan Sharing
+            Preparing{"\n"}dan Sharing
           </Text>
         </View>
       );
@@ -258,7 +260,7 @@ export const CardAppsB = ({ handlePressModal }) => {
     if (isRoleEvent) {
       tmpMenu.push(
         <View
-          style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+          style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14 }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("HalamanUtama")}>
             <View
@@ -360,7 +362,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14 }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
           <View

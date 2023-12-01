@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailDocument, getDivisionFilter, getDocument, getDocumentDibagikan, getDocumentTamplate, getSubDivisionFilter } from "../service/api";
+import { getDetailDocument, getDivisionFilter, getDocument, getDocumentDibagikan, getDocumentTamplate, getDownloadLampiran, getSubDivisionFilter } from "../service/api";
 
 const RepositorySlice = createSlice({
   name: "Repository",
@@ -21,6 +21,9 @@ const RepositorySlice = createSlice({
     filter: {
       unker: [],
       satker: []
+    },
+    download: {
+      detail: {}
     }
   },
   reducers: {
@@ -83,6 +86,19 @@ const RepositorySlice = createSlice({
       })
       .addCase(getSubDivisionFilter.fulfilled, (state, action) => {
         state.filter.satker = action.payload;
+      })
+      .addCase(getDownloadLampiran.fulfilled, (state, action) => {
+        state.download.detail = action.payload;
+        state.loading = false
+        state.load = false
+      })
+      .addCase(getDownloadLampiran.pending, (state, action) => {
+        state.loading = true
+        state.load = true
+      })
+      .addCase(getDownloadLampiran.rejected, (state, action) => {
+        state.loading = false
+        state.load = false
       })
   },
 });

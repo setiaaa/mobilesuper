@@ -21,6 +21,7 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
             <View style={
                 {
                     backgroundColor: COLORS.white,
+                    width: '90%',
                     borderRadius: 8,
                     marginTop: 10,
                     padding: 20,
@@ -97,7 +98,7 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     </View>
                                 ) : (
-                                    <View style={{ width: 200, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
+                                    <View style={{ width: 180, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
                                         <Text>{moment(item.updated_at, 'HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
                                     </View>
                                 )}

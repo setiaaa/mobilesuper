@@ -88,6 +88,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
               backgroundColor: COLORS.lighter,
               height: 1,
               marginVertical: 5,
+              width: 300
             }}
           />
           <View style={{ gap: 5 }}>

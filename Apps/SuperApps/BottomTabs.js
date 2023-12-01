@@ -445,6 +445,7 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
+                        style={{ width: 24, height: 18}}
                           source={require("../../assets/superApp/ikon-keuangan.png")}
                         />
                       </View>
@@ -456,9 +457,11 @@ function MyTabBar({ props, navigation }) {
                         alignItems: "center",
                         fontSize: FONTSIZE.H4,
                         height: 40,
+                        maxWidth: 60,
+                        textAlign: 'center'
                       }}
                     >
-                      Keuangan & Kinerja
+                      Keuangan dan Kinerja
                     </Text>
                   </View>
                 ) : null}
@@ -489,6 +492,7 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
+                          style={{ width: 18, height: 18}}
                           source={require("../../assets/superApp/ikon-kepagawaian.png")}
                         />
                       </View>
@@ -533,6 +537,7 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
+                        style={{ width: 18, height: 18}}
                           source={require("../../assets/superApp/ikon-budidaya.png")}
                         />
                       </View>
@@ -558,15 +563,15 @@ function MyTabBar({ props, navigation }) {
                     flexDirection: "row",
                     justifyContent: "flex-start",
                     gap: 10,
-                    marginTop: 30,
-                    marginHorizontal: 15,
+                    marginTop: 10,
+                    marginHorizontal: 30,
                     alignItems: "flex-start",
                   }}
                 >
                   <View
                     style={{
-                      justifyContent: "center",
-                      alignItems: "center",
+                      // justifyContent: "center",
+                      // alignItems: "center",
                       width: 100,
                     }}
                   >
@@ -588,6 +593,7 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
+                        style={{ width: 18, height: 18}}
                           source={require("../../assets/superApp/ikon-penangkapan.png")}
                         />
                       </View>
@@ -595,13 +601,13 @@ function MyTabBar({ props, navigation }) {
                     <Text
                       style={{
                         marginTop: 10,
-                        justifyContent: "center",
-                        textAlign: "center",
-                        alignItems: "center",
+                        // justifyContent: "center",
+                        // textAlign: "center",
+                        // alignItems: "center",
                         fontSize: FONTSIZE.H4,
                       }}
                     >
-                      Produk Penangkapan
+                      Produksi{"\n"}Budidaya
                     </Text>
                   </View>
                 </View>

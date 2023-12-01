@@ -260,7 +260,8 @@ export const Dibagikan = () => {
         setPage(page + 10);
       }
     }
-
+  };
+  
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -278,7 +279,7 @@ export const Dibagikan = () => {
       setRefreshing(false);
       }, 2000);
   }, [token, page]);
-  };
+  
 
   console.log(load);
 

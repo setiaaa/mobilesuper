@@ -1,52 +1,85 @@
-import React, { useRef, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import React, { useRef, useState, useMemo, useEffect } from "react";
+import { Platform, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Image } from "react-native";
-import { Modal } from "react-native-paper";
+import { Divider, Modal, Portal } from "react-native-paper";
 import { Loading } from "../../components/Loading";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+  BottomSheetView,
+  BottomSheetTextInput,
+  useBottomSheetDynamicSnapPoints,
+} from "@gorhom/bottom-sheet";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+const { StorageAccessFramework } = FileSystem;
+import { getTokenValue } from "../../service/session";
+import { getDownloadLampiran } from "../../service/api";
 
-const DataLampiran = ({ lampiran, nama, size, onClick, type }) => {
-  const navigation = useNavigation();
+const DataLampiran = ({ lampiran, nama, size, onClick, type, bottomSheetAttach, }) => {
+  const navigation = useNavigation()
   // console.log(lampiran);
-  return type === "png" || type === "jpg" || type === "jpeg" ? (
-    <TouchableOpacity onPress={onClick}>
-      <Image
-        source={{ uri: lampiran }}
-        style={{ width: 150, height: 150, borderRadius: 6, marginTop: 10 }}
-      />
-    </TouchableOpacity>
-  ) : type === "mp4" ? (
+
+  const getDetail = () => {
+
+  }
+
+  return (
+    <>
+    {type === "png" || type === "jpg" || type === "jpeg" ? (
+      <TouchableOpacity onPress={() =>{ 
+        bottomSheetAttach()
+        onClick()
+        getDetail()
+      }}>
+        <Image
+          source={{ uri: lampiran }}
+          style={{ width: 150, height: 150, borderRadius: 6, marginTop: 10 }}
+        />
+      </TouchableOpacity>
+    ) : type === "mp4" ? (
+      <TouchableOpacity
+        onPress={() => {
+          bottomSheetAttach()
+          onClick()
+          getDetail()
+        }}
+        style={{
+          width: 150,
+          height: 150,
+          borderRadius: 6,
+          marginTop: 10,
+          backgroundColor: COLORS.secondaryLighter,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image
+          source={require("../../assets/superApp/mp4.png")}
+          style={{ width: 70, height: 70 }}
+        />
+      </TouchableOpacity>
+    ) : type === "doc" || type === "docx" || type === "xls" || type === "xlsx" || type === "pdf" || type === "ppt" || type === "pptx" ? (
     <TouchableOpacity
-      onPress={onClick}
-      style={{
-        width: 150,
-        height: 150,
-        borderRadius: 6,
-        marginTop: 10,
-        backgroundColor: COLORS.secondaryLighter,
-        justifyContent: "center",
-        alignItems: "center",
+      onPress={() => {
+        bottomSheetAttach()
+        onClick()
+        getDetail()
       }}
-    >
-      <Image
-        source={require("../../assets/superApp/mp4.png")}
-        style={{ width: 70, height: 70 }}
-      />
-    </TouchableOpacity>
-  ) : type === "doc" || type === "docx" ? (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("FileViewer", {
-          lampiran: lampiran,
-          type: type,
-        })
-      }
+      // onPress={() =>
+      //   navigation.navigate("FileViewer", {
+      //     lampiran: lampiran,
+      //     type: type,
+      //   })
+      // }
       style={{
         width: 150,
         height: 150,
@@ -61,10 +94,27 @@ const DataLampiran = ({ lampiran, nama, size, onClick, type }) => {
         elevation: 5,
       }}
     >
-      <Image
-        source={require("../../assets/superApp/word.png")}
-        style={{ width: 70, height: 70 }}
-      />
+      {type === "doc" || type === "docx" ? (
+        <Image
+          source={require("../../assets/superApp/word.png")}
+          style={{ width: 70, height: 70 }}
+        />
+      ) : type === "xls" || type === "xlsx" ? (
+        <Image
+          source={require("../../assets/superApp/excel.png")}
+          style={{ width: 70, height: 70 }}
+        />
+      ) : type === "pdf" ? (
+        <Image
+          source={require("../../assets/superApp/pdf.png")}
+          style={{ width: 70, height: 70 }}
+        />
+      ) : type === "ppt" || type === "pptx" ? (
+        <Image
+          source={require("../../assets/superApp/ppt.png")}
+          style={{ width: 70, height: 70 }}
+        />
+      ) : null}
       <View
         style={{
           marginTop: 10,
@@ -90,165 +140,266 @@ const DataLampiran = ({ lampiran, nama, size, onClick, type }) => {
         </Text>
       </View>
     </TouchableOpacity>
-  ) : type === "xls" || type === "xlsx" ? (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("FileViewer", {
-          lampiran: lampiran,
-          type: type,
-        })
-      }
-      style={{
-        width: 150,
-        height: 150,
-        borderRadius: 6,
-        marginTop: 10,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: COLORS.white,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 5,
-      }}
-    >
-      <Image
-        source={require("../../assets/superApp/excel.png")}
-        style={{ width: 70, height: 70 }}
-      />
-      <View
-        style={{
-          marginTop: 10,
-          rowGap: 10,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontWeight: FONTWEIGHT.bold,
-            maxWidth: 130,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-          numberOfLines={1}
-        >
-          {nama}
-        </Text>
-        <Text style={{ color: COLORS.lighter }}>
-          {Math.floor(size / 1024)} MB
-        </Text>
-      </View>
-    </TouchableOpacity>
-  ) : type === "pdf" ? (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("FileViewer", {
-          lampiran: lampiran,
-          type: type,
-        })
-      }
-      style={{
-        width: 150,
-        height: 150,
-        borderRadius: 6,
-        marginTop: 10,
-        justifyContent: "center",
-        alignItems: "center",
-        shadowColor: "black",
-        backgroundColor: COLORS.white,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 5,
-      }}
-    >
-      <Image
-        source={require("../../assets/superApp/pdf.png")}
-        style={{ width: 70, height: 70 }}
-      />
-      <View
-        style={{
-          marginTop: 10,
-          rowGap: 10,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontWeight: FONTWEIGHT.bold,
-            maxWidth: 130,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-          numberOfLines={1}
-        >
-          {nama}
-        </Text>
-        <Text style={{ color: COLORS.lighter }}>
-          {Math.floor(size / 1024)} MB
-        </Text>
-      </View>
-    </TouchableOpacity>
-  ) : type === "ppt" || type === "pptx" ? (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("FileViewer", {
-          lampiran: lampiran,
-          type: type,
-        })
-      }
-      style={{
-        width: 150,
-        height: 150,
-        borderRadius: 6,
-        marginTop: 10,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: COLORS.white,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 5,
-      }}
-    >
-      <Image
-        source={require("../../assets/superApp/ppt.png")}
-        style={{ width: 70, height: 70 }}
-      />
-      <View
-        style={{
-          marginTop: 10,
-          rowGap: 10,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontWeight: FONTWEIGHT.bold,
-            maxWidth: 130,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-          numberOfLines={1}
-        >
-          {nama}
-        </Text>
-        <Text style={{ color: COLORS.lighter }}>
-          {Math.floor(size / 1024)} MB
-        </Text>
-      </View>
-    </TouchableOpacity>
-  ) : null;
+    ) : null}
+    </>
+  )
+//   return type === "png" || type === "jpg" || type === "jpeg" ? (
+//     <TouchableOpacity onPress={onClick}>
+//       <Image
+//         source={{ uri: lampiran }}
+//         style={{ width: 150, height: 150, borderRadius: 6, marginTop: 10 }}
+//       />
+//     </TouchableOpacity>
+//   ) : type === "mp4" ? (
+//     <TouchableOpacity
+//       onPress={onClick}
+//       style={{
+//         width: 150,
+//         height: 150,
+//         borderRadius: 6,
+//         marginTop: 10,
+//         backgroundColor: COLORS.secondaryLighter,
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       <Image
+//         source={require("../../assets/superApp/mp4.png")}
+//         style={{ width: 70, height: 70 }}
+//       />
+//     </TouchableOpacity>
+//   ) : type === "doc" || type === "docx" ? (
+//     <TouchableOpacity
+//       onPress={() =>
+//         navigation.navigate("FileViewer", {
+//           lampiran: lampiran,
+//           type: type,
+//         })
+//       }
+//       style={{
+//         width: 150,
+//         height: 150,
+//         borderRadius: 6,
+//         marginTop: 10,
+//         justifyContent: "center",
+//         alignItems: "center",
+//         backgroundColor: COLORS.white,
+//         shadowOffset: { width: 0, height: 0 },
+//         shadowOpacity: 0.2,
+//         shadowRadius: 5,
+//         elevation: 5,
+//       }}
+//     >
+//       <Image
+//         source={require("../../assets/superApp/word.png")}
+//         style={{ width: 70, height: 70 }}
+//       />
+//       <View
+//         style={{
+//           marginTop: 10,
+//           rowGap: 10,
+//           justifyContent: "center",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Text
+//           style={{
+//             fontWeight: FONTWEIGHT.bold,
+//             maxWidth: 130,
+//             overflow: "hidden",
+//             textOverflow: "ellipsis",
+//             whiteSpace: "nowrap",
+//           }}
+//           numberOfLines={1}
+//         >
+//           {nama}
+//         </Text>
+//         <Text style={{ color: COLORS.lighter }}>
+//           {Math.floor(size / 1024)} MB
+//         </Text>
+//       </View>
+//     </TouchableOpacity>
+//   ) : type === "xls" || type === "xlsx" ? (
+//     <TouchableOpacity
+//       onPress={() =>
+//         navigation.navigate("FileViewer", {
+//           lampiran: lampiran,
+//           type: type,
+//         })
+//       }
+//       style={{
+//         width: 150,
+//         height: 150,
+//         borderRadius: 6,
+//         marginTop: 10,
+//         justifyContent: "center",
+//         alignItems: "center",
+//         backgroundColor: COLORS.white,
+//         shadowOffset: { width: 0, height: 0 },
+//         shadowOpacity: 0.2,
+//         shadowRadius: 5,
+//         elevation: 5,
+//       }}
+//     >
+//       <Image
+//         source={require("../../assets/superApp/excel.png")}
+//         style={{ width: 70, height: 70 }}
+//       />
+//       <View
+//         style={{
+//           marginTop: 10,
+//           rowGap: 10,
+//           justifyContent: "center",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Text
+//           style={{
+//             fontWeight: FONTWEIGHT.bold,
+//             maxWidth: 130,
+//             overflow: "hidden",
+//             textOverflow: "ellipsis",
+//             whiteSpace: "nowrap",
+//           }}
+//           numberOfLines={1}
+//         >
+//           {nama}
+//         </Text>
+//         <Text style={{ color: COLORS.lighter }}>
+//           {Math.floor(size / 1024)} MB
+//         </Text>
+//       </View>
+//     </TouchableOpacity>
+//   ) : type === "pdf" ? (
+//     <TouchableOpacity
+//       onPress={() =>
+//         navigation.navigate("FileViewer", {
+//           lampiran: lampiran,
+//           type: type,
+//         })
+//       }
+//       style={{
+//         width: 150,
+//         height: 150,
+//         borderRadius: 6,
+//         marginTop: 10,
+//         justifyContent: "center",
+//         alignItems: "center",
+//         shadowColor: "black",
+//         backgroundColor: COLORS.white,
+//         shadowOffset: { width: 0, height: 0 },
+//         shadowOpacity: 0.2,
+//         shadowRadius: 5,
+//         elevation: 5,
+//       }}
+//     >
+//       <Image
+//         source={require("../../assets/superApp/pdf.png")}
+//         style={{ width: 70, height: 70 }}
+//       />
+//       <View
+//         style={{
+//           marginTop: 10,
+//           rowGap: 10,
+//           justifyContent: "center",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Text
+//           style={{
+//             fontWeight: FONTWEIGHT.bold,
+//             maxWidth: 130,
+//             overflow: "hidden",
+//             textOverflow: "ellipsis",
+//             whiteSpace: "nowrap",
+//           }}
+//           numberOfLines={1}
+//         >
+//           {nama}
+//         </Text>
+//         <Text style={{ color: COLORS.lighter }}>
+//           {Math.floor(size / 1024)} MB
+//         </Text>
+//       </View>
+//     </TouchableOpacity>
+//   ) : type === "ppt" || type === "pptx" ? (
+//     <TouchableOpacity
+//       onPress={() =>
+//         navigation.navigate("FileViewer", {
+//           lampiran: lampiran,
+//           type: type,
+//         })
+//       }
+//       style={{
+//         width: 150,
+//         height: 150,
+//         borderRadius: 6,
+//         marginTop: 10,
+//         justifyContent: "center",
+//         alignItems: "center",
+//         backgroundColor: COLORS.white,
+//         shadowOffset: { width: 0, height: 0 },
+//         shadowOpacity: 0.2,
+//         shadowRadius: 5,
+//         elevation: 5,
+//       }}
+//     >
+//       <Image
+//         source={require("../../assets/superApp/ppt.png")}
+//         style={{ width: 70, height: 70 }}
+//       />
+//       <View
+//         style={{
+//           marginTop: 10,
+//           rowGap: 10,
+//           justifyContent: "center",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Text
+//           style={{
+//             fontWeight: FONTWEIGHT.bold,
+//             maxWidth: 130,
+//             overflow: "hidden",
+//             textOverflow: "ellipsis",
+//             whiteSpace: "nowrap",
+//           }}
+//           numberOfLines={1}
+//         >
+//           {nama}
+//         </Text>
+//         <Text style={{ color: COLORS.lighter }}>
+//           {Math.floor(size / 1024)} MB
+//         </Text>
+//       </View>
+//     </TouchableOpacity>
+//   ) : null;
 };
 
 export const Lampiran = () => {
   const navigation = useNavigation();
+
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   const param = {
+  //     token: token,
+  //     id: fileDetail.id
+  //   };
+  //   if (token !== "") {
+  //     dispatch(getDownloadLampiran(param))
+  //     console.log(param)
+  //   }
+  // }, [token, id])
+
+
   const { dokumen, loading } = useSelector((state) => state.repository);
   const detail = dokumen.detail;
 
@@ -265,7 +416,207 @@ export const Lampiran = () => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
 
-  console.log(detail.attachments);
+  const bottomSheetModalRef = useRef(null);
+
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+
+  const bottomSheetAttach = () => {
+    bottomSheetModalRef.current?.present();
+    
+  };
+
+  const bottomSheetAttachClose = () => {
+    if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
+  };
+
+  const [file, setFile] = useState('');
+  const [jenis, setJenis] = useState('')
+  const [fileDetail, setFileDetail] = useState(null);
+
+  console.log("fileDetail under this");
+  console.log(fileDetail);
+
+
+  const downloadPath = FileSystem.documentDirectory + (Platform.OS === "android" ? "" : "");
+
+  const downloadFile = async (fileUrl, fileType, fileName) => {
+    //alert(fileName)
+
+    const namafile = fileUrl;
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + fileName,
+        { headers: { Authorization: token } }
+      );
+      try {
+        if (Platform.OS === "android") {
+          console.log('android')
+          const { uri } = await downloadResumable.downloadAsync();
+          saveAndroidFile(uri, namafile[namafile.length - 1], fileType);
+        } else {
+          console.log('ios')
+          saveIosFile(downloadPath);
+        }
+      } catch (e) {
+        // setIsLoading(false);
+        console.error("download error:", e);
+      }
+    } catch (e) {
+      console.log("Error");
+      console.log(e);
+    }
+  };
+
+  const saveAndroidFile = async (fileUri, fileName, fileType) => {
+    try {
+      console.log(fileUri);
+      const fileString = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      const permissions =
+        await StorageAccessFramework.requestDirectoryPermissionsAsync();
+      if (!permissions.granted) {
+        return;
+      }
+
+      try {
+        await StorageAccessFramework.createFileAsync(
+          permissions.directoryUri,
+          fileName,
+          fileType
+        )
+          .then(async (uri) => {
+            await FileSystem.writeAsStringAsync(uri, fileString, {
+              encoding: FileSystem.EncodingType.Base64,
+            });
+            Alert.alert("Success!", "Download Successfully.");
+          })
+          .catch((e) => {
+            Alert.alert(
+              "Failed!",
+              "Download Unsuccessful. Please choose another folder to download file."
+            );
+          });
+      } catch (e) {
+        throw new Error(e);
+      }
+    } catch (err) {}
+  };
+  
+  const saveIosFile = async (fileUri) => {
+    // if(jenis === "doc" ){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "application/msword",
+    //       dialogTitle: "Share Word",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "docx"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    //       dialogTitle: "Share Word",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "xls"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "application/vnd.ms-excel",
+    //       dialogTitle: "Share Excel",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "xlsx"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //       dialogTitle: "Share Excel",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "pdf"){
+      console.log("fileuris save ios", fileUri)
+      try {
+        await Sharing.shareAsync(fileUri, {
+          mimeType: "application/pdf",
+          dialogTitle: "Share PDF",
+        });
+      } catch (error) {
+        console.error("Error sharing file:", error);
+      }
+    // } else if (jenis === "ppt"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "application/vnd.ms-powerpoint",
+    //       dialogTitle: "Share PPT",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "pptx"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    //       dialogTitle: "Share PPT",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "png"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "image/png",
+    //       dialogTitle: "Share Image",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "jpg"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "image/jpg",
+    //       dialogTitle: "Share Image",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // } else if (jenis === "jpeg"){
+    //   try {
+    //     await Sharing.shareAsync(fileUri, {
+    //       mimeType: "image/jpeg",
+    //       dialogTitle: "Share Image",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error sharing file:", error);
+    //   }
+    // }
+  };
+
+  const getDetailLampiran = (id) => {
+    const params = { token, id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDownloadLampiran(params));
+  };
+
+  const { download } = useSelector((state) => state.repository);
+
+  console.log(download)
+
+  
   return (
     <>
     {loading ? (
@@ -325,9 +676,11 @@ export const Lampiran = () => {
               size={item.file_size}
               type={getFileExtension(item.name)}
               onClick={() => {
-                setVisibleModal(true);
-                setLampiranById(item);
+              setFile(item.files)
+              setJenis(getFileExtension(item.name))
+              setFileDetail(item)
               }}
+              bottomSheetAttach={bottomSheetAttach}
             />
           </View>
         )}
@@ -371,7 +724,7 @@ export const Lampiran = () => {
               <TouchableOpacity
                 onPress={() => {
                   setVisibleModal(false);
-                  setLampiranById(null);
+                  setGaleriById(galeri.lists.id);
                 }}
                 style={{
                   position: "absolute",
@@ -418,6 +771,225 @@ export const Lampiran = () => {
           </Modal>
         ) : null
       }
+      <Portal>
+      <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        snapPoints={animatedSnapPoints}
+        handleHeight={animatedHandleHeight}
+        contentHeight={animatedContentHeight}
+        index={0}
+        style={{ borderRadius: 50 }}
+        keyboardBlurBehavior="restore"
+        android_keyboardInputMode="adjust"
+        backdropComponent={({ style }) => (
+          <View
+            style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+          />
+        )}>
+          <BottomSheetView onLayout={handleContentLayout}>
+            <View style={{ marginVertical: 20 }}>
+              <View
+                style={{
+                  marginLeft: 30,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                  <Ionicons
+                    name="attach-outline"
+                    size={32}
+                    color={COLORS.primary}
+                  />
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.normal,
+                      width: 300,
+                    }}
+                  >
+                    {fileDetail?.name}
+                    {/* Lampiran */}
+                  </Text>
+              </View>
+              <View style={{ marginTop: 20 }}>
+                <Divider bold />
+              </View>
+              <TouchableOpacity 
+                onPress={() => {
+                  // downloadFile(
+                  //   file, 
+                  //   "application/pdf",
+                  //   jenis === "doc" ? (
+                  //     "application/msword"
+                  //   ) : jenis === "docx" ? (
+                  //     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  //   ) : jenis === "xls" ? (
+                  //     "application/vnd.ms-excel"
+                  //   ) : jenis === "xlsx" ? (
+                  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  //   ) : jenis === "pdf" ? (
+                  //     "application/pdf"
+                  //   ) : jenis === "ppt" ? (
+                  //     "application/vnd.ms-powerpoint"
+                  //   ) : jenis === "pptx" ? (
+                  //     "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                  //   ) : jenis === "png" ? (
+                  //     "image/png"
+                  //   ) : jenis === "jpg" ? (
+                  //     "image/jpg"
+                  //   ) : jenis === "jpeg" ? (
+                  //     "image/jpeg"
+                  //   ) : (null), 
+                  //   'sample.pdf');
+                  // downloadFile(
+                  //   file,
+                  //   "application/pdf",
+                  //   'sample.pdf'
+                  // )
+                  saveIosFile(fileDetail.files)
+                  getDetailLampiran(fileDetail.id)
+                  console.log('ini',download)
+                  bottomSheetAttachClose();
+                }}
+              >
+                <View
+                  style={{
+                    marginLeft: 30,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    marginTop: 20,
+                  }}
+                >
+                  <Ionicons
+                    name="download-outline"
+                    size={32}
+                    color={"#6B7280"}
+                  />
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.normal,
+                    }}
+                  >
+                    Download
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              {jenis === "png" || jenis === "jpg" || jenis === "jpeg" ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    setVisibleModal(true);
+                    setLampiranById(fileDetail);
+                    bottomSheetAttachClose();
+                  }}
+                >
+                <View
+                  style={{
+                    marginLeft: 30,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    marginTop: 20,
+                  }}
+                >
+                  <Ionicons
+                    name="eye-outline"
+                    size={32}
+                    color={"#6B7280"}
+                  />
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.normal,
+                    }}
+                  >
+                    Preview
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              ) : jenis === "doc" || jenis === "docx" || jenis === "xls" || jenis === "xlsx" || jenis === "pdf" || jenis === "ppt" || jenis === "pptx" ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("FileViewer", {
+                      lampiran: file,
+                      type: jenis,
+                    });
+                    bottomSheetAttachClose();
+                  }}
+                >
+                  <View
+                    style={{
+                      marginLeft: 30,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                      marginTop: 20,
+                    }}
+                  >
+                    <Ionicons
+                      name="eye-outline"
+                      size={32}
+                      color={"#6B7280"}
+                    />
+                    <Text
+                      style={{
+                        fontSize: FONTSIZE.H2,
+                        fontWeight: FONTWEIGHT.normal,
+                      }}
+                    >
+                      Preview
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ) : null}
+              <TouchableOpacity
+                // onPress={() => {
+                //   navigation.navigate("FileViewer", {
+                //     lampiran: detail.attachments[0].files,
+                //     type: getFileExtension(detail.attachments[0].name),
+                //   });
+                //   bottomSheetAttachClose();
+                // }}
+                onPress={() => {
+                  console.log(file, jenis, fileDetail);
+                }}
+                onClick={() => {
+                  setVisibleModal(true);
+                  setLampiranById(item);
+                }}
+              >
+                <View
+                  style={{
+                    marginLeft: 30,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    marginTop: 20,
+                  }}
+                >
+                  <Ionicons
+                    name="eye-outline"
+                    size={32}
+                    color={"#6B7280"}
+                  />
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.normal,
+                    }}
+                  >
+                    Test
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+      </Portal>
     </View>
     </>
   );

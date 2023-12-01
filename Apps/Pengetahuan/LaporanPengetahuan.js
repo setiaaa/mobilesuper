@@ -695,7 +695,7 @@ export const LaporanPengetahuan = () => {
               yAxisLabel=""
               yAxisSuffix=""
               yAxisInterval={2}
-              width={380}
+              width={340}
               // width={Dimensions.get("window").width}
               height={350}
               chartConfig={{
@@ -970,7 +970,7 @@ export const LaporanPengetahuan = () => {
                         ? accumulation?.Kegiatan.percent / 100
                         : 0
                     }
-                    width={130}
+                    width={110}
                     color={COLORS.info}
                   />
                 </View>
@@ -1018,7 +1018,7 @@ export const LaporanPengetahuan = () => {
                         ? accumulation["Video_/_Jurnal"].percent / 100
                         : 0
                     }
-                    width={130}
+                    width={110}
                     color={COLORS.success}
                   />
                 </View>
@@ -1067,7 +1067,7 @@ export const LaporanPengetahuan = () => {
                         ? accumulation?.Infografis.percent / 100
                         : 0
                     }
-                    width={130}
+                    width={110}
                     color={COLORS.warning}
                   />
                 </View>
@@ -1114,7 +1114,7 @@ export const LaporanPengetahuan = () => {
                         ? accumulation?.Tidak_Sesuai.percent / 100
                         : 0
                     }
-                    width={130}
+                    width={110}
                     color={COLORS.infoDanger}
                   />
                 </View>

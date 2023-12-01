@@ -67,7 +67,7 @@ export const CardApps = ({ handlePressModal }) => {
             <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                 <TouchableOpacity onPress={() => navigation.navigate('MainPengetahuan')}>
                     <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                        <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/pegawai-ikon.png')} />
+                        <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/pengetahuan-ikon.png')} />
                     </View>
                 </TouchableOpacity>
                 <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Pengetahuan</Text>
@@ -75,7 +75,7 @@ export const CardApps = ({ handlePressModal }) => {
             <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                 <TouchableOpacity onPress={() => navigation.navigate('MainSPPD')}>
                     <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                        <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/pegawai-ikon.png')} />
+                        <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/sppd-ikon.png')} />
                     </View>
                 </TouchableOpacity>
                 <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>SPPD</Text>
@@ -83,7 +83,7 @@ export const CardApps = ({ handlePressModal }) => {
             <View style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
                 <TouchableOpacity onPress={() => navigation.navigate('MainCuti')}>
                     <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-                        <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/pegawai-ikon.png')} />
+                        <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/cuti-ikon.png')} />
                     </View>
                 </TouchableOpacity>
                 <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Cuti</Text>

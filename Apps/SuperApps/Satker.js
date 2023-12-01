@@ -147,7 +147,7 @@ export const Satker = () => {
                         <View style={{ width: '88%' }}>
                             <Text style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
+                        <View style={{ flexDirection: 'row', gap: 10,  marginTop: 10 }}>
                             <View style={{
                                 flexDirection: 'row',
                                 gap: 5,
@@ -172,9 +172,12 @@ export const Satker = () => {
                             {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
                             {/* custom divider */}
                             <View style={{ height: '100%', width: 1, backgroundColor: '#DBDADE' }} />
-                            <Text style={{ fontSize: 11, color: COLORS.lighter, width: 100 }}>{item.creator.name}</Text>
 
                         </View>
+                        <View style={{ justifyContent: 'flex-start'}}>
+                        <Text style={{ fontSize: 11, color: COLORS.lighter,  }}>{item.creator.name}</Text>
+                        </View>
+
                     </View>
                 </TouchableOpacity >
                 <Divider bold style={{ width: '90%' }} />

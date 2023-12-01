@@ -160,7 +160,7 @@ export const DetailActivity = () => {
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
-                  {detail.title}
+                  {detail?.title}
                 </Text>
               </View>
               <View
@@ -182,7 +182,7 @@ export const DetailActivity = () => {
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
-                    {detail.unit_kerja}
+                    {detail?.unit_kerja}
                   </Text>
                   <Text
                     style={{
@@ -191,7 +191,7 @@ export const DetailActivity = () => {
                       color: "#1868AB",
                     }}
                   >
-                    {detail.creator}
+                    {detail?.creator}
                   </Text>
                 </View>
               </View>
@@ -219,7 +219,7 @@ export const DetailActivity = () => {
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
-                  : {moment(detail.attributes.tanggal).format("DD MMMM YYYY")}
+                  : {moment(detail?.attributes?.tanggal).format("DD MMMM YYYY")}
                 </Text>
               </View>
               <View
@@ -246,7 +246,7 @@ export const DetailActivity = () => {
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
-                  : {detail.attributes.tempat}
+                  : {detail?.attributes?.tempat}
                 </Text>
               </View>
               <View style={{ marginHorizontal: 20, marginTop: 20 }}>
@@ -258,7 +258,7 @@ export const DetailActivity = () => {
                     color: COLORS.lighter,
                   }}
                 >
-                  {detail.attributes.deskripsi}
+                  {detail?.attributes?.deskripsi}
                 </Text>
               </View>
               <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
@@ -273,7 +273,7 @@ export const DetailActivity = () => {
                 <View
                   style={{
                     display:
-                      detail.objid_members.length === 0 ? "none" : "flex",
+                      detail?.objid_members?.length === 0 ? "none" : "flex",
                   }}
                 >
                   <Text
@@ -288,7 +288,7 @@ export const DetailActivity = () => {
                 </View>
               </View>
 
-              {detail.objid_members?.slice(0, 3).map((data) => (
+              {detail?.objid_members?.slice(0, 3).map((data) => (
                 <View
                   style={{
                     backgroundColor: "white",
@@ -327,7 +327,7 @@ export const DetailActivity = () => {
                 style={{
                   marginHorizontal: 20,
                   marginTop: 20,
-                  display: detail.objid_members.length <= 3 ? "none" : "flex",
+                  display: detail?.objid_members?.length <= 3 ? "none" : "flex",
                 }}
               >
                 <TouchableOpacity onPress={bottomSheetAttach}>
@@ -378,14 +378,14 @@ export const DetailActivity = () => {
                     >
                       <Image
                         style={{ width: 26, height: 26, borderRadius: 30 }}
-                        source={{ uri: detail.creator_avatar }}
+                        source={{ uri: detail?.creator_avatar }}
                       />
                       <View style={{}}>
                         <Text style={{ fontWeight: FONTWEIGHT.bold }}>
                           Penulis
                         </Text>
                         <Text style={{ color: COLORS.lighter }}>
-                          {detail.creator}
+                          {detail?.creator}
                         </Text>
                       </View>
                     </View>
@@ -408,9 +408,9 @@ export const DetailActivity = () => {
                             marginTop: 10,
                           }}
                         >
-                          {detail.objid_members?.map((data) => (
+                          {detail?.objid_members?.map((data) => (
                             <View
-                              key={data.id}
+                              key={data?.id}
                               style={{
                                 flexDirection: "row",
                                 alignItems: "center",
@@ -427,10 +427,10 @@ export const DetailActivity = () => {
                             >
                               <View>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                                  {data.title}
+                                  {data?.title}
                                 </Text>
                                 <Text style={{ color: COLORS.lighter }}>
-                                  {data.name}
+                                  {data?.name}
                                 </Text>
                               </View>
                             </View>

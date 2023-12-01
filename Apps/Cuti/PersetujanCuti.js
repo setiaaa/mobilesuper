@@ -64,7 +64,29 @@ export const PersetujanCuti = () => {
     }
   }, [search]);
 
-  const [refreshing, setRefreshing] = useState(false);
+
+    const [ascending, setAscending] = useState(false);
+    const [isFiltered, setIsFiltered] = useState(false);
+
+    const asc = () => {
+        const sortedAscending = filterData
+          .slice()
+          .sort((a, b) => a.jenis_cuti.localeCompare(b.jenis_cuti));
+        setFilterData(sortedAscending);
+        setAscending(true);
+        setIsFiltered(true);
+      };
+    
+      const desc = () => {
+        const sortedDescending = filterData
+          .slice()
+          .sort((a, b) => b.jenis_cuti.localeCompare(a.jenis_cuti));
+        setFilterData(sortedDescending);
+        setAscending(false);
+        setIsFiltered(true);
+      };
+
+    const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     try {
@@ -145,16 +167,32 @@ export const PersetujanCuti = () => {
           </View>
         </View>
 
-        <View style={{ padding: PADDING.Page }}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ width: "100%", marginTop: 20 }}>
-              <Search
-                placeholder={"Cari"}
-                iconColor={COLORS.primary}
-                onSearch={filter}
-              />
-            </View>
-          </View>
+                <View style={{ padding: PADDING.Page }}>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <View style={{ width: '85%',  }}>
+                            <Search
+                                placeholder={'Cari'}
+                                iconColor={COLORS.primary}
+                                onSearch={filter}
+                            />
+                        </View>
+                        <TouchableOpacity onPress={!ascending ? asc : desc}>
+                            <View
+                            style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 30,
+                            backgroundColor: COLORS.white,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderColor: COLORS.secondaryLighter,
+                            borderWidth: isFiltered ? 1 : 0,
+                            }}
+                            >
+                            <Ionicons name="filter-outline" size={24} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
 
           <View style={{ gap: 10 }}>
             <View style={{ gap: 10 }}>

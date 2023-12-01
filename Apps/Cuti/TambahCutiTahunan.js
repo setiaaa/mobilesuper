@@ -165,7 +165,7 @@ export const TambahCutiTahunan = () => {
                   color: COLORS.white,
                 }}
               >
-                Libur
+                Cuti Tahunan
               </Text>
             </View>
           </View>
@@ -458,7 +458,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 155,
+                        width: 130,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -498,7 +498,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 155,
+                        width: 130,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
