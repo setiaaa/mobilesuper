@@ -1809,9 +1809,37 @@ export const postPengajuanCuti = createAsyncThunk(
 export const postApproval = createAsyncThunk(
   "cuti/postApproval",
   async (data) => {
-    console.log(data);
     const respon = await axios.post(
       `${Cuti}approval-cuti/`,
+      data.payload
+      // headers: { Authorization: token },
+    );
+    return respon?.data;
+  }
+);
+
+export const postAttachmentCuti = createAsyncThunk(
+  "cuti/postAttachmentCuti",
+  async (data) => {
+    let formData = new FormData();
+    formData.append("file", {
+      uri: data.result.uri,
+      type: data.result.mimeType,
+      name: data.result.name,
+    });
+    const respon = await axios.post(`${Cuti}unggah-berkas/`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return respon?.data;
+  }
+);
+
+export const postPembatalanCuti = createAsyncThunk(
+  "cuti/postPembatalanCuti",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Cuti}pembatalan-cuti/`,
       data.payload
       // headers: { Authorization: token },
     );
@@ -1873,6 +1901,6 @@ export const getDocumentCetakSPPD = createAsyncThunk(
         headers: { Authorization: token },
       }
     );
-    return respon.data;
+    return respon?.data;
   }
 );

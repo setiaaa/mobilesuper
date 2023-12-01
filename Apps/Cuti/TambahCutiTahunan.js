@@ -23,9 +23,14 @@ import DatePicker from "react-native-modern-datepicker";
 import moment from "moment";
 import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
-import { getPilihApproval, postPengajuanCuti } from "../../service/api";
+import {
+  getPilihApproval,
+  postAttachmentCuti,
+  postPengajuanCuti,
+} from "../../service/api";
 import { ModalSubmit } from "../../components/ModalSubmit";
-import { setStatus } from "../../store/Cuti";
+import { setAttachmentCuti, setStatus } from "../../store/Cuti";
+import * as DocumentPicker from "expo-document-picker";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -45,7 +50,9 @@ export const TambahCutiTahunan = () => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status } = useSelector((state) => state.cuti);
+  const { form, pilih, status, attachment } = useSelector(
+    (state) => state.cuti
+  );
 
   const [modalVisiblePicker, setModalVisiblePicker] = useState("");
 
@@ -59,6 +66,7 @@ export const TambahCutiTahunan = () => {
   const [alasanCuti, setAlasanCuti] = useState("");
 
   const [document, setDocument] = useState([]);
+  const [type, setType] = useState([]);
 
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
@@ -69,20 +77,25 @@ export const TambahCutiTahunan = () => {
     tipe = tipe[tipe.length - 1];
     setDocument([...document, result]);
     setType([...type, tipe]);
-    console.log(result);
+    // console.log(result);
 
     const data = {
-      token: token,
+      // token: token,
       result: result,
     };
-    dispatch(postAttachment(data));
+    dispatch(postAttachmentCuti(data));
   };
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (profile.nip !== "") {
       dispatch(getPilihApproval({ nip: profile.nip }));
     }
   }, [profile.nip, atasan]);
+
+  useEffect(() => {
+    dispatch(setAttachmentCuti([]));
+  }, []);
 
   const pickAtasan = () => {
     let nama = [];
@@ -120,13 +133,17 @@ export const TambahCutiTahunan = () => {
       nomor_telpon: telepon,
       nip_approval1: atasan.key,
       nip_approval2: pejabat.key,
+      attachment: attachment,
     };
     const data = {
       // token: token,
       payload: payload,
     };
     dispatch(postPengajuanCuti(data));
+    // console.log(data);
   };
+
+  console.log(attachment);
 
   return (
     <GestureHandlerRootView>
@@ -847,14 +864,23 @@ export const TambahCutiTahunan = () => {
                     >
                       {document?.map((doc, i) => (
                         <>
-                          :{" "}
-                          {
-                            <Image
-                              key={doc.uri}
-                              source={{ uri: doc.uri }}
-                              style={{ width: 97, height: 97, borderRadius: 8 }}
-                            />
-                          }
+                          {type[i] === "pdf" ? (
+                            <View
+                              style={{
+                                width: 97,
+                                height: 97,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderWidth: 1,
+                                borderRadius: 8,
+                                borderColor: COLORS.ExtraDivinder,
+                              }}
+                            >
+                              <Image
+                                source={require("../../assets/superApp/pdf.png")}
+                              />
+                            </View>
+                          ) : null}
                         </>
                       ))}
                     </View>
@@ -862,8 +888,8 @@ export const TambahCutiTahunan = () => {
                 </View>
 
                 <Text style={{ color: COLORS.lighter }}>
-                  *) Hanya png ,jpg, pdf yang akan diterima dari total berkas
-                  file maks 5mb
+                  *) Hanya pdf yang akan diterima dari total berkas file maks
+                  5mb
                 </Text>
               </View>
             </View>

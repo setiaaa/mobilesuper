@@ -168,7 +168,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     getProfile();
     // ambil token dari superapps belum bisa. coba set token manual untuk testing
-    dispatch(setToken({ token: "50032386b06dacdc0daf346327fe8be4a71786ed" }));
+    dispatch(setToken({ token: "47b08378e6d9124709579ff9325f8f1ecb2304e1" }));
   }, []);
 
   async function getProfile() {

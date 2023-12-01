@@ -78,10 +78,10 @@ import { AddressBookJabatan } from "../Apps/AddressBookJabatan";
 import { AddressBookPegawai } from "../Apps/AddressBookPegawai";
 import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { PSemua } from "../Apps/Korespondensi/Pencarian/PSemua";
-import { PSuratMasuk } from "../Apps/Korespondensi/Pencarian/PSuratMasuk";
-import { PDisposisi } from "../Apps/Korespondensi/Pencarian/PDisposisi";
-import { PTerkirim } from "../Apps/Korespondensi/Pencarian/PTerkirim";
+import { PAll } from "../Apps/Korespondensi/Pencarian/PAll";
+import { PIncoming } from "../Apps/Korespondensi/Pencarian/PIncoming";
+import { PDisposition } from "../Apps/Korespondensi/Pencarian/PDisposition";
+import { PSubmitted } from "../Apps/Korespondensi/Pencarian/PSubmitted";
 import { Pencarian } from "../Apps/Kebijakan/Pencarian";
 
 const Tab = createBottomTabNavigator();
@@ -637,11 +637,11 @@ export const TopsTaskKorespondensi = () => {
   );
 };
 
-export const TopsPencarianKorespondensi = () => {
+export const TopsPencarianKorespondensi = (data) => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
-        initialRouteName={"PSemua"}
+        initialRouteName={"PAll"}
         screenOptions={{
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
@@ -654,29 +654,29 @@ export const TopsPencarianKorespondensi = () => {
         }}
       >
         <Top.Screen
-          name="PSemua"
-          component={PSemua}
+          name="PAll"
+          children={() => <PAll data={data?.data} />}
           options={{
             title: "Semua",
           }}
         />
         <Top.Screen
-          name="PSuratMasuk"
-          component={PSuratMasuk}
+          name="PIncoming"
+          children={() => <PIncoming data={data?.data} />}
           options={{
             title: "Surat Masuk",
           }}
         />
         <Top.Screen
-          name="PDisposisi"
-          component={PDisposisi}
+          name="PDisposition"
+          children={() => <PDisposition data={data?.data} />}
           options={{
             title: "Disposisi",
           }}
         />
         <Top.Screen
-          name="PTerkirim"
-          component={PTerkirim}
+          name="PSubmitted"
+          children={() => <PSubmitted data={data?.data} />}
           options={{
             title: "Terkirim",
           }}
