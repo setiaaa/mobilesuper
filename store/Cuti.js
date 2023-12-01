@@ -13,6 +13,7 @@ import {
   getTanggalLibur,
   postApproval,
   postAttachmentCuti,
+  postPembatalanCuti,
   postPengajuanCuti,
 } from "../service/api";
 
@@ -160,10 +161,10 @@ const CutiSlice = createSlice({
         state.loading = false;
       })
       .addCase(postAttachmentCuti.fulfilled, (state, action) => {
-        let id_attachment = [...state.attachment];
-        id_attachment.push({ id: action.payload.data.id });
+        // let id_attachment = [];
+        // id_attachment.push({ id: action.payload.data.id });
         console.log("berhasil");
-        state.attachment = id_attachment;
+        state.attachment = [{ id: action.payload.data.id }];
         state.loading = false;
       })
       .addCase(postAttachmentCuti.pending, (state, action) => {
@@ -173,6 +174,21 @@ const CutiSlice = createSlice({
       .addCase(postAttachmentCuti.rejected, (state, action) => {
         console.log("error");
         console.log(action.payload);
+        state.loading = false;
+      })
+      .addCase(postPembatalanCuti.fulfilled, (state, action) => {
+        console.log("berhasil");
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(postPembatalanCuti.pending, (state, action) => {
+        console.log("pending");
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(postPembatalanCuti.rejected, (state, action) => {
+        console.log("error");
+        state.status = "error";
         state.loading = false;
       });
   },

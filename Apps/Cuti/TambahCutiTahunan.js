@@ -140,14 +140,8 @@ export const TambahCutiTahunan = () => {
       payload: payload,
     };
     dispatch(postPengajuanCuti(data));
+    // console.log(data);
   };
-
-  // if (attachment !== "") {
-  //   let id = [];
-  //   id.push(attachment.data.id);
-
-  //   console.log(id);
-  // }
 
   console.log(attachment);
 
