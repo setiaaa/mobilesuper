@@ -59,7 +59,7 @@
       "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
     },
     "id": "telkom",
-    "base_url": "https://crsfe.kubekkp.coofis.com",
+    "base_url": "https://crsfe2.kubekkp.coofis.com",
     "upgrade_url": "https://portal.telkom.co.id/store/experience/apps/8",
     "loginSSO": false,
     "termOfUse": true,
@@ -78,7 +78,7 @@
       "signOutAPI": "/api/auth/out",
       "searchglobal": "/api/search/",
 
-      "profile": "/api/profile/",
+      "profile": "/nde/api/v2/mobile/profile/",
       "profiletitle": "/api/profile/title/",
       "checkdevice": "/api/device/check-device/",
       "switchoffdevice": "/api/device/switchoff-device/",

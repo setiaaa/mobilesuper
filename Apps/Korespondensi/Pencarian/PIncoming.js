@@ -65,6 +65,14 @@ export const PIncoming = ({ data }) => {
     <View style={styles.notFound}>
       {/* <SvgXml width="90%" xml={bgSearch} /> */}
       <Image source={require("../../../assets/superApp/SearchLetter.png")} />
+      <View style={{ alignItems: "center", gap: 10, marginTop: 10 }}>
+        <Text style={{ fontSize: 13, fontWeight: 600, color: COLORS.lighter }}>
+          Find your letter
+        </Text>
+        <Text style={{ fontSize: 13, fontWeight: 400, color: COLORS.lighter }}>
+          type keyword in the input text
+        </Text>
+      </View>
     </View>
   );
   const listEmpty = (

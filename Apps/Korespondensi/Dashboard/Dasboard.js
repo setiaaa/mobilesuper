@@ -109,7 +109,7 @@ function Dashboard() {
     } else {
       //jika tidak punya jabatan
       routes = [
-        { key: "dletter", title: "Letter" },
+        { key: "dletter", title: "Surat" },
         { key: "dtodo", title: Config.labelTodo },
       ];
     }
