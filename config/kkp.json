@@ -78,7 +78,7 @@
       "signOutAPI": "/api/auth/out",
       "searchglobal": "/api/search/",
 
-      "profile": "/api/profile/",
+      "profile": "/nde/api/v2/mobile/profile/",
       "profiletitle": "/api/profile/title/",
       "checkdevice": "/api/device/check-device/",
       "switchoffdevice": "/api/device/switchoff-device/",

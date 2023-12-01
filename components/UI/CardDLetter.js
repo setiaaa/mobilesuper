@@ -28,7 +28,7 @@ function CardDLetter({ data, icon, navigation }) {
           data?.type == "draft"
             ? "Nomor Tersedia"
             : data?.type == "onprogress"
-            ? "Perlu Di Proses"
+            ? "Perlu Diproses"
             : data?.type == "agenda_in"
             ? "Surat Masuk"
             : data?.type == "agenda_disposition"

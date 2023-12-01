@@ -15,7 +15,7 @@ import { Avatar, Drawer, Text, IconButton, List } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerActions } from "@react-navigation/native";
 
-import { setProfile } from "../../store/profile";
+import { setOrganization, setProfile } from "../../store/profile";
 import { logout, setFirstLogin, setToken } from "../../store/auth";
 import { nde_api } from "../../utils/api.config";
 import { getHTTP, postHTTP } from "../../utils/http";
@@ -74,7 +74,7 @@ const DrawerItemsData2 = [
 
 const DrawerItemsData3 = [
   {
-    label: "Perlu Di Proses",
+    label: "Perlu Diproses",
     name: "NeedFollowUp",
     icon: "",
     key: 6,
@@ -168,7 +168,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     getProfile();
     // ambil token dari superapps belum bisa. coba set token manual untuk testing
-    dispatch(setToken({ token: "47b08378e6d9124709579ff9325f8f1ecb2304e1" }));
+    dispatch(setToken({ token: "2e8740c2a6add2a1a413605c4cd2b9285e4b3305" }));
   }, []);
 
   async function getProfile() {
@@ -179,8 +179,8 @@ const CustomDrawerContent = (props) => {
       if (data === null) {
         // || data === []
         let response = await getHTTP(nde_api.profile);
-        dispatch(setProfile(response.data));
-
+        dispatch(setProfile(response.data))
+        dispatch(setOrganization(response.data));
         let data2 = await AsyncStorage.getItem("tokenKorespondensi");
         if (data2 != null) {
           let token = JSON.parse(data2);
@@ -696,7 +696,7 @@ function DrawerNavigator({ navigation }) {
         name="NeedFollowUp"
         component={NeedFollowUpList}
         options={defaultOptions({
-          title: "Surat Keluar\nPerlu Di Proses",
+          title: "Surat Keluar\nPerlu Diproses",
           navigation: navigation,
         })}
       />

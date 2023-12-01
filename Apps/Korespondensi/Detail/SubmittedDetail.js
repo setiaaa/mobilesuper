@@ -46,10 +46,10 @@ function SubmittedDetail({ route }) {
 
   let routes = [
     { key: "info", title: "Info", icon: "alert-circle-outline" },
-    { key: "attachment", title: "Attachment", icon: "attachment" },
-    { key: "comment", title: "Comment", icon: "forum" },
-    { key: "dispo", title: "Disposition", icon: "share" },
-    { key: "forward", title: "Forward", icon: "forward" },
+    // { key: "attachment", title: "Attachment", icon: "attachment" },
+    { key: "comment", title: "Komentar", icon: "forum" },
+    // { key: "dispo", title: "Disposition", icon: "share" },
+    // { key: "forward", title: "Forward", icon: "forward" },
   ];
 
   const willFocusSubscription = navigation.addListener("focus", () => {
