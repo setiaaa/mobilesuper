@@ -595,6 +595,7 @@ export const DokumenCuti = () => {
                       item={item}
                       variant={variant}
                       nip={profile.nip}
+                      pembatalan={"pembatalan"}
                     />
                   </View>
                 )}
