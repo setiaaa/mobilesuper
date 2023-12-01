@@ -35,12 +35,11 @@ export const CardAppsB = ({ handlePressModal }) => {
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
-
   useEffect(() => {
     let tmpMenu = [];
     tmpMenu.push(
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14}}
+        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("Drawer")}>
           <View
@@ -139,7 +138,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14 }}
+        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MyTask")}>
           <View
@@ -165,7 +164,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             justifyContent: "center",
             alignItems: "center",
             fontSize: FONTSIZE.H4,
-            textAlign: 'center'
+            textAlign: "center",
           }}
         >
           Task{"\n"}Management
@@ -201,7 +200,7 @@ export const CardAppsB = ({ handlePressModal }) => {
               justifyContent: "center",
               alignItems: "center",
               fontSize: FONTSIZE.H4,
-              textAlign: 'center'
+              textAlign: "center",
             }}
           >
             Preparing{"\n"}dan Sharing
@@ -260,7 +259,7 @@ export const CardAppsB = ({ handlePressModal }) => {
     if (isRoleEvent) {
       tmpMenu.push(
         <View
-          style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14 }}
+          style={{ justifyContent: "center", alignItems: "center", width: 100 }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("HalamanUtama")}>
             <View
@@ -362,7 +361,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100, marginLeft: -14 }}
+        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
           <View
@@ -453,7 +452,6 @@ export const CardAppsB = ({ handlePressModal }) => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   card: {
