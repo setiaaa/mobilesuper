@@ -114,26 +114,26 @@ export const Pencarian = () => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = React.useCallback(() => {
-        try {
-          if (token !== "") {
-            const params = {
-              token: token,
-              search: search,
-              page: page,
-            };
-            dispatch(getDokGeneral(params));
-            console.log('Refresh Berhasil')
-          }
-        } catch (error) {
-            console.log('Refresh gagal:', error)
-        }
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (token !== "") {
+        const params = {
+          token: token,
+          search: search,
+          page: page,
+        };
+        dispatch(getDokGeneral(params));
+        console.log("Refresh Berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, [token, search, page]);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [token, search, page]);
 
   console.log(general);
 
@@ -160,7 +160,10 @@ export const Pencarian = () => {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+            <TouchableOpacity
+              style={{}}
+              onPress={() => navigation.navigate("Home")}
+            >
               <Ionicons
                 name="chevron-back-outline"
                 size={24}

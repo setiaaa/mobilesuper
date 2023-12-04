@@ -123,7 +123,7 @@ export const DokumenCuti = () => {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <Ionicons
                 name="chevron-back-outline"
                 size={24}

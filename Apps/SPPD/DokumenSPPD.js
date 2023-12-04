@@ -59,28 +59,24 @@ export const DokumenSPPD = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getDocumentListSPPD(token));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getDocumentListSPPD(token));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token]);
 
   return (
     <>
-    {loading ? (
-      <Loading />
-    ) : (
-      null
-    )}
+      {loading ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -101,7 +97,10 @@ export const DokumenSPPD = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            style={{}}
+            onPress={() => navigation.navigate("Home")}
+          >
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -115,7 +114,7 @@ export const DokumenSPPD = () => {
           </Text>
         </View>
       </View>
-      <View style={{ padding: 20, }}>
+      <View style={{ padding: 20 }}>
         <Search placeholder={"Cari"} onSearch={filter} />
         <FlatList
           data={filterData}
@@ -129,7 +128,7 @@ export const DokumenSPPD = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{height:"83%", marginTop:6}}
+          style={{ height: "83%", marginTop: 6 }}
         />
       </View>
     </>
