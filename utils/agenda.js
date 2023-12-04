@@ -285,3 +285,116 @@ export function getExtensionIcon(item) {
     return "file";
   }
 }
+
+// DOWNLOAD FILE
+import { Platform, Alert } from "react-native";
+import * as FileSystem from "expo-file-system";
+const { StorageAccessFramework } = FileSystem;
+import * as Sharing from "expo-sharing";
+import { nde_api } from "./api.config";
+import { headerToken } from "./http";
+
+export const initDownload = (item) => {
+  let fileUrl, fileType, fileName;
+  if (item.tipe == "sign") {
+    // setIsLoading(true);
+    fileUrl = item.link;
+    fileType = "application/pdf";
+    if (item.tipe == "attach") {
+      fileName = item.filename;
+    } else {
+      fileName = item.description;
+    }
+  } else {
+    // setIsLoading(true);
+    fileUrl = item.file;
+    fileType = item.description;
+    fileName = item.filename;
+    fileName = item.filename.split("/")[3];
+  }
+  downloadFile(fileUrl, fileType, fileName);
+};
+
+const downloadFile = async (fileUrl, fileType, fileName) => {
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
+  if (Platform.OS == "android") {
+    const dir = ensureDirAsync(downloadPath);
+  }
+  let header = await headerToken();
+  //alert(fileName)
+  const downloadResumable = FileSystem.createDownloadResumable(
+    nde_api.baseurl + fileUrl,
+    downloadPath + fileName,
+    { headers: header },
+    downloadCallback
+  );
+  try {
+    const { uri } = await downloadResumable.downloadAsync();
+    if (Platform.OS == "android") {
+      saveAndroidFile(uri, fileName, fileType);
+    } else saveIosFile(uri);
+  } catch (e) {
+    setIsLoading(false);
+    console.error("download error:", e);
+  }
+};
+const saveAndroidFile = async (fileUri, fileName, fileType) => {
+  try {
+    const fileString = await FileSystem.readAsStringAsync(fileUri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    const permissions =
+      await StorageAccessFramework.requestDirectoryPermissionsAsync();
+    if (!permissions.granted) {
+      return;
+    }
+
+    try {
+      await StorageAccessFramework.createFileAsync(
+        permissions.directoryUri,
+        fileName,
+        fileType
+      )
+        .then(async (uri) => {
+          await FileSystem.writeAsStringAsync(uri, fileString, {
+            encoding: FileSystem.EncodingType.Base64,
+          });
+
+          Alert.alert("Berhasil!", "Unduh surat telah berhasil");
+        })
+        .catch((e) => {
+          Alert.alert(
+            "Gagal!",
+            "Unduh gagal. Silakan pilih folder lain untuk menyimpan file."
+          );
+        });
+    } catch (e) {
+      throw new Error(e);
+    }
+  } catch (err) {}
+};
+
+const saveIosFile = async (fileUri) => {
+  try {
+    const UTI = "public.item";
+    const shareResult = await Sharing.shareAsync(fileUri, { UTI });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const ensureDirAsync = async (dir, intermediates = true) => {
+  const props = await FileSystem.getInfoAsync(dir);
+  if (props.exist && props.isDirectory) {
+    return props;
+  }
+  let _ = await FileSystem.makeDirectoryAsync(dir, { intermediates });
+  return await ensureDirAsync(dir, intermediates);
+};
+const downloadCallback = (downloadProgress) => {
+  const progress =
+    downloadProgress.totalBytesWritten /
+    downloadProgress.totalBytesExpectedToWrite;
+};
