@@ -32,6 +32,7 @@ import ForwardForm from "../Apps/Korespondensi/Form/ForwardForm";
 import { removeAll } from "../store/addressbook";
 import { removeAllDispoMulti } from "../store/dispoMulti";
 import { COLORS } from "../config/SuperAppps";
+import DetailAgendaInpro from "../Apps/Korespondensi/Detail/Tab/DetailAgendaInpro";
 
 const project = Constants.manifest.extra.id;
 function TabViewBg({
@@ -70,6 +71,16 @@ function TabViewBg({
         if (tipe == "disposition") {
           detail = (
             <DetailDispo
+              id={id}
+              noAgenda={data?.agenda_number}
+              data={data}
+              preview={preview}
+              tipe={tipe}
+            />
+          );
+        } else if (tipe == "NeedFollowUpDetail" || tipe == "TrackingDetail") {
+          detail = (
+            <DetailAgendaInpro
               id={id}
               noAgenda={data?.agenda_number}
               data={data}

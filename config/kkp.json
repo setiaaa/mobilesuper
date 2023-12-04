@@ -146,6 +146,7 @@
       "lettersubmit": "/api/letters/submit/",
       "letteridsave": "/api/letters/{$id}/save/",
       "letteridapprove": "/api/letters/{$id}/approve/",
+      "letteridfinish": "/api/letters/{$id}/finish/",
       "letteridreturn": "/api/letters/{$id}/return/",
       "letteridreturntokonseptor": "/api/letters/{$id}/returntokonseptor/",
       "letteridreject": "/api/letters/{$id}/reject/",
