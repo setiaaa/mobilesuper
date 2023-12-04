@@ -1012,6 +1012,31 @@ export const postAttachmentTM = createAsyncThunk(
   }
 );
 
+export const getChoiceListTM = createAsyncThunk(
+  "taskmanagement/getChoiceListTM",
+  async ({ token }) => {
+    // console.log("getChoice token", token);
+    const respon = await axios.get(`${taskManagement}project/choice/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getCompleteTM = createAsyncThunk(
+  "taskmanagement/getCompleteTM",
+  async ({ token, id, search }) => {
+    // console.log("getChoice token", token);
+    const respon = await axios.get(
+      `${taskManagement}task/completed/?project_id=${id}&general=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
 //Penilian
 export const getListPenilaian = createAsyncThunk(
   "mp/getListPenilaian",

@@ -26,7 +26,7 @@ function DetailComment({ data }) {
     >
       <View style={styles.screen}>
         <View style={styles.containerLabel}>
-          <Text style={styles.titleLabel}>Comments</Text>
+          <Text style={styles.titleLabel}>Komentar</Text>
         </View>
         {data?.komentar && (
           <TreeView

@@ -237,15 +237,15 @@ function IncomingList({ route }) {
       />
       <Text style={styles.titleNotFound}>
         {isLoading
-          ? "Loading..."
+          ? "Pencarian..."
           : isSearchFilter && unread
-          ? "Incoming Unread not found"
+          ? "Surat masuk belum dibaca tidak ditemukan"
           : isSearchFilter && !unread
-          ? "Incoming Letter not found"
+          ? "Surat masuk tidak ditemukand"
           : list?.count == 0 && unread
-          ? "You don't have Incoming Unread"
+          ? "Anda tidak memiliki surat masuk belum dibaca"
           : list?.count == 0 && !unread
-          ? "You don't have Incoming Letter"
+          ? "Anda tidak memiliki surat masuk"
           : "Loading..."}
       </Text>
     </View>
