@@ -130,7 +130,8 @@ const ListDokumenLain = ({ item, variant, token }) => {
               <Text>: </Text>
               <Image
                 source={{
-                  uri: item.approvers[1]?.avatar_url !== null
+                  uri:
+                    item.approvers[1]?.avatar_url !== null
                       ? item.approvers[1]?.avatar_url
                       : "-",
                 }}
@@ -185,7 +186,7 @@ export const DokumenLain = () => {
     dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
   };
 
-  const { dokumenlain,loading } = useSelector((state) => state.digitalsign);
+  const { dokumenlain, loading } = useSelector((state) => state.digitalsign);
 
   const filter = (event) => {
     setSearch(event);
@@ -209,45 +210,41 @@ export const DokumenLain = () => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = React.useCallback(() => {
-        try {
-            if (token !== '') {
-                if (variant === ' composer'){
-                    dispatch(getListComposer({ token: token, tipe: tipe }));
-                }
-                if (variant === 'inprogress') {
-                    dispatch(getListInProgress({ token: token, tipe: tipe }));
-                } 
-                if (variant === 'completed') {
-                    dispatch(getListCompleted({ token: token, tipe: tipe }));
-                } 
-                if (variant === 'draft') {
-                    dispatch(getListDraft({ token: token, tipe: tipe }));
-                } 
-                if (variant === 'signed') {
-                    dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
-                }
-                console.log('Refresh Berhasil')
-            }
-        } catch (error) {
-            console.log('Refresh gagal:', error)
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (token !== "") {
+        if (variant === " composer") {
+          dispatch(getListComposer({ token: token, tipe: tipe }));
         }
+        if (variant === "inprogress") {
+          dispatch(getListInProgress({ token: token, tipe: tipe }));
+        }
+        if (variant === "completed") {
+          dispatch(getListCompleted({ token: token, tipe: tipe }));
+        }
+        if (variant === "draft") {
+          dispatch(getListDraft({ token: token, tipe: tipe }));
+        }
+        if (variant === "signed") {
+          dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
+        }
+        console.log("Refresh Berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, [token, tipe]);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [token, tipe]);
 
   // console.log(dokumenlain.lists)
   // console.log(filterData)
   return (
     <GestureHandlerRootView>
-      {loading ? (
-            <Loading />
-        ) : (
-            null
-        )}
+      {loading ? <Loading /> : null}
       <View style={{ position: "relative" }}>
         <View
           style={{
@@ -268,7 +265,7 @@ export const DokumenLain = () => {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <Ionicons
                 name="chevron-back-outline"
                 size={24}
@@ -290,10 +287,7 @@ export const DokumenLain = () => {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-            <Search
-              placeholder={"Cari"}
-              onSearch={filter}
-            />
+            <Search placeholder={"Cari"} onSearch={filter} />
           </View>
         </View>
         {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
@@ -461,7 +455,7 @@ export const DokumenLain = () => {
           ListEmptyComponent={() => <ListEmpty />}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
+          }
           style={{ height: "73%" }}
         />
 

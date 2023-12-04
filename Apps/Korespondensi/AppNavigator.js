@@ -148,6 +148,7 @@ import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 import { Pencarian } from "./Pencarian/Pencarian";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 import LihatSuratSPPD from "../SPPD/LihatSuratSPPD";
+import { Laporan } from "../Task Management/Dashboard/Laporan";
 
 const Stack = createNativeStackNavigator();
 
@@ -452,6 +453,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="MyTask"
             component={MyTask}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Laporan"
+            component={Laporan}
             options={{
               headerShown: false,
             }}
