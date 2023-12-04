@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Image } from 'react-native'
 import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
 import { Text } from 'react-native'
 import { StyleSheet } from 'react-native'
@@ -7,13 +7,14 @@ import moment from 'moment'
 
 export const CardKuotaCuti = ({ item }) => {
     return (
-        <View>
+        <View style={{ alignItems: "center" }}>
             <View style={{ gap: 20, flexDirection: 'row' }}>
                 <View style={[styles.cardKouta]}>
                     <View style={{
                         width: "60%",
                         padding: 15,
-                        borderRadius: 8,
+                        borderTopLeftRadius: 8,
+                        borderBottomLeftRadius: 8,
                         backgroundColor: COLORS.white,
                         alignItems: "center"
                     }}>
@@ -28,18 +29,19 @@ export const CardKuotaCuti = ({ item }) => {
                         width: "40%",
                         borderBottomRightRadius: 8,
                         borderTopRightRadius: 8,
-                        backgroundColor: "grey",
+                        backgroundColor: COLORS.white,
                         alignItems: "center",
                         justifyContent: "center",
                     }}>
+                        <Image source={require("../../assets/superApp/Vector2.png")} style={{position: "absolute", alignSelf: "flex-end", height: 120, width: 145}} />
                         <View style={{ gap: 20, }}>
-                            <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
+                            <View style={{ flexDirection: "row", columnGap: 15, alignItems: "center" }}>
                                 <Text>Kuota Cuti</Text>
                                 <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.kuota}</Text>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", columnGap: 5, alignItems: "center" }}>
+                            <View style={{ flexDirection: "row", columnGap: 15, alignItems: "center" }}>
                                 <Text>Sisa Kuota</Text>
                                 <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.sisa_kuota}</Text>
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     cardKouta: {
-        width: 320,
+        height: 120,
         // padding: 1,
         borderRadius: 8,
         // marginHorizontal: 5,

@@ -44,7 +44,9 @@ export const PersonalCuti = () => {
   const { personal, kuota, loading, arsip } = useSelector(
     (state) => state.cuti
   );
-  const arsipLists = arsip.lists.data;
+  const arsipLists = arsip?.lists?.data;
+
+  console.log(arsip.lists.data)
 
   const formCuti = (id) => {
     const params = { nip: profile.nip, id: id };
@@ -79,16 +81,16 @@ export const PersonalCuti = () => {
   useEffect(() => {
     if (arsipLists) {
       const rejectedData = arsipLists.filter((item) => {
-        return item.status === "Rejected";
+        return item?.status === "Rejected";
       });
       const draftData = arsipLists.filter((item) => {
-        return item.status === "Draft";
+        return item?.status === "Draft";
       });
       const onProgressData = arsipLists.filter((item) => {
-        return item.status === "On Progress";
+        return item?.status === "On Progress";
       });
       const CompleteData = arsipLists.filter((item) => {
-        return item.status === "Completed";
+        return item?.status === "Completed";
       });
 
       setJumlahCompete(CompleteData.length);
@@ -98,7 +100,7 @@ export const PersonalCuti = () => {
     } else {
       console.log("Tidak dapat membaca properti 'status' dari arsipLists.");
     }
-  }, []);
+  }, [arsipLists]);
 
   return (
     <GestureHandlerRootView>
@@ -228,8 +230,8 @@ export const PersonalCuti = () => {
                   setCollapse({ nip: personal.data_user?.nip, toggle: true })
                 }
               >
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ marginRight: "80%" }}>Profil</Text>
+                <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                  <Text style={{ marginRight: "80%", fontSize: 13, fontWeight: 600 }}>Profil</Text>
                   {collapse.nip === personal.data_user?.nip &&
                   collapse.toggle === true ? (
                     <TouchableOpacity
@@ -386,7 +388,7 @@ export const PersonalCuti = () => {
               </View>
             </ScrollView>
           </View>
-          <View style={{ paddingLeft: 20 }}>
+          <View style={{ paddingHorizontal: PADDING.Page }}>
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
             <FlatList
               data={kuota.data_kuota_cuti}
@@ -486,7 +488,7 @@ export const PersonalCuti = () => {
                         </ScrollView> */}
           </View>
 
-          <View style={{ padding: 20, rowGap: 10 }}>
+          {/* <View style={{ padding: 20, rowGap: 10 }}>
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>
               Monitoring Kuota
             </Text>
@@ -577,10 +579,9 @@ export const PersonalCuti = () => {
                     </View>
                   </View>
                 </View>
-                <View>{/* Masukan diagram pie disini */}</View>
               </View>
             </View>
-          </View>
+          </View> */}
           {/* 
                     <View style={{ padding: 20 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
