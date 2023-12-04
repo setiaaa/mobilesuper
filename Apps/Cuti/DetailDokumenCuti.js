@@ -286,8 +286,6 @@ const CardKomen = ({
               style={{
                 fontSize: FONTSIZE.H2,
                 fontWeight: FONTWEIGHT.bold,
-                lineHeight: 20,
-                wordWrap: "break-word",
               }}
             >
               {listData.nama}
@@ -298,8 +296,6 @@ const CardKomen = ({
                   color: COLORS.lighter,
                   fontSize: FONTSIZE.H5,
                   fontWeight: FONTWEIGHT.normal,
-                  lineHeight: 18,
-                  wordWrap: "break-word",
                 }}
               >
                 {listData.nip}
@@ -327,8 +323,6 @@ const CardKomen = ({
                     color: COLORS.white,
                     fontSize: FONTSIZE.H5,
                     fontWeight: FONTWEIGHT.normal,
-                    lineHeight: 18,
-                    wordWrap: "break-word",
                   }}
                 >
                   {listData.aksi}
@@ -356,8 +350,6 @@ const CardKomen = ({
                     color: COLORS.info,
                     fontSize: FONTSIZE.H5,
                     fontWeight: FONTWEIGHT.normal,
-                    lineHeight: 18,
-                    wordWrap: "break-word",
                   }}
                 >
                   (Lihat Dokumen)
@@ -370,8 +362,6 @@ const CardKomen = ({
                 style={{
                   fontSize: FONTSIZE.H5,
                   fontWeight: FONTWEIGHT.normal,
-                  lineHeight: 18,
-                  wordWrap: "break-word",
                   marginBottom: 5,
                 }}
               >
@@ -386,8 +376,6 @@ const CardKomen = ({
                   color: COLORS.lighter,
                   fontSize: FONTSIZE.H5,
                   fontWeight: FONTWEIGHT.normal,
-                  lineHeight: 18,
-                  wordWrap: "break-word",
                   marginBottom: 5,
                 }}
               >
@@ -560,7 +548,7 @@ const CardKomen = ({
 };
 
 export const DetailDokumenCuti = ({ route }) => {
-  const id = route.params;
+  const approval = route.params;
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
   const { arsip, status } = useSelector((state) => state.cuti);
@@ -643,7 +631,7 @@ export const DetailDokumenCuti = ({ route }) => {
     dispatch(postApproval(data));
   };
 
-  console.log(id);
+  console.log(approval);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -1436,7 +1424,6 @@ export const DetailDokumenCuti = ({ route }) => {
               </TouchableOpacity>
             </View>
           </View>
-
           <BottomSheetModal
             ref={bottomSheetModalRef}
             snapPoints={animatedSnapPoints}
@@ -1555,7 +1542,6 @@ export const DetailDokumenCuti = ({ route }) => {
               {/* </KeyboardAvoidingView> */}
             </BottomSheetView>
           </BottomSheetModal>
-
           {/* <View style={{ padding: 20, gap: 10 }}>
             <View style={{}}>
               <View style={{ alignItems: "center", gap: 10 }}>
@@ -1584,7 +1570,7 @@ export const DetailDokumenCuti = ({ route }) => {
             </View>
           </View> */}
           {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress" &&
-          id === "approval" ? (
+          approval.approval === true ? (
             <>
               <View style={{ padding: 20, gap: 10 }}>
                 <View

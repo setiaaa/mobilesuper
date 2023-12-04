@@ -71,7 +71,7 @@ export const Libur = () => {
                 borderRadius: 8
               }}>
                 <TouchableOpacity onPress={() => setCollapse({ toggle: true })}>
-                  <View style={{ flexDirection: "row", gap: 20 }}>
+                  <View style={{ flexDirection: "row" }}>
                     <View>
                       <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
                     </View>
@@ -118,7 +118,7 @@ export const Libur = () => {
                 borderRadius: 8
               }}>
                 <TouchableOpacity onPress={() => setCollapseKhusus({ toggle: true })}>
-                  <View style={{ flexDirection: "row", gap: 20 }}>
+                  <View style={{ flexDirection: "row"}}>
                     <View>
                       <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
                     </View>

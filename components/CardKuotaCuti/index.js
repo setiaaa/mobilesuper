@@ -55,7 +55,7 @@ export const CardKuotaCuti = ({ item }) => {
 }
 const styles = StyleSheet.create({
     cardStatus: {
-        width: "23%",
+        width: "20%",
         padding: 15,
         borderRadius: 8,
         marginHorizontal: 5,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     cardKouta: {
-        width: 360,
+        width: 320,
         // padding: 1,
         borderRadius: 8,
         // marginHorizontal: 5,

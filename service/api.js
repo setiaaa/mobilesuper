@@ -24,6 +24,7 @@ const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
 const digitalSign = BASE_URL + "digitalsign/";
+const attachmentExport = BASE_URL + "attachment/"
 
 const SUMMARY_TOTAL_POST = BASE_URL + "mp/admin/summary/total-post/";
 const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
@@ -708,6 +709,16 @@ export const postCommentRepo = createAsyncThunk(
       data.payload,
       { headers: { Authorization: data.token } }
     );
+    return respon?.data;
+  }
+);
+
+export const getDownloadLampiran = createAsyncThunk(
+  "attachment/download",
+  async ({ token, id }) => {
+    const respon = await axios.get(`${attachmentExport}${id}/download`, {
+      headers: { Authorization: token },
+    });
     return respon?.data;
   }
 );
@@ -1823,9 +1834,37 @@ export const postPengajuanCuti = createAsyncThunk(
 export const postApproval = createAsyncThunk(
   "cuti/postApproval",
   async (data) => {
-    console.log(data);
     const respon = await axios.post(
       `${Cuti}approval-cuti/`,
+      data.payload
+      // headers: { Authorization: token },
+    );
+    return respon?.data;
+  }
+);
+
+export const postAttachmentCuti = createAsyncThunk(
+  "cuti/postAttachmentCuti",
+  async (data) => {
+    let formData = new FormData();
+    formData.append("file", {
+      uri: data.result.uri,
+      type: data.result.mimeType,
+      name: data.result.name,
+    });
+    const respon = await axios.post(`${Cuti}unggah-berkas/`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return respon?.data;
+  }
+);
+
+export const postPembatalanCuti = createAsyncThunk(
+  "cuti/postPembatalanCuti",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Cuti}pembatalan-cuti/`,
       data.payload
       // headers: { Authorization: token },
     );
@@ -1887,6 +1926,6 @@ export const getDocumentCetakSPPD = createAsyncThunk(
         headers: { Authorization: token },
       }
     );
-    return respon.data;
+    return respon?.data;
   }
 );

@@ -313,7 +313,7 @@ export const Bankom = () => {
                             refreshControl={
                                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                             }
-                            style={{ height: '74%', }}
+                            style={{ height: '69%', }}
                         />
                         {/* <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
                             style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}

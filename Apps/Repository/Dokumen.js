@@ -38,6 +38,7 @@ import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
 const DataList = ({ token, item, bottomSheetAttach }) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const getDetailRepo = (id) => {
@@ -80,7 +81,8 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           >
             <TouchableOpacity
               onPress={() => {
-                bottomSheetAttach(item);
+                // bottomSheetAttach(item);
+                navigation.navigate("MainDetailRepo");
                 getDetailRepo(item.id);
               }}
             >
@@ -398,7 +400,7 @@ export const Dokumen = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
             />
-            <Portal>
+            {/* <Portal>
               <BottomSheetModalProvider>
                 <BottomSheetModal
                   ref={bottomSheetModalRef}
@@ -504,7 +506,7 @@ export const Dokumen = () => {
                   </BottomSheetView>
                 </BottomSheetModal>
               </BottomSheetModalProvider>
-            </Portal>
+            </Portal> */}
           </View>
         </View>
       </>

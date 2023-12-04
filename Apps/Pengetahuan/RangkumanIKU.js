@@ -389,7 +389,7 @@ export const RangkumanIKU = () => {
   const saveIosFile = async (fileUri) => {
     try {
       await Sharing.shareAsync(fileUri, {
-        mimeType: "application/pdf",
+        mimeType: "application/vnd.ms-excel",
         dialogTitle: "Share PDF",
       });
     } catch (error) {
@@ -950,7 +950,7 @@ export const RangkumanIKU = () => {
                   refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                   }
-                  style={{ height: 320 }}
+                  style={{ height: 250 }}
                 />
 
                 {/* {pegawai.lists.length !== 0

@@ -142,7 +142,7 @@ const CardListAbsen = ({ item, loading }) => {
                 ) : (
                   <View
                     style={{
-                      width: 200,
+                      width: 180,
                       height: 24,
                       borderRadius: 30,
                       backgroundColor: COLORS.ExtraDivinder,

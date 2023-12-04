@@ -35,7 +35,6 @@ export const CardAppsB = ({ handlePressModal }) => {
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
-
   useEffect(() => {
     let tmpMenu = [];
     tmpMenu.push(
@@ -165,9 +164,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             justifyContent: "center",
             alignItems: "center",
             fontSize: FONTSIZE.H4,
+            textAlign: "center",
           }}
         >
-          Task Management
+          Task{"\n"}Management
         </Text>
       </View>
     );
@@ -200,9 +200,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               justifyContent: "center",
               alignItems: "center",
               fontSize: FONTSIZE.H4,
+              textAlign: "center",
             }}
           >
-            Preparing dan Sharing
+            Preparing{"\n"}dan Sharing
           </Text>
         </View>
       );
@@ -451,7 +452,6 @@ export const CardAppsB = ({ handlePressModal }) => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   card: {

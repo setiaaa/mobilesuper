@@ -21,9 +21,9 @@ import ListEmpty from "../../components/ListEmpty";
 import moment from "moment";
 import { CardListDokumenTidakDisetujui } from "../../components/CardListDokumenTidakDisetujui";
 import { CardListDokumenDisetujui } from "../../components/CardListDokumenDisetujui";
+import { CardListDokumenOnProgress} from "../../components/CardListDokumenOnProgress"
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
-import { CardListDokumenOnProgress } from "../../components/CardListDokumenOnProgress";
 import { CardListDokumenDraft } from "../../components/CardListDokumenDraft";
 
 export const DokumenCuti = () => {
@@ -78,6 +78,27 @@ export const DokumenCuti = () => {
       setRefreshing(false);
     }, 2000);
   }, [profile?.nip]);
+
+  const [ascending, setAscending] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  const asc = () => {
+    const sortedAscending = filterData
+      .slice()
+      .sort((a, b) => a.member?.nama.localeCompare(b.member?.nama));
+    setFilterData(sortedAscending);
+    setAscending(true);
+    setIsFiltered(true);
+  };
+
+  const desc = () => {
+    const sortedDescending = filterData
+      .slice()
+      .sort((a, b) => b.member?.nama.localeCompare(a.member?.nama));
+    setFilterData(sortedDescending);
+    setAscending(false);
+    setIsFiltered(true);
+  };
 
   return (
     <GestureHandlerRootView>
@@ -143,14 +164,30 @@ export const DokumenCuti = () => {
         </View>
 
         <View style={{ padding: PADDING.Page }}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ width: "100%", marginTop: 20 }}>
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <View style={{ width: "85%", }}>
               <Search
                 placeholder={"Cari"}
                 iconColor={COLORS.primary}
                 onSearch={filter}
               />
             </View>
+            <TouchableOpacity onPress={!ascending ? asc : desc}>
+              <View
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+                backgroundColor: COLORS.white,
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: COLORS.secondaryLighter,
+                borderWidth: isFiltered ? 1 : 0,
+              }}
+              >
+              <Ionicons name="filter-outline" size={24} />
+                </View>
+              </TouchableOpacity>
           </View>
 
           <View style={{ gap: 10 }}>
@@ -595,6 +632,7 @@ export const DokumenCuti = () => {
                       item={item}
                       variant={variant}
                       nip={profile.nip}
+                      pembatalan={"pembatalan"}
                     />
                   </View>
                 )}

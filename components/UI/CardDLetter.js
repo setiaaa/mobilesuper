@@ -25,11 +25,13 @@ function CardDLetter({ data, icon, navigation }) {
       <Card.Title
         style={styles.cardTitle}
         title={
-          data.type == "onprogress"
-            ? "Surat Perlu Di Proses"
-            : data.type == "agenda_in"
+          data?.type == "draft"
+            ? "Nomor Tersedia"
+            : data?.type == "onprogress"
+            ? "Perlu Diproses"
+            : data?.type == "agenda_in"
             ? "Surat Masuk"
-            : data.type == "agenda_disposition"
+            : data?.type == "agenda_disposition"
             ? "Disposisi"
             : ""
         }
@@ -41,7 +43,7 @@ function CardDLetter({ data, icon, navigation }) {
             style={avatarIcon}
           />
         )}
-        right={() => <Text style={styles.counterText}>{data.value}</Text>}
+        right={() => <Text style={styles.counterText}>{data?.value}</Text>}
       />
     </Card>
   );

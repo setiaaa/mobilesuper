@@ -239,6 +239,10 @@ function CardList({ data, tipe, onPress }) {
                       ? {
                           backgroundColor: GlobalStyles.colors.yellow,
                         }
+                      : data.status == "Final"
+                      ? {
+                          backgroundColor: GlobalStyles.colors.green,
+                        }
                       : {
                           backgroundColor: GlobalStyles.colors.red,
                           color: GlobalStyles.colors.textWhite,
@@ -252,7 +256,9 @@ function CardList({ data, tipe, onPress }) {
                       fontSize: 13,
                     }}
                   >
-                    {data.status}
+                    {data.status == "Final"
+                      ? "Sudah Ditandatangani"
+                      : data.status}
                   </Text>
                 </View>
               )}

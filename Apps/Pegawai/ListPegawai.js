@@ -131,6 +131,27 @@ export const ListPegawai = () => {
 
   const navigation = useNavigation();
 
+  const [ascending, setAscending] = useState(false);
+    const [isFiltered, setIsFiltered] = useState(false);
+
+    const asc = () => {
+        const sortedAscending = filterData
+          .slice()
+          .sort((a, b) => a.nama.localeCompare(b.nama));
+        setFilterData(sortedAscending);
+        setAscending(true);
+        setIsFiltered(true);
+      };
+    
+      const desc = () => {
+        const sortedDescending = filterData
+          .slice()
+          .sort((a, b) => b.nama.localeCompare(a.nama));
+        setFilterData(sortedDescending);
+        setAscending(false);
+        setIsFiltered(true);
+      };
+
   return (
     <>
       <>
@@ -171,9 +192,27 @@ export const ListPegawai = () => {
         </View>
 
         <View style={{}}>
-          <View style={{ marginVertical: 20, paddingHorizontal: 20 }}>
+        <View style={{ flexDirection: 'row', paddingVertical: 20}}>
+          <View style={{  paddingHorizontal: 20, width: '85%' }}>
             <Search placeholder={"Cari"} onSearch={filter} />
           </View>
+          <TouchableOpacity onPress={!ascending ? asc : desc}>
+              <View
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+                backgroundColor: COLORS.white,
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: COLORS.secondaryLighter,
+                borderWidth: isFiltered ? 1 : 0,
+              }}
+              >
+              <Ionicons name="filter-outline" size={24} />
+                </View>
+            </TouchableOpacity>
+            </View>
 
           <FlatList
             data={filterData}

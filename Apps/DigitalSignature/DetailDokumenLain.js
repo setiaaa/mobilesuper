@@ -467,7 +467,7 @@ export const DetailDokumenLain = () => {
             ""
           )}
 
-          <View style={{ gap: 15, marginTop: 15 }}>
+          <View style={{ gap: 15, marginTop: 15, marginBottom: 15 }}>
             {loading ? null : (
               <TouchableOpacity
                 onPress={() => navigation.navigate("PdfViewer", { data: file })}
