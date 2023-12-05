@@ -15,18 +15,29 @@ import {
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
 import moment from "moment/moment";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { getTokenValue } from "../../service/session";
+import { putTandaTangan } from "../../service/api";
+import { ModalSubmit } from "../../components/ModalSubmit";
+import { setStatus } from "../../store/DigitalSign";
 
 export const DetailSertifikat = (route) => {
   // const { data } = route.params
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const { digitalsign, loading } = useSelector((state) => state.digitalsign);
+  const [paraphrase, setParaphrase] = useState("");
+  const [isApprover, setIsApprover] = useState("");
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+  const { digitalsign, loading, status } = useSelector(
+    (state) => state.digitalsign
+  );
+  const { profile } = useSelector((state) => state.superApps);
   const item = digitalsign.detail;
   let tanggalApprove = [];
 
@@ -46,6 +57,12 @@ export const DetailSertifikat = (route) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
   const [file, setFile] = useState();
   useEffect(() => {
     if (file === undefined) {
@@ -54,8 +71,53 @@ export const DetailSertifikat = (route) => {
       });
     }
   }, [file, item]);
-  console.log(item);
+  console.log(isApprover);
+
+  useEffect(() => {
+    let nipApprover = [];
+    for (let i = 0; i < item?.approvers?.length; i++) {
+      if (i > 0) {
+        if (!item?.approvers[i].is_title)
+          nipApprover.push(item?.approvers[i].nip);
+        else nipApprover.push(item?.approvers[i].officer.nip);
+      }
+    }
+
+    if (nipApprover.includes(profile.nip)) setIsApprover(true);
+    else setIsApprover(false);
+  }, []);
+
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+
+  const handleSubmit = () => {
+    const payload = {
+      passphrase: paraphrase,
+      id_documents: [item.id],
+      array_of_sign: [
+        {
+          kanan_atas_y: "163.0982523076924",
+          kanan_atas_x: "781.2408256615383",
+          kiri_bawah_x: "522.1515948923077",
+          kiri_bawah_y: "100.91683692307703",
+          halaman: "1",
+        },
+        {
+          kanan_atas_y: "163.0982523076924",
+          kanan_atas_x: "781.2408256615383",
+          kiri_bawah_x: "522.1515948923077",
+          kiri_bawah_y: "100.91683692307703",
+          halaman: "2",
+        },
+      ],
+    };
+    const data = {
+      token: token,
+      payload: payload,
+    };
+    dispatch(putTandaTangan(data));
+    // console.log(data);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -268,241 +330,243 @@ export const DetailSertifikat = (route) => {
                 tanggalApprove.push(log.created_at);
               })}
               {item.approvers?.map((data, index = 0) => {
-                return (
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      borderRadius: 4,
-                      width: "95%",
-                      marginHorizontal: 10,
-                      marginBottom: 20,
-                      borderColor: "#DBDADE",
-                    }}
-                  >
+                if (index > 0) {
+                  return (
                     <View
                       style={{
-                        backgroundColor: COLORS.primary,
-                        alignItems: "center",
-                        height: 30,
-                        justifyContent: "center",
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        width: "95%",
+                        marginHorizontal: 10,
+                        marginBottom: 20,
+                        borderColor: "#DBDADE",
                       }}
                     >
-                      <Text
+                      <View
                         style={{
-                          color: COLORS.white,
-                          fontWeight: FONTWEIGHT.bold,
+                          backgroundColor: COLORS.primary,
+                          alignItems: "center",
+                          height: 30,
+                          justifyContent: "center",
                         }}
                       >
-                        Approval
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <View style={{ alignItems: "left", width: "98%" }}>
-                        <View
+                        <Text
                           style={{
-                            flexDirection: "row",
-                            gap: 5,
-                            marginTop: 10,
-                            alignItems: "center",
+                            color: COLORS.white,
+                            fontWeight: FONTWEIGHT.bold,
                           }}
                         >
-                          <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                            Penandatangan
-                          </Text>
-                          {index < item.logs.length ? (
-                            <>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.success,
-                                  borderRadius: 50,
-                                  height: 20,
-                                  width: 20,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <Ionicons
-                                  name="checkmark-outline"
-                                  color={COLORS.white}
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.successLight,
-                                  paddingVertical: 5,
-                                  borderRadius: 20,
-                                  paddingHorizontal: 15,
-                                }}
-                              >
-                                <Text style={{ color: COLORS.success }}>
-                                  Ditandatangani
-                                </Text>
-                              </View>
-                            </>
-                          ) : (
-                            <>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.infoDanger,
-                                  borderRadius: 50,
-                                  height: 20,
-                                  width: 20,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <Ionicons name="close" color={COLORS.white} />
-                              </View>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.infoDangerLight,
-                                  paddingVertical: 5,
-                                  borderRadius: 20,
-                                  paddingHorizontal: 15,
-                                }}
-                              >
-                                <Text style={{ color: COLORS.infoDanger }}>
-                                  Belum Ditandatangani
-                                </Text>
-                              </View>
-                            </>
-                          )}
-                        </View>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image
-                            source={{ uri: data.avatar_url }}
+                          Approval
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          gap: 10,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <View style={{ width: "98%" }}>
+                          <View
                             style={{
-                              width: 50,
-                              height: 50,
-                              borderRadius: 50,
-                              marginVertical: 10,
-                              marginHorizontal: 5,
+                              flexDirection: "row",
+                              gap: 5,
+                              marginTop: 10,
+                              alignItems: "center",
                             }}
-                          />
-                          <View>
-                            {data?.officer ? (
-                              <View style={{ width: "95%" }}>
-                                {loading ? (
-                                  <ShimmerPlaceHolder
-                                    style={{ borderRadius: 4, marginTop: 5 }}
-                                    width={330}
-                                    height={20}
+                          >
+                            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                              Penandatangan
+                            </Text>
+                            {index < item?.logs?.length ? (
+                              <>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.success,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Ionicons
+                                    name="checkmark-outline"
+                                    color={COLORS.white}
                                   />
-                                ) : (
-                                  <Text
-                                    style={{
-                                      marginTop: 10,
-                                      color: COLORS.info,
-                                      fontWeight: FONTWEIGHT.bold,
-                                      textAlign: "left",
-                                    }}
-                                  >
-                                    {data.display_title}
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.successLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text style={{ color: COLORS.success }}>
+                                    Ditandatangani
                                   </Text>
-                                )}
-                                {loading ? (
-                                  <ShimmerPlaceHolder
-                                    style={{ borderRadius: 4, marginTop: 5 }}
-                                    width={165}
-                                    height={20}
-                                  />
-                                ) : (
-                                  <Text
-                                    style={{
-                                      marginTop: 2,
-                                      color: COLORS.lighter,
-                                      fontWeight: FONTWEIGHT.bold,
-                                      textAlign: "left",
-                                    }}
-                                  >
-                                    {data.officer.nama}
-                                  </Text>
-                                )}
-                              </View>
+                                </View>
+                              </>
                             ) : (
-                              <View style={{ width: "95%" }}>
-                                {loading ? (
-                                  <ShimmerPlaceHolder
-                                    style={{ borderRadius: 4, marginTop: 5 }}
-                                    width={330}
-                                    height={20}
-                                  />
-                                ) : (
-                                  <Text
-                                    style={{
-                                      marginTop: 10,
-                                      color: COLORS.lighter,
-                                      fontWeight: FONTWEIGHT.bold,
-                                    }}
-                                  >
-                                    {data.nama}
+                              <>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Ionicons name="close" color={COLORS.white} />
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDangerLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text style={{ color: COLORS.infoDanger }}>
+                                    Belum Ditandatangani
                                   </Text>
-                                )}
-                              </View>
+                                </View>
+                              </>
                             )}
-                            {index < item.logs.length ? (
-                              <View
-                                style={{
-                                  flexDirection: "row",
-                                  gap: 10,
-                                  marginTop: 5,
-                                  marginBottom: 10,
-                                }}
-                              >
-                                <Text style={{ color: COLORS.lighter }}>
-                                  Disetujui :
-                                </Text>
-                                {loading ? (
-                                  <ShimmerPlaceHolder
-                                    style={{ borderRadius: 4, marginTop: 5 }}
-                                    width={165}
-                                    height={20}
-                                  />
-                                ) : (
-                                  <>
-                                    <Text style={{ color: COLORS.lighter }}>
-                                      {moment(tanggalApprove[index]).format(
-                                        "DD MMMM YYYY"
-                                      )}
-                                    </Text>
-                                    <View
-                                      style={{
-                                        height: "100%",
-                                        width: 1,
-                                        backgroundColor: COLORS.lighter,
-                                      }}
+                          </View>
+                          <View style={{ flexDirection: "row" }}>
+                            <Image
+                              source={{ uri: data.avatar_url }}
+                              style={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: 50,
+                                marginVertical: 10,
+                                marginHorizontal: 5,
+                              }}
+                            />
+                            <View>
+                              {data?.officer ? (
+                                <View style={{ width: "95%" }}>
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={330}
+                                      height={20}
                                     />
-                                    <Text style={{ color: COLORS.lighter }}>
-                                      {moment(tanggalApprove[index]).format(
-                                        "HH:mm"
-                                      )}
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        marginTop: 10,
+                                        color: COLORS.info,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {data.display_title}
                                     </Text>
-                                  </>
-                                )}
-                              </View>
-                            ) : (
-                              <Text
-                                style={{
-                                  color: COLORS.lighter,
-                                  marginVertical: 10,
-                                }}
-                              >
-                                -
-                              </Text>
-                            )}
+                                  )}
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={165}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        marginTop: 2,
+                                        color: COLORS.lighter,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {data.officer.nama}
+                                    </Text>
+                                  )}
+                                </View>
+                              ) : (
+                                <View style={{ width: "95%" }}>
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={330}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        marginTop: 10,
+                                        color: COLORS.lighter,
+                                        fontWeight: FONTWEIGHT.bold,
+                                      }}
+                                    >
+                                      {data.nama}
+                                    </Text>
+                                  )}
+                                </View>
+                              )}
+                              {index < item?.logs?.length ? (
+                                <View
+                                  style={{
+                                    flexDirection: "row",
+                                    gap: 10,
+                                    marginTop: 5,
+                                    marginBottom: 10,
+                                  }}
+                                >
+                                  <Text style={{ color: COLORS.lighter }}>
+                                    Disetujui :
+                                  </Text>
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={165}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <>
+                                      <Text style={{ color: COLORS.lighter }}>
+                                        {moment(tanggalApprove[index]).format(
+                                          "DD MMMM YYYY"
+                                        )}
+                                      </Text>
+                                      <View
+                                        style={{
+                                          height: "100%",
+                                          width: 1,
+                                          backgroundColor: COLORS.lighter,
+                                        }}
+                                      />
+                                      <Text style={{ color: COLORS.lighter }}>
+                                        {moment(tanggalApprove[index]).format(
+                                          "HH:mm"
+                                        )}
+                                      </Text>
+                                    </>
+                                  )}
+                                </View>
+                              ) : (
+                                <Text
+                                  style={{
+                                    color: COLORS.lighter,
+                                    marginVertical: 10,
+                                  }}
+                                >
+                                  -
+                                </Text>
+                              )}
+                            </View>
                           </View>
                         </View>
                       </View>
                     </View>
-                  </View>
-                );
+                  );
+                }
               })}
             </View>
           ) : (
@@ -526,20 +590,24 @@ export const DetailSertifikat = (route) => {
                 </Text>
               </TouchableOpacity>
             )}
-            {/* <TouchableOpacity style={{
-                        width: '90%',
-                        backgroundColor: COLORS.infoDanger,
-                        borderRadius: 6,
-                        justifyContent: 'flex-end',
-                        alignItems: 'center',
-                        marginHorizontal: 20,
-                    }}
-                        onPress={() =>
-                            bottomSheetAttach()
-                        }
-                    >
-                        <Text style={{ color: COLORS.white, marginVertical: 15 }}>Sign</Text>
-                    </TouchableOpacity> */}
+
+            {isApprover === true ? (
+              <TouchableOpacity
+                style={{
+                  width: "90%",
+                  backgroundColor: COLORS.infoDanger,
+                  borderRadius: 6,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginHorizontal: 20,
+                }}
+                onPress={() => bottomSheetAttach()}
+              >
+                <Text style={{ color: COLORS.white, marginVertical: 15 }}>
+                  Sign
+                </Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
 
           <BottomSheetModal
@@ -570,7 +638,7 @@ export const DetailSertifikat = (route) => {
                   <TouchableOpacity onPress={() => bottomSheetAttachClose()}>
                     <Ionicons name="chevron-back-outline" size={24} />
                   </TouchableOpacity>
-                  <View
+                  <TouchableOpacity
                     style={{
                       justifyContent: "center",
                       alignItems: "center",
@@ -580,7 +648,7 @@ export const DetailSertifikat = (route) => {
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
                       Tanda Tangan Sertifikat
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 </View>
 
                 <View
@@ -607,10 +675,11 @@ export const DetailSertifikat = (route) => {
                       borderRadius: 6,
                       borderColor: "#D0D5DD",
                     }}
+                    onChangeText={setParaphrase}
                   />
                 </View>
 
-                <View
+                {/* <View
                   style={{
                     marginBottom: 10,
                     justifyContent: "center",
@@ -635,21 +704,23 @@ export const DetailSertifikat = (route) => {
                       borderColor: "#D0D5DD",
                     }}
                   />
-                </View>
+                </View> */}
 
                 <TouchableOpacity
                   style={{
                     width: "90%",
                     backgroundColor: COLORS.danger,
                     height: 50,
-                    marginVertical: 40,
                     borderRadius: 6,
                     alignItems: "center",
                     marginHorizontal: 20,
                     justifyContent: "center",
+                    marginTop: 10,
+                    marginBottom: 40,
                   }}
                   onPress={() => {
                     bottomSheetAttachClose();
+                    handleSubmit();
                   }}
                 >
                   <Text
@@ -665,6 +736,12 @@ export const DetailSertifikat = (route) => {
               </View>
             </BottomSheetView>
           </BottomSheetModal>
+
+          <ModalSubmit
+            status={status}
+            setStatus={setStatus}
+            navigate={"MainDigitalSign"}
+          />
         </ScrollView>
       </BottomSheetModalProvider>
     </View>

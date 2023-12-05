@@ -24,7 +24,7 @@ const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
 const digitalSign = BASE_URL + "digitalsign/";
-const attachmentExport = BASE_URL + "attachment/"
+const attachmentExport = BASE_URL + "attachment/";
 
 const SUMMARY_TOTAL_POST = BASE_URL + "mp/admin/summary/total-post/";
 const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
@@ -1703,6 +1703,20 @@ export const getSummaryList = createAsyncThunk(
       headers: { Authorization: token },
     });
     return respon?.data.results;
+  }
+);
+
+export const putTandaTangan = createAsyncThunk(
+  "digitalsign/putTandaTangan",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/approve/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
   }
 );
 
