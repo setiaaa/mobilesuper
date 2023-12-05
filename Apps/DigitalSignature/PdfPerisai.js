@@ -280,12 +280,10 @@ export const PdfPerisai = () => {
                 $("#pdf-loader").hide();
                 $("#pdf-contents").show();
                 $("#pdf-total-pages").text(__TOTAL_PAGES);
-                alert('Masuk')
+                showPage(1);
             }).catch(function (error) {
                 // If error re-show the upload button
                 $("#pdf-loader").hide();
-
-                alert('KANJUT');
             });;
         }
 
