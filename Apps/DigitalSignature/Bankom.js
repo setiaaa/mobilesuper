@@ -71,7 +71,7 @@ const ListBankom = ({ item, variant, token }) => {
                     <View style={{ flexDirection: "row" }}>
                         <Text style={{ fontSize: 13, width: 120, textAlign: 'justify', paddingRight: 12, fontWeight: FONTWEIGHT.normal, }}>Penerima</Text>
                         {item.receivers[0]?.display_title !== undefined ? (
-                            <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.receivers[0]?.officer?.nama !== undefined ? item.receivers[0]?.officer?.nama : null}</Text>
+                            <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.receivers[0]?.officer?.nama !== undefined ? item.receivers[0]?.officer?.nama : "-"}</Text>
                         ) : 
                             <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.receivers[0]?.nama !== undefined ? item.receivers[0]?.nama : "-"}</Text>
                         }

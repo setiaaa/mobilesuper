@@ -35,9 +35,8 @@ const ListDokumenLain = ({ item, variant, token }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDigisign(params));
   };
-
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
-
+  console.log(item)
   return (
     <View
       key={item.id}
@@ -65,13 +64,13 @@ const ListDokumenLain = ({ item, variant, token }) => {
           navigation.navigate("DetailDokumenLain");
         }}
       >
-        {variant === "inprogress" ? (
+        {/* {variant === "inprogress" ? (
           <Checkbox
             value={isSelected}
             onValueChange={setSelection}
             color={isSelected === true ? COLORS.lighter : null}
           />
-        ) : null}
+        ) : null} */}
         <View style={{ flexDirection: "column" }}>
           <Text
             style={{
@@ -113,7 +112,11 @@ const ListDokumenLain = ({ item, variant, token }) => {
                   fontWeight: FONTWEIGHT.normal,
                 }}
               >
-                : {item.composer?.nama !== null ? item.composer?.nama : "-"}
+                {item.composer?.display_title !== undefined ? (
+                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.composer?.officer?.nama !== undefined ? item.receivers[0]?.officer?.nama : "-"}</Text>
+                ) : 
+                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.composer?.nama !== undefined ? item.composer?.nama : "-"}</Text>
+                }
               </Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -129,15 +132,9 @@ const ListDokumenLain = ({ item, variant, token }) => {
                 Penandatangan
               </Text>
               <Text>: </Text>
-              <Image
-                source={{
-                  uri:
-                    item.approvers[1]?.avatar_url !== null
-                      ? item.approvers[1]?.avatar_url
-                      : "-",
-                }}
-                style={{ width: 20, height: 20, borderRadius: 50 }}
-              />
+              {item?.approvers.slice(1).map(data => (
+                <Image source={{ uri: data.avatar_url}} style={{ width: 20, height: 20, borderRadius: 50 }}/>
+              ))}
             </View>
           </View>
         </View>
