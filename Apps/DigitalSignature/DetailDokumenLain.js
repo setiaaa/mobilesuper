@@ -55,7 +55,6 @@ export const DetailDokumenLain = () => {
     }
   }, [file, item]);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
-  console.log(item);
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -183,8 +182,8 @@ export const DetailDokumenLain = () => {
                               <Text
                                 style={{ color: COLORS.lighter, width: "80%" }}
                               >
-                                {item.receivers[0].officer.nama !== undefined
-                                  ? item.receivers[0].officer.nama
+                                {item.receivers[0]?.officer?.nama !== undefined
+                                  ? item.receivers[0]?.officer?.nama
                                   : null}
                               </Text>
                             </>
@@ -192,7 +191,7 @@ export const DetailDokumenLain = () => {
                             <Text
                               style={{ color: COLORS.lighter, width: "80%" }}
                             >
-                              {item.receivers[0].nama}
+                              {item.receivers[0]?.nama}
                             </Text>
                           )}
                         </View>
@@ -430,7 +429,7 @@ export const DetailDokumenLain = () => {
                                       fontWeight: FONTWEIGHT.bold,
                                     }}
                                   >
-                                    {data.officer.nama}
+                                    {data.officer?.nama}
                                   </Text>
                                 )}
                               </View>
@@ -450,7 +449,7 @@ export const DetailDokumenLain = () => {
                                       fontWeight: FONTWEIGHT.bold,
                                     }}
                                   >
-                                    {data.nama}
+                                    {data?.nama}
                                   </Text>
                                 )}
                               </View>
@@ -495,7 +494,7 @@ export const DetailDokumenLain = () => {
                   alignItems: "center",
                   marginHorizontal: 20,
                 }}
-                onPress={() => bottomSheetAttach()}
+                onPress={() => navigation.navigate("PdfPerisai")}
               >
                 <Text style={{ color: COLORS.white, marginVertical: 15 }}>
                   Sign

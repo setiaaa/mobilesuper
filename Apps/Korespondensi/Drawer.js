@@ -168,7 +168,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     getProfile();
     // ambil token dari superapps belum bisa. coba set token manual untuk testing
-    dispatch(setToken({ token: "2e8740c2a6add2a1a413605c4cd2b9285e4b3305" }));
+    dispatch(setToken({ token: "a668326a2fe345e5629676fc85a35fa8a6f769c5" }));
   }, []);
 
   async function getProfile() {
@@ -179,7 +179,7 @@ const CustomDrawerContent = (props) => {
       if (data === null) {
         // || data === []
         let response = await getHTTP(nde_api.profile);
-        dispatch(setProfile(response.data))
+        dispatch(setProfile(response.data));
         dispatch(setOrganization(response.data));
         let data2 = await AsyncStorage.getItem("tokenKorespondensi");
         if (data2 != null) {
@@ -567,7 +567,10 @@ const CustomDrawerContent = (props) => {
 const defaultOptions = ({ title, navigation }) => ({
   headerTitle: () => {
     return (
-      <Text style={{ textAlign: "right", fontWeight:"bold" }} numberOfLines={2}>
+      <Text
+        style={{ textAlign: "right", fontWeight: "bold" }}
+        numberOfLines={2}
+      >
         {title}
       </Text>
     );
