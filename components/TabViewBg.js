@@ -125,6 +125,7 @@ function TabViewBg({
               noAgenda={data?.agenda_number}
               data={data?.obj}
               tipe={tipe}
+              title="Detail Disposisi"
             />
           );
         } else {
@@ -134,6 +135,7 @@ function TabViewBg({
               noAgenda={data?.agenda_number}
               data={data}
               tipe={tipe}
+              title="Detail Disposisi"
             />
           );
         }

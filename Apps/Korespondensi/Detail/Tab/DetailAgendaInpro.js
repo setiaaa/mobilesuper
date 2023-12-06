@@ -252,7 +252,6 @@ function DetailAgendaInpro({
         <Text style={{ fontSize: 15, fontWeight: 600 }}>
           Form Persetujuan Surat Dinas
         </Text>
-
         <View
           style={{
             backgroundColor: COLORS.white,
@@ -347,9 +346,7 @@ function DetailAgendaInpro({
             </Text>
           </View>
         </View>
-
         <Text style={{ fontSize: 15, fontWeight: 600 }}>Perihal</Text>
-
         <View
           style={{
             backgroundColor: COLORS.white,
@@ -359,7 +356,6 @@ function DetailAgendaInpro({
         >
           <Text>{data?.subject}</Text>
         </View>
-
         <View style={{ flexDirection: "row" }}>
           <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.info }}>
             Kepada
@@ -368,7 +364,6 @@ function DetailAgendaInpro({
             *
           </Text>
         </View>
-
         <View
           style={{
             backgroundColor: COLORS.white,
@@ -380,7 +375,14 @@ function DetailAgendaInpro({
             data?.receivers_display?.length == 0 &&
             data?.kepada_bank?.length == 0 && (
               <>
-                {data && data?.receivers?.length == 0 && <Text>-</Text>}
+                {data &&
+                  data?.receivers?.length == 0 &&
+                  data?.kepada_addressbook?.length == 0 && <Text>-</Text>}
+                {data &&
+                  data?.receivers?.length == 0 &&
+                  data?.kepada_addressbook?.length != 0 && (
+                    <Text>{data?.kepada_addressbook}</Text>
+                  )}
                 {data && data?.receivers?.length == 1 && (
                   <>
                     {data?.template.name != "nota_external" && !loading ? (
@@ -454,7 +456,6 @@ function DetailAgendaInpro({
               </>
             )}
         </View>
-
         <View style={{ flexDirection: "row" }}>
           <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.info }}>
             Tembusan
@@ -463,7 +464,6 @@ function DetailAgendaInpro({
             *
           </Text>
         </View>
-
         <View
           style={{
             backgroundColor: COLORS.white,
@@ -516,8 +516,11 @@ function DetailAgendaInpro({
             </>
           )}
         </View>
-
-        <ActionInprogress id={data?.id} data={data} />
+        {tipe !== "TrackingDetail" &&
+          data?.state !== "rns" &&
+          data?.state !== "finish" && (
+            <ActionInprogress id={data?.id} data={data} />
+          )}
       </View>
     </ScrollView>
   );

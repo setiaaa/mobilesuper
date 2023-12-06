@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import { FAB, Portal } from "react-native-paper";
 import { COLORS } from "../config/SuperAppps";
 import { GlobalStyles } from "../constants/styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeAll } from "../store/addressbook";
+import { removeAllDispoMulti } from "../store/dispoMulti";
 
 function FABactions({ id, data, noAgenda, tipe }) {
   const profile = useSelector((state) => state.profile.profile);
   const [state, setState] = useState({ open: false });
   const [visible, setVisible] = useState(true);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const onStateChange = ({ open }) => {
     setState({ open });
   };
@@ -20,6 +23,17 @@ function FABactions({ id, data, noAgenda, tipe }) {
   });
   const [action, setAction] = useState();
   useEffect(() => {
+    if (
+      tipe != "sender" &&
+      tipe != "receivers" &&
+      tipe != "copytos" &&
+      tipe != "additional_approver" &&
+      tipe != "approver" &&
+      tipe != "Addressbook"
+    ) {
+      dispatch(removeAll());
+      dispatch(removeAllDispoMulti());
+    }
     setVisible(true);
     if (action == undefined) getAction();
     return refresh;
@@ -34,7 +48,7 @@ function FABactions({ id, data, noAgenda, tipe }) {
           label: "Disposisi",
           onPress: () => {
             navigation.navigate("DispositionForm", {
-              title: "Buat Disposisi",
+              title: "Lembar Disposisi",
               id: id,
               data: data,
               noAgenda: noAgenda,
@@ -54,7 +68,7 @@ function FABactions({ id, data, noAgenda, tipe }) {
             label: "Disposisi",
             onPress: () => {
               navigation.navigate("DispositionForm", {
-                title: "Buat Disposisi",
+                title: "Lembar Disposisi",
                 id: id,
                 data: data,
                 noAgenda: noAgenda,
@@ -89,7 +103,7 @@ function FABactions({ id, data, noAgenda, tipe }) {
             label: "Disposisi",
             onPress: () => {
               navigation.navigate("DispositionForm", {
-                title: "Buat Disposisi",
+                title: "Lembar Disposisi",
                 id: id,
                 data: data,
                 noAgenda: noAgenda,
