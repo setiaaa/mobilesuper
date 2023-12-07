@@ -6,6 +6,9 @@ import { GlobalStyles } from "../constants/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAll } from "../store/addressbook";
 import { removeAllDispoMulti } from "../store/dispoMulti";
+import { handlerError, postHTTP } from "../utils/http";
+import { Alert } from "react-native";
+import { nde_api } from "../utils/api.config";
 
 function FABactions({ id, data, noAgenda, tipe }) {
   const profile = useSelector((state) => state.profile.profile);
@@ -38,6 +41,48 @@ function FABactions({ id, data, noAgenda, tipe }) {
     if (action == undefined) getAction();
     return refresh;
   }, [action]);
+
+  function confirmForward() {
+    Alert.alert("Konfirmasi", "Anda yakin untuk meneruskan surat ini?", [
+      {
+        text: "Tidak",
+        onPress: () => null,
+        style: "cancel",
+      },
+      { text: "YA", onPress: () => forward() },
+    ]);
+  }
+  async function forward() {
+    try {
+      //prep-data
+      let kepada = [];
+      let kepada_ids = [];
+      let data = {
+        request: [
+          {
+            kepada: kepada,
+            kepada_ids: kepada_ids,
+            nota_tindakan_free: "",
+            nota_tindakan: "Forward",
+          },
+        ],
+      };
+      //post api forward
+      const response = await postHTTP(
+        nde_api.postForward.replace("{$type}", tipe).replace("{$id}", id),
+        data
+      );
+      //alert response
+      if (response?.data?.status == "Error") {
+        Alert.alert("Peringatan!", response.data.msg);
+      } else {
+        Alert.alert("Berhasil!", "Anda berhasil meneruskan surat ini!");
+        navigation.goBack();
+      }
+    } catch (error) {
+      handlerError(error, "Peringatan!", "Meneruskan tidak berfungsi!");
+    }
+  }
   function getAction() {
     if (tipe == "disposition") {
       setAction([
@@ -74,7 +119,6 @@ function FABactions({ id, data, noAgenda, tipe }) {
                 noAgenda: noAgenda,
                 tipe: tipe,
               });
-              setVisible(false);
             },
           },
           {
@@ -83,14 +127,14 @@ function FABactions({ id, data, noAgenda, tipe }) {
             style: { borderRadius: 50, backgroundColor: COLORS.primary },
             label: "Teruskan",
             onPress: () => {
-              navigation.navigate("ForwardForm", {
-                title: "Teruskan",
-                id: id,
-                data: data,
-                noAgenda: noAgenda,
-                tipe: tipe,
-              });
-              setVisible(false);
+              confirmForward();
+              // navigation.navigate("ForwardForm", {
+              //   title: "Teruskan",
+              //   id: id,
+              //   data: data,
+              //   noAgenda: noAgenda,
+              //   tipe: tipe,
+              // });
             },
           },
         ]);

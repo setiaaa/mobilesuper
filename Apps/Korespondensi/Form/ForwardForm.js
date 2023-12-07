@@ -39,7 +39,7 @@ function ForwardForm({ route, id, data, noAgenda, tipe }) {
       setDetail(data);
     }
     return refresh;
-  }, [data]);
+  }, [data, route]);
 
   async function forward() {
     setIsLoading(true);
@@ -76,18 +76,18 @@ function ForwardForm({ route, id, data, noAgenda, tipe }) {
         );
         //alert response
         if (response.data.status == "Error") {
-          Alert.alert("Warning!", response.data.msg);
+          Alert.alert("Peringatan!", response.data.msg);
         } else {
-          Alert.alert("Success!", "Forward was successfull!");
+          Alert.alert("Berhasil!", "Anda berhasil meneruskan surat ini!");
           navigation.goBack();
           // navigation.goBack();
         }
       } else {
-        Alert.alert("Warning!", "Please fill in the forward form!");
+        Alert.alert("Peringatan!", "Silakan isi lembar teruskan!");
       }
       setIsLoading(false);
     } catch (error) {
-      handlerError(error, "Warning!", "Forward not working!");
+      handlerError(error, "Peringatan!", "Meneruskan tidak berfungsi!");
       //   Alert.alert("Tes", error);
       setIsLoading(false);
     }
@@ -122,7 +122,7 @@ function ForwardForm({ route, id, data, noAgenda, tipe }) {
           />
         </Card>
         <View style={styles.containerLabel}>
-          <Text style={styles.titleLabel}>Alamat Forward</Text>
+          <Text style={styles.titleLabel}>Alamat Kepada</Text>
         </View>
         <Card style={styles.containerCard}>
           <Card.Title
@@ -139,8 +139,8 @@ function ForwardForm({ route, id, data, noAgenda, tipe }) {
                 ))}
                 {(selectedAddressbook == undefined ||
                   selectedAddressbook.length == 0) && (
-                    <Text style={styles.titleName}>Name/NIK</Text>
-                  )}
+                  <Text style={styles.titleName}>Nama/NIK</Text>
+                )}
               </>
             }
             titleNumberOfLines={50}
@@ -161,27 +161,28 @@ function ForwardForm({ route, id, data, noAgenda, tipe }) {
             )}
           />
         </Card>
-        <View style={styles.containerLabel}>
+        {/* <View style={styles.containerLabel}>
           <Text style={styles.titleLabel}>Informasi Surat</Text>
-        </View>
-        <View style={{ marginBottom: 16 }}>
+        </View> */}
+        <Card style={{ marginBottom: 16 }}>
           <DetailAgenda
             style={{
               borderRadius: 6,
-              borderWidth: 1,
               borderColor: GlobalStyles.colors.tertiery50,
+              backgroundColor: GlobalStyles.colors.tertiery20,
             }}
             showBody={false}
             noAgenda={noAgenda ? noAgenda : detail?.agenda_number}
             data={detail}
+            title={route?.params?.title}
           />
-        </View>
+        </Card>
         <Button
           mode="contained"
           style={{ backgroundColor: GlobalStyles.colors.tertiery80 }}
           onPress={forward}
         >
-          Submit
+          Kirim
         </Button>
       </View>
     </ScrollView>
@@ -218,7 +219,6 @@ const styles = StyleSheet.create({
   },
   subtitleProfile: {
     color: GlobalStyles.colors.textBlack,
-
   },
   containerCard: {
     marginBottom: 16,
