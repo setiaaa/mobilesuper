@@ -261,7 +261,7 @@ function DetailAttachment({ data, id, tipeRef }) {
     <>
       <ScrollView keyboardShouldPersistTaps="handled" style={styles.screen}>
         {loadingOverlay}
-        <View>
+        <View style={[styles.container, { marginBottom: 12 }]}>
           <View
             style={[styles.containerRow, { justifyContent: "space-between" }]}
           >
@@ -356,40 +356,6 @@ function DetailAttachment({ data, id, tipeRef }) {
                 </Button>
               </View>
             ))}
-          {data?.template?.name == "nota_external" && (
-            <View style={styles.container}>
-              <Text style={styles.titleLabel}>Digital Signed</Text>
-              <View>
-                {data?.attachments_signed?.length == 0 && <Text>-</Text>}
-                {data?.attachments_signed?.length != 0 &&
-                  data?.attachments_signed?.map((item, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => {
-                        showBottommSheet(item, getExtensionIcon(item), "sign");
-                      }}
-                    >
-                      <View style={styles.containerContent}>
-                        <IconButton
-                          icon={getExtensionIcon(item)}
-                          size={18}
-                          style={styles.iconContent}
-                        />
-                        <View style={{ width: "60%" }}>
-                          <Text>{item?.description}</Text>
-                          <Text>{item?.signed_by}</Text>
-                        </View>
-                        <View style={{ width: "25%" }}>
-                          <Text style={{ textAlign: "right" }}>
-                            {item?.created_date}
-                          </Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  ))}
-              </View>
-            </View>
-          )}
         </View>
         {downloadProgress != 1 && (
           <Dialog visible={downloadProgress != 1 && downloadProgress != 0}>
@@ -399,7 +365,7 @@ function DetailAttachment({ data, id, tipeRef }) {
             </Dialog.Content>
           </Dialog>
         )}
-        <View style={styles.container}>
+        <View style={[styles.container, { marginBottom: 12 }]}>
           {data?.references && <Text style={styles.titleLabel}>Referensi</Text>}
           <View>
             {data?.references?.length == 0 && <Text>-</Text>}
@@ -449,6 +415,40 @@ function DetailAttachment({ data, id, tipeRef }) {
               ))}
           </View>
         </View>
+        {/* {data?.template?.name == "nota_external" && (
+          <View style={styles.container}>
+            <Text style={styles.titleLabel}>Digital Signed</Text>
+            <View>
+              {data?.attachments_signed?.length == 0 && <Text>-</Text>}
+              {data?.attachments_signed?.length != 0 &&
+                data?.attachments_signed?.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      showBottommSheet(item, getExtensionIcon(item), "sign");
+                    }}
+                  >
+                    <View style={styles.containerContent}>
+                      <IconButton
+                        icon={getExtensionIcon(item)}
+                        size={18}
+                        style={styles.iconContent}
+                      />
+                      <View style={{ width: "60%" }}>
+                        <Text>{item?.description}</Text>
+                        <Text>{item?.signed_by}</Text>
+                      </View>
+                      <View style={{ width: "25%" }}>
+                        <Text style={{ textAlign: "right" }}>
+                          {item?.created_date}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+            </View>
+          </View>
+        )} */}
       </ScrollView>
       <BottomSheetModalProvider>
         <SafeAreaView>
@@ -578,14 +578,16 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 16,
-    backgroundColor: GlobalStyles.colors.tertiery10,
+    backgroundColor: GlobalStyles.colors.tertiery20,
   },
   button: {
     width: "49%",
     marginBottom: 16,
   },
   container: {
-    paddingBottom: 6,
+    borderRadius: 12,
+    padding: 12,
+    backgroundColor: GlobalStyles.colors.textWhite,
   },
   titleLabel: {
     fontWeight: "bold",
@@ -594,10 +596,7 @@ const styles = StyleSheet.create({
   },
   containerContent: {
     flexDirection: "row",
-    paddingVertical: 12,
-    backgroundColor: GlobalStyles.colors.tertiery20,
-    borderRadius: 6,
-    marginBottom: 12,
+    alignItems: "center",
   },
   contentContainer: {
     flex: 1,

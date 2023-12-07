@@ -20,7 +20,7 @@ function DetailComment({ data }) {
   return (
     <ScrollView
       style={{
-        backgroundColor: GlobalStyles.colors.tertiery10,
+        backgroundColor: GlobalStyles.colors.tertiery20,
       }}
       keyboardShouldPersistTaps={"handled"}
     >
@@ -54,15 +54,15 @@ function DetailComment({ data }) {
                         style={[
                           node?.action == "Approve"
                             ? {
-                              backgroundColor: GlobalStyles.colors.success50,
-                            }
+                                backgroundColor: GlobalStyles.colors.success50,
+                              }
                             : node?.action == "Return" ||
                               node?.action == "Return To Composer"
-                              ? {
+                            ? {
                                 backgroundColor: GlobalStyles.colors.warning50,
                               }
-                              : {
-                                backgroundColor: GlobalStyles.colors.info50,
+                            : {
+                                backgroundColor: GlobalStyles.colors.blue,
                               },
                           styles.header,
                           styles.badge,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 16,
-    backgroundColor: GlobalStyles.colors.tertiery10,
+    backgroundColor: GlobalStyles.colors.tertiery20,
   },
   containerCard: {
     width: Platform.OS == "android" ? "100%" : "100%",

@@ -480,7 +480,6 @@ function DetailAgendaInpro({
               {data && data.copytos?.length > 1 && (
                 <View
                   style={[
-                    styles.listAccordion,
                     openTembusan
                       ? {
                           borderBottomLeftRadius: 12,

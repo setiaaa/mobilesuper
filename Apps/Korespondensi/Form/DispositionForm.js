@@ -698,7 +698,7 @@ export default DispositionForm;
 const styles = StyleSheet.create({
   screen: {
     padding: 16,
-    backgroundColor: GlobalStyles.colors.tertiery10,
+    backgroundColor: GlobalStyles.colors.tertiery20,
   },
   containerCard: {
     paddingHorizontal: 12,
