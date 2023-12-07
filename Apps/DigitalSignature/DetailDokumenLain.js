@@ -55,6 +55,7 @@ export const DetailDokumenLain = () => {
     }
   }, [file, item]);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
+  console.log(item);
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -497,7 +498,11 @@ export const DetailDokumenLain = () => {
                   alignItems: "center",
                   marginHorizontal: 20,
                 }}
-                onPress={() => navigation.navigate("PdfPerisai")}
+                onPress={() =>
+                  navigation.navigate("PdfPerisai", {
+                    item: item,
+                  })
+                }
               >
                 <Text style={{ color: COLORS.white, marginVertical: 15 }}>
                   Sign
