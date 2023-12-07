@@ -80,7 +80,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
               fontWeight: FONTWEIGHT.bold,
             }}
           >
-            {item.subject}
+            {item?.subject}
           </Text>
           <View
             style={{
@@ -112,10 +112,10 @@ const ListDokumenLain = ({ item, variant, token }) => {
                   fontWeight: FONTWEIGHT.normal,
                 }}
               >
-                {item.composer?.display_title !== undefined ? (
-                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.composer?.officer?.nama !== undefined ? item.receivers[0]?.officer?.nama : "-"}</Text>
+                {item?.composer?.display_title !== undefined ? (
+                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item?.composer?.officer?.nama !== undefined ? item?.receivers[0]?.officer?.nama : "-"}</Text>
                 ) : 
-                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item.composer?.nama !== undefined ? item.composer?.nama : "-"}</Text>
+                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item?.composer?.nama !== undefined ? item?.composer?.nama : "-"}</Text>
                 }
               </Text>
             </View>
@@ -198,7 +198,7 @@ export const DokumenLain = () => {
     const item = dokumenlain.lists;
     if (search !== "") {
       const data = item.filter((item) => {
-        return item.subject.toLowerCase().includes(search.toLowerCase());
+        return item?.subject.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
     } else {
@@ -444,7 +444,7 @@ export const DokumenLain = () => {
         {/* </ScrollView> */}
         <FlatList
           data={filterData}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item?.id}
           renderItem={({ item }) => (
             <View key={item.id}>
               <ListDokumenLain item={item} token={token} variant={variant} />

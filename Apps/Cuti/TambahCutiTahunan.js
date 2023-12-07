@@ -24,6 +24,7 @@ import moment from "moment";
 import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
 import {
+  getFormCuti,
   getPilihApproval,
   postAttachmentCuti,
   postPengajuanCuti,
@@ -58,8 +59,8 @@ export const TambahCutiTahunan = () => {
 
   const [TanggalMulai, setTanggalMulai] = useState("");
   const [TanggalSelesai, setTanggalSelsai] = useState("");
-  const [alamat, setAlamat] = useState(form.data_user?.alamat);
-  const [telepon, setTelepon] = useState(form.data_user?.no_telpon);
+  const [alamat, setAlamat] = useState("");
+  const [telepon, setTelepon] = useState("");
   const [atasan, setAtasan] = useState("");
   const [pejabat, setPejabat] = useState("");
   const [jenisCuti, setJenisCuti] = useState("");
@@ -110,7 +111,7 @@ export const TambahCutiTahunan = () => {
 
   const subJenisCuti = () => {
     let jenis = [];
-    form.data_jenis_cuti?.advancerole.map((item) => {
+    form?.data_jenis_cuti?.advancerole.map((item) => {
       jenis.push({
         key: item.id,
         value: item.definisi,
@@ -143,7 +144,12 @@ export const TambahCutiTahunan = () => {
     // console.log(data);
   };
 
-  console.log(attachment);
+  console.log(form.data_user);
+
+  useEffect(() => {
+    setAlamat(form?.data_user?.alamat);
+    setTelepon(form?.data_user?.no_telpon);
+  }, [form]);
 
   return (
     <GestureHandlerRootView>

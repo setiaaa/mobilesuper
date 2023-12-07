@@ -15,7 +15,7 @@ export const CardListGridTask = ({ id, title, duedate, priority, members }) => {
                     width: 174,
                     flex: 1,
                     height: 150,
-                    backgroundColor: COLORS.white,
+                    backgroundColor: COLORS.orange,
                     borderRadius: 8,
                     padding: 16,
                     marginVertical: 5,
