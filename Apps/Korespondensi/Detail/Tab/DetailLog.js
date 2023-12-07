@@ -106,11 +106,7 @@ function DetailLog({ route, data }) {
               </View>
               <Card.Title
                 style={[styles.containerCardTitle, { marginBottom: 12 }]}
-                title={
-                  <>
-                    <Text>{item.receivers.replace(/;/g, "\n")}</Text>
-                  </>
-                }
+                title={<Text>{item.receivers.replace(/;/g, "\n")}</Text>}
                 titleNumberOfLines={100}
               />
             </Card>
