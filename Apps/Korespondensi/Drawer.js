@@ -10,6 +10,7 @@ import {
   Alert,
   SafeAreaView,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { Avatar, Drawer, Text, IconButton, List } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -164,12 +165,13 @@ const CustomDrawerContent = (props) => {
   const device_uuid = useSelector((state) => state.profile.device_uuid);
   const token = useSelector((state) => state.auth.token);
   const header = {};
+  const [inputToken, setInputToken] = useState("");
 
   useEffect(() => {
     getProfile();
     // ambil token dari superapps belum bisa. coba set token manual untuk testing
-    dispatch(setToken({ token: "7338c2283a951b626efaed44625a9aa1ec8ece29" }));
-  }, []);
+    dispatch(setToken({ token: inputToken }));
+  }, [inputToken]);
 
   async function getProfile() {
     try {
@@ -270,6 +272,29 @@ const CustomDrawerContent = (props) => {
             {data.name}
           </Text>
         ))}
+      </View>
+      <View
+        style={[
+          styles.containerProfile,
+          { flexDirection: "row", gap: 10, marginLeft: 20 },
+        ]}
+      >
+        <TextInput
+          editable
+          multiline
+          placeholder="Masukan Token"
+          onChangeText={setInputToken}
+          style={{ padding: 10, height: 40, borderWidth: 1, width: "80%" }}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(setToken({ token: inputToken }));
+            setDrawerItemIndex(2);
+            props.navigation.navigate("Dashboard");
+          }}
+        >
+          <Ionicons name="send-outline" size={24} />
+        </TouchableOpacity>
       </View>
       <Drawer.Section style={{ marginHorizontal: -5 }}>
         <Drawer.Item
@@ -810,5 +835,6 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 16,
+    textAlign: "center",
   },
 });

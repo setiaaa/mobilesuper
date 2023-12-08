@@ -17,13 +17,13 @@ function CardList({ data, tipe, onPress }) {
   let header = {};
   useEffect(() => {
     if (tipe == "agendain") {
-      setTitle("Log Disposition\nIncoming Letter");
+      setTitle("My Disposisi\nSurat Masuk");
     } else if (tipe == "agendadispo") {
-      setTitle("Log Disposition\nDisposition Letter");
+      setTitle("My Disposisi\nDisposisi");
     } else if (tipe == "agendaout") {
-      setTitle("Log Disposition\nSubmitted Letter");
+      setTitle("My Disposisi\nTerkirim");
     } else if (tipe == "agendamydispo") {
-      setTitle("Log Disposition\nMy Disposition Letter");
+      setTitle("My Disposisi\nMy Disposisi");
     }
     getHeader();
   }, []);
@@ -235,7 +235,7 @@ function CardList({ data, tipe, onPress }) {
               {data.status && (
                 <View
                   style={[
-                    data.status == "In Progress"
+                    data.status == "In Progress" || data.status == "Submit"
                       ? {
                           backgroundColor: GlobalStyles.colors.yellow,
                         }
@@ -335,9 +335,9 @@ const styles = StyleSheet.create({
   badgeStatus: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 6,
-    borderRadius: 6,
+    borderRadius: 10,
     paddingHorizontal: 8,
+    paddingVertical: 2,
   },
   badgeRemaining: {
     flexDirection: "row",

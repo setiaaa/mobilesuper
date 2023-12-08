@@ -35,11 +35,12 @@ import { COLORS } from "../../../../config/SuperAppps";
 import { Image } from "react-native";
 import { setPrevAgenda } from "../../../../store/referensi";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 //untuk detail agenda yang isi suratnya langsung terbaca tanpa view document
-function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
+function DetailAgenda({ id, noAgenda, data, style, tipe, preview, title }) {
   const profile = useSelector((state) => state.profile.profile);
   const { width } = useWindowDimensions();
   const [body, setBody] = useState();
@@ -49,7 +50,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
   const [showButtons, setShowButtons] = useState(false);
 
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState("");
+  // const [title, setTitle] = useState("");
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -240,65 +241,99 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
       style={[style]}
     >
       <View style={{ padding: 20, gap: 10 }}>
-        <Text style={{ fontSize: 15, fontWeight: 600 }}>Informasi Surat</Text>
-        {data?.attachments?.map((item, index) => (
-          <View
-            key={index}
-            style={{
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                borderRadius: 16,
-                padding: 20,
-                width: 90,
-                elevation: 1,
-              }}
-            >
-              <Image
-                source={require("../../../../assets/superApp/pdf.png")}
-                style={{ width: 50, height: 50 }}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-                marginBottom: 20,
-              }}
-            >
-              <Text style={[styles.textContent, { textAlign: "center" }]}>
-                {item?.name}
+        {title != "Lembar Disposisi" &&
+          title != "Teruskan" &&
+          title != "Detail Disposisi" && (
+            <>
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                Informasi Surat
               </Text>
-              <Text style={styles.subtextContent}>{item?.size}</Text>
-            </View>
-            <View style={{ flexDirection: "row", gap: 10 }}>
-              <IconButton
-                icon="eye-outline"
-                mode="contained"
-                iconColor={GlobalStyles.colors.textWhite}
-                style={{ backgroundColor: GlobalStyles.colors.green }}
-                onPress={() => {
-                  navigation.navigate("ViewAttachment", {
-                    selected: item,
-                    title: "Lihat Surat",
-                  });
-                }}
-              />
-              <IconButton
-                icon="file-download-outline"
-                mode="contained"
-                iconColor={GlobalStyles.colors.textWhite}
-                style={{ backgroundColor: GlobalStyles.colors.blue }}
-                onPress={() => initDownload(item)}
-              />
-            </View>
-          </View>
-        ))}
+              {data?.attachments?.map((item, index) => (
+                <View
+                  key={index}
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      borderRadius: 16,
+                      padding: 20,
+                      width: 90,
+                      elevation: 1,
+                    }}
+                  >
+                    <Image
+                      source={require("../../../../assets/superApp/pdf.png")}
+                      style={{ width: 50, height: 50 }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      alignItems: "center",
+                      marginBottom: 20,
+                    }}
+                  >
+                    <Text style={[styles.textContent, { textAlign: "center" }]}>
+                      {item?.name}
+                    </Text>
+                    <Text style={styles.subtextContent}>{item?.size}</Text>
+                  </View>
+                  <View style={{ width: "100%" }}>
+                    <Button
+                      mode="contained"
+                      style={[
+                        {
+                          width: "100%",
+                          backgroundColor: GlobalStyles.colors.primary,
+                          marginBottom: 16,
+                        },
+                      ]}
+                      onPress={() => {
+                        navigation.navigate("ViewAttachment", {
+                          selected: item,
+                          title: "Lihat Surat",
+                        });
+                      }}
+                      icon={() => (
+                        <Ionicons
+                          name="eye-outline"
+                          size={20}
+                          color={COLORS.white}
+                        />
+                      )}
+                    >
+                      Lihat Surat
+                    </Button>
+                    <Button
+                      onPress={() => initDownload(item)}
+                      mode="contained"
+                      style={[
+                        {
+                          width: "100%",
+                          backgroundColor: GlobalStyles.colors.blue,
+                          marginBottom: 16,
+                        },
+                      ]}
+                      icon={() => (
+                        <Ionicons
+                          name="download-outline"
+                          size={20}
+                          color={COLORS.white}
+                        />
+                      )}
+                    >
+                      Unduh Surat
+                    </Button>
+                  </View>
+                </View>
+              ))}
+            </>
+          )}
         <Text style={{ fontSize: 15, fontWeight: 600 }}>Perihal</Text>
 
         <View
@@ -549,7 +584,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
             borderRadius: 16,
           }}
         >
-          <Text>
+          <Text style={{ fontSize: 13 }}>
             {data && data?.senders[0].title
               ? data?.senders[0].title
               : data?.senders[0].name}
@@ -571,16 +606,30 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
             data?.receivers_display?.length == 0 &&
             data?.kepada_bank?.length == 0 && (
               <>
-                {data && data?.receivers?.length == 0 && <Text>-</Text>}
+                {data &&
+                  data?.receivers?.length == 0 &&
+                  data?.kepada_addressbook?.length == 0 && (
+                    <Text style={{ fontSize: 13 }}>-</Text>
+                  )}
+                {data &&
+                  data?.receivers?.length == 0 &&
+                  data?.kepada_addressbook?.length != 0 && (
+                    <Text style={{ fontSize: 13 }}>
+                      {data?.kepada_addressbook}
+                    </Text>
+                  )}
                 {data && data?.receivers?.length == 1 && (
                   <>
                     {data?.template.name != "nota_external" && !loading ? (
-                      <Text>{data?.receivers[0].split("/")[0]}</Text>
+                      <Text style={{ fontSize: 13 }}>
+                        {data?.receivers[0].split("/")[0]}
+                      </Text>
                     ) : (
                       <></>
                     )}
                     {data?.template.name == "nota_external" && (
                       <RenderHTML
+                        style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.receivers[0].split("/")[0] }}
                       />
@@ -591,6 +640,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                   <>
                     {data?.template.name == "nota_external" && (
                       <RenderHTML
+                        style={{ fontSize: 13 }}
                         contentWidth={width}
                         source={{ html: data?.receivers.join("</br>") }}
                       />
@@ -622,9 +672,12 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
             data.receivers_display?.length != 0 &&
             data.kepada_bank?.length == 0 && (
               <>
-                {data.receivers_display?.length == 0 && <Text>-</Text>}
+                {data.receivers_display?.length == 0 && (
+                  <Text style={{ fontSize: 13 }}>-</Text>
+                )}
                 {data && data.receivers_display?.length == 1 && (
                   <RenderHTML
+                    style={{ fontSize: 13 }}
                     contentWidth={width}
                     source={{ html: data?.receivers_display[0] }}
                   />
@@ -633,7 +686,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                   data.receivers_display?.length > 1 &&
                   data.template.name != "nota_external" &&
                   data.receivers_display.map((item, index) => (
-                    <Text key={index}>
+                    <Text key={index} style={{ fontSize: 13 }}>
                       {index + 1}. {item}
                     </Text>
                   ))}
@@ -641,7 +694,9 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                   data.receivers_display?.length > 1 &&
                   data.template.name == "nota_external" &&
                   data.receivers_display.map((item, index) => (
-                    <Text key={index}>{item}</Text>
+                    <Text key={index} style={{ fontSize: 13 }}>
+                      {item}
+                    </Text>
                   ))}
               </>
             )}
@@ -662,14 +717,17 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
         >
           {data && data.copytos_display?.length == 0 && (
             <>
-              {data && data.copytos?.length == 0 && <Text>-</Text>}
+              {data && data.copytos?.length == 0 && (
+                <Text style={{ fontSize: 13 }}>-</Text>
+              )}
               {data && data.copytos?.length == 1 && (
-                <Text>{data.copytos[0].split("/")[0]}</Text>
+                <Text style={{ fontSize: 13 }}>
+                  {data.copytos[0].split("/")[0]}
+                </Text>
               )}
               {data && data.copytos?.length > 1 && (
                 <View
                   style={[
-                    styles.listAccordion,
                     openTembusan
                       ? {
                           borderBottomLeftRadius: 12,
@@ -679,7 +737,7 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
                   ]}
                 >
                   {data.copytos.map((item, index) => (
-                    <Text key={index}>
+                    <Text key={index} style={{ fontSize: 13 }}>
                       {index + 1}. {item.split("/")[0]}
                     </Text>
                   ))}
@@ -689,15 +747,19 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, showBody, preview }) {
           )}
           {data && data.copytos_display?.length != 0 && (
             <>
-              {data && data.copytos_display?.length == 0 && <Text>-</Text>}
+              {data && data.copytos_display?.length == 0 && (
+                <Text style={{ fontSize: 13 }}>-</Text>
+              )}
               {data && data.copytos_display?.length == 1 && (
                 <RenderHTML
+                  style={{ fontSize: 13 }}
                   contentWidth={width}
                   source={{ html: data?.copytos_display[0] }}
                 />
               )}
               {data && data.copytos_display?.length > 1 && (
                 <RenderHTML
+                  style={{ fontSize: 13 }}
                   contentWidth={width}
                   source={{ html: data?.copytos_display.join("\n") }}
                 />
@@ -1317,7 +1379,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   subtitleDropdown: {
-    fontSize: GlobalStyles.font.md,
+    fontSize: 13,
     paddingVertical: 4,
   },
   errorText: {

@@ -7,7 +7,6 @@ import {
   View,
   SafeAreaView,
   Platform,
-  TouchableOpacity,
   Alert,
 } from "react-native";
 import { Button, Card, IconButton } from "react-native-paper";
@@ -18,7 +17,6 @@ import {
 import { GlobalStyles } from "../../../../constants/styles";
 import DetailAgenda from "../../Detail/Tab/DetailAgenda";
 import LoadingOverlay from "../../../../components/UI/LoadingOverlay";
-import { getExtensionIcon } from "../../../../utils/agenda";
 
 import * as FileSystem from "expo-file-system";
 const { StorageAccessFramework } = FileSystem;
@@ -28,7 +26,7 @@ import { nde_api } from "../../../../utils/api.config";
 import { useDispatch } from "react-redux";
 import { setDataNotif } from "../../../../store/pushnotif";
 
-function DetailDispo({ data, noAgenda, preview }) {
+function DetailDispo({ data, noAgenda, preview, title }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState();
@@ -156,7 +154,6 @@ function DetailDispo({ data, noAgenda, preview }) {
       console.log(error);
     }
   };
-
   return (
     <>
       <ScrollView>
@@ -175,14 +172,22 @@ function DetailDispo({ data, noAgenda, preview }) {
             <View style={styles.containerColumn}>
               {data?.receivers.length > 0 &&
                 data?.receivers.map((item, index) => (
-                  <Text key={index}>{item}</Text>
+                  <Text key={index} style={styles.title}>
+                    {item}
+                  </Text>
                 ))}
             </View>
             <View>
-              <Text style={styles.title}>Petunjuk</Text>
+              <Text style={styles.title}>Untuk</Text>
             </View>
-            <View style={styles.container}>
-              <Text>{data?.action ? data.action : data?.action_manual}</Text>
+            <View>
+              <Text>{data?.action ? data?.action : "-"}</Text>
+            </View>
+            <View>
+              <Text style={styles.title}>Catatan</Text>
+            </View>
+            <View>
+              <Text>{data?.action_manual ? data?.action_manual : "-"}</Text>
             </View>
             {/* <View>
               <View>
@@ -218,12 +223,13 @@ function DetailDispo({ data, noAgenda, preview }) {
           <Card style={[styles.containerCard, { padding: 0 }]}>
             <DetailAgenda
               style={{
-                backgroundColor: GlobalStyles.colors.textWhite,
+                backgroundColor: GlobalStyles.colors.tertiery20,
                 borderRadius: 12,
               }}
               showBody={false}
               noAgenda={noAgenda ? noAgenda : ""}
               data={data?.obj}
+              title="Detail Disposisi"
             />
           </Card>
           <Button

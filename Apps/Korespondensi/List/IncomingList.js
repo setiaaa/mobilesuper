@@ -246,7 +246,7 @@ function IncomingList({ route }) {
           ? "Anda tidak memiliki surat masuk belum dibaca"
           : list?.count == 0 && !unread
           ? "Anda tidak memiliki surat masuk"
-          : "Loading..."}
+          : "Pencarian..."}
       </Text>
     </View>
   );
