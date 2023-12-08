@@ -247,7 +247,7 @@ function DetailAgendaInpro({
     }, 1500);
   };
   return (
-    <ScrollView>
+    <ScrollView overScrollMode="never" keyboardShouldPersistTaps="handled">
       <View style={{ padding: 20, gap: 10 }}>
         <Text style={{ fontSize: 15, fontWeight: 600 }}>
           Form Persetujuan Surat Dinas
