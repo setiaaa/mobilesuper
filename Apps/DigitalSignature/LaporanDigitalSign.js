@@ -137,39 +137,39 @@ export const LaporanDigitalSign = () => {
           </View>
         </View>
         <ScrollView>
-        <View style={{ padding: PADDING.Page }}>
+        <View style={{ padding: PADDING.Page,width:"100%" }}>
             <View>
-                <View style={{...styles.card, alignItems: "center"}}>
+                <View style={{...styles.card, alignItems: "center",}}>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{...styles.circle, backgroundColor: COLORS.successLight}}>
                             <Ionicons name="clipboard-outline" size={24} color={COLORS.success} />
                         </View>
-                        <View style={{ justifyContent: "center", marginLeft: 15, gap: 5 }}>
+                        <View style={{ justifyContent: "center", marginLeft: 15, gap: 5, }}>
                             <Text style={{ fontSize: 16, fontWeight: 700 }}>{summary?.count.total_count}</Text>
                             <Text style={{ fontSize: 13, fontWeight: 400 }}>Total Pelatihan</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20 }}>
-                    <View style={styles.card}>
-                        <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20, width:"100%", }}>
+                    <View style={styles.cardsmall}>
+                        <View style={{ flexDirection: "row"}}>
                             <View style={{...styles.circle, backgroundColor: COLORS.infoLight}}>
                                 <Ionicons name="clipboard-outline" size={24} color={COLORS.info} />
                             </View>
-                            <View style={{ justifyContent: "center", marginLeft: 15, gap: 5 }}>
+                            <View style={{ justifyContent: "center", marginLeft: 15, gap: 4 }}>
                                 <Text style={{ fontSize: 16, fontWeight: 700 }}>{summary?.count.jenis_sertifikat?.klasikal}</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: 72 }}>Total Klasikal</Text>
+                                <Text style={{ fontSize: 13, fontWeight: 400, width: "60%" }}>Total Klasikal</Text>
                             </View>
                         </View>
                     </View>
-                    <View style={styles.card}>
+                    <View style={styles.cardsmall}>
                         <View style={{ flexDirection: "row" }}>
                             <View style={{...styles.circle, backgroundColor: COLORS.warningLight}}>
                                 <Ionicons name="clipboard-outline" size={24} color={COLORS.warning} />
                             </View>
                             <View style={{ justifyContent: "center", marginLeft: 15, gap: 5 }}>
                                 <Text style={{ fontSize: 16, fontWeight: 700 }}>{summary?.count.jenis_sertifikat?.non_klasikal}</Text>
-                                <Text style={{ fontSize: 13, fontWeight: 400, width: 72 }}>Total Non Klasikal</Text>
+                                <Text style={{ fontSize: 13, fontWeight: 400, width: "55%" }}>Total Non Klasikal</Text>
                             </View>
                         </View>
                     </View>
@@ -421,6 +421,18 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         //shadow android
         elevation: 2,
+    },
+    cardsmall: {
+        backgroundColor: COLORS.white,
+        padding: 20,
+        borderRadius: 16,
+        //shadow ios
+        shadowOffset: { width: -2, height: 4 },
+        shadowColor: "#171717",
+        shadowOpacity: 0.2,
+        //shadow android
+        elevation: 2,
+        width:"49%"
     },
     cardList: {
         backgroundColor: COLORS.white,

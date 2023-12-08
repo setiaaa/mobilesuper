@@ -71,13 +71,13 @@ const ListDokumenLain = ({ item, variant, token }) => {
             color={isSelected === true ? COLORS.lighter : null}
           />
         ) : null} */}
-        <View style={{ flexDirection: "column" }}>
+        <View style={{ flexDirection: "column",width:"100%" }}>
           <Text
             style={{
               fontSize: 13,
-              width: 300,
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
+              width:"100%"
             }}
           >
             {item?.subject}
@@ -87,46 +87,54 @@ const ListDokumenLain = ({ item, variant, token }) => {
               backgroundColor: COLORS.lighter,
               height: 1,
               marginVertical: 5,
-              width: 300
+              width:"100%"
             }}
           />
-          <View style={{ gap: 5 }}>
+          <View style={{ gap: 5, width:"100%" }}>
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
                   fontSize: 13,
                   width: 120,
-                  textAlign: "justify",
+                  textAlign: "auto",
                   paddingRight: 12,
                   fontWeight: FONTWEIGHT.normal,
+                  width:"45%"
                 }}
               >
                 Penerima
               </Text>
-              {/* <Text style={{ fontSize: 13, width: 200, textAlign: 'justify', fontWeight: FONTWEIGHT.normal, }}>: {item.composer?.nama}</Text> */}
-              <Text
-                style={{
-                  fontSize: 13,
-                  width: 200,
-                  textAlign: "justify",
-                  fontWeight: FONTWEIGHT.normal,
-                }}
-              >
                 {item?.composer?.display_title !== undefined ? (
-                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item?.composer?.officer?.nama !== undefined ? item?.receivers[0]?.officer?.nama : "-"}</Text>
+                  <Text 
+                    style={{ 
+                      fontWeight: FONTWEIGHT.normal, 
+                      width: "55%", 
+                      textAlign:"auto", 
+                      fontWeight:FONTWEIGHT.normal,
+                    }}>
+                    : {item?.composer?.officer?.nama !== undefined ? item?.receivers[0]?.officer?.nama : "-"}
+                  </Text>
                 ) : 
-                  <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>: {item?.composer?.nama !== undefined ? item?.composer?.nama : "-"}</Text>
+                  <Text 
+                    style={{ 
+                      fontWeight: FONTWEIGHT.normal, 
+                      width: "55%", 
+                      textAlign:"auto", 
+                      fontWeight:FONTWEIGHT.normal,  
+                    }}>
+                    : {item?.composer?.nama !== undefined ? item?.composer?.nama : "-"}
+                  </Text>
                 }
-              </Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text
                 style={{
                   fontSize: 13,
                   width: 120,
-                  textAlign: "justify",
+                  textAlign: "auto",
                   paddingRight: 12,
                   fontWeight: FONTWEIGHT.normal,
+                  width:"45%"
                 }}
               >
                 Penandatangan
@@ -454,7 +462,7 @@ export const DokumenLain = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{ height: "73%" }}
+          style={{ height: "69%",}}
         />
 
         {/* <TouchableOpacity onPress={() => {
