@@ -185,7 +185,7 @@ function AddressbookTitle({
       let response = await getHTTP(
         nde_api.titleSearch
           .replace("{$word}", searchQuery)
-          .replace("{$id}", profileOrganization?.division.id)
+          .replace("{$id}", profileOrganization?.division_id)
       );
       setSearchShow(true);
       setsearchList(response.data);
