@@ -59,7 +59,7 @@
       "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
     },
     "id": "telkom",
-    "base_url": "https://crsfe2.kubekkp.coofis.com",
+    "base_url": "https://portal-crs.kkp.go.id",
     "upgrade_url": "https://portal.telkom.co.id/store/experience/apps/8",
     "loginSSO": false,
     "termOfUse": true,
@@ -146,6 +146,7 @@
       "lettersubmit": "/api/letters/submit/",
       "letteridsave": "/api/letters/{$id}/save/",
       "letteridapprove": "/api/letters/{$id}/approve/",
+      "letteridfinish": "/api/letters/{$id}/finish/",
       "letteridreturn": "/api/letters/{$id}/return/",
       "letteridreturntokonseptor": "/api/letters/{$id}/returntokonseptor/",
       "letteridreject": "/api/letters/{$id}/reject/",

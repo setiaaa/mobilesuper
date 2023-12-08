@@ -20,16 +20,10 @@ function DTodo() {
   let [searchTodo, setSearchTodo] = useState("");
   let [isLoading, setIsLoading] = useState(false);
 
-  const willFocusSubscription = navigation.addListener("focus", () => {
-    todoToday();
-    todoOverdue();
-    todoNextweek();
-  });
   useEffect(() => {
     todoToday();
     todoOverdue();
     todoNextweek();
-    return willFocusSubscription;
   }, []);
 
   // const response = getHTTP(nde_api.dashboard);

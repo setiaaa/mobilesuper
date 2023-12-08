@@ -32,28 +32,6 @@ function DLetter() {
       navName: "ConceptNumb",
     },
   ];
-
-  const willFocusSubscription = navigation.addListener("focus", () => {
-    setIsCounter([
-      { count: 1, type: "onprogress", value: "-" },
-      {
-        count: 2,
-        type: "agenda_in",
-        value: "-",
-      },
-      {
-        count: 3,
-        type: "agenda_disposition",
-        value: "-",
-      },
-      {
-        count: 4,
-        type: "draft",
-        value: "-",
-      },
-    ]);
-    getisCounter();
-  });
   useEffect(() => {
     setIsCounter([
       { count: 1, type: "onprogress", value: "-" },
@@ -75,7 +53,6 @@ function DLetter() {
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
-    return willFocusSubscription;
   }, []);
 
   async function getisCounter() {
@@ -106,7 +83,7 @@ function DLetter() {
           },
         ]);
       } else {
-        handlerError(error, "Warning!", "Counter DLetter not working!");
+        handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
       }
       setIsLoading(false);
     }
