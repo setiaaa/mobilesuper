@@ -1718,6 +1718,20 @@ export const getSummaryList = createAsyncThunk(
   }
 );
 
+export const putTandaTangan = createAsyncThunk(
+  "digitalsign/putTandaTangan",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/approve/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
   "cuti/getCutiPersonal",

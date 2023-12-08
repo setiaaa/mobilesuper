@@ -149,6 +149,7 @@ import { Pencarian } from "./Pencarian/Pencarian";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 import LihatSuratSPPD from "../SPPD/LihatSuratSPPD";
 import { Laporan } from "../Task Management/Dashboard/Laporan";
+import { PdfPerisai } from "../DigitalSignature/PdfPerisai";
 
 const Stack = createNativeStackNavigator();
 
@@ -686,6 +687,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="DetailSertifikat"
             component={DetailSertifikat}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PdfPerisai"
+            component={PdfPerisai}
             options={{
               headerShown: false,
             }}

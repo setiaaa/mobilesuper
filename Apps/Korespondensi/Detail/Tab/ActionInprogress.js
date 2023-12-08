@@ -14,6 +14,9 @@ import LoadingOverlay from "../../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../../constants/styles";
 import { nde_api } from "../../../../utils/api.config";
 import { handlerError, postHTTP } from "../../../../utils/http";
+import { TouchableOpacity } from "react-native";
+import { COLORS } from "../../../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
 
 function ActionInprogress({ id, data, page }) {
   const platform = Platform;
@@ -48,7 +51,6 @@ function ActionInprogress({ id, data, page }) {
   let salam = useSelector((state) => state.payload.salam);
   // ref
   const bottomSheetModalRef = useRef(null);
-
   // variables
   const snapPoints = useMemo(() => [50, 250], []);
   const loadingOverlay = (
@@ -56,78 +58,77 @@ function ActionInprogress({ id, data, page }) {
       <LoadingOverlay visible={isLoading} />
     </>
   );
-
   function showComment(action, page) {
     //validasi data payload
     let valid = 1;
-    if (data.verifytitleprofile.status == "error" && action == "Approve") {
-      valid = 0;
-      if (data.verifytitleprofile.data.approver.length != 0) {
-        if (data.state == "rns") {
+    // if (data.verifytitleprofile.status == "error" && action == "Setujui") {
+    //   valid = 0;
+    //   if (data.verifytitleprofile.data.approver.length != 0) {
+    //     if (data.state == "rns") {
+    //       Alert.alert(
+    //         "Peringatan!",
+    //         data.verifytitleprofile.data.approver.join(",") +
+    //           ' is not active. Please remove from "Pemeriksa" to continue.'
+    //       );
+    //     } else if (data.state == "inpro") {
+    //       Alert.alert(
+    //         "Peringatan!",
+    //         data.verifytitleprofile.data.approver.join(",") +
+    //           ' is not active. Please "return to composer" to be fixed.'
+    //       );
+    //     }
+    //   } else if (data.verifytitleprofile.data.copyto.length != 0) {
+    //     Alert.alert(
+    //       "Peringatan!",
+    //       data.verifytitleprofile.data.copyto.join(",") +
+    //         ' is not active. Please remove from "Tembusan" to continue.'
+    //     );
+    //   } else if (data.verifytitleprofile.data.receiver.length != 0) {
+    //     Alert.alert(
+    //       "Peringatan!",
+    //       data.verifytitleprofile.data.receiver.join(",") +
+    //         ' is not active. Please remove from "Kepada" to continue.'
+    //     );
+    //   }
+    // } else {
+    if (page == "edit") {
+      if (sender.length == 0) {
+        valid = 0;
+        Alert.alert("Peringatan!", "Dari is required");
+      } else if (receivers.length == 0) {
+        valid = 0;
+        Alert.alert("Peringatan!", "Kepada is required");
+      } else if (masalah.length == 0) {
+        valid = 0;
+        Alert.alert("Peringatan!", "Kode Masalah is required");
+      } else if (
+        (isi.length == 0 && data?.template.name != "undangan") ||
+        (isi_atas.length == 0 &&
+          isi_bawah.length == 0 &&
+          data?.template.name == "undangan")
+      ) {
+        valid = 0;
+        Alert.alert("Peringatan!", "Isi surat is required");
+      } else if (approver.length != 0) {
+        //cek approver
+        let codeLastApprover = approver[approver.length - 1].code
+          ? approver[approver.length - 1].code
+          : approver[approver.length - 1].nik;
+        let codeSender = sender[0].title_code
+          ? sender[0].title_code
+          : sender[0].name_code
+          ? sender[0].name_code
+          : sender[0].code;
+        if (codeLastApprover != codeSender) {
+          valid = 0;
           Alert.alert(
-            "Warning!",
-            data.verifytitleprofile.data.approver.join(",") +
-            ' is not active. Please remove from "Pemeriksa" to continue.'
+            "Peringatan!",
+            "Last Approver should be the same as a Sender"
           );
-        } else if (data.state == "inpro") {
-          Alert.alert(
-            "Warning!",
-            data.verifytitleprofile.data.approver.join(",") +
-            ' is not active. Please "return to composer" to be fixed.'
-          );
-        }
-      } else if (data.verifytitleprofile.data.copyto.length != 0) {
-        Alert.alert(
-          "Warning!",
-          data.verifytitleprofile.data.copyto.join(",") +
-          ' is not active. Please remove from "Tembusan" to continue.'
-        );
-      } else if (data.verifytitleprofile.data.receiver.length != 0) {
-        Alert.alert(
-          "Warning!",
-          data.verifytitleprofile.data.receiver.join(",") +
-          ' is not active. Please remove from "Kepada" to continue.'
-        );
-      }
-    } else {
-      if (page == "edit") {
-        if (sender.length == 0) {
-          valid = 0;
-          Alert.alert("Warning!", "Dari is required");
-        } else if (receivers.length == 0) {
-          valid = 0;
-          Alert.alert("Warning!", "Kepada is required");
-        } else if (masalah.length == 0) {
-          valid = 0;
-          Alert.alert("Warning!", "Kode Masalah is required");
-        } else if (
-          (isi.length == 0 && data?.template.name != "undangan") ||
-          (isi_atas.length == 0 &&
-            isi_bawah.length == 0 &&
-            data?.template.name == "undangan")
-        ) {
-          valid = 0;
-          Alert.alert("Warning!", "Isi surat is required");
-        } else if (approver.length != 0) {
-          //cek approver
-          let codeLastApprover = approver[approver.length - 1].code
-            ? approver[approver.length - 1].code
-            : approver[approver.length - 1].nik;
-          let codeSender = sender[0].title_code
-            ? sender[0].title_code
-            : sender[0].name_code
-              ? sender[0].name_code
-              : sender[0].code;
-          if (codeLastApprover != codeSender) {
-            valid = 0;
-            Alert.alert(
-              "Warning!",
-              "Last Approver should be the same as a Sender"
-            );
-          }
         }
       }
     }
+    // }
     if (valid == 1) {
       setTipe(action);
       bottomSheetModalRef.current?.present();
@@ -135,13 +136,13 @@ function ActionInprogress({ id, data, page }) {
   }
   function showConfirm() {
     Alert.alert(
-      "Confirm",
-      "Are you sure want to save this data?",
+      "Konfirmasi",
+      "Anda yakin untuk menyimpan data surat ini?",
       [
-        { text: "Cancel", onPress: () => { } },
+        { text: "Tidak", onPress: () => {} },
         {
-          text: "Ok",
-          onPress: () => actionEdit("Save"),
+          text: "Ya",
+          onPress: () => actionEdit("Simpan"),
         },
       ],
       {
@@ -163,17 +164,22 @@ function ActionInprogress({ id, data, page }) {
     try {
       setisLoading(true);
       if (comment.length == 0) {
-        Alert.alert("Warning!", "Please fill in the comment");
+        Alert.alert("Peringatan!", "Silakan isi komentar");
         setisLoading(false);
       } else {
         let payload = { komentar: comment, pass: "1" };
         let response;
-        if (tipe == "Approve") {
+        if (tipe == "Selesaikan") {
+          response = await postHTTP(
+            nde_api.letteridfinish.replace("{$id}", id),
+            payload
+          );
+        } else if (tipe == "Setujui") {
           response = await postHTTP(
             nde_api.letteridapprove.replace("{$id}", id),
             payload
           );
-        } else if (tipe == "Return") {
+        } else if (tipe == "Revisi") {
           response = await postHTTP(
             nde_api.letteridreturn.replace("{$id}", id),
             payload
@@ -183,26 +189,31 @@ function ActionInprogress({ id, data, page }) {
             nde_api.letteridreturntokonseptor.replace("{$id}", id),
             payload
           );
-        } else if (tipe == "Reject") {
+        } else if (tipe == "Batalkan") {
           response = await postHTTP(
             nde_api.letteridreject.replace("{$id}", id),
             payload
           );
         }
+
         if (response?.data?.status == "Error") {
-          Alert.alert("Warning!", response.data.msg);
+          Alert.alert("Gagal!", response.data.msg);
         } else {
-          Alert.alert("Success!", tipe + " was successfull!", [
-            {
-              text: "Ok",
-              onPress: () => navigation.goBack(),
-            },
-          ]);
+          Alert.alert(
+            "Berhasil!",
+            "Surat telah berhasil di" + tipe.toLowerCase() + "!",
+            [
+              {
+                text: "Ok",
+                onPress: () => navigation.goBack(),
+              },
+            ]
+          );
         }
       }
       setisLoading(false);
     } catch (error) {
-      handlerError(error, "Warning!", tipe + " letter not working.");
+      handlerError(error, "Gagal!", tipe + " tidak berfungsi.");
       setisLoading(false);
     }
   }
@@ -212,13 +223,13 @@ function ActionInprogress({ id, data, page }) {
     try {
       setisLoading(true);
       if (comment.length == 0) {
-        Alert.alert("Warning!", "Please fill in the comment");
+        Alert.alert("Peringatan!", "Silakan isi komentar");
         setisLoading(false);
       } else {
         actionEdit(tipe);
       }
     } catch (error) {
-      handlerError(error, "Warning!", tipe + " letter not working.");
+      handlerError(error, "Peringatan!", tipe + " tidak berfungsi.");
       setisLoading(false);
     }
   }
@@ -254,13 +265,13 @@ function ActionInprogress({ id, data, page }) {
           kepada_addressbook_ids = data?.kepada_addressbook_ids.join("\n");
           // if (
           //   receivers_external_display &&
-          //   result[0] == "Approve" &&
+          //   result[0] == "Setujui" &&
           //   data?.tracker.lastposition
           // ) {
           //   // console.log(receivers_external);
           //   // receivers_external_display =
           //   //   document.getElementById("receivers_external")?.innerText;
-          // } else if (result[0] == "Approve" && data?.tracker.lastposition) {
+          // } else if (result[0] == "Setujui" && data?.tracker.lastposition) {
           //   // console.log(document.getElementById("receivers_external"));
           //   // receivers_external_display =
           //   //   document.getElementById("receivers_external")?.innerText;
@@ -276,13 +287,13 @@ function ActionInprogress({ id, data, page }) {
         if (data?.template.name == "nota_external") {
           // if (
           //   receivers_external_display &&
-          //   result[0] == "Approve" &&
+          //   result[0] == "Setujui" &&
           //   data?.tracker.lastposition
           // ) {
           //   // receivers_external_display = document.getElementById(
           //   //   "receivers_external2"
           //   // )?.innerText;
-          // } else if (result[0] == "Approve" && data?.tracker.lastposition) {
+          // } else if (result[0] == "Setujui" && data?.tracker.lastposition) {
           //   // receivers_external_display = document.getElementById(
           //   //   "receivers_external2"
           //   // )?.innerText;
@@ -610,22 +621,28 @@ function ActionInprogress({ id, data, page }) {
         response.data = { status: "Error", msg: tipe + " not working" };
       } else {
         switch (tipe) {
-          case "Save":
+          case "Simpan":
             response = await postHTTP(
               nde_api.letteridsave.replace("{$id}", id),
               payload
             );
             break;
-          case "Submit":
+          case "Kirim":
             response = await postHTTP(nde_api.lettersubmit, payload);
             break;
-          case "Approve":
+          case "Setujui":
             response = await postHTTP(
               nde_api.letteridapprove.replace("{$id}", id),
               payload
             );
             break;
-          case "Return":
+          case "Selesaikan":
+            response = await postHTTP(
+              nde_api.letteridfinish.replace("{$id}", id),
+              payload
+            );
+            break;
+          case "Revisi":
             response = await postHTTP(
               nde_api.letteridreturn.replace("{$id}", id),
               payload
@@ -637,7 +654,7 @@ function ActionInprogress({ id, data, page }) {
               payload
             );
             break;
-          case "Reject":
+          case "Batalkan":
             response = await postHTTP(
               nde_api.letteridreject.replace("{$id}", id),
               payload
@@ -645,29 +662,31 @@ function ActionInprogress({ id, data, page }) {
             break;
         }
       }
-      // console.log(response?.data);
       if (response?.data?.status == "Error") {
-        Alert.alert("Warning!", response?.data?.msg);
+        Alert.alert("Gagal!", response?.data?.msg);
       } else {
-        Alert.alert("Success!", tipe + " was successfull!", [
-          {
-            text: "Ok",
-            onPress: () => navigation.goBack(),
-          },
-        ]);
+        Alert.alert(
+          "Berhasil!",
+          "Surat telah berhasil di" + tipe.toLowerCase() + "!",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.goBack(),
+            },
+          ]
+        );
       }
       setisLoading(false);
     } catch (error) {
       console.log(error);
-      // handlerError(error, "Warning!", tipe + " letter not working.");
+      // handlerError(error, "Peringatan!", tipe + " tidak berfungsi.");
       setisLoading(false);
     }
   }
-
   return (
     <>
       {loadingOverlay}
-      <View>
+      {/* <View>
         {page == "edit" && (
           <Button
             onPress={() => {
@@ -684,7 +703,7 @@ function ActionInprogress({ id, data, page }) {
         {page == "edit" && data?.state == "rns" && (
           <Button
             onPress={() => {
-              showComment("Submit", page);
+              showComment("Kirim", page);
             }}
             mode="contained"
             style={[
@@ -701,7 +720,7 @@ function ActionInprogress({ id, data, page }) {
           <>
             <Button
               onPress={() => {
-                showComment("Approve");
+                showComment("Setujui");
               }}
               mode="contained"
               style={[
@@ -714,7 +733,7 @@ function ActionInprogress({ id, data, page }) {
               Approve
             </Button>
             <Button
-              onPress={() => showComment("Return")}
+              onPress={() => showComment("Revisi")}
               mode="contained"
               style={[
                 {
@@ -738,7 +757,7 @@ function ActionInprogress({ id, data, page }) {
               Return To Composer
             </Button>
             <Button
-              onPress={() => showComment("Reject")}
+              onPress={() => showComment("Batalkan")}
               mode="contained"
               style={[
                 {
@@ -757,7 +776,7 @@ function ActionInprogress({ id, data, page }) {
               <View style={styles.button}>
                 <Button
                   onPress={() => {
-                    showComment("Approve", page);
+                    showComment("Setujui", page);
                   }}
                   mode="contained"
                   style={[{ backgroundColor: GlobalStyles.colors.approve }]}
@@ -767,7 +786,7 @@ function ActionInprogress({ id, data, page }) {
               </View>
               <View style={styles.button}>
                 <Button
-                  onPress={() => showComment("Return", page)}
+                  onPress={() => showComment("Revisi", page)}
                   mode="contained"
                   style={[{ backgroundColor: GlobalStyles.colors.return }]}
                 >
@@ -790,7 +809,7 @@ function ActionInprogress({ id, data, page }) {
               </View>
               <View style={styles.button}>
                 <Button
-                  onPress={() => showComment("Reject", page)}
+                  onPress={() => showComment("Batalkan", page)}
                   mode="contained"
                   style={[{ backgroundColor: GlobalStyles.colors.reject }]}
                 >
@@ -799,6 +818,121 @@ function ActionInprogress({ id, data, page }) {
               </View>
             </View>
           </View>
+        )}
+      </View> */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 10,
+          gap: 10,
+        }}
+      >
+        {page == "edit" && data?.state == "rns" && (
+          <>
+            <TouchableOpacity
+              onPress={() => {
+                showConfirm();
+              }}
+              style={{
+                backgroundColor: COLORS.info,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="save" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Kirim", page);
+              }}
+              style={{
+                backgroundColor: COLORS.success,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="send" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+          </>
+        )}
+        {data?.state == "finish" && page != "edit" && (
+          <TouchableOpacity
+            onPress={() => {
+              showComment("Selesaikan", page);
+            }}
+            style={{
+              backgroundColor: COLORS.success,
+              width: 35,
+              height: 35,
+              borderRadius: 25,
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Ionicons name="checkmark-sharp" size={20} color={COLORS.white} />
+          </TouchableOpacity>
+        )}
+        {data?.state != "rns" && data?.state != "finish" && page != "edit" && (
+          <>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Setujui", page);
+              }}
+              style={{
+                backgroundColor: COLORS.success,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="send-outline" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Revisi", page);
+              }}
+              style={{
+                backgroundColor: GlobalStyles.colors.yellow,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="arrow-back" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Batalkan", page);
+              }}
+              style={{
+                backgroundColor: COLORS.danger,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="close" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+          </>
         )}
       </View>
 
@@ -820,23 +954,23 @@ function ActionInprogress({ id, data, page }) {
                 style={
                   page == "edit"
                     ? [styles.contentContainer, { margin: 16 }]
-                    : styles.contentContainer
+                    : [styles.contentContainer, { margin: 16 }]
                 }
               >
                 <View style={{ flexDirection: "row" }}>
-                  <Text>Comment - </Text>
+                  <Text>Komentar - </Text>
                   <Text
                     style={{
                       color:
-                        tipe == "Approve"
+                        tipe == "Setujui" || tipe == "Selesaikan"
                           ? GlobalStyles.colors.approve
-                          : tipe == "Return"
-                            ? GlobalStyles.colors.return
-                            : tipe == "Return To Composer"
-                              ? GlobalStyles.colors.returntocomposer
-                              : tipe == "Reject"
-                                ? GlobalStyles.colors.reject
-                                : GlobalStyles.colors.blue,
+                          : tipe == "Revisi"
+                          ? GlobalStyles.colors.return
+                          : tipe == "Return To Composer"
+                          ? GlobalStyles.colors.returntocomposer
+                          : tipe == "Batalkan"
+                          ? GlobalStyles.colors.reject
+                          : GlobalStyles.colors.blue,
                     }}
                   >
                     {tipe}
@@ -854,21 +988,21 @@ function ActionInprogress({ id, data, page }) {
                   style={[
                     {
                       backgroundColor:
-                        tipe == "Approve"
+                        tipe == "Setujui" || tipe == "Selesaikan"
                           ? GlobalStyles.colors.approve
-                          : tipe == "Return"
-                            ? GlobalStyles.colors.return
-                            : tipe == "Return To Composer"
-                              ? GlobalStyles.colors.returntocomposer
-                              : tipe == "Reject"
-                                ? GlobalStyles.colors.reject
-                                : GlobalStyles.colors.blue,
+                          : tipe == "Revisi"
+                          ? GlobalStyles.colors.return
+                          : tipe == "Return To Composer"
+                          ? GlobalStyles.colors.returntocomposer
+                          : tipe == "Batalkan"
+                          ? GlobalStyles.colors.reject
+                          : GlobalStyles.colors.blue,
                       marginBottom: 16,
                     },
                   ]}
                   onPress={() => submitComment()}
                 >
-                  Submit
+                  Kirim
                 </Button>
                 <Button
                   mode="contained"
@@ -883,7 +1017,7 @@ function ActionInprogress({ id, data, page }) {
                     setComment("");
                   }}
                 >
-                  Cancel
+                  Kembali
                 </Button>
               </View>
             </BottomSheetModal>

@@ -103,6 +103,7 @@ export const Config = {
     lettersubmit: extra.api.lettersubmit,
     letteridsave: extra.api.letteridsave,
     letteridapprove: extra.api.letteridapprove,
+    letteridfinish: extra.api.letteridfinish,
     letteridreturn: extra.api.letteridreturn,
     letteridreturntokonseptor: extra.api.letteridreturntokonseptor,
     letteridreject: extra.api.letteridreject,

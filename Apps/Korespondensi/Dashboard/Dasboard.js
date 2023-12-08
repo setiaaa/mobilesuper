@@ -16,15 +16,10 @@ function Dashboard() {
   let [addDeleSekre, setAddDeleSekre] = useState(false);
   let routes;
   const [listMySecre, setMySecre] = useState([]);
-  const willFocusSubscription = navigation.addListener("focus", () => {
-    getMySecretary();
-    getProfileTitle("return");
-  });
 
   useEffect(() => {
     getMySecretary();
     getProfileTitle("init");
-    return willFocusSubscription;
   }, [dataNotif]);
   async function getMySecretary() {
     try {
@@ -33,9 +28,9 @@ function Dashboard() {
       setMySecre(response.data);
     } catch (error) {
       if (error.response.status == null && error.status == null) {
-        Alert.alert("Warning!", "Please check your connection");
+        Alert.alert("Peringatan!", "Silakan cek koneksi anda");
       } else {
-        handlerError(error, "Warning!", "Secretary list not working!");
+        handlerError(error, "Peringatan!", "My Sekretaris tidak berfungsi!");
       }
     }
   }
@@ -78,7 +73,7 @@ function Dashboard() {
     } catch (error) {
       if (error.response.status == null && error.status == null) {
       } else {
-        handlerError(error, "Warning!", "Profile Title not working!");
+        handlerError(error, "Peringatan!", "Jabatan profil tidak berfungsi!");
         // Alert.alert("Warning!", "Profile Title not working!");
       }
     }

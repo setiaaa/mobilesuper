@@ -765,7 +765,7 @@ export const TambahCutiSakit = () => {
             </View>
           </View>
 
-          <View style={{ padding: 20, gap: 20 }}>
+          <View style={{ padding: 20, gap: 10 }}>
             <View style={{ gap: 10 }}>
               <View
                 style={{
@@ -1796,13 +1796,12 @@ export const TambahCutiSakit = () => {
               </>
             )}
 
-            <View style={{ paddingHorizontal: 20, paddingBottom: 10 }}>
+            <View>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-evenly",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  columnGap: 50,
                 }}
               >
                 <View
@@ -1958,7 +1957,7 @@ export const TambahCutiSakit = () => {
               </BottomSheetView>
             </BottomSheetModal>
 
-            <View style={{ gap: 10 }}>
+            <View>
               <View
                 style={{
                   flexDirection: "row",
@@ -2080,6 +2079,7 @@ export const TambahCutiSakit = () => {
               style={{
                 flexDirection: "row",
                 gap: 10,
+                marginTop: 10,
                 paddingBottom: 10,
               }}
             >

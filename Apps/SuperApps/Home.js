@@ -43,7 +43,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { CardVisiMisi } from "../../components/CardVisiMisi";
 import { CardVideo } from "../../components/CardVideo";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -186,7 +186,7 @@ export const Home = () => {
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
-        {loading ? <Loading /> : null}
+        {loading === true ? <Loading /> : null}
         <ScrollView>
           <View
             style={{

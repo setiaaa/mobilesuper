@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -14,6 +14,7 @@ import { removeTokenValue } from "../../service/session";
 import { setLogout } from "../../store/LoginAuth";
 import { Loading } from "../../components/Loading";
 import { Alert } from "react-native";
+import { setProfile } from "../../store/SuperApps";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -23,7 +24,7 @@ export const Profile = () => {
   );
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
   return (
-    < >
+    <>
       {loading ? <Loading /> : null}
       <ScrollView>
         <View
@@ -329,10 +330,11 @@ export const Profile = () => {
                     onPress: () => {
                       removeTokenValue();
                       dispatch(setLogout());
+                      dispatch(setProfile({}));
                       navigation.reset({
                         index: 0,
-                        routes: [{ name: 'LoginToken' }] 
-                      })
+                        routes: [{ name: "LoginToken" }],
+                      });
                     },
                   },
                 ]
@@ -343,6 +345,6 @@ export const Profile = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </ >
+    </>
   );
 };

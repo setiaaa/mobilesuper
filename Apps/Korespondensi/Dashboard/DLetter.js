@@ -5,11 +5,13 @@ import CardDLetter from "../../../components/UI/CardDLetter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
+import { useSelector } from "react-redux";
 
 function DLetter() {
   const navigation = useNavigation();
   let [isCounter, setIsCounter] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
+  const token = useSelector((state) => state.auth.token);
   const icon = [
     {
       icon: "email-edit-outline",
@@ -32,28 +34,6 @@ function DLetter() {
       navName: "ConceptNumb",
     },
   ];
-
-  const willFocusSubscription = navigation.addListener("focus", () => {
-    setIsCounter([
-      { count: 1, type: "onprogress", value: "-" },
-      {
-        count: 2,
-        type: "agenda_in",
-        value: "-",
-      },
-      {
-        count: 3,
-        type: "agenda_disposition",
-        value: "-",
-      },
-      {
-        count: 4,
-        type: "draft",
-        value: "-",
-      },
-    ]);
-    getisCounter();
-  });
   useEffect(() => {
     setIsCounter([
       { count: 1, type: "onprogress", value: "-" },
@@ -75,8 +55,7 @@ function DLetter() {
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
-    return willFocusSubscription;
-  }, []);
+  }, [token]);
 
   async function getisCounter() {
     setIsLoading(true);
@@ -106,7 +85,7 @@ function DLetter() {
           },
         ]);
       } else {
-        handlerError(error, "Warning!", "Counter DLetter not working!");
+        handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
       }
       setIsLoading(false);
     }

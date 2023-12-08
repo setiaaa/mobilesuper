@@ -121,6 +121,7 @@ export const HariIni = () => {
                                         ) : null
                                     }
                                     onEndReached={loadMore}
+                                    style={{ height:"95%"}}
                                 />
                             </View>
                         )

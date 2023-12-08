@@ -14,7 +14,7 @@ function MyTabDigitalSign({ props, navigation }) {
     const roleLaporan = ['LAPORAN_BSRE'];
 
     const hasRequiredRoles = (userRoles, appRoles) => {
-        return appRoles.some(role => userRoles.includes(role));
+        return appRoles.some(role => userRoles?.includes(role));
     };
 
     return (

@@ -11,6 +11,13 @@ import { useNavigation } from "@react-navigation/native";
 // import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONTSIZE } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { Dimensions } from "react-native";
+
+const numColumns = 3;
 
 export const CardAppsB = ({ handlePressModal }) => {
   const navigation = useNavigation();
@@ -39,7 +46,12 @@ export const CardAppsB = ({ handlePressModal }) => {
     let tmpMenu = [];
     tmpMenu.push(
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("Drawer")}>
           <View
@@ -71,7 +83,12 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MainKeb")}>
           <View
@@ -103,7 +120,12 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity
           onPress={() => navigation.navigate("MainPengetahuan")}
@@ -138,7 +160,12 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MyTask")}>
           <View
@@ -174,7 +201,12 @@ export const CardAppsB = ({ handlePressModal }) => {
     if (isRolePreShare) {
       tmpMenu.push(
         <View
-          style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("MainRepo")}>
             <View
@@ -211,7 +243,12 @@ export const CardAppsB = ({ handlePressModal }) => {
     if (isRoleKalender) {
       tmpMenu.push(
         <View
-          style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("GrupKalender")}>
             <View
@@ -259,7 +296,12 @@ export const CardAppsB = ({ handlePressModal }) => {
     if (isRoleEvent) {
       tmpMenu.push(
         <View
-          style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("HalamanUtama")}>
             <View
@@ -294,7 +336,12 @@ export const CardAppsB = ({ handlePressModal }) => {
     }
     tmpMenu.push(
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity
           onPress={() => navigation.navigate("MainDigitalSign")}
@@ -329,7 +376,12 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("ListPegawai")}>
           <View
@@ -361,7 +413,12 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
           <View
@@ -393,7 +450,12 @@ export const CardAppsB = ({ handlePressModal }) => {
         </Text>
       </View>,
       <View
-        style={{ justifyContent: "center", alignItems: "center", width: 100 }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("MainCuti")}>
           <View
@@ -431,23 +493,48 @@ export const CardAppsB = ({ handlePressModal }) => {
 
   const numRows = Math.ceil(listMenu.length / 3);
 
-  const renderRow = ({ item }) => (
-    <View style={{ flexDirection: "row", gap: 25, marginBottom: 15 }}>
-      {item}
-    </View>
-  );
+  const renderRow = ({ item }) => {
+    if (item.empty === true) {
+      return <View style={[styles.item, styles.itemInvisible]} />;
+    }
+    return (
+      <View style={styles.item}>
+        <Text style={styles.itemText}>{item}</Text>
+      </View>
+    );
+  };
 
   const rows = Array.from({ length: numRows }, (_, rowIndex) =>
     listMenu.slice(rowIndex * 3, rowIndex * 3 + 3)
   );
 
+  const formatData = (data, numColumns) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+      numberOfElementsLastRow++;
+    }
+
+    return data;
+  };
+
   return (
     <View>
       <FlatList
-        style={{ padding: 20, gap: 20 }}
-        data={rows}
-        keyExtractor={(row, index) => `row_${index}`}
+        data={formatData(listMenu, numColumns)}
         renderItem={renderRow}
+        keyExtractor={(row, index) => `row_${index}`}
+        columnWrapperStyle={{
+          justifyContent: "space-between",
+          marginHorizontal: 15,
+          gap: 5,
+        }}
+        numColumns={numColumns}
       />
     </View>
   );
@@ -465,5 +552,18 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 8,
+  },
+  item: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    margin: 1,
+    height: Dimensions.get("window").width / numColumns, // approximate a square
+  },
+  itemInvisible: {
+    backgroundColor: "transparent",
+  },
+  itemText: {
+    color: "#fff",
   },
 });

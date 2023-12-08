@@ -32,12 +32,15 @@ import {
 import { initLetter } from "../../../utils/agenda";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
+import { useNavigation } from "@react-navigation/core";
 
 function NeedFollowUpDetail({ route }) {
   let id = route.params.id;
   const [isLoading, setisLoading] = useState(true);
   const [detail, setDetail] = useState();
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const getLettersDetail = async () => {
     setisLoading(true);
     try {
@@ -52,9 +55,12 @@ function NeedFollowUpDetail({ route }) {
       //set data edit
       setDataEdit(response?.data);
     } catch (error) {
-      handlerError(error, "Warning", "Need Follow Up detail not working");
+      handlerError(
+        error,
+        "Peringatan",
+        "Detail surat keluar perlu diproses tidak berfungsi"
+      );
       navigation.goBack();
-      console.log(error.response);
     }
     setisLoading(false);
   };
@@ -171,14 +177,14 @@ function NeedFollowUpDetail({ route }) {
     routes = [
       { key: "info", title: "Info", icon: "alert-circle-outline" },
       { key: "attachment", title: "Attachment", icon: "attachment" },
-      { key: "comment", title: "Comment", icon: "forum" },
+      { key: "comment", title: "Komentar", icon: "forum" },
       { key: "edit", title: "Edit", icon: "pencil" },
     ];
   } else {
     routes = [
       { key: "info", title: "Info", icon: "alert-circle-outline" },
       { key: "attachment", title: "Attachment", icon: "attachment" },
-      { key: "comment", title: "Comment", icon: "forum" },
+      { key: "comment", title: "Komentar", icon: "forum" },
     ];
   }
 

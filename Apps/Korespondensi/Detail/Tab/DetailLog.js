@@ -1,17 +1,25 @@
 import moment from "moment";
 import { last } from "ramda";
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { Avatar, Card, IconButton, Text } from "react-native-paper";
 import LoadingOverlay from "../../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../../constants/styles";
 import { nde_api } from "../../../../utils/api.config";
 import { getHTTP } from "../../../../utils/http";
+import RenderHTML from "react-native-render-html";
 
 function DetailLog({ route, data }) {
   const [id, setId] = useState();
   const [log, setLog] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { width } = useWindowDimensions();
   useEffect(() => {
     if (data == undefined) {
       //getlogapi
@@ -57,7 +65,7 @@ function DetailLog({ route, data }) {
       {loadingOverlay}
       <View style={styles.screen}>
         <View style={{ marginBottom: 6 }}>
-          <Text>Log Disposition</Text>
+          <Text>My Disposisi</Text>
         </View>
         {log &&
           log.map((item, index) => (
@@ -70,7 +78,7 @@ function DetailLog({ route, data }) {
                       styles.badgeText,
                     ]}
                   >
-                    Log Disposition {index + 1}
+                    My Disposisi {index + 1}
                   </Text>
                 </View>
                 <View style={styles.headerDate}>
@@ -80,28 +88,27 @@ function DetailLog({ route, data }) {
                 </View>
               </View>
               <View style={[styles.row, { paddingTop: 16 }]}>
-                <Text>Diteruskan Dari</Text>
+                <Text style={styles.title}>Diteruskan Dari</Text>
               </View>
               <Card.Title
-                style={styles.containerCardTitle}
+                style={[styles.containerCardTitle]}
                 title={<Text numberOfLines={3}>{item.creator_name}</Text>}
                 titleNumberOfLines={5}
               />
+              <View style={[styles.row, { marginBottom: 12 }]}>
+                <RenderHTML
+                  source={{ html: item?.message }}
+                  contentWidth={width}
+                />
+              </View>
               <View style={styles.row}>
-                <Text>Diteruskan Kepada</Text>
+                <Text style={styles.title}>Diteruskan Kepada</Text>
               </View>
               <Card.Title
-                style={styles.containerCardTitle}
-                title={
-                  <>
-                    <Text>{item.receivers.replace(/;/g, "\n")}</Text>
-                  </>
-                }
+                style={[styles.containerCardTitle, { marginBottom: 12 }]}
+                title={<Text>{item.receivers.replace(/;/g, "\n")}</Text>}
                 titleNumberOfLines={100}
               />
-              <View style={styles.container}>
-                <Text style={{ textAlign: "center" }}>{item?.message}</Text>
-              </View>
             </Card>
           ))}
 

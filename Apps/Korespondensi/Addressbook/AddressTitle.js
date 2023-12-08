@@ -100,10 +100,10 @@ function AddressbookTitle({
   useEffect(() => {
     //set fu/cfu divisi dan default unit
     cekAsyncProfileOrg();
-    setselectedUnit(profileOrganization?.unit?.id);
-    getDiv(profileOrganization?.unit?.id);
-    setselectedDivision(profileOrganization?.division?.id);
-    getTitleHirarki(profileOrganization?.division?.id);
+    setselectedUnit(profileOrganization?.fucfu_id);
+    getDiv(profileOrganization?.fucfu_id);
+    setselectedDivision(profileOrganization?.division_id);
+    getTitleHirarki(profileOrganization?.division_id);
     // get data
     if (searchQuery) {
       getTitleSearch();
@@ -185,7 +185,7 @@ function AddressbookTitle({
       let response = await getHTTP(
         nde_api.titleSearch
           .replace("{$word}", searchQuery)
-          .replace("{$id}", profileOrganization?.division.id)
+          .replace("{$id}", profileOrganization?.division_id)
       );
       setSearchShow(true);
       setsearchList(response.data);

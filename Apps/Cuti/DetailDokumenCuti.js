@@ -1384,13 +1384,12 @@ export const DetailDokumenCuti = ({ route }) => {
               </View>
             </View> */}
           </View>
-          <View style={{ paddingHorizontal: 20, paddingBottom: 10 }}>
+          <View style={{ paddingHorizontal: 20 }}>
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                columnGap: 50,
+                justifyContent: "space-between",
+                alignItems: "center"
               }}
             >
               <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
@@ -1447,6 +1446,7 @@ export const DetailDokumenCuti = ({ route }) => {
                 style={{
                   marginHorizontal: 20,
                   marginTop: 20,
+                  marginBottom: 5,
                   flexDirection: "row",
                   justifyContent: "space-between",
                   padding: 10,
@@ -1572,7 +1572,7 @@ export const DetailDokumenCuti = ({ route }) => {
           {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress" &&
           approval.approval === true ? (
             <>
-              <View style={{ padding: 20, gap: 10 }}>
+              <View style={{ paddingHorizontal: 20, paddingTop: 10, gap: 10, }}>
                 <View
                   style={{ flexDirection: "row", padding: 5, columnGap: 10 }}
                 >

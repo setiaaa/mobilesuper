@@ -44,7 +44,7 @@ function DispositionDetail({ route }) {
       }
       setisLoading(false);
     } catch (error) {
-      handlerError(error, "Warning", "Disposition detail not working");
+      handlerError(error, "Peringatan", "Disposisi tidak berfungsi");
       navigation.goBack();
       setisLoading(false);
     }
@@ -72,7 +72,7 @@ function DispositionDetail({ route }) {
       { key: "info", title: "Info", icon: "alert-circle-outline" },
       { key: "log", title: "Log", icon: "clipboard-text" },
       { key: "attachment", title: "Attachment", icon: "attachment" },
-      { key: "dispo", title: "Disposition", icon: "share" },
+      { key: "dispo", title: "Disposisi", icon: "share" },
     ];
   }
   const loadingOverlay = (
