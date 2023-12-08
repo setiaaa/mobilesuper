@@ -5,11 +5,13 @@ import CardDLetter from "../../../components/UI/CardDLetter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
+import { useSelector } from "react-redux";
 
 function DLetter() {
   const navigation = useNavigation();
   let [isCounter, setIsCounter] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
+  const token = useSelector((state) => state.auth.token);
   const icon = [
     {
       icon: "email-edit-outline",
@@ -53,7 +55,7 @@ function DLetter() {
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
-  }, []);
+  }, [token]);
 
   async function getisCounter() {
     setIsLoading(true);

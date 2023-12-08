@@ -273,16 +273,28 @@ const CustomDrawerContent = (props) => {
           </Text>
         ))}
       </View>
-      <View style={styles.containerProfile}>
+      <View
+        style={[
+          styles.containerProfile,
+          { flexDirection: "row", gap: 10, marginLeft: 20 },
+        ]}
+      >
         <TextInput
           editable
           multiline
-          numberOfLines={4}
-          maxLength={40}
           placeholder="Masukan Token"
           onChangeText={setInputToken}
-          style={{ padding: 10, height: 40, borderWidth: 1, width: "90%" }}
+          style={{ padding: 10, height: 40, borderWidth: 1, width: "80%" }}
         />
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(setToken({ token: inputToken }));
+            setDrawerItemIndex(2);
+            props.navigation.navigate("Dashboard");
+          }}
+        >
+          <Ionicons name="send-outline" size={24} />
+        </TouchableOpacity>
       </View>
       <Drawer.Section style={{ marginHorizontal: -5 }}>
         <Drawer.Item

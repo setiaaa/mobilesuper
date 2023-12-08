@@ -1,7 +1,7 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Fragment, useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CardDelegation from "../../../components/UI/CardDelegation";
 import { GlobalStyles } from "../../../constants/styles";
 import { removeAll } from "../../../store/addressbook";
@@ -16,6 +16,7 @@ function DDelegation({ add }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let [listMyDelegation, setMyDelegation] = useState([]);
+  const token = useSelector((state) => state.auth.token);
   useFocusEffect(
     useCallback(() => {
       getMyDelegation();
@@ -24,7 +25,7 @@ function DDelegation({ add }) {
 
   useEffect(() => {
     getMyDelegation();
-  }, []);
+  }, [token]);
 
   async function getMyDelegation() {
     try {
