@@ -124,7 +124,7 @@ export const AddressBookPegawai = ({ route }) => {
     }
   }, [search]);
 
-  console.log(addressbook?.employee);
+  // console.log(addressbook?.employee);
   return (
     <View style={{ height: "95%", paddingVertical: 10 }}>
       {/* <View style={{ flexDirection: "row", backgroundColor: COLORS.infoLight }}>
