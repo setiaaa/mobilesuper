@@ -24,7 +24,7 @@ const CHART_POST = BASE_URL + "mp/mypost/chart/post/";
 const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
 const digitalSign = BASE_URL + "digitalsign/";
-const attachmentExport = BASE_URL + "attachment/"
+const attachmentExport = BASE_URL + "attachment/";
 
 const SUMMARY_TOTAL_POST = BASE_URL + "mp/admin/summary/total-post/";
 const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
@@ -610,11 +610,23 @@ export const getDivision = createAsyncThunk(
 );
 export const getEmployee = createAsyncThunk(
   "calendar/getEmployee",
-  async (token) => {
-    const respon = await axios.get(`${addressbook}addressbook/employee/`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.results;
+  async ({ token, search }) => {
+    console.log(token);
+    console.log(search);
+    if (search === "") {
+      const respon = await axios.get(`${addressbook}addressbook/employee/`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    } else {
+      const respon = await axios.get(
+        `${addressbook}addressbook/employee/?search=${search}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      return respon?.data.results;
+    }
   }
 );
 export const getDivisionTree = createAsyncThunk(
