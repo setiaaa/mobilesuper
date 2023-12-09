@@ -27,6 +27,10 @@ import {
 } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { CardItemMember } from "../../components/CardItemMember";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export const DetailEvent = () => {
   const navigation = useNavigation();
@@ -217,7 +221,7 @@ export const DetailEvent = () => {
                     height={20}
                   />
                 ) : (
-                  <>
+                  <View style={{width:wp(5), backgroundColor:"yellow"}}>
                     {data?.start_date !== "" && data?.start_date !== null ? (
                       <Text>
                         {moment(data.start_date).format("d MMM yyy")} -{" "}
@@ -230,7 +234,7 @@ export const DetailEvent = () => {
                     ) : (
                       ""
                     )}
-                  </>
+                  </View>
                 )}
               </View>
 
