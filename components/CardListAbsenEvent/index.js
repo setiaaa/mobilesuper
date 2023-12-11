@@ -7,6 +7,10 @@ import moment from "moment"
 import { TouchableOpacity } from "react-native"
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder"
 import { LinearGradient } from "expo-linear-gradient"
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+  } from "react-native-responsive-screen";
 
 export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventpic, loading }) => {
     const [user, setUser] = useState('member')
@@ -43,7 +47,7 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                 )}
                 <View style={{ marginTop: 10 }}>
 
-                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', gap: wp(4), alignItems: 'center' }}>
                         <Text style={{ width: 110, color: COLORS.lighter }}>Status</Text>
                         {loading ? (
                             <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
@@ -63,7 +67,7 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                         )}
                     </View>
 
-                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', gap:wp(2) }}>
                         {user === 'admin' && checkIn === '' ? (
                             <TouchableOpacity style={{
                                 width: 97,
@@ -91,14 +95,14 @@ export const CardListAbsenEvent = ({ item, role, setScanData, setIdAbsen, eventp
                                 <Text style={{ color: COLORS.white }}>Check In</Text>
                             </TouchableOpacity>
                         ) : (
-                            <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row' }}>
-                                <Text style={{ width: 120, color: COLORS.lighter }}>Waktu Check In</Text>
+                            <View style={{ alignItems: 'center', marginTop: 10, flexDirection: 'row', gap:wp(2) }}>
+                                <Text style={{ width: "35%", color: COLORS.lighter }}>Waktu Check In</Text>
                                 {loading ? (
                                     <View style={{ width: 200, }}>
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     </View>
                                 ) : (
-                                    <View style={{ width: 180, height: 24, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
+                                    <View style={{ width: wp(52), paddingHorizontal:3, paddingVertical:1, borderRadius: 30, backgroundColor: COLORS.ExtraDivinder, justifyContent: 'center', alignItems: 'center' }}>
                                         <Text>{moment(item.updated_at, 'HH:mm:ss').format(DATETIME.LONG_DATETIME)}</Text>
                                     </View>
                                 )}

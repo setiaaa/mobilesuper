@@ -311,7 +311,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 QR Code
               </Text>
               {loading ? (
@@ -338,7 +338,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Tanggal
               </Text>
               {loading ? (
@@ -350,7 +350,7 @@ export const DetailAgenda = () => {
               ) : data.date === null ? (
                 <Text>-</Text>
               ) : (
-                <Text>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
+                <Text style={{width:"55%"}}>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
               )}
             </View>
 
@@ -365,7 +365,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Waktu
               </Text>
               {loading ? (
@@ -377,7 +377,7 @@ export const DetailAgenda = () => {
               ) : data.start_time === null || data.end_time === null ? (
                 <Text>-</Text>
               ) : (
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row",width:"55%" }}>
                   <Text style={{ marginTop: 5 }}>
                     {moment(data.start_time, "HH:mm:ss").format("HH:mm")} -{" "}
                   </Text>
@@ -399,7 +399,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Tempat
               </Text>
               {loading ? (
@@ -411,7 +411,7 @@ export const DetailAgenda = () => {
               ) : data.location === null ? (
                 <Text>-</Text>
               ) : (
-                <Text style={{ width: 156 }}>{data.location}</Text>
+                <Text style={{ width: "55%" }}>{data.location}</Text>
               )}
             </View>
 
@@ -426,7 +426,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 PIC
               </Text>
               {/* <Image source={{ uri: data.extra_attrs?.pic?.avatar_url }} style={{ width: 26, height: 26, borderRadius: 50 }} /> */}
@@ -439,7 +439,7 @@ export const DetailAgenda = () => {
               ) : data.extra_attrs === null ? (
                 <Text>-</Text>
               ) : (
-                <Text style={{ width: 150 }}>
+                <Text style={{ width: "55%" }}>
                   {data.extra_attrs?.pic.title.name}
                 </Text>
               )}
@@ -476,7 +476,7 @@ export const DetailAgenda = () => {
                         </View>  */}
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Peserta Agenda
               </Text>
               {loading ? (
@@ -582,7 +582,7 @@ export const DetailAgenda = () => {
                         <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
 
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Internal</Text>
+                            <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Internal</Text>
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
@@ -612,7 +612,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Tamu Agenda Eksternal
               </Text>
               {loading ? (
@@ -624,7 +624,7 @@ export const DetailAgenda = () => {
               ) : data.extra_attrs.guest_external.length === 0 ? (
                 <Text>-</Text>
               ) : (
-                <View style={{ position: "relative", flexDirection: "column" }}>
+                <View style={{ position: "relative", flexDirection: "column",width:"55%" }}>
                   {data.extra_attrs?.guest_external?.map((data, index) => (
                     <View key={index} style={{ flexDirection: "row", gap: 10 }}>
                       <Text>-</Text>

@@ -252,14 +252,14 @@ export const DetailTodo = () => {
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                                 <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Todo</Text>
+                                    <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>Todo</Text>
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
                                         detail.name === null ? (
                                             <Text>-</Text>
                                         ) : (
-                                            <Text style={{ width: 150 }}>{detail.name}</Text>
+                                            <Text style={{ width: "55%" }}>{detail.name}</Text>
                                         )
                                     )}
                                 </View>
@@ -268,14 +268,14 @@ export const DetailTodo = () => {
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                                 <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tenggat Waktu</Text>
+                                    <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>Tenggat Waktu</Text>
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
                                         detail.due_date === null ? (
                                             <Text>-</Text>
                                         ) : (
-                                            <Text>{detail.due_date}</Text>
+                                            <Text style={{width:"55%"}}>{detail.due_date}</Text>
                                         )
                                     )}
                                 </View>
@@ -284,14 +284,14 @@ export const DetailTodo = () => {
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                                 <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
+                                    <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>Tanggal</Text>
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
                                         agendaDetail.date === null ? (
                                             <Text>-</Text>
                                         ) : (
-                                            <Text>{agendaDetail.date}</Text>
+                                            <Text style={{width:"55%"}}>{agendaDetail.date}</Text>
                                         )
                                     )}
                                 </View>
@@ -300,11 +300,11 @@ export const DetailTodo = () => {
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                                 <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
+                                    <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>Waktu</Text>
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
-                                        <View style={{ flexDirection: 'row' }}>
+                                        <View style={{ flexDirection: 'row', width:"55%" }}>
                                             {agendaDetail.start_time === null ? (
                                                 <Text>/</Text>
                                             ) : (
@@ -325,14 +325,14 @@ export const DetailTodo = () => {
                                 <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 10 }} />
 
                                 <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
+                                    <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>Tempat</Text>
                                     {loading ? (
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                                     ) : (
                                         agendaDetail.location === null ? (
                                             <Text>-</Text>
                                         ) : (
-                                            <Text>{agendaDetail.location}</Text>
+                                            <Text style={{width:"55%"}}>{agendaDetail.location}</Text>
                                         )
                                     )}
                                 </View>

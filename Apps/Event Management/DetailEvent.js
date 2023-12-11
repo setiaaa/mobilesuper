@@ -150,7 +150,7 @@ export const DetailEvent = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  gap: 20,
+                  gap: wp(6),
                   alignItems: "center",
                 }}
               >
@@ -165,7 +165,7 @@ export const DetailEvent = () => {
                     style={{
                       fontSize: FONTSIZE.Judul,
                       fontWeight: FONTWEIGHT.bold,
-                      width: 200,
+                      width: "55%",
                     }}
                   >
                     {data.title}
@@ -211,7 +211,7 @@ export const DetailEvent = () => {
               />
 
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                   Tanggal
                 </Text>
                 {loading ? (
@@ -221,7 +221,7 @@ export const DetailEvent = () => {
                     height={20}
                   />
                 ) : (
-                  <View style={{width:wp(5), backgroundColor:"yellow"}}>
+                  <View style={{width:"55%",}}>
                     {data?.start_date !== "" && data?.start_date !== null ? (
                       <Text>
                         {moment(data.start_date).format("d MMM yyy")} -{" "}
@@ -248,8 +248,8 @@ export const DetailEvent = () => {
                 }}
               />
 
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <View style={{ flexDirection: "row", }}>
+                <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold, }}>
                   Tempat
                 </Text>
                 {loading ? (
@@ -259,7 +259,7 @@ export const DetailEvent = () => {
                     height={20}
                   />
                 ) : (
-                  <Text style={{ width: 156 }}>
+                  <Text style={{ width:"55%",}}>
                     {data?.location !== "" && data?.location !== null
                       ? data.location
                       : "-"}
@@ -278,7 +278,7 @@ export const DetailEvent = () => {
               />
 
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                   Pimpinan Agenda Rapat
                 </Text>
                 {loading ? (
@@ -288,7 +288,7 @@ export const DetailEvent = () => {
                     height={20}
                   />
                 ) : (
-                  <Text style={{ width: 150 }}>
+                  <Text style={{ width: "55%" }}>
                     {data?.extra_attrs?.pic?.title?.name !== "" &&
                       data?.extra_attrs?.pic?.title?.name !== null
                       ? data.extra_attrs?.pic.title.name
@@ -307,7 +307,7 @@ export const DetailEvent = () => {
                 }}
               />
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                   Peserta Agenda Rapat
                 </Text>
                 {loading ? (
@@ -450,7 +450,7 @@ export const DetailEvent = () => {
                 }}
               />
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                   Peserta Agenda Rapat Eksternal
                 </Text>
                 <View>
@@ -472,7 +472,7 @@ export const DetailEvent = () => {
                       >
                         <Text>{"-"}</Text>
                         {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                        <Text style={{ width: 150 }}>{data.name}</Text>
+                        <Text style={{ width: "55%" }}>{data.name}</Text>
                       </View>
                     ))
                   ) : (
@@ -494,7 +494,7 @@ export const DetailEvent = () => {
                 }}
               />
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                   Notulen
                 </Text>
                 {loading ? (
@@ -507,7 +507,7 @@ export const DetailEvent = () => {
                   data.extra_attrs?.notulen?.map((data, index) => (
                     <View key={data.id} style={{ position: "relative" }}>
                       {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                      <Text>{data.nama}</Text>
+                      <Text style={{width:"55%"}}>{data.nama}</Text>
                     </View>
                   ))
                 ) : (
@@ -528,7 +528,7 @@ export const DetailEvent = () => {
                 }}
               />
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+                <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                   Petugas Absen
                 </Text>
                 {loading ? (
@@ -540,7 +540,7 @@ export const DetailEvent = () => {
                 ) : data.extra_attrs?.presensi?.length !== 0 ? (
                   data.extra_attrs?.presensi?.map((item) => (
                     <View>
-                      <Text>{item.nama}</Text>
+                      <Text style={{width:"55%"}}>{item.nama}</Text>
                     </View>
                   ))
                 ) : (

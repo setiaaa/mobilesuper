@@ -12,6 +12,10 @@ import { useEffect } from 'react';
 import { getTokenValue } from '../../service/session';
 import moment from 'moment';
 import { Loading } from '../../components/Loading';
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+  } from "react-native-responsive-screen";
 
 const CardLaporanList = ( {item, token} ) => {
     return (
@@ -199,7 +203,7 @@ export const LaporanDigitalSign = () => {
                         ],
                     }}
                     hide legend
-                    width={350}
+                    width={wp(85)}
                     height={300}
                     chartConfig={{
                         backgroundGradientFrom: COLORS.white,
@@ -301,7 +305,7 @@ export const LaporanDigitalSign = () => {
                         ],
                     }}
                     hide legend
-                    width={350}
+                    width={wp(85)}
                     height={300}
                     chartConfig={{
                         backgroundGradientFrom: COLORS.white,

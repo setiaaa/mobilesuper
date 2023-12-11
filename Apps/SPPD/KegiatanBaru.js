@@ -95,23 +95,13 @@ export const KegiatanBaru = () => {
                 }}
               >
                 <TouchableOpacity onPress={() => setCollapse({ toggle: true })}>
-                  <View style={{ flexDirection: "row", gap: 20 }}>
-                    <View>
+                  <View style={{ flexDirection: "row", justifyContent:"space-between",alignItems:"center" }}>
                       <Ionicons
                         name="calendar-outline"
                         size={24}
                         color={COLORS.primary}
                       />
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text style={{ marginRight: "35%" }}>
-                        {" "}
+                      <Text>
                         Kegiatan Terbaru
                       </Text>
                       {collapse.toggle === true ? (
@@ -123,7 +113,6 @@ export const KegiatanBaru = () => {
                       ) : (
                         <Ionicons name="chevron-down" size={24} />
                       )}
-                    </View>
                   </View>
                 </TouchableOpacity>
 

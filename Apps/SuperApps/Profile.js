@@ -117,7 +117,7 @@ export const Profile = () => {
             style={{
               backgroundColor: COLORS.white,
               width: 177,
-              paddingHorizontal: 20,
+              paddingHorizontal: 10,
               paddingTop: 20,
               borderRadius: 8,
               //shadow ios
@@ -136,22 +136,22 @@ export const Profile = () => {
             </Text>
 
             <View style={{ paddingBottom: 20, }}>
-              <View style={{ flexDirection: "row", marginTop: 20, gap:wp(3) }}>
+              <View style={{ flexDirection: "row", marginTop: 20, gap:wp(2) }}>
                 <Text style={{width:"80%"}}>Jumlah hari kerja</Text>
                 <Text>{profile.working_day}</Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(3) }}>
+              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
                 <Text style={{width:"80%"}}>Jumlah hadir</Text>
                 <Text>{profile.present_day}</Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(3) }}>
+              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
                 <Text style={{width:"80%"}}>Terlambat</Text>
                 <Text>{profile.late_day}</Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(3) }}>
+              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
                 <Text style={{width:"80%"}}>Dinas</Text>
                 <Text>{profile.outstation_day}</Text>
               </View>
@@ -166,8 +166,7 @@ export const Profile = () => {
           <View
             style={{
               backgroundColor: COLORS.white,
-              width: 177,
-              paddingHorizontal: 20,
+              paddingHorizontal: 10,
               paddingTop: 20,
               borderRadius: 8,
               //shadow ios

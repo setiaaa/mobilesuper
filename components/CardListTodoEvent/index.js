@@ -46,7 +46,7 @@ export const CardListTodo = ({ token, item, bottomSheetAttach, role, setIdEdit, 
                     {loading ? (
                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                     ) : (
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, width: 250 }}>{item.name}</Text>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, width: "90%" }}>{item.name}</Text>
                     )}
                     {role.is_pic === true ||
                         role.is_notulensi === true ||

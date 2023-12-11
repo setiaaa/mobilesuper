@@ -12,6 +12,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { CardLiburTahunan } from '../../components/CardLiburTahunan'
 import { Loading } from '../../components/Loading'
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export const Libur = () => {
   const navigation = useNavigation()
@@ -64,19 +68,16 @@ export const Libur = () => {
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: 30, color: COLORS.lighter }}>2023</Text>
             </View>
 
-            <View style={{ paddingHorizontal: 20 }}>
+            <View style={{ paddingHorizontal: 20, }}>
               <View style={{
                 backgroundColor: COLORS.white,
                 padding: 15,
                 borderRadius: 8
               }}>
                 <TouchableOpacity onPress={() => setCollapse({ toggle: true })}>
-                  <View style={{ flexDirection: "row" }}>
-                    <View>
-                      <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                      <Text style={{ marginRight: "35%" }}>Libur Nasional Tahun ini</Text>
+                  <View style={{ flexDirection: "row",alignItems:"center", justifyContent:"space-between" }}>
+                    <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
+                    <Text>Libur Nasional Tahun ini</Text>
                       {collapse.toggle === true ? (
                         <TouchableOpacity onPress={() => setCollapse({ toggle: false })}>
                           <Ionicons name='chevron-up' size={24} />
@@ -84,7 +85,6 @@ export const Libur = () => {
                       ) : (
                         <Ionicons name='chevron-down' size={24} />
                       )}
-                    </View>
                   </View>
                 </TouchableOpacity>
 
@@ -118,20 +118,16 @@ export const Libur = () => {
                 borderRadius: 8
               }}>
                 <TouchableOpacity onPress={() => setCollapseKhusus({ toggle: true })}>
-                  <View style={{ flexDirection: "row"}}>
-                    <View>
-                      <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                      <Text style={{ marginRight: "35%" }}>Libur Khusus Tahun Ini</Text>
-                      {collapseKhusus.toggle === true ? (
-                        <TouchableOpacity onPress={() => setCollapseKhusus({ toggle: false })}>
-                          <Ionicons name='chevron-up' size={24} />
-                        </TouchableOpacity>
-                      ) : (
-                        <Ionicons name='chevron-down' size={24} />
-                      )}
-                    </View>
+                  <View style={{ flexDirection: "row",alignItems:"center", justifyContent:"space-between" }}>
+                    <Ionicons name='calendar-outline' size={24} color={COLORS.primary} />
+                    <Text>Libur Khusus Tahun Ini</Text>
+                    {collapseKhusus.toggle === true ? (
+                      <TouchableOpacity onPress={() => setCollapseKhusus({ toggle: false })}>
+                        <Ionicons name='chevron-up' size={24} />
+                      </TouchableOpacity>
+                    ) : (
+                      <Ionicons name='chevron-down' size={24} />
+                    )}
                   </View>
                 </TouchableOpacity>
 
