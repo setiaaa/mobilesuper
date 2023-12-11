@@ -93,7 +93,7 @@ export const DetailEvent = () => {
 
   const data = event.detailEvent;
 
-  console.log(data.creator.nip);
+  console.log(data?.creator?.nip);
   return (
     <GestureHandlerRootView>
       <ScrollView>
