@@ -610,11 +610,23 @@ export const getDivision = createAsyncThunk(
 );
 export const getEmployee = createAsyncThunk(
   "calendar/getEmployee",
-  async (token) => {
-    const respon = await axios.get(`${addressbook}addressbook/employee/`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.results;
+  async ({ token, search }) => {
+    console.log(token);
+    console.log(search);
+    if (search === "") {
+      const respon = await axios.get(`${addressbook}addressbook/employee/`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    } else {
+      const respon = await axios.get(
+        `${addressbook}addressbook/employee/?search=${search}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      return respon?.data.results;
+    }
   }
 );
 export const getDivisionTree = createAsyncThunk(

@@ -30,8 +30,8 @@ import {
 import moment from "moment";
 import {} from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
-import { TextInput } from "react-native-gesture-handler";import { RefreshControl } from 'react-native';
-
+import { TextInput } from "react-native-gesture-handler";
+import { RefreshControl } from "react-native";
 
 const CardPenilaian = ({ item, token }) => {
   const navigation = useNavigation();
@@ -337,31 +337,31 @@ export const PenilaianPenggetahaun = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '' && isFocused) {
-              let data = {
-                token: token,
-                tahun: year.value,
-                TW: quarter.key,
-                ditinjau: ditinjau,
-                unitKerja: savedUnitKerja.value,
-                page: page,
-                search: search,
-              }
-              // dispatch(getDivision(token))
-              dispatch(getListPenilaian(data))
-              dispatch(getTotalPenilaian(data))
-              // dispatch(getDivisionTree({ token: token, id: kategori.key }))
-          }
-          console.log('Refresh Berhasil')
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "" && isFocused) {
+        let data = {
+          token: token,
+          tahun: year.value,
+          TW: quarter.key,
+          ditinjau: ditinjau,
+          unitKerja: savedUnitKerja.value,
+          page: page,
+          search: search,
+        };
+        // dispatch(getDivision(token))
+        dispatch(getListPenilaian(data));
+        dispatch(getTotalPenilaian(data));
+        // dispatch(getDivisionTree({ token: token, id: kategori.key }))
       }
+      console.log("Refresh Berhasil");
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
 
   // console.log("ditinjau=" + ditinjau);
@@ -561,6 +561,11 @@ export const PenilaianPenggetahaun = () => {
                 <TouchableOpacity
                   onPress={() => {
                     bottomSheetAttachCloseFilter();
+                    setSelectedUnitKerja({
+                      key: "",
+                      value: "",
+                    });
+                    setSavedUnitKerja({ key: "", value: "" });
                   }}
                 >
                   <Text style={{ color: COLORS.danger }}>Batal</Text>
@@ -716,9 +721,9 @@ export const PenilaianPenggetahaun = () => {
             renderItem={({ item }) => (
               <CardPenilaian item={item} token={token} />
             )}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                        }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             style={{ height: 400 }}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={() => <ListEmpty />}
