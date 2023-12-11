@@ -102,7 +102,7 @@ export const CardListAbsenEvent = ({
             )}
           </View>
 
-          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <View style={{ flexDirection: "row", gap: 10, alignItems: "center", gap:wp(2) }}>
             {user === "admin" && checkIn === "" ? (
               <TouchableOpacity
                 style={{

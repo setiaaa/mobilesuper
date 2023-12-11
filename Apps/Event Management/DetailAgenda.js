@@ -591,7 +591,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "55%", fontWeight: FONTWEIGHT.bold }}>
                 Tamu Agenda Internal
               </Text>
               {loading ? (
