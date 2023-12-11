@@ -109,8 +109,6 @@ export const LaporanPengetahuan = () => {
     FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
 
   const downloadFile = async (fileUrl, fileType, type) => {
-    //alert(fileName)
-
     const namafile =
       type === "employe"
         ? exportLaporan?.employee?.file.split("/")
@@ -126,7 +124,8 @@ export const LaporanPengetahuan = () => {
           const { uri } = await downloadResumable.downloadAsync();
           saveAndroidFile(uri, namafile[namafile?.length - 1], fileType);
         } else {
-          saveIosFile(downloadPath);
+          const { uri } = await downloadResumable.downloadAsync();
+          saveIosFile(uri);
         }
       } catch (e) {
         // setIsLoading(false);
@@ -176,8 +175,8 @@ export const LaporanPengetahuan = () => {
   const saveIosFile = async (fileUri) => {
     try {
       await Sharing.shareAsync(fileUri, {
-        mimeType: "application/pdf",
-        dialogTitle: "Share PDF",
+        mimeType: "application/vnd.openxmlformats-",
+        dialogTitle: "Share Excel",
       });
     } catch (error) {
       console.error("Error sharing file:", error);
@@ -834,6 +833,9 @@ export const LaporanPengetahuan = () => {
               {totalPost?.post_waiting}
             </Text>
             <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("PenilaianPenggetahaun");
+              }}
               style={{
                 backgroundColor: COLORS.primary,
                 width: "100%",
