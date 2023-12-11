@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     },
     imageIos: {
         height: 193,
-        width: 350,
+        width: "100%",
         borderRadius: 16,
     },
     imageAndroid: {
         height: 193,
-        width: 369,
+        width: "100%",
         borderRadius: 16,
     },
 });

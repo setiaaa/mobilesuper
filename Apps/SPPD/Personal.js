@@ -336,7 +336,7 @@ export const Personal = () => {
                     fontSize: 11,
                     fontWeight: 400,
                     textAlign: "center",
-                    width: 250,
+                    width: "90%",
                     color: "#6B7280",
                   }}
                 >
@@ -408,7 +408,7 @@ export const Personal = () => {
                     fontSize: 11,
                     fontWeight: 400,
                     textAlign: "center",
-                    width: 250,
+                    width: "90%",
                     color: "#6B7280",
                   }}
                 >
@@ -476,21 +476,19 @@ export const Personal = () => {
                 <Text style={{ fontSize: 13, fontWeight: 600 }}>
                   Jumlah Kota Tujuan
                 </Text>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 400,
-                      textAlign: "center",
-                      width: 250,
-                      color: "#6B7280",
-                    }}
-                  >
-                    Kota Terakhir Didatangi:{" "}
-                    {dashboard.stats?.city?.last_visited}
-                  </Text>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 400,
+                    textAlign: "center",
+                    width: "90%",
+                    color: "#6B7280",
+                  }}
+                >
+                  Kota Terakhir Didatangi:{" "}
+                  {dashboard.stats?.city?.last_visited}
+                </Text>
                   {/* <Text style={{ fontSize: 11, fontWeight: 400, textAlign: "center", width: 250, color: "#6B7280" }}>Pada Tanggal 03 Oktober 2023</Text> */}
-                </View>
               </View>
             </View>
           </View>

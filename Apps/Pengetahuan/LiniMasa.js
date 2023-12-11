@@ -50,6 +50,10 @@ import { RefreshControl } from "react-native";
 import { Portal } from "react-native-portalize";
 import { Divider } from "react-native-paper";
 import { Dropdown } from "../../components/DropDown";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const CardKomen = ({ listData, inputRef, setParentId }) => {
   const [toggleComment, setToggleComment] = useState({
@@ -898,7 +902,7 @@ const CardLiniMasa = ({ item, token }) => {
           marginVertical: 10,
           marginHorizontal: 20,
           justifyContent: "center",
-          gap: 40,
+          gap: wp(8),
           // paddingHorizontal: 16,
           // backgroundColor: "grey",
         }}
@@ -1023,7 +1027,7 @@ const CardLiniMasa = ({ item, token }) => {
           </View>
         </Modal>
 
-        <View style={{ flexDirection: "row", gap: 10 }}>
+        <View style={{ flexDirection: "row" }}>
           <Text style={{ color: COLORS.lighter }}>
             {item.comment_count} Komentar
           </Text>
@@ -1466,7 +1470,9 @@ export const LiniMasa = () => {
   };
 
   useEffect(() => {
-    setFilterData(linimasa.lists);
+    if (filterData.length === 0) {
+      setFilterData(linimasa.lists);
+    }
   }, [linimasa]);
 
   // useEffect(() => {
@@ -1565,6 +1571,8 @@ export const LiniMasa = () => {
       setRefreshing(false);
     }, 2000);
   }, [token, page]);
+
+  console.log(filterData);
 
   return (
     <>

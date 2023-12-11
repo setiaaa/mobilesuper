@@ -10,6 +10,10 @@ import { Text } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder"
 import { LinearGradient } from "expo-linear-gradient"
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+  } from "react-native-responsive-screen";
 
 
 export const CardListDetailAgenda = ({ token, item, bottomSheetAttach, setIdEdit, loading }) => {
@@ -50,7 +54,7 @@ export const CardListDetailAgenda = ({ token, item, bottomSheetAttach, setIdEdit
                     {loading ? (
                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                     ) : (
-                        <Text style={{ fontWeight: FONTWEIGHT.bold, width: 280 }}>{item.title}</Text>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold, width: "90%"}}>{item.title}</Text>
                     )}
                     {
                         event.detailEvent.user_role.is_pic === true ||

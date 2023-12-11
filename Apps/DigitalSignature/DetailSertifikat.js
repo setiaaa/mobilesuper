@@ -172,11 +172,10 @@ export const DetailSertifikat = (route) => {
                 marginTop: 20,
               }}
             >
-              <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
+              <View style={{ marginHorizontal: 20, marginVertical: 20, width:"89%" }}>
                 {loading ? (
                   <ShimmerPlaceHolder
-                    style={{ borderRadius: 4 }}
-                    width={330}
+                    style={{ borderRadius: 4, width:"100%" }}
                     height={20}
                   />
                 ) : (
@@ -189,26 +188,27 @@ export const DetailSertifikat = (route) => {
                     {item?.subject}
                   </Text>
                 )}
-                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20, }}>
+                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold,}}>
                     No Sertifikat
                   </Text>
                   <Text>:</Text>
-                  {loading ? (
-                    <ShimmerPlaceHolder
-                      style={{ borderRadius: 4 }}
-                      width={165}
-                      height={20}
-                    />
-                  ) : (
-                    <Text style={{ width: "50%" }}>
-                      {item?.extra_attributes?.noSertif}
-                    </Text>
-                  )}
+                  <View style={{width: "45%",}}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width:"100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text>
+                        {item?.extra_attributes?.noSertif}
+                      </Text>
+                    )}
+                  </View>
                 </View>
 
-                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20, }}>
+                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold,}}>
                     Penerima Sertifikat
                   </Text>
                   <Text>:</Text>
@@ -217,25 +217,24 @@ export const DetailSertifikat = (route) => {
                       flexDirection: "row",
                       alignItems: "center",
                       gap: 10,
+                      width:"45%"
                     }}
                   >
                     {/* <Image source={item.composer.avatar} /> */}
-                    <View>
+                    <View style={{width:"100%"}}>
                       {loading ? (
                         <ShimmerPlaceHolder
-                          style={{ borderRadius: 4 }}
-                          width={165}
+                          style={{ borderRadius: 4, width:"100%" }}
                           height={20}
                         />
                       ) : (
                         <View>
                           {item.receivers[0]?.display_title !== undefined ? (
-                            <>
+                            <View>
                               <Text
                                 style={{
                                   fontWeight: FONTWEIGHT.bold,
                                   color: COLORS.info,
-                                  width: "80%",
                                   marginBottom: 5,
                                 }}
                               >
@@ -244,16 +243,16 @@ export const DetailSertifikat = (route) => {
                                   : null}
                               </Text>
                               <Text
-                                style={{ color: COLORS.lighter, width: "80%" }}
+                                style={{ color: COLORS.lighter }}
                               >
                                 {item.receivers[0].officer.nama !== undefined
                                   ? item.receivers[0].officer.nama
                                   : null}
                               </Text>
-                            </>
+                            </View>
                           ) : (
                             <Text
-                              style={{ color: COLORS.lighter, width: "80%" }}
+                              style={{ color: COLORS.lighter,}}
                             >
                               {item.receivers[0].nama}
                             </Text>
@@ -264,73 +263,72 @@ export const DetailSertifikat = (route) => {
                   </View>
                 </View>
 
-                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20,}}>
+                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold,}}>
                     Tanggal Dibuat
                   </Text>
-                  <Text>:</Text>
-                  {loading ? (
-                    <ShimmerPlaceHolder
-                      style={{ borderRadius: 4 }}
-                      width={165}
-                      height={20}
-                    />
-                  ) : (
-                    <Text>
-                      {moment(item.extra_attributes?.tanggalSertif).format(
-                        "DD MMMM yyyy"
-                      )}
-                    </Text>
-                  )}
+                  <Text>:</Text> 
+                  <View style={{width:"45%"}}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width:"100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text>
+                        {moment(item.extra_attributes?.tanggalSertif).format(
+                          "DD MMMM yyyy"
+                        )}
+                      </Text>
+                    )}
+                  </View>
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>
+                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                     Judul Course
                   </Text>
                   <Text>:</Text>
-                  {loading ? (
-                    <ShimmerPlaceHolder
-                      style={{ borderRadius: 4 }}
-                      width={165}
-                      height={20}
-                    />
-                  ) : (
-                    <Text style={{ width: "50%" }}>
-                      {item.extra_attributes?.course?.name !== undefined
-                        ? item.extra_attributes?.course?.name
-                        : item.extra_attributes?.nama_course}
-                    </Text>
-                  )}
+                  <View style={{width:"45%"}}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width:"100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text>
+                        {item.extra_attributes?.course?.name !== undefined
+                          ? item.extra_attributes?.course?.name
+                          : item.extra_attributes?.nama_course}
+                      </Text>
+                    )}
+                  </View>
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: 140, fontWeight: FONTWEIGHT.bold }}>
+                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                     keterangan
                   </Text>
                   <Text>:</Text>
-                  {loading ? (
-                    <ShimmerPlaceHolder
-                      style={{ borderRadius: 4 }}
-                      width={165}
-                      height={20}
-                    />
-                  ) : (
-                    <Text style={{ width: "50%" }}>
-                      {item.extra_attributes?.keterangan === undefined ||
-                      item.extra_attributes?.keterangan === ""
-                        ? "-"
-                        : item.extra_attributes?.keterangan}
-                    </Text>
-                  )}
+                  <View style={{width:"45%"}}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width:"100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text>
+                        {item.extra_attributes?.keterangan === undefined ||
+                        item.extra_attributes?.keterangan === ""
+                          ? "-"
+                          : item.extra_attributes?.keterangan}
+                      </Text>
+                    )}
+                  </View>
                 </View>
               </View>
-
-              {item.logs?.map((log) => {
-                tanggalApprove.push(log.created_at);
-              })}
-              {item.approvers?.map((data, index = 0) => {
-                if (index > 0) {
+              {item.approvers?.slice(1).map((data, index) => {
+                //if (index > 0) {
                   return (
                     <View
                       style={{
@@ -379,8 +377,8 @@ export const DetailSertifikat = (route) => {
                             <Text style={{ fontWeight: FONTWEIGHT.bold }}>
                               Penandatangan
                             </Text>
-                            {index < item?.logs?.length ? (
-                              <>
+                            {item.sequence > index ? (
+                              <View style={{flexDirection:"row", width:"60%", justifyContent:"center", alignItems:"center"}}>
                                 <View
                                   style={{
                                     backgroundColor: COLORS.success,
@@ -408,9 +406,9 @@ export const DetailSertifikat = (route) => {
                                     Ditandatangani
                                   </Text>
                                 </View>
-                              </>
+                              </View>
                             ) : (
-                              <>
+                              <View style={{flexDirection:"row", width:"60%", justifyContent:"center", alignItems:"center"}}>
                                 <View
                                   style={{
                                     backgroundColor: COLORS.infoDanger,
@@ -419,6 +417,7 @@ export const DetailSertifikat = (route) => {
                                     width: 20,
                                     justifyContent: "center",
                                     alignItems: "center",
+                                    marginHorizontal:3
                                   }}
                                 >
                                   <Ionicons name="close" color={COLORS.white} />
@@ -435,7 +434,7 @@ export const DetailSertifikat = (route) => {
                                     Belum Ditandatangani
                                   </Text>
                                 </View>
-                              </>
+                              </View>
                             )}
                           </View>
                           <View style={{ flexDirection: "row" }}>
@@ -446,7 +445,8 @@ export const DetailSertifikat = (route) => {
                                 height: 50,
                                 borderRadius: 50,
                                 marginVertical: 10,
-                                marginHorizontal: 5,
+                                marginHorizontal: 10,
+                                marginLeft:5,
                               }}
                             />
                             <View>
@@ -510,7 +510,7 @@ export const DetailSertifikat = (route) => {
                                   )}
                                 </View>
                               )}
-                              {index < item?.logs?.length ? (
+                              {/* {index < item?.logs?.length ? (
                                 <View
                                   style={{
                                     flexDirection: "row",
@@ -559,14 +559,14 @@ export const DetailSertifikat = (route) => {
                                 >
                                   -
                                 </Text>
-                              )}
+                              )} */}
                             </View>
                           </View>
                         </View>
                       </View>
                     </View>
                   );
-                }
+                //}
               })}
             </View>
           ) : (

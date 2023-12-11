@@ -27,6 +27,10 @@ import { CardListDokumenDikembalikan } from "../../components/CardDokumenDikemba
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { CardListDokumenPerluDisetujui } from "../../components/CardListDokumenPerluDisetujui";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export const PersetujanCuti = () => {
   const navigation = useNavigation();
@@ -166,99 +170,100 @@ export const PersetujanCuti = () => {
             </TouchableOpacity>
           </View>
         </View>
-
-                <View style={{ padding: PADDING.Page }}>
-                    <View style={{ flexDirection: 'row', gap: 10 }}>
-                        <View style={{ width: '85%',  }}>
-                            <Search
-                                placeholder={'Cari'}
-                                iconColor={COLORS.primary}
-                                onSearch={filter}
-                            />
-                        </View>
-                        <TouchableOpacity onPress={!ascending ? asc : desc}>
-                            <View
-                            style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 30,
-                            backgroundColor: COLORS.white,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderColor: COLORS.secondaryLighter,
-                            borderWidth: isFiltered ? 1 : 0,
-                            }}
-                            >
-                            <Ionicons name="filter-outline" size={24} />
-                            </View>
-                        </TouchableOpacity>
+        <View style={{ padding: PADDING.Page }}>
+            <View style={{ flexDirection: 'row', gap: 10 }}>
+                <View style={{ width: '85%',  }}>
+                    <Search
+                        placeholder={'Cari'}
+                        iconColor={COLORS.primary}
+                        onSearch={filter}
+                    />
+                </View>
+                <TouchableOpacity onPress={!ascending ? asc : desc}>
+                    <View
+                    style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 30,
+                    backgroundColor: COLORS.white,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderColor: COLORS.secondaryLighter,
+                    borderWidth: isFiltered ? 1 : 0,
+                    }}
+                    >
+                    <Ionicons name="filter-outline" size={24} />
                     </View>
-
-          <View style={{ gap: 10 }}>
-            <View style={{ gap: 10 }}>
+                </TouchableOpacity>
+            </View>
+          <View>
+            {/* <View
+              style={{
+                backgroundColor: "white",
+                marginTop: 10,
+                borderRadius: 8,
+              }}
+            > */}
               <View
                 style={{
-                  backgroundColor: "white",
-                  marginTop: 10,
-                  borderRadius: 8,
+                  paddingVertical: 10,
+                  marginTop:10,
+                  borderRadius:8,
+                  paddingHorizontal: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  backgroundColor:COLORS.white,
+                  gap: wp(3),
                 }}
               >
-                <View
+                <TouchableOpacity
                   style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 20,
-                    flexDirection: "row",
+                    maxWidth: wp(22),
+                    borderColor:
+                      variant === "On Progress"
+                        ? COLORS.infoDangerLight
+                        : COLORS.ExtraDivinder,
                     justifyContent: "center",
+                    alignItems: "center",
                     gap: 10,
                   }}
+                  onPress={() => {
+                    SetVariant("On Progress");
+                  }}
                 >
-                  <TouchableOpacity
+                  <View
                     style={{
-                      maxWidth: 80,
-                      borderColor:
-                        variant === "On Progress"
-                          ? COLORS.infoDangerLight
-                          : COLORS.ExtraDivinder,
-                      justifyContent: "center",
+                      backgroundColor: COLORS.info,
+                      borderRadius: 20,
+                      width: 28,
+                      height: 28,
                       alignItems: "center",
-                      gap: 10,
-                    }}
-                    onPress={() => {
-                      SetVariant("On Progress");
+                      justifyContent: "center",
                     }}
                   >
-                    <View
-                      style={{
-                        backgroundColor: COLORS.info,
-                        borderRadius: 20,
-                        width: 28,
-                        height: 28,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Ionicons
-                        name="calendar-outline"
-                        size={18}
-                        color={COLORS.white}
-                      />
-                    </View>
-                    <Text
-                      style={{
-                        color:
-                          variant === "On Progress"
-                            ? COLORS.infoDanger
-                            : COLORS.foundation,
-                        textAlign: "center",
-                      }}
-                    >
-                      Butuh Persetujuan
-                    </Text>
-                  </TouchableOpacity>
+                    <Ionicons
+                      name="calendar-outline"
+                      size={18}
+                      color={COLORS.white}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color:
+                        variant === "On Progress"
+                          ? COLORS.infoDanger
+                          : COLORS.foundation,
+                      textAlign: "center",
+                      fontSize:FONTSIZE.H4
+                    }}
+                  >
+                    Butuh Persetujuan
+                  </Text>
+                </TouchableOpacity>
 
                   <TouchableOpacity
                     style={{
-                      maxWidth: 80,
+                      maxWidth: wp(22),
                       borderColor:
                         variant === "Completed"
                           ? COLORS.infoDangerLight
@@ -294,6 +299,7 @@ export const PersetujanCuti = () => {
                             ? COLORS.infoDanger
                             : COLORS.foundation,
                         textAlign: "center",
+                        fontSize:FONTSIZE.H4,
                       }}
                     >
                       Disetujui Anda
@@ -302,7 +308,7 @@ export const PersetujanCuti = () => {
 
                   <TouchableOpacity
                     style={{
-                      maxWidth: 120,
+                      maxWidth: wp(22),
                       borderColor:
                         variant === "Rejected"
                           ? COLORS.infoDangerLight
@@ -336,6 +342,7 @@ export const PersetujanCuti = () => {
                             ? COLORS.infoDanger
                             : COLORS.foundation,
                         textAlign: "center",
+                        fontSize:FONTSIZE.H4,
                       }}
                     >
                       Tidak Disetujui Anda
@@ -344,7 +351,7 @@ export const PersetujanCuti = () => {
 
                   <TouchableOpacity
                     style={{
-                      maxWidth: 98,
+                      maxWidth: wp(22),
                       borderColor:
                         variant === "Returned"
                           ? COLORS.infoDangerLight
@@ -378,35 +385,14 @@ export const PersetujanCuti = () => {
                             ? COLORS.infoDanger
                             : COLORS.foundation,
                         textAlign: "center",
+                        fontSize:FONTSIZE.H4,
                       }}
                     >
                       Dikembalikan Anda
                     </Text>
                   </TouchableOpacity>
                 </View>
-              </View>
-              {/* <TouchableOpacity onPress={onPress=()=>navigation.navigate('DetailDokumenCuti')}>
-                        <View style={{backgroundColor: COLORS.white, padding: 10, borderRadius: 8, gap: 15}}>
-                                    <Text style={{fontSize: 12}}>Tanggal Pengajuan: 30 Sepember 2023 | 15:33:30</Text>
-                                    <Text style={{fontSize: 12, color: COLORS.lighter}}>Jenis: Cuti Alasan Penting</Text>
-                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                        <Text style={{fontSize: 12, color: COLORS.lighter}}>Tipe Dokumen: </Text>
-                                        <View style={{backgroundColor: 'red', borderRadius: 10, padding: 5,}}>
-                                            <Text style={{ fontSize: 12, color: COLORS.white}}>Pembatalan Cuti</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
-                                            <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                            <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center'}}>
-                                            <Ionicons name='calendar-outline' size={18} color={COLORS.primary} />
-                                            <Text style={{ fontSize: 12, color: COLORS.lighter}}>Mulai: 01 Jan 2021</Text>
-                                        </View>
-                                    </View>
-                            </View>
-                    </TouchableOpacity> */}
+              {/* </View> */}
               {variant === "Completed" ? (
                 <FlatList
                   data={filterData}
@@ -498,7 +484,6 @@ export const PersetujanCuti = () => {
               ) : null}
             </View>
           </View>
-        </View>
       </View>
     </GestureHandlerRootView>
   );

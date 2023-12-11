@@ -9,6 +9,10 @@ import { Text } from 'react-native';
 import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../config/SuperAppps';
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+  } from "react-native-responsive-screen";
 
 export const CardListBeritaSatker = ({ image, tanggal, title, item, index, id, token }) => {
     const navigation = useNavigation();
@@ -74,12 +78,12 @@ const styles = StyleSheet.create({
     },
     imageIos: {
         height: 193,
-        width: 350,
+        width: "100%",
         borderRadius: 16,
     },
     imageAndroid: {
         height: 193,
-        width: 369,
+        width: "100%",
         borderRadius: 16,
     },
 });

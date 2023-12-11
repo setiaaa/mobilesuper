@@ -380,7 +380,7 @@ function MyTabBar({ props, navigation }) {
               style={{
                 backgroundColor: COLORS.white,
                 width: "90%",
-                height: hp(41),
+                height: hp(43),
                 borderRadius: 10,
                 marginTop: "70%",
               }}
