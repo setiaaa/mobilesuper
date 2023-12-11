@@ -183,16 +183,17 @@ export const DetailDokumenLain = () => {
                               <Text
                                 style={{ color: COLORS.lighter, width: "80%" }}
                               >
-                                {item.receivers[0]?.officer?.nama !== undefined
-                                  ? item.receivers[0]?.officer?.nama
-                                  : null}
+                                {item.receivers?.officer?.nama !== undefined
+                                  ? item.receivers?.officer?.nama
+                                  : "-" || item.receivers?.nama !== undefined ? item.receivers?.nama : "-"}
                               </Text>
                             </>
                           ) : (
                             <Text
                               style={{ color: COLORS.lighter, width: "80%" }}
                             >
-                              {item.receivers[0]?.nama}
+                              {item.receivers?.officer?.nama !== undefined ? item.receivers?.officer.nama : "-" || 
+                              item.receivers?.nama !== undefined ? item.receivers?.officer?.nama : "-"}
                             </Text>
                           )}
                         </View>
@@ -276,7 +277,7 @@ export const DetailDokumenLain = () => {
                   )}
                 </View>
               </View>
-              {item.approvers?.map((data, index) => {
+              {item.approvers?.slice(1).map((data, index) => {
                 return (
                   <View
                     style={{
@@ -430,7 +431,8 @@ export const DetailDokumenLain = () => {
                                       fontWeight: FONTWEIGHT.bold,
                                     }}
                                   >
-                                    {data.officer?.nama}
+                                    {data?.officer?.nama != undefined ? data?.officer?.nama : "-" ||
+                                    data?.nama !== undefined ? data?.nama : "-"}
                                   </Text>
                                 )}
                               </View>
@@ -450,7 +452,8 @@ export const DetailDokumenLain = () => {
                                       fontWeight: FONTWEIGHT.bold,
                                     }}
                                   >
-                                    {data?.nama}
+                                    {item.receivers?.officer?.nama !== undefined ? item.receivers?.officer?.nama : "-" ||
+                                    item.receivers?.nama !== undefined ? item.receivers.nama : "-"}
                                   </Text>
                                 )}
                               </View>

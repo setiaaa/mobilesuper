@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { useSelector } from "react-redux";
-import { PDFDocument, rgb } from "react-native-pdf-lib";
 import { getTokenValue } from "../../service/session";
 
 export const PdfPerisai = ({ route }) => {

@@ -14,7 +14,7 @@ import {
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import {
+import BottomSheet, {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetBackdrop,
@@ -43,6 +43,8 @@ import ShimmerPlaceHolder, {
   createShimmerPlaceHolder,
 } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { Portal } from "react-native-paper";
+import { TextInput } from "react-native";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   const navigation = useNavigation();
@@ -371,7 +373,6 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                           color: COLORS.lighter,
                           fontSize: FONTSIZE.H5,
                           fontWeight: FONTWEIGHT.normal,
-                          lineHeight: 18,
                           wordWrap: "break-word",
                         }}
                       >
@@ -553,6 +554,7 @@ export const DetailLinimasa = (item) => {
   const [parentId, setParentId] = useState({id:"", creator:""});
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
+  const initSnapPoints = useMemo(() => ["20%"], []);
   const [message, setMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const {
@@ -657,7 +659,7 @@ export const DetailLinimasa = (item) => {
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
 
-console.log(linimasa.lists?.like_list)
+// console.log(linimasa.lists?.like_list)
 
 
   return (
@@ -1175,10 +1177,10 @@ console.log(linimasa.lists?.like_list)
                   >
                     <BottomSheetView onLayout={handleContentLayout} style={{flex:1}}>
                       <KeyboardAvoidingView
-                        behavior={Platform.OS === "ios" ? "height" : "height"}
-                        keyboardVerticalOffset={parentId !== "" ? 120: 80}          
+                        behavior={Platform.OS === "ios" ? "position" : "height"}
+                        keyboardVerticalOffset={parentId !== "" ? 120: 80}                    
                       >
-                        <View style={{ marginLeft: 20, marginVertical: 20 }}>
+                        <View style={{ marginLeft: 20, marginVertical: 20, }}>
                           <Text style={{ color: COLORS.ExtraDivinder }}>
                             Komentar({detail.comment_count})
                           </Text>
@@ -1193,9 +1195,9 @@ console.log(linimasa.lists?.like_list)
                                 setParentId={setParentId}
                               />
                             )}
+                            style={{height:500}}
                           />
-
-                        <View style={{ justifyContent: "flex-end", paddingTop:10, justifyContent: 'center' }}>
+                        <View style={{ justifyContent: "flex-end", paddingTop:10, justifyContent: 'center', flex:1, paddingBottom:20 }}>
                         {parentId.id !== "" ? ( 
                           <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
                             <Text>Membalas {parentId.creator}</Text>
@@ -1205,7 +1207,7 @@ console.log(linimasa.lists?.like_list)
                           </View>
                         ) : null }
                           
-                          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20, alignItems: 'center'}}>
+                          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20, alignItems: 'center',}}>
                             {showMessage && 
                             <View style={{ backgroundColor: COLORS.success, padding: 5, borderRadius: 8}}>
                               <Text style={{color: COLORS.white}}>{message}</Text>
@@ -1234,12 +1236,12 @@ console.log(linimasa.lists?.like_list)
                               marginTop: 10,
                             }}
                           >
-                              <BottomSheetTextInput
+                              <TextInput
                                 numberOfLines={1}
                                 maxLength={30}
                                 placeholder="Ketik Komentar Disini"
                                 ref={inputRef}
-                                style={{ padding: 10 }}
+                                style={{ padding: 10, lineHeight: 20, width:"90%"}}
                                 onChangeText={setKomen}
                                 value={komen}
                                 placeholderTextColor={COLORS.grey}

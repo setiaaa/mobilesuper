@@ -9,6 +9,7 @@ import { Config } from "../../../constants/config";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
 import { COLORS, FONTSIZE } from "../../../config/SuperAppps";
+import { useSelector } from "react-redux";
 
 function DTodo() {
   const navigation = useNavigation();
@@ -19,12 +20,13 @@ function DTodo() {
   let [expanded, setExpanded] = useState("");
   let [searchTodo, setSearchTodo] = useState("");
   let [isLoading, setIsLoading] = useState(false);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     todoToday();
     todoOverdue();
     todoNextweek();
-  }, []);
+  }, [token]);
 
   // const response = getHTTP(nde_api.dashboard);
   async function todoToday() {
@@ -142,51 +144,160 @@ function DTodo() {
           </>
         )}
       />
-      
-      {listTodoSearch.length == 0 && (<>
-      <View style={{ marginBottom: 10 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
-            <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
-            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
-            <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Over Due</Text>
-          </View>
-        </View>
-        <ListTodo title="Overdue" result={listTodoOverdue} />
-      </View>
-      
-      <View style={{ marginBottom: 10 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
-          <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
-            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
-              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Today</Text>
-            </View>
-          </View>
-          <ListTodo title="Today" result={listTodoToday} />
-      </View>
 
-      <View style={{ marginBottom: 10 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
-          <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
-            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
-              <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Next Week</Text>
+      {listTodoSearch.length == 0 && (
+        <>
+          <View style={{ marginBottom: 10 }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.infoDanger,
+                  width: "2%",
+                  height: 20,
+                  borderTopEndRadius: 2,
+                  borderBottomEndRadius: 2,
+                }}
+              />
+              <View
+                style={{
+                  height: 20,
+                  width: "96%",
+                  backgroundColor: "#6B7280",
+                  borderRadius: 4,
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    marginStart: 10,
+                  }}
+                >
+                  Over Due
+                </Text>
+              </View>
             </View>
+            <ListTodo title="Overdue" result={listTodoOverdue} />
           </View>
-          <ListTodo title="Next Week" result={listTodoNextweek} />
-      </View>
-      </>
+
+          <View style={{ marginBottom: 10 }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.infoDanger,
+                  width: "2%",
+                  height: 20,
+                  borderTopEndRadius: 2,
+                  borderBottomEndRadius: 2,
+                }}
+              />
+              <View
+                style={{
+                  height: 20,
+                  width: "96%",
+                  backgroundColor: "#6B7280",
+                  borderRadius: 4,
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    marginStart: 10,
+                  }}
+                >
+                  Today
+                </Text>
+              </View>
+            </View>
+            <ListTodo title="Today" result={listTodoToday} />
+          </View>
+
+          <View style={{ marginBottom: 10 }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.infoDanger,
+                  width: "2%",
+                  height: 20,
+                  borderTopEndRadius: 2,
+                  borderBottomEndRadius: 2,
+                }}
+              />
+              <View
+                style={{
+                  height: 20,
+                  width: "96%",
+                  backgroundColor: "#6B7280",
+                  borderRadius: 4,
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    marginStart: 10,
+                  }}
+                >
+                  Next Week
+                </Text>
+              </View>
+            </View>
+            <ListTodo title="Next Week" result={listTodoNextweek} />
+          </View>
+        </>
       )}
 
       {listTodoSearch.length != 0 && (
         <>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
-            <View style={{ backgroundColor: COLORS.infoDanger, width: "2%", height: 20, borderTopEndRadius: 2, borderBottomEndRadius: 2 }} />
-            <View style={{ height: 20, width: "96%", backgroundColor: "#6B7280", borderRadius: 4, justifyContent: "center" }}>
-            <Text style={{ color: COLORS.white, fontSize: 13, fontWeight: 600, marginStart: 10 }}>Searching</Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.infoDanger,
+                width: "2%",
+                height: 20,
+                borderTopEndRadius: 2,
+                borderBottomEndRadius: 2,
+              }}
+            />
+            <View
+              style={{
+                height: 20,
+                width: "96%",
+                backgroundColor: "#6B7280",
+                borderRadius: 4,
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.white,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  marginStart: 10,
+                }}
+              >
+                Searching
+              </Text>
+            </View>
           </View>
-        </View>
           <ListTodo title="Searching" result={listTodoSearch} />
-          </>
-        )}
+        </>
+      )}
       {/* <List.AccordionGroup
         expandedId={expanded}
         onAccordionPress={(item) => setExpandedList(item)}

@@ -55,7 +55,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
   };
   return (
     <View
-      key={item.id}
+      key={item?.id}
       style={{
         backgroundColor: "white",
         borderRadius: 16,
@@ -76,25 +76,25 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
       <TouchableOpacity
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
         onPress={(e) => {
-          getDetail(item.id);
+          getDetail(item?.id);
           navigation.navigate("DetailSertifikat");
         }}
       >
         {variant === "inprogress" ? (
           <Checkbox
-            value={isSelected.includes(item.id) ? true : false}
+            value={isSelected.includes(item?.id) ? true : false}
             onValueChange={() => {
-              if (isSelected.includes(item.id)) {
+              if (isSelected.includes(item?.id)) {
                 const ids = [...isSelected];
-                const newIds = ids.filter((id) => id !== item.id);
+                const newIds = ids.filter((id) => id !== item?.id);
               } else {
-                setSelection((prev) => [...prev, item.id]);
+                setSelection((prev) => [...prev, item?.id]);
               }
             }}
             color={isSelected === true ? COLORS.lighter : null}
           />
         ) : null}
-        <View style={{ flexDirection: "column" }}>
+        <View style={{ flexDirection: "column", width:"98%"}}>
           <Text
             style={{
               fontSize: 16,
@@ -103,14 +103,14 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
               fontWeight: FONTWEIGHT.bold,
             }}
           >
-            {item.subject}
+            {item?.subject}
           </Text>
           <View
             style={{
               backgroundColor: COLORS.lighter,
               height: 1,
               marginVertical: 5,
-              width: "52%",
+              width: "100%",
             }}
           />
           <View style={{ flexDirection: "row" }}>
@@ -121,22 +121,21 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 textAlign: "justify",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
+                width:"40%"
               }}
             >
               Penerima
             </Text>
-            {item.receivers[0]?.display_title !== undefined ? (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>
-                :{" "}
-                {item.receivers[0]?.officer?.nama !== undefined
-                  ? item.receivers[0]?.officer?.nama
+            {item?.receivers[0]?.display_title !== undefined ? (
+              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "60%"}}>
+                : {item?.receivers[0]?.officer?.nama !== undefined
+                  ? item?.receivers[0]?.officer?.nama
                   : null}
               </Text>
             ) : (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "80%" }}>
-                :{" "}
-                {item.receivers[0]?.nama !== undefined
-                  ? item.receivers[0]?.nama
+              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "60%" }}>
+                : {item?.receivers[0]?.nama !== undefined
+                  ? item?.receivers[0]?.nama
                   : "-"}
               </Text>
             )}
@@ -148,7 +147,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 fontWeight: FONTWEIGHT.normal,
               }}
             >
-              : {item.receivers[0]?.nama}
+              {/* {item?.receivers[0]?.nama} */}
             </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
@@ -159,6 +158,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 textAlign: "justify",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
+                width:"40%"
               }}
             >
               Penandatangan
@@ -169,12 +169,13 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 width: 200,
                 textAlign: "justify",
                 fontWeight: FONTWEIGHT.normal,
+                width:"60%"
               }}
             >
               :{" "}
-              {item.approvers[1]?.officer !== undefined
-                ? item.approvers[1]?.officer?.nama
-                : item.approvers[1]?.nama}{" "}
+              {item?.approvers[1]?.officer !== undefined
+                ? item?.approvers[1]?.officer?.nama
+                : item?.approvers[1]?.nama}{" "}
             </Text>
           </View>
         </View>
@@ -242,7 +243,7 @@ export const Bankom = () => {
     const item = digitalsign.lists;
     if (search !== "") {
       const data = item.filter((item) => {
-        return item.subject.toLowerCase().includes(search.toLowerCase());
+        return item?.subject.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
     } else {
@@ -572,9 +573,9 @@ export const Bankom = () => {
             {/* </ScrollView> */}
             <FlatList
               data={filterData}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item?.id}
               renderItem={({ item }) => (
-                <View key={item.id}>
+                <View key={item?.id}>
                   <ListBankom
                     item={item}
                     token={token}

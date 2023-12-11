@@ -202,7 +202,7 @@ export const DetailSertifikat = (route) => {
                     />
                   ) : (
                     <Text style={{ width: "50%" }}>
-                      {item.extra_attributes?.noSertif}
+                      {item?.extra_attributes?.noSertif}
                     </Text>
                   )}
                 </View>
