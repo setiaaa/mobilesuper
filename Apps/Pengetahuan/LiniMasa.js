@@ -608,7 +608,9 @@ const CardLiniMasa = ({ item, token }) => {
                 borderBottomColor: COLORS.grey,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
+              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                Informasi Pengetahuan
+              </Text>
               <TouchableOpacity
                 style={{}}
                 onPress={() => {
@@ -1548,20 +1550,20 @@ export const LiniMasa = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-        if (token !== "") {
-          dispatch(getLinimasa({ token: token, page: page }));
-          dispatch(setRefresh(false));
-          console.log('Refresh Berhasil')
-        }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getLinimasa({ token: token, page: page }));
+        dispatch(setRefresh(false));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
 
   return (

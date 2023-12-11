@@ -96,7 +96,8 @@ export const DetailDokumenSPPD = ({ route }) => {
           const { uri } = await downloadResumable.downloadAsync();
           saveAndroidFile(uri, fileName, fileType);
         } else {
-          saveIosFile(downloadPath);
+          const { uri } = await downloadResumable.downloadAsync();
+          saveIosFile(uri);
         }
       } catch (e) {
         // setIsLoading(false);
@@ -150,6 +151,7 @@ export const DetailDokumenSPPD = ({ route }) => {
         dialogTitle: "Share PDF",
       });
     } catch (error) {
+      console.log(fileUri);
       console.error("Error sharing file:", error);
     }
   };

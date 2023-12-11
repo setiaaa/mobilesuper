@@ -58,10 +58,10 @@ export const CardProgresEvent = ({
             />
           ) : (
             <>
-              <Text style={{ fontWeight: FONTWEIGHT.bold, width: "80%" }}>
+              <Text style={{ fontWeight: FONTWEIGHT.bold, width: "50%" }}>
                 {item.title}
               </Text>
-              <Text>{item.agenda_count} Todo</Text>
+              <Text>{item.agenda_count} Sub Agenda</Text>
             </>
           )}
         </View>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../service/session";
 import { View } from "react-native";
@@ -93,24 +93,26 @@ export const AddressBookPegawai = ({ route }) => {
     });
   }, []);
 
+  const [inputValue, setInputValue] = useState("");
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     if (token !== "") {
-      dispatch(getEmployee(token));
+      dispatch(getEmployee({ token: token, search: search }));
       // dispatch(getDivisionTree({ token: token, id: kategori.key }))
     }
-  }, [token]);
+  }, [token, search]);
 
   const { addressbook } = useSelector((state) => state.addressBookKKP);
 
   const [filterData, setFilterData] = useState([]);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     setFilterData(addressbook.employee);
   }, [addressbook]);
 
-  filter = (event) => {
-    setSearch(event);
+  filter = () => {
+    setSearch(inputValue);
   };
 
   useEffect(() => {
@@ -142,14 +144,23 @@ export const AddressBookPegawai = ({ route }) => {
       <View
         style={{
           marginHorizontal: 15,
-          paddingBottom: 20,
+          marginBottom: 20,
+          backgroundColor: COLORS.white,
+          borderRadius: 8,
         }}
       >
-        <Search
-          placeholder={"Cari..."}
-          iconColor={COLORS.primary}
-          onSearch={filter}
-        />
+        <View style={styles.input}>
+          <Ionicons name="search" size={20} color={COLORS.primary} />
+          <TextInput
+            placeholder={"Cari..."}
+            style={{ fontSize: 16, flex: 1 }}
+            maxLength={30}
+            value={inputValue}
+            onChangeText={(text) => setInputValue(text)}
+            onEndEditing={filter}
+            clearButtonMode="always"
+          />
+        </View>
       </View>
       <FlatList
         data={filterData}
@@ -162,3 +173,16 @@ export const AddressBookPegawai = ({ route }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
+});
