@@ -23,6 +23,7 @@ import ListEmpty from "../../components/ListEmpty";
 import { Loading } from "../../components/Loading";
 import { CardArsipCuti } from "../../components/CardArsipCuti";
 import { RefreshControl } from "react-native";
+import { CardFormPengajuanCuti } from "../../components/CardFormPengajuanCuti";
 
 export const PersonalCuti = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ export const PersonalCuti = () => {
   );
   const arsipLists = arsip?.lists?.data;
 
-  console.log(arsip.lists.data)
+  console.log(arsip.lists.data);
 
   const formCuti = (id) => {
     const params = { nip: profile.nip, id: id };
@@ -230,8 +231,22 @@ export const PersonalCuti = () => {
                   setCollapse({ nip: personal.data_user?.nip, toggle: true })
                 }
               >
-                <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                  <Text style={{ marginRight: "80%", fontSize: 13, fontWeight: 600 }}>Profil</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      marginRight: "80%",
+                      fontSize: 13,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Profil
+                  </Text>
                   {collapse.nip === personal.data_user?.nip &&
                   collapse.toggle === true ? (
                     <TouchableOpacity
@@ -283,10 +298,7 @@ export const PersonalCuti = () => {
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>
               Form Pengajuan Cuti
             </Text>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
+            {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
               {personal?.data_jenis_cuti?.map((item) => {
                 return (
                   <View style={{ flexDirection: "row", marginHorizontal: 10 }}>
@@ -319,75 +331,110 @@ export const PersonalCuti = () => {
                   </View>
                 );
               })}
-            </ScrollView>
+            </ScrollView> */}
+            <FlatList
+              data={personal.data_jenis_cuti}
+              renderItem={({ item }) => (
+                <View key={item.id}>
+                  <CardFormPengajuanCuti item={item} profile={profile} />
+                </View>
+              )}
+              columnWrapperStyle={{
+                gap: 5,
+                marginVertical: 10,
+              }}
+              numColumns={3}
+              keyExtractor={(item) => item.id}
+              ListEmptyComponent={() => <ListEmpty />}
+            />
           </View>
           <View style={{ paddingLeft: 20 }}>
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>
               Status Dokumen Cuti
             </Text>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <View style={styles.cardStatus}>
-                  <View
-                    style={{ width: "70%", alignItems: "center", rowGap: 20 }}
-                  >
-                    <Ionicons
-                      name="document-outline"
-                      size={50}
-                      color={COLORS.grey}
-                    />
-                    <Text>Draft</Text>
-                    <Text>{jumlahDraft}</Text>
-                  </View>
-                </View>
 
-                <View style={styles.cardStatus}>
-                  <View
-                    style={{ width: "70%", alignItems: "center", rowGap: 10 }}
-                  >
-                    <Ionicons
-                      name="document-outline"
-                      size={50}
-                      color={COLORS.grey}
-                    />
-                    <Text>Sedang Proses</Text>
-                    <Text>{jumlahOnProgress}</Text>
-                  </View>
-                </View>
-
-                <View style={styles.cardStatus}>
-                  <View
-                    style={{ width: "70%", alignItems: "center", rowGap: 10 }}
-                  >
-                    <Ionicons
-                      name="document-outline"
-                      size={50}
-                      color={COLORS.grey}
-                    />
-                    <Text>Dokumen Disetujui</Text>
-                    <Text>{jumlahComplete}</Text>
-                  </View>
-                </View>
-
-                <View style={styles.cardStatus}>
-                  <View
-                    style={{ width: "70%", alignItems: "center", rowGap: 2 }}
-                  >
-                    <Ionicons
-                      name="document-outline"
-                      size={50}
-                      color={COLORS.grey}
-                    />
-                    <Text>Dokumen Tidak Disetujui</Text>
-                    <Text>{jumlahReject}</Text>
-                  </View>
+            <View style={{ flexDirection: "row" }}>
+              <View
+                style={[styles.cardStatus, { backgroundColor: COLORS.grey }]}
+              >
+                <View
+                  style={{ width: "70%", alignItems: "center", rowGap: 20 }}
+                >
+                  <Ionicons
+                    name="document-outline"
+                    size={50}
+                    color={COLORS.white}
+                  />
+                  <Text style={{ color: COLORS.white }}>Draft</Text>
+                  <Text style={{ color: COLORS.white }}>{jumlahDraft}</Text>
                 </View>
               </View>
-            </ScrollView>
+
+              <View
+                style={[styles.cardStatus, { backgroundColor: COLORS.orange }]}
+              >
+                <View
+                  style={{
+                    width: "70%",
+                    alignItems: "center",
+                    rowGap: 10,
+                  }}
+                >
+                  <Ionicons
+                    name="file-tray-full-outline"
+                    size={50}
+                    color={COLORS.white}
+                  />
+                  <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                    Sedang Proses
+                  </Text>
+                  <Text style={{ color: COLORS.white }}>
+                    {jumlahOnProgress}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <View
+                style={[styles.cardStatus, { backgroundColor: COLORS.success }]}
+              >
+                <View
+                  style={{ width: "70%", alignItems: "center", rowGap: 10 }}
+                >
+                  <Ionicons
+                    name="checkmark-done-outline"
+                    size={50}
+                    color={COLORS.white}
+                  />
+                  <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                    Dokumen Disetujui
+                  </Text>
+                  <Text style={{ color: COLORS.white }}>{jumlahComplete}</Text>
+                </View>
+              </View>
+
+              <View
+                style={[
+                  styles.cardStatus,
+                  { backgroundColor: COLORS.infoDanger },
+                ]}
+              >
+                <View style={{ width: "70%", alignItems: "center", rowGap: 2 }}>
+                  <Ionicons
+                    name="close-circle-outline"
+                    size={50}
+                    color={COLORS.white}
+                  />
+                  <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                    Dokumen Tidak Disetujui
+                  </Text>
+                  <Text style={{ color: COLORS.white }}>{jumlahReject}</Text>
+                </View>
+              </View>
+            </View>
           </View>
+
           <View style={{ paddingHorizontal: PADDING.Page }}>
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
             <FlatList
@@ -616,7 +663,7 @@ export const PersonalCuti = () => {
 
 const styles = StyleSheet.create({
   cardStatus: {
-    width: "23%",
+    width: "44%",
     padding: 15,
     borderRadius: 8,
     marginHorizontal: 5,
