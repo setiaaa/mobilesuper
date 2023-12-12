@@ -18,7 +18,7 @@ import { getTokenValue } from "../../service/session";
 import { Platform } from "react-native";
 
 const LihatSuratSPPD = ({ route }) => {
-  const { surat, status } = route.params;
+  const { surat, status, data } = route.params;
   const navigation = useNavigation();
   const { dokumen } = useSelector((state) => state.sppd);
   const id = dokumen.detail?.id;
@@ -39,7 +39,7 @@ const LihatSuratSPPD = ({ route }) => {
     try {
       const downloadResumable = FileSystem.createDownloadResumable(
         fileUrl,
-        downloadPath + "cek.pdf",
+        downloadPath + fileName,
         { headers: { Authorization: token } }
       );
       try {
@@ -107,7 +107,8 @@ const LihatSuratSPPD = ({ route }) => {
     }
   };
 
-  console.log(status);
+  const fileName = data?.replace(/\s/g, "_");
+  console.log(fileName);
 
   return (
     <>
@@ -168,8 +169,8 @@ const LihatSuratSPPD = ({ route }) => {
                   "https://apigw.kubekkp.coofis.com/monperdin/document/back-form/" +
                     dokumen.detail?.id +
                     "/",
-                  "application/pdf"
-                  // data + ".pdf"
+                  "application/pdf",
+                  fileName + ".pdf"
                 );
               }}
             >

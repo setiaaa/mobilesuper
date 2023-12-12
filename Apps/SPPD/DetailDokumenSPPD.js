@@ -620,6 +620,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                 navigation.navigate("LihatSuratSPPD", {
                   surat: cetak,
                   status: "share",
+                  data: data,
                 });
               }}
             >

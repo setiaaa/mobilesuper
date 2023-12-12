@@ -69,8 +69,8 @@ export const KegiatanBaru = () => {
             </View>
           </View>
 
-          <View style={{ marginTop: 50, gap: 30, marginBottom: 30 }}>
-            <View style={{ alignItems: "center", gap: 20 }}>
+          <View style={{ marginTop: 15, gap: 30, marginBottom: 30 }}>
+            {/* <View style={{ alignItems: "center", gap: 20 }}>
               <Image
                 source={require("../../assets/superApp/LiburTanggal.png")}
                 style={{}}
@@ -84,9 +84,20 @@ export const KegiatanBaru = () => {
               >
                 2023
               </Text>
-            </View>
+            </View> */}
 
-            <View style={{ paddingHorizontal: 20 }}>
+            <FlatList
+              data={dashboard.events}
+              renderItem={({ item }) => (
+                <View key={item.id}>
+                  <CardKegiatanTerbaru item={item} />
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+              ListEmptyComponent={() => <ListEmpty />}
+            />
+
+            {/* <View style={{ paddingHorizontal: 20 }}>
               <View
                 style={{
                   backgroundColor: COLORS.white,
@@ -95,24 +106,28 @@ export const KegiatanBaru = () => {
                 }}
               >
                 <TouchableOpacity onPress={() => setCollapse({ toggle: true })}>
-                  <View style={{ flexDirection: "row", justifyContent:"space-between",alignItems:"center" }}>
-                      <Ionicons
-                        name="calendar-outline"
-                        size={24}
-                        color={COLORS.primary}
-                      />
-                      <Text>
-                        Kegiatan Terbaru
-                      </Text>
-                      {collapse.toggle === true ? (
-                        <TouchableOpacity
-                          onPress={() => setCollapse({ toggle: false })}
-                        >
-                          <Ionicons name="chevron-up" size={24} />
-                        </TouchableOpacity>
-                      ) : (
-                        <Ionicons name="chevron-down" size={24} />
-                      )}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="calendar-outline"
+                      size={24}
+                      color={COLORS.primary}
+                    />
+                    <Text>Kegiatan Terbaru</Text>
+                    {collapse.toggle === true ? (
+                      <TouchableOpacity
+                        onPress={() => setCollapse({ toggle: false })}
+                      >
+                        <Ionicons name="chevron-up" size={24} />
+                      </TouchableOpacity>
+                    ) : (
+                      <Ionicons name="chevron-down" size={24} />
+                    )}
                   </View>
                 </TouchableOpacity>
 
@@ -122,21 +137,12 @@ export const KegiatanBaru = () => {
                       onPress={() => setCollapse({ toggle: false })}
                       style={{ gap: 20, marginTop: 20 }}
                     >
-                      <FlatList
-                        data={dashboard.events}
-                        renderItem={({ item }) => (
-                          <View key={item.id}>
-                            <CardKegiatanTerbaru item={item} />
-                          </View>
-                        )}
-                        keyExtractor={(item) => item.id}
-                        ListEmptyComponent={() => <ListEmpty />}
-                      />
+                      
                     </TouchableOpacity>
                   </View>
                 ) : null}
               </View>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </View>
