@@ -14,7 +14,12 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTSIZE,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,10 +33,13 @@ import {
   getPilihApproval,
   postAttachmentCuti,
   postPengajuanCuti,
+  postPengajuanCutiDraft,
+  postTanggalCuti,
 } from "../../service/api";
 import { ModalSubmit } from "../../components/ModalSubmit";
-import { setAttachmentCuti, setStatus } from "../../store/Cuti";
+import { setAttachmentCuti, setJumlahCuti, setStatus } from "../../store/Cuti";
 import * as DocumentPicker from "expo-document-picker";
+import CalendarPicker from "react-native-calendar-picker";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -51,7 +59,7 @@ export const TambahCutiTahunan = () => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status, attachment } = useSelector(
+  const { form, pilih, status, attachment, jumlahCuti } = useSelector(
     (state) => state.cuti
   );
 
@@ -65,6 +73,7 @@ export const TambahCutiTahunan = () => {
   const [pejabat, setPejabat] = useState("");
   const [jenisCuti, setJenisCuti] = useState("");
   const [alasanCuti, setAlasanCuti] = useState("");
+  const [tanggalLibur, setTanggalLibur] = useState();
 
   const [document, setDocument] = useState([]);
   const [type, setType] = useState([]);
@@ -96,6 +105,7 @@ export const TambahCutiTahunan = () => {
 
   useEffect(() => {
     dispatch(setAttachmentCuti([]));
+    dispatch(setJumlahCuti({}));
   }, []);
 
   const pickAtasan = () => {
@@ -144,13 +154,63 @@ export const TambahCutiTahunan = () => {
     // console.log(data);
   };
 
-  console.log(form.data_user);
+  const handleSubmitDraft = () => {
+    const payload = {
+      nip_pengaju: profile?.nip,
+      id_dokumen: "",
+      id_jenis_cuti: form.data_jenis_cuti?.id,
+      id_sub_jenis_cuti: "",
+      mulai_cuti: TanggalMulai,
+      akhir_cuti: TanggalSelesai,
+      alasan_cuti: alasanCuti,
+      alamat_cuti: alasanCuti,
+      nomor_telpon: telepon,
+      nip_approval1: atasan.key,
+      nip_approval2: pejabat.key,
+      attachment: attachment,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postPengajuanCutiDraft(data));
+    // console.log(data);
+  };
+
+  const selectDate = () => {
+    const payload = {
+      id_jenis_cuti: form.data_jenis_cuti?.id,
+      nip: profile?.nip,
+      tanggal_mulai: TanggalMulai,
+      tanggal_akhir: TanggalSelesai,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postTanggalCuti(data));
+    // console.log(data);
+  };
 
   useEffect(() => {
     setAlamat(form?.data_user?.alamat);
     setTelepon(form?.data_user?.no_telpon);
+    if (form.data_kalender?.tanggal_sppd.length === 0) {
+      setTanggalLibur([
+        ...form.data_kalender?.tanggal_pernah_dipakai,
+        ...form.data_kalender?.tanggal_libur,
+      ]);
+    } else if (form.data_kalender?.tanggal_pernah_dipakai.length === 0) {
+      setTanggalLibur([
+        ...form.data_kalender?.tanggal_libur,
+        ...form.data_kalender?.tanggal_sppd,
+      ]);
+    } else {
+      setTanggalLibur([]);
+    }
   }, [form]);
 
+  console.log(jumlahCuti.jumlah_cuti);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -588,15 +648,15 @@ export const TambahCutiTahunan = () => {
                               alignItems: "center",
                               justifyContent: "center",
                               width: "90%",
-                              height: 500,
+                              height: 400,
                               borderRadius: 10,
                             }}
                           >
                             <TouchableOpacity
                               onPress={() => setModalVisiblePicker("")}
                               style={{
-                                paddingRight: "85%",
-                                marginBottom: 3,
+                                paddingLeft: "70%",
+                                marginBottom: 20,
                                 marginLeft: 20,
                               }}
                             >
@@ -618,7 +678,7 @@ export const TambahCutiTahunan = () => {
                               </View>
                             </TouchableOpacity>
                             <View style={{ width: "100%" }}>
-                              <DatePicker
+                              {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
                                   textHeaderColor: COLORS.primary,
@@ -686,9 +746,38 @@ export const TambahCutiTahunan = () => {
                                     setTanggalMulai("");
                                   }
                                 }}
+                              /> */}
+                              <CalendarPicker
+                                todayBackgroundColor={COLORS.info}
+                                disabledDates={tanggalLibur}
+                                width={300}
+                                onDateChange={(date) => {
+                                  if (modalVisiblePicker === "mulai") {
+                                    setTanggalMulai(
+                                      moment(
+                                        date,
+                                        "YYYY-MM-DD HH:mm:ss"
+                                      ).format("YYYY-MM-DD")
+                                    );
+                                  } else {
+                                    setTanggalSelsai(
+                                      moment(
+                                        date,
+                                        "YYYY-MM-DD HH:mm:ss"
+                                      ).format("YYYY-MM-DD")
+                                    );
+                                  }
+                                }}
                               />
                               <TouchableOpacity
-                                onPress={() => setModalVisiblePicker("")}
+                                onPress={() => {
+                                  if (modalVisiblePicker === "mulai") {
+                                    setModalVisiblePicker("");
+                                  } else {
+                                    selectDate();
+                                    setModalVisiblePicker("");
+                                  }
+                                }}
                                 style={{
                                   marginTop: 20,
                                   justifyContent: "center",
@@ -730,7 +819,11 @@ export const TambahCutiTahunan = () => {
                       borderRadius: 8,
                     }}
                   >
-                    <Text>0</Text>
+                    <Text>
+                      {jumlahCuti.jumlah_cuti === undefined
+                        ? "0"
+                        : jumlahCuti.jumlah_cuti.toString()}
+                    </Text>
                   </View>
                 </View>
 
@@ -1135,6 +1228,9 @@ export const TambahCutiTahunan = () => {
                 width: "46.5%",
                 height: 50,
                 justifyContent: "center",
+              }}
+              onPress={() => {
+                handleSubmitDraft();
               }}
             >
               <Text style={{ textAlign: "center", color: COLORS.white }}>

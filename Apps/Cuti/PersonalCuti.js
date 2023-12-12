@@ -47,8 +47,6 @@ export const PersonalCuti = () => {
   );
   const arsipLists = arsip?.lists?.data;
 
-  console.log(arsip.lists.data);
-
   const formCuti = (id) => {
     const params = { nip: profile.nip, id: id };
     // const data = event.listsprogress.find(item => item.id === id)
