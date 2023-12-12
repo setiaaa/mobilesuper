@@ -1,7 +1,10 @@
 import {
+  BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetTextInput,
+  BottomSheetView,
+  useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
 import { useMemo } from "react";
@@ -52,7 +55,13 @@ function ActionInprogress({ id, data, page }) {
   // ref
   const bottomSheetModalRef = useRef(null);
   // variables
-  const snapPoints = useMemo(() => [50, 250], []);
+  const initialSnapPoints = useMemo(() => ["10%", "CONTENT_HEIGHT"], []);
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
   const loadingOverlay = (
     <>
       <LoadingOverlay visible={isLoading} />
@@ -943,18 +952,24 @@ function ActionInprogress({ id, data, page }) {
               name={tipe}
               ref={bottomSheetModalRef}
               index={1}
-              snapPoints={snapPoints}
+              snapPoints={animatedSnapPoints}
+              handleHeight={animatedHandleHeight}
+              contentHeight={animatedContentHeight}
               keyboardBehavior={
                 platform?.OS == "android" ? "fillParent" : "interactive"
               }
               keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
+              android_keyboardInputMode="adjustRezise"
+              backdropComponent={(props) => {
+                return <BottomSheetBackdrop {...props} />;
+              }}
             >
+            <BottomSheetView onLayout={handleContentLayout}>
               <View
                 style={
                   page == "edit"
-                    ? [styles.contentContainer, { margin: 16 }]
-                    : [styles.contentContainer, { margin: 16 }]
+                    ? [styles.contentContainer, { padding: 16 }]
+                    : [styles.contentContainer, { padding: 16 }]
                 }
               >
                 <View style={{ flexDirection: "row" }}>
@@ -1020,6 +1035,7 @@ function ActionInprogress({ id, data, page }) {
                   Kembali
                 </Button>
               </View>
+              </BottomSheetView>
             </BottomSheetModal>
           </View>
         </SafeAreaView>
