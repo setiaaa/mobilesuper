@@ -52,20 +52,18 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export const DetailAgenda = () => {
   const navigation = useNavigation();
-  
 
-    const [visibleModal, setVisibleModal] = useState(false);
-    const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
-    const [lampiranById, setLampiranById] = useState(null)
-    const [modalVisible, setModalVisible] = useState(false);
-    const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient)
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [visibleModalPeserta, setVisibleModalPeserta] = useState(false);
+  const [lampiranById, setLampiranById] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
 
   const getFileExtension = (type) => {
     let jenis = type.split(".");
     jenis = jenis[jenis.length - 1];
     return jenis;
   };
-
 
   const video = useRef(null);
 
@@ -118,7 +116,8 @@ export const DetailAgenda = () => {
   };
 
   const bottomSheetAttachPesertaClose = () => {
-    if (bottomSheetModalRefPeserta.current) bottomSheetModalRefPeserta.current?.close();
+    if (bottomSheetModalRefPeserta.current)
+      bottomSheetModalRefPeserta.current?.close();
   };
 
   const bottomSheetAttachClose = () => {
@@ -202,7 +201,7 @@ export const DetailAgenda = () => {
     dispatch(deleteNotulensi(item));
   };
 
-  console.log(data.extra_attrs);
+  console.log(absenLists);
 
   return (
     <>
@@ -311,7 +310,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 QR Code
               </Text>
               {loading ? (
@@ -338,7 +337,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Tanggal
               </Text>
               {loading ? (
@@ -350,7 +349,7 @@ export const DetailAgenda = () => {
               ) : data.date === null ? (
                 <Text>-</Text>
               ) : (
-                <Text>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
+                <Text style={{width:"55%"}}>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
               )}
             </View>
 
@@ -365,7 +364,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Waktu
               </Text>
               {loading ? (
@@ -377,7 +376,7 @@ export const DetailAgenda = () => {
               ) : data.start_time === null || data.end_time === null ? (
                 <Text>-</Text>
               ) : (
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row",width:"55%" }}>
                   <Text style={{ marginTop: 5 }}>
                     {moment(data.start_time, "HH:mm:ss").format("HH:mm")} -{" "}
                   </Text>
@@ -399,7 +398,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Tempat
               </Text>
               {loading ? (
@@ -411,7 +410,7 @@ export const DetailAgenda = () => {
               ) : data.location === null ? (
                 <Text>-</Text>
               ) : (
-                <Text style={{ width: 156 }}>{data.location}</Text>
+                <Text style={{ width: "55%" }}>{data.location}</Text>
               )}
             </View>
 
@@ -426,7 +425,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 PIC
               </Text>
               {/* <Image source={{ uri: data.extra_attrs?.pic?.avatar_url }} style={{ width: 26, height: 26, borderRadius: 50 }} /> */}
@@ -439,16 +438,23 @@ export const DetailAgenda = () => {
               ) : data.extra_attrs === null ? (
                 <Text>-</Text>
               ) : (
-                <Text style={{ width: 150 }}>
+                <Text style={{ width: "55%" }}>
                   {data.extra_attrs?.pic.title.name}
                 </Text>
               )}
             </View>
 
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
+            {/* custom divider */}
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: "#DBDADE",
+                marginVertical: 20,
+              }}
+            />
 
-                        {/* <View style={{ flexDirection: 'row' }}>
+            {/* <View style={{ flexDirection: 'row' }}>
                             <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Peserta Agenda</Text>
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
@@ -462,7 +468,7 @@ export const DetailAgenda = () => {
                             
                         </View> */}
 
-                        {/* <View style={{ flexDirection: 'row' }}>
+            {/* <View style={{ flexDirection: 'row' }}>
                             {loading ? (
                                 <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
                             ) : (
@@ -476,7 +482,7 @@ export const DetailAgenda = () => {
                         </View>  */}
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Peserta Agenda
               </Text>
               {loading ? (
@@ -512,91 +518,106 @@ export const DetailAgenda = () => {
               </TouchableOpacity>
             </View>
 
-
-
             <BottomSheetModal
-                ref={bottomSheetModalRefPeserta}
-                snapPoints={animatedSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
-                index={0}
-                style={{ borderRadius: 50 }}
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjust"
-                backdropComponent={({ style }) => (
+              ref={bottomSheetModalRefPeserta}
+              snapPoints={animatedSnapPoints}
+              handleHeight={animatedHandleHeight}
+              contentHeight={animatedContentHeight}
+              index={0}
+              style={{ borderRadius: 50 }}
+              keyboardBlurBehavior="restore"
+              android_keyboardInputMode="adjust"
+              backdropComponent={({ style }) => (
+                <View
+                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                />
+              )}
+            >
+              <BottomSheetView onLayout={handleContentLayout}>
+                <View style={{ marginTop: 20, marginBottom: 40 }}>
                   <View
-                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                  />
-                )}
-              >
-                <BottomSheetView onLayout={handleContentLayout}>
-                  <View style={{ marginTop: 20, marginBottom: 40 }}>
-                    <View
+                    style={{
+                      margin: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text
                       style={{
-                        margin: 20,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection:"row",
-                        justifyContent:"space-between",
+                        fontSize: FONTSIZE.H2,
+                        fontWeight: FONTWEIGHT.bold,
+                        color: COLORS.normal,
                       }}
                     >
-                      <Text
-                        style={{
-                          fontSize: FONTSIZE.H2,
-                          fontWeight: FONTWEIGHT.bold,
-                          color: COLORS.normal,
-                        }}
-                      >
-                        Peserta Agenda Rapat
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          bottomSheetAttachPesertaClose();
-                        }}
-                        >
-                          <Ionicons
-                            name="close-outline"
-                            size={24}
-                            color={COLORS.lighter}
-                            />
-                      </TouchableOpacity>
-                    </View>
-                    <View>
-                      <FlatList
-                        data={data.extra_attrs?.members}
-                        renderItem={({ item }) => (
-                          <View key={item.nip}>
-                            <CardItemMember item={item} />
-                          </View>
-                        )}
-                        keyExtractor={(item) => item.id}
+                      Peserta Agenda Rapat
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        bottomSheetAttachPesertaClose();
+                      }}
+                    >
+                      <Ionicons
+                        name="close-outline"
+                        size={24}
+                        color={COLORS.lighter}
                       />
-                    </View>
+                    </TouchableOpacity>
                   </View>
-                </BottomSheetView>
-              </BottomSheetModal>
+                  <View>
+                    <FlatList
+                      data={data.extra_attrs?.members}
+                      renderItem={({ item }) => (
+                        <View key={item.nip}>
+                          <CardItemMember item={item} />
+                        </View>
+                      )}
+                      keyExtractor={(item) => item.id}
+                    />
+                  </View>
+                </View>
+              </BottomSheetView>
+            </BottomSheetModal>
 
-                        
+            {/* custom divider */}
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: "#DBDADE",
+                marginVertical: 20,
+              }}
+            />
 
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginVertical: 20 }} />
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>Tamu Agenda Internal</Text>
-                            {loading ? (
-                                <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={100} height={20} />
-                            ) : (
-                                data.extra_attrs.guests.length === 0 ? (
-                                    <Text>-</Text>
-                                ) : (
-                                    data.extra_attrs?.guests?.map((data, index) =>
-                                        <View key={index} style={{ position: 'relative' }}>
-                                            <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} />
-                                        </View>
-                                    )
-                                )
-                            )}
-                            {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ width: "55%", fontWeight: FONTWEIGHT.bold }}>
+                Tamu Agenda Internal
+              </Text>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : data.extra_attrs.guests.length === 0 ? (
+                <Text>-</Text>
+              ) : (
+                data.extra_attrs?.guests?.map((data, index) => (
+                  <View key={index} style={{ position: "relative" }}>
+                    <Image
+                      source={{ uri: data.avatar_url }}
+                      style={{
+                        width: 26,
+                        height: 26,
+                        marginLeft: index !== 0 ? -7 : 0,
+                        borderRadius: 50,
+                      }}
+                    />
+                  </View>
+                ))
+              )}
+              {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
                             </TouchableOpacity> */}
             </View>
@@ -612,7 +633,7 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Tamu Agenda Eksternal
               </Text>
               {loading ? (
@@ -624,7 +645,7 @@ export const DetailAgenda = () => {
               ) : data.extra_attrs.guest_external.length === 0 ? (
                 <Text>-</Text>
               ) : (
-                <View style={{ position: "relative", flexDirection: "column" }}>
+                <View style={{ position: "relative", flexDirection: "column",width:"55%" }}>
                   {data.extra_attrs?.guest_external?.map((data, index) => (
                     <View key={index} style={{ flexDirection: "row", gap: 10 }}>
                       <Text>-</Text>
@@ -795,7 +816,7 @@ export const DetailAgenda = () => {
               <></>
             )}
 
-            {notu.length === 0 ? (
+            {notu.length === 0 && event.detailEvent.status !== "persiapan" ? (
               <TouchableOpacity
                 style={{
                   width: "100%",
@@ -815,13 +836,17 @@ export const DetailAgenda = () => {
               </TouchableOpacity>
             ) : (
               <>
-                {event.detailEvent?.user_role?.is_pic === true ||
-                data.user_role?.is_pic === true ||
-                data.user_role?.is_notulensi === true ||
+                {(event.detailEvent?.user_role?.is_pic === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.user_role?.is_pic === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.user_role?.is_notulensi === true &&
+                  event.detailEvent.status !== "persiapan") ||
                 (data.user_role?.is_notulensi === false &&
                   data.user_role?.is_presensi === false &&
                   data.user_role?.is_member === false &&
-                  data.user_role?.is_pic === false) ? (
+                  data.user_role?.is_pic === false &&
+                  event.detailEvent.status !== "persiapan") ? (
                   <View>
                     <TouchableOpacity
                       style={{
@@ -1337,6 +1362,7 @@ export const DetailAgenda = () => {
               item={item}
               role={data.user_role}
               eventpic={event.detailEvent?.user_role?.is_pic}
+              status={event.detailEvent.status}
               setScanData={setScanData}
               setIdAbsen={setIdAbsen}
               loading={loading}

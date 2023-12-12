@@ -9,6 +9,10 @@ import {
 } from 'accordion-collapse-react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { COLORS, FONTWEIGHT } from '../../config/SuperAppps'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+  } from "react-native-responsive-screen";
 
 export const CollapseCardBiodata = ({ profile }) => {
     console.log(profile)
@@ -48,115 +52,117 @@ export const CollapseCardBiodata = ({ profile }) => {
                 </CollapseHeader>
                 <CollapseBody>
                     <View style={styles.cardCollapse}>
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Nama</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%"}}>Nama</Text>
                             <Text>:</Text>
-                            <Text>{profile.nama}</Text>
+                            <Text style={{ width: "55%"}}>{profile.nama}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>NIP</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>NIP</Text>
                             <Text>:</Text>
-                            <Text>{profile.nip}</Text>
+                            <Text style={{ width: "55%"}}>{profile.nip}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Karpeg/Karis-Karsu/NPWP</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Karpeg/Karis-Karsu/NPWP</Text>
                             <Text>:</Text>
-                            {profile.Karpeg == null ? (
-                                <Text>-</Text>
-                            ) : (
-                                <Text>{profile.Karpeg}</Text>
-                            )}
-                            <Text>/</Text>
-                            {profile.Karis == null ? (
-                                <Text>-</Text>
-                            ) : (
-                                <Text>{profile.Karis}</Text>
-                            )}
-                            <Text>/</Text>
-                            {profile.npwp === "" ? (
-                                <Text>-</Text>
-                            ) : (
-                                <Text>{profile.npwp}</Text>
-                            )}
+                            <View style={{width:"55%", flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start'}}>
+                                {profile.Karpeg == null ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <Text>{profile.Karpeg}</Text>
+                                )}
+                                <Text>/</Text>
+                                {profile.Karis == null ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <Text>{profile.Karis}</Text>
+                                )}
+                                <Text>/</Text>
+                                {profile.npwp === "" ? (
+                                    <Text>-</Text>
+                                ) : (
+                                    <Text>{profile.npwp}</Text>
+                                )}
+                            </View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Tempat/Tanggal lahir</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Tempat/Tanggal lahir</Text>
                             <Text>:</Text>
-                            <Text>{profile.place_birth}/{profile.date_birth}</Text>
+                            <Text style={{ width: "55%" }}>{profile.place_birth}/{profile.date_birth}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Telepon Seluler</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5,width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Telepon Seluler</Text>
                             <Text>:</Text>
-                            <Text>{profile.mobile}</Text>
+                            <Text style={{ width: "55%" }}>{profile.mobile}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>No KTP</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>No KTP</Text>
                             <Text>:</Text>
-                            <Text>{profile.ktp}</Text>
+                            <Text style={{ width: "55%" }}>{profile.ktp}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Email KKP</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5,width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Email KKP</Text>
                             <Text>:</Text>
-                            <Text>{profile.email}</Text>
+                            <Text style={{ width: "55%" }}>{profile.email}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Email Lain</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5,width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Email Lain</Text>
                             <Text>:</Text>
-                            <Text>{profile.email_alt}</Text>
+                            <Text style={{ width: "55%" }}>{profile.email_alt}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Pendidikan Terakhir</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%"}}>Pendidikan Terakhir</Text>
                             <Text>:</Text>
-                            <Text>{profile.pendidikan}</Text>
+                            <Text style={{ width: "55%" }}>{profile.pendidikan}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Unit Kerja</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5,width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Unit Kerja</Text>
                             <Text>:</Text>
-                            <Text style={{ width: 216 }}>{profile.satuan_kerja_nama}</Text>
+                            <Text style={{ width: "55%" }}>{profile.satuan_kerja_nama}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Satker</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Satker</Text>
                             <Text>:</Text>
-                            <Text style={{ width: 216 }}>{profile.unit_kerja}</Text>
+                            <Text style={{ width: "55%" }}>{profile.unit_kerja}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Pangkat</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Pangkat</Text>
                             <Text>:</Text>
                             {profile.pangkat == null ? (
                                 <Text>-</Text>
                             ) : (
-                                <Text>{profile.pangkat}</Text>
+                                <Text style={{ width: "55%" }}>{profile.pangkat}</Text>
                             )}
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Golongan</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5, width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Golongan</Text>
                             <Text>:</Text>
                             {profile.golongan == null ? (
                                 <Text>-</Text>
                             ) : (
-                                <Text>{profile.golongan}</Text>
+                                <Text style={{ width: "55%" }}>{profile.golongan}</Text>
                             )}
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5 }}>
-                            <Text style={{ width: 100 }}>Alamat Kantor</Text>
+                        <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 10, gap: 5,width:wp(82) }}>
+                            <Text style={{ width: "40%" }}>Alamat Kantor</Text>
                             <Text>:</Text>
                             {profile.office_address == null ? (
                                 <Text>-</Text>
                             ) : (
-                                <Text style={{ width: 216 }}>{profile.office_address}</Text>
+                                <Text style={{ width: "50%" }}>{profile.office_address}</Text>
                             )}
                         </View>
 
@@ -173,11 +179,14 @@ const styles = StyleSheet.create({
     card: {
         marginHorizontal: 20,
         borderRadius: 8,
-        width: 362
+        width: wp(88),
+        alignItems:"center"
     },
     cardCollapse: {
         backgroundColor: '#fff',
         marginHorizontal: 20,
-        width: 362
+        width: wp(88),
+        alignItems:"center",
+        paddingHorizontal:wp(20),
     }
 })

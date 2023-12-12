@@ -188,7 +188,7 @@ export const TambahCutiTahunan = () => {
                   color: COLORS.white,
                 }}
               >
-                Cuti Tahunan
+                Pengajuan Cuti
               </Text>
             </View>
           </View>

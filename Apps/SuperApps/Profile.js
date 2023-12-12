@@ -15,6 +15,10 @@ import { setLogout } from "../../store/LoginAuth";
 import { Loading } from "../../components/Loading";
 import { Alert } from "react-native";
 import { setProfile } from "../../store/SuperApps";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -74,7 +78,7 @@ export const Profile = () => {
           <View
             style={{
               backgroundColor: COLORS.white,
-              width: 362,
+              width: wp(87),
               borderRadius: 8,
               justifyContent: "center",
               alignItems: "center",
@@ -107,13 +111,13 @@ export const Profile = () => {
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 7, justifyContent: "center" }}
+          style={{ flexDirection: "row", gap: 7, justifyContent: "center", width:wp(87), alignSelf:"center" }}
         >
           <View
             style={{
               backgroundColor: COLORS.white,
               width: 177,
-              paddingHorizontal: 20,
+              paddingHorizontal: 10,
               paddingTop: 20,
               borderRadius: 8,
               //shadow ios
@@ -122,6 +126,7 @@ export const Profile = () => {
               shadowOpacity: 0.2,
               //shadow android
               elevation: 2,
+              width:wp(43)
             }}
           >
             <Text
@@ -130,29 +135,29 @@ export const Profile = () => {
               Absensi
             </Text>
 
-            <View style={{ paddingBottom: 20 }}>
-              <View style={{ flexDirection: "row", marginTop: 20 }}>
-                <Text style={{ width: 126 }}>Jumlah hari kerja</Text>
+            <View style={{ paddingBottom: 20, }}>
+              <View style={{ flexDirection: "row", marginTop: 20, gap:wp(2) }}>
+                <Text style={{width:"80%"}}>Jumlah hari kerja</Text>
                 <Text>{profile.working_day}</Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <Text style={{ width: 126 }}>Jumlah hadir</Text>
+              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
+                <Text style={{width:"80%"}}>Jumlah hadir</Text>
                 <Text>{profile.present_day}</Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <Text style={{ width: 126 }}>Terlambat</Text>
+              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
+                <Text style={{width:"80%"}}>Terlambat</Text>
                 <Text>{profile.late_day}</Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <Text style={{ width: 126 }}>Dinas</Text>
+              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
+                <Text style={{width:"80%"}}>Dinas</Text>
                 <Text>{profile.outstation_day}</Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <Text style={{ width: 126 }}>Cuti</Text>
+              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(3) }}>
+                <Text style={{width:"80%"}}>Cuti</Text>
                 <Text>-</Text>
               </View>
             </View>
@@ -161,8 +166,7 @@ export const Profile = () => {
           <View
             style={{
               backgroundColor: COLORS.white,
-              width: 177,
-              paddingHorizontal: 20,
+              paddingHorizontal: 10,
               paddingTop: 20,
               borderRadius: 8,
               //shadow ios
@@ -171,6 +175,7 @@ export const Profile = () => {
               shadowOpacity: 0.2,
               //shadow android
               elevation: 2,
+              width:wp(43)
             }}
           >
             <Text
@@ -180,10 +185,9 @@ export const Profile = () => {
             </Text>
 
             <View style={{ paddingBottom: 20 }}>
-              <View style={{ flexDirection: "row", marginTop: 20 }}>
+              <View style={{ flexDirection: "row", marginTop: 20, width:"60%", gap:wp(5) }}>
                 <Text
                   style={{
-                    width: 91,
                     fontSize: 30,
                     fontWeight: FONTWEIGHT.bold,
                   }}
@@ -193,7 +197,7 @@ export const Profile = () => {
                 <View
                   style={{
                     backgroundColor: "#CED06C",
-                    width: 60,
+                    width: wp(18),
                     height: 25,
                     borderRadius: 30,
                     justifyContent: "center",
@@ -209,10 +213,10 @@ export const Profile = () => {
                   flexDirection: "row",
                   marginTop: 10,
                   alignItems: "center",
-                  gap: 5,
+                  gap: wp(1),
                 }}
               >
-                <Text style={{ width: 85 }}>Kualifikasi</Text>
+                <Text style={{ width: "72%"}}>Kualifikasi</Text>
                 <View
                   style={{
                     width: 10,
@@ -229,10 +233,10 @@ export const Profile = () => {
                   flexDirection: "row",
                   marginTop: 10,
                   alignItems: "center",
-                  gap: 5,
+                  gap: wp(1),
                 }}
               >
-                <Text style={{ width: 85 }}>Kompetensi</Text>
+                <Text style={{ width: "72%"}}>Kompetensi</Text>
                 <View
                   style={{
                     width: 10,
@@ -249,10 +253,10 @@ export const Profile = () => {
                   flexDirection: "row",
                   marginTop: 10,
                   alignItems: "center",
-                  gap: 5,
+                  gap: wp(1),
                 }}
               >
-                <Text style={{ width: 85 }}>Kinerja</Text>
+                <Text style={{ width: "72%" }}>Kinerja</Text>
                 <View
                   style={{
                     width: 10,
@@ -269,10 +273,10 @@ export const Profile = () => {
                   flexDirection: "row",
                   marginTop: 10,
                   alignItems: "center",
-                  gap: 5,
+                  gap: wp(1),
                 }}
               >
-                <Text style={{ width: 85 }}>Disiplin</Text>
+                <Text style={{ width: "72%" }}>Disiplin</Text>
                 <View
                   style={{
                     width: 10,
@@ -294,7 +298,7 @@ export const Profile = () => {
             alignItems: "center",
           }}
         >
-          <CollapseCardBiodata profile={profile} />
+          <CollapseCardBiodata profile={profile}/>
           {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
         </View>
 

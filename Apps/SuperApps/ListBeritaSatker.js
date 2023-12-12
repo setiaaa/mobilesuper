@@ -92,35 +92,36 @@ export const ListBeritaSatker = () => {
       <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
         <View
           style={{
-            backgroundColor: COLORS.primary,
-            height: "10%",
             flexDirection: "row",
+            alignItems: "flex-end",
+            backgroundColor: COLORS.primary,
+            height: 80,
+            paddingBottom: 20,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <View
-              style={[
-                styles.backIcon,
-                {
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 25,
-                  marginLeft: 20,
-                },
-              ]}
-            >
-              <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
-            </View>
-          </TouchableOpacity>
           <View
             style={{
-              flex: 1,
-              justifyContent: "center",
+              backgroundColor: COLORS.white,
+              borderRadius: 20,
+              width: 28,
+              height: 28,
               alignItems: "center",
-              marginRight: 40,
+              justifyContent: "center",
+              marginLeft: 20,
             }}
           >
-            <Text style={{ color: "white", fontSize: 15, fontWeight: 600 }}>
+            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="chevron-back-outline"
+                size={24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+            <Text
+              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+            >
               Berita
             </Text>
           </View>

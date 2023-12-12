@@ -90,7 +90,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   size={24}
                   style={{ position: "absolute", top: 5 }}
                 />
-                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Linimasa</Text>
+                <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15, fontSize:FONTSIZE.H3 }}>Linimasa</Text>
               </View>
             ) : (
               <View
@@ -102,7 +102,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 }}
               >
                 <Ionicons name="school-outline" color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
-                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Linimasa</Text>
+                <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15,fontSize:FONTSIZE.H3 }}>Linimasa</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -144,7 +144,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   color={COLORS.primary}
                   size={24}
                 />
-                <Text style={{ color: COLORS.primary, textAlign: "center" }}>
+                <Text style={{ color: COLORS.primary, textAlign: "center",fontSize:FONTSIZE.H3 }}>
                   Postingan Saya
                 </Text>
               </View>
@@ -158,7 +158,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 }}
               >
                 <Ionicons name="home-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                <Text style={{ color: COLORS.grey, textAlign: "center",fontSize:FONTSIZE.H3 }}>
                   Postingan Saya
                 </Text>
               </View>
@@ -203,7 +203,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     color={COLORS.primary}
                     size={24}
                   />
-                  <Text style={{ color: COLORS.primary, textAlign: "center" }}>
+                  <Text style={{ color: COLORS.primary, textAlign: "center",fontSize:FONTSIZE.H3 }}>
                     Rangkuman IKU
                   </Text>
                 </View>
@@ -221,7 +221,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     color={COLORS.grey}
                     size={24}
                   />
-                  <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                  <Text style={{ color: COLORS.grey, textAlign: "center",fontSize:FONTSIZE.H3 }}>
                     Rangkuman IKU
                   </Text>
                 </View>
@@ -268,7 +268,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     size={24}
                     style={{ position: "absolute", top: 5 }}
                   />
-                  <Text style={{ color: COLORS.primary, position: "absolute", bottom: 20 }}>Laporan</Text>
+                  <Text style={{ color: COLORS.primary, position: "absolute", bottom: 20,fontSize:FONTSIZE.H3 }}>Laporan</Text>
                 </View>
               ) : (
                 <View
@@ -285,7 +285,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     size={24}
                     style={{ position: "absolute", top: 5 }}
                   />
-                  <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Laporan</Text>
+                  <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15,fontSize:FONTSIZE.H3 }}>Laporan</Text>
                 </View>
               )}
             </TouchableOpacity>
@@ -330,7 +330,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     size={24}
                     style={{ position: "absolute", top: 5 }}
                   />
-                  <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Penilaian</Text>
+                  <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15,fontSize:FONTSIZE.H3 }}>Penilaian</Text>
                 </View>
               ) : (
                 <View
@@ -347,7 +347,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     size={24}
                     style={{ position: "absolute", top: 5 }}
                   />
-                  <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Penilaian</Text>
+                  <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15,fontSize:FONTSIZE.H3 }}>Penilaian</Text>
                 </View>
               )}
             </TouchableOpacity>

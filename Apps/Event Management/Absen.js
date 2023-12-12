@@ -22,6 +22,10 @@ import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator } from "react-native";
 import { RefreshControl } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 
 const CardListAbsen = ({ item, loading }) => {
@@ -55,7 +59,7 @@ const CardListAbsen = ({ item, loading }) => {
           <Text>{item.member?.nama}</Text>
         )}
         <View style={{ marginTop: 10 }}>
-          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <View style={{ flexDirection: "row", gap: wp(4), alignItems: "center"}}>
             <Text style={{ width: 110 }}>Status</Text>
             {loading ? (
               <ShimmerPlaceHolder
@@ -130,9 +134,10 @@ const CardListAbsen = ({ item, loading }) => {
                   alignItems: "center",
                   marginTop: 10,
                   flexDirection: "row",
+                  gap:wp(2)
                 }}
               >
-                <Text style={{ width: 120 }}>Waktu Check In</Text>
+                <Text style={{ width: "35%",}}>Waktu Check In</Text>
                 {loading ? (
                   <ShimmerPlaceHolder
                     style={{ borderRadius: 4 }}
@@ -142,8 +147,9 @@ const CardListAbsen = ({ item, loading }) => {
                 ) : (
                   <View
                     style={{
-                      width: 180,
-                      height: 24,
+                      width: wp(52),
+                      paddingHorizontal:3,
+                      paddingVertical:1,
                       borderRadius: 30,
                       backgroundColor: COLORS.ExtraDivinder,
                       justifyContent: "center",

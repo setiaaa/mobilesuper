@@ -231,23 +231,23 @@ export const HalamanUtama = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            if (variant === 'hariini') {
-              dispatch(getEventToday(token));
-            } else {
-              dispatch(getEventProgress(token));
-            }
-              console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        if (variant === "hariini") {
+          dispatch(getEventToday(token));
+        } else {
+          dispatch(getEventProgress(token));
+        }
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token]);
 
   // console.log(event.listsprogress);
@@ -314,7 +314,7 @@ export const HalamanUtama = () => {
           >
             <TouchableOpacity
               style={{
-                width: 171,
+                width: "40%",
                 height: 41,
                 borderWidth: 1,
                 backgroundColor:
@@ -331,6 +331,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "hariini" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
+                  fontSize: FONTSIZE.H3
                 }}
               >
                 Agenda Rapat Hari Ini
@@ -339,7 +340,7 @@ export const HalamanUtama = () => {
 
             <TouchableOpacity
               style={{
-                width: 171,
+                width: "40%",
                 height: 41,
                 borderWidth: 1,
                 backgroundColor:
@@ -356,6 +357,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "progres" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
+                  fontSize: FONTSIZE.H3
                 }}
               >
                 Progres Agenda Rapat
@@ -364,31 +366,26 @@ export const HalamanUtama = () => {
           </View>
           {variant === "hariini" ? (
             <>
-            {loading ? (
-                <Loading />
-            ) : (
-                null
-            )}
-            <FlatList
-              data={filterDataHariIni}
-              renderItem={({ item }) => (
-                <CardListEvent token={token} item={item} loading={loading} />
-              )}
-              keyExtractor={(item) => item.id}
-              style={{ marginBottom: 300 }}
-              ListEmptyComponent={() => <ListEmpty />}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-            />
+              {loading ? <Loading /> : null}
+              <FlatList
+                data={filterDataHariIni}
+                renderItem={({ item }) => (
+                  <CardListEvent token={token} item={item} loading={loading} />
+                )}
+                keyExtractor={(item) => item.id}
+                style={{ marginBottom: 300 }}
+                ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
+              />
             </>
           ) : (
             <View>
-            {loading ? (
-                <Loading />
-            ) : (
-                null
-            )}
+              {loading ? <Loading /> : null}
               <View style={{ padding: 25 }}>
                 <View
                   style={{
@@ -458,7 +455,10 @@ export const HalamanUtama = () => {
                 style={{ marginBottom: 300 }}
                 ListEmptyComponent={() => <ListEmpty />}
                 refreshControl={
-                  <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
                 }
               />
               {search === "" && !isFiltered

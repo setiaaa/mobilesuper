@@ -36,6 +36,10 @@ import { setRefresh } from "../../store/Pengetahuan";
 import { Loading } from "../../components/Loading";
 import { ActivityIndicator } from "react-native";
 import { RefreshControl } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const CardPostinganSaya = ({ item, token }) => {
   const navigation = useNavigation();
@@ -95,7 +99,7 @@ const CardPostinganSaya = ({ item, token }) => {
                   />
                 </View>
               </View>
-              <View style={{ marginHorizontal: 10, width: "75%" }}>
+              <View style={{ marginHorizontal: 10, width: wp(56), }}>
                 <Text
                   style={{
                     // width: 270,
@@ -103,7 +107,7 @@ const CardPostinganSaya = ({ item, token }) => {
                     fontWeight: FONTWEIGHT.bold,
                     textAlign: "justify",
                     marginBottom: 5,
-                    maxWidth: 250,
+                    maxWidth: wp(55),
                   }}
                   numberOfLines={3} // Limit the number of lines to 1
                   ellipsizeMode="tail" // Display "..." at the end if text overflows
@@ -301,7 +305,7 @@ const CardPostinganSaya = ({ item, token }) => {
                   />
                 </View>
               </View>
-              <View style={{ marginHorizontal: 10, width: "75%" }}>
+              <View style={{ marginHorizontal: 10, width: wp(56), }}>
                 <Text
                   style={{
                     // width: 270,
@@ -309,7 +313,7 @@ const CardPostinganSaya = ({ item, token }) => {
                     fontWeight: FONTWEIGHT.bold,
                     textAlign: "justify",
                     marginBottom: 5,
-                    maxWidth: 250,
+                    maxWidth: wp(55),
                   }}
                   numberOfLines={3} // Limit the number of lines to 1
                   ellipsizeMode="tail" // Display "..." at the end if text overflows

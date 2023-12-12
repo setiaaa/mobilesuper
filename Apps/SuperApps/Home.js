@@ -95,25 +95,25 @@ export const Home = () => {
     if (token !== "") {
       dispatch(getProfileMe(token));
     }
-  }, [token]);
+  }, [token, profile]);
 
   useEffect(() => {
     if (token !== "") {
       dispatch(getBanner(token));
     }
-  }, [token]);
+  }, [token, banner]);
 
   useEffect(() => {
     if (token !== "") {
       dispatch(getGaleri({ token, page }));
     }
-  }, [token]);
+  }, [token, galeri]);
 
   useEffect(() => {
     if (token !== "") {
       dispatch(getBerita({ token, page }));
     }
-  }, [token]);
+  }, [token, berita]);
 
   useEffect(() => {
     const backAction = () => {

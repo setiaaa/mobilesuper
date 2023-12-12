@@ -339,7 +339,8 @@ export const RangkumanIKU = () => {
           const { uri } = await downloadResumable.downloadAsync();
           saveAndroidFile(uri, namafile[namafile.length - 1], fileType);
         } else {
-          saveIosFile(downloadPath);
+          const { uri } = await downloadResumable.downloadAsync();
+          saveIosFile(uri);
         }
       } catch (e) {
         // setIsLoading(false);
@@ -400,26 +401,26 @@ export const RangkumanIKU = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-        const param = {
-          token: token,
-          page: page,
-          year: savedYear.value,
-          quarter: savedQuarter.key,
-          unitKerja: savedUnitKerja.value,
-        };
-        if (token !== "") {
-          dispatch(getListPegawai(param));
-          console.log('Refresh Berhasil')
-        }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      const param = {
+        token: token,
+        page: page,
+        year: savedYear.value,
+        quarter: savedQuarter.key,
+        unitKerja: savedUnitKerja.value,
+      };
+      if (token !== "") {
+        dispatch(getListPegawai(param));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
 
   return (
@@ -948,7 +949,10 @@ export const RangkumanIKU = () => {
                   ListEmptyComponent={() => <ListEmpty />}
                   onEndReached={loadMore}
                   refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
                   }
                   style={{ height: 250 }}
                 />

@@ -94,13 +94,14 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
             color={isSelected === true ? COLORS.lighter : null}
           />
         ) : null}
-        <View style={{ flexDirection: "column", width:"98%"}}>
+        <View style={{ flexDirection: "column", width:(variant === "inprogress" ? "90%" : "100%"),}}>
           <Text
             style={{
               fontSize: 16,
               width: 300,
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
+              width:"100%",
             }}
           >
             {item?.subject}
@@ -121,19 +122,19 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 textAlign: "justify",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
-                width:"40%"
+                width:"45%",
               }}
             >
               Penerima
             </Text>
             {item?.receivers[0]?.display_title !== undefined ? (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "60%"}}>
+              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%"}}>
                 : {item?.receivers[0]?.officer?.nama !== undefined
                   ? item?.receivers[0]?.officer?.nama
                   : null}
               </Text>
             ) : (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "60%" }}>
+              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%" }}>
                 : {item?.receivers[0]?.nama !== undefined
                   ? item?.receivers[0]?.nama
                   : "-"}
@@ -155,10 +156,10 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
               style={{
                 fontSize: 13,
                 width: 110,
-                textAlign: "justify",
+                textAlign: "auto",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
-                width:"40%"
+                width:"45%"
               }}
             >
               Penandatangan
@@ -167,15 +168,15 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
               style={{
                 fontSize: 13,
                 width: 200,
-                textAlign: "justify",
+                textAlign: "auto",
                 fontWeight: FONTWEIGHT.normal,
-                width:"60%"
+                width:"55%"
               }}
             >
-              :{" "}
+              : 
               {item?.approvers[1]?.officer !== undefined
                 ? item?.approvers[1]?.officer?.nama
-                : item?.approvers[1]?.nama}{" "}
+                : item?.approvers[1]?.nama}
             </Text>
           </View>
         </View>
@@ -589,7 +590,7 @@ export const Bankom = () => {
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
-              style={{ height: "69%" }}
+              style={{ height: "70%" }}
             />
             {/* <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
                             style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}
