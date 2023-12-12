@@ -283,7 +283,7 @@ function MyTabBar({ props, navigation }) {
                   }}
                 />
                 <Ionicons name="reader" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>FAQ</Text>
+                <Text style={{ color: COLORS.primary }}>Help Desk</Text>
               </View>
             ) : (
               <View
@@ -295,7 +295,7 @@ function MyTabBar({ props, navigation }) {
                 }}
               >
                 <Ionicons name="reader" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>FAQ</Text>
+                <Text style={{ color: COLORS.grey }}>Help Desk</Text>
               </View>
             )}
           </TouchableOpacity>
