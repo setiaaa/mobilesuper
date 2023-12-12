@@ -14,7 +14,7 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +32,11 @@ import {
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setAttachmentCuti, setStatus } from "../../store/Cuti";
 import * as DocumentPicker from "expo-document-picker";
+import CalendarPicker from 'react-native-calendar-picker';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -150,6 +155,59 @@ export const TambahCutiTahunan = () => {
     setAlamat(form?.data_user?.alamat);
     setTelepon(form?.data_user?.no_telpon);
   }, [form]);
+
+  const CustomPreviousComponent = () => (
+    <View>
+      <Ionicons
+        name="chevron-back-outline"
+        size={24}
+        color={COLORS.primary}
+      />
+    </View>
+  );
+  const CustomNextComponent = () => (
+    <View>
+      <Ionicons
+        name="chevron-forward-outline"
+        size={24}
+        color={COLORS.primary}
+      />
+    </View>
+  );
+
+  const customDayHeaderStyles = ({dayOfWeek, month, year}) => {
+    switch(dayOfWeek) { // can also evaluate month, year
+      case 7: // Minggu
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: 'bold',
+          }
+        };
+    }
+  }
+  const customDatesStyles = date => {
+    switch(date.isoWeekday()) {
+      case 7: // Monday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+          }
+        };
+    }
+  }
+
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
+
+  const handleDateChange = (date, type) => {
+    if (type === 'END_DATE') {
+      setSelectedEndDate(date);
+    } else {
+      setSelectedStartDate(date);
+      setSelectedEndDate(null);
+    }
+  };
 
   return (
     <GestureHandlerRootView>
@@ -481,7 +539,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -494,7 +552,11 @@ export const TambahCutiTahunan = () => {
                         maxLength={40}
                         placeholder="Mulai"
                         style={{ padding: 10, height: 40 }}
-                        value={TanggalMulai}
+                        // value={TanggalMulai}
+                        // value={selectedStartDate ? selectedStartDate.toString() : ''}
+                        value={selectedStartDate ? moment(selectedStartDate, DATETIME.LONG_DATETIME).format(
+                                DATETIME.SHORT_DATE
+                              ) : ''}
                       />
                       <View
                         style={{
@@ -521,7 +583,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -534,7 +596,9 @@ export const TambahCutiTahunan = () => {
                         maxLength={40}
                         placeholder="Selesai"
                         style={{ padding: 10, height: 40 }}
-                        value={TanggalSelesai}
+                        value={selectedEndDate ? moment(selectedEndDate, DATETIME.LONG_DATETIME).format(
+                                DATETIME.SHORT_DATE
+                              ) : ''}
                       />
                       <View
                         style={{
@@ -588,37 +652,51 @@ export const TambahCutiTahunan = () => {
                               alignItems: "center",
                               justifyContent: "center",
                               width: "90%",
-                              height: 500,
+                              height: hp(70),
                               borderRadius: 10,
                             }}
                           >
-                            <TouchableOpacity
+                            <View style={{ width: "100%" }}>
+                              <CalendarPicker
+                                startFromMonday={true}
+                                width={wp(90)}
+                                weekdays={['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']}
+                                months={['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'Desember']}
+                                previousComponent={<CustomPreviousComponent />}
+                                nextComponent={<CustomNextComponent />}
+                                selectedRangeStyle={{ backgroundColor: COLORS.infoDangerLight, fontWeight: 'bold' }}
+                                customDayHeaderStyles={customDayHeaderStyles}
+                                customDatesStyles={customDatesStyles}
+                                onDateChange={handleDateChange}
+                                allowRangeSelection={true}
+                              />
+                              <TouchableOpacity
                               onPress={() => setModalVisiblePicker("")}
                               style={{
-                                paddingRight: "85%",
                                 marginBottom: 3,
                                 marginLeft: 20,
+                                alignContent:"center",
+                                justifyContent:"center",
+                                marginLeft:"35%"
                               }}
                             >
                               <View
                                 style={{
                                   backgroundColor: COLORS.primary,
-                                  borderRadius: 50,
-                                  width: 35,
+                                  borderRadius: 10,
+                                  width: wp(25),
                                   height: 35,
                                   justifyContent: "center",
                                   alignItems: "center",
+                                  marginTop:10,
                                 }}
                               >
-                                <Ionicons
-                                  name="close-outline"
-                                  size={24}
-                                  color={COLORS.white}
-                                />
+                                <Text style={{color:"white"}}>
+                                  Confirm
+                                </Text>
                               </View>
                             </TouchableOpacity>
-                            <View style={{ width: "100%" }}>
-                              <DatePicker
+                              {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
                                   textHeaderColor: COLORS.primary,
@@ -686,8 +764,8 @@ export const TambahCutiTahunan = () => {
                                     setTanggalMulai("");
                                   }
                                 }}
-                              />
-                              <TouchableOpacity
+                              /> */}
+                              {/* <TouchableOpacity
                                 onPress={() => setModalVisiblePicker("")}
                                 style={{
                                   marginTop: 20,
@@ -709,7 +787,7 @@ export const TambahCutiTahunan = () => {
                                     Ok
                                   </Text>
                                 </View>
-                              </TouchableOpacity>
+                              </TouchableOpacity> */}
                             </View>
                           </View>
                         </View>
