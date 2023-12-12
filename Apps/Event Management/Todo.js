@@ -261,7 +261,7 @@ export const Todo = () => {
               >
                 <TouchableOpacity
                   style={{
-                    width: 331,
+                    width: "80%",
                     height: 50,
                     backgroundColor: COLORS.lightBrown,
                     borderRadius: 8,
@@ -279,7 +279,7 @@ export const Todo = () => {
 
                 <TouchableOpacity
                   style={{
-                    width: 331,
+                    width: "80%",
                     height: 50,
                     backgroundColor: COLORS.infoDanger,
                     borderRadius: 8,

@@ -167,6 +167,120 @@ export const CardAppsB = ({ handlePressModal }) => {
           height: 100,
         }}
       >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("MainDigitalSign")}
+        >
+          <View
+            style={[
+              styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
+            <Image
+              style={{ width: 28, height: 28 }}
+              source={require("../../assets/superApp/digital-ikon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: FONTSIZE.H4,
+          }}
+        >
+          Digital Sign
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("MainCuti")}>
+          <View
+            style={[
+              styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{ width: 28, height: 28 }}
+              source={require("../../assets/superApp/cuti-ikon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: FONTSIZE.H4,
+          }}
+        >
+          Cuti
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
+          <View
+            style={[
+              styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{ width: 28, height: 28 }}
+              source={require("../../assets/superApp/sppd-ikon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            textAlign: "center",
+            fontSize: FONTSIZE.H4,
+          }}
+        >
+          SPPD
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
         <TouchableOpacity onPress={() => navigation.navigate("MyTask")}>
           <View
             style={[
@@ -196,10 +310,49 @@ export const CardAppsB = ({ handlePressModal }) => {
         >
           Task{"\n"}Management
         </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("ListPegawai")}>
+          <View
+            style={[
+              styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{ width: 28, height: 28 }}
+              source={require("../../assets/superApp/pegawai-ikon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: FONTSIZE.H4,
+          }}
+        >
+          Pegawai
+        </Text>
       </View>
     );
     if (isRolePreShare) {
-      tmpMenu.push(
+      tmpMenu.splice(
+        2,
+        0,
         <View
           style={{
             justifyContent: "center",
@@ -241,7 +394,9 @@ export const CardAppsB = ({ handlePressModal }) => {
       );
     }
     if (isRoleKalender) {
-      tmpMenu.push(
+      tmpMenu.splice(
+        7,
+        0,
         <View
           style={{
             justifyContent: "center",
@@ -294,7 +449,9 @@ export const CardAppsB = ({ handlePressModal }) => {
     //   )
     // }
     if (isRoleEvent) {
-      tmpMenu.push(
+      tmpMenu.splice(
+        8,
+        0,
         <View
           style={{
             justifyContent: "center",
@@ -334,159 +491,9 @@ export const CardAppsB = ({ handlePressModal }) => {
         </View>
       );
     }
-    tmpMenu.push(
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MainDigitalSign")}
-        >
-          <View
-            style={[
-              styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
-            <Image
-              style={{ width: 28, height: 28 }}
-              source={require("../../assets/superApp/digital-ikon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: FONTSIZE.H4,
-          }}
-        >
-          Digital Sign
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("ListPegawai")}>
-          <View
-            style={[
-              styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{ width: 28, height: 28 }}
-              source={require("../../assets/superApp/pegawai-ikon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: FONTSIZE.H4,
-          }}
-        >
-          Pegawai
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
-          <View
-            style={[
-              styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{ width: 28, height: 28 }}
-              source={require("../../assets/superApp/sppd-ikon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            textAlign: "center",
-            fontSize: FONTSIZE.H4,
-          }}
-        >
-          SPPD
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("MainCuti")}>
-          <View
-            style={[
-              styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{ width: 28, height: 28 }}
-              source={require("../../assets/superApp/cuti-ikon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: FONTSIZE.H4,
-          }}
-        >
-          Cuti
-        </Text>
-      </View>
-    );
+    // tmpMenu.push(
+
+    // );
 
     setListMenu(tmpMenu);
   }, []);

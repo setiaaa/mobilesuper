@@ -16,6 +16,8 @@ export const CardListDokumenDraft = ({ item, nip }) => {
     dispatch(getDetailArsipCuti(params));
   };
 
+  console.log(item);
+
   return (
     <>
       {item.status === "Draft" ? (

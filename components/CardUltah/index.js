@@ -127,11 +127,11 @@ export const CardUltah = ({ ultah }) => {
                             flexDirection: 'column', 
                         }}>
 
-                        <View key={index} style= {{ flexDirection: 'row', gap: 10 }}>
+                        <View key={index} style= {{ flexDirection: 'row', gap: 10, }}>
                             <View style={{}}>
                                <Text>{index + 1}.</Text>
                             </View>
-                            <View style={{ }}>
+                            <View style={{ width:"90%" }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold}}>{item.nama}</Text>
                                 <Text>{item.nama_jabatan}</Text>
                             </View>

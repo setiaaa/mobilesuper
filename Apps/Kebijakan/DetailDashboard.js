@@ -13,6 +13,10 @@ import { TouchableOpacity } from "react-native";
 import * as Sharing from "expo-sharing";
 import * as IntentLauncher from "expo-intent-launcher";
 import { Alert } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function DetailDashboard({ route }) {
   const { data } = route.params;
@@ -208,14 +212,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#800000",
     borderRadius: 12,
     marginTop: 20,
-    width: 350,
+    width: wp(90),
     marginBottom: 20,
   },
   buttonUnduh: {
     backgroundColor: "#e3efb5",
     borderRadius: 12,
     marginTop: 20,
-    width: 350,
+    width: wp(90),
   },
   cardTop: {
     backgroundColor: "#fff",

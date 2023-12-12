@@ -6,6 +6,10 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import {} from "react-native";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const dataRoleDashboard = ["D_KK", "D_KP", "D_BD", "D_PK"];
 const dataRoleDashboardKeuangan = ["D_KK"];
@@ -13,16 +17,13 @@ const dataRoleDashboardkepegawaian = ["D_KP"];
 const dataRoleDashboardbudidaya = ["D_BD"];
 const dataRoleDashboardpenangkapan = ["D_PK"];
 
-
-
-
 function MyTabBar({ props, navigation }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
 
   const [visibleModal, setVisibleModal] = useState(false);
 
   const { profile } = useSelector((state) => state.superApps);
-  
+
   const isRole = profile.roles_access?.some((item) =>
     dataRoleDashboard.includes(item)
   );
@@ -282,7 +283,7 @@ function MyTabBar({ props, navigation }) {
                   }}
                 />
                 <Ionicons name="reader" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>FAQ</Text>
+                <Text style={{ color: COLORS.primary }}>Help Desk</Text>
               </View>
             ) : (
               <View
@@ -294,7 +295,7 @@ function MyTabBar({ props, navigation }) {
                 }}
               >
                 <Ionicons name="reader" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>FAQ</Text>
+                <Text style={{ color: COLORS.grey }}>Help Desk</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -379,7 +380,7 @@ function MyTabBar({ props, navigation }) {
               style={{
                 backgroundColor: COLORS.white,
                 width: "90%",
-                height: "40%",
+                height: hp(43),
                 borderRadius: 10,
                 marginTop: "70%",
               }}
@@ -397,7 +398,7 @@ function MyTabBar({ props, navigation }) {
               >
                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
                 <TouchableOpacity
-                  style={{}}
+                  style={{ alignItems: "center", justifyContent: "center" }}
                   onPress={() => {
                     setVisibleModal(false);
                   }}
@@ -413,18 +414,15 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "center",
-                  gap: 10,
-                  marginTop: 20,
-                  alignItems: "center",
+                  justifyContent: "space-around",
+                  marginTop: 10,
                 }}
               >
                 {isRoleKeuangan ? (
                   <View
                     style={{
-                      justifyContent: "center",
                       alignItems: "center",
-                      width: 100,
+                      width: 150,
                     }}
                   >
                     <TouchableOpacity
@@ -445,7 +443,7 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                        style={{ width: 24, height: 18}}
+                          style={{ width: 24, height: 18 }}
                           source={require("../../assets/superApp/ikon-keuangan.png")}
                         />
                       </View>
@@ -456,9 +454,8 @@ function MyTabBar({ props, navigation }) {
                         justifyContent: "center",
                         alignItems: "center",
                         fontSize: FONTSIZE.H4,
-                        height: 40,
-                        maxWidth: 60,
-                        textAlign: 'center'
+                        width: 100,
+                        textAlign: "center",
                       }}
                     >
                       Keuangan dan Kinerja
@@ -469,9 +466,8 @@ function MyTabBar({ props, navigation }) {
                 {isRoleKepegawaian ? (
                   <View
                     style={{
-                      justifyContent: "center",
                       alignItems: "center",
-                      width: 100,
+                      width: 150,
                     }}
                   >
                     <TouchableOpacity
@@ -492,7 +488,7 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                          style={{ width: 18, height: 18}}
+                          style={{ width: 18, height: 18 }}
                           source={require("../../assets/superApp/ikon-kepagawaian.png")}
                         />
                       </View>
@@ -510,13 +506,20 @@ function MyTabBar({ props, navigation }) {
                     </Text>
                   </View>
                 ) : null}
+              </View>
 
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  marginTop: 10,
+                }}
+              >
                 {isRoleBudidaya ? (
                   <View
                     style={{
-                      justifyContent: "center",
                       alignItems: "center",
-                      width: 100,
+                      width: 150,
                     }}
                   >
                     <TouchableOpacity
@@ -537,7 +540,7 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                        style={{ width: 18, height: 18}}
+                          style={{ width: 18, height: 18 }}
                           source={require("../../assets/superApp/ikon-budidaya.png")}
                         />
                       </View>
@@ -547,71 +550,66 @@ function MyTabBar({ props, navigation }) {
                         marginTop: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        textAlign: "center",
                         fontSize: FONTSIZE.H4,
                         height: 40,
                       }}
                     >
-                      Produksi{"\n"}Budidaya
+                      Produksi Budidaya
                     </Text>
                   </View>
                 ) : null}
-              </View>
-              {isRolePenangkapan ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    gap: 10,
-                    marginTop: 10,
-                    marginHorizontal: 30,
-                    alignItems: "flex-start",
-                  }}
-                >
+                {isRolePenangkapan ? (
                   <View
                     style={{
-                      // justifyContent: "center",
-                      // alignItems: "center",
-                      width: 100,
+                      alignItems: "center",
+                      width: 150,
                     }}
                   >
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate("Penangkapan");
-                        setVisibleModal(false);
-                      }}
-                    >
-                      <View
-                        style={[
-                          styles.cardApps,
-                          {
-                            backgroundColor: COLORS.primary,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                          },
-                        ]}
-                      >
-                        <Image
-                        style={{ width: 18, height: 18}}
-                          source={require("../../assets/superApp/ikon-penangkapan.png")}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    <Text
+                    <View
                       style={{
-                        marginTop: 10,
-                        // justifyContent: "center",
-                        // textAlign: "center",
-                        // alignItems: "center",
-                        fontSize: FONTSIZE.H4,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: 100,
                       }}
                     >
-                      Produksi{"\n"}Budidaya
-                    </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate("Penangkapan");
+                          setVisibleModal(false);
+                        }}
+                      >
+                        <View
+                          style={[
+                            styles.cardApps,
+                            {
+                              backgroundColor: COLORS.primary,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              display: "flex",
+                            },
+                          ]}
+                        >
+                          <Image
+                            style={{ width: 18, height: 18 }}
+                            source={require("../../assets/superApp/ikon-penangkapan.png")}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                      <Text
+                        style={{
+                          marginTop: 10,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "center",
+                          fontSize: FONTSIZE.H4,
+                        }}
+                      >
+                        Produksi Penangkapan
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              ) : null}
+                ) : null}
+              </View>
             </View>
           </View>
           {/* <TouchableOpacity
@@ -666,8 +664,8 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   cardApps: {
-    width: 48,
-    height: 48,
+    width: wp(15),
+    height: wp(15),
     borderRadius: 50,
     shadowOffset: { width: -2, height: 4 },
     shadowColor: "#171717",

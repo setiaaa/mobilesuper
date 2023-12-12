@@ -314,7 +314,7 @@ export const HalamanUtama = () => {
           >
             <TouchableOpacity
               style={{
-                width: 171,
+                width: "40%",
                 height: 41,
                 borderWidth: 1,
                 backgroundColor:
@@ -331,6 +331,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "hariini" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
+                  fontSize: FONTSIZE.H3
                 }}
               >
                 Agenda Rapat Hari Ini
@@ -339,7 +340,7 @@ export const HalamanUtama = () => {
 
             <TouchableOpacity
               style={{
-                width: 171,
+                width: "40%",
                 height: 41,
                 borderWidth: 1,
                 backgroundColor:
@@ -356,6 +357,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "progres" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
+                  fontSize: FONTSIZE.H3
                 }}
               >
                 Progres Agenda Rapat

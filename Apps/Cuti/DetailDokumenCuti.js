@@ -29,6 +29,10 @@ import { Image } from "react-native";
 import { postApproval } from "../../service/api";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setStatus } from "../../store/Cuti";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   const navigation = useNavigation();
@@ -281,7 +285,7 @@ const CardKomen = ({
               style={{ width: 30, height: 30, borderRadius: 20 }}
             />
           </View>
-          <View style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: 10,width:"90%" }}>
             <Text
               style={{
                 fontSize: FONTSIZE.H2,
@@ -314,7 +318,7 @@ const CardKomen = ({
                   backgroundColor: COLORS.danger,
                   alignItems: "center",
                   justifyContent: "center",
-                  width: 100,
+                  width: "25%",
                   borderRadius: 8,
                 }}
               >
@@ -635,7 +639,7 @@ export const DetailDokumenCuti = ({ route }) => {
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
-        <ScrollView>
+        <ScrollView style={{marginBottom:20}}>
           <View
             style={{
               flexDirection: "row",
@@ -1389,7 +1393,7 @@ export const DetailDokumenCuti = ({ route }) => {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
@@ -1404,22 +1408,24 @@ export const DetailDokumenCuti = ({ route }) => {
               </View>
               <TouchableOpacity
                 style={{
-                  justifyContent: "flex-end",
+                  justifyContent: "center",
                   backgroundColor: COLORS.white,
                   borderRadius: 10,
-                  padding: 15,
-                  paddingHorizontal: 25,
+                  padding: 10,
+                  paddingHorizontal: 20,
                   //shadow ios
                   shadowOffset: { width: -2, height: 4 },
                   shadowColor: "#171717",
                   //shadow android
                   elevation: 2,
+                  width:"40%",
+                  alignItems:"center"
                 }}
                 onPress={() => {
                   bottomSheetAttachComment();
                 }}
               >
-                <Text style={{ color: COLORS.primary }}>Lihat Komentar</Text>
+                <Text style={{ color: COLORS.primary, }}>Lihat Komentar</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -150,6 +150,8 @@ import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 import LihatSuratSPPD from "../SPPD/LihatSuratSPPD";
 import { Laporan } from "../Task Management/Dashboard/Laporan";
 import { PdfPerisai } from "../DigitalSignature/PdfPerisai";
+import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
+import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 
 const Stack = createNativeStackNavigator();
 
@@ -461,6 +463,20 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="Laporan"
             component={Laporan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HDLaporanSaya"
+            component={HDLaporanSaya}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HDFormLaporan"
+            component={HDFormLaporan}
             options={{
               headerShown: false,
             }}

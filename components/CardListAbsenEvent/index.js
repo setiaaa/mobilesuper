@@ -7,6 +7,10 @@ import moment from "moment";
 import { TouchableOpacity } from "react-native";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+  } from "react-native-responsive-screen";
 
 export const CardListAbsenEvent = ({
   item,
@@ -58,7 +62,7 @@ export const CardListAbsenEvent = ({
           </Text>
         )}
         <View style={{ marginTop: 10 }}>
-          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <View style={{ flexDirection: "row", gap: wp(4), alignItems: "center" }}>
             <Text style={{ width: 110, color: COLORS.lighter }}>Status</Text>
             {loading ? (
               <ShimmerPlaceHolder
@@ -98,7 +102,7 @@ export const CardListAbsenEvent = ({
             )}
           </View>
 
-          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <View style={{ flexDirection: "row", gap: 10, alignItems: "center", gap:wp(2) }}>
             {user === "admin" && checkIn === "" ? (
               <TouchableOpacity
                 style={{

@@ -12,6 +12,10 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { createShimmerPlaceHolder } from 'expo-shimmer-placeholder';
 import { LinearGradient } from 'expo-linear-gradient';
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+  } from "react-native-responsive-screen";
 
 export const DetailProfile = () => {
     const { pegawai, loading } = useSelector(state => state.Pegawai)
@@ -46,7 +50,6 @@ export const DetailProfile = () => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
                     <View style={{
                         backgroundColor: COLORS.white,
-                        width: 362,
                         borderRadius: 8,
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -58,6 +61,7 @@ export const DetailProfile = () => {
                         shadowOpacity: 0.2,
                         //shadow android
                         elevation: 2,
+                        width: wp(87),
 
                     }}>
                         {loading ? (
@@ -84,8 +88,7 @@ export const DetailProfile = () => {
 
                     <View style={{
                         backgroundColor: COLORS.white,
-                        width: 177,
-                        paddingHorizontal: 20,
+                        paddingHorizontal: 10,
                         paddingTop: 20,
                         borderRadius: 8,
                         //shadow ios
@@ -94,32 +97,33 @@ export const DetailProfile = () => {
                         shadowOpacity: 0.2,
                         //shadow android
                         elevation: 2,
+                        width:wp(43)
                     }}>
                         <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>Absensi</Text>
 
                         <View style={{ paddingBottom: 20 }}>
-                            <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                                <Text style={{ width: 126, }}>Jumlah hari kerja</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 20,gap:wp(2) }}>
+                                <Text style={{ width: "80%", }}>Jumlah hari kerja</Text>
                                 <Text>{pegawai.detail.working_day}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                                <Text style={{ width: 126, }}>Jumlah hadir</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10,gap:wp(2) }}>
+                                <Text style={{ width: "80%", }}>Jumlah hadir</Text>
                                 <Text>{pegawai.detail.present_day}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                                <Text style={{ width: 126, }}>Terlambat</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10, gap:wp(2)}}>
+                                <Text style={{ width: "80%", }}>Terlambat</Text>
                                 <Text>{pegawai.detail.late_day}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                                <Text style={{ width: 126, }}>Dinas</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10, gap:wp(2) }}>
+                                <Text style={{ width: "80%", }}>Dinas</Text>
                                 <Text>{pegawai.detail.outstation_day}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                                <Text style={{ width: 126, }}>Cuti</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10, gap:wp(2) }}>
+                                <Text style={{ width: "80%", }}>Cuti</Text>
                                 <Text>-</Text>
                             </View>
                         </View>
@@ -127,8 +131,7 @@ export const DetailProfile = () => {
 
                     <View style={{
                         backgroundColor: COLORS.white,
-                        width: 177,
-                        paddingHorizontal: 20,
+                        paddingHorizontal: 10,
                         paddingTop: 20,
                         borderRadius: 8,
                         //shadow ios
@@ -137,37 +140,38 @@ export const DetailProfile = () => {
                         shadowOpacity: 0.2,
                         //shadow android
                         elevation: 2,
+                        width:wp(43)
                     }}>
                         <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>IP ASN</Text>
 
                         <View style={{ paddingBottom: 20 }}>
-                            <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                                <Text style={{ width: 91, fontSize: 30, fontWeight: FONTWEIGHT.bold }}>{pegawai.detail.ipasn_nilai}</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 20, width:"60%", gap:wp(5) }}>
+                                <Text style={{ fontSize: 30, fontWeight: FONTWEIGHT.bold }}>{pegawai.detail.ipasn_nilai}</Text>
                                 <View style={{ backgroundColor: '#CED06C', width: 60, height: 25, borderRadius: 30, justifyContent: 'center', alignItems: 'center', }}>
                                     <Text>Tinggi</Text>
                                 </View>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
-                                <Text style={{ width: 85, }}>Kualifikasi</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: wp(1) }}>
+                                <Text style={{ width: "72%", }}>Kualifikasi</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: '#FF9900', borderRadius: 30 }} />
                                 <Text>{pegawai.detail.ipasn_kualifikasi}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
-                                <Text style={{ width: 85, }}>Kompetensi</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: wp(1) }}>
+                                <Text style={{ width: "72%", }}>Kompetensi</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: COLORS.success, borderRadius: 30 }} />
                                 <Text>{pegawai.detail.ipasn_kompetensi}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
-                                <Text style={{ width: 85, }}>Kinerja</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: wp(1) }}>
+                                <Text style={{ width: "72%", }}>Kinerja</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: '#CED06C', borderRadius: 30 }} />
                                 <Text>{pegawai.detail.ipasn_kinerja}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 5 }}>
-                                <Text style={{ width: 85, }}>Disiplin</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: wp(1) }}>
+                                <Text style={{ width: "72%", }}>Disiplin</Text>
                                 <View style={{ width: 10, height: 10, backgroundColor: COLORS.success, borderRadius: 30 }} />
                                 <Text>{pegawai.detail.ipasn_disiplin}</Text>
                             </View>

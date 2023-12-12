@@ -168,8 +168,13 @@ export const BottomTabsKeb = () => {
     <BottomSheetModalProvider>
       <Tab.Navigator
         tabBar={(props) => <MyTabBarKeb {...props} />}
-        initialRouteName="Dashboard"
+        initialRouteName="Pencarian"
       >
+        <Tab.Screen
+          name="Pencarian"
+          component={Pencarian}
+          options={{ headerShown: false }}
+        />
         <Tab.Screen
           name="Dashboard"
           component={Dashboard}
@@ -178,11 +183,6 @@ export const BottomTabsKeb = () => {
         <Tab.Screen
           name="Tematik"
           component={Tematik}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Pencarian"
-          component={Pencarian}
           options={{ headerShown: false }}
         />
         {/* <Tab.Screen name='Pencarian' component={Pencarian}
