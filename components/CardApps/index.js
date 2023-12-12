@@ -118,80 +118,6 @@ export const CardApps = ({ handlePressModal }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() => navigation.navigate("MainDigitalSign")}
-        >
-          <View
-            style={[
-              styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{ width: 28, height: 28 }}
-              source={require("../../assets/superApp/digital-ikon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: FONTSIZE.H4,
-          }}
-        >
-          Digital Sign
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("ListPegawai")}>
-          <View
-            style={[
-              styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{ width: 28, height: 28 }}
-              source={require("../../assets/superApp/pegawai-ikon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: FONTSIZE.H4,
-          }}
-        >
-          Pegawai
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <TouchableOpacity
           onPress={() => navigation.navigate("MainPengetahuan")}
         >
           <View
@@ -231,7 +157,9 @@ export const CardApps = ({ handlePressModal }) => {
           display: "flex",
         }}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("MainDigitalSign")}
+        >
           <View
             style={[
               styles.cardApps,
@@ -245,7 +173,7 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{ width: 28, height: 28 }}
-              source={require("../../assets/superApp/sppd-ikon.png")}
+              source={require("../../assets/superApp/digital-ikon.png")}
             />
           </View>
         </TouchableOpacity>
@@ -257,7 +185,7 @@ export const CardApps = ({ handlePressModal }) => {
             fontSize: FONTSIZE.H4,
           }}
         >
-          SPPD
+          Digital Sign
         </Text>
       </View>,
       <View
@@ -303,6 +231,42 @@ export const CardApps = ({ handlePressModal }) => {
           display: "flex",
         }}
       >
+        <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
+          <View
+            style={[
+              styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{ width: 28, height: 28 }}
+              source={require("../../assets/superApp/sppd-ikon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: FONTSIZE.H4,
+          }}
+        >
+          SPPD
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
         <TouchableOpacity onPress={() => navigation.navigate("MyTask")}>
           <View
             style={[
@@ -331,10 +295,48 @@ export const CardApps = ({ handlePressModal }) => {
         >
           Task
         </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("ListPegawai")}>
+          <View
+            style={[
+              styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{ width: 28, height: 28 }}
+              source={require("../../assets/superApp/pegawai-ikon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: FONTSIZE.H4,
+          }}
+        >
+          Pegawai
+        </Text>
       </View>
     );
     if (isRolePreShare) {
-      tmpMenu.push(
+      tmpMenu.splice(
+        2,
+        0,
         <View
           style={{
             justifyContent: "center",
@@ -366,7 +368,9 @@ export const CardApps = ({ handlePressModal }) => {
               justifyContent: "center",
               alignItems: "center",
               fontSize: FONTSIZE.H4,
+              width: 50,
             }}
+            numberOfLines={1}
           >
             Preparing dan Sharing
           </Text>
@@ -374,7 +378,9 @@ export const CardApps = ({ handlePressModal }) => {
       );
     }
     if (isRoleKalender) {
-      tmpMenu.push(
+      tmpMenu.splice(
+        7,
+        0,
         <View
           style={{
             justifyContent: "center",
