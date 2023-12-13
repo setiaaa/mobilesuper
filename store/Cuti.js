@@ -15,6 +15,8 @@ import {
   postAttachmentCuti,
   postPembatalanCuti,
   postPengajuanCuti,
+  postPengajuanCutiDraft,
+  postTanggalCuti,
 } from "../service/api";
 
 const CutiSlice = createSlice({
@@ -36,6 +38,7 @@ const CutiSlice = createSlice({
     },
     status: "",
     attachment: [],
+    jumlahCuti: {},
   },
   reducers: {
     setStatus: (state, action) => {
@@ -43,6 +46,9 @@ const CutiSlice = createSlice({
     },
     setAttachmentCuti: (state, action) => {
       state.attachment = action.payload;
+    },
+    setJumlahCuti: (state, action) => {
+      state.jumlahCuti = action.payload;
     },
   },
   extraReducers(builder) {
@@ -190,10 +196,39 @@ const CutiSlice = createSlice({
         console.log("error");
         state.status = "error";
         state.loading = false;
+      })
+      .addCase(postTanggalCuti.fulfilled, (state, action) => {
+        console.log("berhasil");
+        state.jumlahCuti = action.payload;
+        state.loading = false;
+      })
+      .addCase(postTanggalCuti.pending, (state, action) => {
+        console.log("");
+        state.loading = true;
+      })
+      .addCase(postTanggalCuti.rejected, (state, action) => {
+        console.log("gagal");
+        state.loading = false;
+      })
+      .addCase(postPengajuanCutiDraft.fulfilled, (state, action) => {
+        console.log("berhasil");
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(postPengajuanCutiDraft.pending, (state, action) => {
+        console.log("pending");
+        state.status = "";
+        state.loading = true;
+      })
+      .addCase(postPengajuanCutiDraft.rejected, (state, action) => {
+        console.log("error");
+        state.status = "error";
+        state.loading = false;
       });
   },
 });
 
-export const { setStatus, setAttachmentCuti } = CutiSlice.actions;
+export const { setStatus, setAttachmentCuti, setJumlahCuti } =
+  CutiSlice.actions;
 
 export default CutiSlice.reducer;

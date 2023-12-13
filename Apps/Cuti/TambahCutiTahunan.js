@@ -14,7 +14,12 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTSIZE,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,9 +33,11 @@ import {
   getPilihApproval,
   postAttachmentCuti,
   postPengajuanCuti,
+  postPengajuanCutiDraft,
+  postTanggalCuti,
 } from "../../service/api";
 import { ModalSubmit } from "../../components/ModalSubmit";
-import { setAttachmentCuti, setStatus } from "../../store/Cuti";
+import { setAttachmentCuti, setJumlahCuti, setStatus } from "../../store/Cuti";
 import * as DocumentPicker from "expo-document-picker";
 import CalendarPicker from 'react-native-calendar-picker';
 import {
@@ -56,7 +63,7 @@ export const TambahCutiTahunan = () => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status, attachment } = useSelector(
+  const { form, pilih, status, attachment, jumlahCuti } = useSelector(
     (state) => state.cuti
   );
 
@@ -70,6 +77,7 @@ export const TambahCutiTahunan = () => {
   const [pejabat, setPejabat] = useState("");
   const [jenisCuti, setJenisCuti] = useState("");
   const [alasanCuti, setAlasanCuti] = useState("");
+  const [tanggalLibur, setTanggalLibur] = useState();
 
   const [document, setDocument] = useState([]);
   const [type, setType] = useState([]);
@@ -101,6 +109,7 @@ export const TambahCutiTahunan = () => {
 
   useEffect(() => {
     dispatch(setAttachmentCuti([]));
+    dispatch(setJumlahCuti({}));
   }, []);
 
   const pickAtasan = () => {
@@ -149,66 +158,64 @@ export const TambahCutiTahunan = () => {
     // console.log(data);
   };
 
-  console.log(form.data_user);
+  const handleSubmitDraft = () => {
+    const payload = {
+      nip_pengaju: profile?.nip,
+      id_dokumen: "",
+      id_jenis_cuti: form.data_jenis_cuti?.id,
+      id_sub_jenis_cuti: "",
+      mulai_cuti: TanggalMulai,
+      akhir_cuti: TanggalSelesai,
+      alasan_cuti: alasanCuti,
+      alamat_cuti: alasanCuti,
+      nomor_telpon: telepon,
+      nip_approval1: atasan.key,
+      nip_approval2: pejabat.key,
+      attachment: attachment,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postPengajuanCutiDraft(data));
+    // console.log(data);
+  };
+
+  const selectDate = () => {
+    const payload = {
+      id_jenis_cuti: form.data_jenis_cuti?.id,
+      nip: profile?.nip,
+      tanggal_mulai: TanggalMulai,
+      tanggal_akhir: TanggalSelesai,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postTanggalCuti(data));
+    // console.log(data);
+  };
 
   useEffect(() => {
     setAlamat(form?.data_user?.alamat);
     setTelepon(form?.data_user?.no_telpon);
+    if (form.data_kalender?.tanggal_sppd.length === 0) {
+      setTanggalLibur([
+        ...form.data_kalender?.tanggal_pernah_dipakai,
+        ...form.data_kalender?.tanggal_libur,
+      ]);
+    } else if (form.data_kalender?.tanggal_pernah_dipakai.length === 0) {
+      setTanggalLibur([
+        ...form.data_kalender?.tanggal_libur,
+        ...form.data_kalender?.tanggal_sppd,
+      ]);
+    } else {
+      setTanggalLibur([]);
+    }
   }, [form]);
 
-  const CustomPreviousComponent = () => (
-    <View>
-      <Ionicons
-        name="chevron-back-outline"
-        size={24}
-        color={COLORS.primary}
-      />
-    </View>
-  );
-  const CustomNextComponent = () => (
-    <View>
-      <Ionicons
-        name="chevron-forward-outline"
-        size={24}
-        color={COLORS.primary}
-      />
-    </View>
-  );
 
-  const customDayHeaderStyles = ({dayOfWeek, month, year}) => {
-    switch(dayOfWeek) { // can also evaluate month, year
-      case 7: // Minggu
-        return {
-          textStyle: {
-            color: COLORS.primary,
-            fontWeight: 'bold',
-          }
-        };
-    }
-  }
-  const customDatesStyles = date => {
-    switch(date.isoWeekday()) {
-      case 7: // Monday
-        return {
-          textStyle: {
-            color: COLORS.primary,
-          }
-        };
-    }
-  }
-
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [selectedEndDate, setSelectedEndDate] = useState(null);
-
-  const handleDateChange = (date, type) => {
-    if (type === 'END_DATE') {
-      setSelectedEndDate(date);
-    } else {
-      setSelectedStartDate(date);
-      setSelectedEndDate(null);
-    }
-  };
-
+  console.log(jumlahCuti.jumlah_cuti);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -674,6 +681,8 @@ export const TambahCutiTahunan = () => {
                               onPress={() => setModalVisiblePicker("")}
                               style={{
                                 marginBottom: 3,
+                                paddingLeft: "70%",
+                                marginBottom: 20,
                                 marginLeft: 20,
                                 alignContent:"center",
                                 justifyContent:"center",
@@ -696,6 +705,7 @@ export const TambahCutiTahunan = () => {
                                 </Text>
                               </View>
                             </TouchableOpacity>
+                            <View style={{ width: "100%" }}>
                               {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
@@ -765,8 +775,37 @@ export const TambahCutiTahunan = () => {
                                   }
                                 }}
                               /> */}
-                              {/* <TouchableOpacity
-                                onPress={() => setModalVisiblePicker("")}
+                              <CalendarPicker
+                                todayBackgroundColor={COLORS.info}
+                                disabledDates={tanggalLibur}
+                                width={300}
+                                onDateChange={(date) => {
+                                  if (modalVisiblePicker === "mulai") {
+                                    setTanggalMulai(
+                                      moment(
+                                        date,
+                                        "YYYY-MM-DD HH:mm:ss"
+                                      ).format("YYYY-MM-DD")
+                                    );
+                                  } else {
+                                    setTanggalSelsai(
+                                      moment(
+                                        date,
+                                        "YYYY-MM-DD HH:mm:ss"
+                                      ).format("YYYY-MM-DD")
+                                    );
+                                  }
+                                }}
+                              />
+                              <TouchableOpacity
+                                onPress={() => {
+                                  if (modalVisiblePicker === "mulai") {
+                                    setModalVisiblePicker("");
+                                  } else {
+                                    selectDate();
+                                    setModalVisiblePicker("");
+                                  }
+                                }}
                                 style={{
                                   marginTop: 20,
                                   justifyContent: "center",
@@ -808,7 +847,11 @@ export const TambahCutiTahunan = () => {
                       borderRadius: 8,
                     }}
                   >
-                    <Text>0</Text>
+                    <Text>
+                      {jumlahCuti.jumlah_cuti === undefined
+                        ? "0"
+                        : jumlahCuti.jumlah_cuti.toString()}
+                    </Text>
                   </View>
                 </View>
 
@@ -1213,6 +1256,9 @@ export const TambahCutiTahunan = () => {
                 width: "46.5%",
                 height: 50,
                 justifyContent: "center",
+              }}
+              onPress={() => {
+                handleSubmitDraft();
               }}
             >
               <Text style={{ textAlign: "center", color: COLORS.white }}>
