@@ -83,6 +83,10 @@ import { PIncoming } from "../Apps/Korespondensi/Pencarian/PIncoming";
 import { PDisposition } from "../Apps/Korespondensi/Pencarian/PDisposition";
 import { PSubmitted } from "../Apps/Korespondensi/Pencarian/PSubmitted";
 import { Pencarian } from "../Apps/Kebijakan/Pencarian";
+import { PencarianKorespondensi } from "../Apps/Korespondensi/Pencarian/PencarianKorespondensi";
+import MyTabKoresp from "../Apps/Korespondensi/BottomTabsKoresp";
+import DCounter from "../Apps/Korespondensi/Dashboard/DCounter";
+import DLetter from "../Apps/Korespondensi/Dashboard/DLetter";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -129,6 +133,34 @@ export const BottomTabs = () => {
   );
 };
 
+export const BottomTabsKoresp = () => {
+  return (
+    <Host>
+      <BottomSheetModalProvider>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabKoresp {...props} />}
+          initialRouteName="DCounter"
+        >
+          <Tab.Screen
+            name="DCounter"
+            component={DCounter}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DLetter"
+            component={DLetter}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DPencarian"
+            component={PencarianKorespondensi}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </BottomSheetModalProvider>
+    </Host>
+  );
+};
 export const BottomTabsRepo = () => {
   return (
     <BottomSheetModalProvider>
