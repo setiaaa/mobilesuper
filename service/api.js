@@ -735,6 +735,18 @@ export const getDownloadLampiran = createAsyncThunk(
   }
 );
 
+export const postRating = createAsyncThunk(
+  "repository/postRating",
+  async ( data ) => {
+    const respon = await axios.put(
+      `${repository}${data.id}/rate/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
 //profile me
 
 export const getProfileMe = createAsyncThunk(

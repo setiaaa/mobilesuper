@@ -39,7 +39,11 @@ import {
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { setAttachmentCuti, setJumlahCuti, setStatus } from "../../store/Cuti";
 import * as DocumentPicker from "expo-document-picker";
-import CalendarPicker from "react-native-calendar-picker";
+import CalendarPicker from 'react-native-calendar-picker';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -209,6 +213,37 @@ export const TambahCutiTahunan = () => {
       setTanggalLibur([]);
     }
   }, [form]);
+
+  //styling kalender
+  const customDayHeaderStyles = ({dayOfWeek}) => {
+    switch(dayOfWeek) { // can also evaluate month, year
+      case 7: // Thursday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: 'bold',
+          }
+        };
+    }
+  }
+  
+  const customDatesStyles = date => {
+    switch(date.isoWeekday()) {
+      case 7: // Monday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: 'bold',
+          }
+        };
+      case 7: // Sunday
+        return {
+          textStyle: {
+            color: COLORS.primary
+          }
+        };
+    }
+  }
 
   console.log(jumlahCuti.jumlah_cuti);
   return (
@@ -541,7 +576,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -581,7 +616,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -648,36 +683,53 @@ export const TambahCutiTahunan = () => {
                               alignItems: "center",
                               justifyContent: "center",
                               width: "90%",
-                              height: 400,
+                              height: hp(45),
                               borderRadius: 10,
                             }}
                           >
-                            <TouchableOpacity
+                            <View style={{ width: "100%", flex:1 }}>
+                              {/* <CalendarPicker
+                                startFromMonday={true}
+                                width={wp(90)}
+                                weekdays={['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']}
+                                months={['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'Desember']}
+                                previousComponent={<CustomPreviousComponent />}
+                                nextComponent={<CustomNextComponent />}
+                                selectedRangeStyle={{ backgroundColor: COLORS.infoDangerLight, fontWeight: 'bold' }}
+                                customDayHeaderStyles={customDayHeaderStyles}
+                                customDatesStyles={customDatesStyles}
+                                onDateChange={handleDateChange}
+                                allowRangeSelection={true}
+                              />
+                              <TouchableOpacity
                               onPress={() => setModalVisiblePicker("")}
                               style={{
+                                marginBottom: 3,
                                 paddingLeft: "70%",
                                 marginBottom: 20,
                                 marginLeft: 20,
+                                alignContent:"center",
+                                justifyContent:"center",
+                                marginLeft:"35%"
                               }}
-                            >
+                              >
                               <View
                                 style={{
                                   backgroundColor: COLORS.primary,
-                                  borderRadius: 50,
-                                  width: 35,
+                                  borderRadius: 10,
+                                  width: wp(25),
                                   height: 35,
                                   justifyContent: "center",
                                   alignItems: "center",
+                                  marginTop:10,
                                 }}
                               >
-                                <Ionicons
-                                  name="close-outline"
-                                  size={24}
-                                  color={COLORS.white}
-                                />
+                                <Text style={{color:"white"}}>
+                                  Confirm
+                                </Text>
                               </View>
-                            </TouchableOpacity>
-                            <View style={{ width: "100%" }}>
+                            </TouchableOpacity> */}
+                            <View style={{ width: "100%", paddingTop:10, }}>
                               {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
@@ -750,7 +802,14 @@ export const TambahCutiTahunan = () => {
                               <CalendarPicker
                                 todayBackgroundColor={COLORS.info}
                                 disabledDates={tanggalLibur}
-                                width={300}
+                                previousComponent={<Ionicons name="chevron-back-outline" size={24} color={COLORS.primary}/>}
+                                nextComponent={<Ionicons name="chevron-forward-outline" size={24} color={COLORS.primary}/>}
+                                customDayHeaderStyles={customDayHeaderStyles}
+                                customDatesStyles={customDatesStyles}
+                                startFromMonday={true}
+                                width={wp(95)}
+                                weekdays={['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']}
+                                months={['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'Desember']}
                                 onDateChange={(date) => {
                                   if (modalVisiblePicker === "mulai") {
                                     setTanggalMulai(
@@ -779,7 +838,7 @@ export const TambahCutiTahunan = () => {
                                   }
                                 }}
                                 style={{
-                                  marginTop: 20,
+                                  marginTop: 10,
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
@@ -802,6 +861,7 @@ export const TambahCutiTahunan = () => {
                             </View>
                           </View>
                         </View>
+                      </View>
                       </Modal>
                     </View>
                   </View>
