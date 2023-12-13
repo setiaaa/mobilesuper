@@ -1450,17 +1450,27 @@ export const LiniMasa = () => {
 
   useEffect(() => {
     if (refresh) {
-      dispatch(getLinimasa({ token: token, page: page }));
+      dispatch(
+        getLinimasa({
+          token: token,
+          page: page,
+          category: category,
+          competence: competence,
+          unker: filterUnker ? filterUnker.value : "",
+          satker: filterSatker ? filterSatker.value : "",
+          search: search,
+        })
+      );
     }
   }, [refresh]);
 
   const loadMore = () => {
-    if (linimasa.lists.length % 5 === 0) {
+    if (linimasa.lists.length % 5 === 0 && linimasa.lists.length !== 0) {
       if (linimasa.lists.length === page) {
         setPage(page + 5);
       }
     }
-    // console.log(page);
+    console.log(page);
   };
 
   // console.log(linimasa.listsLike)
@@ -1468,12 +1478,6 @@ export const LiniMasa = () => {
   const filterSearch = () => {
     setSearch(inputValue);
   };
-
-  useEffect(() => {
-    if (filterData.length === 0) {
-      setFilterData(linimasa.lists);
-    }
-  }, [linimasa]);
 
   // useEffect(() => {
   //   if (search !== "") {
@@ -1558,7 +1562,17 @@ export const LiniMasa = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        dispatch(getLinimasa({ token: token, page: page }));
+        dispatch(
+          getLinimasa({
+            token: token,
+            page: page,
+            category: category,
+            competence: competence,
+            unker: filterUnker ? filterUnker.value : "",
+            satker: filterSatker ? filterSatker.value : "",
+            search: search,
+          })
+        );
         dispatch(setRefresh(false));
         console.log("Refresh Berhasil");
       }
@@ -1570,9 +1584,15 @@ export const LiniMasa = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, page]);
+  }, [token, page, category, competence, filterUnker, filterSatker, search]);
 
-  console.log(filterData);
+  useEffect(() => {
+    if (filterData.length === 0) {
+      setFilterData(linimasa.lists);
+    }
+  }, [linimasa]);
+
+  // console.log(filterData);
 
   return (
     <>
@@ -1910,7 +1930,7 @@ export const LiniMasa = () => {
         </View>
 
         <FlatList
-          data={filterData}
+          data={linimasa.lists}
           renderItem={({ item }) => (
             <View key={item.id}>
               <CardLiniMasa
