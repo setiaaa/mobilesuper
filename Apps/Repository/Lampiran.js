@@ -40,7 +40,6 @@ const DataLampiran = ({
   bottomSheetAttach,
 }) => {
   const navigation = useNavigation();
-  // console.log(lampiran);
 
   const getDetail = () => {};
 
@@ -415,7 +414,6 @@ export const Lampiran = () => {
   //   };
   //   if (token !== "") {
   //     dispatch(getDownloadLampiran(param))
-  //     console.log(param)
   //   }
   // }, [token, id])
 
@@ -457,31 +455,28 @@ export const Lampiran = () => {
   const [jenis, setJenis] = useState("");
   const [fileDetail, setFileDetail] = useState(null);
 
-  console.log("fileDetail under this");
-  console.log(fileDetail);
-
   const downloadPath =
     FileSystem.documentDirectory + (Platform.OS === "android" ? "" : "");
 
-  const downloadFile = async (fileUrl, fileType, fileName) => {
-    //alert(fileName)
-
-    const namafile = fileUrl;
+  const downloadFile = async (fileUrl, fileType, type) => {
+    // const namafile =
+    //   type === "employe"
+    //     ? exportLaporan?.employee?.file.split("/")
+    //     : exportLaporan?.quarter?.file.split("/");
     try {
       const downloadResumable = FileSystem.createDownloadResumable(
         fileUrl,
-        downloadPath + fileName,
+        downloadPath + fileDetail.name,
         { headers: { Authorization: token } }
       );
       try {
-        if (Platform.OS === "android") {
-          console.log("android");
-          const { uri } = await downloadResumable.downloadAsync();
-          saveAndroidFile(uri, namafile[namafile.length - 1], fileType);
-        } else {
-          console.log("ios");
-          saveIosFile(downloadPath);
-        }
+        // if (Platform.OS === "android") {
+        //   const { uri } = await downloadResumable.downloadAsync();
+        //   saveAndroidFile(uri, namafile[namafile?.length - 1], fileType);
+        // } else {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveIosFile(uri);
+        // }
       } catch (e) {
         // setIsLoading(false);
         console.error("download error:", e);
@@ -491,10 +486,8 @@ export const Lampiran = () => {
       console.log(e);
     }
   };
-
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
-      console.log(fileUri);
       const fileString = await FileSystem.readAsStringAsync(fileUri, {
         encoding: FileSystem.EncodingType.Base64,
       });
@@ -528,100 +521,15 @@ export const Lampiran = () => {
       }
     } catch (err) {}
   };
-
   const saveIosFile = async (fileUri) => {
-    // if(jenis === "doc" ){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "application/msword",
-    //       dialogTitle: "Share Word",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "docx"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    //       dialogTitle: "Share Word",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "xls"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "application/vnd.ms-excel",
-    //       dialogTitle: "Share Excel",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "xlsx"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    //       dialogTitle: "Share Excel",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "pdf"){
-    console.log("fileuris save ios", fileUri);
     try {
       await Sharing.shareAsync(fileUri, {
-        mimeType: "application/pdf",
-        dialogTitle: "Share PDF",
+        mimeType: "application/vnd.openxmlformats-",
+        dialogTitle: "Share Excel",
       });
     } catch (error) {
       console.error("Error sharing file:", error);
     }
-    // } else if (jenis === "ppt"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "application/vnd.ms-powerpoint",
-    //       dialogTitle: "Share PPT",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "pptx"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    //       dialogTitle: "Share PPT",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "png"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "image/png",
-    //       dialogTitle: "Share Image",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "jpg"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "image/jpg",
-    //       dialogTitle: "Share Image",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // } else if (jenis === "jpeg"){
-    //   try {
-    //     await Sharing.shareAsync(fileUri, {
-    //       mimeType: "image/jpeg",
-    //       dialogTitle: "Share Image",
-    //     });
-    //   } catch (error) {
-    //     console.error("Error sharing file:", error);
-    //   }
-    // }
   };
 
   const getDetailLampiran = (id) => {
@@ -631,9 +539,6 @@ export const Lampiran = () => {
   };
 
   const { download } = useSelector((state) => state.repository);
-
-  console.log(download);
-
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -831,39 +736,7 @@ export const Lampiran = () => {
                     </View>
                     <TouchableOpacity
                       onPress={() => {
-                        // downloadFile(
-                        //   file,
-                        //   "application/pdf",
-                        //   jenis === "doc" ? (
-                        //     "application/msword"
-                        //   ) : jenis === "docx" ? (
-                        //     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        //   ) : jenis === "xls" ? (
-                        //     "application/vnd.ms-excel"
-                        //   ) : jenis === "xlsx" ? (
-                        //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        //   ) : jenis === "pdf" ? (
-                        //     "application/pdf"
-                        //   ) : jenis === "ppt" ? (
-                        //     "application/vnd.ms-powerpoint"
-                        //   ) : jenis === "pptx" ? (
-                        //     "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                        //   ) : jenis === "png" ? (
-                        //     "image/png"
-                        //   ) : jenis === "jpg" ? (
-                        //     "image/jpg"
-                        //   ) : jenis === "jpeg" ? (
-                        //     "image/jpeg"
-                        //   ) : (null),
-                        //   'sample.pdf');
-                        // downloadFile(
-                        //   file,
-                        //   "application/pdf",
-                        //   'sample.pdf'
-                        // )
-                        saveIosFile(fileDetail.files);
-                        getDetailLampiran(fileDetail.id);
-                        console.log("ini", download);
+                        downloadFile(fileDetail?.files);
                         bottomSheetAttachClose();
                       }}
                     >
@@ -877,7 +750,7 @@ export const Lampiran = () => {
                         }}
                       >
                         <Ionicons
-                          name="download-outline"
+                          name="share-social-outline"
                           size={32}
                           color={"#6B7280"}
                         />
@@ -887,7 +760,7 @@ export const Lampiran = () => {
                             fontWeight: FONTWEIGHT.normal,
                           }}
                         >
-                          Download
+                          Bagikan
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -932,7 +805,7 @@ export const Lampiran = () => {
                       jenis === "pptx" ? (
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("FileViewer", {
+                          navigation.navigate("FileViewerRepo", {
                             lampiran: file,
                             type: jenis,
                           });

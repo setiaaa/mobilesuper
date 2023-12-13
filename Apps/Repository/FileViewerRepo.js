@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 
-export const FileViewer = ({ route }) => {
+export const FileViewerRepo = ({ route }) => {
   const navigation = useNavigation();
   const { lampiran, type } = route.params;
   return (
@@ -46,8 +46,8 @@ export const FileViewer = ({ route }) => {
           </TouchableOpacity>
         </View>
         {/* <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail</Text>
-            </View> */}
+                  <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail</Text>
+              </View> */}
       </View>
       <View style={{ width: "100%", height: "100%" }}>
         {type === "ppt" ||
