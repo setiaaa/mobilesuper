@@ -654,7 +654,9 @@ const CardLiniMasa = ({ item, token }) => {
                 </Text>
               </View>
 
-              <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>
+              <Text
+                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+              >
                 {detail?.title !== "" && detail?.title !== null
                   ? detail.title
                   : "-"}
@@ -686,7 +688,9 @@ const CardLiniMasa = ({ item, token }) => {
                 </Text>
               </View>
 
-              <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>
+              <Text
+                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+              >
                 {detail?.members_agenda !== "" &&
                 detail?.members_agenda !== null
                   ? detail.members_agenda
@@ -719,7 +723,9 @@ const CardLiniMasa = ({ item, token }) => {
                 </Text>
               </View>
 
-              <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>
+              <Text
+                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+              >
                 {detail?.summary !== "" && detail?.summary !== null
                   ? detail.summary
                   : "-"}
@@ -751,7 +757,9 @@ const CardLiniMasa = ({ item, token }) => {
                 </Text>
               </View>
 
-              <Text style={{ width: 260, marginHorizontal: 60, marginTop: 10 }}>
+              <Text
+                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+              >
                 {detail?.place_agenda !== "" && detail?.place_agenda !== null
                   ? detail.place_agenda
                   : "-"}
@@ -785,7 +793,7 @@ const CardLiniMasa = ({ item, token }) => {
 
               <Text
                 style={{
-                  width: 260,
+                  width: "70%",
                   marginHorizontal: 60,
                   marginTop: 10,
                   marginBottom: 20,

@@ -358,7 +358,7 @@ export const CardApps = ({ handlePressModal }) => {
             >
               <Image
                 style={{ width: 28, height: 28 }}
-                source={require("../../assets/superApp/kalender-ikon.png")}
+                source={require("../../assets/superApp/preparing-ikon.png")}
               />
             </View>
           </TouchableOpacity>

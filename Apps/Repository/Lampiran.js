@@ -1,14 +1,20 @@
 import React, { useRef, useState, useMemo, useEffect } from "react";
-import { Platform, StyleSheet, Text } from "react-native";
+import {
+  Modal,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "react-native";
-import { Divider, Modal, Portal } from "react-native-paper";
+import { Divider } from "react-native-paper";
 import { Loading } from "../../components/Loading";
 import {
   BottomSheetModal,
@@ -23,6 +29,7 @@ import * as Sharing from "expo-sharing";
 const { StorageAccessFramework } = FileSystem;
 import { getTokenValue } from "../../service/session";
 import { getDownloadLampiran } from "../../service/api";
+import { Portal } from "react-native-portalize";
 
 const DataLampiran = ({
   lampiran,
@@ -629,269 +636,234 @@ export const Lampiran = () => {
 
   return (
     <>
-      {loading ? <Loading /> : null}
-      <View style={{ flex: 1 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "flex-end",
-            backgroundColor: COLORS.primary,
-            height: 80,
-            paddingBottom: 20,
-          }}
-        >
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        {loading ? <Loading /> : null}
+        <View style={{ flex: 1 }}>
           <View
             style={{
-              backgroundColor: "white",
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
+              flexDirection: "row",
+              alignItems: "flex-end",
+              backgroundColor: COLORS.primary,
+              height: 80,
+              paddingBottom: 20,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons
-                name="chevron-back-outline"
-                size={24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-            <Text
-              style={{
-                fontSize: FONTSIZE.H1,
-                fontWeight: FONTWEIGHT.bold,
-                color: COLORS.white,
-              }}
-            >
-              Lampiran
-            </Text>
-          </View>
-        </View>
-        <FlatList
-          key={"#"}
-          data={detail.attachments}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <DataLampiran
-                lampiran={item.files}
-                nama={item.name}
-                size={item.file_size}
-                type={getFileExtension(item.name)}
-                onClick={() => {
-                  setFile(item.files);
-                  setJenis(getFileExtension(item.name));
-                  setFileDetail(item);
-                }}
-                bottomSheetAttach={bottomSheetAttach}
-              />
-            </View>
-          )}
-          scrollEnabled={false}
-          style={{ marginTop: 10 }}
-          columnWrapperStyle={{
-            justifyContent: "space-between",
-            marginHorizontal: 15,
-            gap: 5,
-          }}
-          numColumns={2}
-          keyExtractor={(item) => "#" + item.id}
-        />
-        {lampiranById !== null ? (
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={visibleModal}
-            onRequestClose={() => {
-              setVisibleModal(false);
-              setLampiranById(null);
-            }}
-          >
-            <TouchableOpacity
-              style={[
-                Platform.OS === "ios"
-                  ? styles.iOSBackdrop
-                  : styles.androidBackdrop,
-                styles.backdrop,
-              ]}
-            />
             <View
               style={{
+                backgroundColor: "white",
+                borderRadius: 20,
+                width: 28,
+                height: 28,
                 alignItems: "center",
-                flex: 1,
-                display: "flex",
                 justifyContent: "center",
+                marginLeft: 20,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+              <Text
+                style={{
+                  fontSize: FONTSIZE.H1,
+                  fontWeight: FONTWEIGHT.bold,
+                  color: COLORS.white,
+                }}
+              >
+                Lampiran
+              </Text>
+            </View>
+          </View>
+          <FlatList
+            key={"#"}
+            data={detail.attachments}
+            renderItem={({ item }) => (
+              <View key={item.id}>
+                <DataLampiran
+                  lampiran={item.files}
+                  nama={item.name}
+                  size={item.file_size}
+                  type={getFileExtension(item.name)}
+                  onClick={() => {
+                    setFile(item.files);
+                    setJenis(getFileExtension(item.name));
+                    setFileDetail(item);
+                  }}
+                  bottomSheetAttach={bottomSheetAttach}
+                />
+              </View>
+            )}
+            scrollEnabled={false}
+            style={{ marginTop: 10 }}
+            columnWrapperStyle={{
+              justifyContent: "space-between",
+              marginHorizontal: 15,
+              gap: 5,
+            }}
+            numColumns={2}
+            keyExtractor={(item) => "#" + item.id}
+          />
+          {lampiranById !== null ? (
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={visibleModal}
+              onRequestClose={() => {
+                setVisibleModal(false);
+                setLampiranById(null);
               }}
             >
               <TouchableOpacity
-                onPress={() => {
-                  setVisibleModal(false);
-                  setGaleriById(galeri.lists.id);
-                }}
+                style={[
+                  Platform.OS === "ios"
+                    ? styles.iOSBackdrop
+                    : styles.androidBackdrop,
+                  styles.backdrop,
+                ]}
+              />
+              <View
                 style={{
-                  position: "absolute",
-                  top: "15%",
-                  left: 20,
+                  alignItems: "center",
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
-                <View
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    width: 51,
-                    height: 51,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 50,
+                <TouchableOpacity
+                  onPress={() => {
+                    setVisibleModal(false);
+                    // setGaleriById(galeri.lists.id);
                   }}
+                  style={{ position: "absolute", top: "15%", left: 20 }}
                 >
-                  <Ionicons
-                    name="close-outline"
-                    color={COLORS.white}
-                    size={24}
-                  />
-                </View>
-              </TouchableOpacity>
-              {getFileExtension(lampiranById.name) === "png" ||
-              getFileExtension(lampiranById.name) === "jpg" ||
-              getFileExtension(lampiranById.name) === "jpeg" ? (
-                <View>
-                  <Image
-                    source={{ uri: lampiranById.files }}
-                    style={{ width: 390, height: 283 }}
-                  />
-                </View>
-              ) : getFileExtension(lampiranById.name) === "mp4" ? (
-                <Video
-                  ref={video}
-                  style={{ width: 390, height: 283 }}
-                  source={lampiranById.gambar}
-                  useNativeControls
-                  resizeMode={ResizeMode.CONTAIN}
-                  isLooping
-                  onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-                />
-              ) : (
-                <></>
-              )}
-            </View>
-          </Modal>
-        ) : null}
-        <Portal>
-          <BottomSheetModalProvider>
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              snapPoints={animatedSnapPoints}
-              handleHeight={animatedHandleHeight}
-              contentHeight={animatedContentHeight}
-              index={0}
-              style={{ borderRadius: 50 }}
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-              backdropComponent={({ style }) => (
-                <View
-                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                />
-              )}
-            >
-              <BottomSheetView onLayout={handleContentLayout}>
-                <View style={{ marginVertical: 20 }}>
                   <View
                     style={{
-                      marginLeft: 30,
-                      flexDirection: "row",
+                      backgroundColor: COLORS.primary,
+                      width: 51,
+                      height: 51,
+                      justifyContent: "center",
                       alignItems: "center",
-                      gap: 10,
+                      borderRadius: 50,
                     }}
                   >
                     <Ionicons
-                      name="attach-outline"
-                      size={32}
-                      color={COLORS.primary}
+                      name="close-outline"
+                      color={COLORS.white}
+                      size={24}
                     />
-                    <Text
-                      style={{
-                        fontSize: FONTSIZE.H2,
-                        fontWeight: FONTWEIGHT.normal,
-                        width: 300,
-                      }}
-                    >
-                      {fileDetail?.name}
-                      {/* Lampiran */}
-                    </Text>
                   </View>
-                  <View style={{ marginTop: 20 }}>
-                    <Divider bold />
+                </TouchableOpacity>
+                {getFileExtension(lampiranById.name) === "png" ||
+                getFileExtension(lampiranById.name) === "jpg" ||
+                getFileExtension(lampiranById.name) === "jpeg" ? (
+                  <View>
+                    <Image
+                      source={{ uri: lampiranById.files }}
+                      style={{ width: 390, height: 283 }}
+                    />
                   </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // downloadFile(
-                      //   file,
-                      //   "application/pdf",
-                      //   jenis === "doc" ? (
-                      //     "application/msword"
-                      //   ) : jenis === "docx" ? (
-                      //     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                      //   ) : jenis === "xls" ? (
-                      //     "application/vnd.ms-excel"
-                      //   ) : jenis === "xlsx" ? (
-                      //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                      //   ) : jenis === "pdf" ? (
-                      //     "application/pdf"
-                      //   ) : jenis === "ppt" ? (
-                      //     "application/vnd.ms-powerpoint"
-                      //   ) : jenis === "pptx" ? (
-                      //     "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                      //   ) : jenis === "png" ? (
-                      //     "image/png"
-                      //   ) : jenis === "jpg" ? (
-                      //     "image/jpg"
-                      //   ) : jenis === "jpeg" ? (
-                      //     "image/jpeg"
-                      //   ) : (null),
-                      //   'sample.pdf');
-                      // downloadFile(
-                      //   file,
-                      //   "application/pdf",
-                      //   'sample.pdf'
-                      // )
-                      saveIosFile(fileDetail.files);
-                      getDetailLampiran(fileDetail.id);
-                      console.log("ini", download);
-                      bottomSheetAttachClose();
-                    }}
-                  >
+                ) : getFileExtension(lampiranById.name) === "mp4" ? (
+                  <Video
+                    ref={video}
+                    style={{ width: 390, height: 283 }}
+                    source={lampiranById.gambar}
+                    useNativeControls
+                    resizeMode={ResizeMode.CONTAIN}
+                    isLooping
+                    onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+                  />
+                ) : (
+                  <></>
+                )}
+              </View>
+            </Modal>
+          ) : null}
+          <Portal>
+            <BottomSheetModalProvider>
+              <BottomSheetModal
+                ref={bottomSheetModalRef}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                  />
+                )}
+              >
+                <BottomSheetView onLayout={handleContentLayout}>
+                  <View style={{ marginVertical: 20 }}>
                     <View
                       style={{
                         marginLeft: 30,
                         flexDirection: "row",
                         alignItems: "center",
                         gap: 10,
-                        marginTop: 20,
                       }}
                     >
                       <Ionicons
-                        name="download-outline"
+                        name="attach-outline"
                         size={32}
-                        color={"#6B7280"}
+                        color={COLORS.primary}
                       />
                       <Text
                         style={{
                           fontSize: FONTSIZE.H2,
                           fontWeight: FONTWEIGHT.normal,
+                          width: 230,
                         }}
                       >
-                        Download
+                        {fileDetail?.name}
+                        {/* Lampiran */}
                       </Text>
                     </View>
-                  </TouchableOpacity>
-                  {jenis === "png" || jenis === "jpg" || jenis === "jpeg" ? (
+                    <View style={{ marginTop: 20 }}>
+                      <Divider bold />
+                    </View>
                     <TouchableOpacity
                       onPress={() => {
-                        setVisibleModal(true);
-                        setLampiranById(fileDetail);
+                        // downloadFile(
+                        //   file,
+                        //   "application/pdf",
+                        //   jenis === "doc" ? (
+                        //     "application/msword"
+                        //   ) : jenis === "docx" ? (
+                        //     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        //   ) : jenis === "xls" ? (
+                        //     "application/vnd.ms-excel"
+                        //   ) : jenis === "xlsx" ? (
+                        //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        //   ) : jenis === "pdf" ? (
+                        //     "application/pdf"
+                        //   ) : jenis === "ppt" ? (
+                        //     "application/vnd.ms-powerpoint"
+                        //   ) : jenis === "pptx" ? (
+                        //     "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                        //   ) : jenis === "png" ? (
+                        //     "image/png"
+                        //   ) : jenis === "jpg" ? (
+                        //     "image/jpg"
+                        //   ) : jenis === "jpeg" ? (
+                        //     "image/jpeg"
+                        //   ) : (null),
+                        //   'sample.pdf');
+                        // downloadFile(
+                        //   file,
+                        //   "application/pdf",
+                        //   'sample.pdf'
+                        // )
+                        saveIosFile(fileDetail.files);
+                        getDetailLampiran(fileDetail.id);
+                        console.log("ini", download);
                         bottomSheetAttachClose();
                       }}
                     >
@@ -905,7 +877,7 @@ export const Lampiran = () => {
                         }}
                       >
                         <Ionicons
-                          name="eye-outline"
+                          name="download-outline"
                           size={32}
                           color={"#6B7280"}
                         />
@@ -915,52 +887,84 @@ export const Lampiran = () => {
                             fontWeight: FONTWEIGHT.normal,
                           }}
                         >
-                          Preview
+                          Download
                         </Text>
                       </View>
                     </TouchableOpacity>
-                  ) : jenis === "doc" ||
-                    jenis === "docx" ||
-                    jenis === "xls" ||
-                    jenis === "xlsx" ||
-                    jenis === "pdf" ||
-                    jenis === "ppt" ||
-                    jenis === "pptx" ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate("FileViewer", {
-                          lampiran: file,
-                          type: jenis,
-                        });
-                        bottomSheetAttachClose();
-                      }}
-                    >
-                      <View
-                        style={{
-                          marginLeft: 30,
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: 10,
-                          marginTop: 20,
+                    {jenis === "png" || jenis === "jpg" || jenis === "jpeg" ? (
+                      <TouchableOpacity
+                        onPress={() => {
+                          setVisibleModal(true);
+                          setLampiranById(fileDetail);
+                          bottomSheetAttachClose();
                         }}
                       >
-                        <Ionicons
-                          name="eye-outline"
-                          size={32}
-                          color={"#6B7280"}
-                        />
-                        <Text
+                        <View
                           style={{
-                            fontSize: FONTSIZE.H2,
-                            fontWeight: FONTWEIGHT.normal,
+                            marginLeft: 30,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 10,
+                            marginTop: 20,
                           }}
                         >
-                          Preview
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  ) : null}
-                  {/* <TouchableOpacity
+                          <Ionicons
+                            name="eye-outline"
+                            size={32}
+                            color={"#6B7280"}
+                          />
+                          <Text
+                            style={{
+                              fontSize: FONTSIZE.H2,
+                              fontWeight: FONTWEIGHT.normal,
+                            }}
+                          >
+                            Preview
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ) : jenis === "doc" ||
+                      jenis === "docx" ||
+                      jenis === "xls" ||
+                      jenis === "xlsx" ||
+                      jenis === "pdf" ||
+                      jenis === "ppt" ||
+                      jenis === "pptx" ? (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate("FileViewer", {
+                            lampiran: file,
+                            type: jenis,
+                          });
+                          bottomSheetAttachClose();
+                        }}
+                      >
+                        <View
+                          style={{
+                            marginLeft: 30,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 10,
+                            marginTop: 20,
+                          }}
+                        >
+                          <Ionicons
+                            name="eye-outline"
+                            size={32}
+                            color={"#6B7280"}
+                          />
+                          <Text
+                            style={{
+                              fontSize: FONTSIZE.H2,
+                              fontWeight: FONTWEIGHT.normal,
+                            }}
+                          >
+                            Preview
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ) : null}
+                    {/* <TouchableOpacity
                 // onPress={() => {
                 //   navigation.navigate("FileViewer", {
                 //     lampiran: detail.attachments[0].files,
@@ -1000,12 +1004,13 @@ export const Lampiran = () => {
                   </Text>
                 </View>
               </TouchableOpacity> */}
-                </View>
-              </BottomSheetView>
-            </BottomSheetModal>
-          </BottomSheetModalProvider>
-        </Portal>
-      </View>
+                  </View>
+                </BottomSheetView>
+              </BottomSheetModal>
+            </BottomSheetModalProvider>
+          </Portal>
+        </View>
+      </GestureHandlerRootView>
     </>
   );
 };
