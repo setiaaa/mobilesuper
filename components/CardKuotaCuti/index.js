@@ -4,6 +4,10 @@ import { COLORS, DATETIME, FONTWEIGHT } from '../../config/SuperAppps'
 import { Text } from 'react-native'
 import { StyleSheet } from 'react-native'
 import moment from 'moment'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export const CardKuotaCuti = ({ item }) => {
     return (
@@ -12,17 +16,17 @@ export const CardKuotaCuti = ({ item }) => {
                 <View style={[styles.cardKouta]}>
                     <View style={{
                         width: "60%",
-                        padding: 15,
+                        padding: 12,
                         borderTopLeftRadius: 8,
                         borderBottomLeftRadius: 8,
                         backgroundColor: COLORS.white,
-                        alignItems: "center"
+                        alignItems: "center",
                     }}>
-                        <View style={{ rowGap: 10 }}>
+                        <View style={{rowGap:hp(0.5) }}>
                             <Text style={{ fontSize: 12 }}>Jenis : {item.jenis_cuti}</Text>
                             <Text style={{ fontSize: 12 }}>Periode:  {item.periode} </Text>
                             <Text style={{ fontSize: 12, color: COLORS.lighter }}>Mulai Berlaku: {moment(item.mulai_berlaku, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
-                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Beralaku: {moment(item.akhir_berlaku, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
+                            <Text style={{ fontSize: 12, color: COLORS.lighter }}>Akhir Berlaku: {moment(item.akhir_berlaku, "DD MMMM YYYY HH:mm:ss").format(DATETIME.LONG_DATE)}</Text>
                         </View>
                     </View>
                     <View style={{
@@ -35,13 +39,13 @@ export const CardKuotaCuti = ({ item }) => {
                     }}>
                         <Image source={require("../../assets/superApp/Vector2.png")} style={{position: "absolute", alignSelf: "flex-end", height: 120, width: 145}} />
                         <View style={{ gap: 20, }}>
-                            <View style={{ flexDirection: "row", columnGap: 15, alignItems: "center" }}>
+                            <View style={{ flexDirection: "row", columnGap: 12, alignItems: "center" }}>
                                 <Text>Kuota Cuti</Text>
                                 <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.kuota}</Text>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", columnGap: 15, alignItems: "center" }}>
+                            <View style={{ flexDirection: "row", columnGap: 12, alignItems: "center" }}>
                                 <Text>Sisa Kuota</Text>
                                 <View style={{ backgroundColor: COLORS.white, borderRadius: 5, paddingHorizontal: 12, paddingVertical: 8 }}>
                                     <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.sisa_kuota}</Text>

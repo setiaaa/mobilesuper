@@ -683,8 +683,8 @@ export const TambahCutiTahunan = () => {
                               alignItems: "center",
                               justifyContent: "center",
                               width: "90%",
-                              height: hp(45),
                               borderRadius: 10,
+                              height:hp(55),
                             }}
                           >
                             <View style={{ width: "100%", flex:1 }}>
@@ -729,7 +729,7 @@ export const TambahCutiTahunan = () => {
                                 </Text>
                               </View>
                             </TouchableOpacity> */}
-                            <View style={{ width: "100%", paddingTop:10, }}>
+                            <View style={{ width: "100%", paddingTop:10, alignSelf:"center", justifyContent:"center"}}>
                               {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
@@ -799,6 +799,27 @@ export const TambahCutiTahunan = () => {
                                   }
                                 }}
                               /> */}
+                              <View style={{paddingHorizontal:20, paddingVertical:10, alignItems:"flex-end"}}>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.primary,
+                                    borderRadius: 20,
+                                    marginLeft: 20,
+                                    width:24,
+                                    height:24,
+                                    justifyContent:"center",
+                                    alignItems:"center"
+                                  }}
+                                >
+                                  <TouchableOpacity onPress={() => setModalVisiblePicker("")}>
+                                    <Ionicons
+                                      name="close-outline"
+                                      size={24}
+                                      color={COLORS.white}
+                                    />
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
                               <CalendarPicker
                                 todayBackgroundColor={COLORS.info}
                                 disabledDates={tanggalLibur}

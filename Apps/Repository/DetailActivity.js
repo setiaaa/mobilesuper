@@ -91,7 +91,6 @@ export const DetailActivity = () => {
       setToken(val);
     });
   }, []);
-  console.log("ini token" + token);
   const ratingCompleted = (rating) => {
     console.log(token)
     const payload = {
@@ -298,7 +297,11 @@ export const DetailActivity = () => {
                 >
                   Rating
                 </Text>
+                {detail.logged_in_user_avatar === detail.creator_avatar ? 
+                  <Rating key={token} onFinishRating={(value) => ratingCompleted(value)} fractions={2} startingValue={detail.my_rating} readonly/>
+                :
                   <Rating key={token} onFinishRating={(value) => ratingCompleted(value)} fractions={2} startingValue={detail.my_rating}/>
+                }
               </View>
               <View
                 style={{
