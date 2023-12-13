@@ -246,29 +246,29 @@ export default function Dashboard(params) {
 
   const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = React.useCallback(() => {
-        try {
-          if (token !== "") {
-            dispatch(
-              getDokHukum({
-                token: token,
-                id: selectedList.key,
-                page: page,
-                search: search,
-              })
-            );
-            // dispatch(setRefresh(false));
-            console.log('Refresh berhasil')
-          }
-        } catch (error) {
-            console.log('Refresh gagal:', error)
-        }
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (token !== "") {
+        dispatch(
+          getDokHukum({
+            token: token,
+            id: selectedList.key,
+            page: page,
+            search: search,
+          })
+        );
+        // dispatch(setRefresh(false));
+        console.log("Refresh berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, [token, selectedList.key, page, search]);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [token, selectedList.key, page, search]);
 
   // console.log("ini page dari dashboarfd" + page);
   // console.log(lists?.results?.datas);
@@ -389,46 +389,48 @@ export default function Dashboard(params) {
               alignItems: "flex-end",
             }}
           >
-            <View
-              style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
-            >
+            {selectedList.key !== "" && selectedList.value !== "" ? (
               <View
-                style={{
-                  width: "85%",
-                  backgroundColor: COLORS.white,
-                  borderRadius: 8,
-                }}
+                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
               >
-                <View style={styles.input}>
-                  <Ionicons name="search" size={20} color={COLORS.primary} />
-                  <TextInput
-                    placeholder={"Cari..."}
-                    style={{ fontSize: 16, flex: 1 }}
-                    maxLength={30}
-                    value={inputValue}
-                    onChangeText={(text) => setInputValue(text)}
-                    onEndEditing={filterData}
-                    clearButtonMode="always"
-                  />
+                <View
+                  style={{
+                    width: "85%",
+                    backgroundColor: COLORS.white,
+                    borderRadius: 8,
+                  }}
+                >
+                  <View style={styles.input}>
+                    <Ionicons name="search" size={20} color={COLORS.primary} />
+                    <TextInput
+                      placeholder={"Cari..."}
+                      style={{ fontSize: 16, flex: 1 }}
+                      maxLength={30}
+                      value={inputValue}
+                      onChangeText={(text) => setInputValue(text)}
+                      onEndEditing={filterData}
+                      clearButtonMode="always"
+                    />
+                  </View>
+                </View>
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                  <TouchableOpacity onPress={!ascending ? asc : desc}>
+                    <View
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 30,
+                        backgroundColor: COLORS.white,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons name="filter-outline" size={24} />
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View style={{ flexDirection: "row", gap: 10 }}>
-                <TouchableOpacity onPress={!ascending ? asc : desc}>
-                  <View
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 30,
-                      backgroundColor: COLORS.white,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Ionicons name="filter-outline" size={24} />
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
+            ) : null}
           </View>
           {id === undefined || id?.unread === false ? null : (
             <View
@@ -556,7 +558,10 @@ export default function Dashboard(params) {
                   }
                   ListEmptyComponent={<ListEmpty />}
                   refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
                   }
                 />
               ) : (
@@ -592,7 +597,10 @@ export default function Dashboard(params) {
                   onEndReached={dokumenList?.length === 0 ? null : loadMore}
                   ListEmptyComponent={<ListEmpty />}
                   refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
                   }
                 />
               )

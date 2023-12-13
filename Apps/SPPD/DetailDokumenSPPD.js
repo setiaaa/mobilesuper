@@ -48,9 +48,9 @@ export const DetailDokumenSPPD = ({ route }) => {
       dispatch(
         getDocumentAttachmentSPPD({ token: token, id: dokumen.detail?.id })
       );
-      getDocumentCetakSPPD({ token: token, id: dokumen.detail?.id });
+      dispatch(getDocumentCetakSPPD({ token: token, id: dokumen.detail?.id }));
     }
-  }, [token, surat]);
+  }, [token, surat, cetak]);
 
   const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
 
@@ -85,20 +85,21 @@ export const DetailDokumenSPPD = ({ route }) => {
 
   const downloadFile = async (fileUrl, fileType, fileName) => {
     //alert(fileName)
+
     try {
       const downloadResumable = FileSystem.createDownloadResumable(
         fileUrl,
-        downloadPath + fileName,
+        downloadPath + "cek.pdf",
         { headers: { Authorization: token } }
       );
       try {
-        if (Platform.OS === "android") {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveAndroidFile(uri, fileName, fileType);
-        } else {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveIosFile(uri);
-        }
+        // if (Platform.OS === "android") {
+        //   const { uri } = await downloadResumable.downloadAsync();
+        //   saveAndroidFile(uri, fileName, fileType);
+        // } else {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveIosFile(uri);
+        // }
       } catch (e) {
         // setIsLoading(false);
         console.error("download error:", e);
@@ -185,7 +186,7 @@ export const DetailDokumenSPPD = ({ route }) => {
   //   }
   // });
   // };
-  console.log(cetak);
+  // console.log(cetak);
   // console.log(surat)
 
   return (
@@ -609,13 +610,18 @@ export const DetailDokumenSPPD = ({ route }) => {
                 justifyContent: "center",
               }}
               onPress={() => {
-                downloadFile(
-                  "https://apigw.kubekkp.coofis.com/monperdin/document/back-form/" +
-                    dokumen.detail?.id +
-                    "/",
-                  "application/pdf",
-                  data + ".pdf"
-                );
+                // downloadFile(
+                //   "https://apigw.kubekkp.coofis.com/monperdin/document/back-form/" +
+                //     dokumen.detail?.id +
+                //     "/",
+                //   "application/pdf",
+                //   data + ".pdf"
+                // );
+                navigation.navigate("LihatSuratSPPD", {
+                  surat: cetak,
+                  status: "share",
+                  data: data,
+                });
               }}
             >
               <Text

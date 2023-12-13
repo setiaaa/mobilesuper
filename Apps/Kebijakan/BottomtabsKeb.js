@@ -25,115 +25,11 @@ function MyTabBarKeb({ props, navigation }) {
             key={1}
             onPress={() => {
               setTabItemIndex(1);
-              navigation.navigate("Dashboard", { unread: false });
-              // props.navigation.navigate('Home', { unread: false })
-            }}
-          >
-            {tabItemIndex === 1 ? (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: 65,
-                  justifyContent: "center",
-                  width: 80,
-                }}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: 3,
-                    backgroundColor: COLORS.primary,
-                    position: "absolute",
-                    top: 0,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 5 },
-                    shadowColor: COLORS.primary,
-                    shadowOpacity: 0.4,
-                    //shadow android
-                    elevation: 2,
-                  }}
-                />
-                <Ionicons name="list" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Dok. Hukum</Text>
-              </View>
-            ) : (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: 65,
-                  justifyContent: "center",
-                  width: 80,
-                }}
-              >
-                <Ionicons name="list" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Dok. Hukum</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            key={2}
-            onPress={() => {
-              setTabItemIndex(2);
-              navigation.navigate("Tematik", { unread: false });
-              // props.navigation.navigate('Home', { unread: false })
-            }}
-          >
-            {tabItemIndex === 2 ? (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: 65,
-                  justifyContent: "center",
-                  width: 80,
-                }}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: 3,
-                    backgroundColor: COLORS.primary,
-                    position: "absolute",
-                    top: 0,
-                    //shadow ios
-                    shadowOffset: { width: -2, height: 5 },
-                    shadowColor: COLORS.primary,
-                    shadowOpacity: 0.4,
-                    //shadow android
-                    elevation: 2,
-                  }}
-                />
-                <Ionicons
-                  name="pencil-outline"
-                  color={COLORS.primary}
-                  size={24}
-                />
-                <Text style={{ color: COLORS.primary }}>Tematik</Text>
-              </View>
-            ) : (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: 65,
-                  justifyContent: "center",
-                  width: 80,
-                }}
-              >
-                <Ionicons name="pencil-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Tematik</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            key={3}
-            onPress={() => {
-              setTabItemIndex(3);
               navigation.navigate("Pencarian", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
-            {tabItemIndex === 3 ? (
+            {tabItemIndex === 1 ? (
               <View
                 style={{
                   alignItems: "center",
@@ -179,6 +75,110 @@ function MyTabBarKeb({ props, navigation }) {
                   size={24}
                 />
                 <Text style={{ color: COLORS.grey }}>Pencarian</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            key={2}
+            onPress={() => {
+              setTabItemIndex(2);
+              navigation.navigate("Dashboard", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 2 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: 65,
+                  justifyContent: "center",
+                  width: 80,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons name="list" color={COLORS.primary} size={24} />
+                <Text style={{ color: COLORS.primary }}>Dok. Hukum</Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: 65,
+                  justifyContent: "center",
+                  width: 80,
+                }}
+              >
+                <Ionicons name="list" color={COLORS.grey} size={24} />
+                <Text style={{ color: COLORS.grey }}>Dok. Hukum</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            key={3}
+            onPress={() => {
+              setTabItemIndex(3);
+              navigation.navigate("Tematik", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 3 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: 65,
+                  justifyContent: "center",
+                  width: 80,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="pencil-outline"
+                  color={COLORS.primary}
+                  size={24}
+                />
+                <Text style={{ color: COLORS.primary }}>Tematik</Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: 65,
+                  justifyContent: "center",
+                  width: 80,
+                }}
+              >
+                <Ionicons name="pencil-outline" color={COLORS.grey} size={24} />
+                <Text style={{ color: COLORS.grey }}>Tematik</Text>
               </View>
             )}
           </TouchableOpacity>

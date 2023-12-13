@@ -156,6 +156,8 @@ import DispositionList from "./List/DispositionList";
 import TrackingList from "./List/TrackingList";
 import SubmittedList from "./List/SubmittedList";
 import NeedFollowUpList from "./List/NeedFollowUpList";
+import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
+import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 
 const Stack = createNativeStackNavigator();
 
@@ -467,6 +469,20 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="Laporan"
             component={Laporan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HDLaporanSaya"
+            component={HDLaporanSaya}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HDFormLaporan"
+            component={HDFormLaporan}
             options={{
               headerShown: false,
             }}

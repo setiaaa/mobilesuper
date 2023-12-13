@@ -14,7 +14,12 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTSIZE,
+  FONTWEIGHT,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,10 +33,17 @@ import {
   getPilihApproval,
   postAttachmentCuti,
   postPengajuanCuti,
+  postPengajuanCutiDraft,
+  postTanggalCuti,
 } from "../../service/api";
 import { ModalSubmit } from "../../components/ModalSubmit";
-import { setAttachmentCuti, setStatus } from "../../store/Cuti";
+import { setAttachmentCuti, setJumlahCuti, setStatus } from "../../store/Cuti";
 import * as DocumentPicker from "expo-document-picker";
+import CalendarPicker from "react-native-calendar-picker";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -51,7 +63,7 @@ export const TambahCutiTahunan = () => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status, attachment } = useSelector(
+  const { form, pilih, status, attachment, jumlahCuti } = useSelector(
     (state) => state.cuti
   );
 
@@ -65,6 +77,7 @@ export const TambahCutiTahunan = () => {
   const [pejabat, setPejabat] = useState("");
   const [jenisCuti, setJenisCuti] = useState("");
   const [alasanCuti, setAlasanCuti] = useState("");
+  const [tanggalLibur, setTanggalLibur] = useState();
 
   const [document, setDocument] = useState([]);
   const [type, setType] = useState([]);
@@ -96,6 +109,7 @@ export const TambahCutiTahunan = () => {
 
   useEffect(() => {
     dispatch(setAttachmentCuti([]));
+    dispatch(setJumlahCuti({}));
   }, []);
 
   const pickAtasan = () => {
@@ -144,13 +158,96 @@ export const TambahCutiTahunan = () => {
     // console.log(data);
   };
 
-  console.log(form.data_user);
+  const handleSubmitDraft = () => {
+    const payload = {
+      nip_pengaju: profile?.nip,
+      id_dokumen: "",
+      id_jenis_cuti: form.data_jenis_cuti?.id,
+      id_sub_jenis_cuti: "",
+      mulai_cuti: TanggalMulai,
+      akhir_cuti: TanggalSelesai,
+      alasan_cuti: alasanCuti,
+      alamat_cuti: alasanCuti,
+      nomor_telpon: telepon,
+      nip_approval1: atasan.key,
+      nip_approval2: pejabat.key,
+      attachment: attachment,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postPengajuanCutiDraft(data));
+    // console.log(data);
+  };
+
+  const selectDate = () => {
+    const payload = {
+      id_jenis_cuti: form.data_jenis_cuti?.id,
+      nip: profile?.nip,
+      tanggal_mulai: TanggalMulai,
+      tanggal_akhir: TanggalSelesai,
+    };
+    const data = {
+      // token: token,
+      payload: payload,
+    };
+    dispatch(postTanggalCuti(data));
+    // console.log(data);
+  };
 
   useEffect(() => {
     setAlamat(form?.data_user?.alamat);
     setTelepon(form?.data_user?.no_telpon);
+    if (form.data_kalender?.tanggal_sppd.length === 0) {
+      setTanggalLibur([
+        ...form.data_kalender?.tanggal_pernah_dipakai,
+        ...form.data_kalender?.tanggal_libur,
+      ]);
+    } else if (form.data_kalender?.tanggal_pernah_dipakai.length === 0) {
+      setTanggalLibur([
+        ...form.data_kalender?.tanggal_libur,
+        ...form.data_kalender?.tanggal_sppd,
+      ]);
+    } else {
+      setTanggalLibur([]);
+    }
   }, [form]);
 
+  //styling kalender
+  const customDayHeaderStyles = ({ dayOfWeek }) => {
+    switch (
+      dayOfWeek // can also evaluate month, year
+    ) {
+      case 7: // Thursday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: "bold",
+          },
+        };
+    }
+  };
+
+  const customDatesStyles = (date) => {
+    switch (date.isoWeekday()) {
+      case 7: // Monday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: "bold",
+          },
+        };
+      case 7: // Sunday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+          },
+        };
+    }
+  };
+
+  console.log(jumlahCuti.jumlah_cuti);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -481,7 +578,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(40),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -521,7 +618,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(40),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -588,37 +685,54 @@ export const TambahCutiTahunan = () => {
                               alignItems: "center",
                               justifyContent: "center",
                               width: "90%",
-                              height: 500,
+                              height: hp(45),
                               borderRadius: 10,
                             }}
                           >
-                            <TouchableOpacity
+                            <View style={{ width: "100%", flex: 1 }}>
+                              {/* <CalendarPicker
+                                startFromMonday={true}
+                                width={wp(90)}
+                                weekdays={['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']}
+                                months={['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'Desember']}
+                                previousComponent={<CustomPreviousComponent />}
+                                nextComponent={<CustomNextComponent />}
+                                selectedRangeStyle={{ backgroundColor: COLORS.infoDangerLight, fontWeight: 'bold' }}
+                                customDayHeaderStyles={customDayHeaderStyles}
+                                customDatesStyles={customDatesStyles}
+                                onDateChange={handleDateChange}
+                                allowRangeSelection={true}
+                              />
+                              <TouchableOpacity
                               onPress={() => setModalVisiblePicker("")}
                               style={{
-                                paddingRight: "85%",
                                 marginBottom: 3,
+                                paddingLeft: "70%",
+                                marginBottom: 20,
                                 marginLeft: 20,
+                                alignContent:"center",
+                                justifyContent:"center",
+                                marginLeft:"35%"
                               }}
-                            >
+                              >
                               <View
                                 style={{
                                   backgroundColor: COLORS.primary,
-                                  borderRadius: 50,
-                                  width: 35,
+                                  borderRadius: 10,
+                                  width: wp(25),
                                   height: 35,
                                   justifyContent: "center",
                                   alignItems: "center",
+                                  marginTop:10,
                                 }}
                               >
-                                <Ionicons
-                                  name="close-outline"
-                                  size={24}
-                                  color={COLORS.white}
-                                />
+                                <Text style={{color:"white"}}>
+                                  Confirm
+                                </Text>
                               </View>
-                            </TouchableOpacity>
-                            <View style={{ width: "100%" }}>
-                              <DatePicker
+                            </TouchableOpacity> */}
+                              <View style={{ width: "100%", paddingTop: 10 }}>
+                                {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
                                   textHeaderColor: COLORS.primary,
@@ -686,30 +800,100 @@ export const TambahCutiTahunan = () => {
                                     setTanggalMulai("");
                                   }
                                 }}
-                              />
-                              <TouchableOpacity
-                                onPress={() => setModalVisiblePicker("")}
-                                style={{
-                                  marginTop: 20,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <View
+                              /> */}
+                                <CalendarPicker
+                                  todayBackgroundColor={COLORS.info}
+                                  disabledDates={tanggalLibur}
+                                  previousComponent={
+                                    <Ionicons
+                                      name="chevron-back-outline"
+                                      size={24}
+                                      color={COLORS.primary}
+                                    />
+                                  }
+                                  nextComponent={
+                                    <Ionicons
+                                      name="chevron-forward-outline"
+                                      size={24}
+                                      color={COLORS.primary}
+                                    />
+                                  }
+                                  customDayHeaderStyles={customDayHeaderStyles}
+                                  customDatesStyles={customDatesStyles}
+                                  startFromMonday={true}
+                                  width={wp(95)}
+                                  weekdays={[
+                                    "Sen",
+                                    "Sel",
+                                    "Rab",
+                                    "Kam",
+                                    "Jum",
+                                    "Sab",
+                                    "Min",
+                                  ]}
+                                  months={[
+                                    "Januari",
+                                    "Februari",
+                                    "Maret",
+                                    "April",
+                                    "Mei",
+                                    "Juni",
+                                    "Juli",
+                                    "Augustus",
+                                    "September",
+                                    "Oktober",
+                                    "November",
+                                    "Desember",
+                                  ]}
+                                  onDateChange={(date) => {
+                                    if (modalVisiblePicker === "mulai") {
+                                      setTanggalMulai(
+                                        moment(
+                                          date,
+                                          "YYYY-MM-DD HH:mm:ss"
+                                        ).format("YYYY-MM-DD")
+                                      );
+                                    } else {
+                                      setTanggalSelsai(
+                                        moment(
+                                          date,
+                                          "YYYY-MM-DD HH:mm:ss"
+                                        ).format("YYYY-MM-DD")
+                                      );
+                                    }
+                                  }}
+                                />
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    if (modalVisiblePicker === "mulai") {
+                                      setModalVisiblePicker("");
+                                    } else {
+                                      selectDate();
+                                      setModalVisiblePicker("");
+                                    }
+                                  }}
                                   style={{
-                                    backgroundColor: COLORS.primary,
-                                    width: 217,
-                                    height: 39,
-                                    borderRadius: 8,
+                                    marginTop: 10,
                                     justifyContent: "center",
                                     alignItems: "center",
                                   }}
                                 >
-                                  <Text style={{ color: COLORS.white }}>
-                                    Ok
-                                  </Text>
-                                </View>
-                              </TouchableOpacity>
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.primary,
+                                      width: 217,
+                                      height: 39,
+                                      borderRadius: 8,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <Text style={{ color: COLORS.white }}>
+                                      Ok
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -730,7 +914,11 @@ export const TambahCutiTahunan = () => {
                       borderRadius: 8,
                     }}
                   >
-                    <Text>0</Text>
+                    <Text>
+                      {jumlahCuti.jumlah_cuti === undefined
+                        ? "0"
+                        : jumlahCuti.jumlah_cuti.toString()}
+                    </Text>
                   </View>
                 </View>
 
@@ -1135,6 +1323,9 @@ export const TambahCutiTahunan = () => {
                 width: "46.5%",
                 height: 50,
                 justifyContent: "center",
+              }}
+              onPress={() => {
+                handleSubmitDraft();
               }}
             >
               <Text style={{ textAlign: "center", color: COLORS.white }}>

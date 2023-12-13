@@ -735,6 +735,18 @@ export const getDownloadLampiran = createAsyncThunk(
   }
 );
 
+export const postRating = createAsyncThunk(
+  "repository/postRating",
+  async ( data ) => {
+    const respon = await axios.put(
+      `${repository}${data.id}/rate/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data;
+  }
+);
+
 //profile me
 
 export const getProfileMe = createAsyncThunk(
@@ -1857,11 +1869,36 @@ export const postPengajuanCuti = createAsyncThunk(
   }
 );
 
+export const postPengajuanCutiDraft = createAsyncThunk(
+  "cuti/postPengajuanCutiDraft",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.post(
+      `${Cuti}simpan-draft/`,
+      data.payload
+      // headers: { Authorization: token },
+    );
+    return respon?.data;
+  }
+);
+
 export const postApproval = createAsyncThunk(
   "cuti/postApproval",
   async (data) => {
     const respon = await axios.post(
       `${Cuti}approval-cuti/`,
+      data.payload
+      // headers: { Authorization: token },
+    );
+    return respon?.data;
+  }
+);
+
+export const postTanggalCuti = createAsyncThunk(
+  "cuti/postTanggalCuti",
+  async (data) => {
+    const respon = await axios.post(
+      `${Cuti}pilih-tanggal/`,
       data.payload
       // headers: { Authorization: token },
     );
