@@ -687,7 +687,7 @@ export const TambahCutiTahunan = () => {
                               borderRadius: 10,
                             }}
                           >
-                            <View style={{ width: "100%" }}>
+                            <View style={{ width: "100%", flex:1 }}>
                               {/* <CalendarPicker
                                 startFromMonday={true}
                                 width={wp(90)}
@@ -729,7 +729,7 @@ export const TambahCutiTahunan = () => {
                                 </Text>
                               </View>
                             </TouchableOpacity> */}
-                            <View style={{ width: "100%" }}>
+                            <View style={{ width: "100%", paddingTop:10, }}>
                               {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
@@ -838,7 +838,7 @@ export const TambahCutiTahunan = () => {
                                   }
                                 }}
                                 style={{
-                                  marginTop: 20,
+                                  marginTop: 10,
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
