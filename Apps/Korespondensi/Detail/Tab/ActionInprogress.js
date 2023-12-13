@@ -26,6 +26,7 @@ function ActionInprogress({ id, data, page }) {
   const [isLoading, setisLoading] = useState();
   const [tipe, setTipe] = useState();
   const [comment, setComment] = useState("");
+  const [passphrase, setPassphrase] = useState("");
   const navigation = useNavigation();
   let perihal = useSelector((state) => state.payload.subject);
   let masalah = useSelector((state) => state.addressbook.km);
@@ -175,8 +176,19 @@ function ActionInprogress({ id, data, page }) {
       if (comment.length == 0) {
         Alert.alert("Peringatan!", "Silakan isi komentar");
         setisLoading(false);
+      } else if (
+        passphrase.length == 0 &&
+        data?.current + 1 == data?.tracker?.approvers?.length &&
+        tipe == "Setujui"
+      ) {
+        Alert.alert("Peringatan!", "Silakan isi passphrase");
+        setisLoading(false);
       } else {
-        let payload = { komentar: comment, pass: "1" };
+        let payload =
+          data?.current + 1 == data?.tracker?.approvers?.length &&
+          tipe == "Setujui"
+            ? { komentar: comment, passphrase: passphrase, pass: "1" }
+            : { komentar: comment, pass: "1" };
         let response;
         if (tipe == "Selesaikan") {
           response = await postHTTP(
@@ -964,77 +976,93 @@ function ActionInprogress({ id, data, page }) {
                 return <BottomSheetBackdrop {...props} />;
               }}
             >
-            <BottomSheetView onLayout={handleContentLayout}>
-              <View
-                style={
-                  page == "edit"
-                    ? [styles.contentContainer, { padding: 16 }]
-                    : [styles.contentContainer, { padding: 16 }]
-                }
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Komentar - </Text>
-                  <Text
-                    style={{
-                      color:
-                        tipe == "Setujui" || tipe == "Selesaikan"
-                          ? GlobalStyles.colors.approve
-                          : tipe == "Revisi"
-                          ? GlobalStyles.colors.return
-                          : tipe == "Return To Composer"
-                          ? GlobalStyles.colors.returntocomposer
-                          : tipe == "Batalkan"
-                          ? GlobalStyles.colors.reject
-                          : GlobalStyles.colors.blue,
+              <BottomSheetView onLayout={handleContentLayout}>
+                <View
+                  style={
+                    page == "edit"
+                      ? [styles.contentContainer, { padding: 16 }]
+                      : [styles.contentContainer, { padding: 16 }]
+                  }
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text>Komentar - </Text>
+                    <Text
+                      style={{
+                        color:
+                          tipe == "Setujui" || tipe == "Selesaikan"
+                            ? GlobalStyles.colors.approve
+                            : tipe == "Revisi"
+                            ? GlobalStyles.colors.return
+                            : tipe == "Return To Composer"
+                            ? GlobalStyles.colors.returntocomposer
+                            : tipe == "Batalkan"
+                            ? GlobalStyles.colors.reject
+                            : GlobalStyles.colors.blue,
+                      }}
+                    >
+                      {tipe}
+                    </Text>
+                  </View>
+                  <BottomSheetTextInput
+                    value={comment}
+                    onChangeText={(text) => setComment(text)}
+                    style={styles.input}
+                    multiline={true}
+                    autoFocus
+                  />
+
+                  {tipe == "Setujui" &&
+                    data?.current + 1 == data?.tracker?.approvers?.length && (
+                      <>
+                        <View style={{ flexDirection: "row" }}>
+                          <Text>Passphrase</Text>
+                        </View>
+
+                        <BottomSheetTextInput
+                          value={passphrase}
+                          onChangeText={(text) => setPassphrase(text)}
+                          style={styles.input}
+                          multiline={true}
+                        />
+                      </>
+                    )}
+                  <Button
+                    mode="contained"
+                    style={[
+                      {
+                        backgroundColor:
+                          tipe == "Setujui" || tipe == "Selesaikan"
+                            ? GlobalStyles.colors.approve
+                            : tipe == "Revisi"
+                            ? GlobalStyles.colors.return
+                            : tipe == "Return To Composer"
+                            ? GlobalStyles.colors.returntocomposer
+                            : tipe == "Batalkan"
+                            ? GlobalStyles.colors.reject
+                            : GlobalStyles.colors.blue,
+                        marginBottom: 16,
+                      },
+                    ]}
+                    onPress={() => submitComment()}
+                  >
+                    Kirim
+                  </Button>
+                  <Button
+                    mode="contained"
+                    style={[
+                      {
+                        backgroundColor: GlobalStyles.colors.gray500,
+                        marginBottom: 16,
+                      },
+                    ]}
+                    onPress={() => {
+                      bottomSheetModalRef.current?.dismiss();
+                      setComment("");
                     }}
                   >
-                    {tipe}
-                  </Text>
+                    Kembali
+                  </Button>
                 </View>
-                <BottomSheetTextInput
-                  value={comment}
-                  onChangeText={(text) => setComment(text)}
-                  style={styles.input}
-                  multiline={true}
-                  autoFocus
-                />
-                <Button
-                  mode="contained"
-                  style={[
-                    {
-                      backgroundColor:
-                        tipe == "Setujui" || tipe == "Selesaikan"
-                          ? GlobalStyles.colors.approve
-                          : tipe == "Revisi"
-                          ? GlobalStyles.colors.return
-                          : tipe == "Return To Composer"
-                          ? GlobalStyles.colors.returntocomposer
-                          : tipe == "Batalkan"
-                          ? GlobalStyles.colors.reject
-                          : GlobalStyles.colors.blue,
-                      marginBottom: 16,
-                    },
-                  ]}
-                  onPress={() => submitComment()}
-                >
-                  Kirim
-                </Button>
-                <Button
-                  mode="contained"
-                  style={[
-                    {
-                      backgroundColor: GlobalStyles.colors.gray500,
-                      marginBottom: 16,
-                    },
-                  ]}
-                  onPress={() => {
-                    bottomSheetModalRef.current?.dismiss();
-                    setComment("");
-                  }}
-                >
-                  Kembali
-                </Button>
-              </View>
               </BottomSheetView>
             </BottomSheetModal>
           </View>
