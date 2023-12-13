@@ -120,13 +120,13 @@ export const LaporanPengetahuan = () => {
         { headers: { Authorization: token } }
       );
       try {
-        if (Platform.OS === "android") {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveAndroidFile(uri, namafile[namafile?.length - 1], fileType);
-        } else {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveIosFile(uri);
-        }
+        // if (Platform.OS === "android") {
+        //   const { uri } = await downloadResumable.downloadAsync();
+        //   saveAndroidFile(uri, namafile[namafile?.length - 1], fileType);
+        // } else {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveIosFile(uri);
+        // }
       } catch (e) {
         // setIsLoading(false);
         console.error("download error:", e);
