@@ -23,6 +23,7 @@ import Satker from "./Satker";
 import LoginAuth from "./LoginAuth";
 import Cuti from "./Cuti";
 import SPPD from "./SPPD";
+import HelpDesk from "./HelpDesk";
 
 export const store = configureStore({
   reducer: {
@@ -48,6 +49,7 @@ export const store = configureStore({
     satker: Satker,
     login: LoginAuth,
     cuti: Cuti,
-    sppd: SPPD
+    sppd: SPPD,
+    helpDesk : HelpDesk
   },
 });

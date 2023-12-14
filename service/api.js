@@ -54,6 +54,7 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 const SPPD = BASE_URL + "monperdin/";
 
 const Cuti = "https://cuti.kubekkp.coofis.com/api/";
+const HelpDesk = "https://helpdesk.kubekkp.coofis.com/api/";
 
 //Login
 export const Login = createAsyncThunk(
@@ -1992,3 +1993,49 @@ export const getDocumentCetakSPPD = createAsyncThunk(
     return respon?.data;
   }
 );
+
+//help desk
+export const getTicket = createAsyncThunk(
+  "helpDesk/getTicket",
+  async ( data ) => {
+    const respon = await axios.get(`${HelpDesk}ticket?nip=${data.nip}`, {
+      headers: { Authorization: data.token },
+    })
+    return respon.data.results;
+  }
+);
+
+export const getParts = createAsyncThunk(
+  "helpDesk/getParts",
+  async () => {
+    const respon = await axios.get(`${HelpDesk}parts`, {
+      // headers: { Authorization: token },
+    });
+    return respon.data;
+  }
+);
+
+export const postTicket = createAsyncThunk(
+  "ticket/postTicket",
+  async (data) => {
+    console.log("api post")
+    console.log(data.payload)
+    const respon = await axios.post(`${HelpDesk}ticket/store`, 
+    data.payload,
+    {
+      headers: { Authorization: data.token },
+    });
+    console.log(respon)
+    return respon?.data;
+  }
+);
+
+// export const updateTicket = createAsyncThunk(
+//   "ticket/updateTicket",
+//   async (id) => {
+//     const respon = await axios.put(`${HelpDesk}ticket/update-status/${id}`, {
+//       headers: { Authorization: token },
+//     });
+//     return respon?.data;
+//   }
+// );

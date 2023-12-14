@@ -254,7 +254,7 @@ function MyTabBar({ props, navigation }) {
             key={5}
             onPress={() => {
               setTabItemIndex(5);
-              navigation.navigate("FAQ", { unread: false });
+              navigation.navigate("HelpDesk", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
