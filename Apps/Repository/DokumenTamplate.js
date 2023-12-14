@@ -55,7 +55,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           display: "flex",
           flexDirection: "row",
           marginVertical: 10,
-          marginHorizontal: 20,
+          marginHorizontal: "5%",
           backgroundColor: "white",
           borderRadius: 8,
           shadowColor: "black",
@@ -324,28 +324,28 @@ export const DokumenTamplate = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(
-              getDocumentTamplate({
-                token: token,
-                page: page,
-                general: search,
-                by_title: type.key,
-                unker: filterUnker ? filterUnker.value : "",
-                satker: filterSatker ? filterSatker.value : "",
-              })
-            );
-              console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(
+          getDocumentTamplate({
+            token: token,
+            page: page,
+            general: search,
+            by_title: type.key,
+            unker: filterUnker ? filterUnker.value : "",
+            satker: filterSatker ? filterSatker.value : "",
+          })
+        );
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page, type, search, filterUnker, filterSatker]);
 
   return (
@@ -386,8 +386,12 @@ export const DokumenTamplate = () => {
               </Text>
             </View>
           </View>
-          <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
-            <Search placeholder={"Cari"} onSearch={setSearch} />
+          <View style={{ width: "90%", marginLeft: "5%", marginVertical: 20 }}>
+            <Search
+              placeholder={"Cari"}
+              onSearch={setSearch}
+              iconColor={COLORS.primary}
+            />
             <View
               style={{
                 marginTop: 20,
@@ -409,6 +413,14 @@ export const DokumenTamplate = () => {
                 onPress={() => {
                   bottomSheetAttachFilter();
                   dispatch(getDivisionFilter({ token: token }));
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 30,
+                  backgroundColor: COLORS.white,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <Ionicons

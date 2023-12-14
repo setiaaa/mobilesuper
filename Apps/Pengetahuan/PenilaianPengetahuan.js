@@ -415,7 +415,8 @@ export const PenilaianPenggetahaun = () => {
             justifyContent: "space-between",
             marginTop: 20,
             flexDirection: "row",
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
+            width: "90%",
           }}
         >
           <View
@@ -462,8 +463,9 @@ export const PenilaianPenggetahaun = () => {
           style={{
             flexDirection: "row",
             marginVertical: 20,
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
             gap: 5,
+            width: "90%",
           }}
         >
           <View
@@ -517,7 +519,8 @@ export const PenilaianPenggetahaun = () => {
             <View style={{ flex: 1 }}>
               <View
                 style={{
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
+                  width: "90%",
                   marginTop: 20,
                   flexDirection: "row",
                   alignItems: "center",
@@ -581,7 +584,7 @@ export const PenilaianPenggetahaun = () => {
                   marginVertical: 40,
                   borderRadius: 6,
                   alignItems: "center",
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
                   justifyContent: "center",
                 }}
                 onPress={() => {
@@ -603,7 +606,14 @@ export const PenilaianPenggetahaun = () => {
           </BottomSheetView>
         </BottomSheetModal>
 
-        <View style={{ flexDirection: "row", marginHorizontal: 20, gap: 5 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: "5%",
+            gap: 5,
+            width: "90%",
+          }}
+        >
           <TouchableOpacity
             style={{
               backgroundColor:
@@ -709,11 +719,12 @@ export const PenilaianPenggetahaun = () => {
           style={{
             marginTop: 10,
             paddingVertical: 5,
-            // backgroundColor: "brown",
             height: "43%",
           }}
         >
-          <View style={{ marginHorizontal: 20, marginBottom: 10 }}>
+          <View
+            style={{ marginHorizontal: "5%", marginBottom: 10, width: "90%" }}
+          >
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>List Penilaian</Text>
           </View>
           <FlatList

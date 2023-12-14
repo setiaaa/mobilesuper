@@ -337,7 +337,9 @@ export const MyTask = () => {
             </View>
           </View>
 
-          <View style={{ flexDirection: "row", gap: 5, paddingHorizontal: 20 }}>
+          <View
+            style={{ flexDirection: "row", gap: 5, paddingHorizontal: "5%" }}
+          >
             <TouchableOpacity
               onPress={bottomSheetAttachSelect}
               style={{ width: "100%" }}
@@ -385,7 +387,8 @@ export const MyTask = () => {
                   <View
                     style={{
                       alignItems: "center",
-                      margin: 20,
+                      marginVertical: 20,
+                      marginHorizontal: "5%",
                       flexDirection: "row",
                       justifyContent: "space-between",
                     }}
@@ -400,7 +403,7 @@ export const MyTask = () => {
                     </Text>
                     <TouchableOpacity
                       onPress={() => {
-                        bottomSheetAttachClose();
+                        bottomSheetSelectClose();
                       }}
                     >
                       <Ionicons
@@ -411,7 +414,7 @@ export const MyTask = () => {
                     </TouchableOpacity>
                   </View>
 
-                  <View style={{ width: "90%", marginHorizontal: 20 }}>
+                  <View style={{ width: "90%", marginHorizontal: "5%" }}>
                     <Dropdown
                       placeHolder={"Pilih Tipe"}
                       borderWidth={1}
@@ -433,7 +436,7 @@ export const MyTask = () => {
                       <View
                         style={{
                           width: "90%",
-                          marginHorizontal: 20,
+                          marginHorizontal: "5%",
                           marginTop: 20,
                         }}
                       >
@@ -473,19 +476,18 @@ export const MyTask = () => {
                       bottomSheetSelectClose();
                       handleChoiceSubmit();
                     }}
+                    style={{
+                      marginHorizontal: "5%",
+                      backgroundColor: COLORS.primary,
+                      width: Platform.OS === "ios" ? "90%" : "91%",
+                      height: 50,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 6,
+                      marginVertical: 40,
+                    }}
                   >
-                    <View
-                      style={{
-                        marginHorizontal: 20,
-                        backgroundColor: COLORS.primary,
-                        width: Platform.OS === "ios" ? "90%" : "91%",
-                        height: 50,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 6,
-                        marginVertical: 40,
-                      }}
-                    >
+                    <View>
                       <Text style={{ color: COLORS.white }}>Terapkan</Text>
                     </View>
                   </TouchableOpacity>
@@ -502,7 +504,6 @@ export const MyTask = () => {
 
           <View
             style={{
-              paddingHorizontal: 20,
               flexDirection: "row",
               alignItems: "center",
             }}
@@ -514,7 +515,11 @@ export const MyTask = () => {
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} /> */}
                 </>
               ) : (
-                <View>
+                <View
+                  style={{
+                    marginHorizontal: "5%",
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: FONTSIZE.H1,

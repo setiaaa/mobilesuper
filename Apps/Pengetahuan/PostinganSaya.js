@@ -99,7 +99,7 @@ const CardPostinganSaya = ({ item, token }) => {
                   />
                 </View>
               </View>
-              <View style={{ marginHorizontal: 10, width: wp(56), }}>
+              <View style={{ marginHorizontal: 10, width: wp(56) }}>
                 <Text
                   style={{
                     // width: 270,
@@ -305,7 +305,7 @@ const CardPostinganSaya = ({ item, token }) => {
                   />
                 </View>
               </View>
-              <View style={{ marginHorizontal: 10, width: wp(56), }}>
+              <View style={{ marginHorizontal: 10, width: wp(56) }}>
                 <Text
                   style={{
                     // width: 270,
@@ -477,13 +477,11 @@ export const PostinganSaya = () => {
   const [page, setPage] = useState(5);
   const [inputValue, setInputValue] = useState("");
 
-
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
     });
   }, []);
-
 
   useEffect(() => {
     if (token !== "") {
@@ -539,8 +537,7 @@ export const PostinganSaya = () => {
         return item.title.toLowerCase().includes(search.toLowerCase());
       });
       setFilterData(data);
-      if (data.length === 0){
-
+      if (data.length === 0) {
       }
     } else {
       setFilterData(postinganSaya.lists);
@@ -550,26 +547,25 @@ export const PostinganSaya = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getMyPostList({ token: token, page: page }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getMyPostList({ token: token, page: page }));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
 
   // console.log(postinganSaya.lists);
 
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-
 
   const asc = () => {
     const sortedAscending = filterData
@@ -660,31 +656,39 @@ export const PostinganSaya = () => {
             alignItems: "center",
           }}
         >
-          <View style={{ flexDirection: 'row', }}>
-          <View style={{ width: "85%", marginRight: 10, marginBottom: 15 }}>
-            <Search
-              placeholder={"Cari..."}
-              iconColor={COLORS.primary}
-              onSearch={filter}
-            />
-          </View>
-          <TouchableOpacity onPress={!ascending ? asc : desc}>
           <View
             style={{
-            width: 40,
-            height: 40,
-            borderRadius: 30,
-            backgroundColor: COLORS.white,
-            justifyContent: "center",
-            alignItems: "center",
-            borderColor: COLORS.secondaryLighter,
-            // borderWidth: isFiltered ? 1 : 0,
-          }}
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 15,
+            }}
           >
-            <Ionicons name="filter-outline" size={24} />
+            <View style={{ width: "85%" }}>
+              <Search
+                placeholder={"Cari..."}
+                iconColor={COLORS.primary}
+                onSearch={filter}
+              />
+            </View>
+            <TouchableOpacity onPress={!ascending ? asc : desc}>
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 30,
+                  backgroundColor: COLORS.white,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderColor: COLORS.secondaryLighter,
+                  // borderWidth: isFiltered ? 1 : 0,
+                }}
+              >
+                <Ionicons name="filter-outline" size={24} />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-        </View>
           {/* <TouchableOpacity
             style={{
               backgroundColor: "#C34647",
@@ -711,10 +715,7 @@ export const PostinganSaya = () => {
         data={filterData}
         renderItem={({ item }) => (
           <View key={item.id}>
-            <CardPostinganSaya
-              item={item}
-              token={token}
-            />
+            <CardPostinganSaya item={item} token={token} />
           </View>
         )}
         ListFooterComponent={() =>
@@ -735,7 +736,7 @@ export const PostinganSaya = () => {
         onEndReached={loadMore}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
+        }
       />
     </>
   );

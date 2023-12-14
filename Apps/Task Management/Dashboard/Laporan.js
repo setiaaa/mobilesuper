@@ -43,30 +43,30 @@ const ListCompleteProject = ({ item }) => {
       }}
     >
       <View>
-        <Text>Nama Project</Text>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
           }}
         >
-          {item.project}
+          Nama Project
         </Text>
+        <Text>{item.project}</Text>
       </View>
       <View>
-        <Text>Nama List</Text>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
           }}
         >
-          {item.list_task}
+          Nama List
         </Text>
+        <Text>{item.list_task}</Text>
       </View>
       <View>
         <Text
           style={{
             fontSize: FONTSIZE.H1,
-            // fontWeight: FONTWEIGHT.bold,
+            fontWeight: FONTWEIGHT.bold,
           }}
         >
           Nama Task
@@ -74,14 +74,19 @@ const ListCompleteProject = ({ item }) => {
         <Text
           style={{
             fontSize: FONTSIZE.H1,
-            fontWeight: FONTWEIGHT.bold,
           }}
         >
           {item.title}
         </Text>
       </View>
       <View>
-        <Text>Penanggung Jawab</Text>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+          }}
+        >
+          Penanggung Jawab
+        </Text>
         <View style={{ flexDirection: "row" }}>
           {item.members?.slice(0, 3).map((data, index) => (
             <View key={data.id} style={{ position: "relative" }}>
@@ -99,14 +104,14 @@ const ListCompleteProject = ({ item }) => {
         </View>
       </View>
       <View>
-        <Text>Lama Penyelesaian</Text>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
           }}
         >
-          {item.lama_penyelesaian}
+          Lama Penyelesaian
         </Text>
+        <Text>{item.lama_penyelesaian}</Text>
       </View>
     </View>
   );
@@ -236,7 +241,7 @@ export const Laporan = () => {
       <View
         style={{
           gap: 5,
-          paddingHorizontal: 17,
+          paddingHorizontal: "5%",
           width: "100%",
           // backgroundColor: "brown",
           marginTop: 20,

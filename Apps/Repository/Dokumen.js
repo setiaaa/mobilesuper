@@ -46,7 +46,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDocument(params));
   };
-  console.log(item.published)
+  console.log(item.published);
   return (
     <BottomSheetModalProvider>
       <View
@@ -55,8 +55,9 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           display: "flex",
           flexDirection: "row",
           marginVertical: 10,
-          marginHorizontal: 20,
-          backgroundColor: item.published === true ? COLORS.white: COLORS.ExtraDivinder,
+          marginHorizontal: "5%",
+          backgroundColor:
+            item.published === true ? COLORS.white : COLORS.ExtraDivinder,
           borderRadius: 8,
           shadowColor: "black",
           shadowOffset: { width: 0, height: 0 },
@@ -79,216 +80,215 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               display: "flex",
             }}
           >
-          {item.published === true ? 
-            <TouchableOpacity
-              onPress={() => {
-                // bottomSheetAttach(item);
-                navigation.navigate("MainDetailRepo");
-                getDetailRepo(item.id);
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: FONTWEIGHT.bold,
-                  marginBottom: 10,
-                  width: 300,
+            {item.published === true ? (
+              <TouchableOpacity
+                onPress={() => {
+                  // bottomSheetAttach(item);
+                  navigation.navigate("MainDetailRepo");
+                  getDetailRepo(item.id);
                 }}
               >
-                {item.title}
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontWeight: FONTWEIGHT.bold,
+                    marginBottom: 10,
+                    width: 300,
+                  }}
+                >
+                  {item.title}
+                </Text>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Jumlah File
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {item.attachments.length}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: 100,
+                    }}
+                  >
+                    Jumlah File
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {item.attachments.length}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                  marginVertical: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
+                    marginVertical: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View>
                 <Text
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
+                    fontSize: 13,
+                    fontWeight: FONTWEIGHT.bold,
+                    marginBottom: 10,
+                    width: 300,
                   }}
                 >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
+                  {item.title}
                 </Text>
-              </View>
-            </TouchableOpacity>
-          :
-          <View
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: FONTWEIGHT.bold,
-                  marginBottom: 10,
-                  width: 300,
-                }}
-              >
-                {item.title}
-              </Text>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Jumlah File
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {item.attachments.length}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: 100,
+                    }}
+                  >
+                    Jumlah File
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {item.attachments.length}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                  marginVertical: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
+                    marginVertical: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
               </View>
-            </View>
-          }
+            )}
             {/* <View
               style={{
                 justifyContent: "center",
@@ -402,21 +402,20 @@ export const Dokumen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getDocument({ token: token, page: page, type: type.key }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getDocument({ token: token, page: page, type: type.key }));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page, type]);
-
 
   return (
     <GestureHandlerRootView>
@@ -456,8 +455,14 @@ export const Dokumen = () => {
               </Text>
             </View>
           </View>
-          <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
-            <Search placeholder={"Cari"} onSearch={filter} />
+          <View
+            style={{ width: "90%", marginHorizontal: "5%", marginVertical: 20 }}
+          >
+            <Search
+              placeholder={"Cari"}
+              onSearch={filter}
+              iconColor={COLORS.primary}
+            />
             <View style={{ marginTop: 20 }}>
               <Dropdown
                 data={dropdownFilter}

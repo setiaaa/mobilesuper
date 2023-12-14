@@ -62,7 +62,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
         width: "90%",
         flex: 1,
         marginTop: 10,
-        marginHorizontal: 20,
+        marginHorizontal: "5%",
         padding: 20,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
@@ -94,14 +94,19 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
             color={isSelected === true ? COLORS.lighter : null}
           />
         ) : null}
-        <View style={{ flexDirection: "column", width:(variant === "inprogress" ? "90%" : "100%"),}}>
+        <View
+          style={{
+            flexDirection: "column",
+            width: variant === "inprogress" ? "90%" : "100%",
+          }}
+        >
           <Text
             style={{
               fontSize: 16,
               width: 300,
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
-              width:"100%",
+              width: "100%",
             }}
           >
             {item?.subject}
@@ -122,20 +127,22 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 textAlign: "justify",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
-                width:"45%",
+                width: "45%",
               }}
             >
               Penerima
             </Text>
             {item?.receivers[0]?.display_title !== undefined ? (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%"}}>
-                : {item?.receivers[0]?.officer?.nama !== undefined
+              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%" }}>
+                :{" "}
+                {item?.receivers[0]?.officer?.nama !== undefined
                   ? item?.receivers[0]?.officer?.nama
                   : null}
               </Text>
             ) : (
               <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%" }}>
-                : {item?.receivers[0]?.nama !== undefined
+                :{" "}
+                {item?.receivers[0]?.nama !== undefined
                   ? item?.receivers[0]?.nama
                   : "-"}
               </Text>
@@ -159,7 +166,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 textAlign: "auto",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
-                width:"45%"
+                width: "45%",
               }}
             >
               Penandatangan
@@ -170,10 +177,10 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
                 width: 200,
                 textAlign: "auto",
                 fontWeight: FONTWEIGHT.normal,
-                width:"55%"
+                width: "55%",
               }}
             >
-              : 
+              :
               {item?.approvers[1]?.officer !== undefined
                 ? item?.approvers[1]?.officer?.nama
                 : item?.approvers[1]?.nama}
@@ -404,8 +411,14 @@ export const Bankom = () => {
               ) : null}
             </View>
             <View style={{ flexDirection: "row" }}>
-              <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-                <Search placeholder={"Cari"} onSearch={filter} />
+              <View
+                style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}
+              >
+                <Search
+                  placeholder={"Cari"}
+                  onSearch={filter}
+                  iconColor={COLORS.primary}
+                />
               </View>
             </View>
             {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ backgroundColor: "yellow", }}> */}

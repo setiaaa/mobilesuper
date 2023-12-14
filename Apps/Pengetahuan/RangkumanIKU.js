@@ -64,7 +64,6 @@ const ListDaftarPegawai = ({ item, token }) => {
           backgroundColor: COLORS.white,
           borderRadius: 10,
           padding: 20,
-          marginHorizontal: 17,
           gap: 5,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -466,7 +465,8 @@ export const RangkumanIKU = () => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          marginHorizontal: 20,
+          marginHorizontal: "5%",
+          width: "90%",
           marginVertical: 20,
           gap: 10,
         }}
@@ -535,7 +535,13 @@ export const RangkumanIKU = () => {
 
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
-          <View style={{ height: "85%", paddingHorizontal: 16 }}>
+          <View
+            style={{
+              height: "85%",
+              paddingHorizontal: "5%",
+              width: "100%",
+            }}
+          >
             <WebView
               originWhitelist={["*"]}
               source={{
@@ -554,7 +560,7 @@ export const RangkumanIKU = () => {
               style={{
                 flexDirection: "column",
                 gap: 5,
-                paddingHorizontal: 17,
+                paddingHorizontal: "5%",
                 width: "100%",
               }}
             >
@@ -602,11 +608,11 @@ export const RangkumanIKU = () => {
                   <View style={{ flex: 1 }}>
                     <View
                       style={{
-                        marginHorizontal: 20,
+                        marginHorizontal: "5%",
                         marginTop: 10,
                         flexDirection: "row",
                         justifyContent: "space-between",
-                        padding: 14,
+                        paddingVertical: 14,
                       }}
                     >
                       <Text
@@ -633,12 +639,13 @@ export const RangkumanIKU = () => {
                     <View
                       style={{
                         flexDirection: "row",
-                        justifyContent: "center",
-                        gap: 26,
+                        justifyContent: "space-between",
+                        // gap: 26,
+                        marginHorizontal: "5%",
                         paddingBottom: 15,
                       }}
                     >
-                      <View style={{ width: "40%" }}>
+                      <View style={{ width: "47%" }}>
                         {savedYear.key === "" ? (
                           <Dropdown
                             placeHolder={"Pilih Tahun"}
@@ -668,7 +675,7 @@ export const RangkumanIKU = () => {
                         )}
                       </View>
 
-                      <View style={{ width: "40%" }}>
+                      <View style={{ width: "47%" }}>
                         {savedQuarter.key === "" ? (
                           <Dropdown
                             placeHolder={"Pilih Triwulan"}
@@ -699,7 +706,7 @@ export const RangkumanIKU = () => {
                       </View>
                     </View>
 
-                    <View style={{ width: "94%", paddingLeft: 25 }}>
+                    <View style={{ marginHorizontal: "5%" }}>
                       {savedUnitKerja.key === "" ? (
                         <Dropdown
                           placeHolder={"Pilih Unit Kerja"}
@@ -748,7 +755,7 @@ export const RangkumanIKU = () => {
                           // marginTop: ,
                           borderRadius: 8,
                           alignItems: "center",
-                          marginHorizontal: 20,
+                          marginHorizontal: "5%",
                           justifyContent: "center",
                         }}
                         onPress={() => {
@@ -852,7 +859,7 @@ export const RangkumanIKU = () => {
 
             <View
               style={{
-                marginHorizontal: 20,
+                marginHorizontal: "5%",
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -897,7 +904,9 @@ export const RangkumanIKU = () => {
               </View>
             </View>
 
-            <View style={{ paddingHorizontal: 20, marginVertical: 10, gap: 2 }}>
+            <View
+              style={{ paddingHorizontal: "5%", marginVertical: 10, gap: 2 }}
+            >
               <Text
                 style={{ fontSize: 13, fontWeight: 500, color: COLORS.grey }}
               >
@@ -925,7 +934,7 @@ export const RangkumanIKU = () => {
                       : pegawai?.lists
                   }
                   renderItem={({ item }) => (
-                    <View key={item.id} style={{ marginBottom: 10 }}>
+                    <View key={item.id} style={{ marginVertical: 10 }}>
                       <ListDaftarPegawai item={item} token={token} />
                     </View>
                   )}
@@ -954,7 +963,10 @@ export const RangkumanIKU = () => {
                       onRefresh={onRefresh}
                     />
                   }
-                  style={{ height: 250 }}
+                  style={{
+                    height: 250,
+                    paddingHorizontal: "5%",
+                  }}
                 />
 
                 {/* {pegawai.lists.length !== 0

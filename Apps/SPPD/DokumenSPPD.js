@@ -114,8 +114,14 @@ export const DokumenSPPD = () => {
           </Text>
         </View>
       </View>
-      <View style={{ padding: 20 }}>
-        <Search placeholder={"Cari"} onSearch={filter} />
+      <View style={{ paddingVertical: 20, marginHorizontal: "5%" }}>
+        <View>
+          <Search
+            placeholder={"Cari"}
+            onSearch={filter}
+            iconColor={COLORS.primary}
+          />
+        </View>
         <FlatList
           data={filterData}
           renderItem={({ item }) => (

@@ -629,7 +629,7 @@ export const DetailPenilaian = () => {
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 8,
-              marginHorizontal: 20,
+              marginHorizontal: "5%",
               marginTop: 10,
             }}
             onPress={() => {
@@ -654,7 +654,7 @@ export const DetailPenilaian = () => {
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 8,
-              marginHorizontal: 20,
+              marginHorizontal: "5%",
               marginTop: 10,
             }}
             onPress={() => {
@@ -698,7 +698,7 @@ export const DetailPenilaian = () => {
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 8,
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
             marginTop: 10,
             backgroundColor: COLORS.infoDanger,
             borderColor: COLORS.infoDanger,
@@ -821,7 +821,7 @@ export const DetailPenilaian = () => {
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 8,
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
             marginVertical: 10,
           }}
           onPress={() => {

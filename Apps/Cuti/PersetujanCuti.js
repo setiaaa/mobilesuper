@@ -169,8 +169,14 @@ export const PersetujanCuti = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ padding: PADDING.Page }}>
-          <View style={{ flexDirection: "row", gap: 10 }}>
+        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <View style={{ width: "85%" }}>
               <Search
                 placeholder={"Cari"}

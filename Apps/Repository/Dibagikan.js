@@ -48,7 +48,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           display: "flex",
           flexDirection: "row",
           marginVertical: 10,
-          marginHorizontal: 20,
+          marginHorizontal: "5%",
           backgroundColor: "white",
           borderRadius: 8,
           shadowColor: "black",
@@ -261,25 +261,26 @@ export const Dibagikan = () => {
       }
     }
   };
-  
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getDocumentDibagikan({ token: token, page: page, general: general }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(
+          getDocumentDibagikan({ token: token, page: page, general: general })
+        );
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
-  
 
   console.log(load);
 
@@ -323,9 +324,12 @@ export const Dibagikan = () => {
             </View>
           </View>
 
-          <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
+          <View
+            style={{ width: "90%", marginHorizontal: "5%", marginVertical: 20 }}
+          >
             <Search
               placeholder={"Cari"}
+              iconColor={COLORS.primary}
               // onSearch={setGeneral}
             />
           </View>

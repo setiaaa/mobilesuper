@@ -29,7 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAcara, setAgenda } from "../../store/GrupKalender";
 import { setKategori } from "../../store/GrupKalender";
 import { setSubKategori } from "../../store/GrupKalender";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { getTokenValue } from "../../service/session";
 import {
   getDetailGrup,
@@ -243,7 +243,7 @@ export const GrupKalender = () => {
                 zIndex: 1,
               }}
             >
-              <View style={{ width: "90%", marginLeft: 20 }}>
+              <View style={{ width: "90%", marginHorizontal: "5%" }}>
                 <TouchableOpacity
                   style={{
                     backgroundColor: "white",
@@ -275,7 +275,13 @@ export const GrupKalender = () => {
                   )}
                 >
                   <BottomSheetView onLayout={handleContentLayout}>
-                    <View style={{ margin:20, flexDirection:"row", justifyContent:"space-between" }}>
+                    <View
+                      style={{
+                        margin: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       <Text
                         style={{
                           fontSize: FONTSIZE.H2,
@@ -318,8 +324,7 @@ export const GrupKalender = () => {
                               gap: 10,
                               alignItems: "center",
                               justifyContent: "space-between",
-                              marginBottom: 20
-                              
+                              marginBottom: 20,
                             }}
                           >
                             <TouchableOpacity
@@ -599,7 +604,7 @@ export const GrupKalender = () => {
               <View
                 style={{
                   width: "90%",
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
                   backgroundColor: COLORS.white,
                   padding: 10,
                   borderRadius: 8,
@@ -729,8 +734,7 @@ export const GrupKalender = () => {
                   </>
                 )}
 
-                <View>
-                </View>
+                <View></View>
 
                 {/* <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', flex: 1, marginRight: 20 }}>

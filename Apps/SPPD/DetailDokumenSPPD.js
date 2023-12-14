@@ -226,7 +226,7 @@ export const DetailDokumenSPPD = ({ route }) => {
         </View>
       </View>
 
-      <View style={{ padding: 20 }}>
+      <View style={{ paddingVertical: 20, marginHorizontal: "5%" }}>
         <ScrollView style={{ height: "90%" }}>
           <View
             style={{

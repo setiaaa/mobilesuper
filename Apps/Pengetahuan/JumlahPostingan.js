@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +19,7 @@ import {
   getMyPostPoint,
   getMyPostView,
 } from "../../service/api";
+import { Loading } from "../../components/Loading";
 
 export const JumlahPostingan = () => {
   const navigation = useNavigation();
@@ -65,13 +66,17 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          padding: 5
+          padding: 5,
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+        style={{
+          flexDirection: "row",
+          marginTop: 10,
+          justifyContent: "center",
+        }}
       >
         <View
           style={{
@@ -149,13 +154,17 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          padding: 5
+          padding: 5,
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+        style={{
+          flexDirection: "row",
+          marginTop: 10,
+          justifyContent: "center",
+        }}
       >
         <View
           style={{
@@ -233,13 +242,17 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          padding: 5
+          padding: 5,
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+        style={{
+          flexDirection: "row",
+          marginTop: 10,
+          justifyContent: "center",
+        }}
       >
         <View
           style={{
@@ -317,13 +330,17 @@ export const JumlahPostingan = () => {
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
-          padding: 5
+          padding: 5,
         }}
       >
         JUMLAH
       </Text>
       <View
-        style={{ flexDirection: "row", marginTop: 10, justifyContent: "center" }}
+        style={{
+          flexDirection: "row",
+          marginTop: 10,
+          justifyContent: "center",
+        }}
       >
         <View
           style={{
@@ -515,7 +532,7 @@ export const JumlahPostingan = () => {
   //   ]);
 
   return (
-    < >
+    <>
       <View
         style={{
           flexDirection: "row",
@@ -536,7 +553,7 @@ export const JumlahPostingan = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.navigate("Home")}>
+          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -588,9 +605,9 @@ export const JumlahPostingan = () => {
             </Text>
           </View>
           {Object.keys(postinganSayaJumlah.dilihat).length !== 0 &&
-            Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
-            Object.keys(postinganSayaJumlah.draft).length !== 0 &&
-            Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
+          Object.keys(postinganSayaJumlah.disukai).length !== 0 &&
+          Object.keys(postinganSayaJumlah.draft).length !== 0 &&
+          Object.keys(postinganSayaJumlah.nilai).length !== 0 ? (
             <TabView
               navigationState={{ index, routes }}
               renderScene={renderScene}
@@ -608,6 +625,7 @@ export const JumlahPostingan = () => {
               }}
             >
               <Text>Loading...</Text>
+              <Loading />
             </View>
           )}
         </View>
@@ -737,7 +755,6 @@ export const JumlahPostingan = () => {
           </View>
         </View>
       </View>
-    </ >
+    </>
   );
 };
-

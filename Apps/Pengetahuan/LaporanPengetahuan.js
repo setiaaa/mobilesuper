@@ -257,7 +257,8 @@ export const LaporanPengetahuan = () => {
             flexDirection: "row",
             justifyContent: "space-between",
             marginVertical: 20,
-            marginHorizontal: 20,
+            width: "90%",
+            marginHorizontal: "5%",
           }}
         >
           <View style={styles.dropdown}>
@@ -284,9 +285,9 @@ export const LaporanPengetahuan = () => {
         </View>
         <View
           style={{
+            width: "90%",
             backgroundColor: COLORS.white,
-            marginHorizontal: 20,
-            marginStart: 20,
+            marginLeft: "5%",
             padding: 20,
             borderRadius: 16,
             //shadow ios
@@ -427,8 +428,9 @@ export const LaporanPengetahuan = () => {
         </View>
         <View
           style={{
+            width: "90%",
             flexDirection: "row",
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
             marginVertical: 20,
             justifyContent: "space-between",
           }}
@@ -606,176 +608,187 @@ export const LaporanPengetahuan = () => {
           <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
             Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
-          {Object.keys(summary.graph).length !== 0 &&
-          Object.keys(summary.total_post).length !== 0 &&
-          Object.keys(summary.bad_user).length !== 0 ? (
-            <StackedBarChart
-              data={{
-                labels: [
-                  graph?.month_list[0],
-                  graph?.month_list[1],
-                  graph?.month_list[2],
-                  graph?.month_list[3],
-                  graph?.month_list[4],
-                  graph?.month_list[5],
-                  graph?.month_list[6],
-                  graph?.month_list[7],
-                  graph?.month_list[8],
-                  graph?.month_list[9],
-                  graph?.month_list[10],
-                  graph?.month_list[11],
-                ],
-                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
-                data: [
-                  [
-                    graph?.article_unreviewed_count[0],
-                    graph?.article_unreviewed_count[0] +
-                      graph?.article_reviewed_count[0],
+          <View
+            style={
+              {
+                // backgroundColor: "brown",
+                // justifyContent: "center",
+                // alignItems: "center",
+              }
+            }
+          >
+            {Object.keys(summary.graph).length !== 0 &&
+            Object.keys(summary.total_post).length !== 0 &&
+            Object.keys(summary.bad_user).length !== 0 ? (
+              <StackedBarChart
+                data={{
+                  labels: [
+                    graph?.month_list[0],
+                    graph?.month_list[1],
+                    graph?.month_list[2],
+                    graph?.month_list[3],
+                    graph?.month_list[4],
+                    graph?.month_list[5],
+                    graph?.month_list[6],
+                    graph?.month_list[7],
+                    graph?.month_list[8],
+                    graph?.month_list[9],
+                    graph?.month_list[10],
+                    graph?.month_list[11],
                   ],
-                  [
-                    graph?.article_unreviewed_count[1],
-                    graph?.article_unreviewed_count[1] +
-                      graph?.article_reviewed_count[1],
+                  legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                  data: [
+                    [
+                      graph?.article_unreviewed_count[0],
+                      graph?.article_unreviewed_count[0] +
+                        graph?.article_reviewed_count[0],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[1],
+                      graph?.article_unreviewed_count[1] +
+                        graph?.article_reviewed_count[1],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[2],
+                      graph?.article_unreviewed_count[2] +
+                        graph?.article_reviewed_count[2],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[3],
+                      graph?.article_unreviewed_count[3] +
+                        graph?.article_reviewed_count[3],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[4],
+                      graph?.article_unreviewed_count[4] +
+                        graph?.article_reviewed_count[4],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[5],
+                      graph?.article_unreviewed_count[5] +
+                        graph?.article_reviewed_count[5],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[6],
+                      graph?.article_unreviewed_count[6] +
+                        graph?.article_reviewed_count[6],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[7],
+                      graph?.article_unreviewed_count[7] +
+                        graph?.article_reviewed_count[7],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[8],
+                      graph?.article_unreviewed_count[8] +
+                        graph?.article_reviewed_count[8],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[9],
+                      graph?.article_unreviewed_count[9] +
+                        graph?.article_reviewed_count[9],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[10],
+                      graph?.article_unreviewed_count[10] +
+                        graph?.article_reviewed_count[10],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[11],
+                      graph?.article_unreviewed_count[11] +
+                        graph?.article_reviewed_count[11],
+                    ],
                   ],
-                  [
-                    graph?.article_unreviewed_count[2],
-                    graph?.article_unreviewed_count[2] +
-                      graph?.article_reviewed_count[2],
+                  barColors: [COLORS.primary, COLORS.warning],
+                }}
+                hideLegend
+                yAxisLabel=""
+                yAxisSuffix=""
+                yAxisInterval={2}
+                width={340}
+                // width={Dimensions.get("window").width}
+                height={350}
+                chartConfig={{
+                  backgroundGradientFrom: "#F0F0F0",
+                  backgroundGradientFromOpacity: 0,
+                  backgroundGradientTo: COLORS.white,
+                  backgroundGradientToOpacity: 1,
+                  color: () => "black",
+                  barPercentage: 0.2,
+                  propsForBackgroundLines: {
+                    x1: 60,
+                  },
+                  propsForVerticalLabels: {
+                    rotation: 90,
+                    // rotate: -90,
+                    // letterSpacing: 3,
+                    dy: 10,
+                    // dx: 20,
+                  },
+                }}
+                withHorizontalLabels={false}
+                style={{ marginHorizontal: -55 }}
+              />
+            ) : (
+              <StackedBarChart
+                data={{
+                  labels: [
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
                   ],
-                  [
-                    graph?.article_unreviewed_count[3],
-                    graph?.article_unreviewed_count[3] +
-                      graph?.article_reviewed_count[3],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[4],
-                    graph?.article_unreviewed_count[4] +
-                      graph?.article_reviewed_count[4],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[5],
-                    graph?.article_unreviewed_count[5] +
-                      graph?.article_reviewed_count[5],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[6],
-                    graph?.article_unreviewed_count[6] +
-                      graph?.article_reviewed_count[6],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[7],
-                    graph?.article_unreviewed_count[7] +
-                      graph?.article_reviewed_count[7],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[8],
-                    graph?.article_unreviewed_count[8] +
-                      graph?.article_reviewed_count[8],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[9],
-                    graph?.article_unreviewed_count[9] +
-                      graph?.article_reviewed_count[9],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[10],
-                    graph?.article_unreviewed_count[10] +
-                      graph?.article_reviewed_count[10],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[11],
-                    graph?.article_unreviewed_count[11] +
-                      graph?.article_reviewed_count[11],
-                  ],
-                ],
-                barColors: [COLORS.primary, COLORS.warning],
-              }}
-              hideLegend
-              yAxisLabel=""
-              yAxisSuffix=""
-              yAxisInterval={2}
-              width={340}
-              // width={Dimensions.get("window").width}
-              height={350}
-              chartConfig={{
-                backgroundGradientFrom: "#F0F0F0",
-                backgroundGradientFromOpacity: 0,
-                backgroundGradientTo: COLORS.white,
-                backgroundGradientToOpacity: 1,
-                color: () => "black",
-                barPercentage: 0.2,
-                propsForBackgroundLines: {
-                  x1: 60,
-                },
-                propsForVerticalLabels: {
-                  rotation: 90,
-                  // rotate: -90,
-                  // letterSpacing: 3,
-                  dy: 10,
-                  // dx: 20,
-                },
-              }}
-              withHorizontalLabels={false}
-              style={{ marginHorizontal: -55 }}
-            />
-          ) : (
-            <StackedBarChart
-              data={{
-                labels: [
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                ],
-                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
-                data: [],
-                barColors: [COLORS.primary, COLORS.warning],
-              }}
-              hideLegend
-              yAxisLabel=""
-              yAxisSuffix=""
-              yAxisInterval={2}
-              width={380}
-              // width={Dimensions.get("window").width}
-              height={350}
-              chartConfig={{
-                backgroundGradientFrom: "#F0F0F0",
-                backgroundGradientFromOpacity: 0,
-                backgroundGradientTo: COLORS.white,
-                backgroundGradientToOpacity: 1,
-                color: () => "black",
-                barPercentage: 0.2,
-                propsForBackgroundLines: {
-                  x1: 60,
-                },
-                propsForVerticalLabels: {
-                  rotation: 90,
-                  // rotate: -90,
-                  // letterSpacing: 3,
-                  dy: 10,
-                  // dx: 20,
-                },
-              }}
-              withHorizontalLabels={false}
-              style={{ marginHorizontal: -55 }}
-            />
-          )}
+                  legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                  data: [],
+                  barColors: [COLORS.primary, COLORS.warning],
+                }}
+                hideLegend
+                yAxisLabel=""
+                yAxisSuffix=""
+                yAxisInterval={2}
+                width={380}
+                // width={Dimensions.get("window").width}
+                height={350}
+                chartConfig={{
+                  backgroundGradientFrom: "#F0F0F0",
+                  backgroundGradientFromOpacity: 0,
+                  backgroundGradientTo: COLORS.white,
+                  backgroundGradientToOpacity: 1,
+                  color: () => "black",
+                  barPercentage: 0.2,
+                  propsForBackgroundLines: {
+                    x1: 60,
+                  },
+                  propsForVerticalLabels: {
+                    rotation: 90,
+                    // rotate: -90,
+                    // letterSpacing: 3,
+                    dy: 10,
+                    // dx: 20,
+                  },
+                }}
+                withHorizontalLabels={false}
+                style={{ marginHorizontal: -55 }}
+              />
+            )}
+          </View>
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+              alignItems: "center",
+              justifyContent: "space-evenly",
               marginHorizontal: 10,
             }}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View
                 style={{
                   width: 12,
@@ -788,7 +801,7 @@ export const LaporanPengetahuan = () => {
                 Posting Masuk
               </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View
                 style={{
                   width: 12,
@@ -921,13 +934,20 @@ export const LaporanPengetahuan = () => {
           <View
             style={{
               backgroundColor: COLORS.white,
+              // backgroundColor: "brown",
               borderRadius: 16,
               padding: 20,
               borderWidth: 1,
               borderColor: COLORS.grey,
             }}
           >
-            <View style={{ flexDirection: "row", gap: 16 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 16,
+                justifyContent: "center",
+              }}
+            >
               <View style={{ flexDirection: "column" }}>
                 <View style={{ marginBottom: 20, alignItems: "flex-start" }}>
                   <View
@@ -1177,7 +1197,9 @@ export const LaporanPengetahuan = () => {
           <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
             {"*) Yang belum dinilai :"}
           </Text>
-          <View style={{ flexDirection: "row", gap: 50 }}>
+          <View
+            style={{ flexDirection: "row", gap: 50, justifyContent: "center" }}
+          >
             <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
               <View
                 style={{

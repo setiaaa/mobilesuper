@@ -36,7 +36,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
     dispatch(getDetailDigisign(params));
   };
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
-  console.log(item)
+  console.log(item);
   return (
     <View
       key={item.id}
@@ -46,7 +46,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
         width: "90%",
         flex: 1,
         marginTop: 10,
-        marginHorizontal: 20,
+        marginHorizontal: "5%",
         padding: 20,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
@@ -71,13 +71,13 @@ const ListDokumenLain = ({ item, variant, token }) => {
             color={isSelected === true ? COLORS.lighter : null}
           />
         ) : null} */}
-        <View style={{ flexDirection: "column",width:"100%" }}>
+        <View style={{ flexDirection: "column", width: "100%" }}>
           <Text
             style={{
               fontSize: 13,
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
-              width:"100%"
+              width: "100%",
             }}
           >
             {item?.subject}
@@ -87,10 +87,10 @@ const ListDokumenLain = ({ item, variant, token }) => {
               backgroundColor: COLORS.lighter,
               height: 1,
               marginVertical: 5,
-              width:"100%"
+              width: "100%",
             }}
           />
-          <View style={{ gap: 5, width:"100%" }}>
+          <View style={{ gap: 5, width: "100%" }}>
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
@@ -99,32 +99,40 @@ const ListDokumenLain = ({ item, variant, token }) => {
                   textAlign: "auto",
                   paddingRight: 12,
                   fontWeight: FONTWEIGHT.normal,
-                  width:"45%"
+                  width: "45%",
                 }}
               >
                 Penerima
               </Text>
-                {item?.composer?.display_title !== undefined ? (
-                  <Text 
-                    style={{ 
-                      fontWeight: FONTWEIGHT.normal, 
-                      width: "55%", 
-                      textAlign:"auto", 
-                      fontWeight:FONTWEIGHT.normal,
-                    }}>
-                    : {item?.composer?.officer?.nama !== undefined ? item?.receivers[0]?.officer?.nama : "-"}
-                  </Text>
-                ) : 
-                  <Text 
-                    style={{ 
-                      fontWeight: FONTWEIGHT.normal, 
-                      width: "55%", 
-                      textAlign:"auto", 
-                      fontWeight:FONTWEIGHT.normal,  
-                    }}>
-                    : {item?.composer?.nama !== undefined ? item?.composer?.nama : "-"}
-                  </Text>
-                }
+              {item?.composer?.display_title !== undefined ? (
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.normal,
+                    width: "55%",
+                    textAlign: "auto",
+                    fontWeight: FONTWEIGHT.normal,
+                  }}
+                >
+                  :{" "}
+                  {item?.composer?.officer?.nama !== undefined
+                    ? item?.receivers[0]?.officer?.nama
+                    : "-"}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.normal,
+                    width: "55%",
+                    textAlign: "auto",
+                    fontWeight: FONTWEIGHT.normal,
+                  }}
+                >
+                  :{" "}
+                  {item?.composer?.nama !== undefined
+                    ? item?.composer?.nama
+                    : "-"}
+                </Text>
+              )}
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text
@@ -134,14 +142,17 @@ const ListDokumenLain = ({ item, variant, token }) => {
                   textAlign: "auto",
                   paddingRight: 12,
                   fontWeight: FONTWEIGHT.normal,
-                  width:"45%"
+                  width: "45%",
                 }}
               >
                 Penandatangan
               </Text>
               <Text>: </Text>
-              {item?.approvers.slice(1).map(data => (
-                <Image source={{ uri: data.avatar_url}} style={{ width: 20, height: 20, borderRadius: 50 }}/>
+              {item?.approvers.slice(1).map((data) => (
+                <Image
+                  source={{ uri: data.avatar_url }}
+                  style={{ width: 20, height: 20, borderRadius: 50 }}
+                />
               ))}
             </View>
           </View>
@@ -292,7 +303,7 @@ export const DokumenLain = () => {
           </View>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
+          <View style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}>
             <Search placeholder={"Cari"} onSearch={filter} />
           </View>
         </View>
@@ -462,7 +473,7 @@ export const DokumenLain = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{ height: "69%",}}
+          style={{ height: "69%" }}
         />
 
         {/* <TouchableOpacity onPress={() => {

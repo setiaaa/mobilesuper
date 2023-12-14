@@ -52,11 +52,7 @@ export const Personal = () => {
 
   return (
     <>
-    {loading ? (
-      <Loading />
-    ) : (
-      null
-    )}
+      {loading ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -117,7 +113,7 @@ export const Personal = () => {
       </View>
 
       <ScrollView>
-        <View style={{ padding: 20 }}>
+        <View style={{ paddingVertical: 20, paddingHorizontal: "5%" }}>
           <View
             style={{
               justifyContent: "center",
@@ -485,10 +481,9 @@ export const Personal = () => {
                     color: "#6B7280",
                   }}
                 >
-                  Kota Terakhir Didatangi:{" "}
-                  {dashboard.stats?.city?.last_visited}
+                  Kota Terakhir Didatangi: {dashboard.stats?.city?.last_visited}
                 </Text>
-                  {/* <Text style={{ fontSize: 11, fontWeight: 400, textAlign: "center", width: 250, color: "#6B7280" }}>Pada Tanggal 03 Oktober 2023</Text> */}
+                {/* <Text style={{ fontSize: 11, fontWeight: 400, textAlign: "center", width: 250, color: "#6B7280" }}>Pada Tanggal 03 Oktober 2023</Text> */}
               </View>
             </View>
           </View>

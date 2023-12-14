@@ -164,7 +164,7 @@ export const PersonalCuti = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ padding: PADDING.Page }}>
+          <View style={{ paddingVertical: 20, paddingHorizontal: "5%" }}>
             <View
               style={{
                 justifyContent: "center",
@@ -292,7 +292,7 @@ export const PersonalCuti = () => {
               ) : null}
             </View>
           </View>
-          <View style={{ paddingLeft: 20, gap: 10 }}>
+          <View style={{ paddingHorizontal: "5%", gap: 10 }}>
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>
               Form Pengajuan Cuti
             </Text>
@@ -346,12 +346,18 @@ export const PersonalCuti = () => {
               ListEmptyComponent={() => <ListEmpty />}
             />
           </View>
-          <View style={{ paddingLeft: 20 }}>
+          <View style={{ paddingHorizontal: "5%" }}>
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>
               Status Dokumen Cuti
             </Text>
 
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: "2%",
+              }}
+            >
               <View
                 style={[styles.cardStatus, { backgroundColor: COLORS.grey }]}
               >
@@ -393,7 +399,12 @@ export const PersonalCuti = () => {
               </View>
             </View>
 
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
               <View
                 style={[styles.cardStatus, { backgroundColor: COLORS.success }]}
               >
@@ -433,8 +444,10 @@ export const PersonalCuti = () => {
             </View>
           </View>
 
-          <View style={{ paddingHorizontal: PADDING.Page }}>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
+          <View
+            style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}
+          >
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kuota Cuti</Text>
             <FlatList
               data={kuota.data_kuota_cuti}
               renderItem={({ item }) => (
@@ -661,11 +674,10 @@ export const PersonalCuti = () => {
 
 const styles = StyleSheet.create({
   cardStatus: {
-    width: "44%",
+    width: "49%",
     padding: 15,
     borderRadius: 8,
-    marginHorizontal: 5,
-    margin: 10,
+    marginBottom: "2%",
     backgroundColor: COLORS.white,
     alignItems: "center",
   },

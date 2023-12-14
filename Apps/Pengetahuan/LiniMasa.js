@@ -397,10 +397,10 @@ const CardLiniMasa = ({ item, token }) => {
       style={{
         backgroundColor: "white",
         borderRadius: 16,
-        width: "90%",
+        width: "100%",
         flex: 1,
         marginTop: 20,
-        marginHorizontal: 20,
+        // marginHorizontal: 20,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
@@ -1649,325 +1649,343 @@ export const LiniMasa = () => {
 
         <View
           style={{
-            paddingHorizontal: 20,
-            paddingTop: 20,
-            paddingBottom: 10,
-            rowGap: 5,
             // backgroundColor: "brown",
-            borderBottomColor: COLORS.secondaryLighter,
-            borderBottomWidth: 1,
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
           }}
         >
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              // alignContent: "center",
+              paddingTop: 20,
+              paddingBottom: 10,
+              rowGap: 5,
+              width: "90%",
+              // backgroundColor: "yellow",
             }}
           >
             <View
               style={{
-                width: "85%",
-                marginRight: 10,
-                backgroundColor: COLORS.white,
-                borderRadius: 8,
-              }}
-            >
-              <View style={styles.input}>
-                <Ionicons name="search" size={20} color={COLORS.primary} />
-                <TextInput
-                  placeholder={"Cari..."}
-                  style={{ fontSize: 16, flex: 1 }}
-                  maxLength={30}
-                  value={inputValue}
-                  onChangeText={(text) => setInputValue(text)}
-                  onEndEditing={filterSearch}
-                  clearButtonMode="always"
-                />
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                bottomSheetAttachFilter();
-                dispatch(getDivisionFilter({ token: token }));
+                flexDirection: "row",
+                alignItems: "center",
+                // alignContent: "center",
+                justifyContent: "space-between",
               }}
             >
               <View
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 30,
+                  width: "85%",
+                  // marginRight: 10,
                   backgroundColor: COLORS.white,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderColor: COLORS.secondaryLighter,
-                  // borderWidth: isFiltered ? 1 : 0,
+                  borderRadius: 8,
                 }}
               >
-                <Ionicons name="filter-outline" size={24} />
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          <Portal>
-            <BottomSheetModalProvider>
-              <BottomSheetModal
-                ref={bottomSheetModalFilterRef}
-                snapPoints={animatedSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
-                index={0}
-                style={{ borderRadius: 50 }}
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjust"
-                backdropComponent={({ style }) => (
-                  <View
-                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                <View style={styles.input}>
+                  <Ionicons name="search" size={20} color={COLORS.primary} />
+                  <TextInput
+                    placeholder={"Cari..."}
+                    style={{ fontSize: 16, flex: 1 }}
+                    maxLength={30}
+                    value={inputValue}
+                    onChangeText={(text) => setInputValue(text)}
+                    onEndEditing={filterSearch}
+                    clearButtonMode="always"
                   />
-                )}
+                </View>
+              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  bottomSheetAttachFilter();
+                  dispatch(getDivisionFilter({ token: token }));
+                }}
               >
-                <BottomSheetView onLayout={handleContentLayout}>
-                  <View style={{ marginVertical: 20 }}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 30,
+                    backgroundColor: COLORS.white,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderColor: COLORS.secondaryLighter,
+                    // borderWidth: isFiltered ? 1 : 0,
+                  }}
+                >
+                  <Ionicons name="filter-outline" size={24} />
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <Portal>
+              <BottomSheetModalProvider>
+                <BottomSheetModal
+                  ref={bottomSheetModalFilterRef}
+                  snapPoints={animatedSnapPoints}
+                  handleHeight={animatedHandleHeight}
+                  contentHeight={animatedContentHeight}
+                  index={0}
+                  style={{ borderRadius: 50 }}
+                  keyboardBlurBehavior="restore"
+                  android_keyboardInputMode="adjust"
+                  backdropComponent={({ style }) => (
                     <View
-                      style={{
-                        marginHorizontal: 20,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        padding: 10,
-                        borderBottomWidth: 2,
-                        borderBottomColor: COLORS.grey,
-                      }}
-                    >
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                        Filter Satuan dan Unit Kerja
-                      </Text>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => {
-                          bottomSheetAttachFilterClose();
-                        }}
-                      >
-                        <Ionicons
-                          name="close-outline"
-                          size={24}
-                          color={COLORS.lighter}
-                        />
-                      </TouchableOpacity>
-                    </View>
-
-                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                      <Text
+                      style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                    />
+                  )}
+                >
+                  <BottomSheetView onLayout={handleContentLayout}>
+                    <View style={{ marginVertical: 20 }}>
+                      <View
                         style={{
-                          marginHorizontal: 10,
-                          marginBottom: 10,
-                          fontWeight: FONTWEIGHT.bold,
+                          marginHorizontal: 20,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          padding: 10,
+                          borderBottomWidth: 2,
+                          borderBottomColor: COLORS.grey,
                         }}
                       >
-                        Unit Kerja
-                      </Text>
-                      <Dropdown
-                        search={true}
-                        data={unker()}
-                        placeHolder={"Pilih Unit Kerja"}
-                        backgroundColor={COLORS.white}
-                        selected={filterUnker}
-                        setSelected={setFilterUnker}
-                        borderWidth={1}
-                        borderWidthValue={1}
-                        borderwidthDrop={1}
-                        borderColor={COLORS.ExtraDivinder}
-                        borderColorValue={COLORS.ExtraDivinder}
-                        borderColorDrop={COLORS.ExtraDivinder}
-                      />
-                    </View>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                          Filter Satuan dan Unit Kerja
+                        </Text>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => {
+                            bottomSheetAttachFilterClose();
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
+                        </TouchableOpacity>
+                      </View>
 
-                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                      <Text
-                        style={{
-                          marginHorizontal: 10,
-                          marginBottom: 10,
-                          fontWeight: FONTWEIGHT.bold,
-                        }}
-                      >
-                        Satuan Kerja
-                      </Text>
-                      {filterUnker && filterUnker.key ? (
+                      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                        <Text
+                          style={{
+                            marginHorizontal: 10,
+                            marginBottom: 10,
+                            fontWeight: FONTWEIGHT.bold,
+                          }}
+                        >
+                          Unit Kerja
+                        </Text>
                         <Dropdown
-                          data={satker()}
                           search={true}
-                          placeHolder={"Pilih Satuan Kerja"}
+                          data={unker()}
+                          placeHolder={"Pilih Unit Kerja"}
                           backgroundColor={COLORS.white}
-                          selected={filterSatker}
-                          setSelected={setFilterSatker}
+                          selected={filterUnker}
+                          setSelected={setFilterUnker}
                           borderWidth={1}
                           borderWidthValue={1}
                           borderwidthDrop={1}
                           borderColor={COLORS.ExtraDivinder}
                           borderColorValue={COLORS.ExtraDivinder}
                           borderColorDrop={COLORS.ExtraDivinder}
-                          heightValue={300}
                         />
-                      ) : (
-                        <View
+                      </View>
+
+                      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                        <Text
                           style={{
-                            flexDirection: "row",
                             marginHorizontal: 10,
                             marginBottom: 10,
-                            gap: 5,
+                            fontWeight: FONTWEIGHT.bold,
                           }}
                         >
-                          <Text style={{ color: COLORS.infoDanger }}>*</Text>
-                          <Text style={{ color: COLORS.lighter }}>
-                            Daftar satuan kerja akan muncul setelah memilih unit
-                            kerja
-                          </Text>
-                        </View>
-                      )}
+                          Satuan Kerja
+                        </Text>
+                        {filterUnker && filterUnker.key ? (
+                          <Dropdown
+                            data={satker()}
+                            search={true}
+                            placeHolder={"Pilih Satuan Kerja"}
+                            backgroundColor={COLORS.white}
+                            selected={filterSatker}
+                            setSelected={setFilterSatker}
+                            borderWidth={1}
+                            borderWidthValue={1}
+                            borderwidthDrop={1}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderColorValue={COLORS.ExtraDivinder}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            heightValue={300}
+                          />
+                        ) : (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginHorizontal: 10,
+                              marginBottom: 10,
+                              gap: 5,
+                            }}
+                          >
+                            <Text style={{ color: COLORS.infoDanger }}>*</Text>
+                            <Text style={{ color: COLORS.lighter }}>
+                              Daftar satuan kerja akan muncul setelah memilih
+                              unit kerja
+                            </Text>
+                          </View>
+                        )}
+                      </View>
                     </View>
-                  </View>
-                </BottomSheetView>
-              </BottomSheetModal>
-            </BottomSheetModalProvider>
-          </Portal>
+                  </BottomSheetView>
+                </BottomSheetModal>
+              </BottomSheetModalProvider>
+            </Portal>
 
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              // backgroundColor: "brown",
-            }}
-          >
-            <ScrollView
-              horizontal
+            <View
               style={{
-                // backgroundColor: "black",
-                paddingVertical: 10,
                 flexDirection: "row",
-                width: "85%",
+                alignItems: "center",
+                // backgroundColor: "brown",
               }}
             >
-              <TouchableOpacity
-                style={kegiatan ? styles.badgeActive : styles.badge}
-                onPress={handleKegiatan}
-              >
-                <Text
-                  style={kegiatan ? styles.badgeTextActive : styles.badgeText}
-                >
-                  Kegiatan
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={infografis ? styles.badgeActive : styles.badge}
-                onPress={handleInfografis}
-              >
-                <Text
-                  style={infografis ? styles.badgeTextActive : styles.badgeText}
-                >
-                  Infografis
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={videoJurnal ? styles.badgeActive : styles.badge}
-                onPress={handleVideoJurnal}
-              >
-                <Text
-                  style={
-                    videoJurnal ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Video / Jurnal
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={kepemimpinan ? styles.badgeActive : styles.badge}
-                onPress={handleKepemimpinan}
-              >
-                <Text
-                  style={
-                    kepemimpinan ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Kepemimpinan
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={manajerial ? styles.badgeActive : styles.badge}
-                onPress={handleManajerial}
-              >
-                <Text
-                  style={manajerial ? styles.badgeTextActive : styles.badgeText}
-                >
-                  Manajerial
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={sosialKultural ? styles.badgeActive : styles.badge}
-                onPress={handleSosialKultural}
-              >
-                <Text
-                  style={
-                    sosialKultural ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Sosial Kultural
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={teknisFungsional ? styles.badgeActive : styles.badge}
-                onPress={handleTeknisFungsional}
-              >
-                <Text
-                  style={
-                    teknisFungsional ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Teknis Fungsional
-                </Text>
-              </TouchableOpacity>
-            </ScrollView>
-            <View style={{ width: "15%", alignItems: "center" }}>
-              <TouchableOpacity onPress={clearBadge}>
-                <Ionicons
-                  name="close-outline"
-                  size={24}
-                  color={COLORS.lighter}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <FlatList
-          data={linimasa.lists}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <CardLiniMasa
-                item={item}
-                token={token}
-                // setVisibleModal={setVisibleModal}
-              />
-            </View>
-          )}
-          ListFooterComponent={() =>
-            loading === true ? (
-              <View
+              <ScrollView
+                horizontal
                 style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
+                  // backgroundColor: "black",
+                  paddingVertical: 10,
+                  flexDirection: "row",
+                  width: "85%",
                 }}
               >
-                <ActivityIndicator size="large" color={COLORS.primary} />
+                <TouchableOpacity
+                  style={kegiatan ? styles.badgeActive : styles.badge}
+                  onPress={handleKegiatan}
+                >
+                  <Text
+                    style={kegiatan ? styles.badgeTextActive : styles.badgeText}
+                  >
+                    Kegiatan
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={infografis ? styles.badgeActive : styles.badge}
+                  onPress={handleInfografis}
+                >
+                  <Text
+                    style={
+                      infografis ? styles.badgeTextActive : styles.badgeText
+                    }
+                  >
+                    Infografis
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={videoJurnal ? styles.badgeActive : styles.badge}
+                  onPress={handleVideoJurnal}
+                >
+                  <Text
+                    style={
+                      videoJurnal ? styles.badgeTextActive : styles.badgeText
+                    }
+                  >
+                    Video / Jurnal
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={kepemimpinan ? styles.badgeActive : styles.badge}
+                  onPress={handleKepemimpinan}
+                >
+                  <Text
+                    style={
+                      kepemimpinan ? styles.badgeTextActive : styles.badgeText
+                    }
+                  >
+                    Kepemimpinan
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={manajerial ? styles.badgeActive : styles.badge}
+                  onPress={handleManajerial}
+                >
+                  <Text
+                    style={
+                      manajerial ? styles.badgeTextActive : styles.badgeText
+                    }
+                  >
+                    Manajerial
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={sosialKultural ? styles.badgeActive : styles.badge}
+                  onPress={handleSosialKultural}
+                >
+                  <Text
+                    style={
+                      sosialKultural ? styles.badgeTextActive : styles.badgeText
+                    }
+                  >
+                    Sosial Kultural
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={teknisFungsional ? styles.badgeActive : styles.badge}
+                  onPress={handleTeknisFungsional}
+                >
+                  <Text
+                    style={
+                      teknisFungsional
+                        ? styles.badgeTextActive
+                        : styles.badgeText
+                    }
+                  >
+                    Teknis Fungsional
+                  </Text>
+                </TouchableOpacity>
+              </ScrollView>
+              <View style={{ width: "15%", alignItems: "flex-end" }}>
+                <TouchableOpacity onPress={clearBadge}>
+                  <Ionicons
+                    name="close-outline"
+                    size={24}
+                    color={COLORS.lighter}
+                  />
+                </TouchableOpacity>
               </View>
-            ) : null
-          }
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
+            </View>
+          </View>
+
+          <FlatList
+            data={linimasa.lists}
+            renderItem={({ item }) => (
+              <View key={item.id}>
+                <CardLiniMasa
+                  item={item}
+                  token={token}
+                  // setVisibleModal={setVisibleModal}
+                />
+              </View>
+            )}
+            style={{
+              width: "100%",
+              paddingHorizontal: "5%",
+            }}
+            ListFooterComponent={() =>
+              loading === true ? (
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 24,
+                  }}
+                >
+                  <ActivityIndicator size="large" color={COLORS.primary} />
+                </View>
+              ) : null
+            }
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={() => <ListEmpty />}
+            onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        </View>
       </>
     </>
   );

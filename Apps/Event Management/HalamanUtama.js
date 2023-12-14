@@ -295,7 +295,7 @@ export const HalamanUtama = () => {
             </View>
           </View>
 
-          <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+          <View style={{ marginTop: 20, paddingHorizontal: "5%" }}>
             {variant === "hariini" ? (
               <Search placeholder={"Cari"} onSearch={filterHariIni} />
             ) : (
@@ -307,14 +307,16 @@ export const HalamanUtama = () => {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
+              justifyContent: "space-between",
+              // gap: 10,
               marginTop: 20,
+              width: "90%",
+              marginHorizontal: "5%",
             }}
           >
             <TouchableOpacity
               style={{
-                width: "40%",
+                width: "48%",
                 height: 41,
                 borderWidth: 1,
                 backgroundColor:
@@ -331,7 +333,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "hariini" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3
+                  fontSize: FONTSIZE.H3,
                 }}
               >
                 Agenda Rapat Hari Ini
@@ -340,7 +342,7 @@ export const HalamanUtama = () => {
 
             <TouchableOpacity
               style={{
-                width: "40%",
+                width: "48%",
                 height: 41,
                 borderWidth: 1,
                 backgroundColor:
@@ -357,7 +359,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "progres" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3
+                  fontSize: FONTSIZE.H3,
                 }}
               >
                 Progres Agenda Rapat
@@ -386,7 +388,12 @@ export const HalamanUtama = () => {
           ) : (
             <View>
               {loading ? <Loading /> : null}
-              <View style={{ padding: 25 }}>
+              <View
+                style={{
+                  paddingVertical: 25,
+                  paddingHorizontal: "5%",
+                }}
+              >
                 <View
                   style={{
                     flexDirection: "row",

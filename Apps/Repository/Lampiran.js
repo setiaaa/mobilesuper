@@ -564,7 +564,7 @@ export const Lampiran = () => {
                 marginLeft: 20,
               }}
             >
-              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <TouchableOpacity onPress={() => navigation.navigate("MainRepo")}>
                 <Ionicons
                   name="chevron-back-outline"
                   size={24}
@@ -604,7 +604,10 @@ export const Lampiran = () => {
               </View>
             )}
             scrollEnabled={false}
-            style={{ marginTop: 10 }}
+            style={{
+              marginTop: 10,
+              marginHorizontal: "5%",
+            }}
             columnWrapperStyle={{
               justifyContent: "space-between",
               marginHorizontal: 15,
