@@ -335,13 +335,13 @@ export const RangkumanIKU = () => {
         { headers: { Authorization: token } }
       );
       try {
-        if (Platform.OS === "android") {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveAndroidFile(uri, namafile[namafile.length - 1], fileType);
-        } else {
-          const { uri } = await downloadResumable.downloadAsync();
-          saveIosFile(uri);
-        }
+        // if (Platform.OS === "android") {
+        //   const { uri } = await downloadResumable.downloadAsync();
+        //   saveAndroidFile(uri, namafile[namafile.length - 1], fileType);
+        // } else {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveIosFile(uri);
+        // }
       } catch (e) {
         // setIsLoading(false);
         console.error("download error:", e);
@@ -619,7 +619,7 @@ export const RangkumanIKU = () => {
                       </Text>
                       <TouchableOpacity
                         onPress={() => {
-                          closeBottomSheet();
+                          bottomSheetAttachSelectClose();
                         }}
                       >
                         <Ionicons

@@ -537,8 +537,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         renderItem={renderRow}
         keyExtractor={(row, index) => `row_${index}`}
         columnWrapperStyle={{
-          justifyContent: "space-between",
-          marginHorizontal: 15,
+          marginHorizontal: "5%",
           gap: 5,
         }}
         numColumns={numColumns}
@@ -556,8 +555,8 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   cardApps: {
-    width: 50,
-    height: 50,
+    width: wp(15),
+    height: hp(7),
     borderRadius: 8,
   },
   item: {

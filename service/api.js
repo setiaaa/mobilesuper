@@ -738,7 +738,7 @@ export const getDownloadLampiran = createAsyncThunk(
 
 export const postRating = createAsyncThunk(
   "repository/postRating",
-  async ( data ) => {
+  async (data) => {
     const respon = await axios.put(
       `${repository}${data.id}/rate/`,
       data.payload,
@@ -807,6 +807,13 @@ export const getDetailBerita = createAsyncThunk(
 export const getLinimasa = createAsyncThunk(
   "mp/getLinimasa",
   async ({ token, page, category, competence, unker, satker, search }) => {
+    // console.log(page);
+    // console.log(category);
+    // console.log(competence);
+    // console.log(unker);
+    // console.log(satker);
+    // console.log(search);
+
     const respon = await axios.get(
       `${Linimasa}linimasa/?limit=${page}&category=${category}&competence=${competence}&unker=${unker}&satker=${satker}&type=&search=${search}`,
       {

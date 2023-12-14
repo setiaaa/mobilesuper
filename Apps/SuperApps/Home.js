@@ -62,6 +62,10 @@ import { bannerKegiatan } from "../../components/BannerKegiatan";
 import { BeritaHome } from "../../components/BeritaHome";
 import { GaleriHome } from "../../components/GaleriHome";
 import { Loading } from "../../components/Loading";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -191,7 +195,7 @@ export const Home = () => {
           <View
             style={{
               width: "100%",
-              height: 170,
+              height: hp(25),
               position: "absolute",
               top: 0,
               borderBottomLeftRadius: 14,
@@ -270,7 +274,7 @@ export const Home = () => {
             </View>
           </View>
 
-          <View>
+          <View style={{ alignItems: "center" }}>
             <CardApps handlePressModal={handlePressModal} />
             <Portal>
               <BottomSheetModal
@@ -841,7 +845,7 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: 80 }]}>
+          <View style={[styles.containerr, { marginBottom: "80%" }]}>
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}
