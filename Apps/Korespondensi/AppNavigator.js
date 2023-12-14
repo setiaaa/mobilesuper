@@ -152,6 +152,7 @@ import { Laporan } from "../Task Management/Dashboard/Laporan";
 import { PdfPerisai } from "../DigitalSignature/PdfPerisai";
 import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
 import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
+import { FileViewerRepo } from "../Repository/FileViewerRepo";
 
 const Stack = createNativeStackNavigator();
 
@@ -449,6 +450,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="DetailActivity"
             component={DetailActivity}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="FileViewerRepo"
+            component={FileViewerRepo}
             options={{
               headerShown: false,
             }}

@@ -578,7 +578,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: wp(40),
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -618,7 +618,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: wp(40),
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -685,8 +685,8 @@ export const TambahCutiTahunan = () => {
                               alignItems: "center",
                               justifyContent: "center",
                               width: "90%",
-                              height: hp(45),
                               borderRadius: 10,
+                              height: hp(55),
                             }}
                           >
                             <View style={{ width: "100%", flex: 1 }}>
@@ -731,7 +731,14 @@ export const TambahCutiTahunan = () => {
                                 </Text>
                               </View>
                             </TouchableOpacity> */}
-                              <View style={{ width: "100%", paddingTop: 10 }}>
+                              <View
+                                style={{
+                                  width: "100%",
+                                  paddingTop: 10,
+                                  alignSelf: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
                                 {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
@@ -801,6 +808,35 @@ export const TambahCutiTahunan = () => {
                                   }
                                 }}
                               /> */}
+                                <View
+                                  style={{
+                                    paddingHorizontal: 20,
+                                    paddingVertical: 10,
+                                    alignItems: "flex-end",
+                                  }}
+                                >
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.primary,
+                                      borderRadius: 20,
+                                      marginLeft: 20,
+                                      width: 24,
+                                      height: 24,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <TouchableOpacity
+                                      onPress={() => setModalVisiblePicker("")}
+                                    >
+                                      <Ionicons
+                                        name="close-outline"
+                                        size={24}
+                                        color={COLORS.white}
+                                      />
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
                                 <CalendarPicker
                                   todayBackgroundColor={COLORS.info}
                                   disabledDates={tanggalLibur}
@@ -1023,24 +1059,23 @@ export const TambahCutiTahunan = () => {
                   <Pressable onPress={pickDocument}>
                     <View
                       style={{
-                        borderWidth: 1,
                         width: "100%",
-                        borderRadius: 4,
-                        borderColor: COLORS.ExtraDivinder,
-                        height: 200,
+                        borderRadius: 8,
                         justifyContent: "center",
                         alignItems: "center",
-                        gap: 5,
+                        flexDirection: "row",
+                        gap: 10,
+                        flex: 1,
+                        backgroundColor: COLORS.grey,
+                        padding: 10,
                       }}
                     >
-                      <View style={{ marginBottom: 10 }}>
-                        <Ionicons
-                          name="md-cloud-upload-outline"
-                          size={30}
-                          color={"#66656C"}
-                        />
-                      </View>
-                      <Text style={{ color: "#66656C" }}>
+                      <Ionicons
+                        name="md-cloud-upload-outline"
+                        size={30}
+                        color={COLORS.white}
+                      />
+                      <Text style={{ color: COLORS.white }}>
                         Klik Untuk Unggah
                       </Text>
                     </View>
@@ -1108,103 +1143,51 @@ export const TambahCutiTahunan = () => {
                     </Text>
                   </View>
 
-                  <View
-                    style={{
-                      backgroundColor: COLORS.white,
-                      padding: 20,
-                      borderRadius: 16,
-                    }}
-                  >
-                    <View style={{ gap: 5 }}>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
-                        }}
+                  <View style={{ flexDirection: "row", gap: 5 }}>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.info },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: COLORS.white, textAlign: "center" }}
                       >
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            width: "40%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Penuh
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {form.data_kuota_cuti?.full_kuota}
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
-                        }}
+                        Kuota Penuh
+                      </Text>
+                      <Text style={{ color: COLORS.white }}>
+                        {form.data_kuota_cuti?.full_kuota}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.danger },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: COLORS.white, textAlign: "center" }}
                       >
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            width: "40%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Terpakai
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {form.data_kuota_cuti?.kuota_terpakai}
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
-                        }}
+                        Kuota Terpakai
+                      </Text>
+                      <Text style={{ color: COLORS.white }}>
+                        {form.data_kuota_cuti?.kuota_terpakai}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.success },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: COLORS.white, textAlign: "center" }}
                       >
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            width: "40%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Tersisa
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {form.data_kuota_cuti?.kuota_sisa}
-                        </Text>
-                      </View>
+                        Kuota Sisa
+                      </Text>
+                      <Text style={{ color: COLORS.white }}>
+                        {form.data_kuota_cuti?.kuota_sisa}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -1376,5 +1359,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  cardInfoCuti: {
+    width: wp(35),
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
   },
 });
