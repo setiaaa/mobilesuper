@@ -1257,7 +1257,7 @@ const CardLiniMasa = ({ item, token }) => {
                     maxLength={30}
                     placeholder="Ketik Komentar Disini"
                     ref={inputRef}
-                    style={{ padding: 10 }}
+                    style={{ padding: 10, width:"90%" }}
                     onChangeText={setKomen}
                     value={komen}
                   />

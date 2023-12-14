@@ -1207,7 +1207,7 @@ export const DetailLinimasa = (item) => {
                           </View>
                         ) : null }
                           
-                          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20, alignItems: 'center',}}>
+                          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20, alignItems: 'center'}}>
                             {showMessage && 
                             <View style={{ backgroundColor: COLORS.success, padding: 5, borderRadius: 8}}>
                               <Text style={{color: COLORS.white}}>{message}</Text>
