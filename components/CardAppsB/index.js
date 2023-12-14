@@ -42,6 +42,9 @@ export const CardAppsB = ({ handlePressModal }) => {
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
+
+  const { device } = useSelector((state) => state.apps);
+
   useEffect(() => {
     let tmpMenu = [];
     tmpMenu.push(
@@ -66,7 +69,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/korespondensi-ikon3.png")}
             />
           </View>
@@ -103,7 +109,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/kebijakan-ikon.png")}
             />
           </View>
@@ -142,7 +151,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/pengetahuan-ikon.png")}
             />
           </View>
@@ -183,7 +195,10 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/digital-ikon.png")}
             />
           </View>
@@ -220,7 +235,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/cuti-ikon.png")}
             />
           </View>
@@ -257,7 +275,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/sppd-ikon.png")}
             />
           </View>
@@ -294,7 +315,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/task-ikon.png")}
             />
           </View>
@@ -332,7 +356,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/pegawai-ikon.png")}
             />
           </View>
@@ -374,7 +401,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               ]}
             >
               <Image
-                style={{ width: 28, height: 28 }}
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 28,
+                }}
                 source={require("../../assets/superApp/preparing-ikon.png")}
               />
             </View>
@@ -418,7 +448,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               ]}
             >
               <Image
-                style={{ width: 28, height: 28 }}
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 28,
+                }}
                 source={require("../../assets/superApp/kalender-ikon.png")}
               />
             </View>
@@ -473,7 +506,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               ]}
             >
               <Image
-                style={{ width: 28, height: 28 }}
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 28,
+                }}
                 source={require("../../assets/superApp/agenda-ikon.png")}
               />
             </View>

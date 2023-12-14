@@ -577,7 +577,7 @@ export const MyTask = () => {
             />
           )}
 
-          {list.type === "Task Dari Saya" ? (
+          {/* {list.type === "Task Dari Saya" ? (
             <View style={{ position: "absolute", bottom: 20, right: 20 }}>
               <TouchableOpacity onPress={bottomSheetAdd}>
                 <View
@@ -594,7 +594,7 @@ export const MyTask = () => {
                 </View>
               </TouchableOpacity>
             </View>
-          ) : null}
+          ) : null} */}
 
           <BottomSheetModal
             ref={bottomSheetModalRef}
