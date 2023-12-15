@@ -69,20 +69,20 @@ export const ListBerita = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getBerita({ token, page }));
-            console.log(page, 'page')
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getBerita({ token, page }));
+        console.log(page, "page");
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
 
   return (
@@ -123,7 +123,7 @@ export const ListBerita = () => {
             </Text>
           </View>
         </View>
-        <View style={{ padding: PADDING.Page }}>
+        <View style={{ padding: PADDING.Page, alignItems: "center" }}>
           <Search
             placeholder={"Cari"}
             iconColor={COLORS.primary}

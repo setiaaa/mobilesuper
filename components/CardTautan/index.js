@@ -12,8 +12,10 @@ import { COLORS, FONTSIZE } from "../../config/SuperAppps";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 export const CardTautan = ({ setModalVisible }) => {
+  const { device } = useSelector((state) => state.apps);
   return (
     <View style={styles.card}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -26,7 +28,10 @@ export const CardTautan = ({ setModalVisible }) => {
           >
             <Image
               source={require("../../assets/superApp/BUPBJ.png")}
-              style={{ width: 48, height: 48 }}
+              style={{
+                width: device === "tablet" ? 100 : 48,
+                height: device === "tablet" ? 100 : 48,
+              }}
             />
             <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
           </TouchableOpacity>
@@ -39,7 +44,10 @@ export const CardTautan = ({ setModalVisible }) => {
           >
             <Image
               source={require("../../assets/superApp/lapor.png")}
-              style={{ width: 48, height: 48 }}
+              style={{
+                width: device === "tablet" ? 100 : 48,
+                height: device === "tablet" ? 100 : 48,
+              }}
             />
             <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
               Lapor.go.id
@@ -54,7 +62,10 @@ export const CardTautan = ({ setModalVisible }) => {
           >
             <Image
               source={require("../../assets/superApp/wbs.png")}
-              style={{ width: 48, height: 48 }}
+              style={{
+                width: device === "tablet" ? 100 : 48,
+                height: device === "tablet" ? 100 : 48,
+              }}
             />
             <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
               WBS KKP
@@ -69,7 +80,10 @@ export const CardTautan = ({ setModalVisible }) => {
           >
             <Image
               source={require("../../assets/superApp/sidak.png")}
-              style={{ width: 48, height: 48 }}
+              style={{
+                width: device === "tablet" ? 100 : 48,
+                height: device === "tablet" ? 100 : 48,
+              }}
             />
             <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
               Sidak
@@ -84,32 +98,87 @@ export const CardTautan = ({ setModalVisible }) => {
           >
             <Image
               source={require("../../assets/superApp/JDIH.png")}
-              style={{ width: 48, height: 48 }}
+              style={{
+                width: device === "tablet" ? 100 : 48,
+                height: device === "tablet" ? 100 : 48,
+              }}
             />
             <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
               JDIH
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={{ justifyContent: "center", alignItems: "center" }}
-            onPress={() => setModalVisible(true)}
-          >
-            <Image
-              source={require("../../assets/superApp/white.png")}
-              style={{ width: 48, height: 48 }}
-            />
-            <View style={{ position: "absolute", top: 11, right: 13 }}>
-              <Ionicons
-                size={20}
-                name="ellipsis-horizontal"
-                color={COLORS.grey}
+          {device === "tablet" ? (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL("https://e-monev.bappenas.go.id/fe/");
+                }}
+              >
+                <View>
+                  <Image
+                    source={require("../../assets/superApp/monev.png")}
+                    style={{
+                      width: device === "tablet" ? 100 : 48,
+                      height: device === "tablet" ? 100 : 48,
+                    }}
+                  />
+                </View>
+                <View>
+                  <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+                    Emonev{"\n"} Bapennas
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flex: 1,
+                }}
+                onPress={() => setModalVisible(true)}
+              >
+                <Image
+                  source={require("../../assets/superApp/white.png")}
+                  style={{
+                    width: device === "tablet" ? 100 : 48,
+                    height: device === "tablet" ? 100 : 48,
+                  }}
+                />
+                <View style={{ position: "absolute", top: 20, right: 23 }}>
+                  <Ionicons
+                    size={device === "tablet" ? 50 : 20}
+                    name="ellipsis-horizontal"
+                    color={COLORS.grey}
+                  />
+                </View>
+                <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+                  More
+                </Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <TouchableOpacity
+              style={{ justifyContent: "center", alignItems: "center" }}
+              onPress={() => setModalVisible(true)}
+            >
+              <Image
+                source={require("../../assets/superApp/white.png")}
+                style={{ width: 48, height: 48 }}
               />
-            </View>
-            <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
-              More
-            </Text>
-          </TouchableOpacity>
+              <View style={{ position: "absolute", top: 11, right: 13 }}>
+                <Ionicons
+                  size={20}
+                  name="ellipsis-horizontal"
+                  color={COLORS.grey}
+                />
+              </View>
+              <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+                More
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </View>

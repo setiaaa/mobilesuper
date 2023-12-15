@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, PADDING } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { getDetailBerita, getSatkerNews } from "../../service/api";
@@ -68,24 +68,24 @@ export const ListBeritaSatker = () => {
     }
   }, [search]);
 
-    const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = React.useCallback(() => {
-        try {
-            if (token !== '') {
-                dispatch(getSatkerNews({ token, page }))
-                console.log(page, 'page')
-                console.log('Refresh Berhasil')
-            }
-        } catch (error) {
-            console.log('Refresh gagal:', error)
-        }
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (token !== "") {
+        dispatch(getSatkerNews({ token, page }));
+        console.log(page, "page");
+        console.log("Refresh Berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, [token, page]);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [token, page]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -126,7 +126,7 @@ export const ListBeritaSatker = () => {
             </Text>
           </View>
         </View>
-        <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
+        <View style={{ padding: PADDING.Page, alignItems: "center" }}>
           <Search
             placeholder={"Cari"}
             iconColor={COLORS.primary}
@@ -164,9 +164,9 @@ export const ListBeritaSatker = () => {
           }
           keyExtractor={(item) => item.id}
           onEndReached={loadMore}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                    }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       </View>
     </View>
