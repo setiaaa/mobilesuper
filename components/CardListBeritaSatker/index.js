@@ -39,7 +39,7 @@ export const CardListBeritaSatker = ({
         width: "90%",
         flex: 1,
         marginTop: 30,
-        marginHorizontal: 20,
+        marginHorizontal: "5%",
       }}
     >
       <TouchableOpacity
