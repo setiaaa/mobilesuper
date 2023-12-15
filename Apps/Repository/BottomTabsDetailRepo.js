@@ -9,7 +9,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
     const [tabItemIndex, setTabItemIndex] = useState(1);
 
     return (
-        < >
+        <View>
             <BottomSheetModalProvider>
                 <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
                     <TouchableOpacity
@@ -29,7 +29,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
 
                                 <View style={{
                                     width: '100%',
-                                    height: 3,
+                                    height: 1,
                                     backgroundColor: COLORS.primary,
                                     position: 'absolute',
                                     top: 0,
@@ -145,7 +145,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                     </TouchableOpacity>
                 </View>
             </BottomSheetModalProvider>
-        </ >
+        </View>
     )
 }
 

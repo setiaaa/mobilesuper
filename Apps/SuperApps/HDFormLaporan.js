@@ -1,22 +1,91 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   Pressable,
+  Image,
+  Modal,
+  StyleSheet,
 } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TextInput } from "react-native";
 import { Dropdown } from "../../components/DropDown";
+import { useDispatch, useSelector } from "react-redux";
+import { getParts, postTicket } from "../../service/api";
+import { getTokenValue } from "../../service/session";
+import * as DocumentPicker from "expo-document-picker";
+import { setStatus } from '../../store/HelpDesk'
 
 export const HDFormLaporan = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { parts, status } = useSelector((state) => state.helpDesk);
+  const { profile } = useSelector((state) => state.superApps);
+  const [aplikasi, setAplikasi] = useState("");
+  const [request, setRequest] = useState('');
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    dispatch(getParts());
+  }, []);
+  const DataAplikasi = () => {
+    let app = [];
+    parts.data?.map((item) => {
+      app.push({
+        key: item.id,
+        value: item.name,
+      });
+    });
+    return app;
+  };
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  const handleSubmit = () => {
+    const payload = {
+    requestor:profile.nip,
+    request:request,
+    part:aplikasi.key,
+    evident: document.uri
+    };
+    const data = {
+      token: token,
+      payload: payload,
+    };
+    console.log("datadalemsubmit")
+    console.log(data)
+    dispatch(postTicket(data))
+  };
+
+  const [document, setDocument] = useState([]);
+  const [type, setType] = useState([]);
+  
+  const pickDocument = async () => {
+    let result = await DocumentPicker.getDocumentAsync({});
+    // const file = convertFileToObject(result)
+    let tipe = result.uri.split("/");
+    tipe = tipe[tipe.length - 1];
+    tipe = tipe.split(".");
+    tipe = tipe[tipe.length - 1];
+    setDocument([...document, result]);
+    setType([...type, tipe]);
+
+    const data = {
+      // token: token,
+      result: result,
+    };
+    
+  };
 
   return (
-    <>
+    <ScrollView>
       <View
         style={{
           flexDirection: "row",
@@ -113,8 +182,8 @@ export const HDFormLaporan = () => {
                   maxLength={40}
                   placeholder="Ketikkan Sesuatu"
                   style={{ padding: 10 }}
-                  // onChangeText={setJudul}
-                  // value={Judul}
+                  onChangeText={setRequest}
+                  value={request}
                 />
               </View>
             </View>
@@ -141,12 +210,15 @@ export const HDFormLaporan = () => {
               >
                 <Dropdown
                   placeHolder={"Pilih Aplikasi"}
-                  // borderWidth={1}
-                  // borderwidthDrop={1}
-                  // borderWidthValue={1}
-                  // borderColor={COLORS.ExtraDivinder}
-                  // borderColorDrop={COLORS.ExtraDivinder}
-                  // borderColorValue={COLORS.ExtraDivinder}
+                  data={DataAplikasi()}
+                  setSelected={setAplikasi}
+                  selected={aplikasi}
+                  borderWidth={1}
+                  borderwidthDrop={1}
+                  borderWidthValue={1}
+                  borderColor={COLORS.ExtraDivinder}
+                  borderColorDrop={COLORS.ExtraDivinder}
+                  borderColorValue={COLORS.ExtraDivinder}
                   heightValue={150}
                   search={true}
                 />
@@ -184,7 +256,7 @@ export const HDFormLaporan = () => {
                 </Text>
               </View>
 
-              <Pressable>
+              <Pressable onPress={pickDocument}>
                 <View
                   style={{
                     borderWidth: 1,
@@ -206,6 +278,39 @@ export const HDFormLaporan = () => {
                   <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
                 </View>
               </Pressable>
+              {document < 1 ? null : (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginHorizontal: 20,
+                        marginVertical: 10,
+                        flexWrap: "wrap",
+                        gap: 10,
+                      }}
+                    >
+                      {document?.map((doc, i) => (
+                        <>
+                          {type[i] === "png" ? (
+                            <View
+                              style={{
+                                width: 97,
+                                height: 97,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderWidth: 1,
+                                borderRadius: 8,
+                                borderColor: COLORS.ExtraDivinder,
+                              }}
+                            >
+                              <Image
+                                source={{uri: doc.uri}}
+                              />
+                            </View>
+                          ) : null}
+                        </>
+                      ))}
+                    </View>
+                  )}
             </View>
           </View>
 
@@ -224,6 +329,7 @@ export const HDFormLaporan = () => {
               //shadow android
               elevation: 2,
             }}
+              onPress={() => { handleSubmit() }}
           >
             <View
               style={{ alignItems: "center", flexDirection: "row", gap: 5 }}
@@ -236,8 +342,82 @@ export const HDFormLaporan = () => {
               </Text>
             </View>
           </TouchableOpacity>
+          <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={status === '' ? false : true}
+                    onRequestClose={() => {
+                        dispatch(setStatus(''))
+                    }}
+                >
+                    <TouchableOpacity style={[Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop, styles.backdrop]} />
+                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                        <View style={{ backgroundColor: COLORS.white, alignItems: 'center', justifyContent: 'center', width: 325, height: 350 }}>
+                            <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 5, paddingRight: '80%' }}>
+                                <Ionicons name='close-outline' size={24} />
+                            </TouchableOpacity>
+                            {
+                                status === 'berhasil' ? (
+                                    <>
+                                        <View style={{ marginBottom: 40 }}>
+                                            <Image source={require('../../assets/superApp/alertBerhasil.png')} />
+                                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                                <Text >Berhasil Ditambahkan!</Text>
+                                            </View>
+                                            <TouchableOpacity onPress={() => {
+                                                dispatch(setStatus(''))
+                                                navigation.navigate('HelpDesk')
+                                            }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                                <View style={{ backgroundColor: COLORS.success, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <Text style={{ color: COLORS.white }}>Ok</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </>
+                                ) : (
+                                    <View style={{ marginBottom: 40 }}>
+                                        <Image source={require('../../assets/superApp/alertGagal.png')} />
+                                        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                            <Text >Terjadi Kesalahan!</Text>
+                                        </View>
+                                        <TouchableOpacity onPress={() => dispatch(setStatus(''))} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>
+                                            <View style={{ backgroundColor: COLORS.danger, width: 217, height: 39, borderRadius: 8, justifyContent: 'center', alignItems: 'center', }}>
+                                                <Text style={{ color: COLORS.white }}>Ok</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
+                                )
+                            }
+                        </View>
+                    </View>
+                </Modal>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  Card: {
+      backgroundColor: COLORS.white,
+      width: "90%",
+      marginVertical: 20,
+      marginLeft: 20,
+      borderRadius: 16
+  },
+  iOSBackdrop: {
+      backgroundColor: "#000000",
+      opacity: 0.3
+  },
+  androidBackdrop: {
+      backgroundColor: "#232f34",
+      opacity: 0.32
+  },
+  backdrop: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+  }
+})

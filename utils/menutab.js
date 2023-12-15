@@ -5,7 +5,7 @@ import { Host } from "react-native-portalize";
 import MyTabBar from "../Apps/SuperApps/BottomTabs";
 import { Home } from "../Apps/SuperApps/Home";
 import { Satker } from "../Apps/SuperApps/Satker";
-import { FAQ } from "../Apps/SuperApps/FAQ";
+import { HelpDesk } from "../Apps/SuperApps/HelpDesk";
 import { Profile } from "../Apps/SuperApps/Profile";
 import MyTabBarRepo from "../Apps/Repository/BottomTabsRepo";
 import { Dokumen } from "../Apps/Repository/Dokumen";
@@ -106,8 +106,8 @@ export const BottomTabs = () => {
             options={{ headerShown: false }}
           />
           <Tab.Screen
-            name="FAQ"
-            component={FAQ}
+            name="HelpDesk"
+            component={HelpDesk}
             options={{ headerShown: false }}
           />
           <Tab.Screen

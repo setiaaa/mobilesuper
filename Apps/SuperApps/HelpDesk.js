@@ -1,11 +1,40 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { useDispatch, useSelector } from "react-redux";
+import { getParts, getProfileMe, getTicket } from "../../service/api";
+import { getTokenValue } from "../../service/session";
+import { setTiket } from "../../store/HelpDesk";
 
-export const FAQ = () => {
+export const HelpDesk = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.superApps);
+  const { tiket, parts } = useSelector((state) => state.helpDesk);
+  const [collapse, setCollapse] = useState({
+    toggle: false,
+  });
+  const [token, setToken] = useState("");
+  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+  useEffect(() => {
+    nip = profile?.nip
+    if (token !== "" && nip !== "") {
+      dispatch(getTicket( { nip, token} ));
+    }
+  }, [token]);
+  console.log(tiket.list)
   return (
     <>
       <View
@@ -22,13 +51,12 @@ export const FAQ = () => {
               fontSize: 15,
               fontWeight: 600,
               color: COLORS.white,
-              marginLeft: 40,
             }}
           >
             Help Desk
           </Text>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
@@ -47,7 +75,7 @@ export const FAQ = () => {
             size={24}
             color={COLORS.primary}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <ScrollView
         style={{
@@ -61,7 +89,7 @@ export const FAQ = () => {
             alignItems: "center",
           }}
         >
-          <View
+          {/* <View
             style={{
               backgroundColor: COLORS.white,
               width: "90%",
@@ -90,20 +118,12 @@ export const FAQ = () => {
               BENNART DEM GUNAWAN
             </Text>
             <Text>198505042009122001</Text>
-          </View>
-
-          <View
-            style={{
-              marginTop: "5%",
-              width: "90%",
-            }}
-          >
-            <TouchableOpacity
+          </View> */}
+          <View style={{ padding: PADDING.Page }}>
+            <View
               style={{
-                backgroundColor: COLORS.danger,
-                borderRadius: 8,
+                justifyContent: "center",
                 alignItems: "center",
-                paddingVertical: 16,
                 //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: "#171717",
@@ -111,19 +131,200 @@ export const FAQ = () => {
                 //shadow android
                 elevation: 2,
               }}
-              onPress={() => navigation.navigate("HDFormLaporan")}
             >
+              <Image
+                source={require("../../assets/superApp/Card-Background-Red.png")}
+                style={{
+                  width: "100%",
+                  borderTopLeftRadius: 8,
+                  borderTopRightRadius: 8,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                }}
+              />
               <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+                style={{ alignItems: "center", gap: 10, position: "absolute" }}
               >
-                <Ionicons
-                  name="document-text-outline"
-                  size={24}
-                  color={COLORS.white}
+                <Image
+                  source={{ uri: BASE_URL + profile.avatar }}
+                  style={{
+                    width: 75,
+                    height: 75,
+                    borderRadius: 36,
+                    borderWidth: 2,
+                    borderColor: COLORS.white,
+                  }}
                 />
-                <Text style={{ color: COLORS.white }}>Form Laporan</Text>
+                <Text
+                  style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                >
+                  {profile.nama}
+                </Text>
+                <Text
+                  style={{ fontSize: 13, fontWeight: 400, color: COLORS.white }}
+                >
+                  {profile?.nip}
+                </Text>
               </View>
-            </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                padding: 15,
+                borderBottomRightRadius: 8,
+                borderBottomLeftRadius: 8,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() =>
+                  setCollapse({ toggle: true })
+                }
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      marginRight: "80%",
+                      fontSize: 13,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Profil
+                  </Text>
+                  {
+                  collapse.toggle === true ? (
+                    <TouchableOpacity
+                      onPress={() => setCollapse({ toggle: false })}
+                    >
+                      <Ionicons name="chevron-up" size={24} />
+                    </TouchableOpacity>
+                  ) : (
+                    <Ionicons name="chevron-down" size={24} />
+                  )}
+                </View>
+              </TouchableOpacity>
+              {
+              collapse.toggle === true ? (
+                <View>
+                  <TouchableOpacity
+                    onPress={() => setCollapse({ toggle: false })}
+                  >
+                    <Text style={{ marginTop: 10 }}>Jenis Kelamin</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {profile.jenis_kelamin}
+                    </Text>
+
+                    <Text style={{ marginTop: 10 }}>Golongan</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {profile.golongan}
+                    </Text>
+
+                    <Text style={{ marginTop: 10 }}>Jabatan</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {profile.nama_jabatan}
+                    </Text>
+
+                    <Text style={{ marginTop: 10 }}>Unit Kerja</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {profile.unit_kerja}
+                    </Text>
+
+                    <Text style={{ marginTop: 10 }}>Satuan Kerja</Text>
+                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                      {profile.satuan_kerja_nama}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection:"row",
+              columnGap: wp(4),
+            }}
+          >
+            <View
+              style={{
+                marginTop: "5%",
+                width: "43%",
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: COLORS.danger,
+                  borderRadius: 8,
+                  alignItems: "center",
+                  paddingVertical: 16,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                }}
+                onPress={() => 
+                  {
+                    navigation.navigate("HDFormLaporan"), profile?.nip
+                  }}
+              >
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+                >
+                  <Ionicons
+                    name="document-text-outline"
+                    size={24}
+                    color={COLORS.white}
+                  />
+                  <Text style={{ color: COLORS.white }}>Form Laporan</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                marginTop: "5%",
+                width: "43%",
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: COLORS.white,
+                  borderRadius: 8,
+                  alignItems: "center",
+                  paddingVertical: 16,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                }}
+                onPress={() => 
+                  {
+                    navigation.navigate("HDLaporanSaya"), profile?.nip
+                  }}
+              >
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+                >
+                  <Ionicons
+                    name="document-text-outline"
+                    size={24}
+                    color={COLORS.grey}
+                  />
+                  <Text style={{ color: COLORS.grey }}>Laporan Saya</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View
@@ -250,7 +451,7 @@ export const FAQ = () => {
             </View>
           </View>
 
-          <View
+          {/* <View
             style={{
               width: "90%",
               gap: 10,
@@ -311,7 +512,8 @@ export const FAQ = () => {
                 </View>
               </View>
             </View>
-          </View>
+          </View> */}
+          
         </View>
       </ScrollView>
     </>
