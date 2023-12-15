@@ -66,6 +66,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { DeviceType, getDeviceTypeAsync } from "expo-device";
+import { setDevice } from "../../store/Apps";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -136,12 +138,16 @@ export const Home = () => {
       return true;
     };
 
-    // const backHandler = BackHandler.addEventListener(
-    //   "hardwareBackPress",
-    //   backAction
-    // );
-
-    // return () => backHandler.remove();
+    const deviceTypeMap = {
+      [DeviceType.UNKNOWN]: "unknown",
+      [DeviceType.PHONE]: "phone",
+      [DeviceType.TABLET]: "tablet",
+      [DeviceType.TV]: "tv",
+      [DeviceType.DESKTOP]: "desktop",
+    };
+    getDeviceTypeAsync().then((device) => {
+      dispatch(setDevice(deviceTypeMap[device]));
+    });
   }, []);
 
   const {
@@ -186,6 +192,8 @@ export const Home = () => {
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <GestureHandlerRootView>
@@ -268,7 +276,11 @@ export const Home = () => {
                       "bridge/" +
                       profile.avatar,
                   }}
-                  style={{ width: 50, height: 50, borderRadius: 8 }}
+                  style={{
+                    width: device === "tablet" ? 100 : 50,
+                    height: device === "tablet" ? 100 : 50,
+                    borderRadius: 8,
+                  }}
                 />
               </View>
             </View>
@@ -519,7 +531,7 @@ export const Home = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   width: "90%",
-                  height: 550,
+                  height: device === "tablet" ? 620 : 550,
                   borderRadius: 10,
                   marginTop: 100,
                 }}
@@ -560,7 +572,10 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/BUPBJ.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
                   </TouchableOpacity>
@@ -588,7 +603,10 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/lapor.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
                       style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
@@ -605,7 +623,10 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/wbs.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
                       style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
@@ -622,7 +643,10 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/sidak.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
                       style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
@@ -639,7 +663,10 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/JDIH.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
                       style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
@@ -671,7 +698,10 @@ export const Home = () => {
                     <View>
                       <Image
                         source={require("../../assets/superApp/monev.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
@@ -696,7 +726,10 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/kinerjaku.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
@@ -721,7 +754,10 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/milea.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
@@ -746,7 +782,10 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/kinerjabkn.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
@@ -771,7 +810,10 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/SIASN.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
@@ -782,36 +824,65 @@ export const Home = () => {
                       </Text>
                     </View>
                   </TouchableOpacity>
-                </View>
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 10,
-                    marginHorizontal: 20,
-                    marginTop: 20,
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={() => {
-                      Linking.openURL("https://mysapk.bkn.go.id/");
+                  {device === "tablet" ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL("https://mysapk.bkn.go.id/");
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={require("../../assets/superApp/mysapk.png")}
+                          style={{
+                            width: device === "tablet" ? 100 : 48,
+                            height: device === "tablet" ? 100 : 48,
+                          }}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        >
+                          My SAPK
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+                {device === "phone" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      marginHorizontal: 20,
+                      marginTop: 20,
                     }}
                   >
-                    <View>
-                      <Image
-                        source={require("../../assets/superApp/mysapk.png")}
-                        style={{ width: 48, height: 48 }}
-                      />
-                    </View>
-                    <View>
-                      <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
-                      >
-                        My SAPK
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL("https://mysapk.bkn.go.id/");
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={require("../../assets/superApp/mysapk.png")}
+                          style={{
+                            width: device === "tablet" ? 100 : 48,
+                            height: device === "tablet" ? 100 : 48,
+                          }}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        >
+                          My SAPK
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
             </View>
           </Modal>

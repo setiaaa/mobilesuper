@@ -39,6 +39,8 @@ function MyTabBar({ props, navigation }) {
   const isRolePenangkapan = profile.roles_access?.some((item) =>
     dataRoleDashboardpenangkapan.includes(item)
   );
+
+  const { device } = useSelector((state) => state.apps);
   return (
     <BottomSheetModalProvider>
       <>
@@ -382,7 +384,7 @@ function MyTabBar({ props, navigation }) {
                 width: "90%",
                 height: hp(43),
                 borderRadius: 10,
-                marginTop: "70%",
+                marginTop: device === "tablet" ? "40%" : "70%",
               }}
             >
               <View

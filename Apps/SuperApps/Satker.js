@@ -180,6 +180,7 @@ export const Satker = () => {
     index,
     item,
     token,
+    device,
   }) => {
     const getDetail = (id) => {
       const params = { token, id };
@@ -205,13 +206,19 @@ export const Satker = () => {
             style={{ width: 80, height: 80 }}
           />
           <View style={{ marginLeft: 10 }}>
-            <View style={{ width: "88%" }}>
+            <View style={{ width: device === "tablet" ? "95%" : "88%" }}>
               <Text
                 style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}
               >
                 {item.title}
               </Text>
             </View>
+            <View style={{ justifyContent: "flex-start", marginTop: 10 }}>
+              <Text style={{ fontSize: 11, color: COLORS.lighter }}>
+                {item.creator.name}
+              </Text>
+            </View>
+
             <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
               <View
                 style={{
@@ -265,14 +272,9 @@ export const Satker = () => {
 
               {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
               {/* custom divider */}
-              <View
+              {/* <View
                 style={{ height: "100%", width: 1, backgroundColor: "#DBDADE" }}
-              />
-            </View>
-            <View style={{ justifyContent: "flex-start" }}>
-              <Text style={{ fontSize: 11, color: COLORS.lighter }}>
-                {item.creator.name}
-              </Text>
+              /> */}
             </View>
           </View>
         </TouchableOpacity>
@@ -354,6 +356,7 @@ export const Satker = () => {
   };
 
   const navigation = useNavigation();
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <View style={{ flex: 1 }}>
@@ -423,13 +426,22 @@ export const Satker = () => {
                     "bridge/" +
                     profile.avatar,
                 }}
-                style={{ width: 50, height: 50, borderRadius: 8 }}
+                style={{
+                  width: device === "tablet" ? 100 : 50,
+                  height: device === "tablet" ? 100 : 50,
+                  borderRadius: 8,
+                }}
               />
             </View>
           </View>
         </View>
 
-        <View style={{ alignItems: "center" }}>
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: device === "tablet" ? "10%" : "5%",
+          }}
+        >
           <CardSatker profile={profile} />
         </View>
 
@@ -545,7 +557,12 @@ export const Satker = () => {
         <View
           style={[
             styles.cardListSatker,
-            { flex: 1, justifyContent: "center", paddingVertical: 20 },
+            {
+              flex: 1,
+              justifyContent: "center",
+              paddingVertical: 20,
+              width: device === "tablet" ? "90%" : "86%",
+            },
           ]}
         >
           <Text
@@ -562,7 +579,12 @@ export const Satker = () => {
               scrollEnabled={false}
               data={linimasa}
               renderItem={({ item, index }) => (
-                <CardLiniMasaSatker item={item} index={index} token={token} />
+                <CardLiniMasaSatker
+                  item={item}
+                  index={index}
+                  token={token}
+                  device={device}
+                />
               )}
               keyExtractor={(item) => item.id}
             />
@@ -617,7 +639,7 @@ const styles = StyleSheet.create({
   cardListSatker: {
     backgroundColor: "#FFFFFF",
     flexDirection: "column",
-    width: "86%",
+    // width: "86%",
     // marginLeft: 25,
     opacity: 0.9,
     borderRadius: 5,

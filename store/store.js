@@ -24,6 +24,7 @@ import LoginAuth from "./LoginAuth";
 import Cuti from "./Cuti";
 import SPPD from "./SPPD";
 import HelpDesk from "./HelpDesk";
+import Apps from "./Apps";
 
 export const store = configureStore({
   reducer: {
@@ -50,6 +51,7 @@ export const store = configureStore({
     login: LoginAuth,
     cuti: Cuti,
     sppd: SPPD,
-    helpDesk : HelpDesk
+    helpDesk : HelpDesk,
+    apps: Apps,
   },
 });
