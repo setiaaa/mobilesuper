@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
-import { COLORS, FONTSIZE } from "../../config/SuperAppps";
+import { COLORS, FONTSIZE, fontSizeResponsive } from "../../config/SuperAppps";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,7 +33,9 @@ export const CardTautan = ({ setModalVisible }) => {
                 height: device === "tablet" ? 100 : 48,
               }}
             />
-            <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              Halo-BUPBJ
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -49,7 +51,12 @@ export const CardTautan = ({ setModalVisible }) => {
                 height: device === "tablet" ? 100 : 48,
               }}
             />
-            <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Lapor.go.id
             </Text>
           </TouchableOpacity>
@@ -67,7 +74,12 @@ export const CardTautan = ({ setModalVisible }) => {
                 height: device === "tablet" ? 100 : 48,
               }}
             />
-            <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               WBS KKP
             </Text>
           </TouchableOpacity>
@@ -85,7 +97,12 @@ export const CardTautan = ({ setModalVisible }) => {
                 height: device === "tablet" ? 100 : 48,
               }}
             />
-            <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Sidak
             </Text>
           </TouchableOpacity>
@@ -103,14 +120,19 @@ export const CardTautan = ({ setModalVisible }) => {
                 height: device === "tablet" ? 100 : 48,
               }}
             />
-            <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               JDIH
             </Text>
           </TouchableOpacity>
 
           {device === "tablet" ? (
             <>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => {
                   Linking.openURL("https://e-monev.bappenas.go.id/fe/");
                 }}
@@ -125,11 +147,16 @@ export const CardTautan = ({ setModalVisible }) => {
                   />
                 </View>
                 <View>
-                  <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Emonev{"\n"} Bapennas
                   </Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <TouchableOpacity
                 style={{
@@ -142,8 +169,8 @@ export const CardTautan = ({ setModalVisible }) => {
                 <Image
                   source={require("../../assets/superApp/white.png")}
                   style={{
-                    width: device === "tablet" ? 100 : 48,
-                    height: device === "tablet" ? 100 : 48,
+                    width: 100,
+                    height: 100,
                   }}
                 />
                 <View style={{ position: "absolute", top: 20, right: 23 }}>
@@ -153,7 +180,12 @@ export const CardTautan = ({ setModalVisible }) => {
                     color={COLORS.grey}
                   />
                 </View>
-                <Text style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   More
                 </Text>
               </TouchableOpacity>

@@ -499,7 +499,7 @@ export const DetailTask = () => {
                                                             maxLength={40}
                                                             placeholder='Ketik Komentar Disini'
                                                             ref={inputRef}
-                                                            style={{ padding: 10 }}
+                                                            style={{ padding: 10, width:"90%" }}
                                                             onChangeText={setKomen}
                                                             value={komen}
                                                             placeholderTextColor={COLORS.grey}

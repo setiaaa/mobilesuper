@@ -1,12 +1,77 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity, FlatList, RefreshControl } from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
+import { useDispatch, useSelector } from "react-redux";
+import { CardListHelpDesk } from "../../components/CardListHelpDesk";
+import { getTicket } from "../../service/api";
+import { setTiket } from "../../store/HelpDesk";
+import { getTokenValue } from "../../service/session";
+import ListEmpty from "../../components/ListEmpty";
 
 export const HDLaporanSaya = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { tiket } = useSelector((state) => state.helpDesk);
+  const { profile } = useSelector((state) => state.superApps);
+  const [token, setToken] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(tiket.list);
+  }, [tiket]);
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = tiket.list?.filter((item) => {
+        return item.part_name.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(tiket.list);
+    }
+  }, [search]);
+
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (token !== "") {
+        dispatch(getTicket({nip, token}));
+        console.log("Refresh Berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
+
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [nip, token]);
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+  
+  useEffect(() => {
+    if (token !== "") {
+      nip = profile.nip;
+      dispatch(getTicket({nip, token}));
+    }
+  }, [token]);
+  
+  console.log(tiket)
+  console.log(nip)
   return (
     <>
       <View
@@ -58,60 +123,25 @@ export const HDLaporanSaya = () => {
         }}
       >
         <View style={{ width: "90%", marginTop: "5%" }}>
-          <Search placeholder={"Cari..."} iconColor={COLORS.primary} />
+          <Search placeholder={"Cari..."} iconColor={COLORS.primary} onSearch={filter}/>
         </View>
-        <View style={{ width: "90%", marginTop: "5%" }}>
-          <View
-            style={{
-              width: "100%",
-              borderRadius: 8,
-              paddingHorizontal: 18,
-              paddingVertical: 12,
-              backgroundColor: COLORS.white, //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <View style={{ rowGap: 5 }}>
-              <Text
-                style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}
-              >
-                Bagian: Portal
-              </Text>
-              <Text>Permintaan: error lagi</Text>
-              <Text style={{ color: COLORS.lighter }}>
-                Waktu Laporan: 04-10-2023 17:55
-              </Text>
-              <View
-                style={{
-                  backgroundColor: COLORS.secondaryLighter,
-                  borderRadius: 10,
-                  paddingHorizontal: 10,
-                  width: 195,
-                }}
-              >
-                <Text>Nomor Tiket: 20231005003</Text>
-              </View>
-            </View>
-            <View style={{ rowGap: 5, alignItems: "center" }}>
-              <Text style={{ color: COLORS.lighter }}>Status</Text>
-              <View
-                style={{
-                  backgroundColor: COLORS.successLight,
-                  borderRadius: 10,
-                  paddingHorizontal: 10,
-                }}
-              >
-                <Text style={{ color: COLORS.success }}>Selesai</Text>
-              </View>
-            </View>
-          </View>
+        <View style={{width:"90%"}}>
+          <FlatList
+              data={filterData}
+              keyExtractor={(item) => item?.id}
+              renderItem={({ item }) => (
+                <View key={item?.id}>
+                  <CardListHelpDesk
+                    item={item}
+                  />
+                </View>
+              )}
+              ListEmptyComponent={() => <ListEmpty />}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+              style={{ height: "70%" }}
+            />
         </View>
       </View>
     </>

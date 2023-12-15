@@ -320,142 +320,142 @@ export const Komentar = () => {
   };
 
   return (
-    <>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "height" : "height"}
-        // keyboardVerticalOffset={parentId !== "" ? 80: 70}
-        keyboardVerticalOffset={70}
+    // <>
+    <KeyboardAvoidingView
+      style={{ flex: 1, marginBottom: 10 }}
+      behavior={Platform.OS === "ios" ? "padding" : null}
+      enabled
+      keyboardVerticalOffset={Platform.select({ ios: 80, android: 500 })}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "flex-end",
+          backgroundColor: "#800000",
+          height: 80,
+          paddingBottom: 20,
+        }}
       >
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "flex-end",
-            backgroundColor: "#800000",
-            height: 80,
-            paddingBottom: 20,
+            backgroundColor: "white",
+            borderRadius: 20,
+            width: 28,
+            height: 28,
+            alignItems: "center",
+            justifyContent: "center",
+            marginLeft: 20,
           }}
         >
-          <View
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="chevron-back-outline" size={24} color={"#800000"} />
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+          <Text
             style={{
-              backgroundColor: "white",
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
+              fontSize: FONTSIZE.H1,
+              fontWeight: FONTWEIGHT.bold,
+              color: COLORS.white,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.navigate("MainRepo")}>
+            Komentar
+          </Text>
+        </View>
+      </View>
+      <View style={{ marginVertical: 20, marginLeft: 20 }}>
+        <Text>Komentar ({comment?.length})</Text>
+      </View>
+      <FlatList
+        data={comment}
+        renderItem={({ item }) => (
+          <View key={item.id}>
+            <DaftarKomentar
+              items={item}
+              // inputRef={inputRef}
+              setParentId={setParentId}
+            />
+          </View>
+        )}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => <ListEmpty />}
+        style={{ height: "68%" }}
+      />
+      <View
+        style={{
+          justifyContent: "flex-end",
+          width: "90%",
+          alignSelf: "center",
+        }}
+      >
+        {parentId.id !== "" ? (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: 20,
+              paddingTop: 10,
+            }}
+          >
+            <Text>Membalas {parentId.creator}</Text>
+            <TouchableOpacity>
               <Ionicons
-                name="chevron-back-outline"
-                size={24}
-                color={"#800000"}
+                name="close"
+                size={20}
+                color={COLORS.primary}
+                onPress={() => setParentId({ id: "", creator: "" })}
               />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-            <Text
-              style={{
-                fontSize: FONTSIZE.H1,
-                fontWeight: FONTWEIGHT.bold,
-                color: COLORS.white,
-              }}
-            >
-              Komentar
-            </Text>
-          </View>
-        </View>
-        <View style={{ marginVertical: 20, marginHorizontal: "5%" }}>
-          <Text>Komentar ({comment?.length})</Text>
-        </View>
-        <FlatList
-          data={comment}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <DaftarKomentar
-                items={item}
-                // inputRef={inputRef}
-                setParentId={setParentId}
-              />
-            </View>
-          )}
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={() => <ListEmpty />}
-          style={{ height: "68%" }}
+        ) : null}
+        <View
+          style={{
+            height: 1,
+            width: "100%",
+            backgroundColor: COLORS.lighter,
+            opacity: 0.3,
+            marginTop: 10,
+          }}
         />
-        <View style={{ justifyContent: "flex-end" }}>
-          {parentId.id !== "" ? (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingHorizontal: 20,
-                paddingTop: 10,
-              }}
-            >
-              <Text>Membalas {parentId.creator}</Text>
-              <TouchableOpacity>
-                <Ionicons
-                  name="close"
-                  size={20}
-                  color={COLORS.primary}
-                  onPress={() => setParentId({ id: "", creator: "" })}
-                />
-              </TouchableOpacity>
-            </View>
-          ) : null}
-          <View
-            style={{
-              height: 1,
-              width: "90%",
-              backgroundColor: COLORS.lighter,
-              opacity: 0.3,
-              marginTop: 10,
-              marginHorizontal: "5%",
-            }}
+        <View
+          style={{
+            borderWidth: 1,
+            width: "100%",
+            borderRadius: 16,
+            borderColor: COLORS.ExtraDivinder,
+            flexDirection: "row",
+            backgroundColor: COLORS.ExtraDivinder,
+            marginTop: 10,
+          }}
+        >
+          <TextInput
+            numberOfLines={1}
+            maxLength={30}
+            placeholder="Ketik Komentar Disini"
+            // ref={inputRef}
+            style={{ padding: 10, width: "90%" }}
+            onChangeText={setKomen}
+            value={komen}
           />
           <View
             style={{
-              borderWidth: 1,
-              width: "90%",
-              marginHorizontal: "5%",
-              borderRadius: 16,
-              borderColor: COLORS.ExtraDivinder,
-              flexDirection: "row",
-              backgroundColor: COLORS.ExtraDivinder,
-              marginTop: 10,
+              alignItems: "flex-end",
+              flex: 1,
+              marginRight: 10,
+              justifyContent: "center",
             }}
           >
-            <TextInput
-              numberOfLines={1}
-              maxLength={30}
-              placeholder="Ketik Komentar Disini"
-              // ref={inputRef}
-              style={{ padding: 10 }}
-              onChangeText={setKomen}
-              value={komen}
-            />
-            <View
-              style={{
-                alignItems: "flex-end",
-                flex: 1,
-                marginRight: 10,
-                marginLeft: 50,
-                justifyContent: "center",
+            <TouchableOpacity
+              onPress={() => {
+                handleComment();
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  handleComment();
-                }}
-              >
-                <Ionicons name="send-sharp" size={20} color={COLORS.primary} />
-              </TouchableOpacity>
-            </View>
+              <Ionicons name="send-sharp" size={20} color={COLORS.primary} />
+            </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
-    </>
+      </View>
+    </KeyboardAvoidingView>
+    // </ >
   );
 };
