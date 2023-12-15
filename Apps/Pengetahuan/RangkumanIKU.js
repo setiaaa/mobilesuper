@@ -422,6 +422,8 @@ export const RangkumanIKU = () => {
     }, 2000);
   }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <View
@@ -924,7 +926,6 @@ export const RangkumanIKU = () => {
                 style={{
                   marginTop: 10,
                   gap: 15,
-                  marginBottom: "95%",
                 }}
               >
                 <FlatList
@@ -964,7 +965,7 @@ export const RangkumanIKU = () => {
                     />
                   }
                   style={{
-                    height: 250,
+                    height: device === "tablet" ? "79%" : "64%",
                     paddingHorizontal: "5%",
                   }}
                 />

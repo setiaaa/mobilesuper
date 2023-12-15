@@ -149,7 +149,7 @@ export const Libur = () => {
               />
             </View>
 
-            <View style={{ paddingHorizontal: 20 }}>
+            <View style={{ paddingHorizontal: "5%" }}>
               {/* <View
                 style={{
                   backgroundColor: COLORS.white,

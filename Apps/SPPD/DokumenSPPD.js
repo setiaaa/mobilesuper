@@ -74,6 +74,8 @@ export const DokumenSPPD = () => {
     }, 2000);
   }, [token]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -114,8 +116,8 @@ export const DokumenSPPD = () => {
           </Text>
         </View>
       </View>
-      <View style={{ paddingVertical: 20, marginHorizontal: "5%" }}>
-        <View>
+      <View style={{ paddingVertical: 20 }}>
+        <View style={{ paddingHorizontal: "5%" }}>
           <Search
             placeholder={"Cari"}
             onSearch={filter}
@@ -134,7 +136,11 @@ export const DokumenSPPD = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{ height: "83%", marginTop: 6 }}
+          style={{
+            height: device === "tablet" ? "88%" : "83%",
+            marginTop: 6,
+            paddingHorizontal: "5%",
+          }}
         />
       </View>
     </>

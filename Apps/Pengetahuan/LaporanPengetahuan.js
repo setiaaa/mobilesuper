@@ -208,6 +208,8 @@ export const LaporanPengetahuan = () => {
 
   const sliceColorHandle = [COLORS.grey];
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar />
@@ -609,13 +611,10 @@ export const LaporanPengetahuan = () => {
             Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
           <View
-            style={
-              {
-                // backgroundColor: "brown",
-                // justifyContent: "center",
-                // alignItems: "center",
-              }
-            }
+            style={{
+              justifyContent: device === "tablet" ? "center" : "flex-start",
+              alignItems: device === "tablet" ? "center" : "flex-start",
+            }}
           >
             {Object.keys(summary.graph).length !== 0 &&
             Object.keys(summary.total_post).length !== 0 &&

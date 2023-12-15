@@ -284,6 +284,8 @@ export const Dibagikan = () => {
 
   console.log(load);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading === true && dibagikan.lists.length === 0 ? <Loading /> : null}
@@ -368,7 +370,7 @@ export const Dibagikan = () => {
               )
             }
             keyExtractor={(item) => "_" + item.id}
-            style={{ height: 500 }}
+            style={{ height: device === "tablet" ? "79%" : "67%" }}
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={() => {
               if (dibagikan.lists.length !== 0) {

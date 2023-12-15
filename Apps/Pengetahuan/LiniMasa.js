@@ -400,7 +400,6 @@ const CardLiniMasa = ({ item, token }) => {
         width: "100%",
         flex: 1,
         marginTop: 20,
-        // marginHorizontal: 20,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
@@ -1602,6 +1601,8 @@ export const LiniMasa = () => {
 
   // console.log(filterData);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -1950,41 +1951,48 @@ export const LiniMasa = () => {
             </View>
           </View>
 
-          <FlatList
-            data={linimasa.lists}
-            renderItem={({ item }) => (
-              <View key={item.id}>
-                <CardLiniMasa
-                  item={item}
-                  token={token}
-                  // setVisibleModal={setVisibleModal}
-                />
-              </View>
-            )}
+          <View
             style={{
-              width: "100%",
-              paddingHorizontal: "5%",
+              height: device === "tablet" ? "80%" : "67%",
             }}
-            ListFooterComponent={() =>
-              loading === true ? (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 24,
-                  }}
-                >
-                  <ActivityIndicator size="large" color={COLORS.primary} />
+          >
+            <FlatList
+              data={linimasa.lists}
+              renderItem={({ item }) => (
+                <View key={item.id}>
+                  <CardLiniMasa
+                    item={item}
+                    token={token}
+                    // setVisibleModal={setVisibleModal}
+                  />
                 </View>
-              ) : null
-            }
-            keyExtractor={(item) => item.id}
-            ListEmptyComponent={() => <ListEmpty />}
-            onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          />
+              )}
+              style={{
+                width: "100%",
+                paddingHorizontal: "5%",
+                // backgroundColor: "brown",
+              }}
+              ListFooterComponent={() =>
+                loading === true ? (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 24,
+                    }}
+                  >
+                    <ActivityIndicator size="large" color={COLORS.primary} />
+                  </View>
+                ) : null
+              }
+              keyExtractor={(item) => item.id}
+              ListEmptyComponent={() => <ListEmpty />}
+              onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+          </View>
         </View>
       </>
     </>

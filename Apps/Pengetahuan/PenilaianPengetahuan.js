@@ -33,7 +33,7 @@ import { Loading } from "../../components/Loading";
 import { TextInput } from "react-native-gesture-handler";
 import { RefreshControl } from "react-native";
 
-const CardPenilaian = ({ item, token }) => {
+const CardPenilaian = ({ item, token, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const getDetail = (id) => {
@@ -52,9 +52,9 @@ const CardPenilaian = ({ item, token }) => {
           marginVertical: 5,
           backgroundColor: COLORS.white,
           borderRadius: 8,
-          justifyContent: "center",
+          // justifyContent: "center",
           alignItems: "center",
-          paddingHorizontal: 20,
+          paddingHorizontal: 15,
           paddingVertical: 10,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -72,7 +72,10 @@ const CardPenilaian = ({ item, token }) => {
         <View>
           <Image
             source={{ uri: item.cover }}
-            style={{ width: 70, height: 50 }}
+            style={{
+              width: device === "tablet" ? 100 : 70,
+              height: device === "tablet" ? 80 : 50,
+            }}
           />
         </View>
         <View style={{ width: "75%" }}>
@@ -366,6 +369,10 @@ export const PenilaianPenggetahaun = () => {
 
   // console.log("ditinjau=" + ditinjau);
   // console.log(dataUnitKerja());
+  const { device } = useSelector((state) => state.apps);
+
+  // console.log(device);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -719,7 +726,8 @@ export const PenilaianPenggetahaun = () => {
           style={{
             marginTop: 10,
             paddingVertical: 5,
-            height: "43%",
+            height: device === "tablet" ? "64%" : "43%",
+            // backgroundColor: "brown",
           }}
         >
           <View
@@ -730,7 +738,7 @@ export const PenilaianPenggetahaun = () => {
           <FlatList
             data={filterData}
             renderItem={({ item }) => (
-              <CardPenilaian item={item} token={token} />
+              <CardPenilaian item={item} token={token} device={device} />
             )}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

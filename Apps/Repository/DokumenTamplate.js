@@ -348,6 +348,8 @@ export const DokumenTamplate = () => {
     }, 2000);
   }, [token, page, type, search, filterUnker, filterSatker]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       {loading === true && tamplate.lists.length === 0 ? <Loading /> : null}
@@ -576,7 +578,7 @@ export const DokumenTamplate = () => {
                 ) : null
               }
               keyExtractor={(item) => "_" + item.id}
-              style={{ height: 500 }}
+              style={{ height: device === "tablet" ? "79%" : "67%" }}
               ListEmptyComponent={() => <ListEmpty />}
               onEndReached={() => {
                 if (tamplate.lists.length !== 0) {

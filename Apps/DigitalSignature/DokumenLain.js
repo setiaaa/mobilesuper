@@ -259,6 +259,9 @@ export const DokumenLain = () => {
 
   // console.log(dokumenlain.lists)
   // console.log(filterData)
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -312,13 +315,13 @@ export const DokumenLain = () => {
           style={{
             paddingVertical: 10,
             flexDirection: "row",
-            justifyContent: "space-around",
-            paddingHorizontal: 10,
+            justifyContent: "space-between",
+            marginHorizontal: "5%",
           }}
         >
           <TouchableOpacity
             style={{
-              marginHorizontal: 5,
+              width: device === "tablet" ? "19%" : null,
               paddingHorizontal: 6,
               paddingVertical: 6,
               borderWidth: 1,
@@ -347,7 +350,8 @@ export const DokumenLain = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginHorizontal: 5,
+              width: device === "tablet" ? "19%" : null,
+
               paddingHorizontal: 6,
               paddingVertical: 6,
               borderWidth: 1,
@@ -374,7 +378,8 @@ export const DokumenLain = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginHorizontal: 5,
+              width: device === "tablet" ? "19%" : null,
+
               paddingHorizontal: 6,
               paddingVertical: 6,
               borderWidth: 1,
@@ -405,7 +410,8 @@ export const DokumenLain = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginHorizontal: 5,
+              width: device === "tablet" ? "19%" : null,
+
               paddingHorizontal: 6,
               paddingVertical: 6,
               borderWidth: 1,
@@ -432,7 +438,8 @@ export const DokumenLain = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginHorizontal: 5,
+              width: device === "tablet" ? "19%" : null,
+
               paddingHorizontal: 6,
               paddingVertical: 6,
               borderWidth: 1,
