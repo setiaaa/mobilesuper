@@ -7,7 +7,13 @@ import {
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import {} from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TabBar } from "react-native-tab-view";
@@ -55,6 +61,8 @@ export const JumlahPostingan = () => {
 
   const { postinganSayaJumlah } = useSelector((state) => state.pengetahuan);
 
+  const { device } = useSelector((state) => state.apps);
+
   // console.log(postinganSayaJumlah);
 
   const FirstRoute = () => (
@@ -62,7 +70,7 @@ export const JumlahPostingan = () => {
       <Text
         style={{
           backgroundColor: "#F0F0F0",
-          fontSize: 13,
+          fontSize: fontSizeResponsive("H4", device),
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
@@ -87,10 +95,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Nilai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -108,10 +123,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Disukai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -129,10 +151,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Dilihat
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -150,7 +179,7 @@ export const JumlahPostingan = () => {
       <Text
         style={{
           backgroundColor: "#F0F0F0",
-          fontSize: 13,
+          fontSize: fontSizeResponsive("H4", device),
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
@@ -175,10 +204,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Nilai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -196,10 +232,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Disukai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -217,10 +260,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Dilihat
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -238,7 +288,7 @@ export const JumlahPostingan = () => {
       <Text
         style={{
           backgroundColor: "#F0F0F0",
-          fontSize: 13,
+          fontSize: fontSizeResponsive("H4", device),
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
@@ -263,10 +313,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Nilai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -284,10 +341,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Disukai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -305,10 +369,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Dilihat
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -326,7 +397,7 @@ export const JumlahPostingan = () => {
       <Text
         style={{
           backgroundColor: "#F0F0F0",
-          fontSize: 13,
+          fontSize: fontSizeResponsive("H4", device),
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
@@ -351,10 +422,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Nilai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -372,10 +450,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Disukai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -393,10 +478,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Dilihat
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -429,7 +521,7 @@ export const JumlahPostingan = () => {
       <Text
         style={{
           backgroundColor: "#F0F0F0",
-          fontSize: 13,
+          fontSize: fontSizeResponsive("H4", device),
           fontWeight: 600,
           textAlign: "center",
           borderRadius: 4,
@@ -453,10 +545,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Nilai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Nilai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -474,10 +573,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Disukai</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Disukai
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -495,10 +601,17 @@ export const JumlahPostingan = () => {
             padding: 10,
           }}
         >
-          <Text style={{ fontSize: 13, fontWeight: 400 }}>Dilihat</Text>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+            }}
+          >
+            Dilihat
+          </Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 700,
               color: "#11C15B",
               marginTop: 10,
@@ -562,7 +675,13 @@ export const JumlahPostingan = () => {
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Jumlah Postingan
           </Text>
         </View>
@@ -572,7 +691,7 @@ export const JumlahPostingan = () => {
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: 230,
+            height: device === "tablet" ? 290 : 230,
             padding: 16,
             //shadow ios
             shadowOffset: { width: -2, height: 4 },
@@ -597,7 +716,7 @@ export const JumlahPostingan = () => {
               style={{
                 color: COLORS.primary,
                 textAlign: "center",
-                fontSize: 17,
+                fontSize: fontSizeResponsive("H4", device),
                 fontWeight: 600,
               }}
             >
@@ -624,7 +743,9 @@ export const JumlahPostingan = () => {
                 justifyContent: "center",
               }}
             >
-              <Text>Loading...</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Loading...
+              </Text>
               <Loading />
             </View>
           )}
@@ -633,7 +754,7 @@ export const JumlahPostingan = () => {
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 8,
-            height: 210,
+            height: device === "tablet" ? 280 : 210,
             padding: 16,
             marginTop: 10,
             //shadow ios
@@ -654,7 +775,7 @@ export const JumlahPostingan = () => {
             <Ionicons name="newspaper-outline" size={24} />
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H4", device),
                 fontWeight: 600,
                 justifyContent: "center",
                 color: "#111827",
@@ -664,13 +785,20 @@ export const JumlahPostingan = () => {
               POST
             </Text>
           </View>
-          <Text style={{ fontWeight: 400, textAlign: "center", marginTop: 5 }}>
+          <Text
+            style={{
+              fontWeight: 400,
+              textAlign: "center",
+              marginTop: 5,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             Triwulan saat ini
           </Text>
           <Text
             style={{
               backgroundColor: "#F0F0F0",
-              fontSize: 13,
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 600,
               textAlign: "center",
               borderRadius: 4,
@@ -694,7 +822,14 @@ export const JumlahPostingan = () => {
                 padding: 10,
               }}
             >
-              <Text style={{ fontSize: 13, fontWeight: 400 }}>Draft</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: 400,
+                }}
+              >
+                Draft
+              </Text>
               <View
                 style={{
                   marginTop: 10,
@@ -708,7 +843,7 @@ export const JumlahPostingan = () => {
               >
                 <Text
                   style={{
-                    fontSize: 17,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 700,
                     color: "#6B7280",
                   }}
@@ -727,7 +862,14 @@ export const JumlahPostingan = () => {
                 padding: 10,
               }}
             >
-              <Text style={{ fontSize: 13, fontWeight: 400 }}>Diterbitkan</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: 400,
+                }}
+              >
+                Diterbitkan
+              </Text>
               <View
                 style={{
                   marginTop: 10,
@@ -741,7 +883,7 @@ export const JumlahPostingan = () => {
               >
                 <Text
                   style={{
-                    fontSize: 17,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 700,
                     color: "#6B7280",
                   }}

@@ -11,14 +11,19 @@ import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { Image } from "react-native";
 import { useState } from "react";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import {} from "react-native-safe-area-context";
 import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
 import { getDetailDocument, postCommentRepo } from "../../service/api";
 
-const DaftarKomentar = ({ items, setParentId }) => {
+const DaftarKomentar = ({ items, setParentId, device }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     id: items.id,
@@ -76,7 +81,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H2,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
                 lineHeight: 20,
                 wordWrap: "break-word",
@@ -88,7 +93,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   lineHeight: 18,
                   marginBottom: 10,
@@ -101,7 +106,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
             <Text
               style={{
                 color: COLORS.lighter,
-                fontSize: FONTSIZE.H5,
+                fontSize: fontSizeResponsive("H5", device),
                 fontWeight: FONTWEIGHT.normal,
                 lineHeight: 18,
                 wordWrap: "break-word",
@@ -122,7 +127,11 @@ const DaftarKomentar = ({ items, setParentId }) => {
               }}
             >
               <Text
-                style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+                style={{
+                  color: COLORS.primary,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 Balas
               </Text>
@@ -153,7 +162,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
                       <Text
                         style={{
                           color: COLORS.lighter,
-                          fontSize: FONTSIZE.H5,
+                          fontSize: fontSizeResponsive("H5", device),
                           fontWeight: FONTWEIGHT.normal,
                           lineHeight: 18,
                           wordWrap: "break-word",
@@ -188,7 +197,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
                         <View style={{ marginLeft: 10 }}>
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
+                              fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.bold,
                               lineHeight: 20,
                             }}
@@ -199,7 +208,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
                             <Text
                               style={{
                                 color: COLORS.lighter,
-                                fontSize: FONTSIZE.H5,
+                                fontSize: fontSizeResponsive("H5", device),
                                 fontWeight: FONTWEIGHT.normal,
                                 lineHeight: 18,
                                 marginBottom: 10,
@@ -217,7 +226,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
                             <Text
                               style={{
                                 color: COLORS.lighter,
-                                fontSize: FONTSIZE.H5,
+                                fontSize: fontSizeResponsive("H5", device),
                                 fontWeight: FONTWEIGHT.normal,
                                 lineHeight: 18,
                               }}
@@ -228,7 +237,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
                           <Text
                             style={{
                               color: "#999999",
-                              fontSize: FONTSIZE.H5,
+                              fontSize: fontSizeResponsive("H5", device),
                               fontWeight: FONTWEIGHT.normal,
                               lineHeight: 18,
                             }}
@@ -258,7 +267,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
                                 <Text
                                   style={{
                                     color: COLORS.lighter,
-                                    fontSize: FONTSIZE.H5,
+                                    fontSize: fontSizeResponsive("H5", device),
                                     fontWeight: FONTWEIGHT.normal,
                                     lineHeight: 18,
                                   }}
@@ -319,6 +328,8 @@ export const Komentar = () => {
     setParentId({ id: "", creator: "" });
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     // <>
     <KeyboardAvoidingView
@@ -354,7 +365,7 @@ export const Komentar = () => {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -364,7 +375,9 @@ export const Komentar = () => {
         </View>
       </View>
       <View style={{ marginVertical: 20, marginLeft: 20 }}>
-        <Text>Komentar ({comment?.length})</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          Komentar ({comment?.length})
+        </Text>
       </View>
       <FlatList
         data={comment}
@@ -374,6 +387,7 @@ export const Komentar = () => {
               items={item}
               // inputRef={inputRef}
               setParentId={setParentId}
+              device={device}
             />
           </View>
         )}
@@ -397,7 +411,9 @@ export const Komentar = () => {
               paddingTop: 10,
             }}
           >
-            <Text>Membalas {parentId.creator}</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              Membalas {parentId.creator}
+            </Text>
             <TouchableOpacity>
               <Ionicons
                 name="close"
@@ -433,7 +449,11 @@ export const Komentar = () => {
             maxLength={30}
             placeholder="Ketik Komentar Disini"
             // ref={inputRef}
-            style={{ padding: 10, width: "90%" }}
+            style={{
+              padding: 10,
+              width: "90%",
+              fontSize: fontSizeResponsive("H4", device),
+            }}
             onChangeText={setKomen}
             value={komen}
           />

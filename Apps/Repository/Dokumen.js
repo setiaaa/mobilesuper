@@ -20,7 +20,12 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { useMemo } from "react";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { setDokumentlists, setLoadMore } from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +42,7 @@ import { Dropdown } from "../../components/DropDown";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const DataList = ({ token, item, bottomSheetAttach }) => {
+const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -90,10 +95,10 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H3", device),
                     fontWeight: FONTWEIGHT.bold,
                     marginBottom: 10,
-                    width: 300,
+                    width: device === "tablet" ? 400 : 300,
                   }}
                 >
                   {item.title}
@@ -109,17 +114,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 >
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
-                      width: 100,
+                      width: device === "tablet" ? 200 : 100,
                     }}
                   >
                     Jumlah File
                   </Text>
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
                     }}
@@ -139,17 +144,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 >
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
-                      width: 100,
+                      width: device === "tablet" ? 200 : 100,
                     }}
                   >
                     Perubahan
                   </Text>
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
                     }}
@@ -168,17 +173,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 >
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
-                      width: 100,
+                      width: device === "tablet" ? 200 : 100,
                     }}
                   >
                     Perubahan
                   </Text>
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
                     }}
@@ -191,10 +196,10 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               <View>
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H3", device),
                     fontWeight: FONTWEIGHT.bold,
                     marginBottom: 10,
-                    width: 300,
+                    width: device === "tablet" ? 400 : 300,
                   }}
                 >
                   {item.title}
@@ -210,17 +215,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 >
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
-                      width: 100,
+                      width: device === "tablet" ? 200 : 100,
                     }}
                   >
                     Jumlah File
                   </Text>
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
                     }}
@@ -240,17 +245,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 >
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
-                      width: 100,
+                      width: device === "tablet" ? 200 : 100,
                     }}
                   >
                     Perubahan
                   </Text>
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
                     }}
@@ -269,17 +274,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 >
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
-                      width: 100,
+                      width: device === "tablet" ? 200 : 100,
                     }}
                   >
                     Perubahan
                   </Text>
                   <Text
                     style={{
-                      fontSize: 11,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: COLORS.lighter,
                     }}
@@ -289,20 +294,6 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 </View>
               </View>
             )}
-            {/* <View
-              style={{
-                justifyContent: "center",
-                alignItems: "flex-end",
-                flex: 1,
-                marginRight: 20,
-              }}
-            >
-              <Ionicons
-                name="ellipsis-vertical-outline"
-                size={24}
-                color={COLORS.grey}
-              />
-            </View> */}
           </View>
         </View>
       </View>
@@ -452,7 +443,13 @@ export const Dokumen = () => {
               </TouchableOpacity>
             </View>
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-              <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: "white",
+                }}
+              >
                 Preparing dan Sharing
               </Text>
             </View>
@@ -484,6 +481,7 @@ export const Dokumen = () => {
                   bottomSheetAttach={bottomSheetAttach}
                   item={item}
                   token={token}
+                  device={device}
                 />
               )}
               ListFooterComponent={() =>

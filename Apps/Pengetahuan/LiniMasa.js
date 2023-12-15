@@ -8,6 +8,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
@@ -55,7 +56,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const CardKomen = ({ listData, inputRef, setParentId }) => {
+const CardKomen = ({ listData, inputRef, setParentId, device }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     // id: data[0].Komentar[0].id
@@ -111,7 +112,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H2,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
                 lineHeight: 20,
                 wordWrap: "break-word",
@@ -123,7 +124,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   lineHeight: 18,
                   wordWrap: "break-word",
@@ -136,7 +137,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
             <Text
               style={{
                 color: COLORS.lighter,
-                fontSize: FONTSIZE.H3,
+                fontSize: fontSizeResponsive("H3", device),
                 fontWeight: FONTWEIGHT.normal,
                 wordWrap: "break-word",
               }}
@@ -157,7 +158,11 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
               }}
             >
               <Text
-                style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+                style={{
+                  color: COLORS.primary,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 Balas
               </Text>
@@ -190,7 +195,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                       <Text
                         style={{
                           color: COLORS.lighter,
-                          fontSize: FONTSIZE.H5,
+                          fontSize: fontSizeResponsive("H5", device),
                           fontWeight: FONTWEIGHT.normal,
                           lineHeight: 18,
                           wordWrap: "break-word",
@@ -226,7 +231,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                           <View style={{ marginLeft: 10 }}>
                             <Text
                               style={{
-                                fontSize: FONTSIZE.H2,
+                                fontSize: fontSizeResponsive("H2", device),
                                 fontWeight: FONTWEIGHT.bold,
                                 lineHeight: 20,
                                 wordWrap: "break-word",
@@ -238,7 +243,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                               <Text
                                 style={{
                                   color: COLORS.lighter,
-                                  fontSize: FONTSIZE.H5,
+                                  fontSize: fontSizeResponsive("H5", device),
                                   fontWeight: FONTWEIGHT.normal,
                                   lineHeight: 18,
                                   wordWrap: "break-word",
@@ -251,7 +256,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                             <Text
                               style={{
                                 color: "#999999",
-                                fontSize: FONTSIZE.H3,
+                                fontSize: fontSizeResponsive("H3", device),
                                 fontWeight: FONTWEIGHT.normal,
                                 lineHeight: 18,
                                 wordWrap: "break-word",
@@ -282,7 +287,10 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                                   <Text
                                     style={{
                                       color: COLORS.lighter,
-                                      fontSize: FONTSIZE.H5,
+                                      fontSize: fontSizeResponsive(
+                                        "H5",
+                                        device
+                                      ),
                                       fontWeight: FONTWEIGHT.normal,
                                       lineHeight: 18,
                                       wordWrap: "break-word",
@@ -308,7 +316,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
   );
 };
 
-const CardLiniMasa = ({ item, token }) => {
+const CardLiniMasa = ({ item, token, device }) => {
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
   const [visibleModal, setVisibleModal] = useState(false);
@@ -431,7 +439,12 @@ const CardLiniMasa = ({ item, token }) => {
               />
             </View>
             <View>
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 {item.creator.name}
               </Text>
               <View
@@ -445,7 +458,7 @@ const CardLiniMasa = ({ item, token }) => {
                   style={{
                     color: COLORS.grey,
                     marginVertical: 1,
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   {item?.published_date?.slice(0, -9)}
@@ -494,6 +507,7 @@ const CardLiniMasa = ({ item, token }) => {
                           : item.category === "Kegiatan"
                           ? COLORS.info
                           : COLORS.success,
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {item.category}
@@ -513,7 +527,7 @@ const CardLiniMasa = ({ item, token }) => {
             style={{
               textAlign: "justify",
               color: COLORS.lighter,
-              fontSize: FONTSIZE.H3,
+              fontSize: fontSizeResponsive("H3", device),
             }}
           >
             {item.title}
@@ -611,7 +625,12 @@ const CardLiniMasa = ({ item, token }) => {
                 borderBottomColor: COLORS.grey,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Informasi Pengetahuan
               </Text>
               <TouchableOpacity
@@ -645,16 +664,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Judul
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [What]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.title !== "" && detail?.title !== null
                   ? detail.title
@@ -679,16 +715,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Anggota Agenda
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [Who]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.members_agenda !== "" &&
                 detail?.members_agenda !== null
@@ -714,16 +767,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Rangkuman
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [Why]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.summary !== "" && detail?.summary !== null
                   ? detail.summary
@@ -748,16 +818,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Tempat Agenda
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [Where]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.place_agenda !== "" && detail?.place_agenda !== null
                   ? detail.place_agenda
@@ -782,10 +869,22 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Waktu Mulai
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [When]
                 </Text>
               </View>
@@ -796,6 +895,7 @@ const CardLiniMasa = ({ item, token }) => {
                   marginHorizontal: 60,
                   marginTop: 10,
                   marginBottom: 20,
+                  fontSize: fontSizeResponsive("H4", device),
                 }}
               >
                 {detail?.start_date_agenda !== "" &&
@@ -844,7 +944,7 @@ const CardLiniMasa = ({ item, token }) => {
               <View>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -893,7 +993,11 @@ const CardLiniMasa = ({ item, token }) => {
                       source={{ uri: data.avatar_url }}
                       style={{ width: 50, height: 50, borderRadius: 30 }}
                     />
-                    <Text>{data.name}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      {data.name}
+                    </Text>
                   </View>
                 );
               })}
@@ -925,7 +1029,12 @@ const CardLiniMasa = ({ item, token }) => {
               setVisibleModalViewDisukai(true);
             }}
           >
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {item.likes_count} Disukai
             </Text>
           </TouchableOpacity>
@@ -968,7 +1077,7 @@ const CardLiniMasa = ({ item, token }) => {
                 <View>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1025,7 +1134,11 @@ const CardLiniMasa = ({ item, token }) => {
                           borderRadius: 30,
                         }}
                       />
-                      <Text>{data.name}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {data.name}
+                      </Text>
                     </View>
                   );
                 })}
@@ -1035,7 +1148,12 @@ const CardLiniMasa = ({ item, token }) => {
         </Modal>
 
         <View style={{ flexDirection: "row" }}>
-          <Text style={{ color: COLORS.lighter }}>
+          <Text
+            style={{
+              color: COLORS.lighter,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             {item.comment_count} Komentar
           </Text>
           <TouchableOpacity
@@ -1060,7 +1178,12 @@ const CardLiniMasa = ({ item, token }) => {
               size={18}
               style={{ color: COLORS.lighter }}
             /> */}
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {item.views_count} Dilihat
             </Text>
           </TouchableOpacity>
@@ -1106,6 +1229,7 @@ const CardLiniMasa = ({ item, token }) => {
             <Text
               style={{
                 color: detail.liked == true ? COLORS.primary : null,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               Suka
@@ -1171,10 +1295,22 @@ const CardLiniMasa = ({ item, token }) => {
                   size={20}
                   color={COLORS.primary}
                 />
-                <Text style={{ color: COLORS.primary }}>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {detail.likes_count}
                 </Text>
-                <Text style={{ color: COLORS.primary }}>Disukai</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Disukai
+                </Text>
                 <TouchableOpacity
                   onPress={() => {
                     bottomSheetAttachCommentClose();
@@ -1190,7 +1326,12 @@ const CardLiniMasa = ({ item, token }) => {
                 </TouchableOpacity>
               </View>
               <View style={{ marginLeft: 20, marginVertical: 20 }}>
-                <Text style={{ color: COLORS.ExtraDivinder }}>
+                <Text
+                  style={{
+                    color: COLORS.ExtraDivinder,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Komentar({detail.comment_count})
                 </Text>
               </View>
@@ -1204,6 +1345,7 @@ const CardLiniMasa = ({ item, token }) => {
                     setParentId={setParentId}
                     toggleComment={toggleComment}
                     setToggleComment={setToggleComment}
+                    device={device}
                   />
                 )}
                 style={{ height: 370 }}
@@ -1218,7 +1360,11 @@ const CardLiniMasa = ({ item, token }) => {
                       paddingHorizontal: 20,
                     }}
                   >
-                    <Text>Membalas {parentId.creator}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Membalas {parentId.creator}
+                    </Text>
                     <TouchableOpacity>
                       <Ionicons
                         name="close"
@@ -1256,7 +1402,7 @@ const CardLiniMasa = ({ item, token }) => {
                     maxLength={30}
                     placeholder="Ketik Komentar Disini"
                     ref={inputRef}
-                    style={{ padding: 10, width:"90%" }}
+                    style={{ padding: 10, width: "90%" }}
                     onChangeText={setKomen}
                     value={komen}
                   />
@@ -1299,7 +1445,9 @@ const CardLiniMasa = ({ item, token }) => {
           }}
         >
           <Ionicons name="information-circle-outline" size={18} />
-          <Text>Info</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            Info
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -1641,7 +1789,11 @@ export const LiniMasa = () => {
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               Linimasa Pengetahuan
             </Text>
@@ -1682,10 +1834,17 @@ export const LiniMasa = () => {
                 }}
               >
                 <View style={styles.input}>
-                  <Ionicons name="search" size={20} color={COLORS.primary} />
+                  <Ionicons
+                    name="search"
+                    size={fontSizeResponsive("H3", device)}
+                    color={COLORS.primary}
+                  />
                   <TextInput
                     placeholder={"Cari..."}
-                    style={{ fontSize: 16, flex: 1 }}
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      flex: 1,
+                    }}
                     maxLength={30}
                     value={inputValue}
                     onChangeText={(text) => setInputValue(text)}
@@ -1746,7 +1905,12 @@ export const LiniMasa = () => {
                           borderBottomColor: COLORS.grey,
                         }}
                       >
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
                           Filter Satuan dan Unit Kerja
                         </Text>
                         <TouchableOpacity
@@ -1769,6 +1933,7 @@ export const LiniMasa = () => {
                             marginHorizontal: 10,
                             marginBottom: 10,
                             fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           Unit Kerja
@@ -1795,6 +1960,7 @@ export const LiniMasa = () => {
                             marginHorizontal: 10,
                             marginBottom: 10,
                             fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           Satuan Kerja
@@ -1824,8 +1990,20 @@ export const LiniMasa = () => {
                               gap: 5,
                             }}
                           >
-                            <Text style={{ color: COLORS.infoDanger }}>*</Text>
-                            <Text style={{ color: COLORS.lighter }}>
+                            <Text
+                              style={{
+                                color: COLORS.infoDanger,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              *
+                            </Text>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
                               Daftar satuan kerja akan muncul setelah memilih
                               unit kerja
                             </Text>
@@ -1859,7 +2037,10 @@ export const LiniMasa = () => {
                   onPress={handleKegiatan}
                 >
                   <Text
-                    style={kegiatan ? styles.badgeTextActive : styles.badgeText}
+                    style={[
+                      kegiatan ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
                   >
                     Kegiatan
                   </Text>
@@ -1869,9 +2050,10 @@ export const LiniMasa = () => {
                   onPress={handleInfografis}
                 >
                   <Text
-                    style={
-                      infografis ? styles.badgeTextActive : styles.badgeText
-                    }
+                    style={[
+                      infografis ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
                   >
                     Infografis
                   </Text>
@@ -1881,9 +2063,10 @@ export const LiniMasa = () => {
                   onPress={handleVideoJurnal}
                 >
                   <Text
-                    style={
-                      videoJurnal ? styles.badgeTextActive : styles.badgeText
-                    }
+                    style={[
+                      videoJurnal ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
                   >
                     Video / Jurnal
                   </Text>
@@ -1893,9 +2076,10 @@ export const LiniMasa = () => {
                   onPress={handleKepemimpinan}
                 >
                   <Text
-                    style={
-                      kepemimpinan ? styles.badgeTextActive : styles.badgeText
-                    }
+                    style={[
+                      kepemimpinan ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
                   >
                     Kepemimpinan
                   </Text>
@@ -1905,9 +2089,10 @@ export const LiniMasa = () => {
                   onPress={handleManajerial}
                 >
                   <Text
-                    style={
-                      manajerial ? styles.badgeTextActive : styles.badgeText
-                    }
+                    style={[
+                      manajerial ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
                   >
                     Manajerial
                   </Text>
@@ -1917,9 +2102,12 @@ export const LiniMasa = () => {
                   onPress={handleSosialKultural}
                 >
                   <Text
-                    style={
-                      sosialKultural ? styles.badgeTextActive : styles.badgeText
-                    }
+                    style={[
+                      sosialKultural
+                        ? styles.badgeTextActive
+                        : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
                   >
                     Sosial Kultural
                   </Text>
@@ -1929,11 +2117,12 @@ export const LiniMasa = () => {
                   onPress={handleTeknisFungsional}
                 >
                   <Text
-                    style={
+                    style={[
                       teknisFungsional
                         ? styles.badgeTextActive
-                        : styles.badgeText
-                    }
+                        : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
                   >
                     Teknis Fungsional
                   </Text>
@@ -1964,6 +2153,7 @@ export const LiniMasa = () => {
                     item={item}
                     token={token}
                     // setVisibleModal={setVisibleModal}
+                    device={device}
                   />
                 </View>
               )}

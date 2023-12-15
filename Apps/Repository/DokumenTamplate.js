@@ -8,7 +8,12 @@ import {
 } from "react-native";
 import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { Search } from "../../components/Search";
 import { Dropdown } from "../../components/DropDown";
@@ -38,7 +43,7 @@ import moment from "moment";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const DataList = ({ token, item, bottomSheetAttach }) => {
+const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
 
   const getDetailRepo = (id) => {
@@ -88,10 +93,10 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: FONTWEIGHT.bold,
                   marginBottom: 10,
-                  width: 300,
+                  width: device === "tablet" ? 400 : 300,
                 }}
               >
                 {item.title}
@@ -107,17 +112,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Pembuat
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -137,20 +142,20 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Deskripsi
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 200,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   {item.attributes.deskripsi}
@@ -167,17 +172,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Perubahan
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -186,20 +191,6 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            {/* <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  flex: 1,
-                  marginRight: 20,
-                }}
-              >
-                <Ionicons
-                  name="ellipsis-vertical-outline"
-                  size={24}
-                  color={COLORS.grey}
-                />
-              </View> */}
           </View>
         </View>
       </View>
@@ -383,8 +374,14 @@ export const DokumenTamplate = () => {
               </TouchableOpacity>
             </View>
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-              <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
-                Dokumen Tamplate
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: "white",
+                }}
+              >
+                Dokumen Template
               </Text>
             </View>
           </View>
@@ -463,7 +460,12 @@ export const DokumenTamplate = () => {
                         borderBottomColor: COLORS.grey,
                       }}
                     >
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Filter Satuan dan Unit Kerja
                       </Text>
                       <TouchableOpacity
@@ -486,6 +488,7 @@ export const DokumenTamplate = () => {
                           marginHorizontal: 10,
                           marginBottom: 10,
                           fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Unit Kerja
@@ -511,6 +514,7 @@ export const DokumenTamplate = () => {
                           marginHorizontal: 10,
                           marginBottom: 10,
                           fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Satuan Kerja
@@ -539,8 +543,20 @@ export const DokumenTamplate = () => {
                             gap: 5,
                           }}
                         >
-                          <Text style={{ color: COLORS.infoDanger }}>*</Text>
-                          <Text style={{ color: COLORS.lighter }}>
+                          <Text
+                            style={{
+                              color: COLORS.infoDanger,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            *
+                          </Text>
+                          <Text
+                            style={{
+                              color: COLORS.lighter,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             Daftar satuan kerja akan muncul setelah memilih unit
                             kerja
                           </Text>
@@ -562,6 +578,7 @@ export const DokumenTamplate = () => {
                   bottomSheetAttach={bottomSheetAttach}
                   item={item}
                   token={token}
+                  device={device}
                 />
               )}
               ListFooterComponent={() =>
@@ -623,7 +640,7 @@ export const DokumenTamplate = () => {
                         />
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H2,
+                            fontSize: fontSizeResponsive("H2", device),
                             fontWeight: FONTWEIGHT.normal,
                             width: 300,
                           }}
@@ -651,7 +668,7 @@ export const DokumenTamplate = () => {
                           />
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
+                              fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.normal,
                             }}
                           >
@@ -681,7 +698,7 @@ export const DokumenTamplate = () => {
                           />
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
+                              fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.normal,
                             }}
                           >

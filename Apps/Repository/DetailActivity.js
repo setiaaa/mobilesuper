@@ -23,6 +23,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   PADDING,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import {
   GestureHandlerRootView,
@@ -111,7 +112,10 @@ export const DetailActivity = () => {
     dispatch(postRating(data));
   };
 
-  console.log(dokumen);
+  // console.log(dokumen);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -148,7 +152,7 @@ export const DetailActivity = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -180,7 +184,7 @@ export const DetailActivity = () => {
               >
                 <Text
                   style={{
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -196,13 +200,17 @@ export const DetailActivity = () => {
                 }}
               >
                 <Image
-                  style={{ width: 26, height: 26, borderRadius: 30 }}
+                  style={{
+                    width: device === "tablet" ? 52 : 26,
+                    height: device === "tablet" ? 52 : 26,
+                    borderRadius: device === "tablet" ? 60 : 30,
+                  }}
                   source={{ uri: detail.creator_avatar }}
                 />
                 <View>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -210,7 +218,7 @@ export const DetailActivity = () => {
                   </Text>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: "#1868AB",
                     }}
@@ -230,7 +238,7 @@ export const DetailActivity = () => {
               >
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -239,7 +247,7 @@ export const DetailActivity = () => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -257,7 +265,7 @@ export const DetailActivity = () => {
               >
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -266,7 +274,7 @@ export const DetailActivity = () => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -277,7 +285,7 @@ export const DetailActivity = () => {
                 <Text
                   style={{
                     textAlign: "justify",
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -299,7 +307,7 @@ export const DetailActivity = () => {
                 <Text
                   style={{
                     textAlign: "justify",
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                     marginBottom: 4,
@@ -338,7 +346,7 @@ export const DetailActivity = () => {
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H1,
+                      fontSize: fontSizeResponsive("H1", device),
                       fontWeight: FONTWEIGHT.bold,
                       color: COLORS.lighter,
                     }}
@@ -375,10 +383,22 @@ export const DetailActivity = () => {
                     }}
                   >
                     <View style={{ paddingEnd: 20 }}>
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {data.title}
                       </Text>
-                      <Text style={{ color: COLORS.lighter }}>{data.name}</Text>
+                      <Text
+                        style={{
+                          color: COLORS.lighter,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {data.name}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -393,7 +413,7 @@ export const DetailActivity = () => {
                 <TouchableOpacity onPress={bottomSheetAttach}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.bold,
                       color: "#1868AB",
                     }}
@@ -441,10 +461,20 @@ export const DetailActivity = () => {
                         source={{ uri: detail?.creator_avatar }}
                       />
                       <View style={{}}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
                           Penulis
                         </Text>
-                        <Text style={{ color: COLORS.lighter }}>
+                        <Text
+                          style={{
+                            color: COLORS.lighter,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
                           {detail?.creator}
                         </Text>
                       </View>
@@ -452,7 +482,7 @@ export const DetailActivity = () => {
                     <View style={{ marginTop: 10 }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H1,
+                          fontSize: fontSizeResponsive("H1", device),
                           fontWeight: FONTWEIGHT.bold,
                           color: COLORS.lighter,
                         }}
@@ -486,10 +516,20 @@ export const DetailActivity = () => {
                               }}
                             >
                               <View>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                                <Text
+                                  style={{
+                                    fontWeight: FONTWEIGHT.bold,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   {data?.title}
                                 </Text>
-                                <Text style={{ color: COLORS.lighter }}>
+                                <Text
+                                  style={{
+                                    color: COLORS.lighter,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   {data?.name}
                                 </Text>
                               </View>

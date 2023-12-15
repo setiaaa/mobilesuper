@@ -17,6 +17,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { getTokenValue } from "../../service/session";
@@ -41,7 +42,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const CardPostinganSaya = ({ item, token }) => {
+const CardPostinganSaya = ({ item, token, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -103,7 +104,7 @@ const CardPostinganSaya = ({ item, token }) => {
                 <Text
                   style={{
                     // width: 270,
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.bold,
                     textAlign: "justify",
                     marginBottom: 5,
@@ -119,7 +120,12 @@ const CardPostinganSaya = ({ item, token }) => {
                     marginVertical: 15,
                   }}
                 >
-                  <Text style={{ color: "#6B7280", fontSize: 13 }}>
+                  <Text
+                    style={{
+                      color: "#6B7280",
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Tanggal : {item.created_at?.slice(0, -9)}
                   </Text>
                 </View>
@@ -131,7 +137,11 @@ const CardPostinganSaya = ({ item, token }) => {
                 >
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
-                      style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
+                      style={{
+                        color: "#6B7280",
+                        fontSize: fontSizeResponsive("H4", device),
+                        marginEnd: 5,
+                      }}
                     >
                       Poin :
                     </Text>
@@ -142,7 +152,13 @@ const CardPostinganSaya = ({ item, token }) => {
                         width: 30,
                       }}
                     >
-                      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                      <Text
+                        style={{
+                          color: "#FFFFFF",
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {item.score}
                       </Text>
                     </View>
@@ -159,7 +175,11 @@ const CardPostinganSaya = ({ item, token }) => {
                       }}
                     >
                       <Text
-                        style={{ color: COLORS.success, textAlign: "center" }}
+                        style={{
+                          color: COLORS.success,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Publish
                       </Text>
@@ -174,7 +194,13 @@ const CardPostinganSaya = ({ item, token }) => {
                         justifyContent: "center",
                       }}
                     >
-                      <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                      <Text
+                        style={{
+                          color: COLORS.grey,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Draft
                       </Text>
                     </View>
@@ -192,6 +218,7 @@ const CardPostinganSaya = ({ item, token }) => {
                         style={{
                           color: COLORS.infoDanger,
                           textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Canceled
@@ -230,7 +257,7 @@ const CardPostinganSaya = ({ item, token }) => {
                 </TouchableOpacity>
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     color: COLORS.primary,
                     marginStart: 5,
                   }}
@@ -244,13 +271,23 @@ const CardPostinganSaya = ({ item, token }) => {
                   size={18}
                   color={COLORS.grey}
                 />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    marginStart: 5,
+                  }}
+                >
                   {item.comment_count}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    marginStart: 5,
+                  }}
+                >
                   {item.views_count}
                 </Text>
               </View>
@@ -309,7 +346,7 @@ const CardPostinganSaya = ({ item, token }) => {
                 <Text
                   style={{
                     // width: 270,
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.bold,
                     textAlign: "justify",
                     marginBottom: 5,
@@ -325,7 +362,12 @@ const CardPostinganSaya = ({ item, token }) => {
                     marginVertical: 15,
                   }}
                 >
-                  <Text style={{ color: "#6B7280", fontSize: 13 }}>
+                  <Text
+                    style={{
+                      color: "#6B7280",
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Tanggal : {item.created_at?.slice(0, -9)}
                   </Text>
                 </View>
@@ -337,7 +379,11 @@ const CardPostinganSaya = ({ item, token }) => {
                 >
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
-                      style={{ color: "#6B7280", fontSize: 13, marginEnd: 5 }}
+                      style={{
+                        color: "#6B7280",
+                        fontSize: fontSizeResponsive("H4", device),
+                        marginEnd: 5,
+                      }}
                     >
                       Poin :
                     </Text>
@@ -348,7 +394,13 @@ const CardPostinganSaya = ({ item, token }) => {
                         width: 30,
                       }}
                     >
-                      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+                      <Text
+                        style={{
+                          color: "#FFFFFF",
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {item.score}
                       </Text>
                     </View>
@@ -365,7 +417,11 @@ const CardPostinganSaya = ({ item, token }) => {
                       }}
                     >
                       <Text
-                        style={{ color: COLORS.success, textAlign: "center" }}
+                        style={{
+                          color: COLORS.success,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Publish
                       </Text>
@@ -380,7 +436,13 @@ const CardPostinganSaya = ({ item, token }) => {
                         justifyContent: "center",
                       }}
                     >
-                      <Text style={{ color: COLORS.grey, textAlign: "center" }}>
+                      <Text
+                        style={{
+                          color: COLORS.grey,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Draft
                       </Text>
                     </View>
@@ -398,6 +460,7 @@ const CardPostinganSaya = ({ item, token }) => {
                         style={{
                           color: COLORS.infoDanger,
                           textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Canceled
@@ -436,7 +499,7 @@ const CardPostinganSaya = ({ item, token }) => {
                 </TouchableOpacity>
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     color: COLORS.primary,
                     marginStart: 5,
                   }}
@@ -450,13 +513,23 @@ const CardPostinganSaya = ({ item, token }) => {
                   size={18}
                   color={COLORS.grey}
                 />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    marginStart: 5,
+                  }}
+                >
                   {item.comment_count}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text style={{ fontSize: 13, marginStart: 5 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    marginStart: 5,
+                  }}
+                >
                   {item.views_count}
                 </Text>
               </View>
@@ -585,6 +658,8 @@ export const PostinganSaya = () => {
     setIsFiltered(true);
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -619,7 +694,13 @@ export const PostinganSaya = () => {
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Postingan Saya
           </Text>
         </View>
@@ -715,7 +796,7 @@ export const PostinganSaya = () => {
         data={filterData}
         renderItem={({ item }) => (
           <View key={item.id}>
-            <CardPostinganSaya item={item} token={token} />
+            <CardPostinganSaya item={item} token={token} device={device} />
           </View>
         )}
         ListFooterComponent={() =>
