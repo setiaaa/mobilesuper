@@ -8,7 +8,7 @@ import { Image } from "react-native";
 import { Text } from "react-native";
 import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,6 +22,7 @@ export const CardListBeritaSatker = ({
   index,
   id,
   token,
+  device,
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -61,13 +62,19 @@ export const CardListBeritaSatker = ({
             style={{
               color: COLORS.grey,
               marginVertical: 5,
-              fontSize: 10,
+              fontSize: fontSizeResponsive("H5", device),
               fontWeight: 400,
             }}
           >
             {tanggal}
           </Text>
-          <Text style={{ marginVertical: 5, fontSize: 10, fontWeight: 400 }}>
+          <Text
+            style={{
+              marginVertical: 5,
+              fontSize: fontSizeResponsive("H5", device),
+              fontWeight: 400,
+            }}
+          >
             {title}
           </Text>
         </View>

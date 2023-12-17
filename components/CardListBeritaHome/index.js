@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDetailBerita } from "../../service/api";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native";
@@ -8,7 +8,7 @@ import { Image } from "react-native";
 import { Text } from "react-native";
 import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 
 export const CardListBeritaHome = ({
   image,
@@ -21,6 +21,7 @@ export const CardListBeritaHome = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { device } = useSelector((state) => state.apps);
 
   const getDetail = (id) => {
     const params = { token, id };
@@ -57,13 +58,19 @@ export const CardListBeritaHome = ({
             style={{
               color: COLORS.grey,
               marginVertical: 5,
-              fontSize: 10,
+              fontSize: fontSizeResponsive("H5", device),
               fontWeight: 400,
             }}
           >
             {tanggal}
           </Text>
-          <Text style={{ marginVertical: 5, fontSize: 10, fontWeight: 400 }}>
+          <Text
+            style={{
+              marginVertical: 5,
+              fontSize: fontSizeResponsive("H5", device),
+              fontWeight: 400,
+            }}
+          >
             {title}
           </Text>
         </View>
