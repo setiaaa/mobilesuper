@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+} from "react-native";
 import {} from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -43,6 +56,7 @@ export const Personal = () => {
 
   const { dashboard, loading } = useSelector((state) => state.sppd);
   const { profile } = useSelector((state) => state.superApps);
+  const { device } = useSelector((state) => state.apps);
 
   let jmlperjalanan = dashboard.stats?.self_event?.counter.toString();
   let jmlProv = dashboard.stats?.province?.counter.toString();
@@ -52,11 +66,7 @@ export const Personal = () => {
 
   return (
     <>
-    {loading ? (
-      <Loading />
-    ) : (
-      null
-    )}
+      {loading ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -87,7 +97,7 @@ export const Personal = () => {
         <View style={{ flex: 1, alignItems: "center" }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H3", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -117,7 +127,7 @@ export const Personal = () => {
       </View>
 
       <ScrollView>
-        <View style={{ padding: 20 }}>
+        <View style={{ padding: PADDING.Page }}>
           <View
             style={{
               justifyContent: "center",
@@ -130,10 +140,11 @@ export const Personal = () => {
               elevation: 2,
             }}
           >
-            <Image
+            <ImageBackground
               source={require("../../assets/superApp/Card-Background-Red.png")}
               style={{
                 width: "100%",
+                // height: device === "tablet" ? "50%" : null,
                 borderTopLeftRadius: 8,
                 borderTopRightRadius: 8,
                 //shadow ios
@@ -143,128 +154,195 @@ export const Personal = () => {
                 //shadow android
                 elevation: 2,
               }}
-            />
-            <View
-              style={{ alignItems: "center", gap: 10, position: "absolute" }}
             >
-              <Image
-                source={{ uri: BASE_URL + profile.avatar }}
+              <View
                 style={{
-                  width: 75,
-                  height: 75,
-                  borderRadius: 36,
-                  borderWidth: 2,
-                  borderColor: COLORS.white,
+                  alignItems: "center",
+                  gap: 10,
+                  zIndex: 1,
+                  padding: PADDING.Page,
                 }}
-              />
-              <Text
-                style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
               >
-                {profile.nama}
-              </Text>
-              <Text
-                style={{ fontSize: 13, fontWeight: 400, color: COLORS.white }}
-              >
-                {profile.nip}
-              </Text>
-            </View>
+                <Image
+                  source={{ uri: BASE_URL + profile.avatar }}
+                  style={{
+                    width: device === "tablet" ? 100 : 75,
+                    height: device === "tablet" ? 100 : 75,
+                    borderRadius: device === "tablet" ? 100 : 36,
+                    borderWidth: 2,
+                    borderColor: COLORS.white,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H1", device),
+                    fontWeight: 600,
+                    color: COLORS.white,
+                  }}
+                >
+                  {profile.nama}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 400,
+                    color: COLORS.white,
+                  }}
+                >
+                  {profile?.nip}
+                </Text>
+              </View>
+            </ImageBackground>
           </View>
           <View
             style={{
               backgroundColor: COLORS.white,
-              borderBottomLeftRadius: 8,
+              padding: 15,
               borderBottomRightRadius: 8,
-              //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
+              borderBottomLeftRadius: 8,
             }}
           >
-            <TouchableOpacity
-              onPress={() => setCollapse({ toggle: true })}
-              style={{
-                height: 50,
-                borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8,
-                justifyContent: "center",
-              }}
-            >
+            <TouchableOpacity onPress={() => setCollapse({ toggle: true })}>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   alignItems: "center",
-                  paddingHorizontal: 10,
+                  marginHorizontal: 5,
                 }}
               >
-                <Text style={{ fontSize: 13, fontWeight: 600 }}>Profil</Text>
+                <Text
+                  style={{
+                    width: "95%",
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  Profil
+                </Text>
                 {collapse.toggle === true ? (
                   <TouchableOpacity
                     onPress={() => setCollapse({ toggle: false })}
                   >
-                    <Ionicons name="chevron-up-outline" size={24} />
+                    <Ionicons
+                      name="chevron-up"
+                      size={device === "tablet" ? 40 : 24}
+                    />
                   </TouchableOpacity>
                 ) : (
-                  <Ionicons name="chevron-down-outline" size={24} />
+                  <Ionicons
+                    name="chevron-down"
+                    size={device === "tablet" ? 40 : 24}
+                  />
                 )}
               </View>
             </TouchableOpacity>
-
             {collapse.toggle === true ? (
-              <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
+              <View>
                 <TouchableOpacity
                   onPress={() => setCollapse({ toggle: false })}
                 >
-                  <View style={{ gap: 10 }}>
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                        Posisi
-                      </Text>
-                      <Text style={{ fontSize: 13, fontWeight: 600 }}>
-                        {profile.nama_jabatan}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                        Golongan
-                      </Text>
-                      <Text style={{ fontSize: 13, fontWeight: 600 }}>
-                        {profile.golongan}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                        Satuan Kerja
-                      </Text>
-                      <Text style={{ fontSize: 13, fontWeight: 600 }}>
-                        {profile.unit_kerja}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                        Unit Kerja
-                      </Text>
-                      <Text style={{ fontSize: 13, fontWeight: 600 }}>
-                        {profile.satuan_kerja_nama}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                        Kota Kantor
-                      </Text>
-                      <Text style={{ fontSize: 13, fontWeight: 600 }}>
-                        {profile.officecity}
-                      </Text>
-                    </View>
-                  </View>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Posisi
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.nama_jabatan}
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Golongan
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.golongan}
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Satuan Kerja
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.unit_kerja}
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Unit Kerja
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.satuan_kerja_nama}
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Kota Kantor
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.officecity}
+                  </Text>
                 </TouchableOpacity>
               </View>
             ) : null}
           </View>
 
-          <Text style={{ fontSize: 13, fontWeight: 700, marginVertical: 20 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 700,
+              marginVertical: 20,
+            }}
+          >
             Status
           </Text>
 
@@ -272,7 +350,6 @@ export const Personal = () => {
             <View
               style={{
                 flexDirection: "row",
-                height: 110,
                 //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: "#171717",
@@ -294,8 +371,8 @@ export const Personal = () => {
                 <View
                   style={{
                     backgroundColor: "#474747",
-                    width: 35,
-                    height: 35,
+                    width: device === "tablet" ? 50 : 35,
+                    height: device === "tablet" ? 50 : 35,
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: 8,
@@ -303,7 +380,7 @@ export const Personal = () => {
                 >
                   <Ionicons
                     name="file-tray-full-outline"
-                    size={30}
+                    size={device === "tablet" ? 40 : 30}
                     color="#EAEAEA"
                   />
                 </View>
@@ -317,23 +394,29 @@ export const Personal = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   gap: 5,
+                  padding: PADDING.Page,
                 }}
               >
                 <Text
                   style={{
-                    fontSize: 24,
+                    fontSize: device === "tablet" ? 40 : 24,
                     fontWeight: 600,
                     color: COLORS.primary,
                   }}
                 >
                   {jmlperjalanan}
                 </Text>
-                <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
                   Jumlah Perjalanan Dinas
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 400,
                     textAlign: "center",
                     width: "90%",
@@ -348,7 +431,6 @@ export const Personal = () => {
             <View
               style={{
                 flexDirection: "row",
-                height: 110,
                 //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: "#171717",
@@ -370,14 +452,18 @@ export const Personal = () => {
                 <View
                   style={{
                     backgroundColor: "#474747",
-                    width: 35,
-                    height: 35,
+                    width: device === "tablet" ? 50 : 35,
+                    height: device === "tablet" ? 50 : 35,
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: 8,
                   }}
                 >
-                  <Ionicons name="map-outline" size={30} color="#EAEAEA" />
+                  <Ionicons
+                    name="map-outline"
+                    size={device === "tablet" ? 40 : 30}
+                    color="#EAEAEA"
+                  />
                 </View>
               </View>
               <View
@@ -389,23 +475,29 @@ export const Personal = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   gap: 5,
+                  padding: PADDING.Page,
                 }}
               >
                 <Text
                   style={{
-                    fontSize: 24,
+                    fontSize: device === "tablet" ? 40 : 24,
                     fontWeight: 600,
                     color: COLORS.primary,
                   }}
                 >
                   {jmlProv}
                 </Text>
-                <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
                   Jumlah Provinsi Didatangi
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 400,
                     textAlign: "center",
                     width: "90%",
@@ -421,7 +513,6 @@ export const Personal = () => {
             <View
               style={{
                 flexDirection: "row",
-                height: 110,
                 //shadow ios
                 shadowOffset: { width: -2, height: 4 },
                 shadowColor: "#171717",
@@ -443,14 +534,18 @@ export const Personal = () => {
                 <View
                   style={{
                     backgroundColor: "#474747",
-                    width: 35,
-                    height: 35,
+                    width: device === "tablet" ? 50 : 35,
+                    height: device === "tablet" ? 50 : 35,
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: 8,
                   }}
                 >
-                  <Ionicons name="location-outline" size={30} color="#EAEAEA" />
+                  <Ionicons
+                    name="location-outline"
+                    size={device === "tablet" ? 40 : 30}
+                    color="#EAEAEA"
+                  />
                 </View>
               </View>
               <View
@@ -462,33 +557,38 @@ export const Personal = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   gap: 5,
+                  padding: PADDING.Page,
                 }}
               >
                 <Text
                   style={{
-                    fontSize: 24,
+                    fontSize: device === "tablet" ? 40 : 24,
                     fontWeight: 600,
                     color: COLORS.primary,
                   }}
                 >
                   {jmlKota}
                 </Text>
-                <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
                   Jumlah Kota Tujuan
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 400,
                     textAlign: "center",
                     width: "90%",
                     color: "#6B7280",
                   }}
                 >
-                  Kota Terakhir Didatangi:{" "}
-                  {dashboard.stats?.city?.last_visited}
+                  Kota Terakhir Didatangi: {dashboard.stats?.city?.last_visited}
                 </Text>
-                  {/* <Text style={{ fontSize: 11, fontWeight: 400, textAlign: "center", width: 250, color: "#6B7280" }}>Pada Tanggal 03 Oktober 2023</Text> */}
+                {/* <Text style={{ fontSize: 11, fontWeight: 400, textAlign: "center", width: 250, color: "#6B7280" }}>Pada Tanggal 03 Oktober 2023</Text> */}
               </View>
             </View>
           </View>
