@@ -19,7 +19,7 @@ import { Portal } from 'react-native-portalize'
 import moment from 'moment/moment'
 import { CardItemMember } from '../../../components/CardItemMember'
 import { setRefresh } from '../../../store/Pengetahuan'
-import { getDetailTaskTM, postCommentTM, updateStatusTaskTM } from '../../../service/api'
+import { deleteTask, getDetailTaskTM, postCommentTM, updateStatusTaskTM } from '../../../service/api'
 import { KeyboardAvoidingView } from 'react-native'
 import { getTokenValue } from '../../../service/session'
 import { Dropdown } from '../../../components/DropDown'
@@ -142,7 +142,7 @@ export const DetailTask = () => {
 
         return titleCase
     }
-    console.log(taskDetail)
+    console.log("ini task detail")
     return (
         <>
             {taskDetail !== null ? (
@@ -419,7 +419,19 @@ export const DetailTask = () => {
                                                 </View>
                                             </TouchableOpacity>
 
-                                            <TouchableOpacity>
+                                            <TouchableOpacity
+                                            onPress={() => {
+                                                const datas = {
+                                                token: token,
+                                                id: taskDetail.id,
+                                                };
+                                                console.log(datas)
+                                                dispatch(deleteTask(datas));
+                                                setTimeout(() => {
+                                                navigation.goBack();
+                                                }, 3000);
+                                            }}
+                                            >
                                                 <View style={{
                                                     marginHorizontal: 20,
                                                     backgroundColor: COLORS.infoDanger,

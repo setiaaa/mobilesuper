@@ -47,7 +47,7 @@ export const HDFormLaporan = () => {
       setToken(val);
     });
   }, []);
-
+  console.log(token)
   const handleSubmit = () => {
     const payload = {
     requestor:profile.nip,
@@ -59,8 +59,6 @@ export const HDFormLaporan = () => {
       token: token,
       payload: payload,
     };
-    console.log("datadalemsubmit")
-    console.log(data)
     dispatch(postTicket(data))
   };
 
@@ -68,7 +66,7 @@ export const HDFormLaporan = () => {
   const [type, setType] = useState([]);
   
   const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
+    let result = await DocumentPicker.getDocumentAsync({type: "image/*"});
     // const file = convertFileToObject(result)
     let tipe = result.uri.split("/");
     tipe = tipe[tipe.length - 1];
@@ -290,7 +288,7 @@ export const HDFormLaporan = () => {
                     >
                       {document?.map((doc, i) => (
                         <>
-                          {type[i] === "png" ? (
+                          {type[i] === "png" || "jpg" || "jpeg" ? (
                             <View
                               style={{
                                 width: 97,
@@ -302,9 +300,10 @@ export const HDFormLaporan = () => {
                                 borderColor: COLORS.ExtraDivinder,
                               }}
                             >
-                              <Image
+                              {/* <Image
                                 source={{uri: doc.uri}}
-                              />
+                              /> */}
+                              <Ionicons size={24} name="image-outline"></Ionicons>
                             </View>
                           ) : null}
                         </>

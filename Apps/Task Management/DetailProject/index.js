@@ -14,7 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { CardItemMember } from '../../../components/CardItemMember'
 import { useState } from 'react'
 import ListEmpty from '../../../components/ListEmpty'
-import { getListTaskTM } from '../../../service/api'
+import { deleteTask, deleteTaskProject, getListTaskTM } from '../../../service/api'
 
 const CardListKategori = ({ item, token, id_list, type }) => {
     const navigation = useNavigation()
@@ -48,6 +48,7 @@ const CardListKategori = ({ item, token, id_list, type }) => {
 export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => {
     const { detailProject, treeView, loading } = useSelector(state => state.task)
     const { profile } = useSelector(state => state.superApps)
+    const dispatch = useDispatch()
     // const [choiceKategori, setChoiceKategori] = useState('')
     const [dataList, setDataList] = useState([])
     const navigation = useNavigation()
@@ -266,7 +267,19 @@ export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => 
                                         </View>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                    onPress={() => {
+                                        const datas = {
+                                        token: token,
+                                        id: detailProject.id,
+                                        };
+                                        console.log(datas)
+                                        dispatch(deleteTaskProject(datas));
+                                        setTimeout(() => {
+                                        navigation.goBack();
+                                        }, 3000);
+                                    }}
+                                    >
                                         <View style={{
                                             marginHorizontal: 20,
                                             backgroundColor: COLORS.infoDanger,
