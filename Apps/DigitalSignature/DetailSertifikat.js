@@ -3,7 +3,12 @@ import { TextInput, View } from "react-native";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -118,6 +123,8 @@ export const DetailSertifikat = (route) => {
     // console.log(data);
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -154,7 +161,7 @@ export const DetailSertifikat = (route) => {
               <Text
                 style={{
                   color: "white",
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                 }}
               >
@@ -187,7 +194,7 @@ export const DetailSertifikat = (route) => {
                 ) : (
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -195,10 +202,18 @@ export const DetailSertifikat = (route) => {
                   </Text>
                 )}
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     No Sertifikat
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -206,16 +221,28 @@ export const DetailSertifikat = (route) => {
                         height={20}
                       />
                     ) : (
-                      <Text>{item?.extra_attributes?.noSertif}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {item?.extra_attributes?.noSertif}
+                      </Text>
                     )}
                   </View>
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Penerima Sertifikat
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View
                     style={{
                       flexDirection: "row",
@@ -240,20 +267,31 @@ export const DetailSertifikat = (route) => {
                                   fontWeight: FONTWEIGHT.bold,
                                   color: COLORS.info,
                                   marginBottom: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
                                 {item.receivers[0]?.display_title !== undefined
                                   ? item.receivers[0]?.display_title
                                   : null}
                               </Text>
-                              <Text style={{ color: COLORS.lighter }}>
+                              <Text
+                                style={{
+                                  color: COLORS.lighter,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
                                 {item.receivers[0].officer.nama !== undefined
                                   ? item.receivers[0].officer.nama
                                   : null}
                               </Text>
                             </View>
                           ) : (
-                            <Text style={{ color: COLORS.lighter }}>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
                               {item.receivers[0].nama}
                             </Text>
                           )}
@@ -264,10 +302,18 @@ export const DetailSertifikat = (route) => {
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Tanggal Dibuat
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -275,7 +321,9 @@ export const DetailSertifikat = (route) => {
                         height={20}
                       />
                     ) : (
-                      <Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
                         {moment(item.extra_attributes?.tanggalSertif).format(
                           "DD MMMM yyyy"
                         )}
@@ -285,10 +333,18 @@ export const DetailSertifikat = (route) => {
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Judul Course
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -296,7 +352,9 @@ export const DetailSertifikat = (route) => {
                         height={20}
                       />
                     ) : (
-                      <Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
                         {item.extra_attributes?.course?.name !== undefined
                           ? item.extra_attributes?.course?.name
                           : item.extra_attributes?.nama_course}
@@ -306,10 +364,18 @@ export const DetailSertifikat = (route) => {
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     keterangan
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -317,7 +383,9 @@ export const DetailSertifikat = (route) => {
                         height={20}
                       />
                     ) : (
-                      <Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
                         {item.extra_attributes?.keterangan === undefined ||
                         item.extra_attributes?.keterangan === ""
                           ? "-"
@@ -352,6 +420,7 @@ export const DetailSertifikat = (route) => {
                         style={{
                           color: COLORS.white,
                           fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Approval
@@ -374,7 +443,12 @@ export const DetailSertifikat = (route) => {
                             alignItems: "center",
                           }}
                         >
-                          <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                          <Text
+                            style={{
+                              fontWeight: FONTWEIGHT.bold,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             Penandatangan
                           </Text>
                           {item.sequence > index ? (
@@ -409,7 +483,12 @@ export const DetailSertifikat = (route) => {
                                   paddingHorizontal: 15,
                                 }}
                               >
-                                <Text style={{ color: COLORS.success }}>
+                                <Text
+                                  style={{
+                                    color: COLORS.success,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   Ditandatangani
                                 </Text>
                               </View>
@@ -444,7 +523,12 @@ export const DetailSertifikat = (route) => {
                                   paddingHorizontal: 15,
                                 }}
                               >
-                                <Text style={{ color: COLORS.infoDanger }}>
+                                <Text
+                                  style={{
+                                    color: COLORS.infoDanger,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   Belum Ditandatangani
                                 </Text>
                               </View>
@@ -455,9 +539,9 @@ export const DetailSertifikat = (route) => {
                           <Image
                             source={{ uri: data.avatar_url }}
                             style={{
-                              width: 50,
-                              height: 50,
-                              borderRadius: 50,
+                              width: device === "tablet" ? 80 : 50,
+                              height: device === "tablet" ? 80 : 50,
+                              borderRadius: device === "tablet" ? 80 : 50,
                               marginVertical: 10,
                               marginHorizontal: 10,
                               marginLeft: 5,
@@ -479,6 +563,10 @@ export const DetailSertifikat = (route) => {
                                       color: COLORS.info,
                                       fontWeight: FONTWEIGHT.bold,
                                       textAlign: "left",
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
                                     }}
                                   >
                                     {data.display_title}
@@ -497,6 +585,10 @@ export const DetailSertifikat = (route) => {
                                       color: COLORS.lighter,
                                       fontWeight: FONTWEIGHT.bold,
                                       textAlign: "left",
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
                                     }}
                                   >
                                     {data.officer.nama}
@@ -517,6 +609,10 @@ export const DetailSertifikat = (route) => {
                                       marginTop: 10,
                                       color: COLORS.lighter,
                                       fontWeight: FONTWEIGHT.bold,
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
                                     }}
                                   >
                                     {data.nama}
@@ -599,7 +695,13 @@ export const DetailSertifikat = (route) => {
                   marginHorizontal: "5%",
                 }}
               >
-                <Text style={{ color: COLORS.white, marginVertical: 15 }}>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
                   Lihat Sertifikat
                 </Text>
               </TouchableOpacity>
@@ -617,7 +719,13 @@ export const DetailSertifikat = (route) => {
                 }}
                 onPress={() => bottomSheetAttach()}
               >
-                <Text style={{ color: COLORS.white, marginVertical: 15 }}>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Sign
                 </Text>
               </TouchableOpacity>
@@ -659,7 +767,12 @@ export const DetailSertifikat = (route) => {
                       flex: 1,
                     }}
                   >
-                    <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H1", device),
+                        fontWeight: 500,
+                      }}
+                    >
                       Tanda Tangan Sertifikat
                     </Text>
                   </TouchableOpacity>
@@ -740,7 +853,7 @@ export const DetailSertifikat = (route) => {
                   <Text
                     style={{
                       color: COLORS.white,
-                      fontSize: FONTSIZE.H1,
+                      fontSize: fontSizeResponsive("H1", device),
                       fontWeight: 500,
                     }}
                   >

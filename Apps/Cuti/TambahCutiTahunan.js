@@ -19,6 +19,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -53,7 +54,11 @@ const kategories = [
 ];
 
 export const CardlPimpinan = ({ item }) => {
-  return <Text>{item.nama_lengkap}</Text>;
+  return (
+    <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+      {item.nama_lengkap}
+    </Text>
+  );
 };
 
 export const TambahCutiTahunan = () => {
@@ -248,6 +253,9 @@ export const TambahCutiTahunan = () => {
   };
 
   console.log(jumlahCuti.jumlah_cuti);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -280,7 +288,7 @@ export const TambahCutiTahunan = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -305,7 +313,14 @@ export const TambahCutiTahunan = () => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jenis Cuti</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Jenis Cuti
+                </Text>
               </View>
 
               <View
@@ -326,7 +341,7 @@ export const TambahCutiTahunan = () => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -336,7 +351,7 @@ export const TambahCutiTahunan = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -356,7 +371,7 @@ export const TambahCutiTahunan = () => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -366,7 +381,7 @@ export const TambahCutiTahunan = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -387,7 +402,7 @@ export const TambahCutiTahunan = () => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -397,7 +412,7 @@ export const TambahCutiTahunan = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -419,7 +434,7 @@ export const TambahCutiTahunan = () => {
                     >
                       <Text
                         style={{
-                          fontSize: 13,
+                          fontSize: fontSizeResponsive("H3", device),
                           fontWeight: 600,
                           width: "40%",
                           paddingRight: 20,
@@ -429,7 +444,7 @@ export const TambahCutiTahunan = () => {
                       </Text>
                       <Text
                         style={{
-                          fontSize: 13,
+                          fontSize: fontSizeResponsive("H3", device),
                           fontWeight: 400,
                           width: "60%",
                           paddingRight: 20,
@@ -455,10 +470,22 @@ export const TambahCutiTahunan = () => {
                 }}
               >
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Sub jenis Cuti
                   </Text>
-                  <Text style={{ color: COLORS.danger }}>*</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    *
+                  </Text>
                 </View>
                 <Dropdown
                   data={subJenisCuti()}
@@ -488,7 +515,12 @@ export const TambahCutiTahunan = () => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Profil Pegawai
                 </Text>
               </View>
@@ -508,8 +540,16 @@ export const TambahCutiTahunan = () => {
                   >
                     <View style={{ flexDirection: "row" }}>
                       <View style={{ width: "90%" }}>
-                        <Text>{form.data_user?.nama}</Text>
-                        <Text>NIP. {form.data_user?.nip}</Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          {form.data_user?.nama}
+                        </Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          NIP. {form.data_user?.nip}
+                        </Text>
                       </View>
                       {collapse.nip === profile.nip &&
                       collapse.toggle === true ? (
@@ -531,23 +571,56 @@ export const TambahCutiTahunan = () => {
                       <TouchableOpacity
                         onPress={() => setCollapse({ nip: "", toggle: false })}
                       >
-                        <Text style={{ marginTop: 10 }}>Golongan</Text>
                         <Text
-                          style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}
+                          style={{
+                            marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Golongan
+                        </Text>
+                        <Text
+                          style={{
+                            marginTop: 5,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
                         >
                           {form.data_user?.golongan}
                         </Text>
 
-                        <Text style={{ marginTop: 10 }}>Jabatan</Text>
                         <Text
-                          style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}
+                          style={{
+                            marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Jabatan
+                        </Text>
+                        <Text
+                          style={{
+                            marginTop: 5,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
                         >
                           {form.data_user?.jabatan}
                         </Text>
 
-                        <Text style={{ marginTop: 10 }}>Unit Kerja</Text>
                         <Text
-                          style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}
+                          style={{
+                            marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Unit Kerja
+                        </Text>
+                        <Text
+                          style={{
+                            marginTop: 5,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
                         >
                           {form.data_user?.unit_kerja}
                         </Text>
@@ -567,7 +640,9 @@ export const TambahCutiTahunan = () => {
                   gap: 20,
                 }}
               >
-                <Text>Periode Cuti</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Periode Cuti
+                </Text>
                 <View
                   style={{
                     flexDirection: "row",
@@ -590,7 +665,11 @@ export const TambahCutiTahunan = () => {
                         numberOfLines={4}
                         maxLength={40}
                         placeholder="Mulai"
-                        style={{ padding: 10, height: 40 }}
+                        style={{
+                          padding: 10,
+                          height: 40,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                         value={TanggalMulai}
                       />
                       <View
@@ -630,7 +709,11 @@ export const TambahCutiTahunan = () => {
                         numberOfLines={4}
                         maxLength={40}
                         placeholder="Selesai"
-                        style={{ padding: 10, height: 40 }}
+                        style={{
+                          padding: 10,
+                          height: 40,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                         value={TanggalSelesai}
                       />
                       <View
@@ -924,7 +1007,15 @@ export const TambahCutiTahunan = () => {
                                       alignItems: "center",
                                     }}
                                   >
-                                    <Text style={{ color: COLORS.white }}>
+                                    <Text
+                                      style={{
+                                        color: COLORS.white,
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
                                       Ok
                                     </Text>
                                   </View>
@@ -940,7 +1031,11 @@ export const TambahCutiTahunan = () => {
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Durasi Cuti</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Durasi Cuti
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -950,7 +1045,9 @@ export const TambahCutiTahunan = () => {
                       borderRadius: 8,
                     }}
                   >
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {jumlahCuti.jumlah_cuti === undefined
                         ? "0"
                         : jumlahCuti.jumlah_cuti.toString()}
@@ -960,7 +1057,11 @@ export const TambahCutiTahunan = () => {
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Alamat Cuti</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Alamat Cuti
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -976,13 +1077,18 @@ export const TambahCutiTahunan = () => {
                       multiline
                       onChangeText={setAlamat}
                       value={alamat}
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
                     />
                   </View>
                 </View>
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Telepon</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Telepon
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -1000,13 +1106,18 @@ export const TambahCutiTahunan = () => {
                       maxLength={40}
                       onChangeText={setTelepon}
                       value={telepon}
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
                     />
                   </View>
                 </View>
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Alasan Cuti</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Alasan Cuti
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -1024,6 +1135,7 @@ export const TambahCutiTahunan = () => {
                       maxLength={50}
                       placeholder="Ketikan Sesuatu"
                       onChangeText={setAlasanCuti}
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
                     />
                   </View>
                 </View>
@@ -1044,7 +1156,14 @@ export const TambahCutiTahunan = () => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Lampiran
+                </Text>
               </View>
 
               <View
@@ -1075,7 +1194,12 @@ export const TambahCutiTahunan = () => {
                         size={30}
                         color={COLORS.white}
                       />
-                      <Text style={{ color: COLORS.white }}>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Klik Untuk Unggah
                       </Text>
                     </View>
@@ -1116,7 +1240,12 @@ export const TambahCutiTahunan = () => {
                   )}
                 </View>
 
-                <Text style={{ color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   *) Hanya pdf yang akan diterima dari total berkas file maks
                   5mb
                 </Text>
@@ -1138,7 +1267,12 @@ export const TambahCutiTahunan = () => {
                       size={18}
                       color={COLORS.primary}
                     />
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       Info Cuti
                     </Text>
                   </View>
@@ -1151,11 +1285,20 @@ export const TambahCutiTahunan = () => {
                       ]}
                     >
                       <Text
-                        style={{ color: COLORS.white, textAlign: "center" }}
+                        style={{
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Kuota Penuh
                       </Text>
-                      <Text style={{ color: COLORS.white }}>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {form.data_kuota_cuti?.full_kuota}
                       </Text>
                     </View>
@@ -1166,11 +1309,20 @@ export const TambahCutiTahunan = () => {
                       ]}
                     >
                       <Text
-                        style={{ color: COLORS.white, textAlign: "center" }}
+                        style={{
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Kuota Terpakai
                       </Text>
-                      <Text style={{ color: COLORS.white }}>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {form.data_kuota_cuti?.kuota_terpakai}
                       </Text>
                     </View>
@@ -1181,11 +1333,20 @@ export const TambahCutiTahunan = () => {
                       ]}
                     >
                       <Text
-                        style={{ color: COLORS.white, textAlign: "center" }}
+                        style={{
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Kuota Sisa
                       </Text>
-                      <Text style={{ color: COLORS.white }}>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {form.data_kuota_cuti?.kuota_sisa}
                       </Text>
                     </View>
@@ -1208,7 +1369,12 @@ export const TambahCutiTahunan = () => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Yang Menyetujui
                 </Text>
               </View>
@@ -1224,7 +1390,7 @@ export const TambahCutiTahunan = () => {
                   <View style={{ flexDirection: "row", padding: 10 }}>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 600,
                         paddingRight: 20,
                       }}
@@ -1249,7 +1415,7 @@ export const TambahCutiTahunan = () => {
                   <View style={{ flexDirection: "row", padding: 10 }}>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 600,
                         paddingRight: 20,
                       }}
@@ -1286,32 +1452,44 @@ export const TambahCutiTahunan = () => {
             <TouchableOpacity
               style={{
                 backgroundColor: COLORS.success,
-                padding: 10,
+                paddingVertical: 10,
                 borderRadius: 10,
                 width: "46.5%",
-                height: 50,
+
                 justifyContent: "center",
               }}
               onPress={handleSubmit}
             >
-              <Text style={{ textAlign: "center", color: COLORS.white }}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: COLORS.white,
+                  fontSize: fontSizeResponsive("H2", device),
+                }}
+              >
                 Kirim
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
                 backgroundColor: "#B745FF",
-                padding: 10,
+                paddingVertical: 10,
                 borderRadius: 10,
                 width: "46.5%",
-                height: 50,
+
                 justifyContent: "center",
               }}
               onPress={() => {
                 handleSubmitDraft();
               }}
             >
-              <Text style={{ textAlign: "center", color: COLORS.white }}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: COLORS.white,
+                  fontSize: fontSizeResponsive("H2", device),
+                }}
+              >
                 Simpan Draft
               </Text>
             </TouchableOpacity>

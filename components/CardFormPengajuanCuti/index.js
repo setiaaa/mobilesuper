@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { getFormCuti } from "../../service/api";
 import { Text, TouchableOpacity, View } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -10,7 +10,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export const CardFormPengajuanCuti = ({ item, profile }) => {
+export const CardFormPengajuanCuti = ({ item, profile, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const formCuti = (id) => {
@@ -38,7 +38,15 @@ export const CardFormPengajuanCuti = ({ item, profile }) => {
         >
           <Ionicons name="calendar-outline" size={18} color={COLORS.white} />
         </TouchableOpacity>
-        <Text style={{ width: wp(30), textAlign: "center" }}>{item.nama}</Text>
+        <Text
+          style={{
+            width: wp(30),
+            textAlign: "center",
+            fontSize: fontSizeResponsive("H3", device),
+          }}
+        >
+          {item.nama}
+        </Text>
       </View>
     </View>
   );

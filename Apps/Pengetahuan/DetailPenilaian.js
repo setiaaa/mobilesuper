@@ -13,6 +13,7 @@ import {
   DATETIME,
   FONTWEIGHT,
   FONTSIZE,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,7 +34,7 @@ import {
 import { getTokenValue } from "../../service/session";
 import { color } from "react-native-reanimated";
 
-const CardLampiran = ({ lampiran, onClick, type, id }) => {
+const CardLampiran = ({ lampiran, onClick, type, id, device }) => {
   const navigation = useNavigation();
   return type === "png" || type === "jpg" || type === "jpeg" ? (
     <TouchableOpacity key={id} onPress={onClick}>
@@ -247,6 +248,8 @@ export const DetailPenilaian = () => {
     dispatch(getViewLinimasa(params));
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -293,7 +296,8 @@ export const DetailPenilaian = () => {
             borderTopLeftRadius: 32,
             borderTopRightRadius: 32,
             marginTop: -40,
-            padding: 20,
+            paddingVertical: 20,
+            paddingHorizontal: "5%",
           }}
         >
           <View
@@ -309,15 +313,24 @@ export const DetailPenilaian = () => {
               source={require("../../assets/superApp/logoKecil.png")}
               style={{ width: 37, height: 37 }}
             />
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H1", device),
+              }}
+            >
               Formulir Penilaian Pengetahuan
             </Text>
           </View>
 
           <View key={data?.id} style={{ marginTop: 10 }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <Text>Periode: </Text>
-              <Text>{getPeriode(data?.quarter)}</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Periode:{" "}
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                {getPeriode(data?.quarter)}
+              </Text>
             </View>
 
             <View
@@ -327,8 +340,12 @@ export const DetailPenilaian = () => {
                 justifyContent: "center",
               }}
             >
-              <Text>PJ: </Text>
-              <Text>{profile.nama}</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                PJ:{" "}
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                {profile.nama}
+              </Text>
             </View>
 
             <View
@@ -341,10 +358,16 @@ export const DetailPenilaian = () => {
             />
 
             <View style={{ flexDirection: "row", marginTop: 5 }}>
-              <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: device === "tablet" ? 200 : 130,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Jenis
               </Text>
-              <Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 :{" "}
                 {data?.category === null || data?.category === ""
                   ? "-"
@@ -353,10 +376,16 @@ export const DetailPenilaian = () => {
             </View>
 
             <View style={{ flexDirection: "row", marginTop: 5 }}>
-              <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: device === "tablet" ? 200 : 130,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Terbuat
               </Text>
-              <Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 :{" "}
                 {data?.published_date === null || data?.published_date === ""
                   ? "-"
@@ -367,20 +396,37 @@ export const DetailPenilaian = () => {
             </View>
 
             <View style={{ flexDirection: "row", marginTop: 5 }}>
-              <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: device === "tablet" ? 200 : 130,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Judul [What]
               </Text>
-              <Text style={{ width: 186 }}>
+              <Text
+                style={{
+                  width: "70%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 :{" "}
                 {data?.title === null || data?.title === "" ? "-" : data?.title}
               </Text>
             </View>
 
             <View style={{ flexDirection: "row", marginTop: 5 }}>
-              <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: device === "tablet" ? 200 : 130,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Tempat Agenda [Where]
               </Text>
-              <Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 :{" "}
                 {data?.place_agenda === null || data?.place_agenda === ""
                   ? "-"
@@ -389,10 +435,21 @@ export const DetailPenilaian = () => {
             </View>
 
             <View style={{ flexDirection: "row", marginTop: 5 }}>
-              <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: device === "tablet" ? 200 : 130,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Anggota Agenda [Who]
               </Text>
-              <Text style={{ width: 200 }}>
+              <Text
+                style={{
+                  width: 200,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 :{" "}
                 {data?.members_agenda === null || data?.members_agenda === ""
                   ? "-"
@@ -402,12 +459,26 @@ export const DetailPenilaian = () => {
 
             <View style={{ marginTop: 5 }}>
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 200 : 130,
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Rangkuman [Why]
                 </Text>
-                <Text>:</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  :
+                </Text>
               </View>
-              <Text style={{ marginTop: 10, marginHorizontal: 10 }}>
+              <Text
+                style={{
+                  marginTop: 10,
+                  marginHorizontal: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 {data?.summary === null || data?.summary === ""
                   ? "-"
                   : data?.summary}
@@ -416,19 +487,32 @@ export const DetailPenilaian = () => {
 
             <View style={{ marginTop: 5 }}>
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ width: 130, fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 200 : 130,
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Deskripsi [How]
                 </Text>
-                <Text>:</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  :
+                </Text>
               </View>
               <View style={{ marginHorizontal: 10 }}>
                 {data?.content === null || data?.content === "" ? (
-                  <Text>{"-"}</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    {"-"}
+                  </Text>
                 ) : (
                   <RenderHTML
                     source={source}
                     contentWidth={width}
                     enableExperimentalMarginCollapsing={true}
+                    tagsStyles={{
+                      p: { fontSize: fontSizeResponsive("H4", device) },
+                    }}
                   />
                 )}
                 {/* <Text style={{ marginTop: 5, marginHorizontal: 10 }}>{data.deskripsi}</Text> */}
@@ -436,7 +520,15 @@ export const DetailPenilaian = () => {
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: 130, fontWeight: "bold" }}>Lampiran</Text>
+              <Text
+                style={{
+                  width: device === "tablet" ? 200 : 130,
+                  fontWeight: "bold",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Lampiran
+              </Text>
             </View>
             {data?.attachments.length !== 0 ? (
               <FlatList
@@ -452,6 +544,7 @@ export const DetailPenilaian = () => {
                         setVisibleModal(true);
                         setLampiranById(item);
                       }}
+                      device={device}
                     />
                   </View>
                 )}
@@ -464,9 +557,10 @@ export const DetailPenilaian = () => {
             ) : (
               <Text
                 style={{
-                  width: 130,
+                  width: device === "tablet" ? 200 : 130,
                   marginHorizontal: 10,
                   fontWeight: FONTWEIGHT.bolder,
+                  fontSize: fontSizeResponsive("H4", device),
                 }}
               >
                 {"-"}
@@ -576,7 +670,14 @@ export const DetailPenilaian = () => {
               }}
             >
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Nilai:</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Nilai:
+                </Text>
               </View>
 
               <View style={{ width: "65%" }}>
@@ -607,13 +708,28 @@ export const DetailPenilaian = () => {
                 <Text
                   style={{
                     fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Tanggal Nilai
                 </Text>
               </View>
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>:</Text>
-              <Text style={{ marginLeft: 20 }}>{tanggal}</Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                :
+              </Text>
+              <Text
+                style={{
+                  marginLeft: 20,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {tanggal}
+              </Text>
             </View>
           </View>
         </View>
@@ -624,7 +740,7 @@ export const DetailPenilaian = () => {
           <TouchableOpacity
             style={{
               width: "90%",
-              height: 50,
+              paddingVertical: 20,
               backgroundColor: COLORS.info,
               justifyContent: "center",
               alignItems: "center",
@@ -643,13 +759,21 @@ export const DetailPenilaian = () => {
               navigation.navigate("PenilaianPenggetahaun");
             }}
           >
-            <Text style={{ color: COLORS.white }}>Approve</Text>
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: fontSizeResponsive("H2", device),
+              }}
+            >
+              Approve
+            </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={{
               width: "90%",
-              height: 50,
+              paddingVertical: 20,
+
               backgroundColor: COLORS.danger,
               justifyContent: "center",
               alignItems: "center",
@@ -668,7 +792,14 @@ export const DetailPenilaian = () => {
               navigation.navigate("PenilaianPenggetahaun");
             }}
           >
-            <Text style={{ color: COLORS.white }}>Cancel Approve</Text>
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Cancel Approve
+            </Text>
           </TouchableOpacity>
         )}
         {/* <TouchableOpacity style={{
@@ -694,7 +825,7 @@ export const DetailPenilaian = () => {
         <TouchableOpacity
           style={{
             width: "90%",
-            height: 50,
+            paddingVertical: 20,
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 8,
@@ -706,7 +837,14 @@ export const DetailPenilaian = () => {
           }}
           onPress={() => setVisibleModal(true)}
         >
-          <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
+          <Text
+            style={{
+              color: COLORS.white,
+              fontSize: fontSizeResponsive("H2", device),
+            }}
+          >
+            Take Down Artikel
+          </Text>
         </TouchableOpacity>
 
         <Modal
@@ -748,7 +886,7 @@ export const DetailPenilaian = () => {
                 <View>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -805,7 +943,14 @@ export const DetailPenilaian = () => {
                     else if (error !== "" && error) alert("gagal takedown");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Take Down Artikel</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Take Down Artikel
+                  </Text>
                 </TouchableOpacity>
               </ScrollView>
             </View>
@@ -815,7 +960,8 @@ export const DetailPenilaian = () => {
         <TouchableOpacity
           style={{
             width: "90%",
-            height: 50,
+            paddingVertical: 20,
+
             borderColor: COLORS.info,
             borderWidth: 1,
             justifyContent: "center",
@@ -829,7 +975,14 @@ export const DetailPenilaian = () => {
             navigation.navigate("DetailLinimasa");
           }}
         >
-          <Text style={{ color: COLORS.info }}>Lihat Pengetahuan</Text>
+          <Text
+            style={{
+              color: COLORS.info,
+              fontSize: fontSizeResponsive("H2", device),
+            }}
+          >
+            Lihat Pengetahuan
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

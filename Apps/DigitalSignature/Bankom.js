@@ -8,7 +8,12 @@ import {
   View,
 } from "react-native";
 import { Text } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -44,7 +49,14 @@ import {
 } from "@gorhom/bottom-sheet";
 import { ModalSubmit } from "../../components/ModalSubmit";
 
-const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
+const ListBankom = ({
+  item,
+  variant,
+  token,
+  isSelected,
+  setSelection,
+  device,
+}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -102,7 +114,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
         >
           <Text
             style={{
-              fontSize: 16,
+              fontSize: fontSizeResponsive("H1", device),
               width: 300,
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
@@ -122,7 +134,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
           <View style={{ flexDirection: "row" }}>
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 110,
                 textAlign: "justify",
                 paddingRight: 12,
@@ -133,14 +145,26 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
               Penerima
             </Text>
             {item?.receivers[0]?.display_title !== undefined ? (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%" }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
                 :{" "}
                 {item?.receivers[0]?.officer?.nama !== undefined
                   ? item?.receivers[0]?.officer?.nama
                   : null}
               </Text>
             ) : (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%" }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
                 :{" "}
                 {item?.receivers[0]?.nama !== undefined
                   ? item?.receivers[0]?.nama
@@ -149,7 +173,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
             )}
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 200,
                 textAlign: "justify",
                 fontWeight: FONTWEIGHT.normal,
@@ -161,7 +185,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
           <View style={{ flexDirection: "row" }}>
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 110,
                 textAlign: "auto",
                 paddingRight: 12,
@@ -173,7 +197,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
             </Text>
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 200,
                 textAlign: "auto",
                 fontWeight: FONTWEIGHT.normal,
@@ -377,7 +401,7 @@ export const Bankom = () => {
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H1,
+                    fontSize: fontSizeResponsive("H1", device),
                     fontWeight: FONTWEIGHT.bold,
                     color: COLORS.white,
                     marginRight: isSelected.length === 0 ? 50 : null,
@@ -458,6 +482,7 @@ export const Bankom = () => {
                       variant === "composer"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   List Saya
@@ -487,6 +512,7 @@ export const Bankom = () => {
                       variant === "draft"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Draft
@@ -518,6 +544,7 @@ export const Bankom = () => {
                       variant === "inprogress"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Need Sign
@@ -549,6 +576,7 @@ export const Bankom = () => {
                       variant === "signed"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Signed
@@ -580,6 +608,7 @@ export const Bankom = () => {
                       variant === "completed"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Selesai
@@ -598,6 +627,7 @@ export const Bankom = () => {
                     variant={variant}
                     isSelected={isSelected}
                     setSelection={setSelection}
+                    device={device}
                   />
                 </View>
               )}
@@ -656,7 +686,10 @@ export const Bankom = () => {
                         }}
                       >
                         <Text
-                          style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}
+                          style={{
+                            fontSize: fontSizeResponsive("H1", device),
+                            fontWeight: 500,
+                          }}
                         >
                           Tanda Tangan Sertifikat
                         </Text>
@@ -744,7 +777,7 @@ export const Bankom = () => {
                       <Text
                         style={{
                           color: COLORS.white,
-                          fontSize: FONTSIZE.H1,
+                          fontSize: fontSizeResponsive("H1", device),
                           fontWeight: 500,
                         }}
                       >
