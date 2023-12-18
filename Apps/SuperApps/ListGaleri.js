@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { CardListGaleriHome } from "../../components/CardListGaleriHome";
 import { getTokenValue } from "../../service/session";
@@ -23,7 +23,7 @@ import { RefreshControl } from "react-native";
 
 export const ListGaleri = () => {
   const { galeri, loading } = useSelector((state) => state.superApps);
-
+  const { device } = useSelector((state) => state.apps);
   const navigation = useNavigation();
   const [visibleModal, setVisibleModal] = useState(false);
   const [galeriById, setGaleriById] = useState({});
@@ -79,24 +79,22 @@ export const ListGaleri = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getGaleri({ token, page }));
-            console.log(page, 'page')
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getGaleri({ token, page }));
+        console.log(page, "page");
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
 
-  // console.log(visibleModal);
-  console.log(galeri.lists);
   return (
     <View style={{ flex: 1 }}>
       <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
@@ -130,7 +128,13 @@ export const ListGaleri = () => {
               marginRight: 40,
             }}
           >
-            <Text style={{ color: "white", fontSize: 15, fontWeight: 600 }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 600,
+              }}
+            >
               Galeri
             </Text>
           </View>

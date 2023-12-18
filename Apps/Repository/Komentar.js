@@ -317,11 +317,12 @@ export const Komentar = () => {
   };
 
   return (
-    < >
+    // <>
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "height" : "height"}
-      // keyboardVerticalOffset={parentId !== "" ? 80: 70}
-      keyboardVerticalOffset={70}
+      style={{ flex: 1, marginBottom:10 }}
+        behavior={(Platform.OS === 'ios') ? 'padding' : null}
+        enabled
+        keyboardVerticalOffset={Platform.select({ ios: 80, android: 500 })}
     >
       <View
         style={{
@@ -377,7 +378,7 @@ export const Komentar = () => {
         ListEmptyComponent={() => <ListEmpty />}
         style={{ height:'68%'}}
       />
-      <View style={{ justifyContent: "flex-end" }}>
+      <View style={{ justifyContent: "flex-end", width:"90%", alignSelf:"center" }}>
                 {parentId.id !== "" ? (
                   <View
                     style={{
@@ -401,18 +402,16 @@ export const Komentar = () => {
                 <View
                   style={{
                     height: 1,
-                    width: "90%",
+                    width: "100%",
                     backgroundColor: COLORS.lighter,
                     opacity: 0.3,
                     marginTop: 10,
-                    marginHorizontal: 20,
                   }}
                 />
                 <View
                   style={{
                     borderWidth: 1,
-                    width: "90%",
-                    marginLeft: 17,
+                    width: "100%",
                     borderRadius: 16,
                     borderColor: COLORS.ExtraDivinder,
                     flexDirection: "row",
@@ -425,7 +424,7 @@ export const Komentar = () => {
                     maxLength={30}
                     placeholder="Ketik Komentar Disini"
                     // ref={inputRef}
-                    style={{ padding: 10 }}
+                    style={{ padding: 10, width:"90%" }}
                     onChangeText={setKomen}
                     value={komen}
                   />
@@ -434,7 +433,6 @@ export const Komentar = () => {
                       alignItems: "flex-end",
                       flex: 1,
                       marginRight: 10,
-                      marginLeft:50,
                       justifyContent: "center",
                     }}
                   >
@@ -453,6 +451,6 @@ export const Komentar = () => {
                 </View>
               </View>
       </KeyboardAvoidingView>
-    </ >
+    // </ >
   );
 };

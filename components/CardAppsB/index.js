@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONTSIZE } from "../../config/SuperAppps";
+import { COLORS, FONTSIZE, fontSizeResponsive } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
 import {
   widthPercentageToDP as wp,
@@ -42,6 +42,9 @@ export const CardAppsB = ({ handlePressModal }) => {
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
+
+  const { device } = useSelector((state) => state.apps);
+
   useEffect(() => {
     let tmpMenu = [];
     tmpMenu.push(
@@ -66,7 +69,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/korespondensi-ikon3.png")}
             />
           </View>
@@ -76,7 +82,9 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: device === "tablet" ? "center" : null,
+            width: device === "tablet" ? 200 : null,
           }}
         >
           Korespondensi
@@ -103,7 +111,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/kebijakan-ikon.png")}
             />
           </View>
@@ -113,7 +124,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Kebijakan
@@ -142,7 +153,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/pengetahuan-ikon.png")}
             />
           </View>
@@ -152,7 +166,8 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
+            width: device === "tablet" ? 200 : null,
             textAlign: "center",
           }}
         >
@@ -183,7 +198,10 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/digital-ikon.png")}
             />
           </View>
@@ -193,7 +211,9 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
+            width: device === "tablet" ? 200 : null,
+            textAlign: device === "tablet" ? "center" : null,
           }}
         >
           Digital Sign
@@ -220,7 +240,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/cuti-ikon.png")}
             />
           </View>
@@ -230,7 +253,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Cuti
@@ -257,7 +280,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/sppd-ikon.png")}
             />
           </View>
@@ -267,7 +293,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             textAlign: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           SPPD
@@ -294,7 +320,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/task-ikon.png")}
             />
           </View>
@@ -304,8 +333,9 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
             textAlign: "center",
+            width: device === "tablet" ? 300 : null,
           }}
         >
           Task{"\n"}Management
@@ -332,7 +362,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             ]}
           >
             <Image
-              style={{ width: 28, height: 28 }}
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
               source={require("../../assets/superApp/pegawai-ikon.png")}
             />
           </View>
@@ -342,7 +375,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Pegawai
@@ -374,7 +407,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               ]}
             >
               <Image
-                style={{ width: 28, height: 28 }}
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 28,
+                }}
                 source={require("../../assets/superApp/preparing-ikon.png")}
               />
             </View>
@@ -384,11 +420,12 @@ export const CardAppsB = ({ handlePressModal }) => {
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: FONTSIZE.H4,
+              fontSize: fontSizeResponsive("H4", device),
               textAlign: "center",
+              width: device === "tablet" ? 400 : 200,
             }}
           >
-            Preparing{"\n"}dan Sharing
+            Preparing dan Sharing
           </Text>
         </View>
       );
@@ -418,7 +455,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               ]}
             >
               <Image
-                style={{ width: 28, height: 28 }}
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 28,
+                }}
                 source={require("../../assets/superApp/kalender-ikon.png")}
               />
             </View>
@@ -428,7 +468,7 @@ export const CardAppsB = ({ handlePressModal }) => {
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: FONTSIZE.H4,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             Kalender
@@ -473,7 +513,10 @@ export const CardAppsB = ({ handlePressModal }) => {
               ]}
             >
               <Image
-                style={{ width: 28, height: 28 }}
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 28,
+                }}
                 source={require("../../assets/superApp/agenda-ikon.png")}
               />
             </View>
@@ -482,8 +525,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             style={{
               marginTop: 10,
               justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              width: device === "tablet" ? 200 : null,
               textAlign: "center",
-              fontSize: FONTSIZE.H4,
             }}
           >
             Agenda Rapat
@@ -537,8 +582,7 @@ export const CardAppsB = ({ handlePressModal }) => {
         renderItem={renderRow}
         keyExtractor={(row, index) => `row_${index}`}
         columnWrapperStyle={{
-          justifyContent: "space-between",
-          marginHorizontal: 15,
+          marginHorizontal: "5%",
           gap: 5,
         }}
         numColumns={numColumns}
@@ -556,8 +600,8 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   cardApps: {
-    width: 50,
-    height: 50,
+    width: wp(15),
+    height: hp(7),
     borderRadius: 8,
   },
   item: {

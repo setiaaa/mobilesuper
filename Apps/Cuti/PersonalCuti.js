@@ -101,6 +101,8 @@ export const PersonalCuti = () => {
     }
   }, [arsipLists]);
 
+  // console.log(kuota);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -434,7 +436,7 @@ export const PersonalCuti = () => {
           </View>
 
           <View style={{ paddingHorizontal: PADDING.Page }}>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kouta Cuti</Text>
+            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kuota Cuti</Text>
             <FlatList
               data={kuota.data_kuota_cuti}
               renderItem={({ item }) => (

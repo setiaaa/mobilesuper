@@ -2,7 +2,12 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import {} from "react-native";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
@@ -39,6 +44,8 @@ function MyTabBar({ props, navigation }) {
   const isRolePenangkapan = profile.roles_access?.some((item) =>
     dataRoleDashboardpenangkapan.includes(item)
   );
+
+  const { device } = useSelector((state) => state.apps);
   return (
     <BottomSheetModalProvider>
       <>
@@ -254,7 +261,7 @@ function MyTabBar({ props, navigation }) {
             key={5}
             onPress={() => {
               setTabItemIndex(5);
-              navigation.navigate("FAQ", { unread: false });
+              navigation.navigate("HelpDesk", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
@@ -382,7 +389,7 @@ function MyTabBar({ props, navigation }) {
                 width: "90%",
                 height: hp(43),
                 borderRadius: 10,
-                marginTop: "70%",
+                marginTop: device === "tablet" ? "40%" : "70%",
               }}
             >
               <View
@@ -396,7 +403,14 @@ function MyTabBar({ props, navigation }) {
                   borderBottomColor: COLORS.grey,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dashboard
+                </Text>
                 <TouchableOpacity
                   style={{ alignItems: "center", justifyContent: "center" }}
                   onPress={() => {
@@ -405,7 +419,7 @@ function MyTabBar({ props, navigation }) {
                 >
                   <Ionicons
                     name="close-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.lighter}
                   />
                 </TouchableOpacity>
@@ -443,7 +457,10 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                          style={{ width: 24, height: 18 }}
+                          style={{
+                            width: device === "tablet" ? 50 : 24,
+                            height: device === "tablet" ? 40 : 18,
+                          }}
                           source={require("../../assets/superApp/ikon-keuangan.png")}
                         />
                       </View>
@@ -453,8 +470,8 @@ function MyTabBar({ props, navigation }) {
                         marginTop: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: FONTSIZE.H4,
-                        width: 100,
+                        fontSize: fontSizeResponsive("H4", device),
+                        width: device === "tablet" ? 200 : 100,
                         textAlign: "center",
                       }}
                     >
@@ -488,7 +505,10 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                          style={{ width: 18, height: 18 }}
+                          style={{
+                            width: device === "tablet" ? 50 : 24,
+                            height: device === "tablet" ? 50 : 18,
+                          }}
                           source={require("../../assets/superApp/ikon-kepagawaian.png")}
                         />
                       </View>
@@ -498,8 +518,9 @@ function MyTabBar({ props, navigation }) {
                         marginTop: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: FONTSIZE.H4,
-                        height: 40,
+                        fontSize: fontSizeResponsive("H4", device),
+                        width: device === "tablet" ? 200 : 100,
+                        textAlign: "center",
                       }}
                     >
                       Kepegawaian
@@ -540,7 +561,10 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                          style={{ width: 18, height: 18 }}
+                          style={{
+                            width: device === "tablet" ? 50 : 24,
+                            height: device === "tablet" ? 50 : 18,
+                          }}
                           source={require("../../assets/superApp/ikon-budidaya.png")}
                         />
                       </View>
@@ -550,8 +574,9 @@ function MyTabBar({ props, navigation }) {
                         marginTop: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: FONTSIZE.H4,
-                        height: 40,
+                        fontSize: fontSizeResponsive("H4", device),
+                        width: device === "tablet" ? 200 : 100,
+                        textAlign: "center",
                       }}
                     >
                       Produksi Budidaya
@@ -590,7 +615,10 @@ function MyTabBar({ props, navigation }) {
                           ]}
                         >
                           <Image
-                            style={{ width: 18, height: 18 }}
+                            style={{
+                              width: device === "tablet" ? 50 : 24,
+                              height: device === "tablet" ? 50 : 18,
+                            }}
                             source={require("../../assets/superApp/ikon-penangkapan.png")}
                           />
                         </View>
@@ -600,8 +628,9 @@ function MyTabBar({ props, navigation }) {
                           marginTop: 10,
                           justifyContent: "center",
                           alignItems: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                          width: device === "tablet" ? 200 : 100,
                           textAlign: "center",
-                          fontSize: FONTSIZE.H4,
                         }}
                       >
                         Produksi Penangkapan

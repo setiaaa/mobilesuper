@@ -202,7 +202,12 @@ export const DetailTodo = () => {
 
     return (
         < >
-        <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <KeyboardAvoidingView 
+        style={{ flex: 1 }}
+        behavior={(Platform.OS === 'ios') ? 'padding' : null}
+        enabled
+        // keyboardVerticalOffset={Platform.select({ ios: 80, android: 500 })}
+        >
             <GestureHandlerRootView>
                 <BottomSheetModalProvider>
                     <ScrollView>
@@ -437,7 +442,7 @@ export const DetailTodo = () => {
                             <View style={{ width: '90%', backgroundColor: COLORS.white, padding: 16, borderRadius: 16 }}>
                                 <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
                                 {parentId.id !== "" ? ( 
-                                    <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
+                                    <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20, paddingVertical:10}}>
                                         <Text>Membalas {parentId.creator}</Text>
                                         <TouchableOpacity>
                                         <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
@@ -451,8 +456,8 @@ export const DetailTodo = () => {
                                         multiline
                                         numberOfLines={4}
                                         maxLength={40}
-                                        placeholder='Pilih member'
-                                        style={{ padding: 10, borderWidth: 1, borderRadius: 8, borderColor: COLORS.ExtraDivinder, flex: 2 }}
+                                        placeholder='Ketik Komentar'
+                                        style={{ padding: 10, borderWidth: 1, borderRadius: 8, borderColor: COLORS.ExtraDivinder, width:"90%" }}
                                         onChangeText={(e) => {
                                             setMessage(e)
                                         }}

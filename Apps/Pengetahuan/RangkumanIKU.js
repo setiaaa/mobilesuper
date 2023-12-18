@@ -619,7 +619,7 @@ export const RangkumanIKU = () => {
                       </Text>
                       <TouchableOpacity
                         onPress={() => {
-                          closeBottomSheet();
+                          bottomSheetAttachSelectClose();
                         }}
                       >
                         <Ionicons
