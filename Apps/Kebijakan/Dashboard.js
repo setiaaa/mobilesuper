@@ -329,7 +329,6 @@ export default function Dashboard(params) {
         </View>
         <View
           style={{
-            backgroundColor: "brown",
             width: "100%",
             height: "100%",
             alignItems: "center",

@@ -19,7 +19,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { CardItemMember } from "../../../components/CardItemMember";
 import { useState } from "react";
 import ListEmpty from "../../../components/ListEmpty";
-import { getListTaskTM } from "../../../service/api";
+import {
+  deleteTask,
+  deleteTaskProject,
+  getListTaskTM,
+} from "../../../service/api";
 
 const CardListKategori = ({ item, token, id_list, type }) => {
   const navigation = useNavigation();
@@ -39,13 +43,12 @@ const CardListKategori = ({ item, token, id_list, type }) => {
           borderRadius: 8,
           gap: 1,
           marginVertical: 5,
-          marginHorizontal: "5%",
+          marginHorizontal: 20,
           //shadow
           shadowOffset: { width: -2, height: 4 },
           shadowColor: "#171717",
           shadowOpacity: 0.2,
           shadowRadius: 3,
-          elevation: 2,
         }}
       >
         <View style={{ marginVertical: 10, marginLeft: 10 }}>
@@ -68,6 +71,7 @@ export const DetailProject = ({
     (state) => state.task
   );
   const { profile } = useSelector((state) => state.superApps);
+  const dispatch = useDispatch();
   // const [choiceKategori, setChoiceKategori] = useState('')
   const [dataList, setDataList] = useState([]);
   const navigation = useNavigation();
@@ -128,7 +132,7 @@ export const DetailProject = ({
             <View
               style={{
                 backgroundColor: COLORS.white,
-                marginHorizontal: "5%",
+                marginHorizontal: 20,
                 borderRadius: 8,
               }}
             >
@@ -483,7 +487,7 @@ export const DetailProject = ({
                 >
                   <View
                     style={{
-                      marginHorizontal: "5%",
+                      marginHorizontal: 20,
                       backgroundColor: COLORS.lightBrown,
                       width: Platform.OS === "ios" ? "90%" : "91%",
                       height: 50,
@@ -496,10 +500,22 @@ export const DetailProject = ({
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    const datas = {
+                      token: token,
+                      id: detailProject.id,
+                    };
+                    console.log(datas);
+                    dispatch(deleteTaskProject(datas));
+                    setTimeout(() => {
+                      navigation.goBack();
+                    }, 3000);
+                  }}
+                >
                   <View
                     style={{
-                      marginHorizontal: "5%",
+                      marginHorizontal: 20,
                       backgroundColor: COLORS.infoDanger,
                       width: Platform.OS === "ios" ? "90%" : "91%",
                       height: 50,
@@ -517,7 +533,7 @@ export const DetailProject = ({
             <View>
               <Text
                 style={{
-                  marginHorizontal: "5%",
+                  marginHorizontal: 20,
                   marginVertical: 10,
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.lighter,

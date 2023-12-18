@@ -363,7 +363,14 @@ export const Personal = () => {
                 >
                   {dashboard.stats?.documents?.counter?.toString()}
                 </Text>
-                <Text style={{ color: COLORS.white }}>Kegiatan Bulan ini</Text>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Kegiatan Bulan ini
+                </Text>
               </View>
             </View>
 
@@ -382,7 +389,13 @@ export const Personal = () => {
                 >
                   {dashboard.stats?.events?.counter?.toString()}
                 </Text>
-                <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    textAlign: "center",
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
                   Jumlah Dokumen Bulan ini
                 </Text>
               </View>

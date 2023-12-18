@@ -52,7 +52,7 @@ export const HDFormLaporan = () => {
       setToken(val);
     });
   }, []);
-
+  console.log(token)
   const handleSubmit = () => {
     const payload = {
       requestor: profile.nip,
@@ -73,7 +73,7 @@ export const HDFormLaporan = () => {
   const [type, setType] = useState([]);
 
   const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
+    let result = await DocumentPicker.getDocumentAsync({type: "image/*"});
     // const file = convertFileToObject(result)
     let tipe = result.uri.split("/");
     tipe = tipe[tipe.length - 1];
@@ -301,36 +301,39 @@ export const HDFormLaporan = () => {
                 </View>
               </Pressable>
               {document < 1 ? null : (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginHorizontal: 20,
-                    marginVertical: 10,
-                    flexWrap: "wrap",
-                    gap: 10,
-                  }}
-                >
-                  {document?.map((doc, i) => (
-                    <>
-                      {type[i] === "png" ? (
-                        <View
-                          style={{
-                            width: 97,
-                            height: 97,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderWidth: 1,
-                            borderRadius: 8,
-                            borderColor: COLORS.ExtraDivinder,
-                          }}
-                        >
-                          <Image source={{ uri: doc.uri }} />
-                        </View>
-                      ) : null}
-                    </>
-                  ))}
-                </View>
-              )}
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginHorizontal: 20,
+                        marginVertical: 10,
+                        flexWrap: "wrap",
+                        gap: 10,
+                      }}
+                    >
+                      {document?.map((doc, i) => (
+                        <>
+                          {type[i] === "png" || "jpg" || "jpeg" ? (
+                            <View
+                              style={{
+                                width: 97,
+                                height: 97,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderWidth: 1,
+                                borderRadius: 8,
+                                borderColor: COLORS.ExtraDivinder,
+                              }}
+                            >
+                              {/* <Image
+                                source={{uri: doc.uri}}
+                              /> */}
+                              <Ionicons size={24} name="image-outline"></Ionicons>
+                            </View>
+                          ) : null}
+                        </>
+                      ))}
+                    </View>
+                  )}
             </View>
           </View>
 

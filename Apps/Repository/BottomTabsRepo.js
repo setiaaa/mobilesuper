@@ -2,19 +2,19 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import {} from "react-native";
+import { useSelector } from "react-redux";
 
 function MyTabBarRepo({ props, navigation }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
-
+  const { device } = useSelector((state) => state.apps);
   return (
     <>
       <BottomSheetModalProvider>
         <View
           style={{
             flexDirection: "row",
-            height: 68,
             backgroundColor: COLORS.white,
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
@@ -33,9 +33,9 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -53,20 +53,42 @@ function MyTabBarRepo({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="list" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Dokumen</Text>
+                <Ionicons
+                  name="list"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dokumen
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
-                <Ionicons name="list" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Dokumen</Text>
+                <Ionicons
+                  name="list"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dokumen
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -83,9 +105,9 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -106,21 +128,39 @@ function MyTabBarRepo({ props, navigation }) {
                 <Ionicons
                   name="people-outline"
                   color={COLORS.primary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.primary }}>Dibagikan</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dibagikan
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
-                <Ionicons name="people-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Dibagikan</Text>
+                <Ionicons
+                  name="people-outline"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dibagikan
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -137,9 +177,9 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -160,25 +200,39 @@ function MyTabBarRepo({ props, navigation }) {
                 <Ionicons
                   name="documents-outline"
                   color={COLORS.primary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.primary }}>Dokumen Template</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dokumen Template
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <Ionicons
                   name="documents-outline"
                   color={COLORS.grey}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.grey }}>Dokumen Template</Text>
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dokumen Template
+                </Text>
               </View>
             )}
           </TouchableOpacity>

@@ -35,7 +35,7 @@ export const AddressBookJabatan = ({ route }) => {
   const [kategori, setKategori] = useState("");
 
   const { addressbook } = useSelector((state) => state.addressBookKKP);
-
+  console.log(addressbook);
   function getIndicator(isExpanded) {
     if (isExpanded) {
       return (

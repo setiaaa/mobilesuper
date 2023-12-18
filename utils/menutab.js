@@ -83,6 +83,10 @@ import { PIncoming } from "../Apps/Korespondensi/Pencarian/PIncoming";
 import { PDisposition } from "../Apps/Korespondensi/Pencarian/PDisposition";
 import { PSubmitted } from "../Apps/Korespondensi/Pencarian/PSubmitted";
 import { Pencarian } from "../Apps/Kebijakan/Pencarian";
+import { Arsip } from "../Apps/Task Management/Korespondensi/Arsip";
+import { TerlewatKorespondensi } from "../Apps/Task Management/Korespondensi/TerlewatKorespondensi";
+import { HariIniKorespondensi } from "../Apps/Task Management/Korespondensi/HariIniKorespondensi";
+import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/MingguDepanKorespondensi";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -606,28 +610,28 @@ export const TopsTaskKorespondensi = () => {
       >
         <Top.Screen
           name="Arsip"
-          component={InProgres}
+          component={Arsip}
           options={{
             title: "Arsip",
           }}
         />
         <Top.Screen
-          name="Terlewat"
-          component={Pending}
+          name="TerlewatKorespondensi"
+          component={TerlewatKorespondensi}
           options={{
             title: "Terlewat",
           }}
         />
         <Top.Screen
-          name="HariIni"
-          component={Complete}
+          name="HariIniKorespondensi"
+          component={HariIniKorespondensi}
           options={{
             title: "Hari Ini",
           }}
         />
         <Top.Screen
-          name="MingguDepan"
-          component={BackLog}
+          name="MingguDepanKorespondensi"
+          component={MingguDepanKorespondensi}
           options={{
             title: "Minggu Depan",
           }}
