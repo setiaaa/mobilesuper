@@ -20,7 +20,12 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { useMemo } from "react";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { setDokumentlists, setLoadMore } from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +42,7 @@ import { Dropdown } from "../../components/DropDown";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const DataList = ({ token, item, bottomSheetAttach }) => {
+const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -46,7 +51,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDocument(params));
   };
-  console.log(item.published)
+  console.log(item.published);
   return (
     <BottomSheetModalProvider>
       <View
@@ -55,8 +60,9 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           display: "flex",
           flexDirection: "row",
           marginVertical: 10,
-          marginHorizontal: 20,
-          backgroundColor: item.published === true ? COLORS.white: COLORS.ExtraDivinder,
+          marginHorizontal: "5%",
+          backgroundColor:
+            item.published === true ? COLORS.white : COLORS.ExtraDivinder,
           borderRadius: 8,
           shadowColor: "black",
           shadowOffset: { width: 0, height: 0 },
@@ -79,230 +85,215 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               display: "flex",
             }}
           >
-          {item.published === true ? 
-            <TouchableOpacity
-              onPress={() => {
-                // bottomSheetAttach(item);
-                navigation.navigate("MainDetailRepo");
-                getDetailRepo(item.id);
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: FONTWEIGHT.bold,
-                  marginBottom: 10,
-                  width: 300,
+            {item.published === true ? (
+              <TouchableOpacity
+                onPress={() => {
+                  // bottomSheetAttach(item);
+                  navigation.navigate("MainDetailRepo");
+                  getDetailRepo(item.id);
                 }}
               >
-                {item.title}
-              </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: FONTWEIGHT.bold,
+                    marginBottom: 10,
+                    width: device === "tablet" ? 400 : 300,
+                  }}
+                >
+                  {item.title}
+                </Text>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Jumlah File
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {item.attachments.length}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: device === "tablet" ? 200 : 100,
+                    }}
+                  >
+                    Jumlah File
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {item.attachments.length}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                  marginVertical: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
+                    marginVertical: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: device === "tablet" ? 200 : 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: device === "tablet" ? 200 : 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View>
                 <Text
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: FONTWEIGHT.bold,
+                    marginBottom: 10,
+                    width: device === "tablet" ? 400 : 300,
                   }}
                 >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
+                  {item.title}
                 </Text>
-              </View>
-            </TouchableOpacity>
-          :
-          <View
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: FONTWEIGHT.bold,
-                  marginBottom: 10,
-                  width: 300,
-                }}
-              >
-                {item.title}
-              </Text>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Jumlah File
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {item.attachments.length}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: device === "tablet" ? 200 : 100,
+                    }}
+                  >
+                    Jumlah File
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {item.attachments.length}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                  marginVertical: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
+                    marginVertical: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: device === "tablet" ? 200 : 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  // backgroundColor: "brown",
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingRight: 10,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    width: 100,
+                    // backgroundColor: "brown",
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingRight: 10,
                   }}
                 >
-                  Perubahan
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                  }}
-                >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      width: device === "tablet" ? 200 : 100,
+                    }}
+                  >
+                    Perubahan
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                  </Text>
+                </View>
               </View>
-            </View>
-          }
-            {/* <View
-              style={{
-                justifyContent: "center",
-                alignItems: "flex-end",
-                flex: 1,
-                marginRight: 20,
-              }}
-            >
-              <Ionicons
-                name="ellipsis-vertical-outline"
-                size={24}
-                color={COLORS.grey}
-              />
-            </View> */}
+            )}
           </View>
         </View>
       </View>
@@ -402,21 +393,22 @@ export const Dokumen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getDocument({ token: token, page: page, type: type.key }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getDocument({ token: token, page: page, type: type.key }));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page, type]);
 
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <GestureHandlerRootView>
@@ -451,13 +443,25 @@ export const Dokumen = () => {
               </TouchableOpacity>
             </View>
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-              <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: "white",
+                }}
+              >
                 Preparing dan Sharing
               </Text>
             </View>
           </View>
-          <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
-            <Search placeholder={"Cari"} onSearch={filter} />
+          <View
+            style={{ width: "90%", marginHorizontal: "5%", marginVertical: 20 }}
+          >
+            <Search
+              placeholder={"Cari"}
+              onSearch={filter}
+              iconColor={COLORS.primary}
+            />
             <View style={{ marginTop: 20 }}>
               <Dropdown
                 data={dropdownFilter}
@@ -477,6 +481,7 @@ export const Dokumen = () => {
                   bottomSheetAttach={bottomSheetAttach}
                   item={item}
                   token={token}
+                  device={device}
                 />
               )}
               ListFooterComponent={() =>
@@ -493,7 +498,9 @@ export const Dokumen = () => {
                 ) : null
               }
               keyExtractor={(item) => "_" + item.id}
-              style={{ height: 500 }}
+              style={{
+                height: device === "tablet" ? "79%" : "67%",
+              }}
               ListEmptyComponent={() => <ListEmpty />}
               onEndReached={() => {
                 if (dokumen.lists.length !== 0) {

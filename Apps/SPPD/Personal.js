@@ -128,7 +128,7 @@ export const Personal = () => {
       </View>
 
       <ScrollView>
-        <View style={{ padding: PADDING.Page }}>
+        <View style={{ paddingVertical: 20, paddingHorizontal: "5%" }}>
           <View
             style={{
               justifyContent: "center",

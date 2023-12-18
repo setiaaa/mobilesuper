@@ -27,7 +27,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-
 const CardListAbsen = ({ item, loading }) => {
   const [user, setUser] = useState("member");
   const [checkIn, setCheckin] = useState("");
@@ -59,7 +58,9 @@ const CardListAbsen = ({ item, loading }) => {
           <Text>{item.member?.nama}</Text>
         )}
         <View style={{ marginTop: 10 }}>
-          <View style={{ flexDirection: "row", gap: wp(4), alignItems: "center"}}>
+          <View
+            style={{ flexDirection: "row", gap: wp(4), alignItems: "center" }}
+          >
             <Text style={{ width: 110 }}>Status</Text>
             {loading ? (
               <ShimmerPlaceHolder
@@ -134,10 +135,10 @@ const CardListAbsen = ({ item, loading }) => {
                   alignItems: "center",
                   marginTop: 10,
                   flexDirection: "row",
-                  gap:wp(2)
+                  gap: wp(2),
                 }}
               >
-                <Text style={{ width: "35%",}}>Waktu Check In</Text>
+                <Text style={{ width: "35%" }}>Waktu Check In</Text>
                 {loading ? (
                   <ShimmerPlaceHolder
                     style={{ borderRadius: 4 }}
@@ -148,8 +149,8 @@ const CardListAbsen = ({ item, loading }) => {
                   <View
                     style={{
                       width: wp(52),
-                      paddingHorizontal:3,
-                      paddingVertical:1,
+                      paddingHorizontal: 3,
+                      paddingVertical: 1,
                       borderRadius: 30,
                       backgroundColor: COLORS.ExtraDivinder,
                       justifyContent: "center",
@@ -178,7 +179,6 @@ export const Absen = () => {
   const [token, setToken] = useState("");
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-
 
   const { absen, agenda, loading } = useSelector((state) => state.event);
   const idagenda = agenda.detail?.id;
@@ -240,19 +240,19 @@ export const Absen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getlistAbsen({ token, idagenda }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getlistAbsen({ token, idagenda }));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token]);
 
   // useEffect(() => {
@@ -392,47 +392,61 @@ export const Absen = () => {
 
       {/* </View> */}
 
-      <View style={{ padding: 20, flexDirection: 'row', gap: 10}}>
-        <View style={{ width: '85%'}}>
-          <Search placeholder={"Cari"} onSearch={filter} />
+      <View
+        style={{
+          paddingVertical: 20,
+          flexDirection: "row",
+          marginHorizontal: "5%",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <View style={{ width: "85%" }}>
+          <Search
+            placeholder={"Cari"}
+            onSearch={filter}
+            iconColor={COLORS.primary}
+          />
         </View>
 
         <TouchableOpacity onPress={!ascending ? asc : desc}>
-        <View
-          style={{
-          width: 40,
-          height: 40,
-          borderRadius: 30,
-          backgroundColor: COLORS.white,
-          justifyContent: "center",
-          alignItems: "center",
-          borderColor: COLORS.secondaryLighter,
-          borderWidth: isFiltered ? 1 : 0,
-        }}
-        >
-          <Ionicons name="filter-outline" size={24} />
-        </View>
-      </TouchableOpacity>
+          <View
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 30,
+              backgroundColor: COLORS.white,
+              justifyContent: "center",
+              alignItems: "center",
+              borderColor: COLORS.secondaryLighter,
+              borderWidth: isFiltered ? 1 : 0,
+            }}
+          >
+            <Ionicons name="filter-outline" size={24} />
+          </View>
+        </TouchableOpacity>
       </View>
-
-      
 
       <FlatList
         data={filterData}
-        renderItem={({ item }) => (
-          <CardListAbsen item={item}  />
-        )}
+        renderItem={({ item }) => <CardListAbsen item={item} />}
         ListEmptyComponent={() => <ListEmpty />}
-        ListFooterComponent={() => (
+        ListFooterComponent={() =>
           loading && (
-            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 24,
+              }}
+            >
               <ActivityIndicator size="large" color={COLORS.primary} />
             </View>
           )
-      )}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
+        }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         style={{}}
       />
     </>

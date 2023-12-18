@@ -89,7 +89,7 @@ export const Libur = () => {
               <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: 30, color: COLORS.lighter }}>2023</Text>
             </View> */}
 
-            <View style={{ paddingHorizontal: 20 }}>
+            <View style={{ paddingHorizontal: "5%" }}>
               {/* <View
                 style={{
                   backgroundColor: COLORS.white,
@@ -149,7 +149,7 @@ export const Libur = () => {
               />
             </View>
 
-            <View style={{ paddingHorizontal: 20 }}>
+            <View style={{ paddingHorizontal: "5%" }}>
               {/* <View
                 style={{
                   backgroundColor: COLORS.white,

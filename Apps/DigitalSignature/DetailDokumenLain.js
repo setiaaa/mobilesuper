@@ -76,6 +76,8 @@ export const DetailDokumenLain = () => {
                 width: 28,
                 height: 28,
                 marginLeft: 20,
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -104,15 +106,21 @@ export const DetailDokumenLain = () => {
               style={{
                 width: "90%",
                 backgroundColor: COLORS.white,
-                marginHorizontal: 20,
+                marginHorizontal: "5%",
                 borderRadius: 8,
                 marginTop: 20,
               }}
             >
-              <View style={{ marginHorizontal: 20, marginVertical: 20, width:"89%"}}>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginVertical: 20,
+                  width: "89%",
+                }}
+              >
                 {loading ? (
                   <ShimmerPlaceHolder
-                    style={{ borderRadius: 4, width:"100%" }}
+                    style={{ borderRadius: 4, width: "100%" }}
                     height={20}
                   />
                 ) : (
@@ -131,43 +139,43 @@ export const DetailDokumenLain = () => {
                     No Dokumen
                   </Text>
                   <Text>:</Text>
-                  <View style={{width: "45%",}}>
+                  <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
-                        style={{ borderRadius: 4, width:"100%" }}
+                        style={{ borderRadius: 4, width: "100%" }}
                         height={20}
                       />
                     ) : (
-                      <Text>
-                        {item.extra_attributes?.noDokumen}
-                      </Text>
+                      <Text>{item.extra_attributes?.noDokumen}</Text>
                     )}
                   </View>
                 </View>
 
-                <View style={{ flexDirection: "row", gap: 10, marginTop: 20, }}>
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                     Penerima Sertifikat
                   </Text>
                   <Text>:</Text>
-                  <View 
+                  <View
                     style={{
                       flexDirection: "row",
                       alignItems: "center",
                       gap: 10,
-                      width:"45%"
-                    }}>
-                    <View style={{width:"100%"}}>
+                      width: "45%",
+                    }}
+                  >
+                    <View style={{ width: "100%" }}>
                       {loading ? (
                         <ShimmerPlaceHolder
-                          style={{ borderRadius: 4, width:"100%" }}
+                          style={{ borderRadius: 4, width: "100%" }}
                           height={20}
                         />
                       ) : (
                         <View>
                           {item.receivers !== undefined ? (
                             <View>
-                              {item.receivers[0]?.display_title !== undefined ? (
+                              {item.receivers[0]?.display_title !==
+                              undefined ? (
                                 <View>
                                   <Text
                                     style={{
@@ -176,23 +184,33 @@ export const DetailDokumenLain = () => {
                                       marginBottom: 5,
                                     }}
                                   >
-                                    {item.receivers[0]?.display_title !== undefined
+                                    {item.receivers[0]?.display_title !==
+                                    undefined
                                       ? item.receivers[0]?.display_title
                                       : null}
                                   </Text>
                                   <Text
-                                    style={{ color: COLORS.lighter, width: "80%" }}
+                                    style={{
+                                      color: COLORS.lighter,
+                                      width: "80%",
+                                    }}
                                   >
-                                    {item.receivers[0]?.officer?.nama !== undefined
+                                    {item.receivers[0]?.officer?.nama !==
+                                    undefined
                                       ? item.receivers[0]?.officer?.nama
                                       : "-"}
                                   </Text>
                                 </View>
                               ) : (
                                 <Text
-                                  style={{ color: COLORS.lighter, width: "80%" }}
+                                  style={{
+                                    color: COLORS.lighter,
+                                    width: "80%",
+                                  }}
                                 >
-                                  {item.receivers[0]?.nama !== undefined ? item.receivers[0]?.nama : item.receivers?.officer.nama}
+                                  {item.receivers[0]?.nama !== undefined
+                                    ? item.receivers[0]?.nama
+                                    : item.receivers?.officer.nama}
                                 </Text>
                               )}
                             </View>
@@ -224,10 +242,10 @@ export const DetailDokumenLain = () => {
                     Tanggal Dibuat
                   </Text>
                   <Text>:</Text>
-                  <View style={{width:"45%"}}>
+                  <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
-                        style={{ borderRadius: 4, width:"100%" }}
+                        style={{ borderRadius: 4, width: "100%" }}
                         height={20}
                       />
                     ) : (
@@ -248,13 +266,11 @@ export const DetailDokumenLain = () => {
                   <View>
                     {loading ? (
                       <ShimmerPlaceHolder
-                        style={{ borderRadius: 4, width:"100%" }}
+                        style={{ borderRadius: 4, width: "100%" }}
                         height={20}
                       />
                     ) : (
-                      <Text>
-                        {item.extra_attributes?.jenisDokumen}
-                      </Text>
+                      <Text>{item.extra_attributes?.jenisDokumen}</Text>
                     )}
                   </View>
                 </View>
@@ -266,7 +282,7 @@ export const DetailDokumenLain = () => {
                   <Text>:</Text>
                   {loading ? (
                     <ShimmerPlaceHolder
-                      style={{ borderRadius: 4, width:"100%" }}
+                      style={{ borderRadius: 4, width: "100%" }}
                       height={20}
                     />
                   ) : (
@@ -330,7 +346,14 @@ export const DetailDokumenLain = () => {
                             Penandatangan
                           </Text>
                           {item.sequence > index ? (
-                            <View style={{flexDirection:"row", width:"60%", justifyContent:"center", alignItems:"center"}}>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                width: "60%",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
                               <View
                                 style={{
                                   backgroundColor: COLORS.success,
@@ -360,7 +383,14 @@ export const DetailDokumenLain = () => {
                               </View>
                             </View>
                           ) : (
-                            <View style={{flexDirection:"row", width:"60%", justifyContent:"center", alignItems:"center"}}>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                width: "60%",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
                               <View
                                 style={{
                                   backgroundColor: COLORS.infoDanger,
@@ -433,8 +463,11 @@ export const DetailDokumenLain = () => {
                                       fontWeight: FONTWEIGHT.bold,
                                     }}
                                   >
-                                    {data?.officer?.nama != undefined ? data?.officer?.nama : "-" ||
-                                    data?.nama !== undefined ? data?.nama : "-"}
+                                    {data?.officer?.nama != undefined
+                                      ? data?.officer?.nama
+                                      : "-" || data?.nama !== undefined
+                                      ? data?.nama
+                                      : "-"}
                                   </Text>
                                 )}
                               </View>
@@ -454,8 +487,13 @@ export const DetailDokumenLain = () => {
                                       fontWeight: FONTWEIGHT.bold,
                                     }}
                                   >
-                                    {item.receivers[0]?.officer?.nama !== undefined ? item.receivers?.officer?.nama : "-" ||
-                                    item.receivers[0]?.nama !== undefined ? item.receivers.nama : "-"}
+                                    {item.receivers[0]?.officer?.nama !==
+                                    undefined
+                                      ? item.receivers?.officer?.nama
+                                      : "-" ||
+                                        item.receivers[0]?.nama !== undefined
+                                      ? item.receivers.nama
+                                      : "-"}
                                   </Text>
                                 )}
                               </View>
@@ -482,7 +520,7 @@ export const DetailDokumenLain = () => {
                   borderRadius: 6,
                   justifyContent: "flex-end",
                   alignItems: "center",
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
                 }}
               >
                 <Text style={{ color: COLORS.white, marginVertical: 15 }}>
@@ -498,7 +536,7 @@ export const DetailDokumenLain = () => {
                   borderRadius: 6,
                   justifyContent: "flex-end",
                   alignItems: "center",
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
                 }}
                 onPress={() =>
                   navigation.navigate("PdfPerisai", {

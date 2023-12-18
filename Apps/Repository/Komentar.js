@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { KeyboardAvoidingView, TextInput, TouchableOpacity } from "react-native";
+import {
+  KeyboardAvoidingView,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,15 +11,19 @@ import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { Image } from "react-native";
 import { useState } from "react";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
 import { getDetailDocument, postCommentRepo } from "../../service/api";
 
-const DaftarKomentar = ({ items, setParentId }) => {
-  
+const DaftarKomentar = ({ items, setParentId, device }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     id: items.id,
@@ -23,7 +31,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
   const handleClickBalas = () => {
     // if (inputRef.current) {
     //   inputRef.current.focus();
-      setParentId({id:items.id, creator:items.creator} );
+    setParentId({ id: items.id, creator: items.creator });
     // }
   };
   const clickBalas = (id, temp) => {
@@ -32,8 +40,8 @@ const DaftarKomentar = ({ items, setParentId }) => {
       id: id,
     });
   };
-  console.log('ini items')
-  console.log(items)
+  console.log("ini items");
+  console.log(items);
 
   return (
     <View
@@ -73,7 +81,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H2,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
                 lineHeight: 20,
                 wordWrap: "break-word",
@@ -85,7 +93,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   lineHeight: 18,
                   marginBottom: 10,
@@ -98,7 +106,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
             <Text
               style={{
                 color: COLORS.lighter,
-                fontSize: FONTSIZE.H5,
+                fontSize: fontSizeResponsive("H5", device),
                 fontWeight: FONTWEIGHT.normal,
                 lineHeight: 18,
                 wordWrap: "break-word",
@@ -119,7 +127,11 @@ const DaftarKomentar = ({ items, setParentId }) => {
               }}
             >
               <Text
-                style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+                style={{
+                  color: COLORS.primary,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 Balas
               </Text>
@@ -127,10 +139,11 @@ const DaftarKomentar = ({ items, setParentId }) => {
             {items.children?.length === 0 ? null : (
               <View>
                 {(!toggleComment.toggle && toggleComment.id === items.id) ||
-                  (toggleComment.id !== items.id && items.children > 0) ? (
-                  <TouchableOpacity 
+                (toggleComment.id !== items.id && items.children > 0) ? (
+                  <TouchableOpacity
                     key={items.id}
-                    onPress={() => clickBalas(items.id, true)}>
+                    onPress={() => clickBalas(items.id, true)}
+                  >
                     <View
                       style={{
                         flexDirection: "row",
@@ -149,7 +162,7 @@ const DaftarKomentar = ({ items, setParentId }) => {
                       <Text
                         style={{
                           color: COLORS.lighter,
-                          fontSize: FONTSIZE.H5,
+                          fontSize: fontSizeResponsive("H5", device),
                           fontWeight: FONTWEIGHT.normal,
                           lineHeight: 18,
                           wordWrap: "break-word",
@@ -163,113 +176,112 @@ const DaftarKomentar = ({ items, setParentId }) => {
 
                 {items.id === toggleComment.id && toggleComment.toggle ? (
                   <View>
-                  {items.children?.map((listKomen, index) => (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginVertical: 10,
-                        marginHorizontal: 20,
-                      }}
-                    >
-                      <View>
-                        <Image
-                              source={{ uri: listKomen.creator_avatar }}
-                              style={{
-                                width: 30,
-                                height: 30,
-                                borderRadius: 20,
-                              }}
-                            />
-                      </View>
-                      <View style={{ marginLeft: 10 }}>
-                        <Text
-                          style={{
-                            fontSize: FONTSIZE.H2,
-                            fontWeight: FONTWEIGHT.bold,
-                            lineHeight: 20,
-                          }}
-                        >
-                          {listKomen.creator}
-                        </Text>
-                        <View style={{ flexDirection: "row", gap: 5 }}>
-                          <Text
+                    {items.children?.map((listKomen, index) => (
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          marginVertical: 10,
+                          marginHorizontal: 20,
+                        }}
+                      >
+                        <View>
+                          <Image
+                            source={{ uri: listKomen.creator_avatar }}
                             style={{
-                              color: COLORS.lighter,
-                              fontSize: FONTSIZE.H5,
-                              fontWeight: FONTWEIGHT.normal,
-                              lineHeight: 18,
-                              marginBottom: 10,
-                            }}
-                          >
-                            {listKomen.created_at}
-                          </Text>
-                          <View
-                            style={{
-                              height: "70%",
-                              width: 1,
-                              backgroundColor: "#DBDADE",
+                              width: 30,
+                              height: 30,
+                              borderRadius: 20,
                             }}
                           />
+                        </View>
+                        <View style={{ marginLeft: 10 }}>
                           <Text
                             style={{
-                              color: COLORS.lighter,
-                              fontSize: FONTSIZE.H5,
+                              fontSize: fontSizeResponsive("H2", device),
+                              fontWeight: FONTWEIGHT.bold,
+                              lineHeight: 20,
+                            }}
+                          >
+                            {listKomen.creator}
+                          </Text>
+                          <View style={{ flexDirection: "row", gap: 5 }}>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                fontSize: fontSizeResponsive("H5", device),
+                                fontWeight: FONTWEIGHT.normal,
+                                lineHeight: 18,
+                                marginBottom: 10,
+                              }}
+                            >
+                              {listKomen.created_at}
+                            </Text>
+                            <View
+                              style={{
+                                height: "70%",
+                                width: 1,
+                                backgroundColor: "#DBDADE",
+                              }}
+                            />
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                fontSize: fontSizeResponsive("H5", device),
+                                fontWeight: FONTWEIGHT.normal,
+                                lineHeight: 18,
+                              }}
+                            >
+                              {listKomen.jam}
+                            </Text>
+                          </View>
+                          <Text
+                            style={{
+                              color: "#999999",
+                              fontSize: fontSizeResponsive("H5", device),
                               fontWeight: FONTWEIGHT.normal,
                               lineHeight: 18,
                             }}
                           >
-                            {listKomen.jam}
+                            {listKomen.message}
                           </Text>
-                        </View>
-                        <Text
-                          style={{
-                            color: "#999999",
-                            fontSize: FONTSIZE.H5,
-                            fontWeight: FONTWEIGHT.normal,
-                            lineHeight: 18,
-                          }}
-                        >
-                          {listKomen.message}
-                        </Text>
-                        {items.children?.length - 1 === index ? (
-                          <TouchableOpacity
-                            key={listKomen.id}
-                            onPress={() => clickBalas(items.id, false)}
-                          >
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                gap: 5,
-                                marginTop: 10,
-                              }}
+                          {items.children?.length - 1 === index ? (
+                            <TouchableOpacity
+                              key={listKomen.id}
+                              onPress={() => clickBalas(items.id, false)}
                             >
                               <View
                                 style={{
-                                  height: 1,
-                                  width: 20,
-                                  backgroundColor: "#DBDADE",
-                                }}
-                              />
-                              <Text
-                                style={{
-                                  color: COLORS.lighter,
-                                  fontSize: FONTSIZE.H5,
-                                  fontWeight: FONTWEIGHT.normal,
-                                  lineHeight: 18,
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  gap: 5,
+                                  marginTop: 10,
                                 }}
                               >
-                                Tutup {items.children?.length} Balasan
-                              </Text>
-                            </View>
-                          </TouchableOpacity>
-                        ) : null}
+                                <View
+                                  style={{
+                                    height: 1,
+                                    width: 20,
+                                    backgroundColor: "#DBDADE",
+                                  }}
+                                />
+                                <Text
+                                  style={{
+                                    color: COLORS.lighter,
+                                    fontSize: fontSizeResponsive("H5", device),
+                                    fontWeight: FONTWEIGHT.normal,
+                                    lineHeight: 18,
+                                  }}
+                                >
+                                  Tutup {items.children?.length} Balasan
+                                </Text>
+                              </View>
+                            </TouchableOpacity>
+                          ) : null}
+                        </View>
                       </View>
-                    </View>
-                  ))}
-                </View>
-                  )
-                  : null}
+                    ))}
+                  </View>
+                ) : null}
               </View>
             )}
           </View>
@@ -289,10 +301,10 @@ export const Komentar = () => {
   const detail = dokumen.detail;
 
   const comment = detail.comments;
-  console.log(dokumen)
+  console.log(dokumen);
   // console.log(comment);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -309,20 +321,22 @@ export const Komentar = () => {
       token: token,
       payload: payload,
     };
-    console.log(parentId.id)
-    console.log(payload.parent_id)
+    console.log(parentId.id);
+    console.log(payload.parent_id);
     dispatch(postCommentRepo(data));
     setKomen("");
     setParentId({ id: "", creator: "" });
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     // <>
     <KeyboardAvoidingView
-      style={{ flex: 1, marginBottom:10 }}
-        behavior={(Platform.OS === 'ios') ? 'padding' : null}
-        enabled
-        keyboardVerticalOffset={Platform.select({ ios: 80, android: 500 })}
+      style={{ flex: 1, marginBottom: 10 }}
+      behavior={Platform.OS === "ios" ? "padding" : null}
+      enabled
+      keyboardVerticalOffset={Platform.select({ ios: 80, android: 500 })}
     >
       <View
         style={{
@@ -351,7 +365,7 @@ export const Komentar = () => {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -361,96 +375,107 @@ export const Komentar = () => {
         </View>
       </View>
       <View style={{ marginVertical: 20, marginLeft: 20 }}>
-        <Text>Komentar ({comment?.length})</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          Komentar ({comment?.length})
+        </Text>
       </View>
       <FlatList
         data={comment}
         renderItem={({ item }) => (
           <View key={item.id}>
-            <DaftarKomentar 
+            <DaftarKomentar
               items={item}
               // inputRef={inputRef}
               setParentId={setParentId}
+              device={device}
             />
           </View>
         )}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <ListEmpty />}
-        style={{ height:'68%'}}
+        style={{ height: "68%" }}
       />
-      <View style={{ justifyContent: "flex-end", width:"90%", alignSelf:"center" }}>
-                {parentId.id !== "" ? (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      paddingHorizontal: 20,
-                      paddingTop: 10,
-                    }}
-                  >
-                    <Text>Membalas {parentId.creator}</Text>
-                    <TouchableOpacity>
-                      <Ionicons
-                        name="close"
-                        size={20}
-                        color={COLORS.primary}
-                        onPress={() => setParentId({ id: "", creator: "" })}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                ) : null}
-                <View
-                  style={{
-                    height: 1,
-                    width: "100%",
-                    backgroundColor: COLORS.lighter,
-                    opacity: 0.3,
-                    marginTop: 10,
-                  }}
-                />
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: "100%",
-                    borderRadius: 16,
-                    borderColor: COLORS.ExtraDivinder,
-                    flexDirection: "row",
-                    backgroundColor: COLORS.ExtraDivinder,
-                    marginTop: 10,
-                  }}
-                >
-                  <TextInput
-                    numberOfLines={1}
-                    maxLength={30}
-                    placeholder="Ketik Komentar Disini"
-                    // ref={inputRef}
-                    style={{ padding: 10, width:"90%" }}
-                    onChangeText={setKomen}
-                    value={komen}
-                  />
-                  <View
-                    style={{
-                      alignItems: "flex-end",
-                      flex: 1,
-                      marginRight: 10,
-                      justifyContent: "center",
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        handleComment();
-                      }}
-                    >
-                      <Ionicons
-                        name="send-sharp"
-                        size={20}
-                        color={COLORS.primary}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-      </KeyboardAvoidingView>
+      <View
+        style={{
+          justifyContent: "flex-end",
+          width: "90%",
+          alignSelf: "center",
+        }}
+      >
+        {parentId.id !== "" ? (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: 20,
+              paddingTop: 10,
+            }}
+          >
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              Membalas {parentId.creator}
+            </Text>
+            <TouchableOpacity>
+              <Ionicons
+                name="close"
+                size={20}
+                color={COLORS.primary}
+                onPress={() => setParentId({ id: "", creator: "" })}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+        <View
+          style={{
+            height: 1,
+            width: "100%",
+            backgroundColor: COLORS.lighter,
+            opacity: 0.3,
+            marginTop: 10,
+          }}
+        />
+        <View
+          style={{
+            borderWidth: 1,
+            width: "100%",
+            borderRadius: 16,
+            borderColor: COLORS.ExtraDivinder,
+            flexDirection: "row",
+            backgroundColor: COLORS.ExtraDivinder,
+            marginTop: 10,
+          }}
+        >
+          <TextInput
+            numberOfLines={1}
+            maxLength={30}
+            placeholder="Ketik Komentar Disini"
+            // ref={inputRef}
+            style={{
+              padding: 10,
+              width: "90%",
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+            onChangeText={setKomen}
+            value={komen}
+          />
+          <View
+            style={{
+              alignItems: "flex-end",
+              flex: 1,
+              marginRight: 10,
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                handleComment();
+              }}
+            >
+              <Ionicons name="send-sharp" size={20} color={COLORS.primary} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
     // </ >
   );
 };

@@ -33,7 +33,7 @@ import { Loading } from "../../components/Loading";
 import { TextInput } from "react-native-gesture-handler";
 import { RefreshControl } from "react-native";
 
-const CardPenilaian = ({ item, token }) => {
+const CardPenilaian = ({ item, token, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const getDetail = (id) => {
@@ -52,9 +52,9 @@ const CardPenilaian = ({ item, token }) => {
           marginVertical: 5,
           backgroundColor: COLORS.white,
           borderRadius: 8,
-          justifyContent: "center",
+          // justifyContent: "center",
           alignItems: "center",
-          paddingHorizontal: 20,
+          paddingHorizontal: 15,
           paddingVertical: 10,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -72,7 +72,10 @@ const CardPenilaian = ({ item, token }) => {
         <View>
           <Image
             source={{ uri: item.cover }}
-            style={{ width: 70, height: 50 }}
+            style={{
+              width: device === "tablet" ? 100 : 70,
+              height: device === "tablet" ? 80 : 50,
+            }}
           />
         </View>
         <View style={{ width: "75%" }}>
@@ -366,6 +369,10 @@ export const PenilaianPenggetahaun = () => {
 
   // console.log("ditinjau=" + ditinjau);
   // console.log(dataUnitKerja());
+  const { device } = useSelector((state) => state.apps);
+
+  // console.log(device);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -415,7 +422,8 @@ export const PenilaianPenggetahaun = () => {
             justifyContent: "space-between",
             marginTop: 20,
             flexDirection: "row",
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
+            width: "90%",
           }}
         >
           <View
@@ -462,8 +470,9 @@ export const PenilaianPenggetahaun = () => {
           style={{
             flexDirection: "row",
             marginVertical: 20,
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
             gap: 5,
+            width: "90%",
           }}
         >
           <View
@@ -517,7 +526,8 @@ export const PenilaianPenggetahaun = () => {
             <View style={{ flex: 1 }}>
               <View
                 style={{
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
+                  width: "90%",
                   marginTop: 20,
                   flexDirection: "row",
                   alignItems: "center",
@@ -581,7 +591,7 @@ export const PenilaianPenggetahaun = () => {
                   marginVertical: 40,
                   borderRadius: 6,
                   alignItems: "center",
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
                   justifyContent: "center",
                 }}
                 onPress={() => {
@@ -603,7 +613,14 @@ export const PenilaianPenggetahaun = () => {
           </BottomSheetView>
         </BottomSheetModal>
 
-        <View style={{ flexDirection: "row", marginHorizontal: 20, gap: 5 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: "5%",
+            gap: 5,
+            width: "90%",
+          }}
+        >
           <TouchableOpacity
             style={{
               backgroundColor:
@@ -709,17 +726,19 @@ export const PenilaianPenggetahaun = () => {
           style={{
             marginTop: 10,
             paddingVertical: 5,
+            height: device === "tablet" ? "64%" : "43%",
             // backgroundColor: "brown",
-            height: "43%",
           }}
         >
-          <View style={{ marginHorizontal: 20, marginBottom: 10 }}>
+          <View
+            style={{ marginHorizontal: "5%", marginBottom: 10, width: "90%" }}
+          >
             <Text style={{ fontWeight: FONTWEIGHT.bold }}>List Penilaian</Text>
           </View>
           <FlatList
             data={filterData}
             renderItem={({ item }) => (
-              <CardPenilaian item={item} token={token} />
+              <CardPenilaian item={item} token={token} device={device} />
             )}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

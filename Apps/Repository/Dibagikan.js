@@ -15,7 +15,12 @@ import {
 } from "react-native";
 import { Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";
@@ -31,7 +36,7 @@ import moment from "moment";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const DataList = ({ token, item, bottomSheetAttach }) => {
+const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
 
   const getDetailRepo = (id) => {
@@ -48,7 +53,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           display: "flex",
           flexDirection: "row",
           marginVertical: 10,
-          marginHorizontal: 20,
+          marginHorizontal: "5%",
           backgroundColor: "white",
           borderRadius: 8,
           shadowColor: "black",
@@ -80,10 +85,10 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: FONTWEIGHT.bold,
                   marginBottom: 10,
-                  width: 300,
+                  width: device === "tablet" ? 400 : 300,
                 }}
               >
                 {item.title}
@@ -99,17 +104,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Jumlah File
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -129,17 +134,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Perubahan
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -158,17 +163,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Perubahan
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -261,27 +266,30 @@ export const Dibagikan = () => {
       }
     }
   };
-  
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getDocumentDibagikan({ token: token, page: page, general: general }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(
+          getDocumentDibagikan({ token: token, page: page, general: general })
+        );
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
-  
 
   console.log(load);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -317,15 +325,24 @@ export const Dibagikan = () => {
               </TouchableOpacity>
             </View>
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-              <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: "white",
+                }}
+              >
                 Preparing dan Sharing
               </Text>
             </View>
           </View>
 
-          <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
+          <View
+            style={{ width: "90%", marginHorizontal: "5%", marginVertical: 20 }}
+          >
             <Search
               placeholder={"Cari"}
+              iconColor={COLORS.primary}
               // onSearch={setGeneral}
             />
           </View>
@@ -348,6 +365,7 @@ export const Dibagikan = () => {
                 bottomSheetAttach={bottomSheetAttach}
                 item={item}
                 token={token}
+                device={device}
               />
             )}
             ListFooterComponent={() =>
@@ -364,7 +382,7 @@ export const Dibagikan = () => {
               )
             }
             keyExtractor={(item) => "_" + item.id}
-            style={{ height: 500 }}
+            style={{ height: device === "tablet" ? "79%" : "67%" }}
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={() => {
               if (dibagikan.lists.length !== 0) {
@@ -406,7 +424,7 @@ export const Dibagikan = () => {
                 />
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     width: 300,
                   }}
@@ -434,7 +452,7 @@ export const Dibagikan = () => {
                   />
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.normal,
                     }}
                   >
@@ -461,7 +479,7 @@ export const Dibagikan = () => {
                   />
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.normal,
                     }}
                   >

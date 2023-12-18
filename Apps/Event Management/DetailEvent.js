@@ -155,7 +155,7 @@ export const DetailEvent = () => {
             <View
               style={{
                 flexDirection: "row",
-                gap: wp(6),
+                // gap: wp(6),
                 alignItems: "center",
               }}
             >
@@ -170,7 +170,7 @@ export const DetailEvent = () => {
                   style={{
                     fontSize: FONTSIZE.Judul,
                     fontWeight: FONTWEIGHT.bold,
-                    width: "55%",
+                    width: "45%",
                   }}
                 >
                   {data.title}
@@ -452,7 +452,7 @@ export const DetailEvent = () => {
               }}
             />
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
                 Peserta Agenda Rapat Eksternal
               </Text>
               <View>
@@ -693,7 +693,7 @@ export const DetailEvent = () => {
               style={{
                 flexDirection: "column",
                 justifyContent: "space-between",
-                marginHorizontal: 20,
+                marginHorizontal: "5%",
               }}
             >
               {/* <TouchableOpacity style={{
