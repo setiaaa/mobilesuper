@@ -101,6 +101,8 @@ export const PersonalCuti = () => {
     }
   }, [arsipLists]);
 
+  // console.log(kuota);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}

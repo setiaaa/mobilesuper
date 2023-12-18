@@ -2,14 +2,21 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useSelector } from "react-redux";
 
 export const CardSatker = ({ profile }) => {
   const navigation = useNavigation();
+  const { device } = useSelector((state) => state.apps);
   return (
     <View style={styles.card}>
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -18,7 +25,7 @@ export const CardSatker = ({ profile }) => {
             textAlign: "center",
             color: COLORS.primary,
             fontWeight: FONTWEIGHT.bold,
-            fontSize: FONTSIZE.Judul,
+            fontSize: fontSizeResponsive("Judul", device),
           }}
         >
           {profile.satuan_kerja_nama}

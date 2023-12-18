@@ -7,6 +7,8 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -53,6 +55,7 @@ export const DetailDokumenSPPD = ({ route }) => {
   }, [token, surat, cetak]);
 
   const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
+  const { device } = useSelector((state) => state.apps);
 
   const hari = dokumen.detail?.days?.toString();
 
@@ -220,7 +223,13 @@ export const DetailDokumenSPPD = ({ route }) => {
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H3", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Detail Dokumen
           </Text>
         </View>
@@ -235,7 +244,13 @@ export const DetailDokumenSPPD = ({ route }) => {
               borderRadius: 16,
             }}
           >
-            <Text style={{ fontSize: 20, fontWeight: 600, marginVertical: 10 }}>
+            <Text
+              style={{
+                fontSize: device === "tablet" ? 30 : 20,
+                fontWeight: 600,
+                marginVertical: 10,
+              }}
+            >
               {data}
             </Text>
 
@@ -249,7 +264,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -259,7 +274,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 400,
                   width: "60%",
                   paddingRight: 20,
@@ -281,7 +296,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -291,7 +306,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 400,
                   width: "60%",
                   paddingRight: 20,
@@ -313,7 +328,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -323,7 +338,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 400,
                   width: "60%",
                   paddingRight: 20,
@@ -343,7 +358,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -363,7 +378,13 @@ export const DetailDokumenSPPD = ({ route }) => {
                   KOTA DENPASAR - Hotel Kempinsky
                 </Text> */}
                 {dokumen.detail?.venue?.map((item) => {
-                  return <Text>{item.locations}</Text>;
+                  return (
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H2", device) }}
+                    >
+                      {item.locations}
+                    </Text>
+                  );
                 })}
               </View>
             </View>
@@ -378,7 +399,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -387,7 +408,12 @@ export const DetailDokumenSPPD = ({ route }) => {
                 Tujuan Provinsi
               </Text>
               <View style={{ gap: 10, width: "60%", paddingRight: 20 }}>
-                <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 400,
+                  }}
+                >
                   {dokumen.detail?.province}
                 </Text>
               </View>
@@ -403,7 +429,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -413,7 +439,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 400,
                   width: "60%",
                   paddingRight: 20,
@@ -433,7 +459,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -443,7 +469,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 400,
                   width: "60%",
                   paddingRight: 20,
@@ -463,7 +489,7 @@ export const DetailDokumenSPPD = ({ route }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 600,
                   width: "40%",
                   paddingRight: 20,
@@ -473,7 +499,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 400,
                   width: "60%",
                   paddingRight: 20,
@@ -493,7 +519,12 @@ export const DetailDokumenSPPD = ({ route }) => {
             }}
           >
             <Ionicons name="people-outline" size={24} />
-            <Text style={{ fontSize: 15, fontWeight: 600 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+              }}
+            >
               Daftar Pelaksana
             </Text>
           </View>
@@ -516,7 +547,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                 <TouchableOpacity
                   onPress={() => setCollapse({ id: item.id, toggle: true })}
                   style={{
-                    height: 50,
+                    padding: 10,
                     borderRadius: 8,
                     justifyContent: "center",
                   }}
@@ -530,10 +561,20 @@ export const DetailDokumenSPPD = ({ route }) => {
                     }}
                   >
                     <View>
-                      <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H2", device),
+                          fontWeight: 600,
+                        }}
+                      >
                         {item.name}
                       </Text>
-                      <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H2", device),
+                          fontWeight: 400,
+                        }}
+                      >
                         {item.nip}
                       </Text>
                     </View>
@@ -556,18 +597,38 @@ export const DetailDokumenSPPD = ({ route }) => {
                     >
                       <View style={{ gap: 10 }}>
                         <View>
-                          <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H2", device),
+                              fontWeight: 400,
+                            }}
+                          >
                             Golongan
                           </Text>
-                          <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H2", device),
+                              fontWeight: 600,
+                            }}
+                          >
                             {item.tier}
                           </Text>
                         </View>
                         <View>
-                          <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H2", device),
+                              fontWeight: 400,
+                            }}
+                          >
                             Tempat Kedudukan
                           </Text>
-                          <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H2", device),
+                              fontWeight: 600,
+                            }}
+                          >
                             {item.office_city}
                           </Text>
                         </View>
@@ -594,7 +655,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               <Text
                 style={{
                   textAlign: "center",
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 500,
                   color: COLORS.white,
                 }}
@@ -627,7 +688,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               <Text
                 style={{
                   textAlign: "center",
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: 500,
                   color: COLORS.white,
                 }}

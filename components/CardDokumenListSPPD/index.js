@@ -6,6 +6,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import moment from "moment";
 import {
@@ -24,7 +25,7 @@ import { CardListTempatSPPD } from "../CardListTempatSPPD";
 import { useDispatch } from "react-redux";
 import { getDocumentDetailSPPD } from "../../service/api";
 
-export const CardDokumenListSPPD = ({ item, token }) => {
+export const CardDokumenListSPPD = ({ item, token, device }) => {
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalRefVenue = useRef(null);
@@ -82,7 +83,12 @@ export const CardDokumenListSPPD = ({ item, token }) => {
           marginTop: 10,
         }}
       >
-        <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("Judul", device),
+            fontWeight: FONTWEIGHT.bold,
+          }}
+        >
           {item.event}
         </Text>
         <View
@@ -93,13 +99,19 @@ export const CardDokumenListSPPD = ({ item, token }) => {
           }}
         />
         <View style={{}}>
-          <Text style={{ fontSize: 11, fontWeight: 400, color: COLORS.grey }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 400,
+              color: COLORS.grey,
+            }}
+          >
             Tanggal Mulai:{" "}
             {moment(item.start_date, "DD-MM-YYYY").format(DATETIME.LONG_DATE)}
           </Text>
           <Text
             style={{
-              fontSize: 11,
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 400,
               color: COLORS.grey,
               marginTop: 5,
@@ -110,7 +122,12 @@ export const CardDokumenListSPPD = ({ item, token }) => {
           </Text>
         </View>
         <View>
-          <Text style={{ fontSize: FONTSIZE.H2, fontWeight: 400 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 400,
+            }}
+          >
             Tujuan :
           </Text>
 
@@ -118,10 +135,20 @@ export const CardDokumenListSPPD = ({ item, token }) => {
             item.venue.map((data) => {
               return (
                 <View style={{ flexDirection: "row", gap: 5 }}>
-                  <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
                     -
                   </Text>
-                  <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
                     {data.locations}
                   </Text>
                 </View>
@@ -130,26 +157,56 @@ export const CardDokumenListSPPD = ({ item, token }) => {
           ) : (
             <>
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   -
                 </Text>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   {item.venue[0].locations}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   -
                 </Text>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   {item.venue[1].locations}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   -
                 </Text>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   {item.venue[2].locations}
                 </Text>
               </View>
@@ -162,7 +219,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
                 <Text
                   style={{
                     color: COLORS.info,
-                    fontSize: FONTSIZE.H3,
+                    fontSize: fontSizeResponsive("H3", device),
                     fontWeight: FONTWEIGHT.normal,
                     marginTop: 4,
                     marginHorizontal: 4,
@@ -175,7 +232,12 @@ export const CardDokumenListSPPD = ({ item, token }) => {
           )}
         </View>
         <View>
-          <Text style={{ fontSize: FONTSIZE.H2, fontWeight: 400 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 400,
+            }}
+          >
             Peserta :
           </Text>
 
@@ -183,10 +245,20 @@ export const CardDokumenListSPPD = ({ item, token }) => {
             item.participant.map((data) => {
               return (
                 <View style={{ flexDirection: "row", gap: 5 }}>
-                  <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
                     -
                   </Text>
-                  <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
                     {data.person}
                   </Text>
                 </View>
@@ -195,28 +267,58 @@ export const CardDokumenListSPPD = ({ item, token }) => {
           ) : (
             <View style={{ marginBottom: 6 }}>
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   -
                 </Text>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   {item.participant[0].person}
                 </Text>
               </View>
 
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   -
                 </Text>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   {item.participant[1].person}
                 </Text>
               </View>
 
               <View style={{ flexDirection: "row", gap: 5 }}>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   -
                 </Text>
-                <Text style={{ fontSize: FONTSIZE.H3, fontWeight: 400 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                  }}
+                >
                   {item.participant[2].person}
                 </Text>
               </View>
@@ -229,7 +331,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
                 <Text
                   style={{
                     color: COLORS.info,
-                    fontSize: FONTSIZE.H3,
+                    fontSize: fontSizeResponsive("H3", device),
                     fontWeight: 400,
                     marginTop: 4,
                     marginHorizontal: 4,
@@ -268,7 +370,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
             >
               <Text
                 style={{
-                  fontSize: FONTSIZE.H2,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.normal,
                 }}
@@ -292,7 +394,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
                 data={item.participant}
                 renderItem={({ item }) => (
                   <View key={item.nip}>
-                    <CardMemberSPPD item={item} />
+                    <CardMemberSPPD item={item} device={device} />
                   </View>
                 )}
                 keyExtractor={(item) => item.id}
@@ -328,7 +430,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
             >
               <Text
                 style={{
-                  fontSize: FONTSIZE.H2,
+                  fontSize: fontSizeResponsive("H2", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.lighter,
                 }}
@@ -352,7 +454,7 @@ export const CardDokumenListSPPD = ({ item, token }) => {
                 data={item.venue}
                 renderItem={({ item }) => (
                   <View key={item.nip}>
-                    <CardListTempatSPPD item={item} />
+                    <CardListTempatSPPD item={item} device={device} />
                   </View>
                 )}
                 keyExtractor={(item) => item.id}
