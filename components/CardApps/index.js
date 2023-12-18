@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTSIZE } from "../../config/SuperAppps";
+import { COLORS, FONTSIZE, fontSizeResponsive } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
 import {
   widthPercentageToDP as wp,
@@ -80,9 +80,8 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
-            width: device === "tablet" ? wp(16) : wp(15),
-            textAlign: device === "tablet" ? "center" : null,
+            fontSize: fontSizeResponsive("H4", device),
+            width: wp(15),
           }}
           numberOfLines={1}
         >
@@ -122,7 +121,7 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Kebijakan
@@ -163,8 +162,8 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
-            width: device === "tablet" ? wp(16) : wp(15),
+            fontSize: fontSizeResponsive("H4", device),
+            width: wp(15),
             textAlign: device === "tablet" ? "center" : null,
           }}
           numberOfLines={1}
@@ -207,7 +206,7 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Digital Sign
@@ -246,7 +245,7 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Cuti
@@ -285,7 +284,7 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           SPPD
@@ -324,7 +323,7 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Task
@@ -363,7 +362,7 @@ export const CardApps = ({ handlePressModal }) => {
             marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
-            fontSize: FONTSIZE.H4,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Pegawai
@@ -407,7 +406,7 @@ export const CardApps = ({ handlePressModal }) => {
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: FONTSIZE.H4,
+              fontSize: fontSizeResponsive("H4", device),
               width: wp(15),
             }}
             numberOfLines={1}
@@ -454,7 +453,7 @@ export const CardApps = ({ handlePressModal }) => {
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: FONTSIZE.H4,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             Kalender
@@ -509,7 +508,7 @@ export const CardApps = ({ handlePressModal }) => {
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              fontSize: FONTSIZE.H4,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             Agenda{" "}
@@ -588,7 +587,7 @@ export const CardApps = ({ handlePressModal }) => {
                 marginTop: 10,
                 justifyContent: "center",
                 alignItems: "center",
-                fontSize: FONTSIZE.H4,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               More

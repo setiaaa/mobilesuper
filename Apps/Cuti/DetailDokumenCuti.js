@@ -285,7 +285,7 @@ const CardKomen = ({
               style={{ width: 30, height: 30, borderRadius: 20 }}
             />
           </View>
-          <View style={{ marginLeft: 10,width:"90%" }}>
+          <View style={{ marginLeft: 10, width: "90%" }}>
             <Text
               style={{
                 fontSize: FONTSIZE.H2,
@@ -635,11 +635,11 @@ export const DetailDokumenCuti = ({ route }) => {
     dispatch(postApproval(data));
   };
 
-  console.log(approval);
+  // console.log(approval);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
-        <ScrollView style={{marginBottom:20}}>
+        <ScrollView style={{ marginBottom: 20 }}>
           <View
             style={{
               flexDirection: "row",
@@ -821,7 +821,18 @@ export const DetailDokumenCuti = ({ route }) => {
                 >
                   Status Dokumen
                 </Text>
-                {/* <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Disetujui</Text> */}
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 400,
+                    width: "60%",
+                    paddingRight: 20,
+                  }}
+                >
+                  {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress"
+                    ? "Sedang Proses"
+                    : "Disetujui"}
+                </Text>
               </View>
 
               <View style={{ flexDirection: "row", paddingVertical: 10 }}>
@@ -1418,14 +1429,14 @@ export const DetailDokumenCuti = ({ route }) => {
                   shadowColor: "#171717",
                   //shadow android
                   elevation: 2,
-                  width:"40%",
-                  alignItems:"center"
+                  width: "40%",
+                  alignItems: "center",
                 }}
                 onPress={() => {
                   bottomSheetAttachComment();
                 }}
               >
-                <Text style={{ color: COLORS.primary, }}>Lihat Komentar</Text>
+                <Text style={{ color: COLORS.primary }}>Lihat Komentar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -1578,7 +1589,7 @@ export const DetailDokumenCuti = ({ route }) => {
           {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress" &&
           approval.approval === true ? (
             <>
-              <View style={{ paddingHorizontal: 20, paddingTop: 10, gap: 10, }}>
+              <View style={{ paddingHorizontal: 20, paddingTop: 10, gap: 10 }}>
                 <View
                   style={{ flexDirection: "row", padding: 5, columnGap: 10 }}
                 >

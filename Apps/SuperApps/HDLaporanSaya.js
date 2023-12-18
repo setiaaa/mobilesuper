@@ -1,7 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, FlatList, RefreshControl } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  RefreshControl,
+} from "react-native";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +56,7 @@ export const HDLaporanSaya = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        dispatch(getTicket({nip, token}));
+        dispatch(getTicket({ nip, token }));
         console.log("Refresh Berhasil");
       }
     } catch (error) {
@@ -62,16 +74,18 @@ export const HDLaporanSaya = () => {
       setToken(val);
     });
   }, []);
-  
+
   useEffect(() => {
     if (token !== "") {
       nip = profile.nip;
-      dispatch(getTicket({nip, token}));
+      dispatch(getTicket({ nip, token }));
     }
   }, [token]);
-  
-  console.log(tiket)
-  console.log(nip)
+
+  const { device } = useSelector((state) => state.apps);
+
+  console.log(tiket);
+  // console.log(nip)
   return (
     <>
       <View
@@ -104,7 +118,7 @@ export const HDLaporanSaya = () => {
         <View style={{ flex: 1, alignItems: "center" }}>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H3", device),
               fontWeight: 600,
               color: COLORS.white,
               marginRight: 50,
@@ -123,25 +137,27 @@ export const HDLaporanSaya = () => {
         }}
       >
         <View style={{ width: "90%", marginTop: "5%" }}>
-          <Search placeholder={"Cari..."} iconColor={COLORS.primary} onSearch={filter}/>
+          <Search
+            placeholder={"Cari..."}
+            iconColor={COLORS.primary}
+            onSearch={filter}
+          />
         </View>
-        <View style={{width:"90%"}}>
+        <View style={{ width: "90%" }}>
           <FlatList
-              data={filterData}
-              keyExtractor={(item) => item?.id}
-              renderItem={({ item }) => (
-                <View key={item?.id}>
-                  <CardListHelpDesk
-                    item={item}
-                  />
-                </View>
-              )}
-              ListEmptyComponent={() => <ListEmpty />}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-              style={{ height: "70%" }}
-            />
+            data={filterData}
+            keyExtractor={(item) => item?.id}
+            renderItem={({ item }) => (
+              <View key={item?.id}>
+                <CardListHelpDesk item={item} device={device} />
+              </View>
+            )}
+            ListEmptyComponent={() => <ListEmpty />}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            style={{ height: "70%" }}
+          />
         </View>
       </View>
     </>

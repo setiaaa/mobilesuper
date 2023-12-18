@@ -1,7 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+} from "react-native";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
@@ -11,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getParts, getProfileMe, getTicket } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { setTiket } from "../../store/HelpDesk";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export const HelpDesk = () => {
   const navigation = useNavigation();
@@ -20,6 +34,9 @@ export const HelpDesk = () => {
   const [collapse, setCollapse] = useState({
     toggle: false,
   });
+  const [progress, setProgress] = useState("");
+  const [pending, setPending] = useState("");
+  const [approve, setApprove] = useState("");
   const [token, setToken] = useState("");
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
 
@@ -29,34 +46,56 @@ export const HelpDesk = () => {
     });
   }, []);
   useEffect(() => {
-    nip = profile?.nip
+    nip = profile?.nip;
     if (token !== "" && nip !== "") {
-      dispatch(getTicket( { nip, token} ));
+      dispatch(getTicket({ nip, token }));
     }
   }, [token]);
-  console.log(tiket.list)
+
+  useEffect(() => {
+    if (tiket.list) {
+      const inProgress = tiket.list.filter((item) => {
+        return item?.status === "IN_PROGRESS";
+      });
+      const pending = tiket.list.filter((item) => {
+        return item?.status === "PENDING";
+      });
+      const approve = tiket.list.filter((item) => {
+        return item?.status === "APPROVED";
+      });
+      setProgress(inProgress.length);
+      setPending(pending.length);
+      setApprove(approve.length);
+    } else {
+      console.log("Tidak dapat membaca properti 'status'.");
+    }
+  }, [tiket.list]);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
-    <>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: COLORS.primary,
-          height: 80,
-        }}
-      >
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 600,
-              color: COLORS.white,
-            }}
-          >
-            Help Desk
-          </Text>
-        </View>
-        {/* <TouchableOpacity
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ScrollView>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: COLORS.primary,
+            height: 80,
+          }}
+        >
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
+            >
+              Help Desk
+            </Text>
+          </View>
+          {/* <TouchableOpacity
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
@@ -76,15 +115,9 @@ export const HelpDesk = () => {
             color={COLORS.primary}
           />
         </TouchableOpacity> */}
-      </View>
-      <ScrollView
-        style={{
-          width: "100%",
-        }}
-      >
+        </View>
         <View
           style={{
-            height: "100%",
             width: "100%",
             alignItems: "center",
           }}
@@ -132,10 +165,11 @@ export const HelpDesk = () => {
                 elevation: 2,
               }}
             >
-              <Image
+              <ImageBackground
                 source={require("../../assets/superApp/Card-Background-Red.png")}
                 style={{
                   width: "100%",
+                  // height: device === "tablet" ? "50%" : null,
                   borderTopLeftRadius: 8,
                   borderTopRightRadius: 8,
                   //shadow ios
@@ -145,31 +179,45 @@ export const HelpDesk = () => {
                   //shadow android
                   elevation: 2,
                 }}
-              />
-              <View
-                style={{ alignItems: "center", gap: 10, position: "absolute" }}
               >
-                <Image
-                  source={{ uri: BASE_URL + profile.avatar }}
+                <View
                   style={{
-                    width: 75,
-                    height: 75,
-                    borderRadius: 36,
-                    borderWidth: 2,
-                    borderColor: COLORS.white,
+                    alignItems: "center",
+                    gap: 10,
+                    zIndex: 1,
+                    padding: PADDING.Page,
                   }}
-                />
-                <Text
-                  style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
                 >
-                  {profile.nama}
-                </Text>
-                <Text
-                  style={{ fontSize: 13, fontWeight: 400, color: COLORS.white }}
-                >
-                  {profile?.nip}
-                </Text>
-              </View>
+                  <Image
+                    source={{ uri: BASE_URL + profile.avatar }}
+                    style={{
+                      width: device === "tablet" ? 100 : 75,
+                      height: device === "tablet" ? 100 : 75,
+                      borderRadius: device === "tablet" ? 100 : 36,
+                      borderWidth: 2,
+                      borderColor: COLORS.white,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: 600,
+                      color: COLORS.white,
+                    }}
+                  >
+                    {profile.nama}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 400,
+                      color: COLORS.white,
+                    }}
+                  >
+                    {profile?.nip}
+                  </Text>
+                </View>
+              </ImageBackground>
             </View>
             <View
               style={{
@@ -179,67 +227,133 @@ export const HelpDesk = () => {
                 borderBottomLeftRadius: 8,
               }}
             >
-              <TouchableOpacity
-                onPress={() =>
-                  setCollapse({ toggle: true })
-                }
-              >
+              <TouchableOpacity onPress={() => setCollapse({ toggle: true })}>
                 <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "center",
                     alignItems: "center",
+                    marginHorizontal: 5,
                   }}
                 >
                   <Text
                     style={{
-                      marginRight: "80%",
-                      fontSize: 13,
+                      width: "95%",
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: 600,
                     }}
                   >
                     Profil
                   </Text>
-                  {
-                  collapse.toggle === true ? (
+                  {collapse.toggle === true ? (
                     <TouchableOpacity
                       onPress={() => setCollapse({ toggle: false })}
                     >
-                      <Ionicons name="chevron-up" size={24} />
+                      <Ionicons
+                        name="chevron-up"
+                        size={device === "tablet" ? 40 : 24}
+                      />
                     </TouchableOpacity>
                   ) : (
-                    <Ionicons name="chevron-down" size={24} />
+                    <Ionicons
+                      name="chevron-down"
+                      size={device === "tablet" ? 40 : 24}
+                    />
                   )}
                 </View>
               </TouchableOpacity>
-              {
-              collapse.toggle === true ? (
+              {collapse.toggle === true ? (
                 <View>
                   <TouchableOpacity
                     onPress={() => setCollapse({ toggle: false })}
                   >
-                    <Text style={{ marginTop: 10 }}>Jenis Kelamin</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
+                      Jenis Kelamin
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
                       {profile.jenis_kelamin}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Golongan</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
+                      Golongan
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
                       {profile.golongan}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Jabatan</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
+                      Jabatan
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
                       {profile.nama_jabatan}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Unit Kerja</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
+                      Unit Kerja
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
                       {profile.unit_kerja}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Satuan Kerja</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
+                      Satuan Kerja
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
                       {profile.satuan_kerja_nama}
                     </Text>
                   </TouchableOpacity>
@@ -249,7 +363,7 @@ export const HelpDesk = () => {
           </View>
           <View
             style={{
-              flexDirection:"row",
+              flexDirection: "row",
               columnGap: wp(4),
             }}
           >
@@ -272,10 +386,9 @@ export const HelpDesk = () => {
                   //shadow android
                   elevation: 2,
                 }}
-                onPress={() => 
-                  {
-                    navigation.navigate("HDFormLaporan"), profile?.nip
-                  }}
+                onPress={() => {
+                  navigation.navigate("HDFormLaporan"), profile?.nip;
+                }}
               >
                 <View
                   style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
@@ -285,7 +398,14 @@ export const HelpDesk = () => {
                     size={24}
                     color={COLORS.white}
                   />
-                  <Text style={{ color: COLORS.white }}>Form Laporan</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Form Laporan
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -308,10 +428,9 @@ export const HelpDesk = () => {
                   //shadow android
                   elevation: 2,
                 }}
-                onPress={() => 
-                  {
-                    navigation.navigate("HDLaporanSaya"), profile?.nip
-                  }}
+                onPress={() => {
+                  navigation.navigate("HDLaporanSaya"), profile?.nip;
+                }}
               >
                 <View
                   style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
@@ -321,7 +440,14 @@ export const HelpDesk = () => {
                     size={24}
                     color={COLORS.grey}
                   />
-                  <Text style={{ color: COLORS.grey }}>Laporan Saya</Text>
+                  <Text
+                    style={{
+                      color: COLORS.grey,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Laporan Saya
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -334,7 +460,14 @@ export const HelpDesk = () => {
               gap: 10,
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Status Laporan</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H2", device),
+              }}
+            >
+              Status Laporan
+            </Text>
             <View
               style={{
                 flexDirection: "row",
@@ -359,15 +492,30 @@ export const HelpDesk = () => {
                 }}
               >
                 <Ionicons name="cog-outline" size={46} color={COLORS.lighter} />
-                <Text style={{ fontSize: FONTSIZE.H1, textAlign: "center" }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H1", device),
+                    textAlign: "center",
+                  }}
+                >
                   Sedang Diproses
                 </Text>
                 <Text
-                  style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}
+                  style={{
+                    fontSize: fontSizeResponsive("H1", device),
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
                 >
-                  0
+                  {progress}
                 </Text>
-                <Text style={{ color: COLORS.lighter }}>Laporan</Text>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H1", device),
+                  }}
+                >
+                  Laporan
+                </Text>
               </View>
               <View
                 style={{
@@ -389,7 +537,7 @@ export const HelpDesk = () => {
                 <Ionicons name="timer-outline" size={46} color={COLORS.white} />
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H1,
+                    fontSize: fontSizeResponsive("H1", device),
                     textAlign: "center",
                     color: COLORS.white,
                   }}
@@ -398,14 +546,21 @@ export const HelpDesk = () => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H1,
+                    fontSize: fontSizeResponsive("H1", device),
                     fontWeight: FONTWEIGHT.bold,
                     color: COLORS.white,
                   }}
                 >
-                  0
+                  {pending}
                 </Text>
-                <Text style={{ color: COLORS.lighter }}>Laporan</Text>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H1", device),
+                  }}
+                >
+                  Laporan
+                </Text>
               </View>
               <View
                 style={{
@@ -430,7 +585,7 @@ export const HelpDesk = () => {
                 />
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H1,
+                    fontSize: fontSizeResponsive("H1", device),
                     color: COLORS.white,
                     textAlign: "center",
                   }}
@@ -439,14 +594,21 @@ export const HelpDesk = () => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H1,
+                    fontSize: fontSizeResponsive("H1", device),
                     fontWeight: FONTWEIGHT.bold,
                     color: COLORS.white,
                   }}
                 >
-                  0
+                  {approve}
                 </Text>
-                <Text style={{ color: COLORS.lighter }}>Laporan</Text>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H1", device),
+                  }}
+                >
+                  Laporan
+                </Text>
               </View>
             </View>
           </View>
@@ -513,9 +675,8 @@ export const HelpDesk = () => {
               </View>
             </View>
           </View> */}
-          
         </View>
       </ScrollView>
-    </>
+    </GestureHandlerRootView>
   );
 };

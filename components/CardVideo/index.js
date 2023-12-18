@@ -1,11 +1,13 @@
 import React from "react";
 import { Image, Text } from "react-native";
 import { View } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 export const CardVideo = ({ setModalVisibleVideo }) => {
+  const { device } = useSelector((state) => state.apps);
   return (
     <View style={{ alignItems: "center", height: "15%" }}>
       <Image
@@ -54,7 +56,13 @@ export const CardVideo = ({ setModalVisibleVideo }) => {
               <Ionicons name="play-outline" color={COLORS.white} size={20} />
             </TouchableOpacity>
           </View>
-          <Text style={{ textAlign: "center", color: COLORS.lighter }}>
+          <Text
+            style={{
+              textAlign: "center",
+              color: COLORS.lighter,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             Menteri Trenggono Melakukan Panen Parsial Kedua di BUBK Kebumen
           </Text>
         </View>
