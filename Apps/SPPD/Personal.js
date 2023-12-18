@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { getDashboardSPPD } from "../../service/api";
 import { Loading } from "../../components/Loading";
+import { StyleSheet } from "react-native";
 
 export const Personal = () => {
   const navigation = useNavigation();
@@ -340,11 +341,53 @@ export const Personal = () => {
             style={{
               fontSize: fontSizeResponsive("H2", device),
               fontWeight: 700,
-              marginVertical: 20,
+              marginTop: 20,
             }}
           >
             Status
           </Text>
+
+          <View style={{ flexDirection: "row" }}>
+            <View style={[styles.cardStatus, { backgroundColor: COLORS.info }]}>
+              <View style={{ alignItems: "center", rowGap: 20 }}>
+                <Ionicons
+                  name="document-outline"
+                  size={50}
+                  color={COLORS.white}
+                />
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: device === "tablet" ? 40 : 24,
+                  }}
+                >
+                  {dashboard.stats?.documents?.counter?.toString()}
+                </Text>
+                <Text style={{ color: COLORS.white }}>Kegiatan Bulan ini</Text>
+              </View>
+            </View>
+
+            <View style={[styles.cardStatus, { backgroundColor: COLORS.info }]}>
+              <View style={{ alignItems: "center", rowGap: 20 }}>
+                <Ionicons
+                  name="document-outline"
+                  size={50}
+                  color={COLORS.white}
+                />
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: device === "tablet" ? 40 : 24,
+                  }}
+                >
+                  {dashboard.stats?.events?.counter?.toString()}
+                </Text>
+                <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                  Jumlah Dokumen Bulan ini
+                </Text>
+              </View>
+            </View>
+          </View>
 
           <View style={{ gap: 10, marginBottom: 30 }}>
             <View
@@ -597,3 +640,15 @@ export const Personal = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  cardStatus: {
+    width: "49.5%",
+    padding: 15,
+    borderRadius: 8,
+    marginHorizontal: 1,
+    margin: 10,
+    backgroundColor: COLORS.white,
+    alignItems: "center",
+  },
+});

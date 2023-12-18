@@ -226,6 +226,13 @@ export const TambahCutiTahunan = () => {
             fontWeight: "bold",
           },
         };
+      case 6: // Thursday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: "bold",
+          },
+        };
     }
   };
 
@@ -238,10 +245,11 @@ export const TambahCutiTahunan = () => {
             fontWeight: "bold",
           },
         };
-      case 7: // Sunday
+      case 6: // Sunday
         return {
           textStyle: {
             color: COLORS.primary,
+            fontWeight: "bold",
           },
         };
     }
