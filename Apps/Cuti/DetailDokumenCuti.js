@@ -821,7 +821,18 @@ export const DetailDokumenCuti = ({ route }) => {
                 >
                   Status Dokumen
                 </Text>
-                {/* <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Disetujui</Text> */}
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 400,
+                    width: "60%",
+                    paddingRight: 20,
+                  }}
+                >
+                  {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress"
+                    ? "Sedang Proses"
+                    : "Disetujui"}
+                </Text>
               </View>
 
               <View style={{ flexDirection: "row", paddingVertical: 10 }}>
