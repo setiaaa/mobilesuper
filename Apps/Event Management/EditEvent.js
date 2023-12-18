@@ -1252,7 +1252,7 @@ export const EditEvent = () => {
                   </TouchableOpacity>
                 </View>
 
-                {/* <View>
+                <View>
                   {Tamu?.map((item, index) => {
                     return (
                       <View
@@ -1300,7 +1300,7 @@ export const EditEvent = () => {
                       </View>
                     );
                   })}
-                </View> */}
+                </View>
 
                 {/* {inputList} */}
                 <BottomSheetModal
