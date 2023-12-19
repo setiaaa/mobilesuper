@@ -65,7 +65,7 @@ export const DetailProfile = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: fontSizeResponsive("H3", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
                 color: COLORS.white,
               }}

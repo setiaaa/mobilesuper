@@ -502,7 +502,7 @@ export const TopsTP = () => {
   );
 };
 
-export const TopsTask = () => {
+export const TopsTask = ({ device }) => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -512,7 +512,7 @@ export const TopsTask = () => {
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
@@ -551,7 +551,7 @@ export const TopsTask = () => {
   );
 };
 
-export const TopsTaskDashboard = () => {
+export const TopsTaskDashboard = ({ device }) => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -561,7 +561,7 @@ export const TopsTaskDashboard = () => {
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
@@ -593,7 +593,7 @@ export const TopsTaskDashboard = () => {
   );
 };
 
-export const TopsTaskKorespondensi = () => {
+export const TopsTaskKorespondensi = ({ device }) => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -603,7 +603,7 @@ export const TopsTaskKorespondensi = () => {
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
@@ -839,7 +839,7 @@ export const TopsKeuanganKinerja = () => {
   );
 };
 
-export const TopAddressBook = ({ config }) => {
+export const TopAddressBook = ({ config, device }) => {
   return (
     <Host>
       <BottomSheetModalProvider>
@@ -849,7 +849,10 @@ export const TopAddressBook = ({ config }) => {
             tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
             tabBarActiveTintColor: "#C34647",
             tabBarInactiveTintColor: "black",
-            tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+            tabBarLabelStyle: {
+              fontSize: fontSizeResponsive("H3", device),
+              textTransform: "none",
+            },
             tabBarScrollEnabled: true,
             tabBarItemStyle: { width: "auto" },
           }}
@@ -863,8 +866,8 @@ export const TopAddressBook = ({ config }) => {
                   title: "Jabatan",
                   tabBarItemStyle: { width: "50%" },
                   tabBarLabelStyle: {
-                    width: 200,
-                    fontSize: 13,
+                    width: device === "tablet" ? 500 : 200,
+                    fontSize: fontSizeResponsive("H3", device),
                     textTransform: "none",
                     paddingLeft: 80,
                   },
@@ -878,8 +881,8 @@ export const TopAddressBook = ({ config }) => {
                   title: "Pegawai",
                   tabBarItemStyle: { width: "50%" },
                   tabBarLabelStyle: {
-                    width: 200,
-                    fontSize: 13,
+                    width: device === "tablet" ? 500 : 200,
+                    fontSize: fontSizeResponsive("H3", device),
                     textTransform: "none",
                     paddingLeft: 50,
                   },
@@ -896,7 +899,7 @@ export const TopAddressBook = ({ config }) => {
                 tabBarItemStyle: { width: "50%" },
                 tabBarLabelStyle: {
                   width: 200,
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   textTransform: "none",
                   paddingLeft: 80,
                 },
@@ -912,7 +915,7 @@ export const TopAddressBook = ({ config }) => {
                 tabBarItemStyle: { width: "50%" },
                 tabBarLabelStyle: {
                   width: 200,
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   textTransform: "none",
                   paddingLeft: 50,
                 },

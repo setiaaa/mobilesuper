@@ -55,7 +55,8 @@ export const DetailDokumenLain = () => {
     }
   }, [file, item]);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
-  console.log(item);
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -73,8 +74,8 @@ export const DetailDokumenLain = () => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 marginLeft: 20,
                 alignItems: "center",
                 justifyContent: "center",
@@ -83,7 +84,7 @@ export const DetailDokumenLain = () => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>

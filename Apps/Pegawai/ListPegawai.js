@@ -194,10 +194,9 @@ export const ListPegawai = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: 15,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
                 color: COLORS.white,
-                fontSize: fontSizeResponsive("H1", device),
               }}
             >
               Pegawai

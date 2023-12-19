@@ -2,7 +2,13 @@ import React, { useMemo, useRef } from "react";
 import { RefreshControl, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -54,7 +60,7 @@ const tanggalBesok = new Date(
   `${tahun}-${bulan}-${tanggal + 1}`
 ).toDateString();
 
-const CardTodoEvent = ({ item }) => {
+const CardTodoEvent = ({ item, device }) => {
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <View
@@ -72,7 +78,14 @@ const CardTodoEvent = ({ item }) => {
           elevation: 2,
         }}
       >
-        <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          {item.judul}
+        </Text>
         <View
           style={{
             flexDirection: "row",
@@ -81,12 +94,16 @@ const CardTodoEvent = ({ item }) => {
             marginVertical: 10,
           }}
         >
-          <Text>PIC</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            PIC
+          </Text>
           <Image
             source={item.pic}
             style={{ width: 26, height: 26, borderRadius: 30 }}
           />
-          <Text>{item.nama}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item.nama}
+          </Text>
         </View>
 
         <View
@@ -98,12 +115,21 @@ const CardTodoEvent = ({ item }) => {
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Ionicons name="calendar-outline" size={24} />
-            <Text>{item.tanggal}</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              {item.tanggal}
+            </Text>
           </View>
 
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Ionicons name="time-outline" size={24} />
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.progres}</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {item.progres}
+            </Text>
           </View>
         </View>
       </View>
@@ -250,6 +276,8 @@ export const HalamanUtama = () => {
     }, 2000);
   }, [token]);
 
+  const { device } = useSelector((state) => state.apps);
+
   // console.log(event.listsprogress);
   return (
     <View style={{ flex: 1 }}>
@@ -285,7 +313,7 @@ export const HalamanUtama = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -297,9 +325,17 @@ export const HalamanUtama = () => {
 
           <View style={{ marginTop: 20, paddingHorizontal: "5%" }}>
             {variant === "hariini" ? (
-              <Search placeholder={"Cari"} onSearch={filterHariIni} />
+              <Search
+                placeholder={"Cari"}
+                onSearch={filterHariIni}
+                iconColor={COLORS.primary}
+              />
             ) : (
-              <Search placeholder={"Cari"} onSearch={filter} />
+              <Search
+                placeholder={"Cari"}
+                onSearch={filter}
+                iconColor={COLORS.primary}
+              />
             )}
           </View>
 
@@ -317,7 +353,7 @@ export const HalamanUtama = () => {
             <TouchableOpacity
               style={{
                 width: "48%",
-                height: 41,
+                paddingVertical: 10,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "hariini" ? COLORS.primary : COLORS.white,
@@ -333,7 +369,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "hariini" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3,
+                  fontSize: fontSizeResponsive("H3", device),
                 }}
               >
                 Agenda Rapat Hari Ini
@@ -343,7 +379,7 @@ export const HalamanUtama = () => {
             <TouchableOpacity
               style={{
                 width: "48%",
-                height: 41,
+                paddingVertical: 10,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "progres" ? COLORS.primary : COLORS.white,
@@ -359,7 +395,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "progres" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3,
+                  fontSize: fontSizeResponsive("H3", device),
                 }}
               >
                 Progres Agenda Rapat
@@ -405,6 +441,7 @@ export const HalamanUtama = () => {
                     style={{
                       fontWeight: FONTWEIGHT.bold,
                       color: COLORS.lighter,
+                      fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
                     Event
@@ -421,7 +458,6 @@ export const HalamanUtama = () => {
                           justifyContent: "center",
                           alignItems: "center",
                           borderColor: COLORS.secondaryLighter,
-                          borderWidth: isFiltered ? 1 : 0,
                         }}
                       >
                         <Ionicons name="filter-outline" size={24} />
@@ -456,6 +492,7 @@ export const HalamanUtama = () => {
                     item={item}
                     bottomSheetAttach={bottomSheetAttach}
                     loading={loading}
+                    device={device}
                   />
                 )}
                 keyExtractor={(item) => item.id}
@@ -529,7 +566,14 @@ export const HalamanUtama = () => {
                     navigation.navigate("TambahEvent");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Tambah Event</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Tambah Event
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -546,7 +590,14 @@ export const HalamanUtama = () => {
                     navigation.navigate("TambahAgendaEvent");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Tambah Agenda</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Tambah Agenda
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -564,7 +615,14 @@ export const HalamanUtama = () => {
                     navigation.navigate("TambahTodo", { item: event.lists });
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Tambah ToDo
+                  </Text>
                 </TouchableOpacity>
               </View>
             </BottomSheetView>
@@ -588,7 +646,9 @@ export const HalamanUtama = () => {
             <BottomSheetView onLayout={handleContentLayout}>
               <FlatList
                 data={progres}
-                renderItem={({ item }) => <CardTodoEvent item={item} />}
+                renderItem={({ item }) => (
+                  <CardTodoEvent item={item} device={device} />
+                )}
                 style={{ marginBottom: 40 }}
               />
             </BottomSheetView>

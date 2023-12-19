@@ -177,7 +177,7 @@ export const CardListPegawai = ({
               <Text
                 style={{
                   color: COLORS.white,
-                  fontSize: fontSizeResponsive("H3", device),
+                  fontSize: fontSizeResponsive("H4", device),
                 }}
               >
                 Lihat Detail Pegawai

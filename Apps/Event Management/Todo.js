@@ -3,7 +3,12 @@ import { FlatList, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -78,19 +83,19 @@ export const Todo = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getlistTodo({ token, id }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getlistTodo({ token, id }));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token]);
 
   // useEffect(() => {
@@ -107,6 +112,8 @@ export const Todo = () => {
   //         setFilterData(data.todo)
   //     }
   // }, [search])
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <>
@@ -141,7 +148,7 @@ export const Todo = () => {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -261,8 +268,8 @@ export const Todo = () => {
               >
                 <TouchableOpacity
                   style={{
-                    width: "80%",
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.lightBrown,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -274,13 +281,20 @@ export const Todo = () => {
                     navigation.navigate("EditTodo");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Ubah</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ubah
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={{
-                    width: "80%",
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.infoDanger,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -293,7 +307,14 @@ export const Todo = () => {
                     bottomSheetAttachClose();
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Hapus
+                  </Text>
                 </TouchableOpacity>
               </View>
             </BottomSheetView>

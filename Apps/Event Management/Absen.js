@@ -8,6 +8,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -27,7 +28,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const CardListAbsen = ({ item, loading }) => {
+const CardListAbsen = ({ item, loading, device }) => {
   const [user, setUser] = useState("member");
   const [checkIn, setCheckin] = useState("");
   const navigation = useNavigation();
@@ -55,13 +56,19 @@ const CardListAbsen = ({ item, loading }) => {
             height={20}
           />
         ) : (
-          <Text>{item.member?.nama}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item.member?.nama}
+          </Text>
         )}
         <View style={{ marginTop: 10 }}>
           <View
             style={{ flexDirection: "row", gap: wp(4), alignItems: "center" }}
           >
-            <Text style={{ width: 110 }}>Status</Text>
+            <Text
+              style={{ width: 110, fontSize: fontSizeResponsive("H4", device) }}
+            >
+              Status
+            </Text>
             {loading ? (
               <ShimmerPlaceHolder
                 style={{ borderRadius: 4 }}
@@ -92,6 +99,7 @@ const CardListAbsen = ({ item, loading }) => {
                         : item.status === "waiting"
                         ? COLORS.info
                         : null,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   {item.status}
@@ -113,7 +121,14 @@ const CardListAbsen = ({ item, loading }) => {
                 }}
                 onPress={() => setCheckin("1")}
               >
-                <Text style={{ color: COLORS.white }}>Check In</Text>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Check In
+                </Text>
               </TouchableOpacity>
             ) : user === "resepsionis" && checkIn === "" ? (
               <TouchableOpacity
@@ -138,7 +153,14 @@ const CardListAbsen = ({ item, loading }) => {
                   gap: wp(2),
                 }}
               >
-                <Text style={{ width: "35%" }}>Waktu Check In</Text>
+                <Text
+                  style={{
+                    width: "35%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Waktu Check In
+                </Text>
                 {loading ? (
                   <ShimmerPlaceHolder
                     style={{ borderRadius: 4 }}
@@ -157,7 +179,9 @@ const CardListAbsen = ({ item, loading }) => {
                       alignItems: "center",
                     }}
                   >
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {moment(item.updated_at, "HH:mm:ss").format(
                         DATETIME.LONG_DATETIME
                       )}
@@ -270,6 +294,8 @@ export const Absen = () => {
   //     }
   // }, [search])
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <View
@@ -303,7 +329,7 @@ export const Absen = () => {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -429,7 +455,7 @@ export const Absen = () => {
 
       <FlatList
         data={filterData}
-        renderItem={({ item }) => <CardListAbsen item={item} />}
+        renderItem={({ item }) => <CardListAbsen item={item} device={device} />}
         ListEmptyComponent={() => <ListEmpty />}
         ListFooterComponent={() =>
           loading && (

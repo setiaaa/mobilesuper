@@ -6,7 +6,7 @@ import { getDivision, getDivisionTree } from "../service/api";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import { Dropdown } from "../components/DropDown";
-import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
+import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
 import { ScrollView } from "react-native-gesture-handler";
 import TreeView from "react-native-final-tree-view";
 import { Ionicons } from "@expo/vector-icons";
@@ -78,6 +78,8 @@ export const AddressBookJabatan = ({ route }) => {
   // }
   // console.log(selectedlistTree)
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View
       style={{
@@ -88,7 +90,14 @@ export const AddressBookJabatan = ({ route }) => {
       }}
     >
       <View style={{ marginTop: 10, gap: 10, width: "90%" }}>
-        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jabatan</Text>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          Jabatan
+        </Text>
         <Dropdown
           data={addressbook?.listsDivision}
           heightValue={"75%"}
@@ -107,7 +116,14 @@ export const AddressBookJabatan = ({ route }) => {
           search={true}
         />
         {kategori !== "" ? (
-          <Text style={{ fontWeight: FONTWEIGHT.bold }}>Hirarki</Text>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Hirarki
+          </Text>
         ) : null}
       </View>
 
@@ -187,7 +203,7 @@ export const AddressBookJabatan = ({ route }) => {
                             style={{
                               position: "absolute",
                               top: "25%",
-                              left: "-10%",
+                              left: device === "tablet" ? "-4%" : "-10%",
                             }}
                           >
                             {checkedNodeRadio() ? (
@@ -205,12 +221,13 @@ export const AddressBookJabatan = ({ route }) => {
                           style={{
                             fontWeight: FONTWEIGHT.bold,
                             flexShrink: 1,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {node.title}
                         </Text>
 
-                        {hasChildrenNodes ? null : (
+                        {/* {hasChildrenNodes ? null : (
                           <TouchableOpacity>
                             <Ionicons
                               name="information-circle-outline"
@@ -218,16 +235,26 @@ export const AddressBookJabatan = ({ route }) => {
                               color={COLORS.primary}
                             />
                           </TouchableOpacity>
-                        )}
+                        )} */}
 
                         {hasChildrenNodes ? (
-                          <Text>{getIndicator(isExpanded)}</Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {getIndicator(isExpanded)}
+                          </Text>
                         ) : null}
                       </View>
 
                       {hasChildrenNodes ? null : node.officer.official !==
                         "" ? (
-                        <Text>{node.officer.official}</Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          {node.officer.official}
+                        </Text>
                       ) : null}
                     </View>
                     {/* custom divider */}

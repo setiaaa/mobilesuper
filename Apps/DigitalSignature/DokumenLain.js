@@ -1,7 +1,12 @@
 import React, { useMemo, useRef } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { Text, Image } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -26,7 +31,7 @@ import { setDigitalSignLists } from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const ListDokumenLain = ({ item, variant, token }) => {
+const ListDokumenLain = ({ item, variant, token, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isSelected, setSelection] = useState(false);
@@ -74,7 +79,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
         <View style={{ flexDirection: "column", width: "100%" }}>
           <Text
             style={{
-              fontSize: 13,
+              fontSize: fontSizeResponsive("H3", device),
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
               width: "100%",
@@ -94,7 +99,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   width: 120,
                   textAlign: "auto",
                   paddingRight: 12,
@@ -110,7 +115,8 @@ const ListDokumenLain = ({ item, variant, token }) => {
                     fontWeight: FONTWEIGHT.normal,
                     width: "55%",
                     textAlign: "auto",
-                    fontWeight: FONTWEIGHT.normal,
+
+                    fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
                   :{" "}
@@ -124,7 +130,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
                     fontWeight: FONTWEIGHT.normal,
                     width: "55%",
                     textAlign: "auto",
-                    fontWeight: FONTWEIGHT.normal,
+                    fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
                   :{" "}
@@ -137,7 +143,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   width: 120,
                   textAlign: "auto",
                   paddingRight: 12,
@@ -147,7 +153,9 @@ const ListDokumenLain = ({ item, variant, token }) => {
               >
                 Penandatangan
               </Text>
-              <Text>: </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+                :{" "}
+              </Text>
               {item?.approvers.slice(1).map((data) => (
                 <Image
                   source={{ uri: data.avatar_url }}
@@ -278,8 +286,8 @@ export const DokumenLain = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -288,7 +296,7 @@ export const DokumenLain = () => {
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -296,7 +304,7 @@ export const DokumenLain = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -343,6 +351,7 @@ export const DokumenLain = () => {
                   variant === "composer"
                     ? COLORS.infoDanger
                     : COLORS.foundation,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               List Saya
@@ -371,6 +380,7 @@ export const DokumenLain = () => {
               style={{
                 color:
                   variant === "draft" ? COLORS.infoDanger : COLORS.foundation,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               Draft
@@ -403,6 +413,7 @@ export const DokumenLain = () => {
                   variant === "inprogress"
                     ? COLORS.infoDanger
                     : COLORS.foundation,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               Need Sign
@@ -431,6 +442,7 @@ export const DokumenLain = () => {
               style={{
                 color:
                   variant === "signed" ? COLORS.infoDanger : COLORS.foundation,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               Signed
@@ -461,6 +473,7 @@ export const DokumenLain = () => {
                   variant === "completed"
                     ? COLORS.infoDanger
                     : COLORS.foundation,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               Selesai
@@ -473,7 +486,12 @@ export const DokumenLain = () => {
           keyExtractor={(item) => item?.id}
           renderItem={({ item }) => (
             <View key={item.id}>
-              <ListDokumenLain item={item} token={token} variant={variant} />
+              <ListDokumenLain
+                item={item}
+                token={token}
+                variant={variant}
+                device={device}
+              />
             </View>
           )}
           ListEmptyComponent={() => <ListEmpty />}

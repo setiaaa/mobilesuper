@@ -145,7 +145,7 @@ export const Dropdown = ({
                   <Text
                     style={{
                       color: textColor,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     {displayData !== "" ? displayData : placeHolder}
@@ -198,19 +198,19 @@ export const Dropdown = ({
                         <Ionicons
                           name="radio-button-off"
                           color={COLORS.primary}
-                          size={fontSizeResponsive("H3", device)}
+                          size={fontSizeResponsive("H2", device)}
                         />
                       ) : (
                         <Ionicons
                           name="radio-button-on"
                           color={COLORS.primary}
-                          size={fontSizeResponsive("H3", device)}
+                          size={fontSizeResponsive("H2", device)}
                         />
                       )}
                       <Text
                         style={{
                           width: "90%",
-                          fontSize: fontSizeResponsive("H4", device),
+                          fontSize: fontSizeResponsive("H3", device),
                         }}
                       >
                         {kategori.value}
@@ -226,7 +226,7 @@ export const Dropdown = ({
                     justifyContent: "center",
                   }}
                 >
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
                     Tidak Ada Data
                   </Text>
                 </View>

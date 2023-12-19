@@ -9,7 +9,11 @@ import {
 } from "accordion-collapse-react-native";
 import { Divider } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 
 export const CollapseCard = ({
   teu_badan,
@@ -23,6 +27,7 @@ export const CollapseCard = ({
   bidanghukum,
   dilihat,
   diunduh,
+  device,
 }) => {
   const [collapse, setCollapse] = useState(false);
   return (
@@ -33,13 +38,15 @@ export const CollapseCard = ({
             <View
               style={[
                 styles.card,
-                { borderRadius: collapse === true ? 0 : 16 },
+                {
+                  borderRadius: collapse === true ? 0 : 16,
+                  height: device === "tablet" ? 350 : 270,
+                },
               ]}
             >
               <View
                 style={{
                   backgroundColor: COLORS.secondaryLighter,
-                  hegiht: "30%",
                   paddingHorizontal: 20,
                   paddingVertical: 20,
                   borderTopLeftRadius: 16,
@@ -47,16 +54,27 @@ export const CollapseCard = ({
                   flexDirection: "row",
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
                   Informasi Detail
                 </Text>
                 <View
                   style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
                 >
                   {collapse ? (
-                    <Ionicons name="chevron-up-outline" size={20} />
+                    <Ionicons
+                      name="chevron-up-outline"
+                      size={device === "tablet" ? 40 : 20}
+                    />
                   ) : (
-                    <Ionicons name="chevron-down-outline" size={20} />
+                    <Ionicons
+                      name="chevron-down-outline"
+                      size={device === "tablet" ? 40 : 20}
+                    />
                   )}
                 </View>
               </View>
@@ -68,8 +86,22 @@ export const CollapseCard = ({
                   paddingHorizontal: 20,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>T.E.U</Text>
-                <Text style={{ flex: 1, textAlign: "right", marginLeft: 100 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  T.E.U
+                </Text>
+                <Text
+                  style={{
+                    flex: 1,
+                    textAlign: "right",
+                    marginLeft: 100,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {teu_badan}
                 </Text>
               </View>
@@ -82,10 +114,21 @@ export const CollapseCard = ({
                   paddingHorizontal: 20,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Singkatan Jenis
                 </Text>
-                <Text style={{ flex: 1, textAlign: "right" }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    textAlign: "right",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {singkatan_peraturan_cat}
                 </Text>
               </View>
@@ -98,10 +141,21 @@ export const CollapseCard = ({
                   paddingHorizontal: 20,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Tempat Terbit
                 </Text>
-                <Text style={{ flex: 1, textAlign: "right" }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    textAlign: "right",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {tempat_penetapan}
                 </Text>
               </View>
@@ -114,10 +168,21 @@ export const CollapseCard = ({
                   paddingHorizontal: 20,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Tanggal Penetapan
                 </Text>
-                <Text style={{ flex: 1, textAlign: "right" }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    textAlign: "right",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {tgl_penetapan}
                 </Text>
               </View>
@@ -130,10 +195,21 @@ export const CollapseCard = ({
                   paddingHorizontal: 20,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Tanggal Pengundangan
                 </Text>
-                <Text style={{ flex: 1, textAlign: "right" }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    textAlign: "right",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {tgl_diundangkan}
                 </Text>
               </View>
@@ -151,8 +227,22 @@ export const CollapseCard = ({
                 paddingHorizontal: 20,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Subjek</Text>
-              <Text style={{ flex: 1, textAlign: "right", marginLeft: 100 }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Subjek
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: "right",
+                  marginLeft: 100,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 {subjek}
               </Text>
             </View>
@@ -165,8 +255,21 @@ export const CollapseCard = ({
                 paddingHorizontal: 20,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Sumber</Text>
-              <Text style={{ flex: 1, textAlign: "right" }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Sumber
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: "right",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 {sumber_peraturan}
               </Text>
             </View>
@@ -179,8 +282,23 @@ export const CollapseCard = ({
                 paddingHorizontal: 20,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Bahasa</Text>
-              <Text style={{ flex: 1, textAlign: "right" }}>{bahasa}</Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Bahasa
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: "right",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {bahasa}
+              </Text>
             </View>
             <Divider bold />
             <View
@@ -191,8 +309,23 @@ export const CollapseCard = ({
                 paddingHorizontal: 20,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lokasi</Text>
-              <Text style={{ flex: 1, textAlign: "right" }}>-</Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Lokasi
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: "right",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                -
+              </Text>
             </View>
             <Divider bold />
             <View
@@ -203,8 +336,23 @@ export const CollapseCard = ({
                 paddingHorizontal: 20,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Bidang Hukum</Text>
-              <Text style={{ flex: 1, textAlign: "right" }}>{bidanghukum}</Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Bidang Hukum
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: "right",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {bidanghukum}
+              </Text>
             </View>
             <Divider bold />
             <View
@@ -215,8 +363,23 @@ export const CollapseCard = ({
                 paddingHorizontal: 20,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Keterangan</Text>
-              <Text style={{ flex: 1, textAlign: "right" }}>-</Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Keterangan
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: "right",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                -
+              </Text>
             </View>
             <Divider bold />
             <View
@@ -227,8 +390,23 @@ export const CollapseCard = ({
                 paddingHorizontal: 20,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Abstrak</Text>
-              <Text style={{ flex: 1, textAlign: "right" }}>-</Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Abstrak
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: "right",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                -
+              </Text>
             </View>
 
             <View
@@ -243,7 +421,14 @@ export const CollapseCard = ({
               }}
             >
               <View style={{ marginTop: 10 }}>
-                <Text style={styles.text}>Dilihat</Text>
+                <Text
+                  style={[
+                    styles.text,
+                    { fontSize: fontSizeResponsive("H4", device) },
+                  ]}
+                >
+                  Dilihat
+                </Text>
                 <View
                   style={{
                     marginTop: 5,
@@ -253,13 +438,31 @@ export const CollapseCard = ({
                     alignItems: "center",
                   }}
                 >
-                  <Ionicons name="eye-outline" size={15} color={"black"} />
-                  <Text style={styles.text}>{dilihat}</Text>
+                  <Ionicons
+                    name="eye-outline"
+                    size={device === "tablet" ? 30 : 15}
+                    color={"black"}
+                  />
+                  <Text
+                    style={[
+                      styles.text,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    {dilihat}
+                  </Text>
                 </View>
               </View>
 
               <View style={{ marginTop: 10 }}>
-                <Text style={styles.text}>Diunduh</Text>
+                <Text
+                  style={[
+                    styles.text,
+                    { fontSize: fontSizeResponsive("H4", device) },
+                  ]}
+                >
+                  Diunduh
+                </Text>
                 <View
                   style={{
                     marginTop: 5,
@@ -269,8 +472,19 @@ export const CollapseCard = ({
                     alignItems: "baseline",
                   }}
                 >
-                  <Ionicons name="download-outline" size={15} color={"black"} />
-                  <Text style={styles.text}>{diunduh}</Text>
+                  <Ionicons
+                    name="download-outline"
+                    size={device === "tablet" ? 30 : 15}
+                    color={"black"}
+                  />
+                  <Text
+                    style={[
+                      styles.text,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    {diunduh}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -294,7 +508,6 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
     marginHorizontal: 20,
-    height: 300,
   },
   cardCollapse: {
     backgroundColor: "#fff",
@@ -303,7 +516,6 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 16,
   },
   text: {
-    fontSize: 13,
     fontWeight: "400",
   },
 });

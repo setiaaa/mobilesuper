@@ -12,7 +12,12 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Dropdown } from "../../components/DropDown";
@@ -47,7 +52,7 @@ import * as IntentLauncher from "expo-intent-launcher";
 import { RefreshControl } from "react-native";
 const { StorageAccessFramework } = FileSystem;
 
-const ListDaftarPegawai = ({ item, token }) => {
+const ListDaftarPegawai = ({ item, token, device }) => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
@@ -79,20 +84,27 @@ const ListDaftarPegawai = ({ item, token }) => {
       >
         <Text
           style={{
-            fontSize: FONTSIZE.H1,
+            fontSize: fontSizeResponsive("H1", device),
             fontWeight: FONTWEIGHT.bold,
           }}
         >
           {item.nama}
         </Text>
-        <Text>Jabatan: {item.jabatan}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          Jabatan: {item.jabatan}
+        </Text>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ color: COLORS.lighter }}>
+          <Text
+            style={{
+              color: COLORS.lighter,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             Nilai Saat Ini: {item.score.nilai}
           </Text>
           <View
@@ -104,7 +116,14 @@ const ListDaftarPegawai = ({ item, token }) => {
               paddingHorizontal: 10,
             }}
           >
-            <Text style={{ color: "white" }}>{item.score.status}</Text>
+            <Text
+              style={{
+                color: "white",
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {item.score.status}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -438,8 +457,8 @@ export const RangkumanIKU = () => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
@@ -451,13 +470,19 @@ export const RangkumanIKU = () => {
           >
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             {switchView ? "Rangkuman IKU" : "Daftar Pegawai"}
           </Text>
         </View>
@@ -479,7 +504,7 @@ export const RangkumanIKU = () => {
             padding: 10,
             width: "47%",
             borderRadius: 8,
-            height: 45,
+            height: device === "tablet" ? 65 : 45,
             justifyContent: "center",
             //shadow ios
             shadowOffset: switchView
@@ -496,7 +521,7 @@ export const RangkumanIKU = () => {
             style={{
               color: switchView ? COLORS.white : COLORS.primary,
               textAlign: "center",
-              fontSize: 13,
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 600,
             }}
           >
@@ -509,7 +534,7 @@ export const RangkumanIKU = () => {
             padding: 10,
             width: "47%",
             borderRadius: 8,
-            height: 45,
+            height: device === "tablet" ? 65 : 45,
             justifyContent: "center",
             //shadow ios
             shadowOffset: !switchView
@@ -526,7 +551,7 @@ export const RangkumanIKU = () => {
             style={{
               color: !switchView ? COLORS.white : COLORS.primary,
               textAlign: "center",
-              fontSize: 13,
+              fontSize: fontSizeResponsive("H4", device),
               fontWeight: 600,
             }}
           >
@@ -585,7 +610,13 @@ export const RangkumanIKU = () => {
                     elevation: 2,
                   }}
                 >
-                  <Text style={{ marginLeft: 20, color: COLORS.lighter }}>
+                  <Text
+                    style={{
+                      marginLeft: 20,
+                      color: COLORS.lighter,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Pilih Tahun dan Triwulan dan Unit Kerja
                   </Text>
                 </View>
@@ -620,7 +651,7 @@ export const RangkumanIKU = () => {
                       <Text
                         style={{
                           fontWeight: FONTWEIGHT.bold,
-                          fontSize: FONTSIZE.H1,
+                          fontSize: fontSizeResponsive("H1", device),
                         }}
                       >
                         Pilih
@@ -768,7 +799,7 @@ export const RangkumanIKU = () => {
                         <Text
                           style={{
                             color: COLORS.white,
-                            fontSize: FONTSIZE.H1,
+                            fontSize: fontSizeResponsive("H1", device),
                             fontWeight: 500,
                           }}
                         >
@@ -867,14 +898,19 @@ export const RangkumanIKU = () => {
                 alignItems: "center",
               }}
             >
-              <Text>{"*) Nilai Minimum = 3"}</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                {"*) Nilai Minimum = 3"}
+              </Text>
               <View style={{ flexDirection: "row", gap: 10 }}>
                 {exportPegawai?.lists?.length !== 0 ? (
                   <TouchableOpacity
                     style={{
-                      backgroundColor: "white",
-                      borderRadius: 50,
-                      padding: 5,
+                      backgroundColor: COLORS.white,
+                      width: 40,
+                      height: 40,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 30,
                     }}
                     onPress={() => {
                       downloadFile(
@@ -892,9 +928,12 @@ export const RangkumanIKU = () => {
                 <TouchableOpacity
                   onPress={!ascending ? asc : desc}
                   style={{
-                    backgroundColor: "white",
-                    borderRadius: 50,
-                    padding: 5,
+                    backgroundColor: COLORS.white,
+                    width: 40,
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 30,
                   }}
                 >
                   <Ionicons
@@ -910,11 +949,20 @@ export const RangkumanIKU = () => {
               style={{ paddingHorizontal: "5%", marginVertical: 10, gap: 2 }}
             >
               <Text
-                style={{ fontSize: 13, fontWeight: 500, color: COLORS.grey }}
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: 500,
+                  color: COLORS.grey,
+                }}
               >
                 Yang dipilih:
               </Text>
-              <Text style={{ fontSize: 13, fontWeight: 700 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: 700,
+                }}
+              >
                 {savedYear.value ? savedYear.value : "-"} /{" "}
                 {savedQuarter.value ? savedQuarter.value : "-"} /{" "}
                 {savedUnitKerja.value ? savedUnitKerja.value : "-"}
@@ -936,7 +984,11 @@ export const RangkumanIKU = () => {
                   }
                   renderItem={({ item }) => (
                     <View key={item.id} style={{ marginVertical: 10 }}>
-                      <ListDaftarPegawai item={item} token={token} />
+                      <ListDaftarPegawai
+                        item={item}
+                        token={token}
+                        device={device}
+                      />
                     </View>
                   )}
                   ListFooterComponent={() =>

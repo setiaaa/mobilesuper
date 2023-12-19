@@ -6,7 +6,12 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";
@@ -38,6 +43,9 @@ export const Libur = () => {
   }, [profile?.nip]);
 
   const { liburKhusus, libur, loading } = useSelector((state) => state.cuti);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -73,7 +81,7 @@ export const Libur = () => {
             <View style={{ alignItems: "center", flex: 1, marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -134,14 +142,19 @@ export const Libur = () => {
                   </View>
                 ) : null}
               </View> */}
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
                 Libur Nasional Tahun ini
               </Text>
               <FlatList
                 data={libur.data}
                 renderItem={({ item }) => (
                   <View key={item.id}>
-                    <CardLiburTahunan item={item} />
+                    <CardLiburTahunan item={item} device={device} />
                   </View>
                 )}
                 keyExtractor={(item) => item.id}
@@ -196,14 +209,19 @@ export const Libur = () => {
                 ) : null}
               </View> */}
 
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
                 Libur Khusus Tahun Ini
               </Text>
               <FlatList
                 data={liburKhusus.data}
                 renderItem={({ item }) => (
                   <View key={item.id}>
-                    <CardLiburTahunan item={item} />
+                    <CardLiburTahunan item={item} device={device} />
                   </View>
                 )}
                 keyExtractor={(item) => item.id}
