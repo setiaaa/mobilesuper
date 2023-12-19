@@ -16,7 +16,7 @@ export const Search = ({ onSearch, placeholder, iconColor }) => {
       />
       <TextInput
         placeholder={placeholder}
-        style={{ fontSize: fontSizeResponsive("H4", device), flex: 1 }}
+        style={{ fontSize: fontSizeResponsive("H2", device), flex: 1 }}
         maxLength={30}
         onChangeText={onSearch}
         clearButtonMode="always"

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { fontSizeResponsive } from "../../config/SuperAppps";
 
 export const CardKebijakan = ({
   subjek,
@@ -10,6 +11,7 @@ export const CardKebijakan = ({
   route,
   nomor,
   tahun,
+  device,
 }) => {
   const navigation = useNavigation();
   const title = subjek;
@@ -23,10 +25,21 @@ export const CardKebijakan = ({
         }
       >
         <View style={styles.card}>
-          <Text numberOfLines={3} style={styles.nama}>
+          <Text
+            numberOfLines={3}
+            style={[
+              styles.nama,
+              { fontSize: fontSizeResponsive("H4", device) },
+            ]}
+          >
             {title}
           </Text>
-          <Text style={styles.deskripsi}>
+          <Text
+            style={[
+              styles.deskripsi,
+              { fontSize: fontSizeResponsive("H4", device) },
+            ]}
+          >
             No. {nomor} / {tahun}
           </Text>
         </View>

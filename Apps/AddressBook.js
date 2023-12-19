@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Text } from "react-native";
-import { COLORS } from "../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../config/SuperAppps";
 import {
   GestureHandlerRootView,
   TouchableOpacity,
@@ -25,7 +25,7 @@ import { FlatList } from "react-native";
 import { Portal } from "react-native-portalize";
 import { TopAddressBook } from "../utils/menutab";
 
-const CardListPilih = ({ item, addressbook }) => {
+const CardListPilih = ({ item, addressbook, device }) => {
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
     let data;
@@ -73,16 +73,18 @@ const CardListPilih = ({ item, addressbook }) => {
           >
             <Ionicons name="close-circle" size={24} />
           </TouchableOpacity>
-          <Text style={{ width: "80%" }}>
+          <Text
+            style={{ width: "80%", fontSize: fontSizeResponsive("H4", device) }}
+          >
             {item.title.name !== undefined ? item.title.name : item.title}
           </Text>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Ionicons
               name="information-circle-outline"
               size={24}
               color={COLORS.primary}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       ) : (
         <View
@@ -112,16 +114,25 @@ const CardListPilih = ({ item, addressbook }) => {
             <Ionicons name="close-circle" size={24} />
           </TouchableOpacity>
           <View style={{ width: "80%" }}>
-            <Text style={{}}>{item.nama || item.fullname}</Text>
-            <Text style={{ color: COLORS.lighter }}>{item.nip}</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              {item.nama || item.fullname}
+            </Text>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {item.nip}
+            </Text>
           </View>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Ionicons
               name="information-circle-outline"
               size={24}
               color={COLORS.primary}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )}
     </View>
@@ -184,6 +195,8 @@ export const AddressBook = ({ route }) => {
   //   }
   // }, []);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ flex: 1 }}>
       <GestureHandlerRootView>
@@ -221,7 +234,11 @@ export const AddressBook = ({ route }) => {
           </View>
           <View style={{ flex: 1, alignItems: "center" }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               AddressBook
             </Text>
@@ -243,7 +260,7 @@ export const AddressBook = ({ route }) => {
         </View>
 
         <View style={{ height: "90%" }}>
-          <TopAddressBook config={config} />
+          <TopAddressBook config={config} device={device} />
         </View>
         {/* <View style={{ position: 'absolute', bottom: 50, left: 0, right: 0, width: '100%' }}>
                         <Text>selected {addressbook.selected.length}</Text>
@@ -288,7 +305,13 @@ export const AddressBook = ({ route }) => {
                     // backgroundColor: COLORS.primary,
                   }}
                 >
-                  <Text style={{ fontWeight: 500, marginBottom: 50 }}>
+                  <Text
+                    style={{
+                      fontWeight: 500,
+                      marginBottom: 50,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Daftar ({addressbook.selected.length} Pilihan)
                   </Text>
                   <TouchableOpacity
@@ -296,14 +319,24 @@ export const AddressBook = ({ route }) => {
                       dispatch(setAddressbookSelected([]));
                     }}
                   >
-                    <Text style={{ color: COLORS.infoDanger }}>
+                    <Text
+                      style={{
+                        color: COLORS.infoDanger,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       Hapus Semua
                     </Text>
                   </TouchableOpacity>
                 </View>
                 {addressbook.selected.length === 0 ? (
                   <View style={{ alignItems: "center" }}>
-                    <Text style={{ color: COLORS.lighter }}>
+                    <Text
+                      style={{
+                        color: COLORS.lighter,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       Belum ada yang dipilih
                     </Text>
                   </View>
@@ -312,7 +345,11 @@ export const AddressBook = ({ route }) => {
                     <FlatList
                       data={addressbook.selected}
                       renderItem={({ item }) => (
-                        <CardListPilih item={item} addressbook={addressbook} />
+                        <CardListPilih
+                          item={item}
+                          addressbook={addressbook}
+                          device={device}
+                        />
                       )}
                       keyExtractor={(item) => item.id}
                     />

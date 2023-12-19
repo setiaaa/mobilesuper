@@ -31,7 +31,12 @@ import { Button } from "../../components/Button";
 import { CardKebijakanCard } from "../../components/CardKebijkanCard";
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { ActivityIndicator } from "react-native";
@@ -284,6 +289,8 @@ export default function Dashboard(params) {
 
   // console.log(inputValue);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -318,7 +325,7 @@ export default function Dashboard(params) {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: 15,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
                 color: COLORS.white,
               }}
@@ -329,14 +336,20 @@ export default function Dashboard(params) {
         </View>
         <View
           style={{
-            backgroundColor: "brown",
             width: "100%",
             height: "100%",
             alignItems: "center",
           }}
         >
           <View style={{ width: "90%" }}>
-            <Text style={styles.subJudul}>Dokumen Hukum</Text>
+            <Text
+              style={[
+                styles.subJudul,
+                { fontSize: fontSizeResponsive("H2", device) },
+              ]}
+            >
+              Dokumen Hukum
+            </Text>
           </View>
           <View style={styles.dropdown}>
             {/* <DropDownPicker
@@ -415,12 +428,15 @@ export default function Dashboard(params) {
                     <View style={styles.input}>
                       <Ionicons
                         name="search"
-                        size={20}
+                        size={fontSizeResponsive("H3", device)}
                         color={COLORS.primary}
                       />
                       <TextInput
                         placeholder={"Cari..."}
-                        style={{ fontSize: 16, flex: 1 }}
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          flex: 1,
+                        }}
                         maxLength={30}
                         value={inputValue}
                         onChangeText={(text) => setInputValue(text)}
@@ -478,7 +494,7 @@ export default function Dashboard(params) {
                     style={{
                       color: viewDok ? COLORS.white : COLORS.primary,
                       textAlign: "center",
-                      fontSize: 13,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: 600,
                     }}
                   >
@@ -505,7 +521,7 @@ export default function Dashboard(params) {
                     style={{
                       color: viewDok ? COLORS.primary : COLORS.white,
                       textAlign: "center",
-                      fontSize: 13,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: 600,
                     }}
                   >
@@ -525,7 +541,9 @@ export default function Dashboard(params) {
                 flex: 1,
               }}
             >
-              <Text>Tidak ada</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Tidak ada
+              </Text>
             </View>
           ) : (
             <View
@@ -549,6 +567,7 @@ export default function Dashboard(params) {
                         item={item}
                         nomor={item.nomor}
                         tahun={item.tahun}
+                        device={device}
                       />
                     )}
                     style={{ width: "100%" }}
@@ -595,6 +614,7 @@ export default function Dashboard(params) {
                         item={item}
                         nomor={item.nomor}
                         tahun={item.tahun}
+                        device={device}
                       />
                     )}
                     style={{ width: "100%" }}
@@ -665,20 +685,17 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   judul: {
-    fontSize: 20,
     fontWeight: FONTWEIGHT.bold,
     textAlign: "left",
     paddingLeft: 20,
     paddingTop: 20,
   },
   subJudul: {
-    fontSize: 16,
     fontWeight: FONTWEIGHT.bold,
     textAlign: "left",
     marginVertical: 20,
   },
   judulFilter: {
-    fontSize: 16,
     fontWeight: FONTWEIGHT.bold,
     textAlign: "left",
     color: "#499CD7",

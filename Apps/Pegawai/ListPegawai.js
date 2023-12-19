@@ -8,7 +8,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import {} from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 import { Search } from "../../components/Search";
@@ -153,6 +159,8 @@ export const ListPegawai = () => {
     setIsFiltered(true);
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <>
@@ -185,7 +193,11 @@ export const ListPegawai = () => {
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               Pegawai
             </Text>
@@ -237,6 +249,7 @@ export const ListPegawai = () => {
                 navigation={navigation}
                 token={token}
                 loading={loading}
+                device={device}
               />
             )}
             // style={{ flex: 1 }}

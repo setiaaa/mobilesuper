@@ -2,7 +2,13 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FlatList, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
@@ -118,6 +124,8 @@ export const AgendaEvent = () => {
 
   console.log(agenda.lists);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <View
@@ -156,7 +164,7 @@ export const AgendaEvent = () => {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -236,6 +244,7 @@ export const AgendaEvent = () => {
             bottomSheetAttach={bottomSheetAttach}
             setIdEdit={setIdEdit}
             loading={loading}
+            device={device}
           />
         )}
         style={{ marginVertical: 10, height: 440 }}
@@ -273,8 +282,8 @@ export const AgendaEvent = () => {
               >
                 <TouchableOpacity
                   style={{
-                    width: 331,
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.lightBrown,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -287,13 +296,20 @@ export const AgendaEvent = () => {
                     navigation.navigate("EditSubAgenda");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Ubah</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ubah
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={{
-                    width: 331,
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.infoDanger,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -307,7 +323,14 @@ export const AgendaEvent = () => {
                     bottomSheetAttachClose();
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Hapus
+                  </Text>
                 </TouchableOpacity>
               </View>
             </BottomSheetView>

@@ -31,7 +31,12 @@ import { Button } from "../../components/Button";
 import { CardKebijakanCard } from "../../components/CardKebijkanCard";
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { ActivityIndicator } from "react-native";
@@ -137,6 +142,8 @@ export const Pencarian = () => {
 
   console.log(general);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -174,7 +181,7 @@ export const Pencarian = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: 15,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
                 color: COLORS.white,
               }}
@@ -183,18 +190,21 @@ export const Pencarian = () => {
             </Text>
           </View>
         </View>
-        <View style={{ marginHorizontal: 20 }}>
+        <View style={{ marginHorizontal: "5%" }}>
           <View
             style={{
               marginTop: 20,
               // flexDirection: "row",
               gap: 10,
               marginBottom: 20,
-              alignItems: "flex-end",
             }}
           >
             <View
-              style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <View
                 style={{
@@ -204,10 +214,17 @@ export const Pencarian = () => {
                 }}
               >
                 <View style={styles.input}>
-                  <Ionicons name="search" size={20} color={COLORS.primary} />
+                  <Ionicons
+                    name="search"
+                    size={fontSizeResponsive("H3", device)}
+                    color={COLORS.primary}
+                  />
                   <TextInput
                     placeholder={"Cari..."}
-                    style={{ fontSize: 16, flex: 1 }}
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      flex: 1,
+                    }}
                     maxLength={30}
                     value={inputValue}
                     onChangeText={(text) => setInputValue(text)}
@@ -246,8 +263,10 @@ export const Pencarian = () => {
                 item={item}
                 nomor={item.nomor}
                 tahun={item.tahun}
+                device={device}
               />
             )}
+            style={{ marginHorizontal: "5%" }}
             keyExtractor={(item) => item.id_peraturan}
             ListFooterComponent={() =>
               loading === true ? (

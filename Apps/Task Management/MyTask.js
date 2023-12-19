@@ -10,7 +10,12 @@ import { View } from "react-native";
 import { Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
@@ -273,6 +278,8 @@ export const MyTask = () => {
     dispatch(setRefresh(null));
   }, [refresh]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -307,7 +314,11 @@ export const MyTask = () => {
             </View>
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text
-                style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: COLORS.white,
+                }}
               >
                 Task Management
               </Text>
@@ -356,7 +367,13 @@ export const MyTask = () => {
                   flexDirection: "row",
                 }}
               >
-                <Text style={{ marginLeft: 20, color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    marginLeft: 20,
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Pilih Project
                 </Text>
                 <Ionicons
@@ -395,7 +412,7 @@ export const MyTask = () => {
                   >
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H1,
+                        fontSize: fontSizeResponsive("H1", device),
                         fontWeight: FONTWEIGHT.bold,
                       }}
                     >
@@ -488,7 +505,14 @@ export const MyTask = () => {
                     }}
                   >
                     <View>
-                      <Text style={{ color: COLORS.white }}>Terapkan</Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H3", device),
+                        }}
+                      >
+                        Terapkan
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -522,7 +546,7 @@ export const MyTask = () => {
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H1,
+                      fontSize: fontSizeResponsive("H1", device),
                       fontWeight: FONTWEIGHT.bold,
                       color: COLORS.lighter,
                     }}
@@ -533,7 +557,7 @@ export const MyTask = () => {
                   list.type === "Korespondensi" ? null : (
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H3,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: FONTWEIGHT.normal,
                         color: COLORS.lighter,
                       }}
@@ -567,11 +591,11 @@ export const MyTask = () => {
               }}
             >
               {list.type === "Dashboard" ? (
-                <TopsTaskDashboard />
+                <TopsTaskDashboard device={device} />
               ) : list.type === "Korespondensi" ? (
-                <TopsTaskKorespondensi />
+                <TopsTaskKorespondensi device={device} />
               ) : loading === false ? (
-                <TopsTask />
+                <TopsTask device={device} />
               ) : null}
             </View>
           ) : (
@@ -658,7 +682,7 @@ export const MyTask = () => {
                   >
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H1,
+                        fontSize: fontSizeResponsive("H1", device),
                         color: COLORS.infoDanger,
                         fontWeight: 500,
                       }}
@@ -719,6 +743,7 @@ export const MyTask = () => {
                       style={{
                         color: COLORS.white,
                         fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Tambah Project
@@ -754,6 +779,7 @@ export const MyTask = () => {
                       style={{
                         color: COLORS.white,
                         fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Tambah Task

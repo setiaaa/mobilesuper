@@ -3,7 +3,12 @@ import { ScrollView, TouchableOpacity } from "react-native";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native";
 import { Video } from "expo-av";
@@ -94,6 +99,9 @@ export const DetailEvent = () => {
   const data = event.detailEvent;
 
   console.log(data?.creator?.nip);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       <ScrollView>
@@ -127,7 +135,7 @@ export const DetailEvent = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H4", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -168,7 +176,7 @@ export const DetailEvent = () => {
               ) : (
                 <Text
                   style={{
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                     fontWeight: FONTWEIGHT.bold,
                     width: "45%",
                   }}
@@ -186,21 +194,28 @@ export const DetailEvent = () => {
               ) : (
                 <View
                   style={{
-                    width: 90,
-                    height: 24,
+                    paddingHorizontal: device === "tablet" ? 20 : 10,
+                    paddingVertical: device === "tablet" ? 10 : 5,
+                    borderRadius: device === "tablet" ? 40 : 30,
                     backgroundColor: COLORS.infoLight,
-                    borderRadius: 30,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: COLORS.info }}>{data.status}</Text>
+                  <Text
+                    style={{
+                      color: COLORS.info,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    {data.status}
+                  </Text>
                 </View>
               )}
             </View>
 
             <View style={{ marginTop: 10 }}>
-              <Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 {data?.note !== "" && data?.note !== null ? data.note : "-"}
               </Text>
             </View>
@@ -216,7 +231,13 @@ export const DetailEvent = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Tanggal
               </Text>
               {loading ? (
@@ -228,14 +249,20 @@ export const DetailEvent = () => {
               ) : (
                 <View style={{ width: "55%" }}>
                   {data?.start_date !== "" && data?.start_date !== null ? (
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {moment(data.start_date).format("d MMM yyy")} -{" "}
                     </Text>
                   ) : (
                     "-"
                   )}
                   {data?.end_date !== "" && data?.end_date !== null ? (
-                    <Text>{moment(data.end_date).format("d MMM yyy")}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      {moment(data.end_date).format("d MMM yyy")}
+                    </Text>
                   ) : (
                     ""
                   )}
@@ -254,7 +281,13 @@ export const DetailEvent = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Tempat
               </Text>
               {loading ? (
@@ -264,7 +297,12 @@ export const DetailEvent = () => {
                   height={20}
                 />
               ) : (
-                <Text style={{ width: "55%" }}>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {data?.location !== "" && data?.location !== null
                     ? data.location
                     : "-"}
@@ -283,7 +321,13 @@ export const DetailEvent = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Pimpinan Agenda Rapat
               </Text>
               {loading ? (
@@ -293,7 +337,12 @@ export const DetailEvent = () => {
                   height={20}
                 />
               ) : (
-                <Text style={{ width: "55%" }}>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {data?.extra_attrs?.pic?.title?.name !== "" &&
                   data?.extra_attrs?.pic?.title?.name !== null
                     ? data.extra_attrs?.pic.title.name
@@ -312,7 +361,13 @@ export const DetailEvent = () => {
               }}
             />
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Peserta Agenda Rapat
               </Text>
               {loading ? (
@@ -407,7 +462,7 @@ export const DetailEvent = () => {
                       >
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H2,
+                            fontSize: fontSizeResponsive("H2", device),
                             fontWeight: FONTWEIGHT.bold,
                             color: COLORS.normal,
                           }}
@@ -431,7 +486,7 @@ export const DetailEvent = () => {
                           data={data.extra_attrs?.members}
                           renderItem={({ item }) => (
                             <View key={item.nip}>
-                              <CardItemMember item={item} />
+                              <CardItemMember item={item} device={device} />
                             </View>
                           )}
                           keyExtractor={(item) => item.id}
@@ -452,7 +507,13 @@ export const DetailEvent = () => {
               }}
             />
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Peserta Agenda Rapat Eksternal
               </Text>
               <View>
@@ -472,13 +533,26 @@ export const DetailEvent = () => {
                         marginTop: 10,
                       }}
                     >
-                      <Text>{"-"}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {"-"}
+                      </Text>
                       {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                      <Text style={{ width: 150 }}>{data.name}</Text>
+                      <Text
+                        style={{
+                          width: 150,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {data.name}
+                      </Text>
                     </View>
                   ))
                 ) : (
-                  <Text>{"-"}</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    {"-"}
+                  </Text>
                 )}
               </View>
               {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
@@ -496,7 +570,13 @@ export const DetailEvent = () => {
               }}
             />
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Notulen
               </Text>
               {loading ? (
@@ -509,11 +589,20 @@ export const DetailEvent = () => {
                 data.extra_attrs?.notulen?.map((data, index) => (
                   <View key={data.id} style={{ position: "relative" }}>
                     {/* <Image source={{ uri: data.avatar_url }} style={{ width: 26, height: 26, marginLeft: index !== 0 ? -7 : 0, borderRadius: 50 }} /> */}
-                    <Text style={{ width: "55%" }}>{data.nama}</Text>
+                    <Text
+                      style={{
+                        width: "100%",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      {data.nama}
+                    </Text>
                   </View>
                 ))
               ) : (
-                <Text>{"-"}</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {"-"}
+                </Text>
               )}
               {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
@@ -530,7 +619,13 @@ export const DetailEvent = () => {
               }}
             />
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Petugas Absen
               </Text>
               {loading ? (
@@ -542,11 +637,20 @@ export const DetailEvent = () => {
               ) : data.extra_attrs?.presensi?.length !== 0 ? (
                 data.extra_attrs?.presensi?.map((item) => (
                   <View>
-                    <Text style={{ width: "55%" }}>{item.nama}</Text>
+                    <Text
+                      style={{
+                        width: "100%",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      {item.nama}
+                    </Text>
                   </View>
                 ))
               ) : (
-                <Text>{"-"}</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {"-"}
+                </Text>
               )}
               {/* <TouchableOpacity style={{ flex: 1, alignItems: 'flex-end', marginRight: 10 }}>
                                 <Ionicons name='chevron-forward-outline' size={24} color={COLORS.lighter} />
@@ -563,7 +667,13 @@ export const DetailEvent = () => {
               }}
             />
 
-            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+            <Text
+              style={{
+                width: 150,
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Lampiran
             </Text>
             {loading ? (
@@ -599,7 +709,9 @@ export const DetailEvent = () => {
                 keyExtractor={(item) => "*" + item.id}
               />
             ) : (
-              <Text>{"-"}</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                {"-"}
+              </Text>
             )}
 
             {lampiranById !== null ? (
@@ -760,10 +872,17 @@ export const DetailEvent = () => {
                       gap: 20,
                     }}
                   >
-                    <Text style={{ color: COLORS.white }}>Edit Event</Text>
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: fontSizeResponsive("H3", device),
+                      }}
+                    >
+                      Edit Event
+                    </Text>
                     <Ionicons
                       name="pencil-outline"
-                      size={20}
+                      size={device === "tablet" ? 30 : 20}
                       color={COLORS.white}
                     />
                   </View>
@@ -787,10 +906,17 @@ export const DetailEvent = () => {
                       gap: 20,
                     }}
                   >
-                    <Text style={{ color: COLORS.white }}>Hapus Event</Text>
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Hapus Event
+                    </Text>
                     <Ionicons
                       name="trash-outline"
-                      size={20}
+                      size={device === "tablet" ? 30 : 20}
                       color={COLORS.white}
                     />
                   </View>
@@ -839,7 +965,7 @@ export const DetailEvent = () => {
                         <View>
                           <Text
                             style={{
-                              fontSize: FONTSIZE.Judul,
+                              fontSize: fontSizeResponsive("Judul", device),
                               fontWeight: FONTWEIGHT.bold,
                             }}
                           >
@@ -900,7 +1026,12 @@ export const DetailEvent = () => {
                             }, 3000);
                           }}
                         >
-                          <Text style={{ color: COLORS.white }}>
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H3", device),
+                            }}
+                          >
                             Hapus Event
                           </Text>
                         </TouchableOpacity>
