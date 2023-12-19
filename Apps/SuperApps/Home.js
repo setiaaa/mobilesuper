@@ -577,7 +577,10 @@ export const Home = () => {
                       setModalVisible(false);
                     }}
                   >
-                    <Ionicons name="close-outline" size={24} />
+                    <Ionicons
+                      name="close-outline"
+                      size={device === "tablet" ? 40 : 24}
+                    />
                   </TouchableOpacity>
                 </View>
                 <View

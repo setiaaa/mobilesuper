@@ -8,7 +8,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import {} from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 import { Search } from "../../components/Search";
@@ -63,6 +69,8 @@ export const ListPegawai = () => {
   }, [token, page]);
 
   const { pegawai, loading } = useSelector((state) => state.Pegawai);
+  const { device } = useSelector((state) => state.apps);
+
   // const filter = (event) => {
   //     setSearch(event)
   // }
@@ -168,8 +176,8 @@ export const ListPegawai = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -178,14 +186,19 @@ export const ListPegawai = () => {
             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: 15,
+                fontWeight: 600,
+                color: COLORS.white,
+                fontSize: fontSizeResponsive("H1", device),
+              }}
             >
               Pegawai
             </Text>
@@ -212,8 +225,8 @@ export const ListPegawai = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: device === "tablet" ? 60 : 40,
+                  height: device === "tablet" ? 60 : 40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -222,7 +235,10 @@ export const ListPegawai = () => {
                   borderWidth: isFiltered ? 1 : 0,
                 }}
               >
-                <Ionicons name="filter-outline" size={24} />
+                <Ionicons
+                  name="filter-outline"
+                  size={device === "tablet" ? 40 : 24}
+                />
               </View>
             </TouchableOpacity>
           </View>
@@ -237,6 +253,7 @@ export const ListPegawai = () => {
                 navigation={navigation}
                 token={token}
                 loading={loading}
+                device={device}
               />
             )}
             // style={{ flex: 1 }}

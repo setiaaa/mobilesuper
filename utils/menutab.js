@@ -76,7 +76,7 @@ import { PNBP } from "../Apps/Dashboard/PNPB";
 import { IKU } from "../Apps/Dashboard/IKU";
 import { AddressBookJabatan } from "../Apps/AddressBookJabatan";
 import { AddressBookPegawai } from "../Apps/AddressBookPegawai";
-import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
+import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PAll } from "../Apps/Korespondensi/Pencarian/PAll";
 import { PIncoming } from "../Apps/Korespondensi/Pencarian/PIncoming";
@@ -87,6 +87,7 @@ import { Arsip } from "../Apps/Task Management/Korespondensi/Arsip";
 import { TerlewatKorespondensi } from "../Apps/Task Management/Korespondensi/TerlewatKorespondensi";
 import { HariIniKorespondensi } from "../Apps/Task Management/Korespondensi/HariIniKorespondensi";
 import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/MingguDepanKorespondensi";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -691,6 +692,8 @@ export const TopsPencarianKorespondensi = (data) => {
 };
 
 export const TopsDash = () => {
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -699,7 +702,10 @@ export const TopsDash = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}
@@ -752,6 +758,7 @@ export const TopsDash = () => {
 };
 
 export const TopsProduksiBudidaya = () => {
+  const { device } = useSelector((state) => state.apps);
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -760,7 +767,10 @@ export const TopsProduksiBudidaya = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}
@@ -785,6 +795,8 @@ export const TopsProduksiBudidaya = () => {
 };
 
 export const TopsKeuanganKinerja = () => {
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -793,7 +805,10 @@ export const TopsKeuanganKinerja = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}

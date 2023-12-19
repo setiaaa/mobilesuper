@@ -10,7 +10,12 @@ import { TouchableOpacity } from "react-native";
 import { getKesejahteraan } from "../../service/api";
 import { FlatList } from "react-native";
 import moment from "moment";
-import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import RenderHTML from "react-native-render-html";
 import { useWindowDimensions } from "react-native";
@@ -19,10 +24,17 @@ import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator } from "react-native";
 import { setKesejahteraanEmpty } from "../../store/Dashboard";
-import ListEmpty from "../../components/ListEmpty";import { RefreshControl } from 'react-native'
+import ListEmpty from "../../components/ListEmpty";
+import { RefreshControl } from "react-native";
 
-
-const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
+const CardLists = ({
+  item,
+  setDetail,
+  setDetailContent,
+  value,
+  loading,
+  device,
+}) => {
   const source = {
     html: `<section id="services" className="services">
         <div className="container">
@@ -123,7 +135,9 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
             height={20}
           />
         ) : (
-          <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {moment(item.created_date).format(DATETIME.LONG_DATE)}
+          </Text>
         )}
 
         {loading ? (
@@ -133,7 +147,13 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
             height={20}
           />
         ) : (
-          <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>
+          <Text
+            style={{
+              marginTop: 10,
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             {item.title}
           </Text>
         )}
@@ -149,6 +169,7 @@ export const Kesejahteraan = () => {
   const [detail, setDetail] = useState("");
   const [detailContent, setDetailContent] = useState({});
   const [page, setPage] = useState(1);
+  const { device } = useSelector((state) => state.apps);
 
   const dispatch = useDispatch();
 
@@ -207,23 +228,23 @@ export const Kesejahteraan = () => {
     setValue("taspen");
   };
 
-    const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = React.useCallback(() => {
-        try {
-            if (token !== '') {
-                dispatch(getKesejahteraan({ token: token, value: value, page: page }))
-                console.log('Refresh Berhasil')
-            }
-        } catch (error) {
-            console.log('Refresh gagal:', error)
-        }
+  const onRefresh = React.useCallback(() => {
+    try {
+      if (token !== "") {
+        dispatch(getKesejahteraan({ token: token, value: value, page: page }));
+        console.log("Refresh Berhasil");
+      }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, [value, token, page]);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [value, token, page]);
 
   return (
     <View>
@@ -231,7 +252,7 @@ export const Kesejahteraan = () => {
         style={{
           flexDirection: "row",
           justifyContent: "center",
-          gap: 30,
+          gap: device === "tablet" ? 100 : 30,
           marginTop: 20,
         }}
       >
@@ -248,10 +269,17 @@ export const Kesejahteraan = () => {
             filterHandleTapera();
           }}
         >
-          <Image source={require("../../assets/superApp/Tapera.png")} />
+          <Image
+            source={require("../../assets/superApp/Tapera.png")}
+            style={{
+              width: device === "tablet" ? 150 : 70,
+              height: device === "tablet" ? 150 : 70,
+            }}
+          />
           <Text
             style={{
               color: value === "tapera" ? COLORS.primary : COLORS.foundation,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             Tapera
@@ -270,10 +298,17 @@ export const Kesejahteraan = () => {
             filterHandleBpjs();
           }}
         >
-          <Image source={require("../../assets/superApp/BPJS.png")} />
+          <Image
+            source={require("../../assets/superApp/BPJS.png")}
+            style={{
+              width: device === "tablet" ? 150 : 70,
+              height: device === "tablet" ? 150 : 70,
+            }}
+          />
           <Text
             style={{
               color: value === "bpjs" ? COLORS.primary : COLORS.foundation,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             BPJS
@@ -293,10 +328,17 @@ export const Kesejahteraan = () => {
             filterHandleTaspen();
           }}
         >
-          <Image source={require("../../assets/superApp/Taspen.png")} />
+          <Image
+            source={require("../../assets/superApp/Taspen.png")}
+            style={{
+              width: device === "tablet" ? 150 : 70,
+              height: device === "tablet" ? 150 : 70,
+            }}
+          />
           <Text
             style={{
               color: value === "taspen" ? COLORS.primary : COLORS.foundation,
+              fontSize: fontSizeResponsive("H4", device),
             }}
           >
             Taspen
@@ -309,7 +351,14 @@ export const Kesejahteraan = () => {
           <View
             style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 10 }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Berita
+            </Text>
             {/* custom divider */}
             <View
               style={{
@@ -330,6 +379,7 @@ export const Kesejahteraan = () => {
                   setDetailContent={setDetailContent}
                   value={value}
                   loading={loading}
+                  device={device}
                   enableExperimentalMarginCollapsing={true}
                 />
               )}
@@ -349,9 +399,9 @@ export const Kesejahteraan = () => {
               style={{ height: 500 }}
               keyExtractor={(item) => item.id}
               onEndReached={loadMore}
-                            refreshControl={
-                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                            }
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             />
           ) : (
             <ListEmpty />
@@ -375,7 +425,14 @@ export const Kesejahteraan = () => {
             >
               <Ionicons name="chevron-back-outline" size={24} />
             </TouchableOpacity>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Detail Berita</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Detail Berita
+            </Text>
           </View>
           {/* custom divider */}
           <View
@@ -397,7 +454,12 @@ export const Kesejahteraan = () => {
               borderRadius: 8,
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {detailContent.title}
             </Text>
             <View
@@ -408,9 +470,15 @@ export const Kesejahteraan = () => {
                 marginTop: 5,
               }}
             >
-              <Ionicons name="time-outline" size={20} color={COLORS.grey} />
+              <Ionicons
+                name="time-outline"
+                size={device === "tablet" ? 40 : 20}
+                color={COLORS.grey}
+              />
               {/* <Text>{moment(detailContent.created_date).format(DATETIME.LONG_DATE)}</Text> */}
-              <Text>{formatDate(detailContent.created_date)}</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                {formatDate(detailContent.created_date)}
+              </Text>
             </View>
             {/* custom divider */}
             <View
