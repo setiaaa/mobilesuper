@@ -83,6 +83,11 @@ import { PIncoming } from "../Apps/Korespondensi/Pencarian/PIncoming";
 import { PDisposition } from "../Apps/Korespondensi/Pencarian/PDisposition";
 import { PSubmitted } from "../Apps/Korespondensi/Pencarian/PSubmitted";
 import { Pencarian } from "../Apps/Kebijakan/Pencarian";
+import { Arsip } from "../Apps/Task Management/Korespondensi/Arsip";
+import { TerlewatKorespondensi } from "../Apps/Task Management/Korespondensi/TerlewatKorespondensi";
+import { HariIniKorespondensi } from "../Apps/Task Management/Korespondensi/HariIniKorespondensi";
+import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/MingguDepanKorespondensi";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -606,28 +611,28 @@ export const TopsTaskKorespondensi = ({ device }) => {
       >
         <Top.Screen
           name="Arsip"
-          component={InProgres}
+          component={Arsip}
           options={{
             title: "Arsip",
           }}
         />
         <Top.Screen
-          name="Terlewat"
-          component={Pending}
+          name="TerlewatKorespondensi"
+          component={TerlewatKorespondensi}
           options={{
             title: "Terlewat",
           }}
         />
         <Top.Screen
-          name="HariIni"
-          component={Complete}
+          name="HariIniKorespondensi"
+          component={HariIniKorespondensi}
           options={{
             title: "Hari Ini",
           }}
         />
         <Top.Screen
-          name="MingguDepan"
-          component={BackLog}
+          name="MingguDepanKorespondensi"
+          component={MingguDepanKorespondensi}
           options={{
             title: "Minggu Depan",
           }}
@@ -687,6 +692,8 @@ export const TopsPencarianKorespondensi = (data) => {
 };
 
 export const TopsDash = () => {
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -695,7 +702,10 @@ export const TopsDash = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}
@@ -748,6 +758,7 @@ export const TopsDash = () => {
 };
 
 export const TopsProduksiBudidaya = () => {
+  const { device } = useSelector((state) => state.apps);
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -756,7 +767,10 @@ export const TopsProduksiBudidaya = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}
@@ -781,6 +795,8 @@ export const TopsProduksiBudidaya = () => {
 };
 
 export const TopsKeuanganKinerja = () => {
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -789,7 +805,10 @@ export const TopsKeuanganKinerja = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}

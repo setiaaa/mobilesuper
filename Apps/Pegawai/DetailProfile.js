@@ -6,6 +6,7 @@ import {
   COLORS,
   FONTSIZE,
   FONTWEIGHT,
+  PADDING,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
@@ -26,30 +27,28 @@ export const DetailProfile = () => {
   const { pegawai, loading } = useSelector((state) => state.Pegawai);
   const navigation = useNavigation();
   const item = pegawai.detail;
-  console.log(pegawai.detail);
+  const { device } = useSelector((state) => state.apps);
 
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
-
-  const { device } = useSelector((state) => state.apps);
-
   return (
     <>
       <ScrollView>
         <View
           style={{
             flexDirection: "row",
-            alignItems: "center",
+            alignItems: "flex-end",
             backgroundColor: COLORS.primary,
             height: 80,
+            paddingBottom: 20,
           }}
         >
           <View
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -58,7 +57,7 @@ export const DetailProfile = () => {
             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -80,24 +79,23 @@ export const DetailProfile = () => {
           style={{
             justifyContent: "center",
             alignItems: "center",
-            marginVertical: 20,
+            padding: PADDING.Page,
           }}
         >
           <View
             style={{
               backgroundColor: COLORS.white,
+              width: wp(87),
               borderRadius: 8,
               justifyContent: "center",
               alignItems: "center",
-              paddingHorizontal: 16,
-              paddingVertical: 16,
+              padding: PADDING.Page,
               //shadow ios
               shadowOffset: { width: -2, height: 4 },
               shadowColor: "#171717",
               shadowOpacity: 0.2,
               //shadow android
               elevation: 2,
-              width: wp(87),
             }}
           >
             {loading ? (
@@ -109,7 +107,11 @@ export const DetailProfile = () => {
             ) : (
               <Image
                 source={{ uri: BASE_URL + item.avatar }}
-                style={{ width: 61, height: 61, borderRadius: 30 }}
+                style={{
+                  width: device === "tablet" ? 100 : 61,
+                  height: device === "tablet" ? 100 : 61,
+                  borderRadius: device === "tablet" ? 50 : 30,
+                }}
               />
             )}
             {loading ? (
@@ -141,6 +143,7 @@ export const DetailProfile = () => {
                 style={{
                   color: COLORS.lighter,
                   fontSize: fontSizeResponsive("H4", device),
+                  textAlign: "center",
                 }}
               >
                 {item.satuan_kerja_nama}
@@ -289,7 +292,7 @@ export const DetailProfile = () => {
               >
                 <Text
                   style={{
-                    fontSize: fontSizeResponsive("Judul", device),
+                    fontSize: device === "tablet" ? 60 : 30,
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -298,8 +301,8 @@ export const DetailProfile = () => {
                 <View
                   style={{
                     backgroundColor: "#CED06C",
-                    paddingHorizontal: 10,
-                    paddingVertical: 5,
+                    width: wp(18),
+                    height: wp(5),
                     borderRadius: 30,
                     justifyContent: "center",
                     alignItems: "center",
@@ -329,8 +332,8 @@ export const DetailProfile = () => {
                 </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: "#FF9900",
                     borderRadius: 30,
                   }}
@@ -358,8 +361,8 @@ export const DetailProfile = () => {
                 </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: COLORS.success,
                     borderRadius: 30,
                   }}
@@ -387,8 +390,8 @@ export const DetailProfile = () => {
                 </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: "#CED06C",
                     borderRadius: 30,
                   }}
@@ -416,8 +419,8 @@ export const DetailProfile = () => {
                 </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: COLORS.success,
                     borderRadius: 30,
                   }}

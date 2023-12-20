@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  deleteListTask,
+  deleteTask,
+  deleteTaskProject,
   editCategoryTM,
   editTaskTM,
   getChoiceListTM,
@@ -7,6 +10,7 @@ import {
   getDetailProjectTM,
   getDetailTaskTM,
   getListDashboardTM,
+  getListKorespondensiTM,
   getListTaskTM,
   getTreeTM,
   postAttachmentTM,
@@ -85,6 +89,34 @@ const TaskSlice = createSlice({
         state.loading = false;
       })
       .addCase(getListDashboardTM.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListKorespondensiTM.fulfilled, (state, action) => {
+        let datas = action.payload
+        function renameChildrenToDescendants(datas) {
+            datas.forEach(member => {
+                if (member.nodes) {
+                    member.children = member.nodes; // Mengganti atribut "nodes" dengan "descendants"
+                    delete member.nodes; // Menghapus atribut "nodes" yang lama
+                    renameChildrenToDescendants(member.children); // Rekursif untuk anggota keluarga berikutnya
+                }
+            });
+        }
+        renameChildrenToDescendants(datas)
+        const newDataList = {
+          id: "2",
+          name: "Korespondensi",
+          type: "Korespondensi",
+          data: datas,
+          detail: null,
+        };
+        state.list = newDataList;
+        state.loading = false;
+        console.log("in store")
+        console.log(newDataList)
+        
+    })
+      .addCase(getListKorespondensiTM.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(getDetailTaskTM.fulfilled, (state, action) => {
@@ -209,7 +241,40 @@ const TaskSlice = createSlice({
       })
       .addCase(getCompleteTM.rejected, (state, action) => {
         state.loading = false;
-      });
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(deleteTask.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+      })
+      .addCase(deleteTaskProject.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(deleteTaskProject.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteTaskProject.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+      })
+      .addCase(deleteListTask.fulfilled, (state, action) => {
+        state.status = "berhasil";
+        state.loading = false;
+      })
+      .addCase(deleteListTask.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteListTask.rejected, (state, action) => {
+        state.status = "error";
+        state.loading = false;
+      })
   },
 });
 

@@ -283,12 +283,14 @@ export const TambahCutiTahunan = () => {
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
                 marginLeft: 20,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
               }}
             >
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>

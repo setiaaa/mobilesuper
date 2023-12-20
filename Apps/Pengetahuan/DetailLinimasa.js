@@ -753,12 +753,14 @@ export const DetailLinimasa = (item) => {
                       alignItems: "center",
                       marginTop: 25,
                       marginLeft: 20,
+                      width: device === "tablet" ? 40 : 28,
+                      height: device === "tablet" ? 40 : 28,
                     },
                   ]}
                 >
                   <Ionicons
                     name="chevron-back"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </View>
@@ -2068,8 +2070,6 @@ export const DetailLinimasa = (item) => {
 const styles = StyleSheet.create({
   backIcon: {
     backgroundColor: "white",
-    height: 28,
-    width: 28,
     borderRadius: 50,
   },
   imageIos: {

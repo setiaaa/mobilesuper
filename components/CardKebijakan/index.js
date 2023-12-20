@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     // marginLeft: 20,
-    height: 110,
     paddingHorizontal: 10,
     marginBottom: 10,
     borderRadius: 8,

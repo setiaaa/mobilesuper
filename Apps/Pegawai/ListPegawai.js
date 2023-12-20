@@ -69,6 +69,8 @@ export const ListPegawai = () => {
   }, [token, page]);
 
   const { pegawai, loading } = useSelector((state) => state.Pegawai);
+  const { device } = useSelector((state) => state.apps);
+
   // const filter = (event) => {
   //     setSearch(event)
   // }
@@ -159,8 +161,6 @@ export const ListPegawai = () => {
     setIsFiltered(true);
   };
 
-  const { device } = useSelector((state) => state.apps);
-
   return (
     <>
       <>
@@ -176,8 +176,8 @@ export const ListPegawai = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -186,7 +186,7 @@ export const ListPegawai = () => {
             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -224,8 +224,8 @@ export const ListPegawai = () => {
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: device === "tablet" ? 60 : 40,
+                  height: device === "tablet" ? 60 : 40,
                   borderRadius: 30,
                   backgroundColor: COLORS.white,
                   justifyContent: "center",
@@ -234,7 +234,10 @@ export const ListPegawai = () => {
                   borderWidth: isFiltered ? 1 : 0,
                 }}
               >
-                <Ionicons name="filter-outline" size={24} />
+                <Ionicons
+                  name="filter-outline"
+                  size={device === "tablet" ? 40 : 24}
+                />
               </View>
             </TouchableOpacity>
           </View>

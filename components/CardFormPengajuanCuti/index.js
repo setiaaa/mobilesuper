@@ -28,25 +28,39 @@ export const CardFormPengajuanCuti = ({ item, profile, device }) => {
           }}
           style={{
             backgroundColor: COLORS.infoDanger,
-            padding: 15,
-            borderRadius: 30,
-            width: 55,
-            height: 55,
+            borderRadius: device === "tablet" ? 50 : 30,
+            width: device === "tablet" ? 100 : 55,
+            height: device === "tablet" ? 100 : 55,
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Ionicons name="calendar-outline" size={18} color={COLORS.white} />
+          <Ionicons
+            name="calendar-outline"
+            size={device === "tablet" ? 40 : 18}
+            color={COLORS.white}
+          />
         </TouchableOpacity>
-        <Text
+        <View
           style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             width: wp(30),
-            textAlign: "center",
-            fontSize: fontSizeResponsive("H3", device),
+            minHeight: device === "tablet" ? 50 : 30,
           }}
         >
-          {item.nama}
-        </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              overflow: "hidden",
+              width: wp(33),
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            {item.nama}
+          </Text>
+        </View>
       </View>
     </View>
   );

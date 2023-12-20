@@ -19,6 +19,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -57,7 +58,7 @@ export const CardlPimpinan = ({ item }) => {
   return <Text>{item.nama_lengkap}</Text>;
 };
 
-const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
+const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
   console.log(lampiran);
 
@@ -80,10 +81,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={{ uri: lampiran }}
           style={{ width: 90, height: 90, borderRadius: 8 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -105,10 +117,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/mp4.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -138,10 +161,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/word.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -171,10 +205,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/excel.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -204,10 +249,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/pdf.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -237,10 +293,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/ppt.png")}
           style={{ width: 70, height: 70 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -253,6 +320,7 @@ const CardKomen = ({
   inputRef,
   setParentId,
   bottomSheetAttachCommentClose,
+  device,
 }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
@@ -311,7 +379,7 @@ const CardKomen = ({
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H2,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
               }}
             >
@@ -321,7 +389,7 @@ const CardKomen = ({
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                 }}
               >
@@ -348,7 +416,7 @@ const CardKomen = ({
                 <Text
                   style={{
                     color: COLORS.white,
-                    fontSize: FONTSIZE.H5,
+                    fontSize: fontSizeResponsive("H5", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -371,11 +439,14 @@ const CardKomen = ({
                   bottomSheetAttachCommentClose();
                 }}
               >
-                <Ionicons name="documents-outline" size={10} />
+                <Ionicons
+                  name="documents-outline"
+                  size={device === "tablet" ? 40 : 10}
+                />
                 <Text
                   style={{
                     color: COLORS.info,
-                    fontSize: FONTSIZE.H5,
+                    fontSize: fontSizeResponsive("H5", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -387,7 +458,7 @@ const CardKomen = ({
             <View style={{ flexDirection: "row", gap: 5 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   marginBottom: 5,
                 }}
@@ -401,7 +472,7 @@ const CardKomen = ({
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   marginBottom: 5,
                 }}
@@ -723,6 +794,7 @@ export const TambahCutiSakit = () => {
 
   console.log(arsipDetail.detail_dokumen?.dokumen?.id);
 
+  const { device } = useSelector((state) => state.apps);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
@@ -742,12 +814,14 @@ export const TambahCutiSakit = () => {
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
                 marginLeft: 20,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
               }}
             >
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
@@ -755,7 +829,7 @@ export const TambahCutiSakit = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -777,10 +851,17 @@ export const TambahCutiSakit = () => {
               >
                 <Ionicons
                   name="document-outline"
-                  size={18}
+                  size={device === "tablet" ? 40 : 18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jenis Cuti</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Jenis Cuti
+                </Text>
               </View>
 
               <View
@@ -801,7 +882,7 @@ export const TambahCutiSakit = () => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -811,7 +892,7 @@ export const TambahCutiSakit = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -831,7 +912,7 @@ export const TambahCutiSakit = () => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -841,7 +922,7 @@ export const TambahCutiSakit = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -863,7 +944,7 @@ export const TambahCutiSakit = () => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -873,7 +954,7 @@ export const TambahCutiSakit = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -961,10 +1042,15 @@ export const TambahCutiSakit = () => {
               >
                 <Ionicons
                   name="person-outline"
-                  size={18}
+                  size={device === "tablet" ? 40 : 18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Profil Pegawai
                 </Text>
               </View>
@@ -987,10 +1073,14 @@ export const TambahCutiSakit = () => {
                   >
                     <View style={{ flexDirection: "row" }}>
                       <View style={{ width: "90%" }}>
-                        <Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           {arsipDetail.detail_dokumen?.dokumen?.nama_pengaju}
                         </Text>
-                        <Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
                           NIP.{" "}
                           {arsipDetail.detail_dokumen?.dokumen?.nip_pengaju}
                         </Text>
@@ -1003,10 +1093,16 @@ export const TambahCutiSakit = () => {
                             setCollapse({ nip: "", toggle: false })
                           }
                         >
-                          <Ionicons name="chevron-up" size={24} />
+                          <Ionicons
+                            name="chevron-up"
+                            size={device === "tablet" ? 40 : 24}
+                          />
                         </TouchableOpacity>
                       ) : (
-                        <Ionicons name="chevron-down" size={24} />
+                        <Ionicons
+                          name="chevron-down"
+                          size={device === "tablet" ? 40 : 24}
+                        />
                       )}
                     </View>
                   </TouchableOpacity>
@@ -1018,9 +1114,20 @@ export const TambahCutiSakit = () => {
                       <TouchableOpacity
                         onPress={() => setCollapse({ nip: "", toggle: false })}
                       >
-                        <Text style={{ marginTop: 10 }}>Golongan</Text>
                         <Text
-                          style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}
+                          style={{
+                            marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Golongan
+                        </Text>
+                        <Text
+                          style={{
+                            marginTop: 5,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
                         >
                           {
                             arsipDetail.detail_dokumen?.dokumen
@@ -1028,16 +1135,38 @@ export const TambahCutiSakit = () => {
                           }
                         </Text>
 
-                        <Text style={{ marginTop: 10 }}>Jabatan</Text>
                         <Text
-                          style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}
+                          style={{
+                            marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Jabatan
+                        </Text>
+                        <Text
+                          style={{
+                            marginTop: 5,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
                         >
                           {arsipDetail.detail_dokumen?.dokumen?.posisi_pengaju}
                         </Text>
 
-                        <Text style={{ marginTop: 10 }}>Unit Kerja</Text>
                         <Text
-                          style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}
+                          style={{
+                            marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Unit Kerja
+                        </Text>
+                        <Text
+                          style={{
+                            marginTop: 5,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
                         >
                           {
                             arsipDetail.detail_dokumen?.dokumen
@@ -1060,7 +1189,9 @@ export const TambahCutiSakit = () => {
                   gap: 10,
                 }}
               >
-                <Text>Periode Cuti</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Periode Cuti
+                </Text>
                 <View
                   style={{
                     flexDirection: "row",
@@ -1071,7 +1202,7 @@ export const TambahCutiSakit = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 155,
+                        width: device === "tablet" ? 250 : 155,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -1107,7 +1238,11 @@ export const TambahCutiSakit = () => {
                           />
                         </TouchableOpacity>
                       </View> */}
-                      <Text>{mulaiCuti}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {mulaiCuti}
+                      </Text>
                     </View>
                   </View>
 
@@ -1115,7 +1250,7 @@ export const TambahCutiSakit = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 155,
+                        width: device === "tablet" ? 250 : 155,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -1151,7 +1286,11 @@ export const TambahCutiSakit = () => {
                           />
                         </TouchableOpacity>
                       </View> */}
-                      <Text>{akhirCuti}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {akhirCuti}
+                      </Text>
                       <Modal
                         animationType="fade"
                         transparent={true}
@@ -1202,15 +1341,15 @@ export const TambahCutiSakit = () => {
                                 style={{
                                   backgroundColor: COLORS.primary,
                                   borderRadius: 50,
-                                  width: 35,
-                                  height: 35,
+                                  width: device === "tablet" ? 40 : 35,
+                                  height: device === "tablet" ? 40 : 35,
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
                               >
                                 <Ionicons
                                   name="close-outline"
-                                  size={24}
+                                  size={device === "tablet" ? 40 : 24}
                                   color={COLORS.white}
                                 />
                               </View>
@@ -1303,7 +1442,15 @@ export const TambahCutiSakit = () => {
                                     alignItems: "center",
                                   }}
                                 >
-                                  <Text style={{ color: COLORS.white }}>
+                                  <Text
+                                    style={{
+                                      color: COLORS.white,
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
                                     Ok
                                   </Text>
                                 </View>
@@ -1318,7 +1465,11 @@ export const TambahCutiSakit = () => {
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Durasi Cuti</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Durasi Cuti
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -1328,7 +1479,9 @@ export const TambahCutiSakit = () => {
                       borderRadius: 8,
                     }}
                   >
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {arsipDetail.detail_dokumen?.dokumen?.jumlah_cuti}
                     </Text>
                   </View>
@@ -1336,7 +1489,11 @@ export const TambahCutiSakit = () => {
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Alamat Cuti</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Alamat Cuti
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -1353,13 +1510,21 @@ export const TambahCutiSakit = () => {
                       onChangeText={setAlamat}
                       value={alamat}
                     /> */}
-                    <Text>{alamat}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      {alamat}
+                    </Text>
                   </View>
                 </View>
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Telepon</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Telepon
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -1378,13 +1543,21 @@ export const TambahCutiSakit = () => {
                       onChangeText={setTelepon}
                       value={telepon}
                     /> */}
-                    <Text>{telepon}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      {telepon}
+                    </Text>
                   </View>
                 </View>
 
                 <View style={{ gap: 8 }}>
                   <View>
-                    <Text>Alasan Cuti</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Alasan Cuti
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -1418,10 +1591,17 @@ export const TambahCutiSakit = () => {
               >
                 <Ionicons
                   name="attach-outline"
-                  size={18}
+                  size={device === "tablet" ? 40 : 18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Lampiran
+                </Text>
               </View>
 
               {arsipDetail.detail_dokumen?.attachment?.length !== 0 ? (
@@ -1442,7 +1622,7 @@ export const TambahCutiSakit = () => {
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1461,6 +1641,7 @@ export const TambahCutiSakit = () => {
                               setVisibleModal(true);
                               setLampiranById(item);
                             }}
+                            device={device}
                           />
                         </View>
                       )}
@@ -1487,7 +1668,11 @@ export const TambahCutiSakit = () => {
                           rowGap: 20,
                         }}
                       >
-                        <Text>-</Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          -
+                        </Text>
                       </View>
                     </View>
                   </View>
@@ -1544,7 +1729,7 @@ export const TambahCutiSakit = () => {
                         <Ionicons
                           name="close-outline"
                           color={COLORS.white}
-                          size={24}
+                          size={device === "tablet" ? 40 : 24}
                         />
                       </View>
                     </TouchableOpacity>
@@ -1591,7 +1776,12 @@ export const TambahCutiSakit = () => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Lampiran Pembatalan
                 </Text>
               </View>
@@ -1608,24 +1798,28 @@ export const TambahCutiSakit = () => {
                   <Pressable onPress={pickDocument}>
                     <View
                       style={{
-                        borderWidth: 1,
                         width: "100%",
-                        borderRadius: 4,
-                        borderColor: COLORS.ExtraDivinder,
-                        height: 200,
+                        borderRadius: 8,
                         justifyContent: "center",
                         alignItems: "center",
-                        gap: 5,
+                        flexDirection: "row",
+                        gap: 10,
+                        flex: 1,
+                        backgroundColor: COLORS.grey,
+                        padding: 10,
                       }}
                     >
-                      <View style={{ marginBottom: 10 }}>
-                        <Ionicons
-                          name="md-cloud-upload-outline"
-                          size={30}
-                          color={"#66656C"}
-                        />
-                      </View>
-                      <Text style={{ color: "#66656C" }}>
+                      <Ionicons
+                        name="md-cloud-upload-outline"
+                        size={30}
+                        color={COLORS.white}
+                      />
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Klik Untuk Unggah
                       </Text>
                     </View>
@@ -1666,7 +1860,12 @@ export const TambahCutiSakit = () => {
                   )}
                 </View>
 
-                <Text style={{ color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   *) Hanya pdf yang akan diterima dari total berkas file maks
                   5mb
                 </Text>
@@ -1685,10 +1884,15 @@ export const TambahCutiSakit = () => {
                   >
                     <Ionicons
                       name="document-outline"
-                      size={18}
+                      size={device === "tablet" ? 40 : 18}
                       color={COLORS.primary}
                     />
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       Info Cuti
                     </Text>
                   </View>
@@ -1711,7 +1915,7 @@ export const TambahCutiSakit = () => {
                       >
                         <Text
                           style={{
-                            fontSize: 13,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: 600,
                             width: "80%",
                             paddingRight: 20,
@@ -1721,7 +1925,7 @@ export const TambahCutiSakit = () => {
                         </Text>
                         <Text
                           style={{
-                            fontSize: 13,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: 400,
                             width: "60%",
                             paddingRight: 20,
@@ -1741,7 +1945,7 @@ export const TambahCutiSakit = () => {
                       >
                         <Text
                           style={{
-                            fontSize: 13,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: 600,
                             width: "80%",
                             paddingRight: 20,
@@ -1751,7 +1955,7 @@ export const TambahCutiSakit = () => {
                         </Text>
                         <Text
                           style={{
-                            fontSize: 13,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: 400,
                             width: "60%",
                             paddingRight: 20,
@@ -1771,7 +1975,7 @@ export const TambahCutiSakit = () => {
                       >
                         <Text
                           style={{
-                            fontSize: 13,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: 600,
                             width: "80%",
                             paddingRight: 20,
@@ -1781,7 +1985,7 @@ export const TambahCutiSakit = () => {
                         </Text>
                         <Text
                           style={{
-                            fontSize: 13,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: 400,
                             width: "60%",
                             paddingRight: 20,
@@ -1805,14 +2009,24 @@ export const TambahCutiSakit = () => {
                 }}
               >
                 <View
-                  style={{ flexDirection: "row", padding: 5, columnGap: 10 }}
+                  style={{
+                    flexDirection: "row",
+                    padding: 5,
+                    columnGap: 10,
+                    alignItems: "center",
+                  }}
                 >
                   <Ionicons
                     name="chatbox-outline"
-                    size={18}
+                    size={device === "tablet" ? 40 : 18}
                     color={COLORS.primary}
                   />
-                  <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Histori Komentar
                   </Text>
                 </View>
@@ -1833,7 +2047,14 @@ export const TambahCutiSakit = () => {
                     bottomSheetAttachComment();
                   }}
                 >
-                  <Text style={{ color: COLORS.primary }}>Lihat Komentar</Text>
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Lihat Komentar
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -1868,7 +2089,12 @@ export const TambahCutiSakit = () => {
                     borderBottomColor: COLORS.grey,
                   }}
                 >
-                  <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Histori Komentar
                   </Text>
                   <TouchableOpacity
@@ -1878,7 +2104,7 @@ export const TambahCutiSakit = () => {
                   >
                     <Ionicons
                       name="close-outline"
-                      size={24}
+                      size={device === "tablet" ? 40 : 24}
                       color={COLORS.lighter}
                     />
                   </TouchableOpacity>
@@ -1893,6 +2119,7 @@ export const TambahCutiSakit = () => {
                       bottomSheetAttachCommentClose={
                         bottomSheetAttachCommentClose
                       }
+                      device={device}
                     />
                   )}
                   style={{ height: 500 }}
@@ -1968,10 +2195,15 @@ export const TambahCutiSakit = () => {
               >
                 <Ionicons
                   name="people-outline"
-                  size={18}
+                  size={device === "tablet" ? 40 : 18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Yang Menyetujui
                 </Text>
               </View>
@@ -1987,7 +2219,7 @@ export const TambahCutiSakit = () => {
                   <View style={{ flexDirection: "row", padding: 10 }}>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         paddingRight: 20,
                       }}
@@ -2015,6 +2247,7 @@ export const TambahCutiSakit = () => {
                         fontSize: 13,
                         fontWeight: 600,
                         paddingRight: 20,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Pejabat Berwenang
@@ -2037,13 +2270,27 @@ export const TambahCutiSakit = () => {
               </View>
             </View>
             <>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  padding: 5,
+                  columnGap: 10,
+                  alignItems: "center",
+                }}
+              >
                 <Ionicons
                   name="chatbox-outline"
-                  size={18}
+                  size={device === "tablet" ? 40 : 18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Komentar</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Komentar
+                </Text>
               </View>
               <View
                 style={{
@@ -2052,7 +2299,9 @@ export const TambahCutiSakit = () => {
                   borderRadius: 16,
                 }}
               >
-                <Text>Komentar</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Komentar
+                </Text>
                 <View
                   style={{
                     borderWidth: 1,
@@ -2093,7 +2342,13 @@ export const TambahCutiSakit = () => {
                 }}
                 onPress={handleSubmit}
               >
-                <Text style={{ textAlign: "center", color: COLORS.white }}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Kirim
                 </Text>
               </TouchableOpacity>

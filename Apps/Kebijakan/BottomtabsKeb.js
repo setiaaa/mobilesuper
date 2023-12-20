@@ -2,19 +2,19 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import {} from "react-native";
+import { useSelector } from "react-redux";
 
 function MyTabBarKeb({ props, navigation }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
-
+  const { device } = useSelector((state) => state.apps);
   return (
     <>
       <BottomSheetModalProvider>
         <View
           style={{
             flexDirection: "row",
-            height: 68,
             backgroundColor: COLORS.white,
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
@@ -33,9 +33,9 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <View
@@ -56,23 +56,30 @@ function MyTabBarKeb({ props, navigation }) {
                 <Ionicons
                   name="document-text-outline"
                   color={COLORS.primary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.primary }}>Pencarian</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Pencarian
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <Ionicons
                   name="document-text-outline"
                   color={COLORS.grey}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
                 <Text style={{ color: COLORS.grey }}>Pencarian</Text>
               </View>
@@ -91,9 +98,9 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <View
@@ -111,20 +118,44 @@ function MyTabBarKeb({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="list" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Dok. Hukum</Text>
+                <Ionicons
+                  name="list"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H3", device),
+                    textAlign: "center",
+                  }}
+                >
+                  Dok. Hukum
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
-                <Ionicons name="list" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Dok. Hukum</Text>
+                <Ionicons
+                  name="list"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H3", device),
+                    textAlign: "center",
+                  }}
+                >
+                  Dok. Hukum
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -141,9 +172,9 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <View
@@ -164,7 +195,7 @@ function MyTabBarKeb({ props, navigation }) {
                 <Ionicons
                   name="pencil-outline"
                   color={COLORS.primary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
                 <Text style={{ color: COLORS.primary }}>Tematik</Text>
               </View>
@@ -172,13 +203,24 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
-                <Ionicons name="pencil-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Tematik</Text>
+                <Ionicons
+                  name="pencil-outline"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Tematik
+                </Text>
               </View>
             )}
           </TouchableOpacity>

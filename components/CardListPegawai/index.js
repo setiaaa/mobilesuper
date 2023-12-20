@@ -93,10 +93,10 @@ export const CardListPegawai = ({
           <TouchableOpacity
             onPress={() => setCollapse({ nip: "", toggle: false })}
           >
-            <Ionicons name="chevron-up" size={24} />
+            <Ionicons name="chevron-up" size={device === "tablet" ? 40 : 24} />
           </TouchableOpacity>
         ) : (
-          <Ionicons name="chevron-down" size={24} />
+          <Ionicons name="chevron-down" size={device === "tablet" ? 40 : 24} />
         )}
       </TouchableOpacity>
 

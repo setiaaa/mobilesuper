@@ -103,21 +103,26 @@ export const ListGaleri = () => {
             backgroundColor: COLORS.primary,
             height: "10%",
             flexDirection: "row",
+            alignItems: "center",
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <View
-              style={[
-                styles.backIcon,
-                {
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 25,
-                  marginLeft: 20,
-                },
-              ]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 20,
+                backgroundColor: "white",
+                height: device === "tablet" ? 46 : 28,
+                width: device === "tablet" ? 46 : 28,
+                borderRadius: 50,
+              }}
             >
-              <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
+              <Ionicons
+                name="chevron-back"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
             </View>
           </TouchableOpacity>
           <View
