@@ -9,7 +9,13 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   BottomSheetModal,
@@ -47,7 +53,7 @@ import { Loading } from "../../components/Loading";
 
 // const Input = () => {
 //     return (
-//         <View style={{ marginHorizontal: 17, marginTop: 10, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+//         <View style={{ marginHorizontal: "5%", marginTop: 10, flexDirection: 'row', gap: 10, alignItems: 'center' }}>
 //             <View style={{ width: '90%' }}>
 //                 <TextInput
 //                     editable
@@ -79,13 +85,13 @@ import { Loading } from "../../components/Loading";
 //                     }}
 //                 />
 //             </View>
-//             <Ionicons name='remove-circle-outline' size={24} />
+//             <Ionicons name='remove-circle-outline' size={device === "tablet" ? 36 : 24}/>
 //         </View>
 //     )
 
 // };
 
-const CardListPeserta = ({ item, addressbook }) => {
+const CardListPeserta = ({ item, addressbook, device }) => {
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
     let data;
@@ -111,13 +117,22 @@ const CardListPeserta = ({ item, addressbook }) => {
             alignItems: "center",
             marginTop: 10,
             marginHorizontal: "5%",
-            gap: 10,
+            justifyContent: "space-between",
           }}
         >
-          <Text>-</Text>
-          <Text style={{ width: "80%" }}>
-            {item.title?.name !== undefined ? item.title?.name : item.title}
-          </Text>
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              -
+            </Text>
+            <Text
+              style={{
+                width: "80%",
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {item.title?.name !== undefined ? item.title?.name : item.title}
+            </Text>
+          </View>
           <TouchableOpacity
             onPress={() => {
               deleteItem(
@@ -126,7 +141,10 @@ const CardListPeserta = ({ item, addressbook }) => {
               );
             }}
           >
-            <Ionicons name="trash-outline" size={24} />
+            <Ionicons
+              name="trash-outline"
+              size={device === "tablet" ? 36 : 24}
+            />
           </TouchableOpacity>
         </View>
       ) : (
@@ -137,17 +155,31 @@ const CardListPeserta = ({ item, addressbook }) => {
             alignItems: "center",
             marginTop: 10,
             marginHorizontal: "5%",
-            gap: 10,
+            justifyContent: "space-between",
           }}
         >
-          <Text>-</Text>
-          <Text style={{ width: "80%" }}>{item.nama || item.fullname}</Text>
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              -
+            </Text>
+            <Text
+              style={{
+                width: "80%",
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {item.nama || item.fullname}
+            </Text>
+          </View>
           <TouchableOpacity
             onPress={() => {
               deleteItem(item.nip, "pegawai");
             }}
           >
-            <Ionicons name="trash-outline" size={24} />
+            <Ionicons
+              name="trash-outline"
+              size={device === "tablet" ? 36 : 24}
+            />
           </TouchableOpacity>
         </View>
       )}
@@ -373,6 +405,9 @@ export const EditEvent = () => {
     dispatch(updateEvent(datas));
   };
   console.log(Tamu);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -413,7 +448,7 @@ export const EditEvent = () => {
                 >
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: fontSizeResponsive("H1", device),
                       fontWeight: 600,
                       color: COLORS.white,
                     }}
@@ -428,20 +463,20 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 20,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Group Kalender
                   </Text>
                 </View>
-                <View style={{ marginHorizontal: 17 }}>
+                <View style={{ marginHorizontal: "5%" }}>
                   <Dropdown
                     data={kalenderLists}
                     setSelected={setKategori}
@@ -459,25 +494,32 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Judul Event
                   </Text>
-                  <Text style={{ color: COLORS.danger }}>*</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    *
+                  </Text>
                 </View>
                 <View
                   style={{
                     borderWidth: 1,
                     width: "90%",
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
                   }}
@@ -488,7 +530,10 @@ export const EditEvent = () => {
                     numberOfLines={4}
                     maxLength={40}
                     placeholder="Masukan Judul"
-                    style={{ padding: 10 }}
+                    style={{
+                      padding: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
                     onChangeText={setJudul}
                     value={Judul}
                   />
@@ -498,10 +543,10 @@ export const EditEvent = () => {
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    marginHorizontal: 17,
+                    marginHorizontal: "5%",
                   }}
                 >
-                  <View>
+                  <View style={{ width: "49%" }}>
                     <View
                       style={{
                         marginTop: 10,
@@ -512,17 +557,23 @@ export const EditEvent = () => {
                       <Text
                         style={{
                           fontWeight: FONTWEIGHT.bold,
-                          fontSize: FONTSIZE.H3,
+                          fontSize: fontSizeResponsive("H3", device),
                         }}
                       >
                         Tanggal Mulai
                       </Text>
-                      <Text style={{ color: COLORS.danger }}>*</Text>
+                      <Text
+                        style={{
+                          color: COLORS.danger,
+                          fontSize: fontSizeResponsive("H3", device),
+                        }}
+                      >
+                        *
+                      </Text>
                     </View>
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 155,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -534,7 +585,10 @@ export const EditEvent = () => {
                         numberOfLines={4}
                         maxLength={40}
                         placeholder="Mulai"
-                        style={{ padding: 10 }}
+                        style={{
+                          padding: 10,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                         value={TanggalMulai}
                       />
                       <View
@@ -550,7 +604,7 @@ export const EditEvent = () => {
                         >
                           <Ionicons
                             name="calendar-outline"
-                            size={24}
+                            size={device === "tablet" ? 36 : 24}
                             color={COLORS.grey}
                           />
                         </TouchableOpacity>
@@ -558,7 +612,7 @@ export const EditEvent = () => {
                     </View>
                   </View>
 
-                  <View>
+                  <View style={{ width: "49%" }}>
                     <View
                       style={{
                         marginTop: 10,
@@ -569,17 +623,23 @@ export const EditEvent = () => {
                       <Text
                         style={{
                           fontWeight: FONTWEIGHT.bold,
-                          fontSize: FONTSIZE.H3,
+                          fontSize: fontSizeResponsive("H3", device),
                         }}
                       >
                         Tanggal Selesai
                       </Text>
-                      <Text style={{ color: COLORS.danger }}>*</Text>
+                      <Text
+                        style={{
+                          color: COLORS.danger,
+                          fontSize: fontSizeResponsive("H3", device),
+                        }}
+                      >
+                        *
+                      </Text>
                     </View>
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 155,
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -591,7 +651,10 @@ export const EditEvent = () => {
                         numberOfLines={4}
                         maxLength={40}
                         placeholder="Selesai"
-                        style={{ padding: 10 }}
+                        style={{
+                          padding: 10,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                         value={TanggalSelesai}
                       />
                       <View
@@ -607,7 +670,7 @@ export const EditEvent = () => {
                         >
                           <Ionicons
                             name="calendar-outline"
-                            size={24}
+                            size={device === "tablet" ? 36 : 24}
                             color={COLORS.grey}
                           />
                         </TouchableOpacity>
@@ -674,7 +737,7 @@ export const EditEvent = () => {
                         >
                           <Ionicons
                             name="close-outline"
-                            size={24}
+                            size={device === "tablet" ? 36 : 24}
                             color={COLORS.white}
                           />
                         </View>
@@ -732,7 +795,14 @@ export const EditEvent = () => {
                               alignItems: "center",
                             }}
                           >
-                            <Text style={{ color: COLORS.white }}>Ok</Text>
+                            <Text
+                              style={{
+                                color: COLORS.white,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Ok
+                            </Text>
                           </View>
                         </TouchableOpacity>
                       </View>
@@ -744,25 +814,32 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Tempat
                   </Text>
-                  <Text style={{ color: COLORS.danger }}>*</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    *
+                  </Text>
                 </View>
                 <View
                   style={{
                     borderWidth: 1,
                     width: "90%",
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
                     flexDirection: "row",
@@ -774,7 +851,10 @@ export const EditEvent = () => {
                     numberOfLines={4}
                     maxLength={40}
                     placeholder="Ketikan sesuatu"
-                    style={{ padding: 10 }}
+                    style={{
+                      padding: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
                     onChangeText={setTempat}
                     value={Tempat}
                   />
@@ -784,24 +864,31 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Pimpinan Event
                   </Text>
-                  <Text style={{ color: COLORS.danger }}>*</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    *
+                  </Text>
                 </View>
                 <View
                   style={{
                     borderWidth: 1,
-                    marginHorizontal: 17,
+                    marginHorizontal: "5%",
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
                     flexDirection: "row",
@@ -813,7 +900,11 @@ export const EditEvent = () => {
                     numberOfLines={4}
                     maxLength={40}
                     placeholder="Pilih member"
-                    style={{ padding: 10, width: "80%" }}
+                    style={{
+                      padding: 10,
+                      width: "80%",
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
                     value={
                       pilihanPimpinanEvent[0]?.title?.name ||
                       pilihanPimpinanEvent[0]?.title
@@ -844,7 +935,7 @@ export const EditEvent = () => {
                     >
                       <Ionicons
                         name="people-outline"
-                        size={24}
+                        size={device === "tablet" ? 36 : 24}
                         color={COLORS.grey}
                       />
                     </TouchableOpacity>
@@ -886,7 +977,7 @@ export const EditEvent = () => {
                     >
                       {/* <TouchableOpacity onPress={() => setVisible(false)} style={{ paddingRight: '85%', marginBottom: 3, marginLeft: 20 }}>
                                                 <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 35, height: 35, justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Ionicons name='close-outline' size={24} color={COLORS.white} />
+                                                    <Ionicons name='close-outline' size={device === "tablet" ? 36 : 24}color={COLORS.white} />
                                                 </View>
                                             </TouchableOpacity> */}
                       <View
@@ -908,25 +999,32 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Peserta
                   </Text>
-                  <Text style={{ color: COLORS.danger }}>*</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    *
+                  </Text>
                 </View>
                 <View
                   style={{
                     borderWidth: 1,
                     width: "90%",
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
                     flexDirection: "row",
@@ -938,7 +1036,10 @@ export const EditEvent = () => {
                     numberOfLines={4}
                     maxLength={40}
                     placeholder="Pilih member"
-                    style={{ padding: 10 }}
+                    style={{
+                      padding: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
                     value={pilihanPesertaEvent}
                   />
                   <View
@@ -966,7 +1067,7 @@ export const EditEvent = () => {
                     >
                       <Ionicons
                         name="people-outline"
-                        size={24}
+                        size={device === "tablet" ? 36 : 24}
                         color={COLORS.grey}
                       />
                     </TouchableOpacity>
@@ -975,7 +1076,11 @@ export const EditEvent = () => {
                 <FlatList
                   data={pilihanPesertaEvent}
                   renderItem={({ item }) => (
-                    <CardListPeserta item={item} addressbook={addressbook} />
+                    <CardListPeserta
+                      item={item}
+                      addressbook={addressbook}
+                      device={device}
+                    />
                   )}
                   scrollEnabled={false}
                   keyExtractor={(index) => index}
@@ -985,25 +1090,32 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Notulen
                   </Text>
-                  <Text style={{ color: COLORS.danger }}>*</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    *
+                  </Text>
                 </View>
                 <View
                   style={{
                     borderWidth: 1,
                     width: "90%",
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
                     flexDirection: "row",
@@ -1015,7 +1127,10 @@ export const EditEvent = () => {
                     numberOfLines={4}
                     maxLength={40}
                     placeholder="Pilih member"
-                    style={{ padding: 10 }}
+                    style={{
+                      padding: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
                   />
                   <View
                     style={{
@@ -1042,7 +1157,7 @@ export const EditEvent = () => {
                     >
                       <Ionicons
                         name="people-outline"
-                        size={24}
+                        size={device === "tablet" ? 36 : 24}
                         color={COLORS.grey}
                       />
                     </TouchableOpacity>
@@ -1051,7 +1166,11 @@ export const EditEvent = () => {
                 <FlatList
                   data={pilihanNotulenEvent}
                   renderItem={({ item }) => (
-                    <CardListPeserta item={item} addressbook={addressbook} />
+                    <CardListPeserta
+                      item={item}
+                      addressbook={addressbook}
+                      device={device}
+                    />
                   )}
                   scrollEnabled={false}
                   keyExtractor={(index) => index}
@@ -1061,25 +1180,32 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Petugas Absen
                   </Text>
-                  <Text style={{ color: COLORS.danger }}>*</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    *
+                  </Text>
                 </View>
                 <View
                   style={{
                     borderWidth: 1,
                     width: "90%",
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
                     flexDirection: "row",
@@ -1091,7 +1217,10 @@ export const EditEvent = () => {
                     numberOfLines={4}
                     maxLength={40}
                     placeholder="Pilih member"
-                    style={{ padding: 10 }}
+                    style={{
+                      padding: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
                   />
                   <View
                     style={{
@@ -1118,7 +1247,7 @@ export const EditEvent = () => {
                     >
                       <Ionicons
                         name="people-outline"
-                        size={24}
+                        size={device === "tablet" ? 36 : 24}
                         color={COLORS.grey}
                       />
                     </TouchableOpacity>
@@ -1127,7 +1256,11 @@ export const EditEvent = () => {
                 <FlatList
                   data={pilihanPetugasAbsenEvent}
                   renderItem={({ item }) => (
-                    <CardListPeserta item={item} addressbook={addressbook} />
+                    <CardListPeserta
+                      item={item}
+                      addressbook={addressbook}
+                      device={device}
+                    />
                   )}
                   scrollEnabled={false}
                   keyExtractor={(index) => index}
@@ -1137,14 +1270,14 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Catatan
@@ -1154,7 +1287,7 @@ export const EditEvent = () => {
                   style={{
                     borderWidth: 1,
                     width: "90%",
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     borderRadius: 4,
                     borderColor: COLORS.ExtraDivinder,
                     flexDirection: "row",
@@ -1178,7 +1311,10 @@ export const EditEvent = () => {
                       multiline
                       numberOfLines={3}
                       placeholder="Ketikan Sesuatu"
-                      style={{ padding: 10 }}
+                      style={{
+                        padding: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
                       onChangeText={setNote}
                       value={Note}
                     />
@@ -1189,7 +1325,7 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginHorizontal: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -1198,7 +1334,7 @@ export const EditEvent = () => {
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Tamu Eksternal
@@ -1208,12 +1344,12 @@ export const EditEvent = () => {
                                                 bottomSheetMember()
                                             }}
                                         >
-                                            <Ionicons name='add-outline' size={24} color={COLORS.white} />
+                                            <Ionicons name='add-outline' size={device === "tablet" ? 36 : 24}color={COLORS.white} />
                                         </TouchableOpacity> */}
                 </View>
                 <View
                   style={{
-                    marginHorizontal: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                     gap: 10,
                     alignItems: "center",
@@ -1233,7 +1369,10 @@ export const EditEvent = () => {
                       numberOfLines={4}
                       maxLength={40}
                       placeholder="Nama Tamu"
-                      style={{ padding: 10 }}
+                      style={{
+                        padding: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
                       onChangeText={onChangeValue}
                       value={value}
                     />
@@ -1246,7 +1385,7 @@ export const EditEvent = () => {
                   >
                     <Ionicons
                       name="send-outline"
-                      size={24}
+                      size={device === "tablet" ? 36 : 24}
                       color={COLORS.primary}
                     />
                   </TouchableOpacity>
@@ -1259,7 +1398,7 @@ export const EditEvent = () => {
                         style={{
                           flexDirection: "row",
                           alignItems: "center",
-                          marginHorizontal: 17,
+                          marginHorizontal: "5%",
                           gap: 10,
                         }}
                       >
@@ -1278,7 +1417,13 @@ export const EditEvent = () => {
                             width: "89%",
                           }}
                         >
-                          <Text>{item.name}</Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {item.name}
+                          </Text>
                         </View>
                         <TouchableOpacity
                           style={{
@@ -1326,12 +1471,18 @@ export const EditEvent = () => {
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ fontWeight: 500, marginBottom: 50 }}>
+                        <Text
+                          style={{
+                            fontWeight: 500,
+                            marginBottom: 50,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
                           Tambah Tamu Eksternal
                         </Text>
                       </View>
 
-                      <View style={{ marginHorizontal: 17 }}>
+                      <View style={{ marginHorizontal: "5%" }}>
                         <View
                           style={{
                             borderWidth: 1,
@@ -1347,7 +1498,10 @@ export const EditEvent = () => {
                             numberOfLines={4}
                             maxLength={40}
                             placeholder="Nama Tamu"
-                            style={{ padding: 10 }}
+                            style={{
+                              padding: 10,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
                             onChangeText={onChangeValue}
                             value={value}
                           />
@@ -1369,7 +1523,10 @@ export const EditEvent = () => {
                             numberOfLines={4}
                             maxLength={40}
                             placeholder="Email Tamu"
-                            style={{ padding: 10 }}
+                            style={{
+                              padding: 10,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
                             onChangeText={onChangeValue}
                             value={value}
                           />
@@ -1383,14 +1540,14 @@ export const EditEvent = () => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 17,
+                    marginHorizontal: "5%",
                     flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       fontWeight: FONTWEIGHT.bold,
-                      fontSize: FONTSIZE.H3,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Lampiran
@@ -1399,26 +1556,31 @@ export const EditEvent = () => {
                 <Pressable onPress={pickDocument}>
                   <View
                     style={{
-                      borderWidth: 1,
                       width: "90%",
-                      marginLeft: 17,
-                      borderRadius: 4,
-                      borderColor: COLORS.ExtraDivinder,
-                      height: 250,
-                      marginBottom: 20,
+                      borderRadius: 8,
                       justifyContent: "center",
                       alignItems: "center",
-                      gap: 5,
+                      flexDirection: "row",
+                      gap: 10,
+                      flex: 1,
+                      backgroundColor: COLORS.grey,
+                      padding: 10,
+                      marginHorizontal: "5%",
                     }}
                   >
-                    <View style={{ marginBottom: 10 }}>
-                      <Ionicons
-                        name="md-cloud-upload-outline"
-                        size={30}
-                        color={"#66656C"}
-                      />
-                    </View>
-                    <Text style={{ color: "#66656C" }}>Klik Untuk Unggah</Text>
+                    <Ionicons
+                      name="md-cloud-upload-outline"
+                      size={30}
+                      color={COLORS.white}
+                    />
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Klik Untuk Unggah
+                    </Text>
                   </View>
                 </Pressable>
                 {/* ) : null} */}
@@ -1509,8 +1671,13 @@ export const EditEvent = () => {
                     ))}
                   </View>
                 )}
-                <View style={{ marginVertical: 10, marginHorizontal: 17 }}>
-                  <Text style={{ color: COLORS.lighter }}>
+                <View style={{ marginVertical: 10, marginHorizontal: "5%" }}>
+                  <Text
+                    style={{
+                      color: COLORS.lighter,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     *) Hanya png, jpg, jpeg, pdf, doc, docx, ppt, pptx, xls,
                     xlsx yang akan diterima dan ukuran file maks 100 MB
                   </Text>
@@ -1542,7 +1709,14 @@ export const EditEvent = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Simpan</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Simpan
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -1584,7 +1758,10 @@ export const EditEvent = () => {
                   onPress={() => dispatch(setStatus(""))}
                   style={{ marginTop: 5, paddingRight: "80%" }}
                 >
-                  <Ionicons name="close-outline" size={24} />
+                  <Ionicons
+                    name="close-outline"
+                    size={device === "tablet" ? 36 : 24}
+                  />
                 </TouchableOpacity>
                 {status === "berhasil" ? (
                   <>
@@ -1599,7 +1776,11 @@ export const EditEvent = () => {
                           marginTop: 20,
                         }}
                       >
-                        <Text>Berhasil Ditambahkan!</Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          Berhasil Ditambahkan!
+                        </Text>
                       </View>
                       <TouchableOpacity
                         onPress={() => {
@@ -1622,7 +1803,14 @@ export const EditEvent = () => {
                             alignItems: "center",
                           }}
                         >
-                          <Text style={{ color: COLORS.white }}>Ok</Text>
+                          <Text
+                            style={{
+                              color: COLORS.white,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            Ok
+                          </Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -1639,7 +1827,11 @@ export const EditEvent = () => {
                         marginTop: 20,
                       }}
                     >
-                      <Text>Terjadi Kesalahan!</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        Terjadi Kesalahan!
+                      </Text>
                     </View>
                     <TouchableOpacity
                       onPress={() => dispatch(setStatus(""))}
@@ -1659,7 +1851,14 @@ export const EditEvent = () => {
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ color: COLORS.white }}>Ok</Text>
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Ok
+                        </Text>
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -1677,7 +1876,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     width: "90%",
     marginVertical: 20,
-    marginLeft: 20,
+    marginHorizontal: "5%",
     borderRadius: 16,
   },
   iOSBackdrop: {

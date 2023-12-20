@@ -1680,28 +1680,26 @@ export const EditSubAgenda = () => {
                 <Pressable onPress={pickDocument}>
                   <View
                     style={{
-                      borderWidth: 1,
                       width: "90%",
-                      marginHorizontal: "5%",
-                      borderRadius: 4,
-                      borderColor: COLORS.ExtraDivinder,
-                      height: 250,
-                      marginBottom: 20,
+                      borderRadius: 8,
                       justifyContent: "center",
                       alignItems: "center",
-                      gap: 5,
+                      flexDirection: "row",
+                      gap: 10,
+                      flex: 1,
+                      backgroundColor: COLORS.grey,
+                      padding: 10,
+                      marginHorizontal: "5%",
                     }}
                   >
-                    <View style={{ marginBottom: 10 }}>
-                      <Ionicons
-                        name="md-cloud-upload-outline"
-                        size={device === "tablet" ? 36 : 30}
-                        color={"#66656C"}
-                      />
-                    </View>
+                    <Ionicons
+                      name="md-cloud-upload-outline"
+                      size={30}
+                      color={COLORS.white}
+                    />
                     <Text
                       style={{
-                        color: "#66656C",
+                        color: COLORS.white,
                         fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
