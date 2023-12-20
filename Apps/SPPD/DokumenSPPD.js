@@ -128,8 +128,14 @@ export const DokumenSPPD = () => {
           </Text>
         </View>
       </View>
-      <View style={{ padding: 20 }}>
-        <Search placeholder={"Cari"} onSearch={filter} />
+      <View style={{ paddingVertical: 20 }}>
+        <View style={{ paddingHorizontal: "5%" }}>
+          <Search
+            placeholder={"Cari"}
+            onSearch={filter}
+            iconColor={COLORS.primary}
+          />
+        </View>
         <FlatList
           data={filterData}
           renderItem={({ item }) => (
@@ -142,7 +148,11 @@ export const DokumenSPPD = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{ height: "83%", marginTop: 6 }}
+          style={{
+            height: device === "tablet" ? "88%" : "83%",
+            marginTop: 6,
+            paddingHorizontal: "5%",
+          }}
         />
       </View>
     </>

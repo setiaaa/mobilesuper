@@ -2,9 +2,13 @@ import React from "react";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
-import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 
-export const CardLiburTahunan = ({ item }) => {
+export const CardLiburTahunan = ({ item, device }) => {
   return (
     <View style={{ alignItems: "center" }}>
       {/* <View>
@@ -13,15 +17,32 @@ export const CardLiburTahunan = ({ item }) => {
       <View
         style={{
           width: "100%",
-          borderWidth: 1,
+          // borderWidth: 1,
           marginTop: 5,
           padding: 10,
-          borderRadius: 18,
-          borderColor: COLORS.grey,
+          borderRadius: 8,
+          // borderColor: COLORS.grey,
+          backgroundColor: COLORS.white,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
         }}
       >
-        <Text style={{ marginTop: 10 }}>{item.tanggal_libur}</Text>
-        <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+        <Text
+          style={{ marginTop: 10, fontSize: fontSizeResponsive("H4", device) }}
+        >
+          {item.tanggal_libur}
+        </Text>
+        <Text
+          style={{
+            marginTop: 5,
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {item.informasi}
         </Text>
       </View>

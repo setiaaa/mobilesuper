@@ -10,7 +10,12 @@ import { View } from "react-native";
 import { Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
@@ -287,6 +292,8 @@ export const MyTask = () => {
     dispatch(setRefresh(null));
   }, [refresh]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -321,7 +328,11 @@ export const MyTask = () => {
             </View>
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text
-                style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: COLORS.white,
+                }}
               >
                 Task Management
               </Text>
@@ -351,7 +362,9 @@ export const MyTask = () => {
             </View>
           </View>
 
-          <View style={{ flexDirection: "row", gap: 5, paddingHorizontal: 20 }}>
+          <View
+            style={{ flexDirection: "row", gap: 5, paddingHorizontal: "5%" }}
+          >
             <TouchableOpacity
               onPress={bottomSheetAttachSelect}
               style={{ width: "100%" }}
@@ -368,7 +381,13 @@ export const MyTask = () => {
                   flexDirection: "row",
                 }}
               >
-                <Text style={{ marginLeft: 20, color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    marginLeft: 20,
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Pilih Project
                 </Text>
                 <Ionicons
@@ -399,14 +418,15 @@ export const MyTask = () => {
                   <View
                     style={{
                       alignItems: "center",
-                      margin: 20,
+                      marginVertical: 20,
+                      marginHorizontal: "5%",
                       flexDirection: "row",
                       justifyContent: "space-between",
                     }}
                   >
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H1,
+                        fontSize: fontSizeResponsive("H1", device),
                         fontWeight: FONTWEIGHT.bold,
                       }}
                     >
@@ -414,7 +434,7 @@ export const MyTask = () => {
                     </Text>
                     <TouchableOpacity
                       onPress={() => {
-                        bottomSheetAttachClose();
+                        bottomSheetSelectClose();
                       }}
                     >
                       <Ionicons
@@ -425,7 +445,7 @@ export const MyTask = () => {
                     </TouchableOpacity>
                   </View>
 
-                  <View style={{ width: "90%", marginHorizontal: 20 }}>
+                  <View style={{ width: "90%", marginHorizontal: "5%" }}>
                     <Dropdown
                       placeHolder={"Pilih Tipe"}
                       borderWidth={1}
@@ -447,7 +467,7 @@ export const MyTask = () => {
                       <View
                         style={{
                           width: "90%",
-                          marginHorizontal: 20,
+                          marginHorizontal: "5%",
                           marginTop: 20,
                         }}
                       >
@@ -487,20 +507,26 @@ export const MyTask = () => {
                       bottomSheetSelectClose();
                       handleChoiceSubmit();
                     }}
+                    style={{
+                      marginHorizontal: "5%",
+                      backgroundColor: COLORS.primary,
+                      width: Platform.OS === "ios" ? "90%" : "91%",
+                      height: 50,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 6,
+                      marginVertical: 40,
+                    }}
                   >
-                    <View
-                      style={{
-                        marginHorizontal: 20,
-                        backgroundColor: COLORS.primary,
-                        width: Platform.OS === "ios" ? "90%" : "91%",
-                        height: 50,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 6,
-                        marginVertical: 40,
-                      }}
-                    >
-                      <Text style={{ color: COLORS.white }}>Terapkan</Text>
+                    <View>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H3", device),
+                        }}
+                      >
+                        Terapkan
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -516,7 +542,6 @@ export const MyTask = () => {
 
           <View
             style={{
-              paddingHorizontal: 20,
               flexDirection: "row",
               alignItems: "center",
             }}
@@ -528,10 +553,14 @@ export const MyTask = () => {
                                         <ShimmerPlaceHolder style={{ borderRadius: 4 }} width={150} height={20} /> */}
                 </>
               ) : (
-                <View>
+                <View
+                  style={{
+                    marginHorizontal: "5%",
+                  }}
+                >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H1,
+                      fontSize: fontSizeResponsive("H1", device),
                       fontWeight: FONTWEIGHT.bold,
                       color: COLORS.lighter,
                     }}
@@ -542,7 +571,7 @@ export const MyTask = () => {
                   list.type === "Korespondensi" ? null : (
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H3,
+                        fontSize: fontSizeResponsive("H3", device),
                         fontWeight: FONTWEIGHT.normal,
                         color: COLORS.lighter,
                       }}
@@ -576,11 +605,11 @@ export const MyTask = () => {
               }}
             >
               {list.type === "Dashboard" ? (
-                <TopsTaskDashboard />
+                <TopsTaskDashboard device={device} />
               ) : list.type === "Korespondensi" ? (
-                <TopsTaskKorespondensi />
+                <TopsTaskKorespondensi device={device} />
               ) : loading === false ? (
-                <TopsTask />
+                <TopsTask device={device} />
               ) : null}
             </View>
           ) : (
@@ -667,7 +696,7 @@ export const MyTask = () => {
                   >
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H1,
+                        fontSize: fontSizeResponsive("H1", device),
                         color: COLORS.infoDanger,
                         fontWeight: 500,
                       }}
@@ -728,6 +757,7 @@ export const MyTask = () => {
                       style={{
                         color: COLORS.white,
                         fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Tambah Project
@@ -763,6 +793,7 @@ export const MyTask = () => {
                       style={{
                         color: COLORS.white,
                         fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Tambah Task

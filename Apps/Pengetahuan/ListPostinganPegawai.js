@@ -1,7 +1,14 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import {} from "react-native-safe-area-context";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
@@ -10,46 +17,69 @@ import ListEmpty from "../../components/ListEmpty";
 import { StatusBar } from "expo-status-bar";
 import { Loading } from "../../components/Loading";
 
-const CardListPostingan = ({ item }) => {
+const CardListPostingan = ({ item, device }) => {
   // console.log(item);
   return (
-    <View style={{ alignSelf: "center", width: "100%", padding: PADDING.Page }}>
+    <View
+      style={{
+        alignSelf: "center",
+        width: "100%",
+        paddingVertical: PADDING.Page,
+        paddingHorizontal: "5%",
+      }}
+    >
       <View
         style={{
-          height: 120,
-          padding: 20,
-          borderBottomWidth: 10,
+          // height: 120,
+          paddingHorizontal: 20,
           borderColor: COLORS.lighter,
           alignItems: "center",
           borderRadius: 8,
           flexDirection: "row",
           //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
           //shadow android
           elevation: 2,
           backgroundColor: COLORS.white,
         }}
       >
         <View style={{ marginVertical: 20 }}>
-          <Text style={{ fontSize: 13, fontWeight: 600 }}>{item?.title}</Text>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 600,
+            }}
+          >
+            {item?.title}
+          </Text>
           <View
             style={{
               display: "flex",
               // justifyContent: "space-between",
               marginVertical: 10,
               gap: 12,
-              paddingBottom: 10
             }}
           >
             <View style={{ width: "80%" }}>
               <Text
-                style={{ fontSize: 13, fontWeight: 400, color: COLORS.grey }}
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: 400,
+                  color: COLORS.grey,
+                }}
               >
                 Tanggal : {item?.created_at}
               </Text>
             </View>
             <View>
               <Text
-                style={{ fontSize: 13, fontWeight: 400, color: COLORS.grey }}
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: 400,
+                  color: COLORS.grey,
+                }}
               >
                 {"Nilai Saat ini : " + item?.score}
               </Text>
@@ -64,7 +94,9 @@ const CardListPostingan = ({ item }) => {
 export const ListPostinganPegawai = (param) => {
   const navigation = useNavigation();
 
-  const { postinganPegawai, loading } = useSelector((state) => state.pengetahuan);
+  const { postinganPegawai, loading } = useSelector(
+    (state) => state.pengetahuan
+  );
 
   // console.log(postinganPegawai);
 
@@ -74,9 +106,11 @@ export const ListPostinganPegawai = (param) => {
 
   const resetData = () => {
     postinganPegawai.lists = [];
-  }
+  };
 
-  console.log(postinganPegawai.lists)
+  console.log(postinganPegawai.lists);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <View style={{ flex: 1 }}>
@@ -94,41 +128,50 @@ export const ListPostinganPegawai = (param) => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => {
-            navigation.goBack()
-            resetData()
-          }}>
+          <TouchableOpacity
+            style={{}}
+            onPress={() => {
+              navigation.goBack();
+              resetData();
+            }}
+          >
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Postingan {nama}
           </Text>
         </View>
       </View>
       {loading ? (
         <Loading />
-      ) : (
-        postinganPegawai.lists.length === 0 ? <ListEmpty /> : null
-      )}
+      ) : postinganPegawai.lists.length === 0 ? (
+        <ListEmpty />
+      ) : null}
       <View style={{ marginBottom: 130 }}>
         <FlatList
           data={postinganPegawai?.lists}
           renderItem={({ item }) => (
             <View key={item.id}>
-              <CardListPostingan item={item} />
+              <CardListPostingan item={item} device={device} />
             </View>
           )}
           style={{ marginBottom: 80 }}

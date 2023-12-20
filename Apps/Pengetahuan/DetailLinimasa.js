@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { FlatList, KeyboardAvoidingView, Platform, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import { View } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -10,6 +15,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -68,10 +74,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={{ uri: lampiran }}
           style={{ width: 90, height: 90, borderRadius: 8 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -93,10 +110,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/mp4.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -126,7 +154,13 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/word.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
         <Text style={{ color: COLORS.lighter }}>
@@ -162,7 +196,12 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
         <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -192,10 +231,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/pdf.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -225,10 +275,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/ppt.png")}
           style={{ width: 70, height: 70 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -236,7 +297,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   ) : null;
 };
 
-const CardKomen = ({ listData, inputRef, setParentId }) => {
+const CardKomen = ({ listData, inputRef, setParentId, device }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     // id: data[0].Komentar[0].id
@@ -252,7 +313,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
   const handleClickBalas = () => {
     if (inputRef.current) {
       inputRef.current.focus();
-      setParentId({id:listData.id, creator:listData.creator} );
+      setParentId({ id: listData.id, creator: listData.creator });
     }
   };
   return (
@@ -286,15 +347,19 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
           <View>
             <Image
               source={{ uri: listData.creator_avatar }}
-              style={{ width: 30, height: 30, borderRadius: 20 }}
+              style={{
+                width: device === "tablet" ? 60 : 30,
+                height: device === "tablet" ? 60 : 30,
+                borderRadius: device === "tablet" ? 40 : 20,
+              }}
             />
           </View>
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H2,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
-                lineHeight: 20,
+                // lineHeight: 20,
                 wordWrap: "break-word",
               }}
             >
@@ -304,9 +369,9 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
-                  lineHeight: 18,
+                  // lineHeight: 18,
                   wordWrap: "break-word",
                   marginBottom: 10,
                 }}
@@ -317,7 +382,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
             <Text
               style={{
                 color: COLORS.lighter,
-                fontSize: FONTSIZE.H3,
+                fontSize: fontSizeResponsive("H3", device),
                 fontWeight: FONTWEIGHT.normal,
                 wordWrap: "break-word",
               }}
@@ -338,7 +403,11 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
               }}
             >
               <Text
-                style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+                style={{
+                  color: COLORS.primary,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 Balas
               </Text>
@@ -371,7 +440,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                       <Text
                         style={{
                           color: COLORS.lighter,
-                          fontSize: FONTSIZE.H5,
+                          fontSize: fontSizeResponsive("H5", device),
                           fontWeight: FONTWEIGHT.normal,
                           wordWrap: "break-word",
                         }}
@@ -406,7 +475,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                           <View style={{ marginLeft: 10 }}>
                             <Text
                               style={{
-                                fontSize: FONTSIZE.H2,
+                                fontSize: fontSizeResponsive("H2", device),
                                 fontWeight: FONTWEIGHT.bold,
                                 lineHeight: 20,
                                 wordWrap: "break-word",
@@ -418,7 +487,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                               <Text
                                 style={{
                                   color: COLORS.lighter,
-                                  fontSize: FONTSIZE.H5,
+                                  fontSize: fontSizeResponsive("H5", device),
                                   fontWeight: FONTWEIGHT.normal,
                                   lineHeight: 18,
                                   wordWrap: "break-word",
@@ -431,7 +500,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                             <Text
                               style={{
                                 color: "#999999",
-                                fontSize: FONTSIZE.H3,
+                                fontSize: fontSizeResponsive("H3", device),
                                 fontWeight: FONTWEIGHT.normal,
                                 lineHeight: 18,
                                 wordWrap: "break-word",
@@ -462,7 +531,10 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                                   <Text
                                     style={{
                                       color: COLORS.lighter,
-                                      fontSize: FONTSIZE.H5,
+                                      fontSize: fontSizeResponsive(
+                                        "H5",
+                                        device
+                                      ),
                                       fontWeight: FONTWEIGHT.normal,
                                       lineHeight: 18,
                                       wordWrap: "break-word",
@@ -551,11 +623,11 @@ export const DetailLinimasa = (item) => {
   const [visibleModalView, setVisibleModalView] = useState(false);
   const [visibleModalViewDisukai, setVisibleModalViewDisukai] = useState(false);
   const inputRef = useRef(null);
-  const [parentId, setParentId] = useState({id:"", creator:""});
+  const [parentId, setParentId] = useState({ id: "", creator: "" });
   const bottomSheetModalRef = useRef(null);
   const initialSnapPoints = useMemo(() => ["95%"], []);
   const initSnapPoints = useMemo(() => ["20%"], []);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   const {
     animatedHandleHeight,
@@ -603,7 +675,6 @@ export const DetailLinimasa = (item) => {
     linimasa.detail = {};
   };
 
-  
   const listsView = linimasa.view;
   const listsLike = linimasa.like_list;
   const source = {
@@ -635,7 +706,7 @@ export const DetailLinimasa = (item) => {
     };
     dispatch(postComment(data));
     setKomen("");
-    setParentId({id:"",creator:""})
+    setParentId({ id: "", creator: "" });
   };
 
   useEffect(() => {
@@ -652,15 +723,14 @@ export const DetailLinimasa = (item) => {
 
   const [flatListScrolling, setFlatListScrolling] = useState(false);
 
-
   // console.log(linimasa.detail.li)
-
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
 
-// console.log(linimasa.lists?.like_list)
+  // console.log(linimasa.lists?.like_list)
 
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <View style={{ flex: 1 }}>
@@ -683,12 +753,14 @@ export const DetailLinimasa = (item) => {
                       alignItems: "center",
                       marginTop: 25,
                       marginLeft: 20,
+                      width: device === "tablet" ? 40 : 28,
+                      height: device === "tablet" ? 40 : 28,
                     },
                   ]}
                 >
                   <Ionicons
                     name="chevron-back"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </View>
@@ -759,8 +831,8 @@ export const DetailLinimasa = (item) => {
                   <Text
                     style={{
                       paddingBottom: 20,
-                      paddingHorizontal: 25,
-                      fontSize: FONTSIZE.H1,
+                      paddingHorizontal: "5%",
+                      fontSize: fontSizeResponsive("H1", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -772,7 +844,7 @@ export const DetailLinimasa = (item) => {
                   style={{
                     flexDirection: "row",
                     gap: 10,
-                    paddingHorizontal: 25,
+                    paddingHorizontal: "5%",
                   }}
                 >
                   <View>
@@ -801,7 +873,12 @@ export const DetailLinimasa = (item) => {
                         height={20}
                       />
                     ) : (
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {detail.creator?.name}
                       </Text>
                     )}
@@ -817,7 +894,7 @@ export const DetailLinimasa = (item) => {
                       <Text
                         style={{
                           color: COLORS.grey,
-                          fontSize: 13,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         {detail.published_date?.slice(0, -9)}
@@ -831,7 +908,7 @@ export const DetailLinimasa = (item) => {
                     flexDirection: "row",
                     gap: 15,
                     alignItems: "center",
-                    paddingHorizontal: 25,
+                    paddingHorizontal: "5%",
                     marginTop: 20,
                   }}
                 >
@@ -888,6 +965,7 @@ export const DetailLinimasa = (item) => {
                               : detail.category === "Kegiatan"
                               ? COLORS.info
                               : COLORS.success,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         {detail.category}
@@ -912,11 +990,15 @@ export const DetailLinimasa = (item) => {
                       marginTop: 20,
                       backgroundColor: COLORS.infoLight,
                       padding: 20,
-                      marginHorizontal: 20,
+                      marginHorizontal: "5%",
                       borderRadius: 20,
                     }}
                   >
-                    <Text>{detail.summary}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      {detail.summary}
+                    </Text>
                   </View>
                 ) : null}
 
@@ -927,11 +1009,16 @@ export const DetailLinimasa = (item) => {
                     <ShimmerParagraph />
                   </View>
                 ) : (
-                  <View style={{ marginHorizontal: 20, paddingVertical: -20 }}>
+                  <View
+                    style={{ marginHorizontal: "5%", paddingVertical: -20 }}
+                  >
                     <RenderHTML
                       source={source}
                       contentWidth={width}
                       enableExperimentalMarginCollapsing={true}
+                      tagsStyles={{
+                        p: { fontSize: fontSizeResponsive("H4", device) },
+                      }}
                     />
                   </View>
                 )}
@@ -941,7 +1028,7 @@ export const DetailLinimasa = (item) => {
                     display: "flex",
                     flexDirection: "row",
                     marginVertical: 10,
-                    marginHorizontal: 20,
+                    marginHorizontal: "5%",
                     // paddingHorizontal: 16,
                     // backgroundColor: "grey",
                     justifyContent: "space-between",
@@ -949,130 +1036,145 @@ export const DetailLinimasa = (item) => {
                 >
                   <View>
                     <TouchableOpacity
-                    onPress={() => {
-                      // bottomSheetAttachCommentClose();
-                      // dispatch(
-                      //   getListsLike({ token: token, id: detail.id })
-                      // );
-                      // navigation.navigate("ListSukaLinimasa");
-                      setVisibleModalViewDisukai(true);
-                    }}
-                    >
-                    <Text style={{ color: COLORS.lighter }}>
-                      {detail.likes_count} Disukai
-                    </Text>
-                    </TouchableOpacity>
-
-
-                  <Modal
-                  animationType="fade"
-                  transparent={true}
-                  visible={visibleModalViewDisukai}
-                  onRequestClose={() => {
-                    setVisibleModalViewDisukai(!visibleModalViewDisukai);
-                  }}
-                >
-                  <TouchableOpacity
-                    style={[
-                      Platform.OS === "ios"
-                        ? styles.iOSBackdrop
-                        : styles.androidBackdrop,
-                      styles.backdrop,
-                    ]}
-                  />
-                  <View style={{ alignItems: "center", flex: 1 }}>
-                    <View
-                      style={{
-                        backgroundColor: COLORS.white,
-                        width: "90%",
-                        borderRadius: 10,
-                        marginTop: "40%",
+                      onPress={() => {
+                        // bottomSheetAttachCommentClose();
+                        // dispatch(
+                        //   getListsLike({ token: token, id: detail.id })
+                        // );
+                        // navigation.navigate("ListSukaLinimasa");
+                        setVisibleModalViewDisukai(true);
                       }}
                     >
-                      <View
+                      <Text
                         style={{
-                          marginTop: 20,
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginHorizontal: 20,
+                          color: COLORS.lighter,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        <View>
-                          <Text
-                            style={{
-                              fontSize: FONTSIZE.Judul,
-                              fontWeight: FONTWEIGHT.bold,
-                            }}
-                          >
-                            Disukai Oleh
-                          </Text>
-                        </View>
+                        {detail.likes_count} Disukai
+                      </Text>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity
-                          style={{}}
-                          onPress={() => {
-                            setVisibleModalViewDisukai(false);
-                          }}
-                        >
-                          <Ionicons
-                            name="close-outline"
-                            size={24}
-                            color={COLORS.lighter}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      {/* custom divider */}
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
+                    <Modal
+                      animationType="fade"
+                      transparent={true}
+                      visible={visibleModalViewDisukai}
+                      onRequestClose={() => {
+                        setVisibleModalViewDisukai(!visibleModalViewDisukai);
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={[
+                          Platform.OS === "ios"
+                            ? styles.iOSBackdrop
+                            : styles.androidBackdrop,
+                          styles.backdrop,
+                        ]}
+                      />
+                      <View style={{ alignItems: "center", flex: 1 }}>
                         <View
                           style={{
-                            height: 1,
+                            backgroundColor: COLORS.white,
                             width: "90%",
-                            backgroundColor: "#DBDADE",
-                            marginVertical: 10,
+                            borderRadius: 10,
+                            marginTop: "40%",
                           }}
-                        />
-                      </View>
+                        >
+                          <View
+                            style={{
+                              marginTop: 20,
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              marginHorizontal: 20,
+                            }}
+                          >
+                            <View>
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("Judul", device),
+                                  fontWeight: FONTWEIGHT.bold,
+                                }}
+                              >
+                                Disukai Oleh
+                              </Text>
+                            </View>
 
-                      <ScrollView style={{ marginBottom: 40 }}>
-                        {linimasa.detail?.like_list?.map((data) => {
-                          return (
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                gap: 10,
-                                marginHorizontal: 20,
-                                marginTop: 20,
+                            <TouchableOpacity
+                              style={{}}
+                              onPress={() => {
+                                setVisibleModalViewDisukai(false);
                               }}
                             >
-                              <Image
-                                source={{ uri: data.avatar_url }}
-                                style={{
-                                  width: 50,
-                                  height: 50,
-                                  borderRadius: 30,
-                                }}
+                              <Ionicons
+                                name="close-outline"
+                                size={24}
+                                color={COLORS.lighter}
                               />
-                              <Text>{data.name}</Text>
-                            </View>
-                          );
-                        })}
-                      </ScrollView>
-                      
-                    </View>
-                  </View>
-                </Modal>
+                            </TouchableOpacity>
+                          </View>
+                          {/* custom divider */}
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <View
+                              style={{
+                                height: 1,
+                                width: "90%",
+                                backgroundColor: "#DBDADE",
+                                marginVertical: 10,
+                              }}
+                            />
+                          </View>
 
-
+                          <ScrollView style={{ marginBottom: 40 }}>
+                            {linimasa.detail?.like_list?.map((data) => {
+                              return (
+                                <View
+                                  style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    gap: 10,
+                                    marginHorizontal: 20,
+                                    marginTop: 20,
+                                  }}
+                                >
+                                  <Image
+                                    source={{ uri: data.avatar_url }}
+                                    style={{
+                                      width: 50,
+                                      height: 50,
+                                      borderRadius: 30,
+                                    }}
+                                  />
+                                  <Text
+                                    style={{
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
+                                    {data.name}
+                                  </Text>
+                                </View>
+                              );
+                            })}
+                          </ScrollView>
+                        </View>
+                      </View>
+                    </Modal>
                   </View>
                   <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Text style={{ color: COLORS.lighter }}>
+                    <Text
+                      style={{
+                        color: COLORS.lighter,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       {detail.comment_count} Komentar
                     </Text>
                   </View>
@@ -1092,7 +1194,12 @@ export const DetailLinimasa = (item) => {
                         size={18}
                         style={{ color: COLORS.lighter }}
                       />
-                      <Text style={{ color: COLORS.lighter }}>
+                      <Text
+                        style={{
+                          color: COLORS.lighter,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {detail.views_count} Dilihat
                       </Text>
                     </TouchableOpacity>
@@ -1137,6 +1244,7 @@ export const DetailLinimasa = (item) => {
                     <Text
                       style={{
                         color: detail.liked == true ? COLORS.primary : null,
+                        fontSize: fontSizeResponsive("H4", device),
                       }}
                     >
                       Suka
@@ -1152,10 +1260,13 @@ export const DetailLinimasa = (item) => {
                     onPress={bottomSheetAttachComment}
                   >
                     <Ionicons name="chatbox-outline" size={18} />
-                    <Text>Komentar</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Komentar
+                    </Text>
                   </TouchableOpacity>
 
-                  
                   <BottomSheetModal
                     ref={bottomSheetModalRef}
                     snapPoints={animatedSnapPoints}
@@ -1175,44 +1286,100 @@ export const DetailLinimasa = (item) => {
                       />
                     )}
                   >
-                    <BottomSheetView onLayout={handleContentLayout} style={{flex:1}}>
+                    <BottomSheetView
+                      onLayout={handleContentLayout}
+                      style={{ flex: 1 }}
+                    >
                       <KeyboardAvoidingView
                         behavior={Platform.OS === "ios" ? "position" : "height"}
-                        keyboardVerticalOffset={parentId !== "" ? 120: 80}                    
+                        keyboardVerticalOffset={parentId !== "" ? 120 : 80}
                       >
-                        <View style={{ marginLeft: 20, marginVertical: 20, }}>
-                          <Text style={{ color: COLORS.ExtraDivinder }}>
+                        <View style={{ marginLeft: 20, marginVertical: 20 }}>
+                          <Text
+                            style={{
+                              color: COLORS.ExtraDivinder,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             Komentar({detail.comment_count})
                           </Text>
                         </View>
 
-                          <FlatList
-                            data={detail.comments}
-                            renderItem={({ item }) => (
-                              <CardKomen
-                                listData={item}
-                                inputRef={inputRef}
-                                setParentId={setParentId}
-                              />
-                            )}
-                            style={{height:500}}
-                          />
-                        <View style={{ justifyContent: "flex-end", paddingTop:10, justifyContent: 'center', flex:1, paddingBottom:20 }}>
-                        {parentId.id !== "" ? ( 
-                          <View style={{flexDirection:"row", justifyContent:"space-between", paddingHorizontal:20}}>
-                            <Text>Membalas {parentId.creator}</Text>
-                            <TouchableOpacity>
-                              <Ionicons name="close" size={20} color={COLORS.primary} onPress={() => setParentId({id:"", creator:""})}/>
-                            </TouchableOpacity>
-                          </View>
-                        ) : null }
-                          
-                          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20, alignItems: 'center'}}>
-                            {showMessage && 
-                            <View style={{ backgroundColor: COLORS.success, padding: 5, borderRadius: 8}}>
-                              <Text style={{color: COLORS.white}}>{message}</Text>
+                        <FlatList
+                          data={detail.comments}
+                          renderItem={({ item }) => (
+                            <CardKomen
+                              listData={item}
+                              inputRef={inputRef}
+                              setParentId={setParentId}
+                              device={device}
+                            />
+                          )}
+                          style={{ height: 500 }}
+                        />
+                        <View
+                          style={{
+                            justifyContent: "flex-end",
+                            paddingTop: 10,
+                            justifyContent: "center",
+                            flex: 1,
+                            paddingBottom: 20,
+                          }}
+                        >
+                          {parentId.id !== "" ? (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                paddingHorizontal: 20,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Membalas {parentId.creator}
+                              </Text>
+                              <TouchableOpacity>
+                                <Ionicons
+                                  name="close"
+                                  size={20}
+                                  color={COLORS.primary}
+                                  onPress={() =>
+                                    setParentId({ id: "", creator: "" })
+                                  }
+                                />
+                              </TouchableOpacity>
                             </View>
-                            }
+                          ) : null}
+
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "flex-end",
+                              paddingHorizontal: 20,
+                              alignItems: "center",
+                            }}
+                          >
+                            {showMessage && (
+                              <View
+                                style={{
+                                  backgroundColor: COLORS.success,
+                                  padding: 5,
+                                  borderRadius: 8,
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    color: COLORS.white,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  {message}
+                                </Text>
+                              </View>
+                            )}
                           </View>
                           <View
                             style={{
@@ -1236,16 +1403,21 @@ export const DetailLinimasa = (item) => {
                               marginTop: 10,
                             }}
                           >
-                              <TextInput
-                                numberOfLines={1}
-                                maxLength={30}
-                                placeholder="Ketik Komentar Disini"
-                                ref={inputRef}
-                                style={{ padding: 10, lineHeight: 20, width:"90%"}}
-                                onChangeText={setKomen}
-                                value={komen}
-                                placeholderTextColor={COLORS.grey}
-                              />
+                            <TextInput
+                              numberOfLines={1}
+                              maxLength={30}
+                              placeholder="Ketik Komentar Disini"
+                              ref={inputRef}
+                              style={{
+                                padding: 10,
+                                lineHeight: 20,
+                                width: "90%",
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                              onChangeText={setKomen}
+                              value={komen}
+                              placeholderTextColor={COLORS.grey}
+                            />
                             <View
                               style={{
                                 alignItems: "flex-end",
@@ -1256,7 +1428,7 @@ export const DetailLinimasa = (item) => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                  setMessage('Pesan Telah Terkirim');
+                                  setMessage("Pesan Telah Terkirim");
                                   setShowMessage(true);
                                   setTimeout(() => {
                                     setShowMessage(false);
@@ -1300,7 +1472,11 @@ export const DetailLinimasa = (item) => {
                     onPress={() => setVisibleModalInfo(true)}
                   >
                     <Ionicons name="information-circle-outline" size={18} />
-                    <Text>Info</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Info
+                    </Text>
                   </TouchableOpacity>
                 </View>
 
@@ -1323,13 +1499,13 @@ export const DetailLinimasa = (item) => {
                   >
                     <Text
                       style={{
-                        fontSize: FONTSIZE.Judul,
+                        fontSize: fontSizeResponsive("Judul", device),
                         fontWeight: FONTWEIGHT.bold,
                       }}
                     >
                       Lampiran
                     </Text>
-                    
+
                     <FlatList
                       key={"#"}
                       data={detail.attachments}
@@ -1467,16 +1643,36 @@ export const DetailLinimasa = (item) => {
                         marginTop: "40%",
                       }}
                     >
-
-                      <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: "row", justifyContent: "space-between", padding: 10, borderBottomWidth: 2, borderBottomColor: COLORS.grey }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Informasi Pengetahuan</Text>
+                      <View
+                        style={{
+                          marginHorizontal: 20,
+                          marginTop: 20,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          padding: 10,
+                          borderBottomWidth: 2,
+                          borderBottomColor: COLORS.grey,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Informasi Pengetahuan
+                        </Text>
                         <TouchableOpacity
                           style={{}}
                           onPress={() => {
-                            setVisibleModalInfo(false)
+                            setVisibleModalInfo(false);
                           }}
                         >
-                          <Ionicons name='close-outline' size={24} color={COLORS.lighter} />
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
                         </TouchableOpacity>
                       </View>
 
@@ -1501,12 +1697,17 @@ export const DetailLinimasa = (item) => {
                             style={{
                               fontWeight: FONTWEIGHT.bold,
                               marginLeft: 10,
+                              fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
                             Judul
                           </Text>
                           <Text
-                            style={{ color: COLORS.lighter, marginLeft: 5 }}
+                            style={{
+                              color: COLORS.lighter,
+                              marginLeft: 5,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
                           >
                             [What]
                           </Text>
@@ -1517,6 +1718,7 @@ export const DetailLinimasa = (item) => {
                             width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {detail.title}
@@ -1544,12 +1746,17 @@ export const DetailLinimasa = (item) => {
                             style={{
                               fontWeight: FONTWEIGHT.bold,
                               marginLeft: 10,
+                              fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
                             Anggota Angenda
                           </Text>
                           <Text
-                            style={{ color: COLORS.lighter, marginLeft: 5 }}
+                            style={{
+                              color: COLORS.lighter,
+                              marginLeft: 5,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
                           >
                             [Who]
                           </Text>
@@ -1560,6 +1767,7 @@ export const DetailLinimasa = (item) => {
                             width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {detail.members_agenda}
@@ -1587,12 +1795,17 @@ export const DetailLinimasa = (item) => {
                             style={{
                               fontWeight: FONTWEIGHT.bold,
                               marginLeft: 10,
+                              fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
                             Rangkuman
                           </Text>
                           <Text
-                            style={{ color: COLORS.lighter, marginLeft: 5 }}
+                            style={{
+                              color: COLORS.lighter,
+                              marginLeft: 5,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
                           >
                             [Why]
                           </Text>
@@ -1603,6 +1816,7 @@ export const DetailLinimasa = (item) => {
                             width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {detail.summary}
@@ -1630,12 +1844,17 @@ export const DetailLinimasa = (item) => {
                             style={{
                               fontWeight: FONTWEIGHT.bold,
                               marginLeft: 10,
+                              fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
                             Tempat Agenda
                           </Text>
                           <Text
-                            style={{ color: COLORS.lighter, marginLeft: 5 }}
+                            style={{
+                              color: COLORS.lighter,
+                              marginLeft: 5,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
                           >
                             [Where]
                           </Text>
@@ -1646,6 +1865,7 @@ export const DetailLinimasa = (item) => {
                             width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {detail.place_agenda}
@@ -1673,12 +1893,17 @@ export const DetailLinimasa = (item) => {
                             style={{
                               fontWeight: FONTWEIGHT.bold,
                               marginLeft: 10,
+                              fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
                             Waktu Mulai
                           </Text>
                           <Text
-                            style={{ color: COLORS.lighter, marginLeft: 5 }}
+                            style={{
+                              color: COLORS.lighter,
+                              marginLeft: 5,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
                           >
                             [When]
                           </Text>
@@ -1690,6 +1915,7 @@ export const DetailLinimasa = (item) => {
                             marginHorizontal: 60,
                             marginTop: 10,
                             marginBottom: 20,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {detail.start_date_agenda?.slice(0, -9)}
@@ -1736,7 +1962,7 @@ export const DetailLinimasa = (item) => {
                         <View>
                           <Text
                             style={{
-                              fontSize: FONTSIZE.Judul,
+                              fontSize: fontSizeResponsive("Judul", device),
                               fontWeight: FONTWEIGHT.bold,
                             }}
                           >
@@ -1794,7 +2020,13 @@ export const DetailLinimasa = (item) => {
                                   borderRadius: 30,
                                 }}
                               />
-                              <Text>{data.name}</Text>
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {data.name}
+                              </Text>
                             </View>
                           );
                         })}
@@ -1838,8 +2070,6 @@ export const DetailLinimasa = (item) => {
 const styles = StyleSheet.create({
   backIcon: {
     backgroundColor: "white",
-    height: 28,
-    width: 28,
     borderRadius: 50,
   },
   imageIos: {

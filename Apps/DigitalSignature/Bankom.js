@@ -8,7 +8,12 @@ import {
   View,
 } from "react-native";
 import { Text } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -44,7 +49,14 @@ import {
 } from "@gorhom/bottom-sheet";
 import { ModalSubmit } from "../../components/ModalSubmit";
 
-const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
+const ListBankom = ({
+  item,
+  variant,
+  token,
+  isSelected,
+  setSelection,
+  device,
+}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -62,7 +74,7 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
         width: "90%",
         flex: 1,
         marginTop: 10,
-        marginHorizontal: 20,
+        marginHorizontal: "5%",
         padding: 20,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
@@ -94,14 +106,19 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
             color={isSelected === true ? COLORS.lighter : null}
           />
         ) : null}
-        <View style={{ flexDirection: "column", width:(variant === "inprogress" ? "90%" : "100%"),}}>
+        <View
+          style={{
+            flexDirection: "column",
+            width: variant === "inprogress" ? "90%" : "100%",
+          }}
+        >
           <Text
             style={{
-              fontSize: 16,
+              fontSize: fontSizeResponsive("H1", device),
               width: 300,
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
-              width:"100%",
+              width: "100%",
             }}
           >
             {item?.subject}
@@ -117,32 +134,46 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
           <View style={{ flexDirection: "row" }}>
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 110,
                 textAlign: "justify",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
-                width:"45%",
+                width: "45%",
               }}
             >
               Penerima
             </Text>
             {item?.receivers[0]?.display_title !== undefined ? (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%"}}>
-                : {item?.receivers[0]?.officer?.nama !== undefined
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                :{" "}
+                {item?.receivers[0]?.officer?.nama !== undefined
                   ? item?.receivers[0]?.officer?.nama
                   : null}
               </Text>
             ) : (
-              <Text style={{ fontWeight: FONTWEIGHT.normal, width: "55%" }}>
-                : {item?.receivers[0]?.nama !== undefined
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                :{" "}
+                {item?.receivers[0]?.nama !== undefined
                   ? item?.receivers[0]?.nama
                   : "-"}
               </Text>
             )}
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 200,
                 textAlign: "justify",
                 fontWeight: FONTWEIGHT.normal,
@@ -154,26 +185,26 @@ const ListBankom = ({ item, variant, token, isSelected, setSelection }) => {
           <View style={{ flexDirection: "row" }}>
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 110,
                 textAlign: "auto",
                 paddingRight: 12,
                 fontWeight: FONTWEIGHT.normal,
-                width:"45%"
+                width: "45%",
               }}
             >
               Penandatangan
             </Text>
             <Text
               style={{
-                fontSize: 13,
+                fontSize: fontSizeResponsive("H3", device),
                 width: 200,
                 textAlign: "auto",
                 fontWeight: FONTWEIGHT.normal,
-                width:"55%"
+                width: "55%",
               }}
             >
-              : 
+              :
               {item?.approvers[1]?.officer !== undefined
                 ? item?.approvers[1]?.officer?.nama
                 : item?.approvers[1]?.nama}
@@ -332,6 +363,8 @@ export const Bankom = () => {
 
   // console.log(digitalsign.lists)
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -350,8 +383,8 @@ export const Bankom = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 20,
-                  width: 28,
-                  height: 28,
+                  width: device === "tablet" ? 40 : 28,
+                  height: device === "tablet" ? 40 : 28,
                   alignItems: "center",
                   justifyContent: "center",
                   marginLeft: 20,
@@ -360,7 +393,7 @@ export const Bankom = () => {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Ionicons
                     name="chevron-back-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>
@@ -368,7 +401,7 @@ export const Bankom = () => {
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H1,
+                    fontSize: fontSizeResponsive("H1", device),
                     fontWeight: FONTWEIGHT.bold,
                     color: COLORS.white,
                     marginRight: isSelected.length === 0 ? 50 : null,
@@ -404,8 +437,14 @@ export const Bankom = () => {
               ) : null}
             </View>
             <View style={{ flexDirection: "row" }}>
-              <View style={{ width: "90%", marginLeft: 20, marginTop: 20 }}>
-                <Search placeholder={"Cari"} onSearch={filter} />
+              <View
+                style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}
+              >
+                <Search
+                  placeholder={"Cari"}
+                  onSearch={filter}
+                  iconColor={COLORS.primary}
+                />
               </View>
             </View>
             {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ backgroundColor: "yellow", }}> */}
@@ -413,13 +452,13 @@ export const Bankom = () => {
               style={{
                 paddingVertical: 10,
                 flexDirection: "row",
-                justifyContent: "space-around",
-                paddingHorizontal: 10,
+                justifyContent: "space-between",
+                marginHorizontal: "5%",
               }}
             >
               <TouchableOpacity
                 style={{
-                  marginHorizontal: 5,
+                  width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
                   paddingVertical: 6,
                   borderWidth: 1,
@@ -443,6 +482,7 @@ export const Bankom = () => {
                       variant === "composer"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   List Saya
@@ -450,7 +490,7 @@ export const Bankom = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  marginHorizontal: 5,
+                  width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
                   paddingVertical: 6,
                   borderWidth: 1,
@@ -472,6 +512,7 @@ export const Bankom = () => {
                       variant === "draft"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Draft
@@ -479,7 +520,7 @@ export const Bankom = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  marginHorizontal: 5,
+                  width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
                   paddingVertical: 6,
                   borderWidth: 1,
@@ -503,6 +544,7 @@ export const Bankom = () => {
                       variant === "inprogress"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Need Sign
@@ -510,7 +552,7 @@ export const Bankom = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  marginHorizontal: 5,
+                  width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
                   paddingVertical: 6,
                   borderWidth: 1,
@@ -534,6 +576,7 @@ export const Bankom = () => {
                       variant === "signed"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Signed
@@ -541,7 +584,7 @@ export const Bankom = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  marginHorizontal: 5,
+                  width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
                   paddingVertical: 6,
                   borderWidth: 1,
@@ -565,6 +608,7 @@ export const Bankom = () => {
                       variant === "completed"
                         ? COLORS.infoDanger
                         : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Selesai
@@ -583,6 +627,7 @@ export const Bankom = () => {
                     variant={variant}
                     isSelected={isSelected}
                     setSelection={setSelection}
+                    device={device}
                   />
                 </View>
               )}
@@ -641,7 +686,10 @@ export const Bankom = () => {
                         }}
                       >
                         <Text
-                          style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}
+                          style={{
+                            fontSize: fontSizeResponsive("H1", device),
+                            fontWeight: 500,
+                          }}
                         >
                           Tanda Tangan Sertifikat
                         </Text>
@@ -729,7 +777,7 @@ export const Bankom = () => {
                       <Text
                         style={{
                           color: COLORS.white,
-                          fontSize: FONTSIZE.H1,
+                          fontSize: fontSizeResponsive("H1", device),
                           fontWeight: 500,
                         }}
                       >

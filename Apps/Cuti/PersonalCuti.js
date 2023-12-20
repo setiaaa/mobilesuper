@@ -3,7 +3,13 @@ import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";
@@ -103,6 +109,8 @@ export const PersonalCuti = () => {
 
   // console.log(kuota);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -120,8 +128,8 @@ export const PersonalCuti = () => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -130,7 +138,7 @@ export const PersonalCuti = () => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
@@ -138,7 +146,7 @@ export const PersonalCuti = () => {
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -150,8 +158,8 @@ export const PersonalCuti = () => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginRight: 20,
@@ -160,13 +168,13 @@ export const PersonalCuti = () => {
               <TouchableOpacity onPress={() => navigation.navigate("Libur")}>
                 <Ionicons
                   name="calendar-outline"
-                  size={18}
+                  size={device === "tablet" ? 30 : 18}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ padding: PADDING.Page }}>
+          <View style={{ paddingVertical: 20, paddingHorizontal: "5%" }}>
             <View
               style={{
                 justifyContent: "center",
@@ -183,6 +191,7 @@ export const PersonalCuti = () => {
                 source={require("../../assets/superApp/Card-Background-Red.png")}
                 style={{
                   width: "100%",
+                  height: device === "tablet" ? 300 : 200,
                   borderTopLeftRadius: 8,
                   borderTopRightRadius: 8,
                   //shadow ios
@@ -199,20 +208,28 @@ export const PersonalCuti = () => {
                 <Image
                   source={{ uri: BASE_URL + profile.avatar }}
                   style={{
-                    width: 75,
-                    height: 75,
-                    borderRadius: 36,
+                    width: device === "tablet" ? 125 : 75,
+                    height: device === "tablet" ? 125 : 75,
+                    borderRadius: device === "tablet" ? 65 : 36,
                     borderWidth: 2,
                     borderColor: COLORS.white,
                   }}
                 />
                 <Text
-                  style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                  style={{
+                    fontSize: fontSizeResponsive("H1", device),
+                    fontWeight: 600,
+                    color: COLORS.white,
+                  }}
                 >
                   {profile.nama}
                 </Text>
                 <Text
-                  style={{ fontSize: 13, fontWeight: 400, color: COLORS.white }}
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    fontWeight: 400,
+                    color: COLORS.white,
+                  }}
                 >
                   {profile.nip}
                 </Text>
@@ -243,6 +260,7 @@ export const PersonalCuti = () => {
                       marginRight: "80%",
                       fontSize: 13,
                       fontWeight: 600,
+                      fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
                     Profil
@@ -265,28 +283,93 @@ export const PersonalCuti = () => {
                   <TouchableOpacity
                     onPress={() => setCollapse({ nip: "", toggle: false })}
                   >
-                    <Text style={{ marginTop: 10 }}>Jenis Kelamin</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Jenis Kelamin
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       {personal.data_user?.jenis_kelamin}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Golongan</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Golongan
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       {personal.data_user?.golongan}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Jabatan</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Jabatan
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       {personal.data_user?.jabatan}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Unit Kerja</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Unit Kerja
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       {personal.data_user?.unit_kerja}
                     </Text>
 
-                    <Text style={{ marginTop: 10 }}>Satuan Kerja</Text>
-                    <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Satuan Kerja
+                    </Text>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       {personal.data_user?.satuan_kerja}
                     </Text>
                   </TouchableOpacity>
@@ -294,8 +377,13 @@ export const PersonalCuti = () => {
               ) : null}
             </View>
           </View>
-          <View style={{ paddingLeft: 20, gap: 10 }}>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+          <View style={{ paddingHorizontal: "5%", gap: 10 }}>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Form Pengajuan Cuti
             </Text>
             {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
@@ -336,7 +424,11 @@ export const PersonalCuti = () => {
               data={personal.data_jenis_cuti}
               renderItem={({ item }) => (
                 <View key={item.id}>
-                  <CardFormPengajuanCuti item={item} profile={profile} />
+                  <CardFormPengajuanCuti
+                    item={item}
+                    profile={profile}
+                    device={device}
+                  />
                 </View>
               )}
               columnWrapperStyle={{
@@ -348,12 +440,23 @@ export const PersonalCuti = () => {
               ListEmptyComponent={() => <ListEmpty />}
             />
           </View>
-          <View style={{ paddingLeft: 20 }}>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+          <View style={{ paddingHorizontal: "5%" }}>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Status Dokumen Cuti
             </Text>
 
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: "2%",
+              }}
+            >
               <View
                 style={[styles.cardStatus, { backgroundColor: COLORS.grey }]}
               >
@@ -365,8 +468,22 @@ export const PersonalCuti = () => {
                     size={50}
                     color={COLORS.white}
                   />
-                  <Text style={{ color: COLORS.white }}>Draft</Text>
-                  <Text style={{ color: COLORS.white }}>{jumlahDraft}</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
+                    Draft
+                  </Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
+                    {jumlahDraft}
+                  </Text>
                 </View>
               </View>
 
@@ -385,17 +502,33 @@ export const PersonalCuti = () => {
                     size={50}
                     color={COLORS.white}
                   />
-                  <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      textAlign: "center",
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
                     Sedang Proses
                   </Text>
-                  <Text style={{ color: COLORS.white }}>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
                     {jumlahOnProgress}
                   </Text>
                 </View>
               </View>
             </View>
 
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
               <View
                 style={[styles.cardStatus, { backgroundColor: COLORS.success }]}
               >
@@ -407,10 +540,23 @@ export const PersonalCuti = () => {
                     size={50}
                     color={COLORS.white}
                   />
-                  <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      textAlign: "center",
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
                     Dokumen Disetujui
                   </Text>
-                  <Text style={{ color: COLORS.white }}>{jumlahComplete}</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
+                    {jumlahComplete}
+                  </Text>
                 </View>
               </View>
 
@@ -426,22 +572,44 @@ export const PersonalCuti = () => {
                     size={50}
                     color={COLORS.white}
                   />
-                  <Text style={{ color: COLORS.white, textAlign: "center" }}>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      textAlign: "center",
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
                     Dokumen Tidak Disetujui
                   </Text>
-                  <Text style={{ color: COLORS.white }}>{jumlahReject}</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
+                    {jumlahReject}
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
 
-          <View style={{ paddingHorizontal: PADDING.Page }}>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Kuota Cuti</Text>
+          <View
+            style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Kuota Cuti
+            </Text>
             <FlatList
               data={kuota.data_kuota_cuti}
               renderItem={({ item }) => (
                 <View key={item.id}>
-                  <CardKuotaCuti item={item} />
+                  <CardKuotaCuti item={item} device={device} />
                 </View>
               )}
               keyExtractor={(item) => item.id}
@@ -663,11 +831,10 @@ export const PersonalCuti = () => {
 
 const styles = StyleSheet.create({
   cardStatus: {
-    width: "44%",
+    width: "49%",
     padding: 15,
     borderRadius: 8,
-    marginHorizontal: 5,
-    margin: 10,
+    marginBottom: "2%",
     backgroundColor: COLORS.white,
     alignItems: "center",
   },

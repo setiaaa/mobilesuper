@@ -9,7 +9,13 @@ import {
   Dimensions,
   Alert,
 } from "react-native";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from "../../components/DropDown";
 import { useNavigation } from "@react-navigation/native";
@@ -208,6 +214,8 @@ export const LaporanPengetahuan = () => {
 
   const sliceColorHandle = [COLORS.grey];
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar />
@@ -225,8 +233,8 @@ export const LaporanPengetahuan = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -238,14 +246,18 @@ export const LaporanPengetahuan = () => {
             >
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               Laporan
             </Text>
@@ -257,7 +269,8 @@ export const LaporanPengetahuan = () => {
             flexDirection: "row",
             justifyContent: "space-between",
             marginVertical: 20,
-            marginHorizontal: 20,
+            width: "90%",
+            marginHorizontal: "5%",
           }}
         >
           <View style={styles.dropdown}>
@@ -284,9 +297,9 @@ export const LaporanPengetahuan = () => {
         </View>
         <View
           style={{
+            width: "90%",
             backgroundColor: COLORS.white,
-            marginHorizontal: 20,
-            marginStart: 20,
+            marginLeft: "5%",
             padding: 20,
             borderRadius: 16,
             //shadow ios
@@ -297,7 +310,12 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 600,
+            }}
+          >
             Jumlah Postingan pada Triwulan Ke-{quarter.key} Tahun {year.value}
           </Text>
           <View
@@ -317,9 +335,9 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: COLORS.warningLight,
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
+                  width: device === "tablet" ? 56 : 42,
+                  height: device === "tablet" ? 56 : 42,
+                  borderRadius: device === "tablet" ? 28 : 21,
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 10,
@@ -331,14 +349,20 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.warning}
                 />
               </View>
-              <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("Judul", device),
+                  fontWeight: 600,
+                  marginBottom: 5,
+                }}
+              >
                 {totalPost?.post_publish}
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 400,
-                  width: 60,
+                  width: device === "tablet" ? 80 : 60,
                   textAlign: "center",
                 }}
               >
@@ -356,9 +380,9 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: COLORS.successLight,
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
+                  width: device === "tablet" ? 56 : 42,
+                  height: device === "tablet" ? 56 : 42,
+                  borderRadius: device === "tablet" ? 28 : 21,
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 10,
@@ -370,14 +394,20 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.success}
                 />
               </View>
-              <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("Judul", device),
+                  fontWeight: 600,
+                  marginBottom: 5,
+                }}
+              >
                 {totalPost?.post_reviewed}
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 400,
-                  width: 60,
+                  width: device === "tablet" ? 80 : 60,
                   textAlign: "center",
                 }}
               >
@@ -395,9 +425,9 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: COLORS.infoDangerLight,
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
+                  width: device === "tablet" ? 56 : 42,
+                  height: device === "tablet" ? 56 : 42,
+                  borderRadius: device === "tablet" ? 28 : 21,
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 10,
@@ -409,14 +439,20 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.infoDanger}
                 />
               </View>
-              <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("Judul", device),
+                  fontWeight: 600,
+                  marginBottom: 5,
+                }}
+              >
                 {totalPost?.post_waiting}
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 400,
-                  width: 60,
+                  width: device === "tablet" ? 80 : 60,
                   textAlign: "center",
                 }}
               >
@@ -427,8 +463,9 @@ export const LaporanPengetahuan = () => {
         </View>
         <View
           style={{
+            width: "90%",
             flexDirection: "row",
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
             marginVertical: 20,
             justifyContent: "space-between",
           }}
@@ -452,11 +489,12 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: "#F0F0F0",
-                  width: 26,
-                  height: 26,
-                  borderRadius: 13,
+                  width: device === "tablet" ? 33 : 26,
+                  height: device === "tablet" ? 33 : 26,
+                  borderRadius: device === "tablet" ? 20 : 13,
                   justifyContent: "center",
                   alignItems: "center",
+                  marginRight: 10,
                 }}
               >
                 <Ionicons
@@ -466,12 +504,22 @@ export const LaporanPengetahuan = () => {
                 />
               </View>
               <Text
-                style={{ fontSize: 16, fontWeight: 600, color: COLORS.primary }}
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: COLORS.primary,
+                }}
               >
                 {badUser?.user_count}
               </Text>
             </View>
-            <Text style={{ fontWeight: 400, marginTop: 10 }}>
+            <Text
+              style={{
+                fontWeight: 400,
+                marginTop: 10,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Jumlah pegawai belum memenuhi nilai minimum triwulan Ke-
               {quarter.key} Tahun
               {" " + year.value}
@@ -496,11 +544,12 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: "#F0F0F0",
-                  width: 26,
-                  height: 26,
-                  borderRadius: 13,
+                  width: device === "tablet" ? 33 : 26,
+                  height: device === "tablet" ? 33 : 26,
+                  borderRadius: device === "tablet" ? 20 : 13,
                   justifyContent: "center",
                   alignItems: "center",
+                  marginRight: 10,
                 }}
               >
                 <Ionicons
@@ -509,7 +558,14 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.grey}
                 />
               </View>
-              <Text style={{ fontSize: 16, fontWeight: 600 }}>Report</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                }}
+              >
+                Report
+              </Text>
             </View>
             <View
               style={{
@@ -519,7 +575,14 @@ export const LaporanPengetahuan = () => {
                 marginTop: 20,
               }}
             >
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>Pegawai</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
+                Pegawai
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   // openFileEmployee();
@@ -532,17 +595,17 @@ export const LaporanPengetahuan = () => {
               >
                 <View
                   style={{
-                    width: 24,
-                    height: 24,
+                    width: device === "tablet" ? 36 : 24,
+                    height: device === "tablet" ? 36 : 24,
+                    borderRadius: device === "tablet" ? 6 : 4,
                     backgroundColor: COLORS.primary,
-                    borderRadius: 4,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
                   <Ionicons
                     name="download-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -556,7 +619,14 @@ export const LaporanPengetahuan = () => {
                 marginTop: 20,
               }}
             >
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>Triwulan</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
+                Triwulan
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   downloadFile(
@@ -568,17 +638,17 @@ export const LaporanPengetahuan = () => {
               >
                 <View
                   style={{
-                    width: 24,
-                    height: 24,
+                    width: device === "tablet" ? 36 : 24,
+                    height: device === "tablet" ? 36 : 24,
+                    borderRadius: device === "tablet" ? 6 : 4,
                     backgroundColor: COLORS.primary,
-                    borderRadius: 4,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
                   <Ionicons
                     name="download-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -603,179 +673,193 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 10,
+            }}
+          >
             Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
-          {Object.keys(summary.graph).length !== 0 &&
-          Object.keys(summary.total_post).length !== 0 &&
-          Object.keys(summary.bad_user).length !== 0 ? (
-            <StackedBarChart
-              data={{
-                labels: [
-                  graph?.month_list[0],
-                  graph?.month_list[1],
-                  graph?.month_list[2],
-                  graph?.month_list[3],
-                  graph?.month_list[4],
-                  graph?.month_list[5],
-                  graph?.month_list[6],
-                  graph?.month_list[7],
-                  graph?.month_list[8],
-                  graph?.month_list[9],
-                  graph?.month_list[10],
-                  graph?.month_list[11],
-                ],
-                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
-                data: [
-                  [
-                    graph?.article_unreviewed_count[0],
-                    graph?.article_unreviewed_count[0] +
-                      graph?.article_reviewed_count[0],
+          <View
+            style={{
+              justifyContent: device === "tablet" ? "center" : "flex-start",
+              alignItems: device === "tablet" ? "center" : "flex-start",
+            }}
+          >
+            {Object.keys(summary.graph).length !== 0 &&
+            Object.keys(summary.total_post).length !== 0 &&
+            Object.keys(summary.bad_user).length !== 0 ? (
+              <StackedBarChart
+                data={{
+                  labels: [
+                    graph?.month_list[0],
+                    graph?.month_list[1],
+                    graph?.month_list[2],
+                    graph?.month_list[3],
+                    graph?.month_list[4],
+                    graph?.month_list[5],
+                    graph?.month_list[6],
+                    graph?.month_list[7],
+                    graph?.month_list[8],
+                    graph?.month_list[9],
+                    graph?.month_list[10],
+                    graph?.month_list[11],
                   ],
-                  [
-                    graph?.article_unreviewed_count[1],
-                    graph?.article_unreviewed_count[1] +
-                      graph?.article_reviewed_count[1],
+                  legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                  data: [
+                    [
+                      graph?.article_unreviewed_count[0],
+                      graph?.article_unreviewed_count[0] +
+                        graph?.article_reviewed_count[0],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[1],
+                      graph?.article_unreviewed_count[1] +
+                        graph?.article_reviewed_count[1],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[2],
+                      graph?.article_unreviewed_count[2] +
+                        graph?.article_reviewed_count[2],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[3],
+                      graph?.article_unreviewed_count[3] +
+                        graph?.article_reviewed_count[3],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[4],
+                      graph?.article_unreviewed_count[4] +
+                        graph?.article_reviewed_count[4],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[5],
+                      graph?.article_unreviewed_count[5] +
+                        graph?.article_reviewed_count[5],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[6],
+                      graph?.article_unreviewed_count[6] +
+                        graph?.article_reviewed_count[6],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[7],
+                      graph?.article_unreviewed_count[7] +
+                        graph?.article_reviewed_count[7],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[8],
+                      graph?.article_unreviewed_count[8] +
+                        graph?.article_reviewed_count[8],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[9],
+                      graph?.article_unreviewed_count[9] +
+                        graph?.article_reviewed_count[9],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[10],
+                      graph?.article_unreviewed_count[10] +
+                        graph?.article_reviewed_count[10],
+                    ],
+                    [
+                      graph?.article_unreviewed_count[11],
+                      graph?.article_unreviewed_count[11] +
+                        graph?.article_reviewed_count[11],
+                    ],
                   ],
-                  [
-                    graph?.article_unreviewed_count[2],
-                    graph?.article_unreviewed_count[2] +
-                      graph?.article_reviewed_count[2],
+                  barColors: [COLORS.primary, COLORS.warning],
+                }}
+                hideLegend
+                yAxisLabel=""
+                yAxisSuffix=""
+                yAxisInterval={2}
+                width={340}
+                // width={Dimensions.get("window").width}
+                height={350}
+                chartConfig={{
+                  backgroundGradientFrom: "#F0F0F0",
+                  backgroundGradientFromOpacity: 0,
+                  backgroundGradientTo: COLORS.white,
+                  backgroundGradientToOpacity: 1,
+                  color: () => "black",
+                  barPercentage: 0.2,
+                  propsForBackgroundLines: {
+                    x1: 60,
+                  },
+                  propsForVerticalLabels: {
+                    rotation: 90,
+                    // rotate: -90,
+                    // letterSpacing: 3,
+                    dy: 10,
+                    // dx: 20,
+                  },
+                }}
+                withHorizontalLabels={false}
+                style={{ marginHorizontal: -55 }}
+              />
+            ) : (
+              <StackedBarChart
+                data={{
+                  labels: [
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
+                    ["..."],
                   ],
-                  [
-                    graph?.article_unreviewed_count[3],
-                    graph?.article_unreviewed_count[3] +
-                      graph?.article_reviewed_count[3],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[4],
-                    graph?.article_unreviewed_count[4] +
-                      graph?.article_reviewed_count[4],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[5],
-                    graph?.article_unreviewed_count[5] +
-                      graph?.article_reviewed_count[5],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[6],
-                    graph?.article_unreviewed_count[6] +
-                      graph?.article_reviewed_count[6],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[7],
-                    graph?.article_unreviewed_count[7] +
-                      graph?.article_reviewed_count[7],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[8],
-                    graph?.article_unreviewed_count[8] +
-                      graph?.article_reviewed_count[8],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[9],
-                    graph?.article_unreviewed_count[9] +
-                      graph?.article_reviewed_count[9],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[10],
-                    graph?.article_unreviewed_count[10] +
-                      graph?.article_reviewed_count[10],
-                  ],
-                  [
-                    graph?.article_unreviewed_count[11],
-                    graph?.article_unreviewed_count[11] +
-                      graph?.article_reviewed_count[11],
-                  ],
-                ],
-                barColors: [COLORS.primary, COLORS.warning],
-              }}
-              hideLegend
-              yAxisLabel=""
-              yAxisSuffix=""
-              yAxisInterval={2}
-              width={340}
-              // width={Dimensions.get("window").width}
-              height={350}
-              chartConfig={{
-                backgroundGradientFrom: "#F0F0F0",
-                backgroundGradientFromOpacity: 0,
-                backgroundGradientTo: COLORS.white,
-                backgroundGradientToOpacity: 1,
-                color: () => "black",
-                barPercentage: 0.2,
-                propsForBackgroundLines: {
-                  x1: 60,
-                },
-                propsForVerticalLabels: {
-                  rotation: 90,
-                  // rotate: -90,
-                  // letterSpacing: 3,
-                  dy: 10,
-                  // dx: 20,
-                },
-              }}
-              withHorizontalLabels={false}
-              style={{ marginHorizontal: -55 }}
-            />
-          ) : (
-            <StackedBarChart
-              data={{
-                labels: [
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                  ["..."],
-                ],
-                legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
-                data: [],
-                barColors: [COLORS.primary, COLORS.warning],
-              }}
-              hideLegend
-              yAxisLabel=""
-              yAxisSuffix=""
-              yAxisInterval={2}
-              width={380}
-              // width={Dimensions.get("window").width}
-              height={350}
-              chartConfig={{
-                backgroundGradientFrom: "#F0F0F0",
-                backgroundGradientFromOpacity: 0,
-                backgroundGradientTo: COLORS.white,
-                backgroundGradientToOpacity: 1,
-                color: () => "black",
-                barPercentage: 0.2,
-                propsForBackgroundLines: {
-                  x1: 60,
-                },
-                propsForVerticalLabels: {
-                  rotation: 90,
-                  // rotate: -90,
-                  // letterSpacing: 3,
-                  dy: 10,
-                  // dx: 20,
-                },
-              }}
-              withHorizontalLabels={false}
-              style={{ marginHorizontal: -55 }}
-            />
-          )}
+                  legend: ["Posting Masuk", "Jumlah Posting belum dinilai"],
+                  data: [],
+                  barColors: [COLORS.primary, COLORS.warning],
+                }}
+                hideLegend
+                yAxisLabel=""
+                yAxisSuffix=""
+                yAxisInterval={2}
+                width={380}
+                // width={Dimensions.get("window").width}
+                height={350}
+                chartConfig={{
+                  backgroundGradientFrom: "#F0F0F0",
+                  backgroundGradientFromOpacity: 0,
+                  backgroundGradientTo: COLORS.white,
+                  backgroundGradientToOpacity: 1,
+                  color: () => "black",
+                  barPercentage: 0.2,
+                  propsForBackgroundLines: {
+                    x1: 60,
+                  },
+                  propsForVerticalLabels: {
+                    rotation: 90,
+                    // rotate: -90,
+                    // letterSpacing: 3,
+                    dy: 10,
+                    // dx: 20,
+                  },
+                }}
+                withHorizontalLabels={false}
+                style={{ marginHorizontal: -55 }}
+              />
+            )}
+          </View>
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+              alignItems: "center",
+              justifyContent: "space-evenly",
               marginHorizontal: 10,
             }}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View
                 style={{
                   width: 12,
@@ -784,11 +868,16 @@ export const LaporanPengetahuan = () => {
                   backgroundColor: COLORS.warning,
                 }}
               />
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
                 Posting Masuk
               </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View
                 style={{
                   width: 12,
@@ -797,7 +886,12 @@ export const LaporanPengetahuan = () => {
                   backgroundColor: COLORS.primary,
                 }}
               />
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
                 Jumlah Posting belum dinilai
               </Text>
             </View>
@@ -813,7 +907,7 @@ export const LaporanPengetahuan = () => {
           <View style={{ alignItems: "center", marginBottom: 10 }}>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: 400,
                 width: "50%",
                 textAlign: "center",
@@ -824,7 +918,7 @@ export const LaporanPengetahuan = () => {
             </Text>
             <Text
               style={{
-                fontSize: 28,
+                fontSize: fontSizeResponsive("Judul", device),
                 fontWeight: 600,
                 color: COLORS.primary,
                 marginVertical: 10,
@@ -839,15 +933,15 @@ export const LaporanPengetahuan = () => {
               style={{
                 backgroundColor: COLORS.primary,
                 width: "100%",
-                height: 40,
-                borderRadius: 8,
+                paddingVertical: 10,
+                borderRadius: device === "tablet" ? 12 : 8,
                 justifyContent: "center",
                 marginTop: 20,
               }}
             >
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: 500,
                   textAlign: "center",
                   color: COLORS.white,
@@ -875,7 +969,13 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 10,
+            }}
+          >
             Postingan Masuk Triwulan Ke-{quarter.key}
             {" " + year.value}
           </Text>
@@ -903,12 +1003,18 @@ export const LaporanPengetahuan = () => {
           )}
 
           <View style={{ marginBottom: 20, alignItems: "center" }}>
-            <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("Judul", device),
+                fontWeight: 600,
+                marginBottom: 10,
+              }}
+            >
               {accumulation?.total_article_all}
             </Text>
             <Text
               style={{
-                fontSize: 12,
+                fontSize: fontSizeResponsive("H3", device),
                 fontWeight: 400,
                 width: "50%",
                 textAlign: "center",
@@ -921,13 +1027,20 @@ export const LaporanPengetahuan = () => {
           <View
             style={{
               backgroundColor: COLORS.white,
+              // backgroundColor: "brown",
               borderRadius: 16,
               padding: 20,
               borderWidth: 1,
               borderColor: COLORS.grey,
             }}
           >
-            <View style={{ flexDirection: "row", gap: 16 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 16,
+                justifyContent: "center",
+              }}
+            >
               <View style={{ flexDirection: "column" }}>
                 <View style={{ marginBottom: 20, alignItems: "flex-start" }}>
                   <View
@@ -955,12 +1068,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.info}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Kegiatan
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation?.Kegiatan.total
@@ -1003,12 +1125,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.success}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Video/Jurnal
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation["Video_/_Jurnal"].total
@@ -1052,12 +1183,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.warning}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Infografis
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation?.Infografis.total
@@ -1099,12 +1239,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.infoDanger}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Tidak Sesuai
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation?.Tidak_Sesuai.total
@@ -1142,12 +1291,18 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 5,
+            }}
+          >
             Post Sudah Dinilai
           </Text>
           <Text
             style={{
-              fontSize: 12,
+              fontSize: fontSizeResponsive("H3", device),
               fontWeight: 400,
               marginBottom: 10,
               color: COLORS.grey,
@@ -1164,20 +1319,34 @@ export const LaporanPengetahuan = () => {
               shadowColor="#999"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
                 {review?.percent_article_reviewed}%
               </Text>
             </ProgressCircle>
           </View>
           <View style={{ marginVertical: 10, alignItems: "center" }}>
-            <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("Judul", device),
+                fontWeight: 600,
+                marginBottom: 10,
+              }}
+            >
               {review?.total_article_reviewed}
             </Text>
           </View>
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 10,
+            }}
+          >
             {"*) Yang belum dinilai :"}
           </Text>
-          <View style={{ flexDirection: "row", gap: 50 }}>
+          <View
+            style={{ flexDirection: "row", gap: 50, justifyContent: "center" }}
+          >
             <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
               <View
                 style={{
@@ -1205,12 +1374,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Kegiatan
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}
@@ -1245,12 +1419,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Video/Jurnal
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}
@@ -1290,12 +1469,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Infografis
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}
@@ -1330,12 +1514,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Tidak Sesuai
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}

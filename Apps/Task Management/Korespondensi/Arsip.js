@@ -42,17 +42,17 @@ export const Arsip = () => {
     //     setFilterDataStatus(data)
     // }, [data])
 
-    // const renderShimmerList = () => {
-    //     const arr = []
-    //     for (let i = 0; i < 6; i++) {
-    //         arr.push(
-    //             <View key={i}>
-    //                 <CardShimmerListTask />
-    //             </View>
-    //         )
-    //     }
-    //     return arr
-    // }
+  // const renderShimmerList = () => {
+  //     const arr = []
+  //     for (let i = 0; i < 6; i++) {
+  //         arr.push(
+  //             <View key={i}>
+  //                 <CardShimmerListTask />
+  //             </View>
+  //         )
+  //     }
+  //     return arr
+  // }
 
     // const renderShimmerGrid = () => {
     //     const arr = []
@@ -67,9 +67,9 @@ export const Arsip = () => {
     //     return arr
     // }
 
-    const filter = (event) => {
-        setSearch(event)
-    }
+  const filter = (event) => {
+    setSearch(event);
+  };
 
     useEffect(() => {
         if (search !== '') {

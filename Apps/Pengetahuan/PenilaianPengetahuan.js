@@ -1,6 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -33,7 +38,7 @@ import { Loading } from "../../components/Loading";
 import { TextInput } from "react-native-gesture-handler";
 import { RefreshControl } from "react-native";
 
-const CardPenilaian = ({ item, token }) => {
+const CardPenilaian = ({ item, token, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const getDetail = (id) => {
@@ -52,9 +57,9 @@ const CardPenilaian = ({ item, token }) => {
           marginVertical: 5,
           backgroundColor: COLORS.white,
           borderRadius: 8,
-          justifyContent: "center",
+          // justifyContent: "center",
           alignItems: "center",
-          paddingHorizontal: 20,
+          paddingHorizontal: 15,
           paddingVertical: 10,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
@@ -72,31 +77,56 @@ const CardPenilaian = ({ item, token }) => {
         <View>
           <Image
             source={{ uri: item.cover }}
-            style={{ width: 70, height: 50 }}
+            style={{
+              width: device === "tablet" ? 100 : 70,
+              height: device === "tablet" ? 80 : 50,
+            }}
           />
         </View>
         <View style={{ width: "75%" }}>
-          <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.title}</Text>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            {item.title}
+          </Text>
           <View style={{ gap: 10, marginTop: 10 }}>
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Tanggal:{" "}
               {moment(item.published_date, "HH:mm:ss").format("DD MMM YYYY")}
             </Text>
             <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
-              <Text style={{ color: COLORS.lighter }}>Poin:</Text>
+              <Text
+                style={{
+                  color: COLORS.lighter,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Poin:
+              </Text>
               {item.is_scored !== true ? (
                 <View
                   style={{
                     borderWidth: 1,
-                    width: 80,
-                    padding: 5,
+                    paddingHorizontal: "5%",
+                    paddingVertical: 5,
                     borderColor: COLORS.primary,
-                    borderRadius: 16,
+                    borderRadius: device === "tablet" ? 24 : 16,
                     alignItems: "center",
                   }}
                 >
                   <Text
-                    style={{ fontSize: FONTSIZE.H4, color: COLORS.primary }}
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      color: COLORS.primary,
+                    }}
                   >
                     Waiting
                   </Text>
@@ -104,14 +134,19 @@ const CardPenilaian = ({ item, token }) => {
               ) : (
                 <View
                   style={{
-                    padding: 5,
-                    width: 80,
+                    paddingVertical: 5,
+                    paddingHorizontal: "5%",
                     backgroundColor: COLORS.success,
-                    borderRadius: 16,
+                    borderRadius: device === "tablet" ? 24 : 16,
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ fontSize: FONTSIZE.H4, color: COLORS.white }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      color: COLORS.white,
+                    }}
+                  >
                     {item.score}
                   </Text>
                 </View>
@@ -366,6 +401,10 @@ export const PenilaianPenggetahaun = () => {
 
   // console.log("ditinjau=" + ditinjau);
   // console.log(dataUnitKerja());
+  const { device } = useSelector((state) => state.apps);
+
+  // console.log(device);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -382,8 +421,8 @@ export const PenilaianPenggetahaun = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -395,14 +434,18 @@ export const PenilaianPenggetahaun = () => {
             >
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               Penilaian
             </Text>
@@ -415,7 +458,8 @@ export const PenilaianPenggetahaun = () => {
             justifyContent: "space-between",
             marginTop: 20,
             flexDirection: "row",
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
+            width: "90%",
           }}
         >
           <View
@@ -426,10 +470,14 @@ export const PenilaianPenggetahaun = () => {
             }}
           >
             <View style={styles.input}>
-              <Ionicons name="search" size={20} color={COLORS.primary} />
+              <Ionicons
+                name="search"
+                size={fontSizeResponsive("H3", device)}
+                color={COLORS.primary}
+              />
               <TextInput
                 placeholder={"Cari..."}
-                style={{ fontSize: 16, flex: 1 }}
+                style={{ fontSize: fontSizeResponsive("H4", device), flex: 1 }}
                 maxLength={30}
                 value={inputValue}
                 onChangeText={(text) => setInputValue(text)}
@@ -462,8 +510,9 @@ export const PenilaianPenggetahaun = () => {
           style={{
             flexDirection: "row",
             marginVertical: 20,
-            marginHorizontal: 20,
+            marginHorizontal: "5%",
             gap: 5,
+            width: "90%",
           }}
         >
           <View
@@ -472,7 +521,14 @@ export const PenilaianPenggetahaun = () => {
               gap: 10,
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Pilih Tahun</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Pilih Tahun
+            </Text>
             <Dropdown
               data={listYear}
               placeHolder={"Pilih Tahun"}
@@ -488,7 +544,14 @@ export const PenilaianPenggetahaun = () => {
               gap: 10,
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Pilih Triwulan</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Pilih Triwulan
+            </Text>
 
             <Dropdown
               data={dataKuartal}
@@ -517,7 +580,8 @@ export const PenilaianPenggetahaun = () => {
             <View style={{ flex: 1 }}>
               <View
                 style={{
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
+                  width: "90%",
                   marginTop: 20,
                   flexDirection: "row",
                   alignItems: "center",
@@ -568,7 +632,14 @@ export const PenilaianPenggetahaun = () => {
                     setSavedUnitKerja({ key: "", value: "" });
                   }}
                 >
-                  <Text style={{ color: COLORS.danger }}>Batal</Text>
+                  <Text
+                    style={{
+                      color: COLORS.danger,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Batal
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -581,7 +652,7 @@ export const PenilaianPenggetahaun = () => {
                   marginVertical: 40,
                   borderRadius: 6,
                   alignItems: "center",
-                  marginHorizontal: 20,
+                  marginHorizontal: "5%",
                   justifyContent: "center",
                 }}
                 onPress={() => {
@@ -592,7 +663,7 @@ export const PenilaianPenggetahaun = () => {
                 <Text
                   style={{
                     color: COLORS.white,
-                    fontSize: FONTSIZE.H1,
+                    fontSize: fontSizeResponsive("H1", device),
                     fontWeight: 500,
                   }}
                 >
@@ -603,7 +674,14 @@ export const PenilaianPenggetahaun = () => {
           </BottomSheetView>
         </BottomSheetModal>
 
-        <View style={{ flexDirection: "row", marginHorizontal: 20, gap: 5 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: "5%",
+            gap: 5,
+            width: "90%",
+          }}
+        >
           <TouchableOpacity
             style={{
               backgroundColor:
@@ -626,7 +704,7 @@ export const PenilaianPenggetahaun = () => {
               <Image source={require("../../assets/superApp/unreviewed.png")} />
               <Text
                 style={{
-                  fontSize: 25,
+                  fontSize: fontSizeResponsive("Judul", device),
                   fontWeight: FONTWEIGHT.bold,
                   marginTop: 10,
                   color: !ditinjau && ditinjau !== "" ? COLORS.white : null,
@@ -637,6 +715,7 @@ export const PenilaianPenggetahaun = () => {
             </View>
             <Text
               style={{
+                fontSize: fontSizeResponsive("H4", device),
                 fontWeight: FONTWEIGHT.bold,
                 marginVertical: 5,
                 color: !ditinjau && ditinjau !== "" ? COLORS.white : null,
@@ -646,6 +725,7 @@ export const PenilaianPenggetahaun = () => {
             </Text>
             <Text
               style={{
+                fontSize: fontSizeResponsive("H4", device),
                 color:
                   !ditinjau && ditinjau !== "" ? COLORS.white : COLORS.lighter,
               }}
@@ -676,7 +756,7 @@ export const PenilaianPenggetahaun = () => {
               <Image source={require("../../assets/superApp/reviewed.png")} />
               <Text
                 style={{
-                  fontSize: 25,
+                  fontSize: fontSizeResponsive("Judul", device),
                   fontWeight: FONTWEIGHT.bold,
                   marginTop: 10,
                   color: ditinjau && ditinjau !== "" ? COLORS.white : null,
@@ -688,6 +768,7 @@ export const PenilaianPenggetahaun = () => {
             <Text
               style={{
                 fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
                 marginVertical: 5,
                 color: ditinjau && ditinjau !== "" ? COLORS.white : null,
               }}
@@ -696,6 +777,7 @@ export const PenilaianPenggetahaun = () => {
             </Text>
             <Text
               style={{
+                fontSize: fontSizeResponsive("H4", device),
                 color:
                   ditinjau && ditinjau !== "" ? COLORS.white : COLORS.lighter,
               }}
@@ -709,17 +791,26 @@ export const PenilaianPenggetahaun = () => {
           style={{
             marginTop: 10,
             paddingVertical: 5,
+            height: device === "tablet" ? "64%" : "43%",
             // backgroundColor: "brown",
-            height: "43%",
           }}
         >
-          <View style={{ marginHorizontal: 20, marginBottom: 10 }}>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>List Penilaian</Text>
+          <View
+            style={{ marginHorizontal: "5%", marginBottom: 10, width: "90%" }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              List Penilaian
+            </Text>
           </View>
           <FlatList
             data={filterData}
             renderItem={({ item }) => (
-              <CardPenilaian item={item} token={token} />
+              <CardPenilaian item={item} token={token} device={device} />
             )}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

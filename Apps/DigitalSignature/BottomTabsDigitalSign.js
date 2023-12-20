@@ -1,169 +1,273 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { COLORS } from '../../config/SuperAppps';
-import { } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import {} from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
 function MyTabDigitalSign({ props, navigation }) {
-    const [tabItemIndex, setTabItemIndex] = useState(1);
-    const { profile } = useSelector(state => state.superApps);
+  const [tabItemIndex, setTabItemIndex] = useState(1);
+  const { profile } = useSelector((state) => state.superApps);
+  const { device } = useSelector((state) => state.apps);
 
-    const roleBankom = ['USER_BSRE'];
-    const roleLaporan = ['LAPORAN_BSRE'];
+  const roleBankom = ["USER_BSRE"];
+  const roleLaporan = ["LAPORAN_BSRE"];
 
-    const hasRequiredRoles = (userRoles, appRoles) => {
-        return appRoles.some(role => userRoles?.includes(role));
-    };
+  const hasRequiredRoles = (userRoles, appRoles) => {
+    return appRoles.some((role) => userRoles?.includes(role));
+  };
 
-    return (
-        < >
-            <BottomSheetModalProvider>
-                <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around', borderTopLeftRadius: 16, borderTopRightRadius: 16, }}>
-                    {hasRequiredRoles(profile?.roles_access, roleBankom) ? (
-                        <TouchableOpacity
-                            key={1}
-                            onPress={() => {
-                                setTabItemIndex(1)
-                                navigation.navigate('Bankom', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }}>
-                            {tabItemIndex === 1 ? (
-                                <View style={{
-                                    alignItems: 'center',
-                                    height: 65,
-                                    justifyContent: 'center',
-                                    width: 80,
-                                }}>
-
-                                    <View style={{
-                                        width: '100%',
-                                        height: 3,
-                                        backgroundColor: COLORS.primary,
-                                        position: 'absolute',
-                                        top: 0,
-                                        //shadow ios
-                                        shadowOffset: { width: -2, height: 5 },
-                                        shadowColor: COLORS.primary,
-                                        shadowOpacity: 0.4,
-                                        //shadow android
-                                        elevation: 2,
-                                    }} />
-                                    <Ionicons name='briefcase-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
-                                    <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Bankom</Text>
-                                </View>
-                            ) : (
-                                <View style={{
-                                    alignItems: 'center',
-                                    height: 65,
-                                    justifyContent: 'center',
-                                    width: 80,
-                                }}>
-                                    <Ionicons name='briefcase-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
-                                    <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Bankom</Text>
-                                </View>
-                            )}
-                        </TouchableOpacity>
-                    ) : null}
-
-                    <TouchableOpacity
-                        key={2}
-                        onPress={() => {
-                            setTabItemIndex(2)
-                            navigation.navigate('DokumenLain', { unread: false })
-                            // props.navigation.navigate('Home', { unread: false })
-                        }}>
-                        {tabItemIndex === 2 ? (
-                            <View style={{
-                                alignItems: 'center',
-                                height: 65,
-                                justifyContent: 'center',
-                                width: 80,
-                            }}>
-
-                                <View style={{
-                                    width: '100%',
-                                    height: 3,
-                                    backgroundColor: COLORS.primary,
-                                    position: 'absolute',
-                                    top: 0,
-                                    //shadow ios
-                                    shadowOffset: { width: -2, height: 5 },
-                                    shadowColor: COLORS.primary,
-                                    shadowOpacity: 0.4,
-                                    //shadow android
-                                    elevation: 2,
-                                }} />
-                                <Ionicons name='attach-outline' color={COLORS.primary} size={24} />
-                                <Text style={{ color: COLORS.primary, textAlign: 'center' }}>Dokumen Lain</Text>
-                            </View>
-                        ) : (
-                            <View style={{
-                                alignItems: 'center',
-                                height: 65,
-                                justifyContent: 'center',
-                                width: 80,
-                            }}>
-                                <Ionicons name='attach-outline' color={COLORS.grey} size={24} />
-                                <Text style={{ color: COLORS.grey, textAlign: 'center' }}>Dokumen Lain</Text>
-                            </View>
-                        )}
-                    </TouchableOpacity>
-
-                    {hasRequiredRoles(profile?.roles_access, roleLaporan) ? (
-                        <TouchableOpacity
-                            key={3}
-                            onPress={() => {
-                                setTabItemIndex(3)
-                                navigation.navigate('LaporanDigitalSign', { unread: false })
-                                // props.navigation.navigate('Home', { unread: false })
-                            }}>
-                            {tabItemIndex === 3 ? (
-                                <View style={{
-                                    alignItems: 'center',
-                                    height: 65,
-                                    justifyContent: 'center',
-                                    width: 80,
-                                }}>
-
-                                    <View style={{
-                                        width: '100%',
-                                        height: 3,
-                                        backgroundColor: COLORS.primary,
-                                        position: 'absolute',
-                                        top: 0,
-                                        //shadow ios
-                                        shadowOffset: { width: -2, height: 5 },
-                                        shadowColor: COLORS.primary,
-                                        shadowOpacity: 0.4,
-                                        //shadow android
-                                        elevation: 2,
-                                    }} />
-                                    <Ionicons name='chatbubbles-outline' color={COLORS.primary} size={24} style={{ position: "absolute", top: 5 }} />
-                                    <Text style={{ color: COLORS.primary, position: "absolute", bottom: 15 }}>Laporan</Text>
-                                </View>
-                            ) : (
-                                <View style={{
-                                    alignItems: 'center',
-                                    height: 65,
-                                    justifyContent: 'center',
-                                    width: 80,
-                                }}>
-                                    <Ionicons name='chatbubbles-outline' color={COLORS.grey} size={24} style={{ position: "absolute", top: 5 }} />
-                                    <Text style={{ color: COLORS.grey, position: "absolute", bottom: 15 }}>Laporan</Text>
-                                </View>
-                            )}
-                        </TouchableOpacity>
-                    ) : null}
+  return (
+    <>
+      <BottomSheetModalProvider>
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: COLORS.white,
+            justifyContent: "space-around",
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+          }}
+        >
+          {hasRequiredRoles(profile?.roles_access, roleBankom) ? (
+            <TouchableOpacity
+              key={1}
+              onPress={() => {
+                setTabItemIndex(1);
+                navigation.navigate("Bankom", { unread: false });
+                // props.navigation.navigate('Home', { unread: false })
+              }}
+            >
+              {tabItemIndex === 1 ? (
+                <View
+                  style={{
+                    alignItems: "center",
+                    height: device === "tablet" ? 100 : 65,
+                    justifyContent: "center",
+                    width: device === "tablet" ? 95 : 80,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 3,
+                      backgroundColor: COLORS.primary,
+                      position: "absolute",
+                      top: 0,
+                      //shadow ios
+                      shadowOffset: { width: -2, height: 5 },
+                      shadowColor: COLORS.primary,
+                      shadowOpacity: 0.4,
+                      //shadow android
+                      elevation: 2,
+                    }}
+                  />
+                  <Ionicons
+                    name="briefcase-outline"
+                    color={COLORS.primary}
+                    size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 5 }}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      position: "absolute",
+                      bottom: 15,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Bankom
+                  </Text>
                 </View>
-            </BottomSheetModalProvider>
-        </ >
-    )
+              ) : (
+                <View
+                  style={{
+                    alignItems: "center",
+                    height: device === "tablet" ? 100 : 65,
+                    justifyContent: "center",
+                    width: device === "tablet" ? 95 : 80,
+                  }}
+                >
+                  <Ionicons
+                    name="briefcase-outline"
+                    color={COLORS.grey}
+                    size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 5 }}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.grey,
+                      position: "absolute",
+                      bottom: 15,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Bankom
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          ) : null}
+
+          <TouchableOpacity
+            key={2}
+            onPress={() => {
+              setTabItemIndex(2);
+              navigation.navigate("DokumenLain", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 2 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 100 : 65,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 150 : 80,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="attach-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    textAlign: "center",
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Dokumen Lain
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 100 : 65,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 150 : 80,
+                }}
+              >
+                <Ionicons
+                  name="attach-outline"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    textAlign: "center",
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Dokumen Lain
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          {hasRequiredRoles(profile?.roles_access, roleLaporan) ? (
+            <TouchableOpacity
+              key={3}
+              onPress={() => {
+                setTabItemIndex(3);
+                navigation.navigate("LaporanDigitalSign", { unread: false });
+                // props.navigation.navigate('Home', { unread: false })
+              }}
+            >
+              {tabItemIndex === 3 ? (
+                <View
+                  style={{
+                    alignItems: "center",
+                    height: device === "tablet" ? 100 : 65,
+                    justifyContent: "center",
+                    width: device === "tablet" ? 95 : 80,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 3,
+                      backgroundColor: COLORS.primary,
+                      position: "absolute",
+                      top: 0,
+                      //shadow ios
+                      shadowOffset: { width: -2, height: 5 },
+                      shadowColor: COLORS.primary,
+                      shadowOpacity: 0.4,
+                      //shadow android
+                      elevation: 2,
+                    }}
+                  />
+                  <Ionicons
+                    name="chatbubbles-outline"
+                    color={COLORS.primary}
+                    size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 5 }}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      position: "absolute",
+                      bottom: 15,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Laporan
+                  </Text>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    alignItems: "center",
+                    height: device === "tablet" ? 100 : 65,
+                    justifyContent: "center",
+                    width: device === "tablet" ? 95 : 80,
+                  }}
+                >
+                  <Ionicons
+                    name="chatbubbles-outline"
+                    color={COLORS.grey}
+                    size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 5 }}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.grey,
+                      position: "absolute",
+                      bottom: 15,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Laporan
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          ) : null}
+        </View>
+      </BottomSheetModalProvider>
+    </>
+  );
 }
 
-
-const styles = StyleSheet.create({
-
-})
-export default MyTabDigitalSign
+const styles = StyleSheet.create({});
+export default MyTabDigitalSign;
