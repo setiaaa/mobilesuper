@@ -88,6 +88,8 @@ import { TerlewatKorespondensi } from "../Apps/Task Management/Korespondensi/Ter
 import { HariIniKorespondensi } from "../Apps/Task Management/Korespondensi/HariIniKorespondensi";
 import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/MingguDepanKorespondensi";
 import { useSelector } from "react-redux";
+import MyTabBarDetailKorespondensi from "../Apps/Task Management/DetailKorespondensiTM/BottmTabsDetailKorespondensi";
+import { DetailKorespondensiTM } from "../Apps/Task Management/DetailKorespondensiTM/DetailKorespondensiTM";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -268,6 +270,28 @@ export const BottomTabsDetailTask = () => {
           component={LampiranTask}
           options={{ headerShown: false }}
         />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsDetailKorespondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarDetailKorespondensi {...props} />}
+        initialRouteName="DetailKorespondensiTM"
+      >
+        <Tab.Screen
+          name="DetailKorespondensiTM"
+          component={DetailKorespondensiTM}
+          options={{ headerShown: false }}
+        />
+        {/* <Tab.Screen
+          name="LampiranTask"
+          component={LampiranTask}
+          options={{ headerShown: false }}
+        /> */}
       </Tab.Navigator>
     </BottomSheetModalProvider>
   );

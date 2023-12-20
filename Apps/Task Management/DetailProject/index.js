@@ -1,29 +1,20 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import { View } from "react-native";
-import { Text } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../../config/SuperAppps";
-import { useDispatch, useSelector } from "react-redux";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
-import { Image } from "react-native";
-import moment from "moment";
-import { Portal } from "react-native-portalize";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetView,
-  useBottomSheetDynamicSnapPoints,
-} from "@gorhom/bottom-sheet";
-import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { CardItemMember } from "../../../components/CardItemMember";
-import { useState } from "react";
-import ListEmpty from "../../../components/ListEmpty";
-import {
-  deleteTask,
-  deleteTaskProject,
-  getListTaskTM,
-} from "../../../service/api";
+import React, { useEffect, useMemo, useRef } from 'react'
+import { View } from 'react-native'
+import { Text } from 'react-native'
+import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps'
+import { useDispatch, useSelector } from 'react-redux'
+import { FlatList, ScrollView } from 'react-native-gesture-handler'
+import { Image } from 'react-native'
+import moment from 'moment'
+import { Portal } from 'react-native-portalize'
+import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView, useBottomSheetDynamicSnapPoints } from '@gorhom/bottom-sheet'
+import { useNavigation } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+import { CardItemMember } from '../../../components/CardItemMember'
+import { useState } from 'react'
+import ListEmpty from '../../../components/ListEmpty'
+import { deleteTask, deleteTaskProject, getListDashboardTM, getListTaskTM } from '../../../service/api'
 
 const CardListKategori = ({ item, token, id_list, type }) => {
   const navigation = useNavigation();
@@ -84,25 +75,22 @@ export const DetailProject = ({
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
-  const bottomSheetMember = () => {
-    bottomSheetModalMemberRef.current?.present();
-  };
-
-  useEffect(() => {
-    let arrList = [];
-    const index = treeView.map((e) => e.id).indexOf(choiceKategori.key);
-    treeView[index]?.list_tasks?.map((item) => {
-      arrList.push({
-        key: item.id,
-        value: item.name,
-      });
-    });
-    // console.log(index)
-    // setChoiceList(arrList.length > 0 ? arrList[0] : '')
-    setDataList(arrList);
-  }, [choiceKategori]);
-
-  // console.log(choiceKategori)
+    const bottomSheetMember = () => {
+        bottomSheetModalMemberRef.current?.present()
+    }
+    useEffect(() => {
+        let arrList = []
+        const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+        treeView[index]?.list_tasks?.map(item => {
+            arrList.push({
+                key: item.id,
+                value: item.name
+            })
+        })
+        // console.log(index)
+        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
+        setDataList(arrList)
+    }, [choiceKategori])
 
   let arrTask = [];
   {
@@ -122,7 +110,15 @@ export const DetailProject = ({
     });
   }
 
-  console.log(type);
+    const setType = () => {
+        type = {
+            key:"1",
+            value:"Dashboard"
+        }
+        console.log(type)
+    }
+    console.log("ini type")
+    console.log(type)
 
   return (
     <>
@@ -500,35 +496,34 @@ export const DetailProject = ({
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={() => {
-                    const datas = {
-                      token: token,
-                      id: detailProject.id,
-                    };
-                    console.log(datas);
-                    dispatch(deleteTaskProject(datas));
-                    setTimeout(() => {
-                      navigation.goBack();
-                    }, 3000);
-                  }}
-                >
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      backgroundColor: COLORS.infoDanger,
-                      width: Platform.OS === "ios" ? "90%" : "91%",
-                      height: 50,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 6,
-                    }}
-                  >
-                    <Text style={{ color: COLORS.white }}>Hapus</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            ) : null}
+                                    <TouchableOpacity
+                                    onPress={() => {
+                                        const datas = {
+                                        token: token,
+                                        id: detailProject.id,
+                                        };
+                                        console.log(datas)
+                                        dispatch(deleteTaskProject(datas));
+                                        setTimeout(() => {
+                                            dispatch(getListDashboardTM({ token: token, page: 5 }));
+                                        }, 3000);
+                                    }}
+                                    >
+                                        <View style={{
+                                            marginHorizontal: 20,
+                                            backgroundColor: COLORS.infoDanger,
+                                            width: Platform.OS === 'ios' ? '90%' : '91%',
+                                            height: 50,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderRadius: 6,
+                                        }}>
+                                            <Text style={{ color: COLORS.white }}>Hapus</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            ) : null
+                        }
 
             <View>
               <Text

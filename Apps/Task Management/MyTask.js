@@ -33,7 +33,11 @@ import { Dropdown } from "../../components/DropDown";
 import {
   getDetailProjectTM,
   getListDashboardTM,
+  getListKorespondensiArsipTM,
+  getListKorespondensiNextWeekTM,
+  getListKorespondensiOverdueTM,
   getListKorespondensiTM,
+  getListKorespondensiTodayTM,
   getListTaskTM,
   getTreeTM,
 } from "../../service/api";
@@ -193,7 +197,10 @@ export const MyTask = () => {
     if (choiceTipe.value === "Dashboard") {
       dispatch(getListDashboardTM({ token: token, page: page }));
     } else if (choiceTipe.value === "Korespondensi") {
-      dispatch(getListKorespondensiTM({ token: token, page: page }));
+      dispatch(getListKorespondensiArsipTM({ token: token, page: page }));
+      dispatch(getListKorespondensiTodayTM({ token: token, page: page }));
+      dispatch(getListKorespondensiNextWeekTM({ token: token, page: page }));
+      dispatch(getListKorespondensiOverdueTM({ token: token, page: page }));
     } else {
       if (choiceList === "" && choiceKategori !== "") {
         dispatch(
@@ -244,8 +251,8 @@ export const MyTask = () => {
     const data = taskLists.filter((item) => {
       if (choiceFilter === "semua") {
         return item;
-      } else if (choiceFilter == "arsip") {
-        return item;
+      // } else if (choiceFilter == "arsip") {
+      //   return item;
       }
       else {
         if (list.type === "Dashboard") {

@@ -934,22 +934,6 @@ export const getListTaskTM = createAsyncThunk(
   }
 );
 
-export const getListKorespondensiTM = createAsyncThunk(
-  "taskmanagement/getListKorespondensiTM",
-  async ({ token, page }) => {
-    console.log("ini api korespondesni " + page);
-    console.log(token)
-    const respon = await axios.get(
-      `${TaskKorespondensi}integration/nde/todo/`,
-      {
-        headers: { Authorization: token },
-      }
-    );
-    console.log(respon?.data.result);
-    return respon?.data.results;
-  }
-);
-
 export const getDetailTaskTM = createAsyncThunk(
   "taskmanagement/getDetailTaskTM",
   async ({ token, id_task }) => {
@@ -1120,6 +1104,97 @@ export const deleteListTask = createAsyncThunk(
       { headers: { Authorization: data.token } }
     );
     return respon;
+  }
+);
+
+export const getListKorespondensiTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    console.log(respon?.data.results);
+    return respon?.data.results;
+  }
+);
+
+export const getListKorespondensiArsipTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiArsipTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/archive/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+export const getListKorespondensiOverdueTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiOverdueTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/overdue`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+export const getListKorespondensiTodayTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiTodayTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/today`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+export const getListKorespondensiNextWeekTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiNextWeekTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/nextweek`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getDetailKorespondensiTM = createAsyncThunk(
+  "taskmanagement/getDetailKorespondensiTM",
+  async ({ token, id }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/${id}/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const postMarkKorespondensiTM = createAsyncThunk(
+  "taskmanagement/postMarkKorespondensiTM",
+  async (data) => {
+    const payload = {
+      mark_complete : "1"
+    };
+    const respon = await axios.post(
+      `${TaskKorespondensi}integration/nde/todo/${data.id}/mark/`,
+      payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.status;
   }
 );
 
