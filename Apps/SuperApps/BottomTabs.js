@@ -52,7 +52,7 @@ function MyTabBar({ props, navigation }) {
         <View
           style={{
             flexDirection: "row",
-            height: 68,
+            height: device === "tablet" ? 100 : 68,
             backgroundColor: COLORS.white,
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
@@ -71,7 +71,7 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -91,20 +91,42 @@ function MyTabBar({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="home" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Home</Text>
+                <Ionicons
+                  name="home"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Home
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
               >
-                <Ionicons name="home" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Home</Text>
+                <Ionicons
+                  name="home"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Home
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -121,7 +143,7 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -144,15 +166,22 @@ function MyTabBar({ props, navigation }) {
                 <Ionicons
                   name="business-outline"
                   color={COLORS.primary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.primary }}>Satker</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Satker
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -160,9 +189,16 @@ function MyTabBar({ props, navigation }) {
                 <Ionicons
                   name="business-outline"
                   color={COLORS.grey}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.grey }}>Satker</Text>
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Satker
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -214,9 +250,9 @@ function MyTabBar({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: 65,
+                    height: device === "tablet" ? 100 : 65,
                     justifyContent: "center",
-                    width: 80,
+                    width: device === "tablet" ? 130 : 80,
                   }}
                 >
                   <View
@@ -237,21 +273,39 @@ function MyTabBar({ props, navigation }) {
                   <Ionicons
                     name="grid-outline"
                     color={COLORS.primary}
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                   />
-                  <Text style={{ color: COLORS.primary }}>Dashboard</Text>
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Dashboard
+                  </Text>
                 </View>
               ) : (
                 <View
                   style={{
                     alignItems: "center",
-                    height: 65,
+                    height: device === "tablet" ? 100 : 65,
                     justifyContent: "center",
-                    width: 80,
+                    width: device === "tablet" ? 130 : 80,
                   }}
                 >
-                  <Ionicons name="grid-outline" color={COLORS.grey} size={24} />
-                  <Text style={{ color: COLORS.grey }}>Dashboard</Text>
+                  <Ionicons
+                    name="grid-outline"
+                    color={COLORS.grey}
+                    size={device === "tablet" ? 40 : 24}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.grey,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Dashboard
+                  </Text>
                 </View>
               )}
             </TouchableOpacity>
@@ -269,9 +323,9 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 98 : 80,
                 }}
               >
                 <View
@@ -289,20 +343,42 @@ function MyTabBar({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="reader" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Help Desk</Text>
+                <Ionicons
+                  name="reader"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Help Desk
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 98 : 80,
                 }}
               >
-                <Ionicons name="reader" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Help Desk</Text>
+                <Ionicons
+                  name="reader"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Help Desk
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -319,7 +395,7 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -339,20 +415,42 @@ function MyTabBar({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="person" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Profile</Text>
+                <Ionicons
+                  name="person"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Profile
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
               >
-                <Ionicons name="person" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Profile</Text>
+                <Ionicons
+                  name="person"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Profile
+                </Text>
               </View>
             )}
           </TouchableOpacity>

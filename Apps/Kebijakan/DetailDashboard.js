@@ -8,7 +8,12 @@ import { shareAsync } from "expo-sharing";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import { CollapseCard } from "../../components/CollapseCard";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import * as Sharing from "expo-sharing";
 import * as IntentLauncher from "expo-intent-launcher";
@@ -17,6 +22,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useSelector } from "react-redux";
 
 export default function DetailDashboard({ route }) {
   const { data } = route.params;
@@ -26,32 +32,32 @@ export default function DetailDashboard({ route }) {
 
   let judul = data.subjek.replace(/\s/g, "-");
 
-  console.log(data)
+  console.log(data);
 
   const downloadFromUrl = () => {
     let remoteUrl = data.link;
     let localPath = `${FileSystem.documentDirectory}/${judul}.pdf`;
-      FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
-        const contentURL = await FileSystem.getContentUriAsync(uri);
-        try {
-          if (Platform.OS == 'android') {
-            await IntentLauncher.startActivityAsync(
-              "android.intent.action.VIEW",
-              {
-                data: contentURL,
-                flags: 1,
-                type: 'application/pdf',
-              }
-            );
-          } else if (Platform.OS == 'ios') {
-            Sharing.shareAsync(localPath);
-          }
-        } catch (error) {
-          Alert.alert("INFO", JSON.stringify(error));
+    FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
+      const contentURL = await FileSystem.getContentUriAsync(uri);
+      try {
+        if (Platform.OS == "android") {
+          await IntentLauncher.startActivityAsync(
+            "android.intent.action.VIEW",
+            {
+              data: contentURL,
+              flags: 1,
+              type: "application/pdf",
+            }
+          );
+        } else if (Platform.OS == "ios") {
+          Sharing.shareAsync(localPath);
         }
-      });
+      } catch (error) {
+        Alert.alert("INFO", JSON.stringify(error));
+      }
+    });
   };
-
+  const { device } = useSelector((state) => state.apps);
   return (
     <>
       <ScrollView style={styles.container}>
@@ -69,8 +75,8 @@ export default function DetailDashboard({ route }) {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -79,7 +85,7 @@ export default function DetailDashboard({ route }) {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -87,7 +93,7 @@ export default function DetailDashboard({ route }) {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -98,14 +104,33 @@ export default function DetailDashboard({ route }) {
         </View>
         <View style={styles.cardTop}>
           <View>
-            <Text style={styles.judul}>{data.bentuk}</Text>
+            <Text
+              style={[
+                styles.judul,
+                { fontSize: device === "tablet" ? 40 : 20 },
+              ]}
+            >
+              {data.bentuk}
+            </Text>
           </View>
           <View style={{ marginLeft: 20 }}>
             <View style={{ marginTop: 20 }}>
-              <Text style={styles.subJudul}>{data.subjek}</Text>
+              <Text
+                style={[
+                  styles.subJudul,
+                  { fontSize: fontSizeResponsive("Judul", device) },
+                ]}
+              >
+                {data.subjek}
+              </Text>
             </View>
             <View style={{ flexDirection: "row", marginVertical: 20 }}>
-              <Text style={styles.subJudul}>
+              <Text
+                style={[
+                  styles.subJudul,
+                  { fontSize: fontSizeResponsive("Judul", device) },
+                ]}
+              >
                 Nomor {data.nomor}/{data.tahun}
               </Text>
               <View
@@ -118,19 +143,33 @@ export default function DetailDashboard({ route }) {
                   gap: 10,
                 }}
               >
-                <Text style={styles.subJudul}>Status</Text>
+                <Text
+                  style={[
+                    styles.subJudul,
+                    { fontSize: fontSizeResponsive("Judul", device) },
+                  ]}
+                >
+                  Status
+                </Text>
                 <View
                   style={{
                     backgroundColor:
                       data.status === "Berlaku" ? "#d9f5e5" : "red",
                     borderRadius: 16,
-                    height: 30,
-                    width: 70,
+                    height: device === "tablet" ? 40 : 30,
+                    width: device === "tablet" ? 120 : 70,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Text style={styles.subJudul}>{data.status}</Text>
+                  <Text
+                    style={[
+                      styles.subJudul,
+                      { fontSize: fontSizeResponsive("Judul", device) },
+                    ]}
+                  >
+                    {data.status}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -160,12 +199,45 @@ export default function DetailDashboard({ route }) {
           bidanghukum={data.bidanghukum}
           dilihat={data.jumlah_view}
           diunduh={data.jumlah_download}
+          device={device}
         />
 
         <View style={{ alignItems: "center" }}>
           <View>
-            <TouchableOpacity style={ styles.buttonUnduh } onPress={() => {downloadFromUrl()}}>
-              <Text style={{ textAlign: "center", margin: 15, fontSize: 18 }}>Unduh File PDF</Text>
+            <TouchableOpacity
+              style={styles.buttonUnduh}
+              onPress={() => {
+                downloadFromUrl();
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  margin: 15,
+                  fontSize: fontSizeResponsive("Judul", device),
+                }}
+              >
+                Unduh File PDF
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonBuka}
+              onPress={() => {
+                navigation.navigate("PdfViewer", {
+                  data: data,
+                });
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  margin: 15,
+                  fontSize: fontSizeResponsive("Judul", device),
+                  color: COLORS.white,
+                }}
+              >
+                Buka File PDF
+              </Text>
             </TouchableOpacity>
             {/* <Button
               title="Unduh File PDF"
@@ -173,7 +245,7 @@ export default function DetailDashboard({ route }) {
               onClick={downloadFromUrl()}
             /> */}
           </View>
-          <View>
+          {/* <View>
             <Button
               title="Buka File PDF"
               textColor={"white"}
@@ -184,7 +256,7 @@ export default function DetailDashboard({ route }) {
                 })
               }
             />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </>
@@ -196,7 +268,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   judul: {
-    fontSize: 20,
     fontWeight: "600",
     textAlign: "left",
     justifyContent: "flex-start",
@@ -205,7 +276,6 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   subJudul: {
-    fontSize: 16,
     fontWeight: "300",
   },
   buttonBuka: {

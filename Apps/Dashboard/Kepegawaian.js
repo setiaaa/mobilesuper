@@ -1,63 +1,85 @@
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-import { useNavigation } from '@react-navigation/native'
-import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import { View } from 'react-native'
-import { ScrollView } from 'react-native'
-import { Text } from 'react-native'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
-import { TopsDash } from '../../utils/menutab'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { setBerita, setPengumuman } from '../../store/Dashboard'
-import Carousel, { ParallaxImage } from 'react-native-snap-carousel'
-import { StyleSheet } from 'react-native'
-import { Dimensions } from 'react-native'
-import { useRef } from 'react'
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { TouchableOpacity } from "react-native";
+import { View } from "react-native";
+import { ScrollView } from "react-native";
+import { Text } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
+import { TopsDash } from "../../utils/menutab";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setBerita, setPengumuman } from "../../store/Dashboard";
+import Carousel, { ParallaxImage } from "react-native-snap-carousel";
+import { StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
+import { useRef } from "react";
 
-
-
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get("window");
 
 export const Kepegawaian = () => {
+  const dispatch = useDispatch();
+  const { berita, pengumuman } = useSelector((state) => state.dashboard);
+  const { device } = useSelector((state) => state.apps);
 
-    const dispatch = useDispatch()
+  const navigation = useNavigation();
 
+  return (
+    <View style={{ flex: 1 }}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider style={{ flex: 1 }}>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              height: "10%",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: device === "tablet" ? 46 : 28,
+                height: device === "tablet" ? 46 : 28,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 20,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 600,
+                  color: COLORS.white,
+                }}
+              >
+                Kepegawaian
+              </Text>
+            </View>
+          </View>
 
+          <View style={{ height: "100%" }}>
+            <TopsDash />
+          </View>
 
-    const { berita, pengumuman } = useSelector(state => state.dashboard)
-    const navigation = useNavigation()
-
-    return (
-        <View style={{ flex: 1 }}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-                <BottomSheetModalProvider style={{ flex: 1 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>
-                        <View style={{
-                            backgroundColor: COLORS.white,
-                            borderRadius: 20,
-                            width: 28,
-                            height: 28,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginLeft: 20
-                        }}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Ionicons name='chevron-back-outline' size={24} color={COLORS.primary} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>Kepegawaian</Text>
-                        </View>
-                    </View>
-
-                    <View style={{ height: '100%' }}>
-                        <TopsDash />
-                    </View>
-
-                    {/* <ScrollView style={{ flex: 1 }}>
+          {/* <ScrollView style={{ flex: 1 }}>
 
                         <View>
                             <View style={{ marginVertical: 20, marginLeft: 30, flexDirection: 'row' }}>
@@ -106,54 +128,53 @@ export const Kepegawaian = () => {
                         </View>
 
                     </ScrollView> */}
-                </BottomSheetModalProvider>
-            </GestureHandlerRootView>
-        </View >
-    )
-}
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        marginVertical: 20
-    },
-    containerCard: {
-        backgroundColor: '#F4F7FE',
-        justifyContent: 'flex-start',
-        flexDirection: 'row',
-        gap: 36,
-        marginLeft: 20
-    },
-    containerr: {
-        flex: 1,
-    },
-    item: {
-        width: screenWidth - 60,
-        height: screenWidth - 60,
-    },
-    items: {
-        width: screenWidth - 60,
-        height: screenWidth - 170,
-    },
-    imageContainer: {
-        flex: 1,// Prevent a random Android rendering issue
-        backgroundColor: 'white',
-        // borderRadius: 8,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
-    },
-    image: {
-        ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
-    },
-    images: {
-        ...StyleSheet.absoluteFillObject,
-        resizeMode: 'contain',
-    },
-    paginationDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        marginHorizontal: 8
-    },
-
+  container: {
+    marginVertical: 20,
+  },
+  containerCard: {
+    backgroundColor: "#F4F7FE",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    gap: 36,
+    marginLeft: 20,
+  },
+  containerr: {
+    flex: 1,
+  },
+  item: {
+    width: screenWidth - 60,
+    height: screenWidth - 60,
+  },
+  items: {
+    width: screenWidth - 60,
+    height: screenWidth - 170,
+  },
+  imageContainer: {
+    flex: 1, // Prevent a random Android rendering issue
+    backgroundColor: "white",
+    // borderRadius: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: "cover",
+  },
+  images: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: "contain",
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 8,
+  },
 });

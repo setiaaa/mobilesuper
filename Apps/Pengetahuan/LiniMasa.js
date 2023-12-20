@@ -8,6 +8,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
@@ -55,7 +56,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const CardKomen = ({ listData, inputRef, setParentId }) => {
+const CardKomen = ({ listData, inputRef, setParentId, device }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     // id: data[0].Komentar[0].id
@@ -84,6 +85,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
         shadowOpacity: 0.2,
+        elevation: 2,
       }}
     >
       <View
@@ -111,7 +113,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H2,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
                 lineHeight: 20,
                 wordWrap: "break-word",
@@ -123,7 +125,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   lineHeight: 18,
                   wordWrap: "break-word",
@@ -136,7 +138,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
             <Text
               style={{
                 color: COLORS.lighter,
-                fontSize: FONTSIZE.H3,
+                fontSize: fontSizeResponsive("H3", device),
                 fontWeight: FONTWEIGHT.normal,
                 wordWrap: "break-word",
               }}
@@ -157,7 +159,11 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
               }}
             >
               <Text
-                style={{ color: COLORS.primary, fontWeight: FONTWEIGHT.bold }}
+                style={{
+                  color: COLORS.primary,
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 Balas
               </Text>
@@ -190,7 +196,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                       <Text
                         style={{
                           color: COLORS.lighter,
-                          fontSize: FONTSIZE.H5,
+                          fontSize: fontSizeResponsive("H5", device),
                           fontWeight: FONTWEIGHT.normal,
                           lineHeight: 18,
                           wordWrap: "break-word",
@@ -226,7 +232,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                           <View style={{ marginLeft: 10 }}>
                             <Text
                               style={{
-                                fontSize: FONTSIZE.H2,
+                                fontSize: fontSizeResponsive("H2", device),
                                 fontWeight: FONTWEIGHT.bold,
                                 lineHeight: 20,
                                 wordWrap: "break-word",
@@ -238,7 +244,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                               <Text
                                 style={{
                                   color: COLORS.lighter,
-                                  fontSize: FONTSIZE.H5,
+                                  fontSize: fontSizeResponsive("H5", device),
                                   fontWeight: FONTWEIGHT.normal,
                                   lineHeight: 18,
                                   wordWrap: "break-word",
@@ -251,7 +257,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                             <Text
                               style={{
                                 color: "#999999",
-                                fontSize: FONTSIZE.H3,
+                                fontSize: fontSizeResponsive("H3", device),
                                 fontWeight: FONTWEIGHT.normal,
                                 lineHeight: 18,
                                 wordWrap: "break-word",
@@ -282,7 +288,10 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
                                   <Text
                                     style={{
                                       color: COLORS.lighter,
-                                      fontSize: FONTSIZE.H5,
+                                      fontSize: fontSizeResponsive(
+                                        "H5",
+                                        device
+                                      ),
                                       fontWeight: FONTWEIGHT.normal,
                                       lineHeight: 18,
                                       wordWrap: "break-word",
@@ -308,7 +317,7 @@ const CardKomen = ({ listData, inputRef, setParentId }) => {
   );
 };
 
-const CardLiniMasa = ({ item, token }) => {
+const CardLiniMasa = ({ item, token, device }) => {
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
   const [visibleModal, setVisibleModal] = useState(false);
@@ -397,10 +406,9 @@ const CardLiniMasa = ({ item, token }) => {
       style={{
         backgroundColor: "white",
         borderRadius: 16,
-        width: "90%",
+        width: "100%",
         flex: 1,
         marginTop: 20,
-        marginHorizontal: 20,
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
@@ -432,7 +440,12 @@ const CardLiniMasa = ({ item, token }) => {
               />
             </View>
             <View>
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 {item.creator.name}
               </Text>
               <View
@@ -446,7 +459,7 @@ const CardLiniMasa = ({ item, token }) => {
                   style={{
                     color: COLORS.grey,
                     marginVertical: 1,
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   {item?.published_date?.slice(0, -9)}
@@ -495,6 +508,7 @@ const CardLiniMasa = ({ item, token }) => {
                           : item.category === "Kegiatan"
                           ? COLORS.info
                           : COLORS.success,
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     {item.category}
@@ -514,7 +528,7 @@ const CardLiniMasa = ({ item, token }) => {
             style={{
               textAlign: "justify",
               color: COLORS.lighter,
-              fontSize: FONTSIZE.H3,
+              fontSize: fontSizeResponsive("H3", device),
             }}
           >
             {item.title}
@@ -612,7 +626,12 @@ const CardLiniMasa = ({ item, token }) => {
                 borderBottomColor: COLORS.grey,
               }}
             >
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Informasi Pengetahuan
               </Text>
               <TouchableOpacity
@@ -646,16 +665,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Judul
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [What]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.title !== "" && detail?.title !== null
                   ? detail.title
@@ -680,16 +716,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Anggota Agenda
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [Who]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.members_agenda !== "" &&
                 detail?.members_agenda !== null
@@ -715,16 +768,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Rangkuman
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [Why]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.summary !== "" && detail?.summary !== null
                   ? detail.summary
@@ -749,16 +819,33 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Tempat Agenda
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [Where]
                 </Text>
               </View>
 
               <Text
-                style={{ width: "70%", marginHorizontal: 60, marginTop: 10 }}
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
               >
                 {detail?.place_agenda !== "" && detail?.place_agenda !== null
                   ? detail.place_agenda
@@ -783,10 +870,22 @@ const CardLiniMasa = ({ item, token }) => {
                     backgroundColor: COLORS.primary,
                   }}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginLeft: 10 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    marginLeft: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Waktu Mulai
                 </Text>
-                <Text style={{ color: COLORS.lighter, marginLeft: 5 }}>
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    marginLeft: 5,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   [When]
                 </Text>
               </View>
@@ -797,6 +896,7 @@ const CardLiniMasa = ({ item, token }) => {
                   marginHorizontal: 60,
                   marginTop: 10,
                   marginBottom: 20,
+                  fontSize: fontSizeResponsive("H4", device),
                 }}
               >
                 {detail?.start_date_agenda !== "" &&
@@ -845,7 +945,7 @@ const CardLiniMasa = ({ item, token }) => {
               <View>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -894,7 +994,11 @@ const CardLiniMasa = ({ item, token }) => {
                       source={{ uri: data.avatar_url }}
                       style={{ width: 50, height: 50, borderRadius: 30 }}
                     />
-                    <Text>{data.name}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      {data.name}
+                    </Text>
                   </View>
                 );
               })}
@@ -926,7 +1030,12 @@ const CardLiniMasa = ({ item, token }) => {
               setVisibleModalViewDisukai(true);
             }}
           >
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {item.likes_count} Disukai
             </Text>
           </TouchableOpacity>
@@ -969,7 +1078,7 @@ const CardLiniMasa = ({ item, token }) => {
                 <View>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -1026,7 +1135,11 @@ const CardLiniMasa = ({ item, token }) => {
                           borderRadius: 30,
                         }}
                       />
-                      <Text>{data.name}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {data.name}
+                      </Text>
                     </View>
                   );
                 })}
@@ -1036,7 +1149,12 @@ const CardLiniMasa = ({ item, token }) => {
         </Modal>
 
         <View style={{ flexDirection: "row" }}>
-          <Text style={{ color: COLORS.lighter }}>
+          <Text
+            style={{
+              color: COLORS.lighter,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             {item.comment_count} Komentar
           </Text>
           <TouchableOpacity
@@ -1061,7 +1179,12 @@ const CardLiniMasa = ({ item, token }) => {
               size={18}
               style={{ color: COLORS.lighter }}
             /> */}
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {item.views_count} Dilihat
             </Text>
           </TouchableOpacity>
@@ -1107,6 +1230,7 @@ const CardLiniMasa = ({ item, token }) => {
             <Text
               style={{
                 color: detail.liked == true ? COLORS.primary : null,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               Suka
@@ -1172,10 +1296,22 @@ const CardLiniMasa = ({ item, token }) => {
                   size={20}
                   color={COLORS.primary}
                 />
-                <Text style={{ color: COLORS.primary }}>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {detail.likes_count}
                 </Text>
-                <Text style={{ color: COLORS.primary }}>Disukai</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Disukai
+                </Text>
                 <TouchableOpacity
                   onPress={() => {
                     bottomSheetAttachCommentClose();
@@ -1191,7 +1327,12 @@ const CardLiniMasa = ({ item, token }) => {
                 </TouchableOpacity>
               </View>
               <View style={{ marginLeft: 20, marginVertical: 20 }}>
-                <Text style={{ color: COLORS.ExtraDivinder }}>
+                <Text
+                  style={{
+                    color: COLORS.ExtraDivinder,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Komentar({detail.comment_count})
                 </Text>
               </View>
@@ -1205,6 +1346,7 @@ const CardLiniMasa = ({ item, token }) => {
                     setParentId={setParentId}
                     toggleComment={toggleComment}
                     setToggleComment={setToggleComment}
+                    device={device}
                   />
                 )}
                 style={{ height: 370 }}
@@ -1219,7 +1361,11 @@ const CardLiniMasa = ({ item, token }) => {
                       paddingHorizontal: 20,
                     }}
                   >
-                    <Text>Membalas {parentId.creator}</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Membalas {parentId.creator}
+                    </Text>
                     <TouchableOpacity>
                       <Ionicons
                         name="close"
@@ -1257,7 +1403,7 @@ const CardLiniMasa = ({ item, token }) => {
                     maxLength={30}
                     placeholder="Ketik Komentar Disini"
                     ref={inputRef}
-                    style={{ padding: 10, width:"90%" }}
+                    style={{ padding: 10, width: "90%" }}
                     onChangeText={setKomen}
                     value={komen}
                   />
@@ -1300,7 +1446,9 @@ const CardLiniMasa = ({ item, token }) => {
           }}
         >
           <Ionicons name="information-circle-outline" size={18} />
-          <Text>Info</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            Info
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -1602,6 +1750,8 @@ export const LiniMasa = () => {
 
   // console.log(filterData);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -1618,8 +1768,8 @@ export const LiniMasa = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -1633,14 +1783,18 @@ export const LiniMasa = () => {
             >
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               Linimasa Pengetahuan
             </Text>
@@ -1649,325 +1803,388 @@ export const LiniMasa = () => {
 
         <View
           style={{
-            paddingHorizontal: 20,
-            paddingTop: 20,
-            paddingBottom: 10,
-            rowGap: 5,
             // backgroundColor: "brown",
-            borderBottomColor: COLORS.secondaryLighter,
-            borderBottomWidth: 1,
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
           }}
         >
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              // alignContent: "center",
+              paddingTop: 20,
+              paddingBottom: 10,
+              rowGap: 5,
+              width: "90%",
+              // backgroundColor: "yellow",
             }}
           >
             <View
               style={{
-                width: "85%",
-                marginRight: 10,
-                backgroundColor: COLORS.white,
-                borderRadius: 8,
-              }}
-            >
-              <View style={styles.input}>
-                <Ionicons name="search" size={20} color={COLORS.primary} />
-                <TextInput
-                  placeholder={"Cari..."}
-                  style={{ fontSize: 16, flex: 1 }}
-                  maxLength={30}
-                  value={inputValue}
-                  onChangeText={(text) => setInputValue(text)}
-                  onEndEditing={filterSearch}
-                  clearButtonMode="always"
-                />
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                bottomSheetAttachFilter();
-                dispatch(getDivisionFilter({ token: token }));
+                flexDirection: "row",
+                alignItems: "center",
+                // alignContent: "center",
+                justifyContent: "space-between",
               }}
             >
               <View
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 30,
+                  width: "85%",
+                  // marginRight: 10,
                   backgroundColor: COLORS.white,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderColor: COLORS.secondaryLighter,
-                  // borderWidth: isFiltered ? 1 : 0,
+                  borderRadius: 8,
                 }}
               >
-                <Ionicons name="filter-outline" size={24} />
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          <Portal>
-            <BottomSheetModalProvider>
-              <BottomSheetModal
-                ref={bottomSheetModalFilterRef}
-                snapPoints={animatedSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
-                index={0}
-                style={{ borderRadius: 50 }}
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjust"
-                backdropComponent={({ style }) => (
-                  <View
-                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                <View style={styles.input}>
+                  <Ionicons
+                    name="search"
+                    size={fontSizeResponsive("H3", device)}
+                    color={COLORS.primary}
                   />
-                )}
+                  <TextInput
+                    placeholder={"Cari..."}
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      flex: 1,
+                    }}
+                    maxLength={30}
+                    value={inputValue}
+                    onChangeText={(text) => setInputValue(text)}
+                    onEndEditing={filterSearch}
+                    clearButtonMode="always"
+                  />
+                </View>
+              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  bottomSheetAttachFilter();
+                  dispatch(getDivisionFilter({ token: token }));
+                }}
               >
-                <BottomSheetView onLayout={handleContentLayout}>
-                  <View style={{ marginVertical: 20 }}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 30,
+                    backgroundColor: COLORS.white,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderColor: COLORS.secondaryLighter,
+                    // borderWidth: isFiltered ? 1 : 0,
+                  }}
+                >
+                  <Ionicons name="filter-outline" size={24} />
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <Portal>
+              <BottomSheetModalProvider>
+                <BottomSheetModal
+                  ref={bottomSheetModalFilterRef}
+                  snapPoints={animatedSnapPoints}
+                  handleHeight={animatedHandleHeight}
+                  contentHeight={animatedContentHeight}
+                  index={0}
+                  style={{ borderRadius: 50 }}
+                  keyboardBlurBehavior="restore"
+                  android_keyboardInputMode="adjust"
+                  backdropComponent={({ style }) => (
                     <View
-                      style={{
-                        marginHorizontal: 20,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        padding: 10,
-                        borderBottomWidth: 2,
-                        borderBottomColor: COLORS.grey,
-                      }}
-                    >
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                        Filter Satuan dan Unit Kerja
-                      </Text>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => {
-                          bottomSheetAttachFilterClose();
-                        }}
-                      >
-                        <Ionicons
-                          name="close-outline"
-                          size={24}
-                          color={COLORS.lighter}
-                        />
-                      </TouchableOpacity>
-                    </View>
-
-                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                      <Text
+                      style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                    />
+                  )}
+                >
+                  <BottomSheetView onLayout={handleContentLayout}>
+                    <View style={{ marginVertical: 20 }}>
+                      <View
                         style={{
-                          marginHorizontal: 10,
-                          marginBottom: 10,
-                          fontWeight: FONTWEIGHT.bold,
+                          marginHorizontal: 20,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          padding: 10,
+                          borderBottomWidth: 2,
+                          borderBottomColor: COLORS.grey,
                         }}
                       >
-                        Unit Kerja
-                      </Text>
-                      <Dropdown
-                        search={true}
-                        data={unker()}
-                        placeHolder={"Pilih Unit Kerja"}
-                        backgroundColor={COLORS.white}
-                        selected={filterUnker}
-                        setSelected={setFilterUnker}
-                        borderWidth={1}
-                        borderWidthValue={1}
-                        borderwidthDrop={1}
-                        borderColor={COLORS.ExtraDivinder}
-                        borderColorValue={COLORS.ExtraDivinder}
-                        borderColorDrop={COLORS.ExtraDivinder}
-                      />
-                    </View>
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Filter Satuan dan Unit Kerja
+                        </Text>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => {
+                            bottomSheetAttachFilterClose();
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                            color={COLORS.lighter}
+                          />
+                        </TouchableOpacity>
+                      </View>
 
-                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                      <Text
-                        style={{
-                          marginHorizontal: 10,
-                          marginBottom: 10,
-                          fontWeight: FONTWEIGHT.bold,
-                        }}
-                      >
-                        Satuan Kerja
-                      </Text>
-                      {filterUnker && filterUnker.key ? (
+                      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                        <Text
+                          style={{
+                            marginHorizontal: 10,
+                            marginBottom: 10,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Unit Kerja
+                        </Text>
                         <Dropdown
-                          data={satker()}
                           search={true}
-                          placeHolder={"Pilih Satuan Kerja"}
+                          data={unker()}
+                          placeHolder={"Pilih Unit Kerja"}
                           backgroundColor={COLORS.white}
-                          selected={filterSatker}
-                          setSelected={setFilterSatker}
+                          selected={filterUnker}
+                          setSelected={setFilterUnker}
                           borderWidth={1}
                           borderWidthValue={1}
                           borderwidthDrop={1}
                           borderColor={COLORS.ExtraDivinder}
                           borderColorValue={COLORS.ExtraDivinder}
                           borderColorDrop={COLORS.ExtraDivinder}
-                          heightValue={300}
                         />
-                      ) : (
-                        <View
+                      </View>
+
+                      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                        <Text
                           style={{
-                            flexDirection: "row",
                             marginHorizontal: 10,
                             marginBottom: 10,
-                            gap: 5,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
-                          <Text style={{ color: COLORS.infoDanger }}>*</Text>
-                          <Text style={{ color: COLORS.lighter }}>
-                            Daftar satuan kerja akan muncul setelah memilih unit
-                            kerja
-                          </Text>
-                        </View>
-                      )}
+                          Satuan Kerja
+                        </Text>
+                        {filterUnker && filterUnker.key ? (
+                          <Dropdown
+                            data={satker()}
+                            search={true}
+                            placeHolder={"Pilih Satuan Kerja"}
+                            backgroundColor={COLORS.white}
+                            selected={filterSatker}
+                            setSelected={setFilterSatker}
+                            borderWidth={1}
+                            borderWidthValue={1}
+                            borderwidthDrop={1}
+                            borderColor={COLORS.ExtraDivinder}
+                            borderColorValue={COLORS.ExtraDivinder}
+                            borderColorDrop={COLORS.ExtraDivinder}
+                            heightValue={300}
+                          />
+                        ) : (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginHorizontal: 10,
+                              marginBottom: 10,
+                              gap: 5,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: COLORS.infoDanger,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              *
+                            </Text>
+                            <Text
+                              style={{
+                                color: COLORS.lighter,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              Daftar satuan kerja akan muncul setelah memilih
+                              unit kerja
+                            </Text>
+                          </View>
+                        )}
+                      </View>
                     </View>
-                  </View>
-                </BottomSheetView>
-              </BottomSheetModal>
-            </BottomSheetModalProvider>
-          </Portal>
+                  </BottomSheetView>
+                </BottomSheetModal>
+              </BottomSheetModalProvider>
+            </Portal>
+
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                // backgroundColor: "brown",
+              }}
+            >
+              <ScrollView
+                horizontal
+                style={{
+                  // backgroundColor: "black",
+                  paddingVertical: 10,
+                  flexDirection: "row",
+                  width: "85%",
+                }}
+              >
+                <TouchableOpacity
+                  style={kegiatan ? styles.badgeActive : styles.badge}
+                  onPress={handleKegiatan}
+                >
+                  <Text
+                    style={[
+                      kegiatan ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Kegiatan
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={infografis ? styles.badgeActive : styles.badge}
+                  onPress={handleInfografis}
+                >
+                  <Text
+                    style={[
+                      infografis ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Infografis
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={videoJurnal ? styles.badgeActive : styles.badge}
+                  onPress={handleVideoJurnal}
+                >
+                  <Text
+                    style={[
+                      videoJurnal ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Video / Jurnal
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={kepemimpinan ? styles.badgeActive : styles.badge}
+                  onPress={handleKepemimpinan}
+                >
+                  <Text
+                    style={[
+                      kepemimpinan ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Kepemimpinan
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={manajerial ? styles.badgeActive : styles.badge}
+                  onPress={handleManajerial}
+                >
+                  <Text
+                    style={[
+                      manajerial ? styles.badgeTextActive : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Manajerial
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={sosialKultural ? styles.badgeActive : styles.badge}
+                  onPress={handleSosialKultural}
+                >
+                  <Text
+                    style={[
+                      sosialKultural
+                        ? styles.badgeTextActive
+                        : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Sosial Kultural
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={teknisFungsional ? styles.badgeActive : styles.badge}
+                  onPress={handleTeknisFungsional}
+                >
+                  <Text
+                    style={[
+                      teknisFungsional
+                        ? styles.badgeTextActive
+                        : styles.badgeText,
+                      { fontSize: fontSizeResponsive("H4", device) },
+                    ]}
+                  >
+                    Teknis Fungsional
+                  </Text>
+                </TouchableOpacity>
+              </ScrollView>
+              <View style={{ width: "15%", alignItems: "flex-end" }}>
+                <TouchableOpacity onPress={clearBadge}>
+                  <Ionicons
+                    name="close-outline"
+                    size={24}
+                    color={COLORS.lighter}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
 
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              // backgroundColor: "brown",
+              height: device === "tablet" ? "80%" : "67%",
             }}
           >
-            <ScrollView
-              horizontal
+            <FlatList
+              data={linimasa.lists}
+              renderItem={({ item }) => (
+                <View key={item.id}>
+                  <CardLiniMasa
+                    item={item}
+                    token={token}
+                    // setVisibleModal={setVisibleModal}
+                    device={device}
+                  />
+                </View>
+              )}
               style={{
-                // backgroundColor: "black",
-                paddingVertical: 10,
-                flexDirection: "row",
-                width: "85%",
+                width: "100%",
+                paddingHorizontal: "5%",
+                // backgroundColor: "brown",
               }}
-            >
-              <TouchableOpacity
-                style={kegiatan ? styles.badgeActive : styles.badge}
-                onPress={handleKegiatan}
-              >
-                <Text
-                  style={kegiatan ? styles.badgeTextActive : styles.badgeText}
-                >
-                  Kegiatan
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={infografis ? styles.badgeActive : styles.badge}
-                onPress={handleInfografis}
-              >
-                <Text
-                  style={infografis ? styles.badgeTextActive : styles.badgeText}
-                >
-                  Infografis
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={videoJurnal ? styles.badgeActive : styles.badge}
-                onPress={handleVideoJurnal}
-              >
-                <Text
-                  style={
-                    videoJurnal ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Video / Jurnal
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={kepemimpinan ? styles.badgeActive : styles.badge}
-                onPress={handleKepemimpinan}
-              >
-                <Text
-                  style={
-                    kepemimpinan ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Kepemimpinan
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={manajerial ? styles.badgeActive : styles.badge}
-                onPress={handleManajerial}
-              >
-                <Text
-                  style={manajerial ? styles.badgeTextActive : styles.badgeText}
-                >
-                  Manajerial
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={sosialKultural ? styles.badgeActive : styles.badge}
-                onPress={handleSosialKultural}
-              >
-                <Text
-                  style={
-                    sosialKultural ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Sosial Kultural
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={teknisFungsional ? styles.badgeActive : styles.badge}
-                onPress={handleTeknisFungsional}
-              >
-                <Text
-                  style={
-                    teknisFungsional ? styles.badgeTextActive : styles.badgeText
-                  }
-                >
-                  Teknis Fungsional
-                </Text>
-              </TouchableOpacity>
-            </ScrollView>
-            <View style={{ width: "15%", alignItems: "center" }}>
-              <TouchableOpacity onPress={clearBadge}>
-                <Ionicons
-                  name="close-outline"
-                  size={24}
-                  color={COLORS.lighter}
-                />
-              </TouchableOpacity>
-            </View>
+              ListFooterComponent={() =>
+                loading === true ? (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 24,
+                    }}
+                  >
+                    <ActivityIndicator size="large" color={COLORS.primary} />
+                  </View>
+                ) : null
+              }
+              keyExtractor={(item) => item.id}
+              ListEmptyComponent={() => <ListEmpty />}
+              onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
           </View>
         </View>
-
-        <FlatList
-          data={linimasa.lists}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <CardLiniMasa
-                item={item}
-                token={token}
-                // setVisibleModal={setVisibleModal}
-              />
-            </View>
-          )}
-          ListFooterComponent={() =>
-            loading === true ? (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
-                }}
-              >
-                <ActivityIndicator size="large" color={COLORS.primary} />
-              </View>
-            ) : null
-          }
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={() => <ListEmpty />}
-          onEndReached={linimasa.lists.length !== 0 ? loadMore : null}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
       </>
     </>
   );

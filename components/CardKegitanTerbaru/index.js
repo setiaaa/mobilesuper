@@ -14,11 +14,18 @@ export const CardKegiatanTerbaru = ({ item }) => {
       <View
         style={{
           width: "90%",
-          borderWidth: 1,
+          // borderWidth: 1,
           marginTop: 5,
           padding: 10,
-          borderRadius: 18,
-          borderColor: COLORS.grey,
+          borderRadius: 8,
+          // borderColor: COLORS.grey,
+          backgroundColor: COLORS.white,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
         }}
       >
         <Text style={{ marginTop: 10, color: COLORS.lighter }}>

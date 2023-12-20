@@ -11,20 +11,21 @@ import { CardShimmerListGridTask } from "../../../components/CardListGridTask/Ca
 import { COLORS, DATETIME } from "../../../config/SuperAppps";
 import { Loading } from "../../../components/Loading";
 import { Search } from "../../../components/Search";
+import TreeView from "react-native-final-tree-view";
+import { Text } from "react-native";
 
-export const HariIni = () => {
+export const Arsip = () => {
   const { list, variant, loading } = useSelector((state) => state.task);
   const taskLists = list.data;
   const [filterData, setFilterData] = useState([]);
   const [filterDataStatus, setFilterDataStatus] = useState([]);
   const [page, setPage] = useState(5);
   const [search, setSearch] = useState("");
-
   useEffect(() => {
-    const data = taskLists.filter((item) => {
-      return item.deadline_status === "today";
-    });
-    setFilterDataStatus(data);
+    // const data = taskLists.filter((item) => {
+    //     return item.deadline_status
+    // })
+    setFilterDataStatus(taskLists);
   }, [taskLists]);
 
   const loadMore = () => {
@@ -34,19 +35,19 @@ export const HariIni = () => {
     console.log("page dari harini" + page);
   };
 
-  // console.log(list)
+  console.log(taskLists);
 
-  const renderShimmerList = () => {
-    const arr = [];
-    for (let i = 0; i < 6; i++) {
-      arr.push(
-        <View key={i}>
-          <CardShimmerListTask />
-        </View>
-      );
-    }
-    return arr;
-  };
+  // const renderShimmerList = () => {
+  //     const arr = []
+  //     for (let i = 0; i < 6; i++) {
+  //         arr.push(
+  //             <View key={i}>
+  //                 <CardShimmerListTask />
+  //             </View>
+  //         )
+  //     }
+  //     return arr
+  // }
 
   const renderShimmerGrid = () => {
     const arr = [];
@@ -77,9 +78,7 @@ export const HariIni = () => {
     }
     console.log(filterData);
   }, [search, taskLists]);
-
-  const { device } = useSelector((state) => state.apps);
-
+  console.log(filterData);
   return (
     <>
       <View style={{ marginTop: 20 }}>
@@ -95,33 +94,49 @@ export const HariIni = () => {
             <Loading />
           ) : (
             <View>
-              <FlatList
-                data={search !== "" ? filterData : filterDataStatus}
-                renderItem={({ item }) => (
-                  <CardListTask
-                    id={item.id}
-                    title={item.title}
-                    duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
-                    device={device}
-                  />
-                )}
-                ListEmptyComponent={() => <ListEmpty />}
-                ListFooterComponent={() =>
-                  loading === true ? (
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        padding: 24,
-                      }}
-                    >
-                      <ActivityIndicator size="large" color={COLORS.primary} />
-                    </View>
-                  ) : null
-                }
-                onEndReached={loadMore}
-                style={{ height: "95%" }}
-              />
+              {/* <FlatList
+                                    data={search !== '' ? filterData : filterDataStatus}
+                                    renderItem={({ item }) => <CardListTask
+                                        id={item.id}
+                                        title={item.type}
+                                        duedate={item.date}
+                                    />
+                                    }
+                                    ListEmptyComponent={() =>
+                                        <ListEmpty />
+                                    }
+                                    ListFooterComponent={() =>
+                                        loading === true ? (
+                                        <View
+                                            style={{
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            padding: 24,
+                                            }}
+                                        >
+                                            <ActivityIndicator size="large" color={COLORS.primary} />
+                                        </View>
+                                        ) : null
+                                    }
+                                    onEndReached={loadMore}
+                                    style={{ height:"95%"}}
+                                /> */}
+              {/* <TreeView
+      data={family} // defined above
+      renderNode={({ node, level, isExpanded, hasChildrenNodes }) => {
+        return (
+          <View>
+            <Text
+              style={{
+                marginLeft: 25 * level,
+              }}
+            >
+              {getIndicator(isExpanded, hasChildrenNodes)} {node.name}
+            </Text>
+          </View>
+        )
+      }}
+    /> */}
             </View>
           )}
         </View>
@@ -137,11 +152,11 @@ export const HariIni = () => {
               data={filterData}
               renderItem={({ item }) => (
                 <CardListGridTask
-                  id={item.id}
-                  title={item.title}
-                  duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
-                  priority={item.priority}
-                  members={item.members}
+                  // id={item.id}
+                  // title={item.children}
+                  duedate={item.date}
+                  // priority={item.priority}
+                  // members={item.members}
                 />
               )}
               style={{ marginTop: 20 }}

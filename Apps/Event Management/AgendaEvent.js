@@ -2,7 +2,13 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FlatList, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
@@ -67,7 +73,7 @@ export const AgendaEvent = () => {
 
   const resetData = () => {
     agenda.lists = [];
-  }
+  };
 
   const { agenda, event, loading } = useSelector((state) => state.event);
 
@@ -86,19 +92,19 @@ export const AgendaEvent = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getEventAgenda({ token: token, id: event.detailEvent.id }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getEventAgenda({ token: token, id: event.detailEvent.id }));
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token]);
 
   // useEffect(() => {
@@ -116,7 +122,9 @@ export const AgendaEvent = () => {
   //     }
   // }, [search])
 
-  console.log(agenda.lists)
+  console.log(agenda.lists);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <>
@@ -140,10 +148,12 @@ export const AgendaEvent = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity onPress={() => {
-            navigation.navigate("HalamanUtama")
-            resetData()
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("HalamanUtama");
+              resetData();
+            }}
+          >
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -154,7 +164,7 @@ export const AgendaEvent = () => {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -164,11 +174,7 @@ export const AgendaEvent = () => {
         </View>
       </View>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        agenda.lists.length === 0 ? <ListEmpty /> : null
-      )}
+      {loading ? <Loading /> : agenda.lists.length === 0 ? <ListEmpty /> : null}
 
       {/* <View style={{ width: 358, marginHorizontal: 15, marginVertical: 20 }}>
                 <Search placeholder={'Cari Agenda'} onSearch={filter} />
@@ -238,6 +244,7 @@ export const AgendaEvent = () => {
             bottomSheetAttach={bottomSheetAttach}
             setIdEdit={setIdEdit}
             loading={loading}
+            device={device}
           />
         )}
         style={{ marginVertical: 10, height: 440 }}
@@ -275,8 +282,8 @@ export const AgendaEvent = () => {
               >
                 <TouchableOpacity
                   style={{
-                    width: 331,
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.lightBrown,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -289,13 +296,20 @@ export const AgendaEvent = () => {
                     navigation.navigate("EditSubAgenda");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Ubah</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ubah
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={{
-                    width: 331,
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.infoDanger,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -309,7 +323,14 @@ export const AgendaEvent = () => {
                     bottomSheetAttachClose();
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Hapus
+                  </Text>
                 </TouchableOpacity>
               </View>
             </BottomSheetView>

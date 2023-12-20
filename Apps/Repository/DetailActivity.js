@@ -17,18 +17,25 @@ import {
 import { useMemo } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTSIZE,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import {
   GestureHandlerRootView,
   ScrollView,
 } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import moment from "moment/moment";
 import { Loading } from "../../components/Loading";
 import { postRating } from "../../service/api";
-import { Rating } from 'react-native-ratings';
+import { Rating } from "react-native-ratings";
 import { getTokenValue } from "../../service/session";
 
 // const item = {
@@ -85,34 +92,33 @@ export const DetailActivity = () => {
   const detail = dokumen.detail;
   const comment = dokumen.comments;
   const [token, setToken] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
     });
   }, []);
   const ratingCompleted = (rating) => {
-    console.log(token)
+    console.log(token);
     const payload = {
-      rating:rating,
+      rating: rating,
     };
     const data = {
-      id:detail.id,
+      id: detail.id,
       token: token,
       payload: payload,
     };
-    console.log(data)
+    console.log(data);
     dispatch(postRating(data));
-  }
+  };
 
-  console.log(dokumen);
+  // console.log(dokumen);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-    {loading ? (
-      <Loading />
-    ) : (
-      null
-    )}
+      {loading ? <Loading /> : null}
       <View style={{ flex: 1 }}>
         <View>
           <View
@@ -128,8 +134,8 @@ export const DetailActivity = () => {
               style={{
                 backgroundColor: "white",
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -138,7 +144,7 @@ export const DetailActivity = () => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={"#800000"}
                 />
               </TouchableOpacity>
@@ -146,7 +152,7 @@ export const DetailActivity = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -158,8 +164,9 @@ export const DetailActivity = () => {
           <ScrollView>
             <View
               style={{
-                backgroundColor: "white",
-                margin: 10,
+                backgroundColor: COLORS.white,
+                marginVertical: 10,
+                marginHorizontal: "5%",
                 paddingBottom: 20,
                 borderRadius: 8,
                 shadowColor: "black",
@@ -177,7 +184,7 @@ export const DetailActivity = () => {
               >
                 <Text
                   style={{
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -193,13 +200,17 @@ export const DetailActivity = () => {
                 }}
               >
                 <Image
-                  style={{ width: 26, height: 26, borderRadius: 30 }}
+                  style={{
+                    width: device === "tablet" ? 52 : 26,
+                    height: device === "tablet" ? 52 : 26,
+                    borderRadius: device === "tablet" ? 60 : 30,
+                  }}
                   source={{ uri: detail.creator_avatar }}
                 />
                 <View>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -207,7 +218,7 @@ export const DetailActivity = () => {
                   </Text>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.normal,
                       color: "#1868AB",
                     }}
@@ -227,7 +238,7 @@ export const DetailActivity = () => {
               >
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -236,7 +247,7 @@ export const DetailActivity = () => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -254,7 +265,7 @@ export const DetailActivity = () => {
               >
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -263,7 +274,7 @@ export const DetailActivity = () => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -274,7 +285,7 @@ export const DetailActivity = () => {
                 <Text
                   style={{
                     textAlign: "justify",
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -285,23 +296,41 @@ export const DetailActivity = () => {
               <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
                 <Divider bold />
               </View>
-              <View style={{paddingHorizontal:PADDING.Page, marginBottom:20,justifyContent:"center", alignItems:"center"}}>
+              <View
+                style={{
+                  paddingHorizontal: PADDING.Page,
+                  marginBottom: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Text
                   style={{
                     textAlign: "justify",
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    marginBottom:4
+                    marginBottom: 4,
                   }}
                 >
                   Rating
                 </Text>
-                {detail.logged_in_user_avatar === detail.creator_avatar ? 
-                  <Rating key={token} onFinishRating={(value) => ratingCompleted(value)} fractions={2} startingValue={detail.my_rating} readonly/>
-                :
-                  <Rating key={token} onFinishRating={(value) => ratingCompleted(value)} fractions={2} startingValue={detail.my_rating}/>
-                }
+                {detail.logged_in_user_avatar === detail.creator_avatar ? (
+                  <Rating
+                    key={token}
+                    onFinishRating={(value) => ratingCompleted(value)}
+                    fractions={2}
+                    startingValue={detail.my_rating}
+                    readonly
+                  />
+                ) : (
+                  <Rating
+                    key={token}
+                    onFinishRating={(value) => ratingCompleted(value)}
+                    fractions={2}
+                    startingValue={detail.my_rating}
+                  />
+                )}
               </View>
               <View
                 style={{
@@ -317,7 +346,7 @@ export const DetailActivity = () => {
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H1,
+                      fontSize: fontSizeResponsive("H1", device),
                       fontWeight: FONTWEIGHT.bold,
                       color: COLORS.lighter,
                     }}
@@ -354,10 +383,22 @@ export const DetailActivity = () => {
                     }}
                   >
                     <View style={{ paddingEnd: 20 }}>
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {data.title}
                       </Text>
-                      <Text style={{ color: COLORS.lighter }}>{data.name}</Text>
+                      <Text
+                        style={{
+                          color: COLORS.lighter,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {data.name}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -372,7 +413,7 @@ export const DetailActivity = () => {
                 <TouchableOpacity onPress={bottomSheetAttach}>
                   <Text
                     style={{
-                      fontSize: FONTSIZE.H2,
+                      fontSize: fontSizeResponsive("H2", device),
                       fontWeight: FONTWEIGHT.bold,
                       color: "#1868AB",
                     }}
@@ -420,10 +461,20 @@ export const DetailActivity = () => {
                         source={{ uri: detail?.creator_avatar }}
                       />
                       <View style={{}}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        <Text
+                          style={{
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
                           Penulis
                         </Text>
-                        <Text style={{ color: COLORS.lighter }}>
+                        <Text
+                          style={{
+                            color: COLORS.lighter,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
                           {detail?.creator}
                         </Text>
                       </View>
@@ -431,7 +482,7 @@ export const DetailActivity = () => {
                     <View style={{ marginTop: 10 }}>
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H1,
+                          fontSize: fontSizeResponsive("H1", device),
                           fontWeight: FONTWEIGHT.bold,
                           color: COLORS.lighter,
                         }}
@@ -465,10 +516,20 @@ export const DetailActivity = () => {
                               }}
                             >
                               <View>
-                                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                                <Text
+                                  style={{
+                                    fontWeight: FONTWEIGHT.bold,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   {data?.title}
                                 </Text>
-                                <Text style={{ color: COLORS.lighter }}>
+                                <Text
+                                  style={{
+                                    color: COLORS.lighter,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
                                   {data?.name}
                                 </Text>
                               </View>
@@ -484,6 +545,6 @@ export const DetailActivity = () => {
           </Portal>
         </View>
       </View>
-    </GestureHandlerRootView >
+    </GestureHandlerRootView>
   );
 };
