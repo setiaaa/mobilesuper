@@ -550,7 +550,7 @@ export const CardAppsB = ({ handlePressModal }) => {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-      <View style={styles.item}>
+      <View style={[styles.item, { height: device === "tablet" ? 200 : 100 }]}>
         <Text style={styles.itemText}>{item}</Text>
       </View>
     );
@@ -608,8 +608,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    margin: 1,
-    height: Dimensions.get("window").width / numColumns, // approximate a square
+    margin: 1, // approximate a square
   },
   itemInvisible: {
     backgroundColor: "transparent",

@@ -471,7 +471,7 @@ export const PersonalCuti = () => {
                   <Text
                     style={{
                       color: COLORS.white,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     Draft
@@ -479,7 +479,7 @@ export const PersonalCuti = () => {
                   <Text
                     style={{
                       color: COLORS.white,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     {jumlahDraft}
@@ -506,7 +506,7 @@ export const PersonalCuti = () => {
                     style={{
                       color: COLORS.white,
                       textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     Sedang Proses
@@ -514,7 +514,7 @@ export const PersonalCuti = () => {
                   <Text
                     style={{
                       color: COLORS.white,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     {jumlahOnProgress}
@@ -544,7 +544,7 @@ export const PersonalCuti = () => {
                     style={{
                       color: COLORS.white,
                       textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     Dokumen Disetujui
@@ -552,7 +552,7 @@ export const PersonalCuti = () => {
                   <Text
                     style={{
                       color: COLORS.white,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     {jumlahComplete}
@@ -576,7 +576,7 @@ export const PersonalCuti = () => {
                     style={{
                       color: COLORS.white,
                       textAlign: "center",
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     Dokumen Tidak Disetujui
@@ -584,7 +584,7 @@ export const PersonalCuti = () => {
                   <Text
                     style={{
                       color: COLORS.white,
-                      fontSize: fontSizeResponsive("H4", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                     }}
                   >
                     {jumlahReject}
@@ -609,7 +609,7 @@ export const PersonalCuti = () => {
               data={kuota.data_kuota_cuti}
               renderItem={({ item }) => (
                 <View key={item.id}>
-                  <CardKuotaCuti item={item} />
+                  <CardKuotaCuti item={item} device={device} />
                 </View>
               )}
               keyExtractor={(item) => item.id}
