@@ -3,7 +3,7 @@ import { ActivityIndicator, View } from 'react-native'
 import { FlatList } from 'react-native'
 import { CardListTask } from '../../../components/CardListTask'
 import { CardShimmerListTask } from '../../../components/CardListTask/CardShimmerListTask'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CardListGridTask } from '../../../components/CardListGridTask'
 import moment from 'moment'
 import ListEmpty from '../../../components/ListEmpty'
@@ -11,57 +11,69 @@ import { CardShimmerListGridTask } from '../../../components/CardListGridTask/Ca
 import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
 import { Search } from '../../../components/Search'
+import { Text } from 'react-native'
+import { getListKorespondensiTodayTM } from '../../../service/api'
+import { CardListTaskKorespondensi } from '../../../components/CardListKorespondensiTM'
+import { getTokenValue } from '../../../service/session'
 
 
 export const HariIniKorespondensi = () => {
-    const { list, variant, loading } = useSelector(state => state.task)
-    const taskLists = list.data
+    const { list, variant, loadingtoday, listKorespondensi } = useSelector(state => state.task)
+    const taskLists = listKorespondensi.today
     const [filterData, setFilterData] = useState([])
     const [filterDataStatus, setFilterDataStatus] = useState([])
     const [page, setPage] = useState(5);
     const [search, setSearch] = useState('')
-
+    const [token, setToken] = useState('')
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        const data = taskLists.filter((item) => {
-            return item.deadline_status === 'today'
+        getTokenValue().then((val) => {
+          setToken(val);
+        });
+    }, []);
+
+    let data = []
+    {taskLists?.map((item) => (
+        item.children.map((child, index) => {
+            data.push(child)
         })
-        setFilterDataStatus(data)
-    }, [taskLists])
+    ))}
+
+    // useEffect(() => {
+    //     // dispatch(getListKorespondensiTodayTM(token))
+    //     setFilterDataStatus(taskLists)
+    // }, [taskLists])
 
     const loadMore = () => {
         if (filterData % 5 === 0) {
           setPage(page + 5);
         }
-        console.log("page dari harini" + page);
     };
+    // const renderShimmerList = () => {
+    //     const arr = []
+    //     for (let i = 0; i < 6; i++) {
+    //         arr.push(
+    //             <View key={i}>
+    //                 <CardShimmerListTask />
+    //             </View>
+    //         )
+    //     }
+    //     return arr
+    // }
 
-    // console.log(list)
-
-    const renderShimmerList = () => {
-        const arr = []
-        for (let i = 0; i < 6; i++) {
-            arr.push(
-                <View key={i}>
-                    <CardShimmerListTask />
-                </View>
-            )
-        }
-        return arr
-    }
-
-    const renderShimmerGrid = () => {
-        const arr = []
-        for (let i = 0; i < 6; i++) {
-            arr.push(
-                <View key={i} style={{ flexDirection: 'row', gap: 4 }}>
-                    <CardShimmerListGridTask />
-                    <CardShimmerListGridTask />
-                </View>
-            )
-        }
-        return arr
-    }
+    // const renderShimmerGrid = () => {
+    //     const arr = []
+    //     for (let i = 0; i < 6; i++) {
+    //         arr.push(
+    //             <View key={i} style={{ flexDirection: 'row', gap: 4 }}>
+    //                 <CardShimmerListGridTask />
+    //                 <CardShimmerListGridTask />
+    //             </View>
+    //         )
+    //     }
+    //     return arr
+    // }
 
     const filter = (event) => {
         setSearch(event)
@@ -70,14 +82,13 @@ export const HariIniKorespondensi = () => {
     useEffect(() => {
         // const item = taskLists
         if (search !== '') {
-            const data = filterDataStatus.filter((item) => {
-                return item.title?.toLowerCase().includes(search.toLowerCase());
+            const datas = data.filter((item) => {
+                return item.subject?.toLowerCase().includes(search.toLowerCase());
             })
-            setFilterData(data)
+            setFilterData(datas)
         } else {
-            setFilterData(filterDataStatus)
+            setFilterData(data)
         }
-        console.log(filterData)
     }, [search, taskLists])
 
     return (
@@ -89,26 +100,27 @@ export const HariIniKorespondensi = () => {
                 onSearch={filter}
                 />
         </View>
-            {variant === 'list' ? (
                 <View style={{ flex: 1, marginTop: 20,}}>
                     {
-                        loading ? (
+                        loadingtoday ? (
                             <Loading/>
                         ) : (
                             <View>
                                 <FlatList
-                                    data={search !== '' ? filterData : filterDataStatus}
-                                    renderItem={({ item }) => <CardListTask
+                                    data={search !== '' ? filterData : data}
+                                    // data={data}
+                                    renderItem={({ item }) => <CardListTaskKorespondensi
                                         id={item.id}
-                                        title={item.title}
-                                        duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
+                                        title={item.subject}
+                                        duedate={item.duedate}
+                                        priority={item.prio}
                                     />
                                     }
                                     ListEmptyComponent={() =>
                                         <ListEmpty />
                                     }
                                     ListFooterComponent={() =>
-                                        loading === true ? (
+                                        loadingtoday === true ? (
                                         <View
                                             style={{
                                             justifyContent: "center",
@@ -127,41 +139,6 @@ export const HariIniKorespondensi = () => {
                         )
                     }
                 </View>
-            ) : variant === 'grid' ? (
-                <View style={{ flex: 1 }}>
-                    {
-                        loading ? (
-                            <View style={{ flexDirection: 'column', marginTop: 20 }}>
-                                {
-                                    renderShimmerGrid()
-                                }
-                            </View>
-                        ) : (
-                            <FlatList
-                                key={'#'}
-                                data={filterData}
-                                renderItem={({ item }) => <CardListGridTask
-                                    id={item.id}
-                                    title={item.title}
-                                    duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
-                                    priority={item.priority}
-                                    members={item.members}
-                                />
-                                }
-                                style={{ marginTop: 20 }}
-                                columnWrapperStyle={{ gap: 4 }}
-                                numColumns={2}
-                                keyExtractor={item => "#" + item.id}
-                                ListEmptyComponent={() =>
-                                    <ListEmpty />
-                                }
-                            />
-                        )
-                    }
-                </View>
-            ) : (
-                null
-            )}
         </>
     )
 }

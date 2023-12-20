@@ -33,7 +33,11 @@ import { Dropdown } from "../../components/DropDown";
 import {
   getDetailProjectTM,
   getListDashboardTM,
+  getListKorespondensiArsipTM,
+  getListKorespondensiNextWeekTM,
+  getListKorespondensiOverdueTM,
   getListKorespondensiTM,
+  getListKorespondensiTodayTM,
   getListTaskTM,
   getTreeTM,
 } from "../../service/api";
@@ -43,6 +47,7 @@ import { DetailProject } from "./DetailProject";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { Loading } from "../../components/Loading";
+import { Portal } from "react-native-portalize";
 
 const tipe = [
   { key: "1", value: "Dashboard" },
@@ -193,7 +198,10 @@ export const MyTask = () => {
     if (choiceTipe.value === "Dashboard") {
       dispatch(getListDashboardTM({ token: token, page: page }));
     } else if (choiceTipe.value === "Korespondensi") {
-      dispatch(getListKorespondensiTM({ token: token, page: page }));
+      dispatch(getListKorespondensiArsipTM({ token: token, page: page }));
+      dispatch(getListKorespondensiTodayTM({ token: token, page: page }));
+      dispatch(getListKorespondensiNextWeekTM({ token: token, page: page }));
+      dispatch(getListKorespondensiOverdueTM({ token: token, page: page }));
     } else {
       if (choiceList === "" && choiceKategori !== "") {
         dispatch(
@@ -244,15 +252,14 @@ export const MyTask = () => {
     const data = taskLists.filter((item) => {
       if (choiceFilter === "semua") {
         return item;
-      } else if (choiceFilter == "arsip") {
-        return item;
-      }
-      else {
+        // } else if (choiceFilter == "arsip") {
+        //   return item;
+      } else {
         if (list.type === "Dashboard") {
           return item.deadline_status === choiceFilter;
-        // } else if (list.type === "Korespondensi") {
-        //   return item.deadline_status == choiceFilter;
-        // } else {
+          // } else if (list.type === "Korespondensi") {
+          //   return item.deadline_status == choiceFilter;
+          // } else {
           return item.status === choiceFilter;
         }
       }
@@ -304,8 +311,8 @@ export const MyTask = () => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -314,7 +321,7 @@ export const MyTask = () => {
               <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
@@ -334,8 +341,8 @@ export const MyTask = () => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginRight: 20,
@@ -348,7 +355,7 @@ export const MyTask = () => {
               >
                 <Ionicons
                   name="document-text-outline"
-                  size={24}
+                  size={device === "tablet" ? 30 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>

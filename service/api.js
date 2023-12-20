@@ -911,7 +911,7 @@ export const getListDashboardTM = createAsyncThunk(
   async ({ token, page }) => {
     console.log("ini api " + page);
     const respon = await axios.get(
-      `${taskManagement}dashboard/list/?limit=10&page=${page}`,
+      `${taskManagement}dashboard/list/?limit=10&page=${page}&my_task=true`,
       {
         headers: { Authorization: token },
       }
@@ -931,22 +931,6 @@ export const getListTaskTM = createAsyncThunk(
       data: respon?.data.result,
       type: type,
     };
-  }
-);
-
-export const getListKorespondensiTM = createAsyncThunk(
-  "taskmanagement/getListKorespondensiTM",
-  async ({ token, page }) => {
-    console.log("ini api korespondesni " + page);
-    console.log(token)
-    const respon = await axios.get(
-      `${TaskKorespondensi}integration/nde/todo/`,
-      {
-        headers: { Authorization: token },
-      }
-    );
-    console.log(respon?.data.result);
-    return respon?.data.results;
   }
 );
 
@@ -1089,7 +1073,7 @@ export const getCompleteTM = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
   "taskmanagement/deleteTask",
   async (data) => {
-    console.log("masuk api")
+    console.log("masuk api");
     console.log(data);
     const respon = await axios.delete(
       `${taskManagement}task/${data.id}/destroy/`,
@@ -1120,6 +1104,97 @@ export const deleteListTask = createAsyncThunk(
       { headers: { Authorization: data.token } }
     );
     return respon;
+  }
+);
+
+export const getListKorespondensiTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    console.log(respon?.data.results);
+    return respon?.data.results;
+  }
+);
+
+export const getListKorespondensiArsipTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiArsipTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/archive/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+export const getListKorespondensiOverdueTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiOverdueTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/overdue`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+export const getListKorespondensiTodayTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiTodayTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/today`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+export const getListKorespondensiNextWeekTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiNextWeekTM",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/nextweek`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getDetailKorespondensiTM = createAsyncThunk(
+  "taskmanagement/getDetailKorespondensiTM",
+  async ({ token, id }) => {
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/${id}/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const postMarkKorespondensiTM = createAsyncThunk(
+  "taskmanagement/postMarkKorespondensiTM",
+  async (data) => {
+    const payload = {
+      mark_complete: "1",
+    };
+    const respon = await axios.post(
+      `${TaskKorespondensi}integration/nde/todo/${data.id}/mark/`,
+      payload,
+      { headers: { Authorization: data.token } }
+    );
+    return respon?.data.status;
   }
 );
 
@@ -2058,35 +2133,30 @@ export const getDocumentCetakSPPD = createAsyncThunk(
 //help desk
 export const getTicket = createAsyncThunk(
   "helpDesk/getTicket",
-  async ( data ) => {
+  async (data) => {
     const respon = await axios.get(`${HelpDesk}ticket?nip=${data.nip}`, {
       headers: { Authorization: data.token },
-    })
+    });
     return respon.data.results;
   }
 );
 
-export const getParts = createAsyncThunk(
-  "helpDesk/getParts",
-  async () => {
-    const respon = await axios.get(`${HelpDesk}parts`, {
-      // headers: { Authorization: token },
-    });
-    return respon.data;
-  }
-);
+export const getParts = createAsyncThunk("helpDesk/getParts", async () => {
+  const respon = await axios.get(`${HelpDesk}parts`, {
+    // headers: { Authorization: token },
+  });
+  return respon.data;
+});
 
 export const postTicket = createAsyncThunk(
   "ticket/postTicket",
   async (data) => {
-    console.log("api post")
-    console.log(data.payload)
-    const respon = await axios.post(`${HelpDesk}ticket/store`, 
-    data.payload,
-    {
+    console.log("api post");
+    console.log(data.payload);
+    const respon = await axios.post(`${HelpDesk}ticket/store`, data.payload, {
       headers: { Authorization: data.token },
     });
-    console.log(respon)
+    console.log(respon);
     return respon?.data;
   }
 );
