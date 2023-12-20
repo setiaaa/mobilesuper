@@ -28,7 +28,6 @@ export const DetailDokumenLain = () => {
   const bottomSheetModalRef = useRef(null);
   const { digitalsign, loading } = useSelector((state) => state.digitalsign);
   const item = digitalsign.detail;
-  const { device } = useSelector((state) => state.apps);
   
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
@@ -288,7 +287,6 @@ export const DetailDokumenLain = () => {
                 </View>
               </View>
               {item.approvers?.slice(1).map((data, index) => {
-                  console.log(data)
                 return (
                   <View
                     style={{

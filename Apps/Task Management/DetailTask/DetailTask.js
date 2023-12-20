@@ -855,61 +855,34 @@ export const DetailTask = () => {
                       </View>
                     </TouchableOpacity>
 
-                                            <TouchableOpacity
-                                            onPress={() => {
-                                                const datas = {
-                                                token: token,
-                                                id: taskDetail.id,
-                                                };
-                                                console.log(datas)
-                                                dispatch(deleteTask(datas));
-                                                setTimeout(() => {
-                                                    dispatch(getListDashboardTM({ token: token, page: page }));
-                                                }, 3000);
-                                            }}
-                                            >
-                                                <View style={{
-                                                    marginHorizontal: 20,
-                                                    backgroundColor: COLORS.infoDanger,
-                                                    width: Platform.OS === 'ios' ? '90%' : '91%',
-                                                    height: 50,
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    borderRadius: 6,
-                                                }}>
-                                                    <Text style={{ color: COLORS.white }}>Hapus</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </>
-                                    ) : null
-                                }
-                            </View>
-                    <TouchableOpacity>
-                      <View
-                        style={{
-                          marginHorizontal: "5%",
-                          backgroundColor: COLORS.infoDanger,
-                          width: Platform.OS === "ios" ? "90%" : "91%",
-                          height: 50,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderRadius: 6,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            color: COLORS.white,
-                            fontSize: fontSizeResponsive("H4", device),
-                          }}
-                        >
-                          Hapus
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </>
-                ) : null}
-              </View>
-
+                            <TouchableOpacity
+                            onPress={() => {
+                                const datas = {
+                                token: token,
+                                id: taskDetail.id,
+                                };
+                                console.log(datas)
+                                dispatch(deleteTask(datas));
+                                setTimeout(() => {
+                                    dispatch(getListDashboardTM({ token: token, page: page }));
+                                }, 3000);
+                            }}
+                            >
+                                <View style={{
+                                    marginHorizontal: 20,
+                                    backgroundColor: COLORS.infoDanger,
+                                    width: Platform.OS === 'ios' ? '90%' : '91%',
+                                    height: 50,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 6,
+                                }}>
+                                    <Text style={{ color: COLORS.white }}>Hapus</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </>
+                    ) : null}
+                </View>
               <Portal>
                 <BottomSheetModalProvider>
                   <BottomSheetModal
