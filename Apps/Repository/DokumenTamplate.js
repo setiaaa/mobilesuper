@@ -8,7 +8,12 @@ import {
 } from "react-native";
 import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { Search } from "../../components/Search";
 import { Dropdown } from "../../components/DropDown";
@@ -38,7 +43,7 @@ import moment from "moment";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 
-const DataList = ({ token, item, bottomSheetAttach }) => {
+const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
 
   const getDetailRepo = (id) => {
@@ -55,7 +60,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           display: "flex",
           flexDirection: "row",
           marginVertical: 10,
-          marginHorizontal: 20,
+          marginHorizontal: "5%",
           backgroundColor: "white",
           borderRadius: 8,
           shadowColor: "black",
@@ -88,10 +93,10 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
             >
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: FONTWEIGHT.bold,
                   marginBottom: 10,
-                  width: 300,
+                  width: device === "tablet" ? 400 : 300,
                 }}
               >
                 {item.title}
@@ -107,17 +112,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Pembuat
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -137,20 +142,20 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Deskripsi
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 200,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   {item.attributes.deskripsi}
@@ -167,17 +172,17 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
               >
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
-                    width: 100,
+                    width: device === "tablet" ? 200 : 100,
                   }}
                 >
                   Perubahan
                 </Text>
                 <Text
                   style={{
-                    fontSize: 11,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: FONTWEIGHT.normal,
                     color: COLORS.lighter,
                   }}
@@ -186,20 +191,6 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            {/* <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  flex: 1,
-                  marginRight: 20,
-                }}
-              >
-                <Ionicons
-                  name="ellipsis-vertical-outline"
-                  size={24}
-                  color={COLORS.grey}
-                />
-              </View> */}
           </View>
         </View>
       </View>
@@ -324,29 +315,31 @@ export const DokumenTamplate = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(
-              getDocumentTamplate({
-                token: token,
-                page: page,
-                general: search,
-                by_title: type.key,
-                unker: filterUnker ? filterUnker.value : "",
-                satker: filterSatker ? filterSatker.value : "",
-              })
-            );
-              console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(
+          getDocumentTamplate({
+            token: token,
+            page: page,
+            general: search,
+            by_title: type.key,
+            unker: filterUnker ? filterUnker.value : "",
+            satker: filterSatker ? filterSatker.value : "",
+          })
+        );
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page, type, search, filterUnker, filterSatker]);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <GestureHandlerRootView>
@@ -365,8 +358,8 @@ export const DokumenTamplate = () => {
               style={{
                 backgroundColor: "white",
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -375,19 +368,29 @@ export const DokumenTamplate = () => {
               <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={"#800000"}
                 />
               </TouchableOpacity>
             </View>
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-              <Text style={{ fontSize: 15, fontWeight: 600, color: "white" }}>
-                Dokumen Tamplate
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: "white",
+                }}
+              >
+                Dokumen Template
               </Text>
             </View>
           </View>
-          <View style={{ width: "90%", marginLeft: 20, marginVertical: 20 }}>
-            <Search placeholder={"Cari"} onSearch={setSearch} />
+          <View style={{ width: "90%", marginLeft: "5%", marginVertical: 20 }}>
+            <Search
+              placeholder={"Cari"}
+              onSearch={setSearch}
+              iconColor={COLORS.primary}
+            />
             <View
               style={{
                 marginTop: 20,
@@ -409,6 +412,14 @@ export const DokumenTamplate = () => {
                 onPress={() => {
                   bottomSheetAttachFilter();
                   dispatch(getDivisionFilter({ token: token }));
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 30,
+                  backgroundColor: COLORS.white,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <Ionicons
@@ -449,7 +460,12 @@ export const DokumenTamplate = () => {
                         borderBottomColor: COLORS.grey,
                       }}
                     >
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Filter Satuan dan Unit Kerja
                       </Text>
                       <TouchableOpacity
@@ -472,6 +488,7 @@ export const DokumenTamplate = () => {
                           marginHorizontal: 10,
                           marginBottom: 10,
                           fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Unit Kerja
@@ -497,6 +514,7 @@ export const DokumenTamplate = () => {
                           marginHorizontal: 10,
                           marginBottom: 10,
                           fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Satuan Kerja
@@ -525,8 +543,20 @@ export const DokumenTamplate = () => {
                             gap: 5,
                           }}
                         >
-                          <Text style={{ color: COLORS.infoDanger }}>*</Text>
-                          <Text style={{ color: COLORS.lighter }}>
+                          <Text
+                            style={{
+                              color: COLORS.infoDanger,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            *
+                          </Text>
+                          <Text
+                            style={{
+                              color: COLORS.lighter,
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             Daftar satuan kerja akan muncul setelah memilih unit
                             kerja
                           </Text>
@@ -548,6 +578,7 @@ export const DokumenTamplate = () => {
                   bottomSheetAttach={bottomSheetAttach}
                   item={item}
                   token={token}
+                  device={device}
                 />
               )}
               ListFooterComponent={() =>
@@ -564,7 +595,7 @@ export const DokumenTamplate = () => {
                 ) : null
               }
               keyExtractor={(item) => "_" + item.id}
-              style={{ height: 500 }}
+              style={{ height: device === "tablet" ? "79%" : "67%" }}
               ListEmptyComponent={() => <ListEmpty />}
               onEndReached={() => {
                 if (tamplate.lists.length !== 0) {
@@ -609,7 +640,7 @@ export const DokumenTamplate = () => {
                         />
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H2,
+                            fontSize: fontSizeResponsive("H2", device),
                             fontWeight: FONTWEIGHT.normal,
                             width: 300,
                           }}
@@ -637,7 +668,7 @@ export const DokumenTamplate = () => {
                           />
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
+                              fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.normal,
                             }}
                           >
@@ -667,7 +698,7 @@ export const DokumenTamplate = () => {
                           />
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
+                              fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.normal,
                             }}
                           >

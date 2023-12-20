@@ -8,14 +8,17 @@ import {
   AccordionList,
 } from "accordion-collapse-react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { COLORS, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export const CollapseCardBiodata = ({ profile }) => {
-  console.log(profile);
+export const CollapseCardBiodata = ({ profile, device }) => {
   const [collapse, setCollapse] = useState(false);
   return (
     <View>
@@ -36,15 +39,31 @@ export const CollapseCardBiodata = ({ profile }) => {
                   gap: 10,
                 }}
               >
-                <Ionicons name="person-outline" size={24} />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Biodata</Text>
+                <Ionicons
+                  name="person-outline"
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Biodata
+                </Text>
                 <View
                   style={{ flex: 1, alignItems: "flex-end", marginRight: 20 }}
                 >
                   {collapse === true ? (
-                    <Ionicons name="chevron-up-outline" size={20} />
+                    <Ionicons
+                      name="chevron-up-outline"
+                      size={device === "tablet" ? 40 : 20}
+                    />
                   ) : (
-                    <Ionicons name="chevron-down-outline" size={20} />
+                    <Ionicons
+                      name="chevron-down-outline"
+                      size={device === "tablet" ? 40 : 20}
+                    />
                   )}
                 </View>
               </View>
@@ -72,9 +91,23 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Nama</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Nama
+              </Text>
               <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.nama}</Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.nama}
+              </Text>
             </View>
 
             <View
@@ -86,9 +119,23 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>NIP</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                NIP
+              </Text>
               <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.nip}</Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.nip}
+              </Text>
             </View>
 
             <View
@@ -100,8 +147,17 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Karpeg/Karis-Karsu/NPWP</Text>
-              <Text>:</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Karpeg/Karis-Karsu/NPWP
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
               <View
                 style={{
                   width: "55%",
@@ -110,22 +166,36 @@ export const CollapseCardBiodata = ({ profile }) => {
                   alignItems: "flex-start",
                 }}
               >
-                {profile.karpeg == null ? (
+                {profile.Karpeg == null ? (
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    -
+                  </Text>
+                ) : (
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    {profile.Karpeg}
+                  </Text>
+                )}
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  /
+                </Text>
+                {profile.Karis == null ? (
                   <Text>-</Text>
                 ) : (
-                  <Text>{profile.karpeg}</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    {profile.Karis}
+                  </Text>
                 )}
-                <Text>/</Text>
-                {profile.karis == null ? (
-                  <Text>-</Text>
-                ) : (
-                  <Text>{profile.karis}</Text>
-                )}
-                <Text>/</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  /
+                </Text>
                 {profile.npwp === "" ? (
-                  <Text>-</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    -
+                  </Text>
                 ) : (
-                  <Text>{profile.npwp}</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    {profile.npwp}
+                  </Text>
                 )}
               </View>
             </View>
@@ -139,9 +209,21 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Tempat/Tanggal lahir</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Tempat/Tanggal lahir
+              </Text>
               <Text>:</Text>
-              <Text style={{ width: "55%" }}>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 {profile.place_birth}/{profile.date_birth}
               </Text>
             </View>
@@ -155,9 +237,25 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Telepon Seluler</Text>
-              <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.mobile}</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Telepon Seluler
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.mobile}
+              </Text>
             </View>
 
             <View
@@ -169,9 +267,25 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>No KTP</Text>
-              <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.ktp}</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                No KTP
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.ktp}
+              </Text>
             </View>
 
             <View
@@ -183,9 +297,25 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Email KKP</Text>
-              <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.email}</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Email KKP
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.email}
+              </Text>
             </View>
 
             <View
@@ -197,9 +327,25 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Email Lain</Text>
-              <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.email_alt}</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Email Lain
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.email_alt}
+              </Text>
             </View>
 
             <View
@@ -211,9 +357,25 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Pendidikan Terakhir</Text>
-              <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.pendidikan}</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Pendidikan Terakhir
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.pendidikan}
+              </Text>
             </View>
 
             <View
@@ -225,9 +387,25 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Unit Kerja</Text>
-              <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.satuan_kerja_nama}</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Unit Kerja
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.satuan_kerja_nama}
+              </Text>
             </View>
 
             <View
@@ -239,9 +417,25 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Satker</Text>
-              <Text>:</Text>
-              <Text style={{ width: "55%" }}>{profile.unit_kerja}</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Satker
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
+              <Text
+                style={{
+                  width: "55%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {profile.unit_kerja}
+              </Text>
             </View>
 
             <View
@@ -253,12 +447,30 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Pangkat</Text>
-              <Text>:</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Pangkat
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
               {profile.pangkat == null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <Text style={{ width: "55%" }}>{profile.pangkat}</Text>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {profile.pangkat}
+                </Text>
               )}
             </View>
 
@@ -271,12 +483,30 @@ export const CollapseCardBiodata = ({ profile }) => {
                 width: wp(82),
               }}
             >
-              <Text style={{ width: "40%" }}>Golongan</Text>
-              <Text>:</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Golongan
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
               {profile.golongan == null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <Text style={{ width: "55%" }}>{profile.golongan}</Text>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {profile.golongan}
+                </Text>
               )}
             </View>
 
@@ -287,26 +517,45 @@ export const CollapseCardBiodata = ({ profile }) => {
                 marginTop: 10,
                 gap: 5,
                 width: wp(82),
+                marginBottom: 10,
               }}
             >
-              <Text style={{ width: "40%" }}>Alamat Kantor</Text>
-              <Text>:</Text>
+              <Text
+                style={{
+                  width: "40%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Alamat Kantor
+              </Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                :
+              </Text>
               {profile.office_address == null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <Text style={{ width: "50%" }}>{profile.office_address}</Text>
+                <Text
+                  style={{
+                    width: "50%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {profile.office_address}
+                </Text>
               )}
             </View>
 
             {/* custom divider */}
-            <View
+            {/* <View
               style={{
                 height: 1,
                 width: "100%",
                 backgroundColor: "#DBDADE",
                 marginTop: 10,
               }}
-            />
+            /> */}
           </View>
         </CollapseBody>
       </Collapse>

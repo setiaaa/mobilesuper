@@ -1,6 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
+import {
+  COLORS,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
+import { TouchableOpacity } from "react-native";
+import { Platform } from "react-native";
+import { StyleSheet } from "react-native";
+import { Image } from "react-native";
+import { Text } from "react-native";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { View } from "react-native";
 import { COLORS, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Platform } from "react-native";
@@ -10,6 +24,7 @@ import { Text } from "react-native";
 
 export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
   const navigation = useNavigation();
+  const { device } = useSelector((state) => state.apps);
   return (
     <View
       style={{
@@ -47,7 +62,7 @@ export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
               style={{
                 color: COLORS.grey,
                 marginVertical: 5,
-                fontSize: 10,
+                fontSize: fontSizeResponsive("H5", device),
                 fontWeight: 400,
                 textAlign: "center",
                 fontWeight: FONTWEIGHT.bold,

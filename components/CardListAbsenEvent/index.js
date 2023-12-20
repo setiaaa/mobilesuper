@@ -1,16 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { View } from "react-native";
-import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Text } from "react-native";
 import moment from "moment";
 import { TouchableOpacity } from "react-native";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-  } from "react-native-responsive-screen";
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export const CardListAbsenEvent = ({
   item,
@@ -20,6 +25,7 @@ export const CardListAbsenEvent = ({
   eventpic,
   loading,
   status,
+  device,
 }) => {
   const [user, setUser] = useState("member");
   const [checkIn, setCheckin] = useState("");
@@ -57,13 +63,28 @@ export const CardListAbsenEvent = ({
             height={20}
           />
         ) : (
-          <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             {item.member?.nama}
           </Text>
         )}
         <View style={{ marginTop: 10 }}>
-          <View style={{ flexDirection: "row", gap: wp(4), alignItems: "center" }}>
-            <Text style={{ width: 110, color: COLORS.lighter }}>Status</Text>
+          <View
+            style={{ flexDirection: "row", gap: wp(4), alignItems: "center" }}
+          >
+            <Text
+              style={{
+                width: device === "tablet" ? 205 : 110,
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Status
+            </Text>
             {loading ? (
               <ShimmerPlaceHolder
                 style={{ borderRadius: 4 }}
@@ -73,8 +94,8 @@ export const CardListAbsenEvent = ({
             ) : (
               <View
                 style={{
-                  width: 80,
-                  height: 24,
+                  paddingHorizontal: 20,
+                  paddingVertical: 5,
                   borderRadius: 30,
                   backgroundColor:
                     item.status === "hadir"
@@ -94,6 +115,7 @@ export const CardListAbsenEvent = ({
                         : item.status === "waiting"
                         ? COLORS.info
                         : null,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   {item.status}
@@ -102,7 +124,14 @@ export const CardListAbsenEvent = ({
             )}
           </View>
 
-          <View style={{ flexDirection: "row", gap: 10, alignItems: "center", gap:wp(2) }}>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 10,
+              alignItems: "center",
+              gap: wp(2),
+            }}
+          >
             {user === "admin" && checkIn === "" ? (
               <TouchableOpacity
                 style={{
@@ -115,7 +144,14 @@ export const CardListAbsenEvent = ({
                 }}
                 onPress={() => setCheckin("1")}
               >
-                <Text style={{ color: COLORS.white }}>Check In</Text>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Check In
+                </Text>
               </TouchableOpacity>
             ) : user === "resepsionis" && checkIn === "" ? (
               <TouchableOpacity
@@ -129,7 +165,14 @@ export const CardListAbsenEvent = ({
                 }}
                 onPress={() => setCheckin("1")}
               >
-                <Text style={{ color: COLORS.white }}>Check In</Text>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Check In
+                </Text>
               </TouchableOpacity>
             ) : (
               <View
@@ -139,7 +182,13 @@ export const CardListAbsenEvent = ({
                   flexDirection: "row",
                 }}
               >
-                <Text style={{ width: 120, color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 240 : 120,
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Waktu Check In
                 </Text>
                 {loading ? (
@@ -153,15 +202,17 @@ export const CardListAbsenEvent = ({
                 ) : (
                   <View
                     style={{
-                      width: 200,
-                      height: 24,
+                      width: device === "tablet" ? 300 : 150,
+                      paddingVertical: 5,
                       borderRadius: 30,
                       backgroundColor: COLORS.ExtraDivinder,
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    <Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
                       {/* {moment(item.updated_at, "HH:mm:sss").format(
                         DATETIME.LONG_DATETIME
                       )} */}
@@ -205,7 +256,14 @@ export const CardListAbsenEvent = ({
                 setIdAbsen(item.id);
               }}
             >
-              <Text style={{ color: COLORS.white }}>Scan QRCode</Text>
+              <Text
+                style={{
+                  color: COLORS.white,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Scan QRCode
+              </Text>
             </TouchableOpacity>
           ) : (
             <></>

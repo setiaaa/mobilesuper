@@ -1,13 +1,9 @@
-import { DrawerActions } from "@react-navigation/native";
 import { Avatar, Card } from "react-native-paper";
 import { Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
-import { useDispatch } from "react-redux";
 import { COLORS } from "../../config/SuperAppps";
-import { View } from "react-native";
 
-function CardDLetter({ data, icon, navigation }) {
-  const dispatch = useDispatch();
+function CardDCounter({ data, icon, navigation }) {
   const avatarIcon = StyleSheet.compose(styles.avatarIcon, {
     backgroundColor: icon.color,
   });
@@ -15,11 +11,26 @@ function CardDLetter({ data, icon, navigation }) {
     <Card
       style={styles.card}
       onPress={() => {
-        navigation.dispatch(
-          DrawerActions.jumpTo(icon.navName, {
-            unread: true,
+        navigation.navigate(icon.navName, {
+            unread: icon.navName == "DispositionUnread"  || icon.navName == "IncomingUnread" ? true:false,
+            title: data?.type == "draft"
+            ? "Nomor Tersedia"
+            : data?.type == "onprogress"
+            ? "Perlu Diproses"
+            : data?.type == "agenda_in"
+            ? "Surat Masuk Belum Dibaca"
+            : data?.type == "agenda_disposition"
+            ? "Disposisi Belum Dibaca"
+            : data?.type == "incoming"
+            ? "Surat Masuk"
+            : data?.type == "disposition"
+            ? "Disposisi"
+            : data?.type == "tracking"
+            ? "Lacak"
+            : data?.type == "submitted"
+            ? "Terkirim"
+            : ""
           })
-        );
       }}
     >
       <Card.Title
@@ -30,26 +41,37 @@ function CardDLetter({ data, icon, navigation }) {
             : data?.type == "onprogress"
             ? "Perlu Diproses"
             : data?.type == "agenda_in"
-            ? "Surat Masuk"
+            ? "Surat Masuk\nBelum Dibaca"
             : data?.type == "agenda_disposition"
+            ? "Disposisi\nBelum Dibaca"
+            : data?.type == "incoming"
+            ? "Surat Masuk"
+            : data?.type == "disposition"
             ? "Disposisi"
+            : data?.type == "tracking"
+            ? "Lacak"
+            : data?.type == "submitted"
+            ? "Terkirim"
             : ""
         }
+        titleNumberOfLines={5}
         left={(props) => (
           <Avatar.Icon
             {...props}
+            size={50}
             icon={icon.icon}
             color={COLORS.white}
             style={avatarIcon}
           />
         )}
-        right={() => <Text style={styles.counterText}>{data?.value}</Text>}
+        titleStyle={{fontSize:14}}
+        right={() => <Text style={styles.counterText} numberOfLines={5}>{data?.value}</Text>}
       />
     </Card>
   );
 }
 
-export default CardDLetter;
+export default CardDCounter;
 
 const styles = StyleSheet.create({
   card: {
@@ -58,6 +80,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 16,
     backgroundColor: GlobalStyles.colors.textWhite,
     width: "98%",
+    paddingVertical:12,
     alignSelf: "center",
   },
   cardTitle: {

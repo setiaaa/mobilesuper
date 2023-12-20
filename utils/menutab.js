@@ -5,7 +5,7 @@ import { Host } from "react-native-portalize";
 import MyTabBar from "../Apps/SuperApps/BottomTabs";
 import { Home } from "../Apps/SuperApps/Home";
 import { Satker } from "../Apps/SuperApps/Satker";
-import { FAQ } from "../Apps/SuperApps/FAQ";
+import { HelpDesk } from "../Apps/SuperApps/HelpDesk";
 import { Profile } from "../Apps/SuperApps/Profile";
 import MyTabBarRepo from "../Apps/Repository/BottomTabsRepo";
 import { Dokumen } from "../Apps/Repository/Dokumen";
@@ -76,13 +76,22 @@ import { PNBP } from "../Apps/Dashboard/PNPB";
 import { IKU } from "../Apps/Dashboard/IKU";
 import { AddressBookJabatan } from "../Apps/AddressBookJabatan";
 import { AddressBookPegawai } from "../Apps/AddressBookPegawai";
-import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
+import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PAll } from "../Apps/Korespondensi/Pencarian/PAll";
 import { PIncoming } from "../Apps/Korespondensi/Pencarian/PIncoming";
 import { PDisposition } from "../Apps/Korespondensi/Pencarian/PDisposition";
 import { PSubmitted } from "../Apps/Korespondensi/Pencarian/PSubmitted";
 import { Pencarian } from "../Apps/Kebijakan/Pencarian";
+import { PencarianKorespondensi } from "../Apps/Korespondensi/Pencarian/PencarianKorespondensi";
+import MyTabKoresp from "../Apps/Korespondensi/BottomTabsKoresp";
+import DCounter from "../Apps/Korespondensi/Dashboard/DCounter";
+import DLetter from "../Apps/Korespondensi/Dashboard/DLetter";
+import { Arsip } from "../Apps/Task Management/Korespondensi/Arsip";
+import { TerlewatKorespondensi } from "../Apps/Task Management/Korespondensi/TerlewatKorespondensi";
+import { HariIniKorespondensi } from "../Apps/Task Management/Korespondensi/HariIniKorespondensi";
+import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/MingguDepanKorespondensi";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -106,8 +115,8 @@ export const BottomTabs = () => {
             options={{ headerShown: false }}
           />
           <Tab.Screen
-            name="FAQ"
-            component={FAQ}
+            name="HelpDesk"
+            component={HelpDesk}
             options={{ headerShown: false }}
           />
           <Tab.Screen
@@ -129,6 +138,34 @@ export const BottomTabs = () => {
   );
 };
 
+export const BottomTabsKoresp = () => {
+  return (
+    <Host>
+      <BottomSheetModalProvider>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabKoresp {...props} />}
+          initialRouteName="DCounter"
+        >
+          <Tab.Screen
+            name="DCounter"
+            component={DCounter}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DLetter"
+            component={DLetter}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DPencarian"
+            component={PencarianKorespondensi}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </BottomSheetModalProvider>
+    </Host>
+  );
+};
 export const BottomTabsRepo = () => {
   return (
     <BottomSheetModalProvider>
@@ -497,7 +534,7 @@ export const TopsTP = () => {
   );
 };
 
-export const TopsTask = () => {
+export const TopsTask = ({ device }) => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -507,7 +544,7 @@ export const TopsTask = () => {
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
@@ -546,7 +583,7 @@ export const TopsTask = () => {
   );
 };
 
-export const TopsTaskDashboard = () => {
+export const TopsTaskDashboard = ({ device }) => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -556,7 +593,7 @@ export const TopsTaskDashboard = () => {
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
@@ -588,7 +625,7 @@ export const TopsTaskDashboard = () => {
   );
 };
 
-export const TopsTaskKorespondensi = () => {
+export const TopsTaskKorespondensi = ({ device }) => {
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -598,7 +635,7 @@ export const TopsTaskKorespondensi = () => {
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
@@ -606,28 +643,28 @@ export const TopsTaskKorespondensi = () => {
       >
         <Top.Screen
           name="Arsip"
-          component={InProgres}
+          component={Arsip}
           options={{
             title: "Arsip",
           }}
         />
         <Top.Screen
-          name="Terlewat"
-          component={Pending}
+          name="TerlewatKorespondensi"
+          component={TerlewatKorespondensi}
           options={{
             title: "Terlewat",
           }}
         />
         <Top.Screen
-          name="HariIni"
-          component={Complete}
+          name="HariIniKorespondensi"
+          component={HariIniKorespondensi}
           options={{
             title: "Hari Ini",
           }}
         />
         <Top.Screen
-          name="MingguDepan"
-          component={BackLog}
+          name="MingguDepanKorespondensi"
+          component={MingguDepanKorespondensi}
           options={{
             title: "Minggu Depan",
           }}
@@ -687,6 +724,8 @@ export const TopsPencarianKorespondensi = (data) => {
 };
 
 export const TopsDash = () => {
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -695,7 +734,10 @@ export const TopsDash = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}
@@ -748,6 +790,7 @@ export const TopsDash = () => {
 };
 
 export const TopsProduksiBudidaya = () => {
+  const { device } = useSelector((state) => state.apps);
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -756,7 +799,10 @@ export const TopsProduksiBudidaya = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}
@@ -781,6 +827,8 @@ export const TopsProduksiBudidaya = () => {
 };
 
 export const TopsKeuanganKinerja = () => {
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <BottomSheetModalProvider>
       <Top.Navigator
@@ -789,7 +837,10 @@ export const TopsKeuanganKinerja = () => {
           tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
-          tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
           tabBarScrollEnabled: true,
           tabBarItemStyle: { width: "auto" },
         }}
@@ -820,7 +871,7 @@ export const TopsKeuanganKinerja = () => {
   );
 };
 
-export const TopAddressBook = ({ config }) => {
+export const TopAddressBook = ({ config, device }) => {
   return (
     <Host>
       <BottomSheetModalProvider>
@@ -830,7 +881,10 @@ export const TopAddressBook = ({ config }) => {
             tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
             tabBarActiveTintColor: "#C34647",
             tabBarInactiveTintColor: "black",
-            tabBarLabelStyle: { fontSize: 13, textTransform: "none" },
+            tabBarLabelStyle: {
+              fontSize: fontSizeResponsive("H3", device),
+              textTransform: "none",
+            },
             tabBarScrollEnabled: true,
             tabBarItemStyle: { width: "auto" },
           }}
@@ -844,8 +898,8 @@ export const TopAddressBook = ({ config }) => {
                   title: "Jabatan",
                   tabBarItemStyle: { width: "50%" },
                   tabBarLabelStyle: {
-                    width: 200,
-                    fontSize: 13,
+                    width: device === "tablet" ? 500 : 200,
+                    fontSize: fontSizeResponsive("H3", device),
                     textTransform: "none",
                     paddingLeft: 80,
                   },
@@ -859,8 +913,8 @@ export const TopAddressBook = ({ config }) => {
                   title: "Pegawai",
                   tabBarItemStyle: { width: "50%" },
                   tabBarLabelStyle: {
-                    width: 200,
-                    fontSize: 13,
+                    width: device === "tablet" ? 500 : 200,
+                    fontSize: fontSizeResponsive("H3", device),
                     textTransform: "none",
                     paddingLeft: 50,
                   },
@@ -877,7 +931,7 @@ export const TopAddressBook = ({ config }) => {
                 tabBarItemStyle: { width: "50%" },
                 tabBarLabelStyle: {
                   width: 200,
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   textTransform: "none",
                   paddingLeft: 80,
                 },
@@ -893,7 +947,7 @@ export const TopAddressBook = ({ config }) => {
                 tabBarItemStyle: { width: "50%" },
                 tabBarLabelStyle: {
                   width: 200,
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H3", device),
                   textTransform: "none",
                   paddingLeft: 50,
                 },

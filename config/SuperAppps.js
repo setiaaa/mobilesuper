@@ -30,6 +30,18 @@ export const FONTSIZE = {
   Judul: 17,
 };
 
+export const fontSizeResponsive = (type, device) => {
+  let data = {
+    H1: device === "phone" ? 15 : 26,
+    H2: device === "phone" ? 14 : 25,
+    H3: device === "phone" ? 12 : 23,
+    H4: device === "phone" ? 11 : 22,
+    H5: device === "phone" ? 10 : 21,
+    Judul: device === "phone" ? 17 : 28,
+  };
+  return data[type];
+};
+
 export const FONTWEIGHT = {
   bolder: "800",
   bold: "700",

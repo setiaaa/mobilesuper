@@ -31,7 +31,7 @@ import DelegationList from "./List/DelegationList";
 import Dashboard from "./Dashboard/Dasboard";
 import TermOfUse from "./TermOfUse";
 import { Profile } from "./Profile";
-import { Pencarian } from "./Pencarian/Pencarian";
+import { PencarianKorespondensi } from "./Pencarian/PencarianKorespondensi";
 import { Config } from "../../constants/config";
 import MyDispositionList from "./List/MyDispositionList";
 import ScanLogList from "./List/ScanLogList";
@@ -307,7 +307,7 @@ const CustomDrawerContent = (props) => {
           active={drawerItemIndex === 1}
           onPress={() => {
             setDrawerItemIndex(1);
-            props.navigation.navigate("Pencarian");
+            props.navigation.navigate("PencarianKorespondensi");
           }}
           theme={{
             colors: {
@@ -588,70 +588,6 @@ const CustomDrawerContent = (props) => {
   );
 };
 
-//toolbar custom
-const defaultOptions = ({ title, navigation }) => ({
-  headerTitle: () => {
-    return (
-      <Text
-        style={{ textAlign: "right", fontWeight: "bold" }}
-        numberOfLines={2}
-      >
-        {title}
-      </Text>
-    );
-  },
-  headerTitleContainerStyle: {
-    flex: 1,
-    alignItems: "flex-end",
-    paddingRight: 10,
-    // marginTop: 40
-  },
-  headerTitleStyle: {
-    fontSize: 16,
-  },
-  headerRightContainerStyle: {
-    display: "none",
-  },
-  headerLeftContainerStyle: {
-    width: "50%",
-    // marginHorizontal: 0,
-    // backgroundColor: "yellow",
-    paddingLeft: 10,
-  },
-  // headerStatusBarHeight: 0,
-  headerLeft: () => (
-    <SafeAreaView style={{ alignItems: "center" }}>
-      {/* <View style={styles.containerHeader}> */}
-      <View style={styles.containerHeaderLeft}>
-        <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-          style={{
-            backgroundColor: "#752A2B",
-            width: 30,
-            height: 30,
-            borderRadius: 15,
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 5,
-          }}
-        >
-          {/* <IconButton
-            icon="menu"
-            size={16}
-            color={COLORS.white}
-            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-          /> */}
-          <Ionicons name="menu-outline" size={16} color={COLORS.white} />
-        </TouchableOpacity>
-        <Image
-          source={require("../../assets/superApp/LogoKorespondensi.png")}
-        />
-        {/* <Image style={styles.logoHeader} source={Config.logoHeader} /> */}
-      </View>
-      {/* </View> */}
-    </SafeAreaView>
-  ),
-});
 function DrawerNavigator({ navigation }) {
   return (
     <DrawerNav.Navigator
@@ -786,7 +722,7 @@ function DrawerNavigator({ navigation }) {
       />
       <DrawerNav.Screen
         name="Pencarian"
-        component={Pencarian}
+        component={PencarianKorespondensi}
         options={defaultOptions({
           title: "Pencarian",
           navigation: navigation,

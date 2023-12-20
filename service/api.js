@@ -25,6 +25,7 @@ const CHART_LIKE = BASE_URL + "mp/mypost/chart/like/";
 const CHART_COUNT = BASE_URL + "mp/mypost/chart/count/";
 const digitalSign = BASE_URL + "digitalsign/";
 const attachmentExport = BASE_URL + "attachment/";
+const TaskKorespondensi = BASE_URL + "bridge/";
 
 const SUMMARY_TOTAL_POST = BASE_URL + "mp/admin/summary/total-post/";
 const SUMMARY_GRAPH = BASE_URL + "mp/admin/summary/graph/";
@@ -54,6 +55,7 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 const SPPD = BASE_URL + "monperdin/";
 
 const Cuti = "https://cuti.kubekkp.coofis.com/api/";
+const HelpDesk = "https://helpdesk.kubekkp.coofis.com/api/";
 
 //Login
 export const Login = createAsyncThunk(
@@ -932,6 +934,22 @@ export const getListTaskTM = createAsyncThunk(
   }
 );
 
+export const getListKorespondensiTM = createAsyncThunk(
+  "taskmanagement/getListKorespondensiTM",
+  async ({ token, page }) => {
+    console.log("ini api korespondesni " + page);
+    console.log(token)
+    const respon = await axios.get(
+      `${TaskKorespondensi}integration/nde/todo/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    console.log(respon?.data.result);
+    return respon?.data.results;
+  }
+);
+
 export const getDetailTaskTM = createAsyncThunk(
   "taskmanagement/getDetailTaskTM",
   async ({ token, id_task }) => {
@@ -1065,6 +1083,43 @@ export const getCompleteTM = createAsyncThunk(
       }
     );
     return respon?.data.results;
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  "taskmanagement/deleteTask",
+  async (data) => {
+    console.log("masuk api")
+    console.log(data);
+    const respon = await axios.delete(
+      `${taskManagement}task/${data.id}/destroy/`,
+      { headers: { Authorization: data.token } }
+    );
+    return respon;
+  }
+);
+
+export const deleteTaskProject = createAsyncThunk(
+  "taskmanagement/deleteTaskProject",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.delete(
+      `${taskManagement}project/${data.id}/destroy/`,
+      { headers: { Authorization: data.token } }
+    );
+    return respon;
+  }
+);
+
+export const deleteListTask = createAsyncThunk(
+  "taskmanagement/deleteListTask",
+  async (data) => {
+    console.log(data);
+    const respon = await axios.delete(
+      `${taskManagement}list-task/${data.id}/destroy/`,
+      { headers: { Authorization: data.token } }
+    );
+    return respon;
   }
 );
 
@@ -1999,3 +2054,49 @@ export const getDocumentCetakSPPD = createAsyncThunk(
     return respon?.data;
   }
 );
+
+//help desk
+export const getTicket = createAsyncThunk(
+  "helpDesk/getTicket",
+  async ( data ) => {
+    const respon = await axios.get(`${HelpDesk}ticket?nip=${data.nip}`, {
+      headers: { Authorization: data.token },
+    })
+    return respon.data.results;
+  }
+);
+
+export const getParts = createAsyncThunk(
+  "helpDesk/getParts",
+  async () => {
+    const respon = await axios.get(`${HelpDesk}parts`, {
+      // headers: { Authorization: token },
+    });
+    return respon.data;
+  }
+);
+
+export const postTicket = createAsyncThunk(
+  "ticket/postTicket",
+  async (data) => {
+    console.log("api post")
+    console.log(data.payload)
+    const respon = await axios.post(`${HelpDesk}ticket/store`, 
+    data.payload,
+    {
+      headers: { Authorization: data.token },
+    });
+    console.log(respon)
+    return respon?.data;
+  }
+);
+
+// export const updateTicket = createAsyncThunk(
+//   "ticket/updateTicket",
+//   async (id) => {
+//     const respon = await axios.put(`${HelpDesk}ticket/update-status/${id}`, {
+//       headers: { Authorization: token },
+//     });
+//     return respon?.data;
+//   }
+// );

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import {} from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Search } from "../../components/Search";
@@ -74,6 +80,8 @@ export const DokumenSPPD = () => {
     }, 2000);
   }, [token]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}
@@ -109,18 +117,30 @@ export const DokumenSPPD = () => {
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H3", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Daftar Dokumen
           </Text>
         </View>
       </View>
-      <View style={{ padding: 20 }}>
-        <Search placeholder={"Cari"} onSearch={filter} />
+      <View style={{ paddingVertical: 20 }}>
+        <View style={{ paddingHorizontal: "5%" }}>
+          <Search
+            placeholder={"Cari"}
+            onSearch={filter}
+            iconColor={COLORS.primary}
+          />
+        </View>
         <FlatList
           data={filterData}
           renderItem={({ item }) => (
             <View key={item.id}>
-              <CardDokumenListSPPD item={item} token={token} />
+              <CardDokumenListSPPD item={item} token={token} device={device} />
             </View>
           )}
           keyExtractor={(item) => item.id}
@@ -128,7 +148,11 @@ export const DokumenSPPD = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{ height: "83%", marginTop: 6 }}
+          style={{
+            height: device === "tablet" ? "88%" : "83%",
+            marginTop: 6,
+            paddingHorizontal: "5%",
+          }}
         />
       </View>
     </>

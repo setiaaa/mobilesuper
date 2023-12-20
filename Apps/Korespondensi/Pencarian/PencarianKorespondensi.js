@@ -1,16 +1,15 @@
 import { View } from "react-native";
 import { TopsPencarianKorespondensi } from "../../../utils/menutab";
 import { PADDING, COLORS } from "../../../config/SuperAppps";
-import { Search } from "../../../components/Search";
 import { useNavigation } from "@react-navigation/native";
 import { useRef, useState, useEffect } from "react";
-import { Button, Chip, IconButton, Searchbar } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
-import moment from "moment";
 import SearchFilter from "../../../components/UI/SearchFilter";
+import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 
-export const Pencarian = () => {
+export const PencarianKorespondensi = () => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchFilter, setIsSearchFilter] = useState(false);
@@ -100,22 +99,35 @@ export const Pencarian = () => {
       )}
     </>
   );
+
+  const loadingOverlay = (
+    <>
+      <LoadingOverlay visible={isLoading} />
+    </>
+  );
   return (
-    <View
-      style={{ padding: PADDING.Page, flex: 1, backgroundColor: COLORS.white }}
-    >
-      <View style={{ marginBottom: 20 }}>
-        <SearchFilter
-          tipe="searchGlobal"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          clearSearch={clearSearch}
-          getSearch={() => {
-            getSearchGlobal(1);
-          }}
-        />
+    <>
+      {loadingOverlay}
+      <View
+        style={{
+          padding: PADDING.Page,
+          flex: 1,
+          backgroundColor: COLORS.white,
+        }}
+      >
+        <View>
+          <SearchFilter
+            tipe="searchGlobal"
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            clearSearch={clearSearch}
+            getSearch={() => {
+              getSearchGlobal(1);
+            }}
+          />
+        </View>
+        <TopsPencarianKorespondensi data={list} />
       </View>
-      <TopsPencarianKorespondensi data={list} />
-    </View>
+    </>
   );
 };

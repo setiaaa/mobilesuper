@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { ScrollView, Text } from "react-native";
 import { View } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useState } from "react";
 import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
 import { Search } from "../Search";
+import { useSelector } from "react-redux";
 
 export const Dropdown = ({
   data,
@@ -76,6 +77,8 @@ export const Dropdown = ({
     }
   }, [cari]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View>
       {press === 0 ? (
@@ -94,7 +97,13 @@ export const Dropdown = ({
               <View
                 style={{ marginLeft: 20, flexDirection: "row", marginTop: 15 }}
               >
-                <Text style={{ color: textColor, width: "70%" }}>
+                <Text
+                  style={{
+                    color: textColor,
+                    width: "70%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {displayData !== "" ? displayData : placeHolder}
                 </Text>
                 <View
@@ -102,7 +111,7 @@ export const Dropdown = ({
                 >
                   <Ionicons
                     name="chevron-down-outline"
-                    size={14}
+                    size={fontSizeResponsive("H3", device)}
                     color={textColor}
                   />
                 </View>
@@ -133,7 +142,12 @@ export const Dropdown = ({
                     flexDirection: "row",
                   }}
                 >
-                  <Text style={{ color: textColor }}>
+                  <Text
+                    style={{
+                      color: textColor,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
                     {displayData !== "" ? displayData : placeHolder}
                   </Text>
                   <View
@@ -141,7 +155,7 @@ export const Dropdown = ({
                   >
                     <Ionicons
                       name="chevron-up-outline"
-                      size={14}
+                      size={fontSizeResponsive("H3", device)}
                       color={textColor}
                     />
                   </View>
@@ -184,16 +198,23 @@ export const Dropdown = ({
                         <Ionicons
                           name="radio-button-off"
                           color={COLORS.primary}
-                          size={18}
+                          size={fontSizeResponsive("H2", device)}
                         />
                       ) : (
                         <Ionicons
                           name="radio-button-on"
                           color={COLORS.primary}
-                          size={18}
+                          size={fontSizeResponsive("H2", device)}
                         />
                       )}
-                      <Text style={{ width: "90%" }}>{kategori.value}</Text>
+                      <Text
+                        style={{
+                          width: "90%",
+                          fontSize: fontSizeResponsive("H3", device),
+                        }}
+                      >
+                        {kategori.value}
+                      </Text>
                     </TouchableOpacity>
                   );
                 })
@@ -205,7 +226,9 @@ export const Dropdown = ({
                     justifyContent: "center",
                   }}
                 >
-                  <Text>Tidak Ada Data</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
+                    Tidak Ada Data
+                  </Text>
                 </View>
               )}
             </ScrollView>

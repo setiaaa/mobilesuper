@@ -21,6 +21,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   PADDING,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import {} from "react-native-safe-area-context";
@@ -180,6 +181,7 @@ export const Satker = () => {
     index,
     item,
     token,
+    device,
   }) => {
     const getDetail = (id) => {
       const params = { token, id };
@@ -202,16 +204,33 @@ export const Satker = () => {
         >
           <Image
             source={{ uri: item.cover }}
-            style={{ width: 80, height: 80 }}
+            style={{
+              width: device === "tablet" ? 200 : 80,
+              height: device === "tablet" ? 200 : 80,
+            }}
           />
           <View style={{ marginLeft: 10 }}>
-            <View style={{ width: "88%" }}>
+            <View style={{ width: device === "tablet" ? "85%" : "88%" }}>
               <Text
-                style={{ fontSize: FONTSIZE.H2, fontWeight: FONTWEIGHT.bold }}
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: FONTWEIGHT.bold,
+                }}
               >
                 {item.title}
               </Text>
             </View>
+            <View style={{ justifyContent: "flex-start", marginTop: 10 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  color: COLORS.lighter,
+                }}
+              >
+                {item.creator.name}
+              </Text>
+            </View>
+
             <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
               <View
                 style={{
@@ -224,8 +243,8 @@ export const Satker = () => {
                       ? COLORS.warningLight
                       : COLORS.infoLight,
                   borderRadius: 30,
-                  height: 30,
-                  width: 110,
+                  height: device === "tablet" ? 60 : 30,
+                  width: device === "tablet" ? 200 : 110,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -234,17 +253,20 @@ export const Satker = () => {
                   <Ionicons
                     name="document-outline"
                     color={"#F6AD1D"}
+                    size={device === "tablet" ? 30 : 24}
                     style={{ marginTop: 2 }}
                   />
                 ) : item.category === "Kegiatan" ? (
                   <Ionicons
                     name="analytics-outline"
+                    size={device === "tablet" ? 30 : 24}
                     color={"#1868AB"}
                     style={{ marginTop: 3 }}
                   />
                 ) : (
                   <Ionicons
                     name="videocam-outline"
+                    size={device === "tablet" ? 30 : 24}
                     color={"#11C15B"}
                     style={{ marginTop: 2 }}
                   />
@@ -257,6 +279,7 @@ export const Satker = () => {
                         : item.category === "Kegiatan"
                         ? COLORS.info
                         : COLORS.success,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   {item.category}
@@ -265,14 +288,9 @@ export const Satker = () => {
 
               {/* <Divider bold style={{ transform: [{ rotate: '90deg' }], width: 5 }} /> */}
               {/* custom divider */}
-              <View
+              {/* <View
                 style={{ height: "100%", width: 1, backgroundColor: "#DBDADE" }}
-              />
-            </View>
-            <View style={{ justifyContent: "flex-start" }}>
-              <Text style={{ fontSize: 11, color: COLORS.lighter }}>
-                {item.creator.name}
-              </Text>
+              /> */}
             </View>
           </View>
         </TouchableOpacity>
@@ -354,6 +372,7 @@ export const Satker = () => {
   };
 
   const navigation = useNavigation();
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <View style={{ flex: 1 }}>
@@ -400,7 +419,7 @@ export const Satker = () => {
                   textAlign: "right",
                   fontWeight: FONTWEIGHT.bolder,
                   marginBottom: 10,
-                  fontSize: FONTSIZE.H2,
+                  fontSize: fontSizeResponsive("H2", device),
                 }}
               >
                 {profile.nama}
@@ -409,7 +428,7 @@ export const Satker = () => {
                 style={{
                   color: COLORS.white,
                   textAlign: "right",
-                  fontSize: FONTSIZE.H3,
+                  fontSize: fontSizeResponsive("H3", device),
                 }}
               >
                 {profile.nip}
@@ -423,13 +442,22 @@ export const Satker = () => {
                     "bridge/" +
                     profile.avatar,
                 }}
-                style={{ width: 50, height: 50, borderRadius: 8 }}
+                style={{
+                  width: device === "tablet" ? 100 : 50,
+                  height: device === "tablet" ? 100 : 50,
+                  borderRadius: 8,
+                }}
               />
             </View>
           </View>
         </View>
 
-        <View style={{ alignItems: "center" }}>
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: device === "tablet" ? "10%" : "5%",
+          }}
+        >
           <CardSatker profile={profile} />
         </View>
 
@@ -472,7 +500,12 @@ export const Satker = () => {
         <View
           style={{ marginLeft: 30, flexDirection: "row", marginBottom: 20 }}
         >
-          <Text style={{ fontWeight: "bold", fontSize: FONTSIZE.H2 }}>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: fontSizeResponsive("H2", device),
+            }}
+          >
             Berita Terkini
           </Text>
           <TouchableOpacity
@@ -482,7 +515,7 @@ export const Satker = () => {
             <Text
               style={{
                 fontWeight: FONTWEIGHT.bold,
-                fontSize: FONTSIZE.H3,
+                fontSize: fontSizeResponsive("H3", device),
                 flex: 1,
                 color: "#1868AB",
               }}
@@ -545,14 +578,19 @@ export const Satker = () => {
         <View
           style={[
             styles.cardListSatker,
-            { flex: 1, justifyContent: "center", paddingVertical: 20 },
+            {
+              flex: 1,
+              justifyContent: "center",
+              paddingVertical: 20,
+              width: device === "tablet" ? "90%" : "86%",
+            },
           ]}
         >
           <Text
             style={{
               marginLeft: 20,
               fontWeight: FONTWEIGHT.bold,
-              fontSize: FONTSIZE.Judul,
+              fontSize: fontSizeResponsive("Judul", device),
             }}
           >
             Linimasa Pengetahuan
@@ -562,7 +600,12 @@ export const Satker = () => {
               scrollEnabled={false}
               data={linimasa}
               renderItem={({ item, index }) => (
-                <CardLiniMasaSatker item={item} index={index} token={token} />
+                <CardLiniMasaSatker
+                  item={item}
+                  index={index}
+                  token={token}
+                  device={device}
+                />
               )}
               keyExtractor={(item) => item.id}
             />
@@ -570,7 +613,7 @@ export const Satker = () => {
         </View>
 
         <View style={{ marginBottom: 40 }}>
-          <CardUltah ultah={ultah} />
+          <CardUltah ultah={ultah} device={device} />
         </View>
       </ScrollView>
     </View>
@@ -617,7 +660,7 @@ const styles = StyleSheet.create({
   cardListSatker: {
     backgroundColor: "#FFFFFF",
     flexDirection: "column",
-    width: "86%",
+    // width: "86%",
     // marginLeft: 25,
     opacity: 0.9,
     borderRadius: 5,

@@ -2,7 +2,12 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import {} from "react-native";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
@@ -39,13 +44,15 @@ function MyTabBar({ props, navigation }) {
   const isRolePenangkapan = profile.roles_access?.some((item) =>
     dataRoleDashboardpenangkapan.includes(item)
   );
+
+  const { device } = useSelector((state) => state.apps);
   return (
     <BottomSheetModalProvider>
       <>
         <View
           style={{
             flexDirection: "row",
-            height: 68,
+            height: device === "tablet" ? 100 : 68,
             backgroundColor: COLORS.white,
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
@@ -64,7 +71,7 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -84,20 +91,42 @@ function MyTabBar({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="home" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Home</Text>
+                <Ionicons
+                  name="home"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Home
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
               >
-                <Ionicons name="home" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Home</Text>
+                <Ionicons
+                  name="home"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Home
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -114,7 +143,7 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -137,15 +166,22 @@ function MyTabBar({ props, navigation }) {
                 <Ionicons
                   name="business-outline"
                   color={COLORS.primary}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.primary }}>Satker</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Satker
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -153,9 +189,16 @@ function MyTabBar({ props, navigation }) {
                 <Ionicons
                   name="business-outline"
                   color={COLORS.grey}
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.grey }}>Satker</Text>
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Satker
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -207,9 +250,9 @@ function MyTabBar({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: 65,
+                    height: device === "tablet" ? 100 : 65,
                     justifyContent: "center",
-                    width: 80,
+                    width: device === "tablet" ? 130 : 80,
                   }}
                 >
                   <View
@@ -230,21 +273,39 @@ function MyTabBar({ props, navigation }) {
                   <Ionicons
                     name="grid-outline"
                     color={COLORS.primary}
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                   />
-                  <Text style={{ color: COLORS.primary }}>Dashboard</Text>
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Dashboard
+                  </Text>
                 </View>
               ) : (
                 <View
                   style={{
                     alignItems: "center",
-                    height: 65,
+                    height: device === "tablet" ? 100 : 65,
                     justifyContent: "center",
-                    width: 80,
+                    width: device === "tablet" ? 130 : 80,
                   }}
                 >
-                  <Ionicons name="grid-outline" color={COLORS.grey} size={24} />
-                  <Text style={{ color: COLORS.grey }}>Dashboard</Text>
+                  <Ionicons
+                    name="grid-outline"
+                    color={COLORS.grey}
+                    size={device === "tablet" ? 40 : 24}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.grey,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Dashboard
+                  </Text>
                 </View>
               )}
             </TouchableOpacity>
@@ -254,7 +315,7 @@ function MyTabBar({ props, navigation }) {
             key={5}
             onPress={() => {
               setTabItemIndex(5);
-              navigation.navigate("FAQ", { unread: false });
+              navigation.navigate("HelpDesk", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
@@ -262,9 +323,9 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 98 : 80,
                 }}
               >
                 <View
@@ -282,20 +343,42 @@ function MyTabBar({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="reader" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Help Desk</Text>
+                <Ionicons
+                  name="reader"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Help Desk
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 98 : 80,
                 }}
               >
-                <Ionicons name="reader" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Help Desk</Text>
+                <Ionicons
+                  name="reader"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Help Desk
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -312,7 +395,7 @@ function MyTabBar({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
@@ -332,20 +415,42 @@ function MyTabBar({ props, navigation }) {
                     elevation: 2,
                   }}
                 />
-                <Ionicons name="person" color={COLORS.primary} size={24} />
-                <Text style={{ color: COLORS.primary }}>Profile</Text>
+                <Ionicons
+                  name="person"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Profile
+                </Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 100 : 65,
                   justifyContent: "center",
                   width: 80,
                 }}
               >
-                <Ionicons name="person" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Profile</Text>
+                <Ionicons
+                  name="person"
+                  color={COLORS.grey}
+                  size={device === "tablet" ? 40 : 24}
+                />
+                <Text
+                  style={{
+                    color: COLORS.grey,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Profile
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -382,7 +487,7 @@ function MyTabBar({ props, navigation }) {
                 width: "90%",
                 height: hp(43),
                 borderRadius: 10,
-                marginTop: "70%",
+                marginTop: device === "tablet" ? "40%" : "70%",
               }}
             >
               <View
@@ -396,7 +501,14 @@ function MyTabBar({ props, navigation }) {
                   borderBottomColor: COLORS.grey,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dashboard
+                </Text>
                 <TouchableOpacity
                   style={{ alignItems: "center", justifyContent: "center" }}
                   onPress={() => {
@@ -405,7 +517,7 @@ function MyTabBar({ props, navigation }) {
                 >
                   <Ionicons
                     name="close-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.lighter}
                   />
                 </TouchableOpacity>
@@ -443,7 +555,10 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                          style={{ width: 24, height: 18 }}
+                          style={{
+                            width: device === "tablet" ? 50 : 24,
+                            height: device === "tablet" ? 40 : 18,
+                          }}
                           source={require("../../assets/superApp/ikon-keuangan.png")}
                         />
                       </View>
@@ -453,8 +568,8 @@ function MyTabBar({ props, navigation }) {
                         marginTop: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: FONTSIZE.H4,
-                        width: 100,
+                        fontSize: fontSizeResponsive("H4", device),
+                        width: device === "tablet" ? 200 : 100,
                         textAlign: "center",
                       }}
                     >
@@ -488,7 +603,10 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                          style={{ width: 18, height: 18 }}
+                          style={{
+                            width: device === "tablet" ? 50 : 24,
+                            height: device === "tablet" ? 50 : 18,
+                          }}
                           source={require("../../assets/superApp/ikon-kepagawaian.png")}
                         />
                       </View>
@@ -498,8 +616,9 @@ function MyTabBar({ props, navigation }) {
                         marginTop: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: FONTSIZE.H4,
-                        height: 40,
+                        fontSize: fontSizeResponsive("H4", device),
+                        width: device === "tablet" ? 200 : 100,
+                        textAlign: "center",
                       }}
                     >
                       Kepegawaian
@@ -540,7 +659,10 @@ function MyTabBar({ props, navigation }) {
                         ]}
                       >
                         <Image
-                          style={{ width: 18, height: 18 }}
+                          style={{
+                            width: device === "tablet" ? 50 : 24,
+                            height: device === "tablet" ? 50 : 18,
+                          }}
                           source={require("../../assets/superApp/ikon-budidaya.png")}
                         />
                       </View>
@@ -550,8 +672,9 @@ function MyTabBar({ props, navigation }) {
                         marginTop: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: FONTSIZE.H4,
-                        height: 40,
+                        fontSize: fontSizeResponsive("H4", device),
+                        width: device === "tablet" ? 200 : 100,
+                        textAlign: "center",
                       }}
                     >
                       Produksi Budidaya
@@ -590,7 +713,10 @@ function MyTabBar({ props, navigation }) {
                           ]}
                         >
                           <Image
-                            style={{ width: 18, height: 18 }}
+                            style={{
+                              width: device === "tablet" ? 50 : 24,
+                              height: device === "tablet" ? 50 : 18,
+                            }}
                             source={require("../../assets/superApp/ikon-penangkapan.png")}
                           />
                         </View>
@@ -600,8 +726,9 @@ function MyTabBar({ props, navigation }) {
                           marginTop: 10,
                           justifyContent: "center",
                           alignItems: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                          width: device === "tablet" ? 200 : 100,
                           textAlign: "center",
-                          fontSize: FONTSIZE.H4,
                         }}
                       >
                         Produksi Penangkapan

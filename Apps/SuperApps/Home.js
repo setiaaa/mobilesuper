@@ -35,7 +35,13 @@ import {
 import { useMemo } from "react";
 import { CardAppsB } from "../../components/CardAppsB";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import {
   GestureHandlerRootView,
   PanGestureHandler,
@@ -66,6 +72,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { DeviceType, getDeviceTypeAsync } from "expo-device";
+import { setDevice } from "../../store/Apps";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -136,12 +144,16 @@ export const Home = () => {
       return true;
     };
 
-    // const backHandler = BackHandler.addEventListener(
-    //   "hardwareBackPress",
-    //   backAction
-    // );
-
-    // return () => backHandler.remove();
+    const deviceTypeMap = {
+      [DeviceType.UNKNOWN]: "unknown",
+      [DeviceType.PHONE]: "phone",
+      [DeviceType.TABLET]: "tablet",
+      [DeviceType.TV]: "tv",
+      [DeviceType.DESKTOP]: "desktop",
+    };
+    getDeviceTypeAsync().then((device) => {
+      dispatch(setDevice(deviceTypeMap[device]));
+    });
   }, []);
 
   const {
@@ -186,6 +198,8 @@ export const Home = () => {
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <GestureHandlerRootView>
@@ -245,7 +259,7 @@ export const Home = () => {
                     textAlign: "right",
                     fontWeight: FONTWEIGHT.bolder,
                     marginBottom: 10,
-                    fontSize: FONTSIZE.H2,
+                    fontSize: fontSizeResponsive("H2", device),
                   }}
                 >
                   {profile.nama}
@@ -254,7 +268,7 @@ export const Home = () => {
                   style={{
                     color: COLORS.white,
                     textAlign: "right",
-                    fontSize: FONTSIZE.H3,
+                    fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
                   {profile.nip}
@@ -268,7 +282,11 @@ export const Home = () => {
                       "bridge/" +
                       profile.avatar,
                   }}
-                  style={{ width: 50, height: 50, borderRadius: 8 }}
+                  style={{
+                    width: device === "tablet" ? 100 : 50,
+                    height: device === "tablet" ? 100 : 50,
+                    borderRadius: 8,
+                  }}
                 />
               </View>
             </View>
@@ -306,7 +324,7 @@ export const Home = () => {
                       <Text
                         style={{
                           fontWeight: FONTWEIGHT.bold,
-                          fontSize: FONTSIZE.H1,
+                          fontSize: fontSizeResponsive("H1", device),
                         }}
                       >
                         Aplikasi
@@ -319,7 +337,7 @@ export const Home = () => {
                       >
                         <Ionicons
                           name="close-outline"
-                          size={24}
+                          size={device === "tablet" ? 40 : 24}
                           color={COLORS.lighter}
                         />
                       </TouchableOpacity>
@@ -339,14 +357,21 @@ export const Home = () => {
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={screenWidth - 60}
-              data={banner}
+              data={{ banner }}
               renderItem={bannerKegiatan}
               hasParallaxImages={true}
             />
           </View>
 
           <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Tautan Pintas</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Tautan Pintas
+            </Text>
           </View>
           <View
             style={{
@@ -369,7 +394,10 @@ export const Home = () => {
             }}
           >
             <Text
-              style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H2", device),
+              }}
             >
               Video
             </Text>
@@ -462,7 +490,10 @@ export const Home = () => {
             }}
           >
             <Text
-              style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H2", device),
+              }}
             >
               Berita Terkini
             </Text>
@@ -473,7 +504,7 @@ export const Home = () => {
               <Text
                 style={{
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3,
+                  fontSize: fontSizeResponsive("H3", device),
                   flex: 1,
                   color: "#1868AB",
                 }}
@@ -531,7 +562,7 @@ export const Home = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   width: "90%",
-                  height: 550,
+                  height: device === "tablet" ? 730 : 550,
                   borderRadius: 10,
                   marginTop: 100,
                 }}
@@ -544,7 +575,12 @@ export const Home = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: 500,
+                    }}
+                  >
                     Kerumahtanggaan
                   </Text>
                   <TouchableOpacity
@@ -553,7 +589,10 @@ export const Home = () => {
                       setModalVisible(false);
                     }}
                   >
-                    <Ionicons name="close-outline" size={24} />
+                    <Ionicons
+                      name="close-outline"
+                      size={device === "tablet" ? 40 : 24}
+                    />
                   </TouchableOpacity>
                 </View>
                 <View
@@ -572,14 +611,26 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/BUPBJ.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
-                    <Text style={{ fontSize: FONTSIZE.H4 }}>Halo-BUPBJ</Text>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H4", device) }}
+                    >
+                      Halo-BUPBJ
+                    </Text>
                   </TouchableOpacity>
                 </View>
 
                 <View style={{ marginHorizontal: 20, marginTop: 40 }}>
-                  <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: 500,
+                    }}
+                  >
                     Pengawasan
                   </Text>
                 </View>
@@ -600,10 +651,16 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/lapor.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
-                      style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                      style={{
+                        textAlign: "center",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
                     >
                       Lapor.go.id
                     </Text>
@@ -617,10 +674,16 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/wbs.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
-                      style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                      style={{
+                        textAlign: "center",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
                     >
                       WBS KKP
                     </Text>
@@ -634,10 +697,16 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/sidak.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
-                      style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                      style={{
+                        textAlign: "center",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
                     >
                       Sidak
                     </Text>
@@ -651,10 +720,16 @@ export const Home = () => {
                   >
                     <Image
                       source={require("../../assets/superApp/JDIH.png")}
-                      style={{ width: 48, height: 48 }}
+                      style={{
+                        width: device === "tablet" ? 100 : 48,
+                        height: device === "tablet" ? 100 : 48,
+                      }}
                     />
                     <Text
-                      style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                      style={{
+                        textAlign: "center",
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
                     >
                       JDIH
                     </Text>
@@ -662,7 +737,12 @@ export const Home = () => {
                 </View>
 
                 <View style={{ marginHorizontal: 20, marginTop: 50 }}>
-                  <Text style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: 500,
+                    }}
+                  >
                     Kinerja dan Pengembangan Pegawai
                   </Text>
                 </View>
@@ -683,12 +763,18 @@ export const Home = () => {
                     <View>
                       <Image
                         source={require("../../assets/superApp/monev.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Emonev{"\n"} Bapennas
                       </Text>
@@ -708,12 +794,18 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/kinerjaku.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Kinerjaku
                       </Text>
@@ -733,12 +825,18 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/milea.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         E-Milea
                       </Text>
@@ -758,12 +856,18 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/kinerjabkn.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         E-Kinerja {"\n"}BKN
                       </Text>
@@ -783,47 +887,85 @@ export const Home = () => {
                     >
                       <Image
                         source={require("../../assets/superApp/SIASN.png")}
-                        style={{ width: 48, height: 48 }}
+                        style={{
+                          width: device === "tablet" ? 100 : 48,
+                          height: device === "tablet" ? 100 : 48,
+                        }}
                       />
                     </View>
                     <View>
                       <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         SIASN{"\n"} BKN
                       </Text>
                     </View>
                   </TouchableOpacity>
-                </View>
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 10,
-                    marginHorizontal: 20,
-                    marginTop: 20,
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={() => {
-                      Linking.openURL("https://mysapk.bkn.go.id/");
+                  {device === "tablet" ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL("https://mysapk.bkn.go.id/");
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={require("../../assets/superApp/mysapk.png")}
+                          style={{
+                            width: device === "tablet" ? 100 : 48,
+                            height: device === "tablet" ? 100 : 48,
+                          }}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            textAlign: "center",
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          My SAPK
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+                {device === "phone" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      marginHorizontal: 20,
+                      marginTop: 20,
                     }}
                   >
-                    <View>
-                      <Image
-                        source={require("../../assets/superApp/mysapk.png")}
-                        style={{ width: 48, height: 48 }}
-                      />
-                    </View>
-                    <View>
-                      <Text
-                        style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
-                      >
-                        My SAPK
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL("https://mysapk.bkn.go.id/");
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={require("../../assets/superApp/mysapk.png")}
+                          style={{
+                            width: device === "tablet" ? 100 : 48,
+                            height: device === "tablet" ? 100 : 48,
+                          }}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{ textAlign: "center", fontSize: FONTSIZE.H4 }}
+                        >
+                          My SAPK
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
             </View>
           </Modal>
@@ -836,7 +978,10 @@ export const Home = () => {
             }}
           >
             <Text
-              style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H2", device),
+              }}
             >
               Galeri
             </Text>
@@ -847,7 +992,7 @@ export const Home = () => {
               <Text
                 style={{
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3,
+                  fontSize: fontSizeResponsive("H3", device),
                   flex: 1,
                   color: "#1868AB",
                 }}

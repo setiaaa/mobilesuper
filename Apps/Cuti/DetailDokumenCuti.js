@@ -8,6 +8,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
@@ -34,7 +35,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
+const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
   console.log(lampiran);
 
@@ -57,10 +58,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={{ uri: lampiran }}
           style={{ width: 90, height: 90, borderRadius: 8 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -85,7 +97,12 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
         <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -115,10 +132,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/word.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -148,10 +176,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/excel.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -181,10 +220,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/pdf.png")}
           style={{ width: 90, height: 90 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -214,10 +264,21 @@ const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
           source={require("../../assets/superApp/ppt.png")}
           style={{ width: 70, height: 70 }}
         />
-        <Text style={{ fontWeight: FONTWEIGHT.bold }} numberOfLines={1}>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+          numberOfLines={1}
+        >
           {name}
         </Text>
-        <Text style={{ color: COLORS.lighter }}>
+        <Text
+          style={{
+            color: COLORS.lighter,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
           {Math.floor(size / 1000)} MB
         </Text>
       </View>
@@ -230,6 +291,7 @@ const CardKomen = ({
   inputRef,
   setParentId,
   bottomSheetAttachCommentClose,
+  device,
 }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
@@ -285,10 +347,10 @@ const CardKomen = ({
               style={{ width: 30, height: 30, borderRadius: 20 }}
             />
           </View>
-          <View style={{ marginLeft: 10,width:"90%" }}>
+          <View style={{ marginLeft: 10, width: "90%" }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H2,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: FONTWEIGHT.bold,
               }}
             >
@@ -298,7 +360,7 @@ const CardKomen = ({
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                 }}
               >
@@ -325,7 +387,7 @@ const CardKomen = ({
                 <Text
                   style={{
                     color: COLORS.white,
-                    fontSize: FONTSIZE.H5,
+                    fontSize: fontSizeResponsive("H5", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -348,11 +410,14 @@ const CardKomen = ({
                   bottomSheetAttachCommentClose();
                 }}
               >
-                <Ionicons name="documents-outline" size={10} />
+                <Ionicons
+                  name="documents-outline"
+                  size={device === "tablet" ? 40 : 10}
+                />
                 <Text
                   style={{
                     color: COLORS.info,
-                    fontSize: FONTSIZE.H5,
+                    fontSize: fontSizeResponsive("H5", device),
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
@@ -364,7 +429,7 @@ const CardKomen = ({
             <View style={{ flexDirection: "row", gap: 5 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   marginBottom: 5,
                 }}
@@ -378,7 +443,7 @@ const CardKomen = ({
               <Text
                 style={{
                   color: COLORS.lighter,
-                  fontSize: FONTSIZE.H5,
+                  fontSize: fontSizeResponsive("H5", device),
                   fontWeight: FONTWEIGHT.normal,
                   marginBottom: 5,
                 }}
@@ -635,11 +700,12 @@ export const DetailDokumenCuti = ({ route }) => {
     dispatch(postApproval(data));
   };
 
-  console.log(approval);
+  // console.log(approval);
+  const { device } = useSelector((state) => state.apps);
   return (
     <GestureHandlerRootView>
       <View style={{ position: "relative" }}>
-        <ScrollView style={{marginBottom:20}}>
+        <ScrollView style={{ marginBottom: 20 }}>
           <View
             style={{
               flexDirection: "row",
@@ -653,8 +719,8 @@ export const DetailDokumenCuti = ({ route }) => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -663,27 +729,45 @@ export const DetailDokumenCuti = ({ route }) => {
               <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
             </View>
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
-                style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: COLORS.white,
+                }}
               >
                 Detail Cuti
               </Text>
             </View>
           </View>
           <View style={{ padding: 20, gap: 10 }}>
-            <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                padding: 5,
+                columnGap: 10,
+                alignItems: "center",
+              }}
+            >
               <Ionicons
                 name="document-outline"
-                size={18}
+                size={device === "tablet" ? 40 : 18}
                 color={COLORS.primary}
               />
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jenis Cuti</Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Jenis Cuti
+              </Text>
             </View>
             <View
               style={{
@@ -702,7 +786,7 @@ export const DetailDokumenCuti = ({ route }) => {
               >
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 600,
                     width: "40%",
                     paddingRight: 20,
@@ -712,7 +796,7 @@ export const DetailDokumenCuti = ({ route }) => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 400,
                     width: "60%",
                     paddingRight: 20,
@@ -722,58 +806,104 @@ export const DetailDokumenCuti = ({ route }) => {
                 </Text>
               </View>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 2,
-                  borderBottomColor: "#DBDADE",
-                  paddingVertical: 10,
-                }}
-              >
-                <Text
+              {arsipDetail.detail_dokumen?.jenis_cuti?.tipe_hari !==
+              undefined ? (
+                <View
                   style={{
-                    fontSize: 13,
-                    fontWeight: 600,
-                    width: "40%",
-                    paddingRight: 20,
+                    flexDirection: "row",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "#DBDADE",
+                    paddingVertical: 10,
                   }}
                 >
-                  Tipe Hari
-                </Text>
-                {/* <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Hari Kalender</Text> */}
-              </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: 600,
+                      width: "40%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    Tipe Hari
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: 400,
+                      width: "60%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    {arsipDetail.detail_dokumen?.jenis_cuti?.tipe_hari}
+                  </Text>
+                </View>
+              ) : null}
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 2,
-                  borderBottomColor: "#DBDADE",
-                  paddingVertical: 10,
-                }}
-              >
-                <Text
+              {arsipDetail.detail_dokumen?.jenis_cuti?.definition !==
+              undefined ? (
+                <View
                   style={{
-                    fontSize: 13,
-                    fontWeight: 600,
-                    width: "40%",
-                    paddingRight: 20,
+                    flexDirection: "row",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "#DBDADE",
+                    paddingVertical: 10,
                   }}
                 >
-                  Sub Jenis Cuti
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 400,
-                    width: "60%",
-                    paddingRight: 20,
-                    color: COLORS.info,
-                  }}
-                >
-                  {arsipDetail.detail_dokumen?.jenis_cuti?.definition}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: 600,
+                      width: "40%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    Sub Jenis Cuti
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: 400,
+                      width: "60%",
+                      paddingRight: 20,
+                      color: COLORS.info,
+                    }}
+                  >
+                    {arsipDetail.detail_dokumen?.jenis_cuti?.definition}
+                  </Text>
+                </View>
+              ) : null}
 
+              {maxDay !== undefined ? (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "#DBDADE",
+                    paddingVertical: 10,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: 600,
+                      width: "40%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    Maksimal Hari
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      fontWeight: 400,
+                      width: "60%",
+                      paddingRight: 20,
+                    }}
+                  >
+                    {maxDay}
+                  </Text>
+                </View>
+              ) : null}
               <View
                 style={{
                   flexDirection: "row",
@@ -784,36 +914,7 @@ export const DetailDokumenCuti = ({ route }) => {
               >
                 <Text
                   style={{
-                    fontSize: 13,
-                    fontWeight: 600,
-                    width: "40%",
-                    paddingRight: 20,
-                  }}
-                >
-                  Maksimal Hari
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 400,
-                    width: "60%",
-                    paddingRight: 20,
-                  }}
-                >
-                  {maxDay === undefined ? "-" : maxDay}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 2,
-                  borderBottomColor: "#DBDADE",
-                  paddingVertical: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 600,
                     width: "40%",
                     paddingRight: 20,
@@ -821,13 +922,24 @@ export const DetailDokumenCuti = ({ route }) => {
                 >
                   Status Dokumen
                 </Text>
-                {/* <Text style={{ fontSize: 13, fontWeight: 400, width: "60%", paddingRight: 20 }}>Disetujui</Text> */}
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    fontWeight: 400,
+                    width: "60%",
+                    paddingRight: 20,
+                  }}
+                >
+                  {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress"
+                    ? "Sedang Proses"
+                    : "Disetujui"}
+                </Text>
               </View>
 
               <View style={{ flexDirection: "row", paddingVertical: 10 }}>
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 600,
                     width: "40%",
                     paddingRight: 20,
@@ -837,7 +949,7 @@ export const DetailDokumenCuti = ({ route }) => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: 13,
+                    fontSize: fontSizeResponsive("H4", device),
                     fontWeight: 400,
                     width: "60%",
                     paddingRight: 20,
@@ -856,14 +968,20 @@ export const DetailDokumenCuti = ({ route }) => {
                 padding: 5,
                 paddingBottom: 15,
                 columnGap: 10,
+                alignItems: "center",
               }}
             >
               <Ionicons
                 name="person-outline"
-                size={18}
+                size={device === "tablet" ? 40 : 18}
                 color={COLORS.primary}
               />
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Status Dokumen Cuti
               </Text>
             </View>
@@ -883,10 +1001,17 @@ export const DetailDokumenCuti = ({ route }) => {
                 >
                   <View style={{ flexDirection: "row" }}>
                     <View style={{ width: "90%" }}>
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                      <Text
+                        style={{
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {arsipDetail.detail_dokumen?.dokumen?.nama_pengaju}
                       </Text>
-                      <Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
                         NIP. {arsipDetail.detail_dokumen?.dokumen?.nip_pengaju}
                       </Text>
                     </View>
@@ -895,10 +1020,16 @@ export const DetailDokumenCuti = ({ route }) => {
                       <TouchableOpacity
                         onPress={() => setCollapse({ nip: "", toggle: false })}
                       >
-                        <Ionicons name="chevron-up" size={24} />
+                        <Ionicons
+                          name="chevron-up"
+                          size={device === "tablet" ? 40 : 24}
+                        />
                       </TouchableOpacity>
                     ) : (
-                      <Ionicons name="chevron-down" size={24} />
+                      <Ionicons
+                        name="chevron-down"
+                        size={device === "tablet" ? 40 : 24}
+                      />
                     )}
                   </View>
                 </TouchableOpacity>
@@ -909,29 +1040,56 @@ export const DetailDokumenCuti = ({ route }) => {
                       onPress={() => setCollapse({ nip: "", toggle: false })}
                     >
                       <Text
-                        style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}
+                        style={{
+                          marginTop: 10,
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Golongan
                       </Text>
-                      <Text style={{ marginTop: 5 }}>
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {arsipDetail.detail_dokumen?.dokumen?.golongan_pengaju}
                       </Text>
 
                       <Text
-                        style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}
+                        style={{
+                          marginTop: 10,
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Jabatan
                       </Text>
-                      <Text style={{ marginTop: 5 }}>
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {arsipDetail.detail_dokumen?.dokumen?.posisi_pengaju}
                       </Text>
 
                       <Text
-                        style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}
+                        style={{
+                          marginTop: 10,
+                          fontWeight: FONTWEIGHT.bold,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
                       >
                         Unit Kerja
                       </Text>
-                      <Text style={{ marginTop: 5 }}>
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         {arsipDetail.detail_dokumen?.dokumen?.unit_kerja}
                       </Text>
                     </TouchableOpacity>
@@ -956,7 +1114,7 @@ export const DetailDokumenCuti = ({ route }) => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -966,7 +1124,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -994,7 +1152,7 @@ export const DetailDokumenCuti = ({ route }) => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -1004,7 +1162,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -1024,7 +1182,7 @@ export const DetailDokumenCuti = ({ route }) => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -1034,7 +1192,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -1054,7 +1212,7 @@ export const DetailDokumenCuti = ({ route }) => {
                   >
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -1064,7 +1222,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -1077,7 +1235,7 @@ export const DetailDokumenCuti = ({ route }) => {
                   <View style={{ flexDirection: "row", paddingVertical: 10 }}>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 600,
                         width: "40%",
                         paddingRight: 20,
@@ -1087,7 +1245,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 13,
+                        fontSize: fontSizeResponsive("H4", device),
                         fontWeight: 400,
                         width: "60%",
                         paddingRight: 20,
@@ -1106,14 +1264,22 @@ export const DetailDokumenCuti = ({ route }) => {
                     paddingBottom: 10,
                     paddingTop: 20,
                     columnGap: 10,
+                    alignItems: "center",
                   }}
                 >
                   <Ionicons
                     name="attach-outline"
-                    size={18}
+                    size={device === "tablet" ? 40 : 18}
                     color={COLORS.primary}
                   />
-                  <Text style={{ fontWeight: FONTWEIGHT.bold }}>Lampiran</Text>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Lampiran
+                  </Text>
                 </View>
 
                 {arsipDetail.detail_dokumen?.attachment?.length !== 0 ? (
@@ -1134,7 +1300,7 @@ export const DetailDokumenCuti = ({ route }) => {
                   >
                     <Text
                       style={{
-                        fontSize: FONTSIZE.Judul,
+                        fontSize: fontSizeResponsive("Judul", device),
                         fontWeight: FONTWEIGHT.bold,
                       }}
                     >
@@ -1153,6 +1319,7 @@ export const DetailDokumenCuti = ({ route }) => {
                                 setVisibleModal(true);
                                 setLampiranById(item);
                               }}
+                              device={device}
                             />
                           </View>
                         )}
@@ -1179,7 +1346,13 @@ export const DetailDokumenCuti = ({ route }) => {
                             rowGap: 20,
                           }}
                         >
-                          <Text>-</Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            -
+                          </Text>
                         </View>
                       </View>
                     </View>
@@ -1272,13 +1445,25 @@ export const DetailDokumenCuti = ({ route }) => {
           </View>
           <View>
             <View style={{ padding: 20, gap: 10 }}>
-              <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  padding: 5,
+                  columnGap: 10,
+                  alignItems: "center",
+                }}
+              >
                 <Ionicons
                   name="people-outline"
-                  size={18}
+                  size={device === "tablet" ? 40 : 18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Yang Menyetujui
                 </Text>
               </View>
@@ -1292,7 +1477,7 @@ export const DetailDokumenCuti = ({ route }) => {
                 <View style={{ flexDirection: "row", paddingVertical: 10 }}>
                   <Text
                     style={{
-                      fontSize: 13,
+                      fontSize: fontSizeResponsive("H4", device),
                       fontWeight: 600,
                       width: "40%",
                       paddingRight: 20,
@@ -1304,13 +1489,21 @@ export const DetailDokumenCuti = ({ route }) => {
                     {arsipDetail.detail_dokumen?.approver?.length !== 0 ? (
                       arsipDetail.detail_dokumen?.approver.map((item) => {
                         return (
-                          <Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
                             - {item.nama_approver} / {item.nip_approver}
                           </Text>
                         );
                       })
                     ) : (
-                      <Text>-</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
                     )}
                   </View>
                 </View>
@@ -1399,10 +1592,15 @@ export const DetailDokumenCuti = ({ route }) => {
               <View style={{ flexDirection: "row", padding: 5, columnGap: 10 }}>
                 <Ionicons
                   name="chatbox-outline"
-                  size={18}
+                  size={device === "tablet" ? 40 : 18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Histori Komentar
                 </Text>
               </View>
@@ -1418,14 +1616,21 @@ export const DetailDokumenCuti = ({ route }) => {
                   shadowColor: "#171717",
                   //shadow android
                   elevation: 2,
-                  width:"40%",
-                  alignItems:"center"
+                  width: "40%",
+                  alignItems: "center",
                 }}
                 onPress={() => {
                   bottomSheetAttachComment();
                 }}
               >
-                <Text style={{ color: COLORS.primary, }}>Lihat Komentar</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Lihat Komentar
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -1460,7 +1665,12 @@ export const DetailDokumenCuti = ({ route }) => {
                   borderBottomColor: COLORS.grey,
                 }}
               >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   Histori Komentar
                 </Text>
                 <TouchableOpacity
@@ -1470,7 +1680,7 @@ export const DetailDokumenCuti = ({ route }) => {
                 >
                   <Ionicons
                     name="close-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.lighter}
                   />
                 </TouchableOpacity>
@@ -1485,6 +1695,7 @@ export const DetailDokumenCuti = ({ route }) => {
                     bottomSheetAttachCommentClose={
                       bottomSheetAttachCommentClose
                     }
+                    device={device}
                   />
                 )}
                 style={{ height: 500 }}
@@ -1578,16 +1789,21 @@ export const DetailDokumenCuti = ({ route }) => {
           {arsipDetail.detail_dokumen?.dokumen?.status === "On Progress" &&
           approval.approval === true ? (
             <>
-              <View style={{ paddingHorizontal: 20, paddingTop: 10, gap: 10, }}>
+              <View style={{ paddingHorizontal: 20, paddingTop: 10, gap: 10 }}>
                 <View
                   style={{ flexDirection: "row", padding: 5, columnGap: 10 }}
                 >
                   <Ionicons
                     name="chatbox-outline"
-                    size={18}
+                    size={device === "tablet" ? 40 : 18}
                     color={COLORS.primary}
                   />
-                  <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Komentar Yang Menyetujui
                   </Text>
                 </View>
@@ -1598,7 +1814,9 @@ export const DetailDokumenCuti = ({ route }) => {
                     borderRadius: 16,
                   }}
                 >
-                  <Text>Komentar</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    Komentar
+                  </Text>
                   <View
                     style={{
                       borderWidth: 1,
@@ -1619,7 +1837,14 @@ export const DetailDokumenCuti = ({ route }) => {
                     />
                   </View>
 
-                  <Text style={{ marginTop: 10 }}>Passphrase</Text>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Passphrase
+                  </Text>
                   <View
                     style={{
                       borderWidth: 1,
@@ -1662,11 +1887,18 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="checkmark-outline"
-                        size={18}
+                        size={device === "tablet" ? 40 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
-                      <Text style={{ color: COLORS.white }}>Disetujui</Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Disetujui
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -1686,11 +1918,18 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="arrow-undo-outline"
-                        size={18}
+                        size={device === "tablet" ? 40 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
-                      <Text style={{ color: COLORS.white }}>Perubahan</Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Perubahan
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -1710,11 +1949,18 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="alert-outline"
-                        size={18}
+                        size={device === "tablet" ? 40 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
-                      <Text style={{ color: COLORS.white }}>Ditangguhkan</Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Ditangguhkan
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -1734,11 +1980,16 @@ export const DetailDokumenCuti = ({ route }) => {
                     >
                       <Ionicons
                         name="close-outline"
-                        size={18}
+                        size={device === "tablet" ? 40 : 18}
                         color={COLORS.white}
                         paddingRight={10}
                       />
-                      <Text style={{ color: COLORS.white }}>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Tidak Disetujui
                       </Text>
                     </TouchableOpacity>

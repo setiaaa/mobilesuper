@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, PADDING } from "../../config/SuperAppps";
+import { COLORS, PADDING, fontSizeResponsive } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { getBerita, getDetailBerita } from "../../service/api";
@@ -20,6 +20,7 @@ export const ListBerita = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const { berita, loading } = useSelector((state) => state.superApps);
+  const { device } = useSelector((state) => state.apps);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -93,21 +94,26 @@ export const ListBerita = () => {
             backgroundColor: COLORS.primary,
             height: "10%",
             flexDirection: "row",
+            alignItems: "center",
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <View
-              style={[
-                styles.backIcon,
-                {
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 25,
-                  marginLeft: 20,
-                },
-              ]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 20,
+                backgroundColor: "white",
+                height: device === "tablet" ? 46 : 28,
+                width: device === "tablet" ? 46 : 28,
+                borderRadius: 50,
+              }}
             >
-              <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
+              <Ionicons
+                name="chevron-back"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
             </View>
           </TouchableOpacity>
           <View
@@ -118,12 +124,18 @@ export const ListBerita = () => {
               marginRight: 40,
             }}
           >
-            <Text style={{ color: "white", fontSize: 15, fontWeight: 600 }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 600,
+              }}
+            >
               Berita
             </Text>
           </View>
         </View>
-        <View style={{ padding: PADDING.Page }}>
+        <View style={{ padding: PADDING.Page, alignItems: "center" }}>
           <Search
             placeholder={"Cari"}
             iconColor={COLORS.primary}

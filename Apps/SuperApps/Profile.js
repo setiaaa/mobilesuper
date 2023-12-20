@@ -1,7 +1,13 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import {} from "react-native-safe-area-context";
-import { COLORS, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  PADDING,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,6 +32,7 @@ export const Profile = () => {
   const { profile, linimasa, loading } = useSelector(
     (state) => state.superApps
   );
+  const { device } = useSelector((state) => state.apps);
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
   return (
     <>
@@ -61,7 +68,11 @@ export const Profile = () => {
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               Profile Saya
             </Text>
@@ -93,25 +104,41 @@ export const Profile = () => {
           >
             <Image
               source={{ uri: BASE_URL + profile.avatar }}
-              style={{ width: 61, height: 61, borderRadius: 30 }}
+              style={{
+                width: device === "tablet" ? 100 : 61,
+                height: device === "tablet" ? 100 : 61,
+                borderRadius: device === "tablet" ? 50 : 30,
+              }}
             />
             <Text
               style={{
                 marginVertical: 10,
                 color: COLORS.info,
                 fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
               }}
             >
               {profile.nama}
             </Text>
-            <Text style={{ color: COLORS.lighter, fontSize: FONTSIZE.H4 }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {profile.unit_kerja}
             </Text>
           </View>
         </View>
 
         <View
-          style={{ flexDirection: "row", gap: 7, justifyContent: "center", width:wp(87), alignSelf:"center" }}
+          style={{
+            flexDirection: "row",
+            gap: 7,
+            justifyContent: "center",
+            width: wp(87),
+            alignSelf: "center",
+          }}
         >
           <View
             style={{
@@ -126,39 +153,93 @@ export const Profile = () => {
               shadowOpacity: 0.2,
               //shadow android
               elevation: 2,
-              width:wp(43)
+              width: wp(43),
             }}
           >
             <Text
-              style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}
+              style={{
+                fontSize: fontSizeResponsive("Judul", device),
+                fontWeight: FONTWEIGHT.bold,
+              }}
             >
               Absensi
             </Text>
 
-            <View style={{ paddingBottom: 20, }}>
-              <View style={{ flexDirection: "row", marginTop: 20, gap:wp(2) }}>
-                <Text style={{width:"80%"}}>Jumlah hari kerja</Text>
-                <Text>{profile.working_day}</Text>
+            <View style={{ paddingBottom: 20 }}>
+              <View style={{ flexDirection: "row", marginTop: 20, gap: wp(2) }}>
+                <Text
+                  style={{
+                    width: "80%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Jumlah hari kerja
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.working_day}
+                </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
-                <Text style={{width:"80%"}}>Jumlah hadir</Text>
-                <Text>{profile.present_day}</Text>
+              <View style={{ flexDirection: "row", marginTop: 10, gap: wp(2) }}>
+                <Text
+                  style={{
+                    width: "80%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Jumlah hadir
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.present_day}
+                </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
-                <Text style={{width:"80%"}}>Terlambat</Text>
-                <Text>{profile.late_day}</Text>
+              <View style={{ flexDirection: "row", marginTop: 10, gap: wp(2) }}>
+                <Text
+                  style={{
+                    width: "80%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Terlambat
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.late_day}
+                </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(2) }}>
-                <Text style={{width:"80%"}}>Dinas</Text>
-                <Text>{profile.outstation_day}</Text>
+              <View style={{ flexDirection: "row", marginTop: 10, gap: wp(2) }}>
+                <Text
+                  style={{
+                    width: "80%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Dinas
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.outstation_day}
+                </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginTop: 10, gap:wp(3) }}>
-                <Text style={{width:"80%"}}>Cuti</Text>
-                <Text>-</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                  gap: wp(3),
+                }}
+              >
+                <Text
+                  style={{
+                    width: "80%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Cuti
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               </View>
             </View>
           </View>
@@ -175,20 +256,31 @@ export const Profile = () => {
               shadowOpacity: 0.2,
               //shadow android
               elevation: 2,
-              width:wp(43)
+              width: wp(43),
             }}
           >
             <Text
-              style={{ fontSize: FONTSIZE.Judul, fontWeight: FONTWEIGHT.bold }}
+              style={{
+                fontSize: fontSizeResponsive("Judul", device),
+                fontWeight: FONTWEIGHT.bold,
+              }}
             >
               IP ASN
             </Text>
 
             <View style={{ paddingBottom: 20 }}>
-              <View style={{ flexDirection: "row", marginTop: 20, width:"60%", gap:wp(5) }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 20,
+                  width: "60%",
+                  gap: wp(5),
+                  alignItems: "center",
+                }}
+              >
                 <Text
                   style={{
-                    fontSize: 30,
+                    fontSize: device === "tablet" ? 60 : 30,
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -198,13 +290,15 @@ export const Profile = () => {
                   style={{
                     backgroundColor: "#CED06C",
                     width: wp(18),
-                    height: 25,
+                    height: wp(5),
                     borderRadius: 30,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <Text>Tinggi</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    Tinggi
+                  </Text>
                 </View>
               </View>
 
@@ -216,16 +310,25 @@ export const Profile = () => {
                   gap: wp(1),
                 }}
               >
-                <Text style={{ width: "72%"}}>Kualifikasi</Text>
+                <Text
+                  style={{
+                    width: "72%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Kualifikasi
+                </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: "#FF9900",
                     borderRadius: 30,
                   }}
                 />
-                <Text>{profile.ipasn_kualifikasi}</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.ipasn_kualifikasi}
+                </Text>
               </View>
 
               <View
@@ -236,16 +339,25 @@ export const Profile = () => {
                   gap: wp(1),
                 }}
               >
-                <Text style={{ width: "72%"}}>Kompetensi</Text>
+                <Text
+                  style={{
+                    width: "72%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Kompetensi
+                </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: COLORS.success,
                     borderRadius: 30,
                   }}
                 />
-                <Text>{profile.ipasn_kompetensi}</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.ipasn_kompetensi}
+                </Text>
               </View>
 
               <View
@@ -256,16 +368,25 @@ export const Profile = () => {
                   gap: wp(1),
                 }}
               >
-                <Text style={{ width: "72%" }}>Kinerja</Text>
+                <Text
+                  style={{
+                    width: "72%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Kinerja
+                </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: "#CED06C",
                     borderRadius: 30,
                   }}
                 />
-                <Text>{profile.ipasn_kinerja}</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.ipasn_kinerja}
+                </Text>
               </View>
 
               <View
@@ -276,16 +397,25 @@ export const Profile = () => {
                   gap: wp(1),
                 }}
               >
-                <Text style={{ width: "72%" }}>Disiplin</Text>
+                <Text
+                  style={{
+                    width: "72%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Disiplin
+                </Text>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: wp(3),
+                    height: wp(3),
                     backgroundColor: COLORS.success,
                     borderRadius: 30,
                   }}
                 />
-                <Text>{profile.ipasn_disiplin}</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  {profile.ipasn_disiplin}
+                </Text>
               </View>
             </View>
           </View>
@@ -298,7 +428,7 @@ export const Profile = () => {
             alignItems: "center",
           }}
         >
-          <CollapseCardBiodata profile={profile}/>
+          <CollapseCardBiodata profile={profile} device={device} />
           {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
         </View>
 
@@ -345,7 +475,14 @@ export const Profile = () => {
               );
             }}
           >
-            <Text style={{ color: COLORS.white }}>Logout</Text>
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Logout
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

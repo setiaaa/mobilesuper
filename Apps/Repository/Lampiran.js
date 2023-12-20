@@ -11,7 +11,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "react-native";
 import { Divider } from "react-native-paper";
@@ -38,6 +43,7 @@ const DataLampiran = ({
   onClick,
   type,
   bottomSheetAttach,
+  device,
 }) => {
   const navigation = useNavigation();
 
@@ -144,6 +150,7 @@ const DataLampiran = ({
           >
             <Text
               style={{
+                fontSize: fontSizeResponsive("H4", device),
                 fontWeight: FONTWEIGHT.bold,
                 maxWidth: 130,
                 overflow: "hidden",
@@ -154,7 +161,12 @@ const DataLampiran = ({
             >
               {nama}
             </Text>
-            <Text style={{ color: COLORS.lighter }}>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {Math.floor(size / 1024)} MB
             </Text>
           </View>
@@ -539,6 +551,9 @@ export const Lampiran = () => {
   };
 
   const { download } = useSelector((state) => state.repository);
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -557,17 +572,17 @@ export const Lampiran = () => {
               style={{
                 backgroundColor: "white",
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
               }}
             >
-              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <TouchableOpacity onPress={() => navigation.navigate("MainRepo")}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
@@ -575,7 +590,7 @@ export const Lampiran = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -600,11 +615,15 @@ export const Lampiran = () => {
                     setFileDetail(item);
                   }}
                   bottomSheetAttach={bottomSheetAttach}
+                  device={device}
                 />
               </View>
             )}
             scrollEnabled={false}
-            style={{ marginTop: 10 }}
+            style={{
+              marginTop: 10,
+              marginHorizontal: "5%",
+            }}
             columnWrapperStyle={{
               justifyContent: "space-between",
               marginHorizontal: 15,
@@ -722,7 +741,7 @@ export const Lampiran = () => {
                       />
                       <Text
                         style={{
-                          fontSize: FONTSIZE.H2,
+                          fontSize: fontSizeResponsive("H2", device),
                           fontWeight: FONTWEIGHT.normal,
                           width: 230,
                         }}
@@ -756,7 +775,7 @@ export const Lampiran = () => {
                         />
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H2,
+                            fontSize: fontSizeResponsive("H2", device),
                             fontWeight: FONTWEIGHT.normal,
                           }}
                         >
@@ -788,7 +807,7 @@ export const Lampiran = () => {
                           />
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
+                              fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.normal,
                             }}
                           >
@@ -828,7 +847,7 @@ export const Lampiran = () => {
                           />
                           <Text
                             style={{
-                              fontSize: FONTSIZE.H2,
+                              fontSize: fontSizeResponsive("H2", device),
                               fontWeight: FONTWEIGHT.normal,
                             }}
                           >

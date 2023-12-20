@@ -9,6 +9,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   PADDING,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
@@ -107,6 +108,8 @@ export const PersetujanCuti = () => {
     }, 2000);
   }, [profile?.nip]);
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -123,8 +126,8 @@ export const PersetujanCuti = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -133,7 +136,7 @@ export const PersetujanCuti = () => {
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -141,7 +144,7 @@ export const PersetujanCuti = () => {
           <View style={{ flex: 1, alignItems: "center" }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -153,8 +156,8 @@ export const PersetujanCuti = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginRight: 20,
@@ -163,14 +166,20 @@ export const PersetujanCuti = () => {
             <TouchableOpacity onPress={() => navigation.navigate("Libur")}>
               <Ionicons
                 name="calendar-outline"
-                size={18}
+                size={device === "tablet" ? 25 : 18}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ padding: PADDING.Page }}>
-          <View style={{ flexDirection: "row", gap: 10 }}>
+        <View style={{ paddingVertical: PADDING.Page, marginHorizontal: "5%" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <View style={{ width: "85%" }}>
               <Search
                 placeholder={"Cari"}
@@ -232,16 +241,16 @@ export const PersetujanCuti = () => {
                 <View
                   style={{
                     backgroundColor: COLORS.info,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
+                    borderRadius: device === "tablet" ? 40 : 20,
+                    width: device === "tablet" ? 42 : 28,
+                    height: device === "tablet" ? 42 : 28,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
                   <Ionicons
                     name="calendar-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -252,7 +261,7 @@ export const PersetujanCuti = () => {
                         ? COLORS.infoDanger
                         : COLORS.foundation,
                     textAlign: "center",
-                    fontSize: FONTSIZE.H4,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Butuh Persetujuan
@@ -276,16 +285,16 @@ export const PersetujanCuti = () => {
                 <View
                   style={{
                     backgroundColor: COLORS.success,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
+                    borderRadius: device === "tablet" ? 40 : 20,
+                    width: device === "tablet" ? 42 : 28,
+                    height: device === "tablet" ? 42 : 28,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
                   <Ionicons
                     name="calendar-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -296,7 +305,7 @@ export const PersetujanCuti = () => {
                         ? COLORS.infoDanger
                         : COLORS.foundation,
                     textAlign: "center",
-                    fontSize: FONTSIZE.H4,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Disetujui Anda
@@ -318,16 +327,16 @@ export const PersetujanCuti = () => {
                 <View
                   style={{
                     backgroundColor: COLORS.danger,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
+                    borderRadius: device === "tablet" ? 40 : 20,
+                    width: device === "tablet" ? 42 : 28,
+                    height: device === "tablet" ? 42 : 28,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
                   <Ionicons
                     name="calendar-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -338,7 +347,7 @@ export const PersetujanCuti = () => {
                         ? COLORS.infoDanger
                         : COLORS.foundation,
                     textAlign: "center",
-                    fontSize: FONTSIZE.H4,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Tidak Disetujui Anda
@@ -360,16 +369,16 @@ export const PersetujanCuti = () => {
                 <View
                   style={{
                     backgroundColor: COLORS.orange,
-                    borderRadius: 20,
-                    width: 28,
-                    height: 28,
+                    borderRadius: device === "tablet" ? 40 : 20,
+                    width: device === "tablet" ? 42 : 28,
+                    height: device === "tablet" ? 42 : 28,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
                   <Ionicons
                     name="calendar-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -380,7 +389,7 @@ export const PersetujanCuti = () => {
                         ? COLORS.infoDanger
                         : COLORS.foundation,
                     textAlign: "center",
-                    fontSize: FONTSIZE.H4,
+                    fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
                   Dikembalikan Anda
@@ -397,6 +406,7 @@ export const PersetujanCuti = () => {
                       item={item}
                       nip={profile.nip}
                       variant={variant}
+                      device={device}
                     />
                   </View>
                 )}

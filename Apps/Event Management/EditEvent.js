@@ -103,7 +103,7 @@ const CardListPeserta = ({ item, addressbook }) => {
   return (
     <View key={item.nip || item.id}>
       {item.code !== undefined ||
-        (item.title !== undefined && item.title.name !== "") ? (
+      (item.title !== undefined && item.title?.name !== "") ? (
         <View
           style={{
             flexDirection: "row",
@@ -116,7 +116,7 @@ const CardListPeserta = ({ item, addressbook }) => {
         >
           <Text>-</Text>
           <Text style={{ width: "80%" }}>
-            {item.title.name !== undefined ? item.title.name : item.title}
+            {item.title?.name !== undefined ? item.title?.name : item.title}
           </Text>
           <TouchableOpacity
             onPress={() => {
@@ -252,7 +252,7 @@ export const EditEvent = () => {
     setPilihanPetugasAbsenEvent(data.extra_attrs.presensi);
     setNote(data.note);
     setTamu(
-      data.extra_attrs.guest_external ? data.extra_attrs.guest_external : []
+      data.extra_attrs?.guest_external ? data.extra_attrs?.guest_external : []
     );
     setDocument(data.attachments);
   }, [token]);
@@ -372,6 +372,7 @@ export const EditEvent = () => {
     };
     dispatch(updateEvent(datas));
   };
+  console.log(Tamu);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -620,7 +621,7 @@ export const EditEvent = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                      modalVisiblePicker === "selesai"
+                    modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }
@@ -814,7 +815,7 @@ export const EditEvent = () => {
                     placeholder="Pilih member"
                     style={{ padding: 10, width: "80%" }}
                     value={
-                      pilihanPimpinanEvent[0]?.title.name ||
+                      pilihanPimpinanEvent[0]?.title?.name ||
                       pilihanPimpinanEvent[0]?.title
                     }
                   />
@@ -1277,7 +1278,7 @@ export const EditEvent = () => {
                             width: "89%",
                           }}
                         >
-                          <Text>{item}</Text>
+                          <Text>{item.name}</Text>
                         </View>
                         <TouchableOpacity
                           style={{

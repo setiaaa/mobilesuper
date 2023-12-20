@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDetailBerita } from "../../service/api";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native";
@@ -8,7 +8,7 @@ import { Image } from "react-native";
 import { Text } from "react-native";
 import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 
 export const CardListBeritaHome = ({
   image,
@@ -21,6 +21,7 @@ export const CardListBeritaHome = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { device } = useSelector((state) => state.apps);
 
   const getDetail = (id) => {
     const params = { token, id };
@@ -38,8 +39,10 @@ export const CardListBeritaHome = ({
           width: 0,
         },
         borderRadius: 16,
-        width: "100%",
-        marginBottom: 16,
+        width: "90%",
+        flex: 1,
+        marginTop: 30,
+        marginHorizontal: "5%",
       }}
     >
       <TouchableOpacity
@@ -56,18 +59,24 @@ export const CardListBeritaHome = ({
             }
           />
         </View>
-        <View style={{ margin: 10 }}>
+        <View style={{ marginVertical: 10 }}>
           <Text
             style={{
               color: COLORS.grey,
               marginVertical: 5,
-              fontSize: 10,
+              fontSize: fontSizeResponsive("H5", device),
               fontWeight: 400,
             }}
           >
             {tanggal}
           </Text>
-          <Text style={{ fontSize: 15, marginVertical: 10, fontWeight: 600 }}>
+          <Text
+            style={{
+              marginVertical: 5,
+              fontSize: fontSizeResponsive("H5", device),
+              fontWeight: 400,
+            }}
+          >
             {title}
           </Text>
         </View>
