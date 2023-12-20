@@ -69,25 +69,25 @@ export const ListBerita = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getBerita({ token, page }));
-            console.log(page, 'page')
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getBerita({ token, page }));
+        console.log(page, "page");
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
+      <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{
             backgroundColor: COLORS.primary,
@@ -130,7 +130,7 @@ export const ListBerita = () => {
             onSearch={filter}
           />
         </View>
-        <View style={{ flex: 1, paddingBottom: 24 }}>
+        <View style={{ flex: 1, paddingHorizontal: PADDING.Page }}>
           <FlatList
             data={filterData}
             renderItem={({ item, index }) => (

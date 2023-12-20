@@ -62,6 +62,10 @@ import { bannerKegiatan } from "../../components/BannerKegiatan";
 import { BeritaHome } from "../../components/BeritaHome";
 import { GaleriHome } from "../../components/GaleriHome";
 import { Loading } from "../../components/Loading";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -191,7 +195,7 @@ export const Home = () => {
           <View
             style={{
               width: "100%",
-              height: 170,
+              height: hp(25),
               position: "absolute",
               top: 0,
               borderBottomLeftRadius: 14,
@@ -270,7 +274,7 @@ export const Home = () => {
             </View>
           </View>
 
-          <View>
+          <View style={{ alignItems: "center" }}>
             <CardApps handlePressModal={handlePressModal} />
             <Portal>
               <BottomSheetModal
@@ -486,9 +490,21 @@ export const Home = () => {
                 sliderWidth={screenWidth}
                 sliderHeight={screenWidth}
                 itemWidth={screenWidth - 60}
-                data={berita.lists.slice(0, 3)}
+                data={berita.lists.slice(0, 5)}
                 renderItem={BeritaHome}
                 hasParallaxImages={true}
+                onSnapToItem={setSlide4}
+              />
+              <Pagination
+                dotsLength={berita?.lists?.slice(0, 5).length}
+                dotColor={"black"}
+                inactiveDotColor={COLORS.grey}
+                dotStyle={styles.paginationDot}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.6}
+                activeDotIndex={slide4}
+                carouselRef={carouselRef}
+                tappableDots={!!carouselRef}
               />
             </View>
             {/* <Carousel data={CarouselData} /> */}
@@ -814,7 +830,7 @@ export const Home = () => {
 
           <View
             style={{
-              marginLeft: 30,
+              marginLeft: 25,
               marginVertical: 20,
               flexDirection: "row",
             }}
@@ -841,25 +857,25 @@ export const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.containerr, { marginBottom: 80 }]}>
+          <View style={[styles.containerr, { marginBottom: "80%" }]}>
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={screenWidth - 60}
-              data={galeri.lists.slice(0, 3)}
+              data={galeri.lists.slice(0, 5)}
               renderItem={GaleriHome}
               hasParallaxImages={true}
-              onSnapToItem={setSlide4}
+              onSnapToItem={setSlide3}
             />
             <Pagination
-              dotsLength={galeri?.lists?.slice(0, 3).length}
+              dotsLength={galeri?.lists?.slice(0, 5).length}
               dotColor={"black"}
               inactiveDotColor={COLORS.grey}
               dotStyle={styles.paginationDot}
               inactiveDotOpacity={0.4}
               inactiveDotScale={0.6}
-              activeDotIndex={slide4}
+              activeDotIndex={slide3}
               carouselRef={carouselRef}
               tappableDots={!!carouselRef}
             />

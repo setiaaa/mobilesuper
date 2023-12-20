@@ -46,7 +46,7 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDocument(params));
   };
-
+  const navigation = useNavigation();
   return (
     <BottomSheetModalProvider>
       <View
@@ -81,8 +81,9 @@ const DataList = ({ token, item, bottomSheetAttach }) => {
           >
             <TouchableOpacity
               onPress={() => {
-                bottomSheetAttach(item);
-                getDetailRepo(item.id);
+                navigation.navigate("MainDetailRepo", getDetailRepo(item.id));
+                // bottomSheetAttach(item);
+                // getDetailRepo(item.id);
               }}
             >
               <Text

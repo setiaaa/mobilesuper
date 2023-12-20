@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { Platform, View } from "react-native";
 import { Text } from "react-native";
 import { TouchableOpacity } from "react-native";
@@ -17,16 +17,19 @@ import {
 import { useMemo } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { COLORS, DATETIME, FONTSIZE, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
 import {
   GestureHandlerRootView,
   ScrollView,
 } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { } from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
 import moment from "moment/moment";
 import { Loading } from "../../components/Loading";
+import { postRating } from "../../service/api";
+import { Rating } from 'react-native-ratings';
+import { getTokenValue } from "../../service/session";
 
 // const item = {
 //     judul: 'Business Agility with Scrum',
@@ -81,10 +84,28 @@ export const DetailActivity = () => {
   const { dokumen, loading } = useSelector((state) => state.repository);
   const detail = dokumen.detail;
   const comment = dokumen.comments;
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch()
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+  const ratingCompleted = (rating) => {
+    console.log(token)
+    const payload = {
+      rating:rating,
+    };
+    const data = {
+      id:detail.id,
+      token: token,
+      payload: payload,
+    };
+    console.log(data)
+    dispatch(postRating(data));
+  }
 
-  // console.log(detail);
   console.log(dokumen);
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     {loading ? (
@@ -263,6 +284,24 @@ export const DetailActivity = () => {
               </View>
               <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
                 <Divider bold />
+              </View>
+              <View style={{paddingHorizontal:PADDING.Page, marginBottom:20,justifyContent:"center", alignItems:"center"}}>
+                <Text
+                  style={{
+                    textAlign: "justify",
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.normal,
+                    color: COLORS.lighter,
+                    marginBottom:4
+                  }}
+                >
+                  Rating
+                </Text>
+                {detail.logged_in_user_avatar === detail.creator_avatar ? 
+                  <Rating key={token} onFinishRating={(value) => ratingCompleted(value)} fractions={2} startingValue={detail.my_rating} readonly/>
+                :
+                  <Rating key={token} onFinishRating={(value) => ratingCompleted(value)} fractions={2} startingValue={detail.my_rating}/>
+                }
               </View>
               <View
                 style={{

@@ -1,5 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Platform,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, FONTSIZE } from "../../config/SuperAppps";
@@ -8,6 +15,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import * as Device from "expo-device";
 
 export const CardApps = ({ handlePressModal }) => {
   const navigation = useNavigation();
@@ -32,6 +40,8 @@ export const CardApps = ({ handlePressModal }) => {
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
+
+  const isTablet = Device.DeviceType.TABLET;
 
   useEffect(() => {
     let tmpMenu = [];
@@ -67,7 +77,7 @@ export const CardApps = ({ handlePressModal }) => {
             justifyContent: "center",
             alignItems: "center",
             fontSize: FONTSIZE.H4,
-            width: 50,
+            width: wp(15),
           }}
           numberOfLines={1}
         >
@@ -143,7 +153,7 @@ export const CardApps = ({ handlePressModal }) => {
             justifyContent: "center",
             alignItems: "center",
             fontSize: FONTSIZE.H4,
-            width: 50,
+            width: wp(15),
           }}
           numberOfLines={1}
         >
@@ -358,7 +368,7 @@ export const CardApps = ({ handlePressModal }) => {
             >
               <Image
                 style={{ width: 28, height: 28 }}
-                source={require("../../assets/superApp/kalender-ikon.png")}
+                source={require("../../assets/superApp/preparing-ikon.png")}
               />
             </View>
           </TouchableOpacity>
@@ -368,7 +378,7 @@ export const CardApps = ({ handlePressModal }) => {
               justifyContent: "center",
               alignItems: "center",
               fontSize: FONTSIZE.H4,
-              width: 50,
+              width: wp(15),
             }}
             numberOfLines={1}
           >
@@ -558,7 +568,6 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 220,
     borderRadius: 12,
-    marginLeft: 20,
     marginTop: 60,
     padding: 5,
     //shadow ios
@@ -576,8 +585,8 @@ const styles = StyleSheet.create({
     left: 16,
   },
   cardApps: {
-    width: 50,
-    height: 50,
+    width: wp(15),
+    height: hp(7),
     borderRadius: 8,
   },
 });

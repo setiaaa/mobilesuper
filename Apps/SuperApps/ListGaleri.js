@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, PADDING } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { CardListGaleriHome } from "../../components/CardListGaleriHome";
 import { getTokenValue } from "../../service/session";
@@ -79,27 +79,25 @@ export const ListGaleri = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getGaleri({ token, page }));
-            console.log(page, 'page')
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getGaleri({ token, page }));
+        console.log(page, "page");
+        console.log("Refresh Berhasil");
       }
+    } catch (error) {
+      console.log("Refresh gagal:", error);
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token, page]);
 
-  // console.log(visibleModal);
-  console.log(galeri.lists);
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
+      <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{
             backgroundColor: COLORS.primary,
@@ -142,42 +140,44 @@ export const ListGaleri = () => {
             onSearch={filter}
           />
         </View>
-        <FlatList
-          key={"#"}
-          data={filterData}
-          renderItem={({ item }) => (
-            <CardListGaleriHome
-              image={item.main_images?.image}
-              deskripsi={item.main_images.title}
-              onclick={() => {
-                setVisibleModal(true);
-                setGaleriById(item);
-              }}
-            />
-          )}
-          ListEmptyComponent={() => <ListEmpty />}
-          ListFooterComponent={() =>
-            loading && (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
+        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+          <FlatList
+            key={"#"}
+            data={filterData}
+            renderItem={({ item }) => (
+              <CardListGaleriHome
+                image={item.main_images?.image}
+                deskripsi={item.main_images.title}
+                onclick={() => {
+                  setVisibleModal(true);
+                  setGaleriById(item);
                 }}
-              >
-                <ActivityIndicator size="large" color={COLORS.primary} />
-              </View>
-            )
-          }
-          numColumns={2}
-          keyExtractor={(item) => "#" + item.id}
-          onEndReached={
-            search === "" && galeri.lists.length !== 0 ? loadMore : null
-          }
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
+              />
+            )}
+            ListEmptyComponent={() => <ListEmpty />}
+            ListFooterComponent={() =>
+              loading && (
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 24,
+                  }}
+                >
+                  <ActivityIndicator size="large" color={COLORS.primary} />
+                </View>
+              )
+            }
+            numColumns={2}
+            keyExtractor={(item) => "#" + item.id}
+            onEndReached={
+              search === "" && galeri.lists.length !== 0 ? loadMore : null
+            }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        </View>
       </View>
 
       <Modal

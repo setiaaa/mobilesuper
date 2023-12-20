@@ -40,6 +40,10 @@ import { ModalSubmit } from "../../components/ModalSubmit";
 import { setAttachmentCuti, setJumlahCuti, setStatus } from "../../store/Cuti";
 import * as DocumentPicker from "expo-document-picker";
 import CalendarPicker from "react-native-calendar-picker";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -209,6 +213,39 @@ export const TambahCutiTahunan = () => {
       setTanggalLibur([]);
     }
   }, [form]);
+
+  //styling kalender
+  const customDayHeaderStyles = ({ dayOfWeek }) => {
+    switch (
+      dayOfWeek // can also evaluate month, year
+    ) {
+      case 7: // Thursday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: "bold",
+          },
+        };
+    }
+  };
+
+  const customDatesStyles = (date) => {
+    switch (date.isoWeekday()) {
+      case 7: // Monday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+            fontWeight: "bold",
+          },
+        };
+      case 7: // Sunday
+        return {
+          textStyle: {
+            color: COLORS.primary,
+          },
+        };
+    }
+  };
 
   console.log(jumlahCuti.jumlah_cuti);
   return (
@@ -541,7 +578,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -581,7 +618,7 @@ export const TambahCutiTahunan = () => {
                     <View
                       style={{
                         borderWidth: 1,
-                        width: 130,
+                        width: wp(35),
                         borderRadius: 4,
                         borderColor: COLORS.ExtraDivinder,
                         flexDirection: "row",
@@ -648,37 +685,61 @@ export const TambahCutiTahunan = () => {
                               alignItems: "center",
                               justifyContent: "center",
                               width: "90%",
-                              height: 400,
                               borderRadius: 10,
+                              height: hp(55),
                             }}
                           >
-                            <TouchableOpacity
+                            <View style={{ width: "100%", flex: 1 }}>
+                              {/* <CalendarPicker
+                                startFromMonday={true}
+                                width={wp(90)}
+                                weekdays={['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']}
+                                months={['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'Desember']}
+                                previousComponent={<CustomPreviousComponent />}
+                                nextComponent={<CustomNextComponent />}
+                                selectedRangeStyle={{ backgroundColor: COLORS.infoDangerLight, fontWeight: 'bold' }}
+                                customDayHeaderStyles={customDayHeaderStyles}
+                                customDatesStyles={customDatesStyles}
+                                onDateChange={handleDateChange}
+                                allowRangeSelection={true}
+                              />
+                              <TouchableOpacity
                               onPress={() => setModalVisiblePicker("")}
                               style={{
+                                marginBottom: 3,
                                 paddingLeft: "70%",
                                 marginBottom: 20,
                                 marginLeft: 20,
+                                alignContent:"center",
+                                justifyContent:"center",
+                                marginLeft:"35%"
                               }}
-                            >
+                              >
                               <View
                                 style={{
                                   backgroundColor: COLORS.primary,
-                                  borderRadius: 50,
-                                  width: 35,
+                                  borderRadius: 10,
+                                  width: wp(25),
                                   height: 35,
                                   justifyContent: "center",
                                   alignItems: "center",
+                                  marginTop:10,
                                 }}
                               >
-                                <Ionicons
-                                  name="close-outline"
-                                  size={24}
-                                  color={COLORS.white}
-                                />
+                                <Text style={{color:"white"}}>
+                                  Confirm
+                                </Text>
                               </View>
-                            </TouchableOpacity>
-                            <View style={{ width: "100%" }}>
-                              {/* <DatePicker
+                            </TouchableOpacity> */}
+                              <View
+                                style={{
+                                  width: "100%",
+                                  paddingTop: 10,
+                                  alignSelf: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                {/* <DatePicker
                                 options={{
                                   backgroundColor: COLORS.white,
                                   textHeaderColor: COLORS.primary,
@@ -747,58 +808,128 @@ export const TambahCutiTahunan = () => {
                                   }
                                 }}
                               /> */}
-                              <CalendarPicker
-                                todayBackgroundColor={COLORS.info}
-                                disabledDates={tanggalLibur}
-                                width={300}
-                                onDateChange={(date) => {
-                                  if (modalVisiblePicker === "mulai") {
-                                    setTanggalMulai(
-                                      moment(
-                                        date,
-                                        "YYYY-MM-DD HH:mm:ss"
-                                      ).format("YYYY-MM-DD")
-                                    );
-                                  } else {
-                                    setTanggalSelsai(
-                                      moment(
-                                        date,
-                                        "YYYY-MM-DD HH:mm:ss"
-                                      ).format("YYYY-MM-DD")
-                                    );
-                                  }
-                                }}
-                              />
-                              <TouchableOpacity
-                                onPress={() => {
-                                  if (modalVisiblePicker === "mulai") {
-                                    setModalVisiblePicker("");
-                                  } else {
-                                    selectDate();
-                                    setModalVisiblePicker("");
-                                  }
-                                }}
-                                style={{
-                                  marginTop: 20,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
                                 <View
                                   style={{
-                                    backgroundColor: COLORS.primary,
-                                    width: 217,
-                                    height: 39,
-                                    borderRadius: 8,
+                                    paddingHorizontal: 20,
+                                    paddingVertical: 10,
+                                    alignItems: "flex-end",
+                                  }}
+                                >
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.primary,
+                                      borderRadius: 20,
+                                      marginLeft: 20,
+                                      width: 24,
+                                      height: 24,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <TouchableOpacity
+                                      onPress={() => setModalVisiblePicker("")}
+                                    >
+                                      <Ionicons
+                                        name="close-outline"
+                                        size={24}
+                                        color={COLORS.white}
+                                      />
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
+                                <CalendarPicker
+                                  todayBackgroundColor={COLORS.info}
+                                  disabledDates={tanggalLibur}
+                                  previousComponent={
+                                    <Ionicons
+                                      name="chevron-back-outline"
+                                      size={24}
+                                      color={COLORS.primary}
+                                    />
+                                  }
+                                  nextComponent={
+                                    <Ionicons
+                                      name="chevron-forward-outline"
+                                      size={24}
+                                      color={COLORS.primary}
+                                    />
+                                  }
+                                  customDayHeaderStyles={customDayHeaderStyles}
+                                  customDatesStyles={customDatesStyles}
+                                  startFromMonday={true}
+                                  width={wp(95)}
+                                  weekdays={[
+                                    "Sen",
+                                    "Sel",
+                                    "Rab",
+                                    "Kam",
+                                    "Jum",
+                                    "Sab",
+                                    "Min",
+                                  ]}
+                                  months={[
+                                    "Januari",
+                                    "Februari",
+                                    "Maret",
+                                    "April",
+                                    "Mei",
+                                    "Juni",
+                                    "Juli",
+                                    "Augustus",
+                                    "September",
+                                    "Oktober",
+                                    "November",
+                                    "Desember",
+                                  ]}
+                                  onDateChange={(date) => {
+                                    if (modalVisiblePicker === "mulai") {
+                                      setTanggalMulai(
+                                        moment(
+                                          date,
+                                          "YYYY-MM-DD HH:mm:ss"
+                                        ).format("YYYY-MM-DD")
+                                      );
+                                    } else {
+                                      setTanggalSelsai(
+                                        moment(
+                                          date,
+                                          "YYYY-MM-DD HH:mm:ss"
+                                        ).format("YYYY-MM-DD")
+                                      );
+                                    }
+                                  }}
+                                />
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    if (modalVisiblePicker === "mulai") {
+                                      setModalVisiblePicker("");
+                                    } else {
+                                      selectDate();
+                                      setModalVisiblePicker("");
+                                    }
+                                  }}
+                                  style={{
+                                    marginTop: 10,
                                     justifyContent: "center",
                                     alignItems: "center",
                                   }}
                                 >
-                                  <Text style={{ color: COLORS.white }}>
-                                    Ok
-                                  </Text>
-                                </View>
-                              </TouchableOpacity>
+                                  <View
+                                    style={{
+                                      backgroundColor: COLORS.primary,
+                                      width: 217,
+                                      height: 39,
+                                      borderRadius: 8,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <Text style={{ color: COLORS.white }}>
+                                      Ok
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -928,24 +1059,23 @@ export const TambahCutiTahunan = () => {
                   <Pressable onPress={pickDocument}>
                     <View
                       style={{
-                        borderWidth: 1,
                         width: "100%",
-                        borderRadius: 4,
-                        borderColor: COLORS.ExtraDivinder,
-                        height: 200,
+                        borderRadius: 8,
                         justifyContent: "center",
                         alignItems: "center",
-                        gap: 5,
+                        flexDirection: "row",
+                        gap: 10,
+                        flex: 1,
+                        backgroundColor: COLORS.grey,
+                        padding: 10,
                       }}
                     >
-                      <View style={{ marginBottom: 10 }}>
-                        <Ionicons
-                          name="md-cloud-upload-outline"
-                          size={30}
-                          color={"#66656C"}
-                        />
-                      </View>
-                      <Text style={{ color: "#66656C" }}>
+                      <Ionicons
+                        name="md-cloud-upload-outline"
+                        size={30}
+                        color={COLORS.white}
+                      />
+                      <Text style={{ color: COLORS.white }}>
                         Klik Untuk Unggah
                       </Text>
                     </View>
@@ -1013,103 +1143,51 @@ export const TambahCutiTahunan = () => {
                     </Text>
                   </View>
 
-                  <View
-                    style={{
-                      backgroundColor: COLORS.white,
-                      padding: 20,
-                      borderRadius: 16,
-                    }}
-                  >
-                    <View style={{ gap: 5 }}>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
-                        }}
+                  <View style={{ flexDirection: "row", gap: 5 }}>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.info },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: COLORS.white, textAlign: "center" }}
                       >
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            width: "40%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Penuh
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {form.data_kuota_cuti?.full_kuota}
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
-                        }}
+                        Kuota Penuh
+                      </Text>
+                      <Text style={{ color: COLORS.white }}>
+                        {form.data_kuota_cuti?.full_kuota}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.danger },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: COLORS.white, textAlign: "center" }}
                       >
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            width: "40%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Terpakai
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {form.data_kuota_cuti?.kuota_terpakai}
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
-                        }}
+                        Kuota Terpakai
+                      </Text>
+                      <Text style={{ color: COLORS.white }}>
+                        {form.data_kuota_cuti?.kuota_terpakai}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.success },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: COLORS.white, textAlign: "center" }}
                       >
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 600,
-                            width: "40%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Tersisa
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {form.data_kuota_cuti?.kuota_sisa}
-                        </Text>
-                      </View>
+                        Kuota Sisa
+                      </Text>
+                      <Text style={{ color: COLORS.white }}>
+                        {form.data_kuota_cuti?.kuota_sisa}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -1281,5 +1359,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  cardInfoCuti: {
+    width: wp(35),
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
   },
 });

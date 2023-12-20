@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailDocument, getDivisionFilter, getDocument, getDocumentDibagikan, getDocumentTamplate, getDownloadLampiran, getSubDivisionFilter } from "../service/api";
+import { getDetailDocument, getDivisionFilter, getDocument, getDocumentDibagikan, getDocumentTamplate, getDownloadLampiran, getSubDivisionFilter, postRating } from "../service/api";
 
 const RepositorySlice = createSlice({
   name: "Repository",

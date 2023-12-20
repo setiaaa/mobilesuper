@@ -1469,7 +1469,7 @@ export const DetailLinimasa = (item) => {
                     >
 
                       <View style={{ marginHorizontal: 20, marginTop: 20, flexDirection: "row", justifyContent: "space-between", padding: 10, borderBottomWidth: 2, borderBottomColor: COLORS.grey }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Dashboard</Text>
+                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Informasi Pengetahuan</Text>
                         <TouchableOpacity
                           style={{}}
                           onPress={() => {
@@ -1514,7 +1514,7 @@ export const DetailLinimasa = (item) => {
 
                         <Text
                           style={{
-                            width: 260,
+                            width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
                           }}
@@ -1557,7 +1557,7 @@ export const DetailLinimasa = (item) => {
 
                         <Text
                           style={{
-                            width: 260,
+                            width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
                           }}
@@ -1600,7 +1600,7 @@ export const DetailLinimasa = (item) => {
 
                         <Text
                           style={{
-                            width: 260,
+                            width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
                           }}
@@ -1643,7 +1643,7 @@ export const DetailLinimasa = (item) => {
 
                         <Text
                           style={{
-                            width: 260,
+                            width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
                           }}
@@ -1686,7 +1686,7 @@ export const DetailLinimasa = (item) => {
 
                         <Text
                           style={{
-                            width: 260,
+                            width: "70%",
                             marginHorizontal: 60,
                             marginTop: 10,
                             marginBottom: 20,
