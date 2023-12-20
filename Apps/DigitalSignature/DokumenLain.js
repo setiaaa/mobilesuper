@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { Text, Image } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { COLORS, FONTSIZE, FONTWEIGHT, fontSizeResponsive } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -30,6 +30,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isSelected, setSelection] = useState(false);
+  const { device } = useSelector((state) => state.apps);
   const getDetail = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
@@ -74,7 +75,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
         <View style={{ flexDirection: "column",width:"100%" }}>
           <Text
             style={{
-              fontSize: 13,
+              fontSize: fontSizeResponsive("H1", device),
               textAlign: "justify",
               fontWeight: FONTWEIGHT.bold,
               width:"100%"
@@ -94,7 +95,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H1", device),
                   width: 120,
                   textAlign: "auto",
                   paddingRight: 12,
@@ -129,7 +130,7 @@ const ListDokumenLain = ({ item, variant, token }) => {
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: fontSizeResponsive("H1", device),
                   width: 120,
                   textAlign: "auto",
                   paddingRight: 12,
@@ -159,7 +160,7 @@ export const DokumenLain = () => {
   const [tipe, setTipe] = useState("dokumen_lain");
   const [variant, SetVariant] = useState("");
   const [filterData, setFilterData] = useState([]);
-
+  const { device } = useSelector((state) => state.apps);
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -282,7 +283,7 @@ export const DokumenLain = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}

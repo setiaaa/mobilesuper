@@ -142,7 +142,7 @@ export const DetailTask = () => {
 
         return titleCase
     }
-    console.log("ini task detail")
+    console.log(taskDetail)
     return (
         <>
             {taskDetail !== null ? (
@@ -428,7 +428,7 @@ export const DetailTask = () => {
                                                 console.log(datas)
                                                 dispatch(deleteTask(datas));
                                                 setTimeout(() => {
-                                                navigation.goBack();
+                                                    dispatch(getListDashboardTM({ token: token, page: page }));
                                                 }, 3000);
                                             }}
                                             >

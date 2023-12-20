@@ -78,6 +78,7 @@ import { DetailAcara } from "../Kalender/DetailAcara";
 import { ListSuka } from "../Kalender/ListSuka";
 import { MyTask } from "../Task Management/MyTask";
 import MainDetailTask from "../Task Management/DetailTask/MainDetailTask";
+import MainDetailKorespondensiTM from "../Task Management/DetailKorespondensiTM/MainDetailKorespondensiTM"
 import { AddTask } from "../Task Management/AddTask";
 import { ListGaleri } from "../SuperApps/ListGaleri";
 import { Kepegawaian } from "../Dashboard/Kepegawaian";
@@ -592,6 +593,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="MainDetailTask"
             component={MainDetailTask}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainDetailKorespondensiTM"
+            component={MainDetailKorespondensiTM}
             options={{
               headerShown: false,
             }}

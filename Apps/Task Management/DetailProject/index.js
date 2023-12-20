@@ -14,7 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { CardItemMember } from '../../../components/CardItemMember'
 import { useState } from 'react'
 import ListEmpty from '../../../components/ListEmpty'
-import { deleteTask, deleteTaskProject, getListTaskTM } from '../../../service/api'
+import { deleteTask, deleteTaskProject, getListDashboardTM, getListTaskTM } from '../../../service/api'
 
 const CardListKategori = ({ item, token, id_list, type }) => {
     const navigation = useNavigation()
@@ -64,7 +64,6 @@ export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => 
     const bottomSheetMember = () => {
         bottomSheetModalMemberRef.current?.present()
     }
-
     useEffect(() => {
         let arrList = []
         const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
@@ -78,8 +77,6 @@ export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => 
         // setChoiceList(arrList.length > 0 ? arrList[0] : '')
         setDataList(arrList)
     }, [choiceKategori])
-
-    // console.log(choiceKategori)
 
     let arrTask = []
     {
@@ -99,6 +96,14 @@ export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => 
         })
     }
 
+    const setType = () => {
+        type = {
+            key:"1",
+            value:"Dashboard"
+        }
+        console.log(type)
+    }
+    console.log("ini type")
     console.log(type)
 
     return (
@@ -276,7 +281,7 @@ export const DetailProject = ({ token, type, choiceKategori, dataKategori }) => 
                                         console.log(datas)
                                         dispatch(deleteTaskProject(datas));
                                         setTimeout(() => {
-                                        navigation.goBack();
+                                            dispatch(getListDashboardTM({ token: token, page: 5 }));
                                         }, 3000);
                                     }}
                                     >

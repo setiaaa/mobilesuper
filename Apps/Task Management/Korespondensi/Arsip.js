@@ -11,8 +11,8 @@ import { CardShimmerListGridTask } from '../../../components/CardListGridTask/Ca
 import { COLORS, DATETIME } from '../../../config/SuperAppps'
 import { Loading } from '../../../components/Loading'
 import { Search } from '../../../components/Search'
-import TreeView from 'react-native-final-tree-view'
 import { Text } from 'react-native'
+import { CardListTaskKorespondensi } from '../../../components/CardListKorespondensiTM'
 
 
 export const Arsip = () => {
@@ -22,21 +22,25 @@ export const Arsip = () => {
     const [filterDataStatus, setFilterDataStatus] = useState([])
     const [page, setPage] = useState(5);
     const [search, setSearch] = useState('')
-    useEffect(() => {
-        // const data = taskLists.filter((item) => {
-        //     return item.deadline_status
-        // })
-        setFilterDataStatus(taskLists)
-    }, [taskLists])
-
+    
     const loadMore = () => {
         if (filterData % 5 === 0) {
           setPage(page + 5);
         }
-        console.log("page dari harini" + page);
+        console.log("page dari arsp" + page);
     };
 
-    // console.log(list)
+    const data = []
+    {taskLists?.map((item) => (
+        item.children.map((child, index) => {
+            data.push(child)
+        })
+    ))}
+
+    // useEffect(() => {
+    //     // dispatch(getListKorespondensiArsipTM({ token: token, page: page }));
+    //     setFilterDataStatus(data)
+    // }, [data])
 
     // const renderShimmerList = () => {
     //     const arr = []
@@ -50,36 +54,33 @@ export const Arsip = () => {
     //     return arr
     // }
 
-    const renderShimmerGrid = () => {
-        const arr = []
-        for (let i = 0; i < 6; i++) {
-            arr.push(
-                <View key={i} style={{ flexDirection: 'row', gap: 4 }}>
-                    <CardShimmerListGridTask />
-                    <CardShimmerListGridTask />
-                </View>
-            )
-        }
-        return arr
-    }
+    // const renderShimmerGrid = () => {
+    //     const arr = []
+    //     for (let i = 0; i < 6; i++) {
+    //         arr.push(
+    //             <View key={i} style={{ flexDirection: 'row', gap: 4 }}>
+    //                 <CardShimmerListGridTask />
+    //                 <CardShimmerListGridTask />
+    //             </View>
+    //         )
+    //     }
+    //     return arr
+    // }
 
     const filter = (event) => {
         setSearch(event)
     }
 
     useEffect(() => {
-        // const item = taskLists
         if (search !== '') {
-            const data = filterDataStatus.filter((item) => {
-                return item.title?.toLowerCase().includes(search.toLowerCase());
+            const datas = data.filter((item) => {
+                return item.subject?.toLowerCase().includes(search.toLowerCase());
             })
-            setFilterData(data)
+            setFilterData(datas)
         } else {
-            setFilterData(filterDataStatus)
+            setFilterData(data)
         }
-        console.log(filterData)
     }, [search, taskLists])
-    console.log(filterData)
     return (
         <>
         <View style={{marginTop:20}}>
@@ -89,19 +90,20 @@ export const Arsip = () => {
                 onSearch={filter}
                 />
         </View>
-            {variant === 'list' ? (
                 <View style={{ flex: 1, marginTop: 20,}}>
                     {
                         loading ? (
                             <Loading/>
                         ) : (
                             <View>
-                                {/* <FlatList
-                                    data={search !== '' ? filterData : filterDataStatus}
-                                    renderItem={({ item }) => <CardListTask
+                                <FlatList
+                                    data={search !== '' ? filterData : data}
+                                    // data={data}
+                                    renderItem={({ item }) => <CardListTaskKorespondensi
                                         id={item.id}
-                                        title={item.type}
-                                        duedate={item.date}
+                                        title={item.subject}
+                                        duedate={item.duedate}
+                                        priority={item.prio}
                                     />
                                     }
                                     ListEmptyComponent={() =>
@@ -122,46 +124,11 @@ export const Arsip = () => {
                                     }
                                     onEndReached={loadMore}
                                     style={{ height:"95%"}}
-                                /> */}  
+                                />  
                             </View>
                         )
                     }
                 </View>
-            ) : variant === 'grid' ? (
-                <View style={{ flex: 1 }}>
-                    {
-                        loading ? (
-                            <View style={{ flexDirection: 'column', marginTop: 20 }}>
-                                {
-                                    renderShimmerGrid()
-                                }
-                            </View>
-                        ) : (
-                            <FlatList
-                                key={'#'}
-                                data={filterData}
-                                renderItem={({ item }) => <CardListGridTask
-                                    // id={item.id}
-                                    // title={item.children}
-                                    duedate={item.date}
-                                    // priority={item.priority}
-                                    // members={item.members}
-                                />
-                                }
-                                style={{ marginTop: 20 }}
-                                columnWrapperStyle={{ gap: 4 }}
-                                numColumns={2}
-                                keyExtractor={item => "#" + item.id}
-                                ListEmptyComponent={() =>
-                                    <ListEmpty />
-                                }
-                            />
-                        )
-                    }
-                </View>
-            ) : (
-                null
-            )}
         </>
     )
 }

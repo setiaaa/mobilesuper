@@ -87,6 +87,8 @@ import { Arsip } from "../Apps/Task Management/Korespondensi/Arsip";
 import { TerlewatKorespondensi } from "../Apps/Task Management/Korespondensi/TerlewatKorespondensi";
 import { HariIniKorespondensi } from "../Apps/Task Management/Korespondensi/HariIniKorespondensi";
 import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/MingguDepanKorespondensi";
+import MyTabBarDetailKorespondensi from "../Apps/Task Management/DetailKorespondensiTM/BottmTabsDetailKorespondensi";
+import { DetailKorespondensiTM } from "../Apps/Task Management/DetailKorespondensiTM/DetailKorespondensiTM";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -267,6 +269,28 @@ export const BottomTabsDetailTask = () => {
           component={LampiranTask}
           options={{ headerShown: false }}
         />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsDetailKorespondensi = () => {
+  return (
+    <BottomSheetModalProvider>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBarDetailKorespondensi {...props} />}
+        initialRouteName="DetailKorespondensiTM"
+      >
+        <Tab.Screen
+          name="DetailKorespondensiTM"
+          component={DetailKorespondensiTM}
+          options={{ headerShown: false }}
+        />
+        {/* <Tab.Screen
+          name="LampiranTask"
+          component={LampiranTask}
+          options={{ headerShown: false }}
+        /> */}
       </Tab.Navigator>
     </BottomSheetModalProvider>
   );
