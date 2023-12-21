@@ -54,8 +54,6 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 
 const SPPD = BASE_URL + "monperdin/";
 
-// const Cuti = "https://cuti.kubekkp.coofis.com/api/";
-// const HelpDesk = "https://helpdesk.kubekkp.coofis.com/api/";
 const Cuti = `https://portal.kkp.go.id/service/cuti`;
 const HelpDesk = `https://portal.kkp.go.id/service/helpdesk`;
 
