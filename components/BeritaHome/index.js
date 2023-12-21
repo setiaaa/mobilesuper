@@ -8,9 +8,6 @@ import { Dimensions } from "react-native";
 
 const { width: screenWidth } = Dimensions.get("window");
 export const BeritaHome = ({ item, index }, parallaxProps) => {
-  {
-    console.log("lalala", item);
-  }
   return (
     <View style={styles.item}>
       <ParallaxImage
@@ -22,7 +19,7 @@ export const BeritaHome = ({ item, index }, parallaxProps) => {
       />
       <View
         style={{
-          backgroundColor: "white",
+          backgroundColor: "#fff",
           borderBottomLeftRadius: 8,
           borderBottomRightRadius: 8,
         }}

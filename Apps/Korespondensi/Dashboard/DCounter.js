@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { View, } from "react-native";
+import { View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
@@ -8,6 +8,7 @@ import { getHTTP, handlerError } from "../../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
 import { TextInput } from "react-native-paper";
 import { setToken } from "../../../store/auth";
+import { Keyboard } from "react-native";
 
 function DCounter() {
   const navigation = useNavigation();
@@ -111,9 +112,9 @@ function DCounter() {
       <View>
         <TextInput
           editable
-          multiline
           placeholder="Masukan Token"
           onChangeText={setInputToken}
+          onSubmit={Keyboard.dismiss}
           style={{ width: "100%" }}
         />
       </View>

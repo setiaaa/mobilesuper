@@ -12,15 +12,6 @@ import { StyleSheet } from "react-native";
 import { Image } from "react-native";
 import { Text } from "react-native";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View } from "react-native";
-import { COLORS, FONTWEIGHT, PADDING } from "../../config/SuperAppps";
-import { TouchableOpacity } from "react-native";
-import { Platform } from "react-native";
-import { StyleSheet } from "react-native";
-import { Image } from "react-native";
-import { Text } from "react-native";
 
 export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
   const navigation = useNavigation();

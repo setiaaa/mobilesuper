@@ -96,7 +96,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
     if (stateConfig.title === "Addressbook\nDisposition") {
       setPilihanKepada(addressbook.selected);
     }
-    console.log("addressbook", pilihanKepada);
+    // console.log("addressbook", pilihanKepada);
   }, [addressbook.selected]);
 
   useEffect(() => {
@@ -216,7 +216,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
       let status = 1;
       // validasi
       dispoMulti.map((items) => {
-        if (items.kepadaDispo == [] || items.kepadaDispo == "") {
+        if (pilihanKepada.length == 0 || pilihanKepada == "") {
           status = 0;
         } else if (
           items.tindakan1 &&
@@ -266,7 +266,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           });
           let temp = [];
           let temp_ids = [];
-          items.kepadaDispo.map((item, j) => {
+          pilihanKepada.map((item, j) => {
             temp.push(item.fullname ? item.fullname : item.title);
             temp_ids.push(item.nik ? item.nik : item.code);
           });
@@ -285,6 +285,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           request: request,
           copy_log: "1",
         };
+        // console.log("payload", payload);
         //post api dispo
         const response = await postHTTP(
           nde_api.postDisposition
@@ -363,6 +364,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     onPress={() => {
                       const config = {
                         title: "Addressbook\nDisposition",
+                        tipeAddress: "korespodensi",
                         tabs: {
                           jabatan: true,
                           pegawai: true,
@@ -407,6 +409,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                         onPress={() => {
                           const config = {
                             title: "Addressbook\nDisposition",
+                            tipeAddress: "korespodensi",
                             tabs: {
                               jabatan: true,
                               pegawai: true,
