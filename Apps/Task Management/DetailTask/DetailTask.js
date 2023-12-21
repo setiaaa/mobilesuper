@@ -180,8 +180,8 @@ export const DetailTask = () => {
                 style={{
                   backgroundColor: COLORS.white,
                   borderRadius: 20,
-                  width: 28,
-                  height: 28,
+                  width: device === "tablet" ? 40 : 28,
+                  height: device === "tablet" ? 40 : 28,
                   alignItems: "center",
                   justifyContent: "center",
                   marginLeft: 20,
@@ -193,7 +193,7 @@ export const DetailTask = () => {
                 >
                   <Ionicons
                     name="chevron-back-outline"
-                    size={24}
+                    size={device === "tablet" ? 40 : 24}
                     color={COLORS.primary}
                   />
                 </TouchableOpacity>
@@ -413,8 +413,8 @@ export const DetailTask = () => {
                                           borderWidth: 2,
                                           borderRadius: 50,
                                           borderColor: COLORS.white,
-                                          width: 30,
-                                          height: 30,
+                                          width: device === "tablet" ? 60 : 30,
+                                          height: device === "tablet" ? 60 : 30,
                                         }}
                                       />
                                     </View>
@@ -449,8 +449,8 @@ export const DetailTask = () => {
                                   borderWidth: 2,
                                   borderRadius: 50,
                                   borderColor: COLORS.white,
-                                  width: 30,
-                                  height: 30,
+                                  width: device === "tablet" ? 60 : 30,
+                                  height: device === "tablet" ? 60 : 30,
                                 }}
                               />
                               <View style={{ flex: 1 }}>
@@ -516,7 +516,10 @@ export const DetailTask = () => {
                                   >
                                     <Text
                                       style={{
-                                        fontSize: FONTSIZE.H2,
+                                        fontSize: fontSizeResponsive(
+                                          "H2",
+                                          device
+                                        ),
                                         fontWeight: FONTWEIGHT.bold,
                                         color: COLORS.lighter,
                                       }}
@@ -529,7 +532,10 @@ export const DetailTask = () => {
                                       data={taskDetail.members}
                                       renderItem={({ item }) => (
                                         <View key={item.nip}>
-                                          <CardItemMember item={item} />
+                                          <CardItemMember
+                                            item={item}
+                                            device={device}
+                                          />
                                         </View>
                                       )}
                                       keyExtractor={(item) => item.id}
@@ -584,8 +590,8 @@ export const DetailTask = () => {
                                 borderWidth: 2,
                                 borderRadius: 50,
                                 borderColor: COLORS.white,
-                                width: 30,
-                                height: 30,
+                                width: device === "tablet" ? 60 : 30,
+                                height: device === "tablet" ? 60 : 30,
                               }}
                             />
                             <View style={{ flex: 1 }}>
@@ -656,8 +662,8 @@ export const DetailTask = () => {
                                 borderWidth: 2,
                                 borderRadius: 50,
                                 borderColor: COLORS.white,
-                                width: 30,
-                                height: 30,
+                                width: device === "tablet" ? 60 : 30,
+                                height: device === "tablet" ? 60 : 30,
                               }}
                             />
                             <View style={{ flex: 1 }}>
@@ -729,8 +735,8 @@ export const DetailTask = () => {
                                 borderWidth: 2,
                                 borderRadius: 50,
                                 borderColor: COLORS.white,
-                                width: 30,
-                                height: 30,
+                                width: device === "tablet" ? 60 : 30,
+                                height: device === "tablet" ? 60 : 30,
                               }}
                             />
                             <View
@@ -855,34 +861,45 @@ export const DetailTask = () => {
                       </View>
                     </TouchableOpacity>
 
-                            <TouchableOpacity
-                            onPress={() => {
-                                const datas = {
-                                token: token,
-                                id: taskDetail.id,
-                                };
-                                console.log(datas)
-                                dispatch(deleteTask(datas));
-                                setTimeout(() => {
-                                    dispatch(getListDashboardTM({ token: token, page: page }));
-                                }, 3000);
-                            }}
-                            >
-                                <View style={{
-                                    marginHorizontal: 20,
-                                    backgroundColor: COLORS.infoDanger,
-                                    width: Platform.OS === 'ios' ? '90%' : '91%',
-                                    height: 50,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    borderRadius: 6,
-                                }}>
-                                    <Text style={{ color: COLORS.white }}>Hapus</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </>
-                    ) : null}
-                </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        const datas = {
+                          token: token,
+                          id: taskDetail.id,
+                        };
+                        console.log(datas);
+                        dispatch(deleteTask(datas));
+                        setTimeout(() => {
+                          dispatch(
+                            getListDashboardTM({ token: token, page: page })
+                          );
+                        }, 3000);
+                      }}
+                    >
+                      <View
+                        style={{
+                          marginHorizontal: "5%",
+                          backgroundColor: COLORS.infoDanger,
+                          width: Platform.OS === "ios" ? "90%" : "91%",
+                          height: 50,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: 6,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Hapus
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                ) : null}
+              </View>
               <Portal>
                 <BottomSheetModalProvider>
                   <BottomSheetModal

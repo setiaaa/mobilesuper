@@ -1,22 +1,37 @@
-import React, { useEffect, useMemo, useRef } from 'react'
-import { View } from 'react-native'
-import { Text } from 'react-native'
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../../config/SuperAppps'
-import { useDispatch, useSelector } from 'react-redux'
-import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import { Image } from 'react-native'
-import moment from 'moment'
-import { Portal } from 'react-native-portalize'
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView, useBottomSheetDynamicSnapPoints } from '@gorhom/bottom-sheet'
-import { useNavigation } from '@react-navigation/native'
-import { TouchableOpacity } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
-import { CardItemMember } from '../../../components/CardItemMember'
-import { useState } from 'react'
-import ListEmpty from '../../../components/ListEmpty'
-import { deleteTask, deleteTaskProject, getListDashboardTM, getListTaskTM } from '../../../service/api'
+import React, { useEffect, useMemo, useRef } from "react";
+import { FlatList, ScrollView, View } from "react-native";
+import { Text } from "react-native";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../../config/SuperAppps";
+import { useDispatch, useSelector } from "react-redux";
+import { Image } from "react-native";
+import moment from "moment";
+import { Portal } from "react-native-portalize";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView,
+  useBottomSheetDynamicSnapPoints,
+} from "@gorhom/bottom-sheet";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { CardItemMember } from "../../../components/CardItemMember";
+import { useState } from "react";
+import ListEmpty from "../../../components/ListEmpty";
+import {
+  deleteTask,
+  deleteTaskProject,
+  getListDashboardTM,
+  getListTaskTM,
+} from "../../../service/api";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-const CardListKategori = ({ item, token, id_list, type }) => {
+const CardListKategori = ({ item, token, id_list, type, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
@@ -43,7 +58,12 @@ const CardListKategori = ({ item, token, id_list, type }) => {
         }}
       >
         <View style={{ marginVertical: 10, marginLeft: 10 }}>
-          <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H2", device),
+            }}
+          >
             {item.value}
           </Text>
         </View>
@@ -114,15 +134,17 @@ export const DetailProject = ({
     });
   }
 
-    const setType = () => {
-        type = {
-            key:"1",
-            value:"Dashboard"
-        }
-        console.log(type)
-    }
-    console.log("ini type")
-    console.log(type)
+  const setType = () => {
+    type = {
+      key: "1",
+      value: "Dashboard",
+    };
+    // console.log(type)
+  };
+  // console.log("ini type")
+  // console.log(type)
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <>
@@ -151,7 +173,7 @@ export const DetailProject = ({
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       color: COLORS.lighter,
                       fontWeight: FONTWEIGHT.bold,
                     }}
@@ -159,7 +181,10 @@ export const DetailProject = ({
                     {detailProject.name}
                   </Text>
                   <Text
-                    style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      color: COLORS.lighter,
+                    }}
                   >
                     {detailProject.description}
                   </Text>
@@ -171,7 +196,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -180,7 +205,7 @@ export const DetailProject = ({
                     </Text>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         flex: 1,
                       }}
@@ -192,7 +217,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -207,7 +232,10 @@ export const DetailProject = ({
                       }}
                     >
                       <Text
-                        style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
                       >
                         :{" "}
                       </Text>
@@ -232,8 +260,8 @@ export const DetailProject = ({
                                       borderWidth: 2,
                                       borderRadius: 50,
                                       borderColor: COLORS.white,
-                                      width: 30,
-                                      height: 30,
+                                      width: device === "tablet" ? 60 : 30,
+                                      height: device === "tablet" ? 60 : 30,
                                     }}
                                   />
                                 </View>
@@ -244,7 +272,7 @@ export const DetailProject = ({
                             <View>
                               <Ionicons
                                 name="chevron-forward-outline"
-                                size={24}
+                                size={device === "tablet" ? 40 : 24}
                                 color={COLORS.grey}
                               />
                             </View>
@@ -264,15 +292,15 @@ export const DetailProject = ({
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 60 : 30,
+                              height: device === "tablet" ? 60 : 30,
                             }}
                           />
                           <View style={{ flex: 1 }}>
                             <Text
                               style={{
                                 fontWeight: FONTWEIGHT.bold,
-                                fontSize: FONTSIZE.H4,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
                               {detailProject.pic[0]?.title?.name !== ""
@@ -283,7 +311,7 @@ export const DetailProject = ({
                               <Text
                                 style={{
                                   fontWeight: FONTWEIGHT.normal,
-                                  fontSize: FONTSIZE.H4,
+                                  fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
                                 {" "}
@@ -299,7 +327,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -314,7 +342,10 @@ export const DetailProject = ({
                       }}
                     >
                       <Text
-                        style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
                       >
                         :{" "}
                       </Text>
@@ -339,8 +370,8 @@ export const DetailProject = ({
                                       borderWidth: 2,
                                       borderRadius: 50,
                                       borderColor: COLORS.white,
-                                      width: 30,
-                                      height: 30,
+                                      width: device === "tablet" ? 60 : 30,
+                                      height: device === "tablet" ? 60 : 30,
                                     }}
                                   />
                                 </View>
@@ -351,7 +382,7 @@ export const DetailProject = ({
                             <View>
                               <Ionicons
                                 name="chevron-forward-outline"
-                                size={24}
+                                size={device === "tablet" ? 40 : 24}
                                 color={COLORS.grey}
                               />
                             </View>
@@ -381,7 +412,7 @@ export const DetailProject = ({
                             <Text
                               style={{
                                 fontWeight: FONTWEIGHT.bold,
-                                fontSize: FONTSIZE.H4,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
                               {detailProject.members[0]?.title?.name !== ""
@@ -392,7 +423,7 @@ export const DetailProject = ({
                               <Text
                                 style={{
                                   fontWeight: FONTWEIGHT.normal,
-                                  fontSize: FONTSIZE.H4,
+                                  fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
                                 {" "}
@@ -408,7 +439,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -423,7 +454,10 @@ export const DetailProject = ({
                       }}
                     >
                       <Text
-                        style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
                       >
                         :{" "}
                       </Text>
@@ -440,15 +474,15 @@ export const DetailProject = ({
                             borderWidth: 2,
                             borderRadius: 50,
                             borderColor: COLORS.white,
-                            width: 30,
-                            height: 30,
+                            width: device === "tablet" ? 60 : 30,
+                            height: device === "tablet" ? 60 : 30,
                           }}
                         />
                         <View style={{ flex: 1 }}>
                           <Text
                             style={{
                               fontWeight: FONTWEIGHT.bold,
-                              fontSize: FONTSIZE.H4,
+                              fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
                             {detailProject.creator.title?.name !== ""
@@ -459,7 +493,7 @@ export const DetailProject = ({
                             <Text
                               style={{
                                 fontWeight: FONTWEIGHT.normal,
-                                fontSize: FONTSIZE.H4,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
                               {" "}
@@ -477,7 +511,11 @@ export const DetailProject = ({
             {profile.nip === detailProject.creator.nip ||
             profile.nip === detailProject.pic[0].nip ? (
               <View
-                style={{ marginVertical: 20, flexDirection: "column", gap: 10 }}
+                style={{
+                  marginVertical: 20,
+                  flexDirection: "column",
+                  gap: 10,
+                }}
               >
                 <TouchableOpacity
                   onPress={() =>
@@ -490,45 +528,58 @@ export const DetailProject = ({
                     style={{
                       marginHorizontal: 20,
                       backgroundColor: COLORS.lightBrown,
-                      width: Platform.OS === "ios" ? "90%" : "91%",
                       height: 50,
                       justifyContent: "center",
                       alignItems: "center",
                       borderRadius: 6,
                     }}
                   >
-                    <Text style={{ color: COLORS.white }}>Ubah</Text>
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Ubah
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
-                                    <TouchableOpacity
-                                    onPress={() => {
-                                        const datas = {
-                                        token: token,
-                                        id: detailProject.id,
-                                        };
-                                        console.log(datas)
-                                        dispatch(deleteTaskProject(datas));
-                                        setTimeout(() => {
-                                            dispatch(getListDashboardTM({ token: token, page: 5 }));
-                                        }, 3000);
-                                    }}
-                                    >
-                                        <View style={{
-                                            marginHorizontal: 20,
-                                            backgroundColor: COLORS.infoDanger,
-                                            width: Platform.OS === 'ios' ? '90%' : '91%',
-                                            height: 50,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            borderRadius: 6,
-                                        }}>
-                                            <Text style={{ color: COLORS.white }}>Hapus</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            ) : null
-                        }
+                <TouchableOpacity
+                  onPress={() => {
+                    const datas = {
+                      token: token,
+                      id: detailProject.id,
+                    };
+                    console.log(datas);
+                    dispatch(deleteTaskProject(datas));
+                    setTimeout(() => {
+                      dispatch(getListDashboardTM({ token: token, page: 5 }));
+                    }, 3000);
+                  }}
+                >
+                  <View
+                    style={{
+                      marginHorizontal: 20,
+                      backgroundColor: COLORS.infoDanger,
+                      height: 50,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 6,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Hapus
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            ) : null}
 
             <View>
               <Text
@@ -537,6 +588,7 @@ export const DetailProject = ({
                   marginVertical: 10,
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.lighter,
+                  fontSize: fontSizeResponsive("H4", device),
                 }}
               >
                 List Task
@@ -549,6 +601,7 @@ export const DetailProject = ({
                     token={token}
                     id_list={item.key}
                     type={type}
+                    device={device}
                   />
                 )}
                 ListEmptyComponent={() => <ListEmpty />}
@@ -583,7 +636,7 @@ export const DetailProject = ({
                       >
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H2,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: FONTWEIGHT.bold,
                             color: COLORS.lighter,
                           }}
@@ -616,7 +669,7 @@ export const DetailProject = ({
                           data={detailProject.members}
                           renderItem={({ item }) => (
                             <View key={item.nip}>
-                              <CardItemMember item={item} />
+                              <CardItemMember item={item} device={device} />
                             </View>
                           )}
                           keyExtractor={(item) => item.id}
