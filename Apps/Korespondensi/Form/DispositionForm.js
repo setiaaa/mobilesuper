@@ -389,7 +389,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                 )}
               </View>
               <View style={styles.containerTitle}>
-                <Text style={styles.title}>Untuk</Text>
+                <Text style={styles.title}>Aksi Disposisi</Text>
                 {selectedTindakan.length != 0 && (
                   <IconButton
                     icon="plus"
@@ -410,7 +410,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     <TextInput
                       mode="outlined"
                       theme={{ roundness: 6 }}
-                      placeholder="Pilih Untuk"
+                      placeholder="Pilih Aksi"
                       right={
                         <TextInput.Icon
                           size={24}
@@ -433,7 +433,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
               </View>
 
               <View style={styles.containerTitle}>
-                <Text style={styles.title}>Catatan</Text>
+                <Text style={styles.title}>Catatan Disposisi</Text>
               </View>
               <TextInput
                 value={item.nota_tindakan_free1}
@@ -740,7 +740,7 @@ const styles = StyleSheet.create({
   containerTitleLeft: {
     flexDirection: "row",
     alignItems: "center",
-    paddingBottom: 16,
+    paddingVertical: 16,
   },
   titleTodo: {
     fontSize: GlobalStyles.font.md,
@@ -782,10 +782,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize:  GlobalStyles.font.md,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize:  GlobalStyles.font.md,
   },
   labelRemind: {
     fontSize: GlobalStyles.font.md,

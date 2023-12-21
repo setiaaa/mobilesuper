@@ -111,7 +111,6 @@ function DCounter() {
       <View>
         <TextInput
           editable
-          multiline
           placeholder="Masukan Token"
           onChangeText={setInputToken}
           style={{ width: "100%" }}

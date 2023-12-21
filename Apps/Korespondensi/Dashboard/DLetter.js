@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
@@ -122,10 +122,10 @@ function DLetter() {
     </>
   );
   return (
-    <View style={{ margin: 12 }}>
+    <ScrollView style={{ padding: 12 }}>
       {/* {loadingOverlay} */}
       {isCounter?.length != 0 && (
-        <View>
+        <View style={{ paddingBottom: 30 }}>
           {isLetter?.map((item, index) => (
             <CardDCounter
               key={index}
@@ -136,7 +136,7 @@ function DLetter() {
           ))}
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
