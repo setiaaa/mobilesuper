@@ -631,7 +631,8 @@ export const DetailProject = ({
                           justifyContent: "center",
                           alignItems: "center",
                           flexDirection:"row",
-                          justifyContent:"space-around"
+                          justifyContent:"space-between",
+                          paddingHorizontal:20,
                         }}
                       >
                         <Text
