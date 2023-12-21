@@ -33,6 +33,7 @@ import { getTokenValue } from "../../service/session";
 import {
   deleteNotulensi,
   getDetailNotulensi,
+  getEventAgendaDetail,
   getlistAbsen,
   getlistApprover,
   getlistNotulensi,
@@ -50,6 +51,7 @@ import { CardApprovalEvent } from "../../components/CardApprovalEvent";
 import { CardListAbsenEvent } from "../../components/CardListAbsenEvent";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { setRefresh } from "../../store/Event";
 
 export const DetailAgenda = () => {
   const navigation = useNavigation();
@@ -68,9 +70,8 @@ export const DetailAgenda = () => {
 
   const video = useRef(null);
 
-  const { agenda, approver, notulensi, absen, event, loading } = useSelector(
-    (state) => state.event
-  );
+  const { agenda, approver, notulensi, absen, event, loading, refresh } =
+    useSelector((state) => state.event);
   const data = agenda.detail;
   const id = agenda.detail?.notulensi?.id;
   const idagenda = agenda.detail?.id;
@@ -150,19 +151,9 @@ export const DetailAgenda = () => {
           idabsen: idabsen,
           status: "hadir",
           is_scan: true,
+          id_Qr: data,
         })
       );
-      alert("berhasil");
-    } else {
-      dispatch(
-        putAbsen({
-          token: token,
-          idabsen: idabsen,
-          status: "waiting",
-          is_scan: true,
-        })
-      );
-      alert("gagal");
     }
   };
 
@@ -200,11 +191,22 @@ export const DetailAgenda = () => {
       id: notu[0].id,
     };
     dispatch(deleteNotulensi(item));
+    dispatch(setRefresh(true));
   };
 
-  console.log(absenLists);
+  useEffect(() => {
+    if (refresh === true) {
+      dispatch(getlistNotulensi({ token, idagenda }));
+      const params = { token: token, id: data.id };
+      dispatch(getEventAgendaDetail(params));
+      dispatch(setRefresh(false));
+    }
+  }, [refresh]);
 
+  // console.log(absenLists);
+  console.log(data);
   const { device } = useSelector((state) => state.apps);
+  const { profile } = useSelector((state) => state.superApps);
 
   return (
     <>
@@ -686,7 +688,7 @@ export const DetailAgenda = () => {
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
-                  width: "55%",
+                  width: "45%",
                   fontWeight: FONTWEIGHT.bold,
                   fontSize: fontSizeResponsive("H4", device),
                 }}
@@ -939,7 +941,8 @@ export const DetailAgenda = () => {
 
             {data.user_role?.is_pic === true &&
             !notu[0]?.ready_to_approve &&
-            notu.length !== 0 ? (
+            notu.length !== 0 &&
+            data?.notulensi?.ready_to_approve === false ? (
               <TouchableOpacity
                 style={{
                   width: "100%",
@@ -1005,10 +1008,11 @@ export const DetailAgenda = () => {
                   event.detailEvent.status !== "persiapan") ||
                 (data.user_role?.is_notulensi === true &&
                   event.detailEvent.status !== "persiapan") ||
-                (data.user_role?.is_notulensi === false &&
-                  data.user_role?.is_presensi === false &&
-                  data.user_role?.is_member === false &&
-                  data.user_role?.is_pic === false &&
+                (data.user_role?.is_member === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.user_role?.is_presensi === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.creator?.nip === profile.nip &&
                   event.detailEvent.status !== "persiapan") ? (
                   <View>
                     <TouchableOpacity
@@ -1060,30 +1064,35 @@ export const DetailAgenda = () => {
                                             <Ionicons name='trash-outline' size={24} color={COLORS.white} />
                                             <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
                                         </TouchableOpacity> */}
-
-                    <TouchableOpacity
-                      style={{
-                        width: "100%",
-                        height: 50,
-                        borderRadius: 8,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 10,
-                        backgroundColor: COLORS.infoDanger,
-                        marginTop: 10,
-                      }}
-                      onPress={() => setVisibleModal(true)}
-                    >
-                      <Text
+                    {(data.user_role?.is_member === true &&
+                      event.detailEvent.status !== "persiapan") ||
+                    (data.user_role?.is_presensi === true &&
+                      event.detailEvent.status !== "persiapan") ||
+                    data?.notulensi?.ready_to_approve === true ? null : (
+                      <TouchableOpacity
                         style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
+                          width: "100%",
+                          height: 50,
+                          borderRadius: 8,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: 10,
+                          backgroundColor: COLORS.infoDanger,
+                          marginTop: 10,
                         }}
+                        onPress={() => setVisibleModal(true)}
                       >
-                        Take Down Artikel
-                      </Text>
-                    </TouchableOpacity>
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Hapus Notulensi
+                        </Text>
+                      </TouchableOpacity>
+                    )}
 
                     <Modal
                       animationType="fade"
@@ -1188,7 +1197,7 @@ export const DetailAgenda = () => {
                                   fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
-                                Take Down Artikel
+                                Hapus Notulensi
                               </Text>
                             </TouchableOpacity>
                           </ScrollView>
@@ -1593,6 +1602,8 @@ export const DetailAgenda = () => {
               setIdAbsen={setIdAbsen}
               loading={loading}
               device={device}
+              creator={data.creator?.nip}
+              profile={profile.nip}
             />
           )}
           scrollEnabled={false}

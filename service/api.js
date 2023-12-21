@@ -305,7 +305,7 @@ export const getDetailAbsen = createAsyncThunk(
 
 export const putAbsen = createAsyncThunk("calendar/putAbsen", async (data) => {
   const respon = await axios.put(
-    `${kalender}event/agenda/presensi/${data.idabsen}/update/`,
+    `${kalender}event/agenda/presensi/qrcode/${data.id_Qr}`,
     { status: data.status, is_scan: data.is_scan },
     { headers: { Authorization: data.token } }
   );

@@ -100,7 +100,6 @@ const TaskSlice = createSlice({
         };
         state.list = newDataList;
         state.loading = false;
-        console.log("asdads", data);
       })
       .addCase(getListDashboardTM.pending, (state, action) => {
         state.loading = true;
