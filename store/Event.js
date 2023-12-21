@@ -9,6 +9,7 @@ import {
   getEventAgenda,
   getEventAgendaDetail,
   getEventDetail,
+  getEventFilter,
   getEventProgress,
   getEventToday,
   getlistAbsen,
@@ -57,6 +58,9 @@ const EventSlice = createSlice({
       lists: [],
       detail: {},
       checkin: {},
+    },
+    eventFilter: {
+      list: [],
     },
     kalenderLists: [],
     attachment: [],
@@ -145,6 +149,16 @@ const EventSlice = createSlice({
         state.loading = true;
       })
       .addCase(getEventProgress.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getEventFilter.fulfilled, (state, action) => {
+        state.eventFilter.list = action.payload;
+        state.loading = false;
+      })
+      .addCase(getEventFilter.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getEventFilter.rejected, (state, action) => {
         state.loading = false;
       })
       .addCase(getEventDetail.fulfilled, (state, action) => {

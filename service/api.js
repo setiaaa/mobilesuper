@@ -176,6 +176,19 @@ export const getEvent = createAsyncThunk("calendar/getEvent", async (token) => {
   return respon?.data.results;
 });
 
+export const getEventFilter = createAsyncThunk(
+  "calendar/getEventFilter",
+  async ({ token, status, search }) => {
+    const respon = await axios.get(
+      `${kalender}event/?limit=999&status=${status}&title=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
 export const getEventToday = createAsyncThunk(
   "calendar/getEventToday",
   async (token) => {
