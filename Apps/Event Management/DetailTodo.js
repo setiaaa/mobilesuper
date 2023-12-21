@@ -306,8 +306,8 @@ export const DetailTodo = () => {
                   style={{
                     backgroundColor: COLORS.white,
                     borderRadius: 20,
-                    width: 28,
-                    height: 28,
+                    width: device === "tablet" ? 40 : 28,
+                    height: device === "tablet" ? 40 : 28,
                     alignItems: "center",
                     justifyContent: "center",
                     marginLeft: 20,
@@ -316,7 +316,7 @@ export const DetailTodo = () => {
                   <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons
                       name="chevron-back-outline"
-                      size={24}
+                      size={device === "tablet" ? 40 : 24}
                       color={COLORS.primary}
                     />
                   </TouchableOpacity>

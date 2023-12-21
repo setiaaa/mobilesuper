@@ -345,7 +345,7 @@ export const initDownload = (item) => {
     fileUrl = item.file;
     fileType = item.description;
     fileName = item.filename;
-    fileName = item.filename.split("/")[3];
+    fileName = item.filename.split("/")[3].replaceAll(" ", "_");
   }
   downloadFile(fileUrl, fileType, fileName);
 };
@@ -366,9 +366,10 @@ const downloadFile = async (fileUrl, fileType, fileName) => {
   );
   try {
     const { uri } = await downloadResumable.downloadAsync();
-    if (Platform.OS == "android") {
-      saveAndroidFile(uri, fileName, fileType);
-    } else saveIosFile(uri);
+    // if (Platform.OS == "android") {
+    //   saveAndroidFile(uri, fileName, fileType);
+    // } else
+    saveIosFile(uri);
   } catch (e) {
     setIsLoading(false);
     console.error("download error:", e);

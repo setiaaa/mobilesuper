@@ -336,11 +336,9 @@ function DetailAgendaInpro({
                 paddingRight: 20,
               }}
             >
-              <Text>
-                {data && data?.senders[0].title
-                  ? data?.senders[0].title
-                  : data?.senders[0].name}
-              </Text>
+              {data && data?.senders[0].title
+                ? data?.senders[0].title
+                : data?.senders[0].name}
             </Text>
           </View>
         </View>
@@ -354,14 +352,24 @@ function DetailAgendaInpro({
         >
           <Text>{data?.subject}</Text>
         </View>
+        {tipe == "TrackingDetail" && (
+          <>
+            <Text style={{ fontSize: 15, fontWeight: 600 }}>Posisi Surat</Text>
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                padding: 20,
+                borderRadius: 16,
+              }}
+            >
+              <Text style={{ fontSize: 13 }}>{data?.position}</Text>
+            </View>
+          </>
+        )}
         {data?.template?.name != "nota_external" && (
           <>
             <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{ fontSize: 15, fontWeight: 600 }}
-              >
-                Kepada
-              </Text>
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>Kepada</Text>
               <Text
                 style={{ fontSize: 15, fontWeight: 600, color: COLORS.danger }}
               >
@@ -461,11 +469,7 @@ function DetailAgendaInpro({
                 )}
             </View>
             <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{ fontSize: 15, fontWeight: 600 }}
-              >
-                Tembusan
-              </Text>
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
             </View>
             <View
               style={{
@@ -711,11 +715,7 @@ function DetailAgendaInpro({
               </>
             )}
             <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{ fontSize: 15, fontWeight: 600 }}
-              >
-                Tembusan
-              </Text>
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
             </View>
             <View
               style={{
@@ -730,9 +730,7 @@ function DetailAgendaInpro({
                     <Text style={{ fontSize: 13 }}>-</Text>
                   )}
                   {data && data.copytos?.length == 1 && (
-                    <Text style={{ fontSize: 13 }}>
-                      {data.copytos[0]}
-                    </Text>
+                    <Text style={{ fontSize: 13 }}>{data.copytos[0]}</Text>
                   )}
                   {data && data.copytos?.length > 1 && (
                     <View>
@@ -768,9 +766,7 @@ function DetailAgendaInpro({
               )}
             </View>
             <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{ fontSize: 15, fontWeight: 600 }}
-              >
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>
                 Tembusan Eksternal
               </Text>
             </View>

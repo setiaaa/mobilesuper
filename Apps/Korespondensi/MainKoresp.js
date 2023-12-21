@@ -11,49 +11,48 @@ export default function MainKoresp() {
   const navigation = useNavigation();
   return (
     <>
-    
-    <View
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: COLORS.primary,
+          height: 80,
+        }}
+      >
+        <View
           style={{
-            flexDirection: "row",
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: 28,
+            height: 28,
             alignItems: "center",
-            backgroundColor: COLORS.primary,
-            height: 80,
+            justifyContent: "center",
+            marginLeft: 20,
           }}
         >
-          <View
+          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+            <Ionicons
+              name="chevron-back-outline"
+              size={24}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+          <Text
             style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: 28,
-              height: 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
+              fontSize: 15,
+              fontWeight: 600,
+              color: COLORS.white,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-              <Ionicons
-                name="chevron-back-outline"
-                size={24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: 600,
-                color: COLORS.white,
-              }}
-            >
-              Korespondensi
-            </Text>
-          </View>
+            Korespondensi
+          </Text>
         </View>
-    <BottomSheetModalProvider>
-      <BottomTabsKoresp />
-    </BottomSheetModalProvider>
+      </View>
+      <BottomSheetModalProvider>
+        <BottomTabsKoresp />
+      </BottomSheetModalProvider>
     </>
   );
 }
