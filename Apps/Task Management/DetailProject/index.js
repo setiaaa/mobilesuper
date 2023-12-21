@@ -78,6 +78,10 @@ export const DetailProject = ({
     const bottomSheetMember = () => {
         bottomSheetModalMemberRef.current?.present()
     }
+    const bottomsheetMemberClose = () => {
+      if (bottomSheetModalMemberRef.current)
+      bottomSheetModalMemberRef.current?.close();
+    };
     useEffect(() => {
         let arrList = []
         const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
@@ -123,6 +127,7 @@ export const DetailProject = ({
   return (
     <>
       {loading === true ? null : (
+        <BottomSheetModalProvider>
         <View style={{ flex: 1 }}>
           <ScrollView>
             <View
@@ -548,17 +553,15 @@ export const DetailProject = ({
                 )}
                 ListEmptyComponent={() => <ListEmpty />}
               />
-            </View>
-
-            <Portal>
-              <BottomSheetModalProvider>
+            </View> 
+            {/* <Portal>  */}
                 <BottomSheetModal
                   ref={bottomSheetModalMemberRef}
                   snapPoints={animatedSnapPoints}
                   handleHeight={animatedHandleHeight}
                   contentHeight={animatedContentHeight}
                   index={0}
-                  style={{ borderRadius: 50 }}
+                  style={{ borderTopLeftRadius:50, borderTopRightRadius:50 }}
                   keyboardBlurBehavior="restore"
                   android_keyboardInputMode="adjust"
                   backdropComponent={({ style }) => (
@@ -574,6 +577,8 @@ export const DetailProject = ({
                           marginBottom: 20,
                           justifyContent: "center",
                           alignItems: "center",
+                          flexDirection:"row",
+                          justifyContent:"space-around"
                         }}
                       >
                         <Text
@@ -585,6 +590,26 @@ export const DetailProject = ({
                         >
                           Penanggung Jawab
                         </Text>
+                        <TouchableOpacity
+                        onPress={() => {
+                          bottomsheetMemberClose()
+                        }}
+                      >
+                        <View
+                          style={{
+                            width: 51,
+                            height: 51,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: 50,
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                          />
+                        </View>
+                      </TouchableOpacity>
                       </View>
                       <View>
                         <FlatList
@@ -600,10 +625,10 @@ export const DetailProject = ({
                     </View>
                   </BottomSheetView>
                 </BottomSheetModal>
-              </BottomSheetModalProvider>
-            </Portal>
+          {/* </Portal> */}
           </ScrollView>
         </View>
+              </BottomSheetModalProvider>
       )}
     </>
   );
