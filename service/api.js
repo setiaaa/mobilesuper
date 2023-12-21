@@ -176,6 +176,19 @@ export const getEvent = createAsyncThunk("calendar/getEvent", async (token) => {
   return respon?.data.results;
 });
 
+export const getEventFilter = createAsyncThunk(
+  "calendar/getEventFilter",
+  async ({ token, status, search }) => {
+    const respon = await axios.get(
+      `${kalender}event/?limit=999&status=${status}&title=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
 export const getEventToday = createAsyncThunk(
   "calendar/getEventToday",
   async (token) => {
@@ -938,7 +951,7 @@ export const getListKorespondensiTM = createAsyncThunk(
   "taskmanagement/getListKorespondensiTM",
   async ({ token, page }) => {
     console.log("ini api korespondesni " + page);
-    console.log(token)
+    console.log(token);
     const respon = await axios.get(
       `${TaskKorespondensi}integration/nde/todo/`,
       {
@@ -1089,7 +1102,7 @@ export const getCompleteTM = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
   "taskmanagement/deleteTask",
   async (data) => {
-    console.log("masuk api")
+    console.log("masuk api");
     console.log(data);
     const respon = await axios.delete(
       `${taskManagement}task/${data.id}/destroy/`,
@@ -2058,35 +2071,30 @@ export const getDocumentCetakSPPD = createAsyncThunk(
 //help desk
 export const getTicket = createAsyncThunk(
   "helpDesk/getTicket",
-  async ( data ) => {
+  async (data) => {
     const respon = await axios.get(`${HelpDesk}ticket?nip=${data.nip}`, {
       headers: { Authorization: data.token },
-    })
+    });
     return respon.data.results;
   }
 );
 
-export const getParts = createAsyncThunk(
-  "helpDesk/getParts",
-  async () => {
-    const respon = await axios.get(`${HelpDesk}parts`, {
-      // headers: { Authorization: token },
-    });
-    return respon.data;
-  }
-);
+export const getParts = createAsyncThunk("helpDesk/getParts", async () => {
+  const respon = await axios.get(`${HelpDesk}parts`, {
+    // headers: { Authorization: token },
+  });
+  return respon.data;
+});
 
 export const postTicket = createAsyncThunk(
   "ticket/postTicket",
   async (data) => {
-    console.log("api post")
-    console.log(data.payload)
-    const respon = await axios.post(`${HelpDesk}ticket/store`, 
-    data.payload,
-    {
+    console.log("api post");
+    console.log(data.payload);
+    const respon = await axios.post(`${HelpDesk}ticket/store`, data.payload, {
       headers: { Authorization: data.token },
     });
-    console.log(respon)
+    console.log(respon);
     return respon?.data;
   }
 );
