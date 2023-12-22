@@ -151,7 +151,11 @@ export const CardProgresEvent = ({
               <>
                 <Image
                   source={{ uri: item.pic.avatar_url }}
-                  style={{ width: 26, height: 26, borderRadius: 30 }}
+                  style={{
+                    width: device === "tablet" ? 60 : 26,
+                    height: device === "tablet" ? 60 : 26,
+                    borderRadius: 30,
+                  }}
                 />
                 <Text
                   style={{

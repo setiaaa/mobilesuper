@@ -4,7 +4,12 @@ import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
-import { COLORS, FONTSIZE, FONTWEIGHT, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,12 +28,13 @@ import moment from "moment/moment";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 
-export const DetailDokumenLain = () => {
+export const DetailDokumenLain = ({ route }) => {
+  const variant = route.params;
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
   const { digitalsign, loading } = useSelector((state) => state.digitalsign);
   const item = digitalsign.detail;
-  
+
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
@@ -55,7 +61,6 @@ export const DetailDokumenLain = () => {
   }, [file, item]);
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { device } = useSelector((state) => state.apps);
-
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -135,7 +140,13 @@ export const DetailDokumenLain = () => {
                 )}
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold, fontSize: fontSizeResponsive("H4", device), }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
                     No Dokumen
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
@@ -146,15 +157,23 @@ export const DetailDokumenLain = () => {
                         height={20}
                       />
                     ) : (
-                      <Text style={{fontSize: fontSizeResponsive("H4", device),}}>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
                         {item.extra_attributes?.noDokumen}
                       </Text>
                     )}
                   </View>
                 </View>
 
-                <View style={{ flexDirection: "row", gap: 10, marginTop: 20, }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold, fontSize: fontSizeResponsive("H4", device), }}>
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
                     Penerima Sertifikat
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
@@ -183,7 +202,10 @@ export const DetailDokumenLain = () => {
                                       fontWeight: FONTWEIGHT.bold,
                                       color: COLORS.info,
                                       marginBottom: 5,
-                                      fontSize: fontSizeResponsive("H4", device),
+                                      fontSize: fontSizeResponsive(
+                                        "H2",
+                                        device
+                                      ),
                                     }}
                                   >
                                     {item.receivers?.display_title !== undefined
@@ -191,7 +213,14 @@ export const DetailDokumenLain = () => {
                                       : null}
                                   </Text>
                                   <Text
-                                    style={{ color: COLORS.lighter, width: "80%", fontSize: fontSizeResponsive("H4", device), }}
+                                    style={{
+                                      color: COLORS.lighter,
+                                      width: "80%",
+                                      fontSize: fontSizeResponsive(
+                                        "H2",
+                                        device
+                                      ),
+                                    }}
                                   >
                                     {item.receivers?.officer?.nama !== undefined
                                       ? item.receivers?.officer?.nama
@@ -200,9 +229,15 @@ export const DetailDokumenLain = () => {
                                 </View>
                               ) : (
                                 <Text
-                                  style={{ color: COLORS.lighter, width: "80%", fontSize: fontSizeResponsive("H4", device), }}
+                                  style={{
+                                    color: COLORS.lighter,
+                                    width: "80%",
+                                    fontSize: fontSizeResponsive("H2", device),
+                                  }}
                                 >
-                                  {item.receivers?.nama !== undefined ? item.receivers?.nama : "-"}
+                                  {item.receivers?.nama !== undefined
+                                    ? item.receivers?.nama
+                                    : "-"}
                                 </Text>
                               )}
                             </View>
@@ -228,7 +263,13 @@ export const DetailDokumenLain = () => {
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold, fontSize: fontSizeResponsive("H4", device), }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
                     Tanggal Dibuat
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
@@ -239,7 +280,9 @@ export const DetailDokumenLain = () => {
                         height={20}
                       />
                     ) : (
-                      <Text style={{fontSize: fontSizeResponsive("H4", device),}}>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
                         {moment(item.extra_attributes?.tanggalDokumen).format(
                           "DD MMMM yyyy"
                         )}
@@ -249,7 +292,13 @@ export const DetailDokumenLain = () => {
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold, fontSize: fontSizeResponsive("H4", device), }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
                     Jenis Dokumen
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
@@ -260,7 +309,9 @@ export const DetailDokumenLain = () => {
                         height={20}
                       />
                     ) : (
-                      <Text style={{fontSize: fontSizeResponsive("H4", device),}}>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      >
                         {item.extra_attributes?.jenisDokumen}
                       </Text>
                     )}
@@ -268,7 +319,13 @@ export const DetailDokumenLain = () => {
                 </View>
 
                 <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
-                  <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold, fontSize: fontSizeResponsive("H4", device), }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
                     Keterangan
                   </Text>
                   <Text>:</Text>
@@ -278,7 +335,9 @@ export const DetailDokumenLain = () => {
                       height={20}
                     />
                   ) : (
-                    <Text style={{fontSize: fontSizeResponsive("H4", device),}}>
+                    <Text
+                      style={{ fontSize: fontSizeResponsive("H2", device) }}
+                    >
                       {item.extra_attributes?.keterangan === undefined ||
                       item.extra_attributes?.keterangan === ""
                         ? "-"
@@ -335,7 +394,12 @@ export const DetailDokumenLain = () => {
                             alignItems: "center",
                           }}
                         >
-                          <Text style={{ fontWeight: FONTWEIGHT.bold,fontSize: fontSizeResponsive("H4", device), }}>
+                          <Text
+                            style={{
+                              fontWeight: FONTWEIGHT.bold,
+                              fontSize: fontSizeResponsive("H2", device),
+                            }}
+                          >
                             Penandatangan
                           </Text>
                           {item.sequence > index ? (
@@ -370,7 +434,12 @@ export const DetailDokumenLain = () => {
                                   paddingHorizontal: 15,
                                 }}
                               >
-                                <Text style={{ color: COLORS.success, fontSize: fontSizeResponsive("H4", device), }}>
+                                <Text
+                                  style={{
+                                    color: COLORS.success,
+                                    fontSize: fontSizeResponsive("H2", device),
+                                  }}
+                                >
                                   Ditandatangani
                                 </Text>
                               </View>
@@ -404,7 +473,12 @@ export const DetailDokumenLain = () => {
                                   paddingHorizontal: 15,
                                 }}
                               >
-                                <Text style={{ color: COLORS.infoDanger, fontSize: fontSizeResponsive("H4", device), }}>
+                                <Text
+                                  style={{
+                                    color: COLORS.infoDanger,
+                                    fontSize: fontSizeResponsive("H2", device),
+                                  }}
+                                >
                                   Belum Ditandatangani
                                 </Text>
                               </View>
@@ -456,7 +530,10 @@ export const DetailDokumenLain = () => {
                                       marginTop: 2,
                                       color: COLORS.lighter,
                                       fontWeight: FONTWEIGHT.bold,
-                                      fontSize: fontSizeResponsive("H4", device),
+                                      fontSize: fontSizeResponsive(
+                                        "H2",
+                                        device
+                                      ),
                                     }}
                                   >
                                     {data?.officer?.nama != undefined
@@ -481,10 +558,15 @@ export const DetailDokumenLain = () => {
                                       marginTop: 10,
                                       color: COLORS.lighter,
                                       fontWeight: FONTWEIGHT.bold,
-                                      fontSize: fontSizeResponsive("H4", device),
+                                      fontSize: fontSizeResponsive(
+                                        "H2",
+                                        device
+                                      ),
                                     }}
                                   >
-                                    {data?.nama !== undefined ? data?.nama : "-"}
+                                    {data?.nama !== undefined
+                                      ? data?.nama
+                                      : "-"}
                                   </Text>
                                 )}
                               </View>
@@ -514,32 +596,46 @@ export const DetailDokumenLain = () => {
                   marginHorizontal: "5%",
                 }}
               >
-                <Text style={{ color: COLORS.white, marginVertical: 15, fontSize: fontSizeResponsive("H2", device), }}>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    marginVertical: 15,
+                    fontSize: fontSizeResponsive("H2", device),
+                  }}
+                >
                   Lihat Sertifikat
                 </Text>
               </TouchableOpacity>
             )}
-            <>
-              <TouchableOpacity
-                style={{
-                  width: "90%",
-                  backgroundColor: COLORS.infoDanger,
-                  borderRadius: 6,
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  marginHorizontal: "5%",
-                }}
-                onPress={() =>
-                  navigation.navigate("PdfPerisai", {
-                    item: item,
-                  })
-                }
-              >
-                <Text style={{ color: COLORS.white, marginVertical: 15, fontSize: fontSizeResponsive("H2", device), }}>
-                  Sign
-                </Text>
-              </TouchableOpacity>
-            </>
+            {variant.variant === "inprogress" ? (
+              <>
+                <TouchableOpacity
+                  style={{
+                    width: "90%",
+                    backgroundColor: COLORS.infoDanger,
+                    borderRadius: 6,
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginHorizontal: "5%",
+                  }}
+                  onPress={() =>
+                    navigation.navigate("PdfPerisai", {
+                      item: item,
+                    })
+                  }
+                >
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginVertical: 15,
+                      fontSize: fontSizeResponsive("H2", device),
+                    }}
+                  >
+                    Sign
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
           </View>
 
           <BottomSheetModal

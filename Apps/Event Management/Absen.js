@@ -65,7 +65,10 @@ const CardListAbsen = ({ item, loading, device }) => {
             style={{ flexDirection: "row", gap: wp(4), alignItems: "center" }}
           >
             <Text
-              style={{ width: 110, fontSize: fontSizeResponsive("H4", device) }}
+              style={{
+                width: device === "tablet" ? 220 : 105,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
             >
               Status
             </Text>
@@ -78,8 +81,8 @@ const CardListAbsen = ({ item, loading, device }) => {
             ) : (
               <View
                 style={{
-                  width: 80,
-                  height: 24,
+                  width: device === "tablet" ? 160 : 80,
+                  height: device === "tablet" ? 40 : 24,
                   borderRadius: 30,
                   backgroundColor:
                     item.status === "hadir"
@@ -182,9 +185,7 @@ const CardListAbsen = ({ item, loading, device }) => {
                     <Text
                       style={{ fontSize: fontSizeResponsive("H4", device) }}
                     >
-                      {moment(item.updated_at, "HH:mm:ss").format(
-                        DATETIME.LONG_DATETIME
-                      )}
+                      {item.updated_at}
                     </Text>
                   </View>
                 )}

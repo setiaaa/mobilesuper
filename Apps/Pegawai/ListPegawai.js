@@ -63,9 +63,9 @@ export const ListPegawai = () => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getPegawai({ token, page }));
+      dispatch(getPegawai({ token, page, search }));
     }
-  }, [token, page]);
+  }, [token, page, search]);
 
   const { pegawai, loading } = useSelector((state) => state.Pegawai);
   const { device } = useSelector((state) => state.apps);
@@ -156,7 +156,6 @@ export const ListPegawai = () => {
     setAscending(false);
     setIsFiltered(true);
   };
-
   return (
     <>
       <>
@@ -213,7 +212,7 @@ export const ListPegawai = () => {
             <View style={{ width: "85%" }}>
               <Search
                 placeholder={"Cari"}
-                onSearch={filter}
+                onSearch={setSearch}
                 iconColor={COLORS.primary}
               />
             </View>
@@ -239,7 +238,7 @@ export const ListPegawai = () => {
           </View>
 
           <FlatList
-            data={filterData}
+            data={pegawai.lists}
             renderItem={({ item }) => (
               <CardListPegawai
                 item={item}

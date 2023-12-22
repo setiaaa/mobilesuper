@@ -65,7 +65,7 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
         onPress={() => {
           getDetail(item.id);
-          navigation.navigate("DetailDokumenLain");
+          navigation.navigate("DetailDokumenLain", { variant: variant });
         }}
       >
         {/* {variant === "inprogress" ? (

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
@@ -206,8 +206,30 @@ export const DetailAgenda = () => {
   const { device } = useSelector((state) => state.apps);
   const { profile } = useSelector((state) => state.superApps);
 
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(absenLists);
+  }, [absenLists]);
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = absenLists?.filter((item) => {
+        return item.member?.nama.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(absenLists);
+    }
+  }, [search]);
+
   return (
-    <>
+    <KeyboardAvoidingView>
       <ScrollView>
         <View
           style={{
@@ -589,8 +611,8 @@ export const DetailAgenda = () => {
                     <Image
                       source={{ uri: data.avatar_url }}
                       style={{
-                        width: 26,
-                        height: 26,
+                        width: device === "tablet" ? 60 : 26,
+                        height: device === "tablet" ? 60 : 26,
                         marginLeft: index !== 0 ? -7 : 0,
                         borderRadius: 50,
                       }}
@@ -604,7 +626,7 @@ export const DetailAgenda = () => {
               >
                 <Ionicons
                   name="chevron-forward-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.lighter}
                 />
               </TouchableOpacity>
@@ -652,7 +674,7 @@ export const DetailAgenda = () => {
                     >
                       <Ionicons
                         name="close-outline"
-                        size={24}
+                        size={device === "tablet" ? 40 : 24}
                         color={COLORS.lighter}
                       />
                     </TouchableOpacity>
@@ -709,8 +731,8 @@ export const DetailAgenda = () => {
                     <Image
                       source={{ uri: data.avatar_url }}
                       style={{
-                        width: 26,
-                        height: 26,
+                        width: device === "tablet" ? 60 : 26,
+                        height: device === "tablet" ? 60 : 26,
                         marginLeft: index !== 0 ? -7 : 0,
                         borderRadius: 50,
                       }}
@@ -837,7 +859,10 @@ export const DetailAgenda = () => {
                 bottomSheetAttach();
               }}
             >
-              <Ionicons name="document-outline" size={24} />
+              <Ionicons
+                name="document-outline"
+                size={device === "tablet" ? 40 : 24}
+              />
               <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 Info Approval
               </Text>
@@ -1571,43 +1596,98 @@ export const DetailAgenda = () => {
             width: "90%",
             flex: 1,
             alignSelf: "center",
-            padding: 15,
+            padding: 5,
             borderRadius: 8,
+            marginBottom: 40,
           }}
         >
-          <Text
+          <View
             style={{
-              fontWeight: FONTWEIGHT.bold,
-              fontSize: fontSizeResponsive("H4", device),
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              marginHorizontal: "5%",
+              marginTop: 10,
             }}
           >
-            Absensi
-          </Text>
-          {/* <View style={{ marginTop: 10 }}>
-                        <Search />
-                    </View> */}
-        </View>
-
-        <FlatList
-          data={absenLists}
-          renderItem={({ item }) => (
-            <CardListAbsenEvent
-              item={item}
-              role={data.user_role}
-              eventpic={event.detailEvent?.user_role?.is_pic}
-              status={event.detailEvent.status}
-              setScanData={setScanData}
-              setIdAbsen={setIdAbsen}
-              loading={loading}
-              device={device}
-              creator={data.creator?.nip}
-              profile={profile.nip}
+            <Ionicons
+              name="people-outline"
+              size={device === "tablet" ? 40 : 24}
             />
-          )}
-          scrollEnabled={false}
-          style={{ marginBottom: 10 }}
-          ListEmptyComponent={() => <ListEmpty />}
-        />
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.bold,
+              }}
+            >
+              Presensi
+            </Text>
+          </View>
+          <View style={{ marginHorizontal: "5%", marginVertical: 10 }}>
+            <Search
+              placeholder={"Cari"}
+              iconColor={COLORS.primary}
+              onSearch={filter}
+            />
+          </View>
+          <FlatList
+            data={filterData}
+            renderItem={({ item }) => (
+              <CardListAbsenEvent
+                item={item}
+                role={data.user_role}
+                eventpic={event.detailEvent?.user_role?.is_pic}
+                status={event.detailEvent.status}
+                setScanData={setScanData}
+                setIdAbsen={setIdAbsen}
+                loading={loading}
+                device={device}
+                creator={data.creator?.nip}
+                profile={profile.nip}
+              />
+            )}
+            scrollEnabled={true}
+            nestedScrollEnabled
+            style={{ maxHeight: 300 }}
+            ListEmptyComponent={() => <ListEmpty />}
+          />
+          {(data.creator?.nip === profile?.nip &&
+            event.detailEvent?.status !== "persiapan") ||
+          (data.user_role?.is_pic === true &&
+            event.detailEvent?.status !== "persiapan") ||
+          (data.user_role?.is_presensi === true &&
+            event.detailEvent?.status !== "persiapan") ? (
+            <TouchableOpacity
+              style={{
+                width: "90%",
+                borderWidth: 1,
+                height: 50,
+                borderRadius: 8,
+                justifyContent: "center",
+                alignItems: "center",
+                marginHorizontal: "5%",
+                marginVertical: "5%",
+                borderColor: COLORS.primary,
+              }}
+              onPress={() => {
+                setScanData(false);
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+              >
+                <Ionicons
+                  name="qr-code-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Scan QRCode
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
+        </View>
 
         {/* {event.detailEvent?.user_role?.is_pic === true ||
                     data.user_role?.is_pic === true ||
@@ -1643,8 +1723,42 @@ export const DetailAgenda = () => {
                     ) : (
                         <></>
                     )} */}
+        {data.user_role?.is_pic === true &&
+        event.detailEvent.status !== "persiapan" &&
+        data?.notulensi?.ready_to_approve === true ? (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity
+              style={{
+                width: "90%",
+                height: 50,
+                borderRadius: 8,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 10,
+                marginTop: 10,
+                marginBottom: 40,
+                backgroundColor: COLORS.primary,
+              }}
+              onPress={() => {
+                navigation.navigate("TandaTanganNotulensi", {
+                  item: notu[0]?.pdf,
+                });
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  color: COLORS.white,
+                }}
+              >
+                Tanda Tangan Notulensi
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </ScrollView>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

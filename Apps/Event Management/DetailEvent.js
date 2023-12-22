@@ -391,8 +391,8 @@ export const DetailEvent = () => {
                             <Image
                               source={{ uri: data.avatar_url }}
                               style={{
-                                width: 26,
-                                height: 26,
+                                width: device === "tablet" ? 60 : 26,
+                                height: device === "tablet" ? 60 : 26,
                                 marginLeft: index !== 0 ? -7 : 0,
                                 borderRadius: 50,
                               }}
@@ -405,7 +405,10 @@ export const DetailEvent = () => {
                         bottomSheetAttach();
                       }}
                     >
-                      <Ionicons name="chevron-forward" size={24} />
+                      <Ionicons
+                        name="chevron-forward"
+                        size={device === "tablet" ? 40 : 24}
+                      />
                     </TouchableOpacity>
                   </View>
                 ) : (
@@ -414,8 +417,8 @@ export const DetailEvent = () => {
                       <Image
                         source={{ uri: data.avatar_url }}
                         style={{
-                          width: 26,
-                          height: 26,
+                          width: device === "tablet" ? 60 : 26,
+                          height: device === "tablet" ? 60 : 26,
                           marginLeft: index !== 0 ? -7 : 0,
                           borderRadius: 50,
                         }}
@@ -474,7 +477,7 @@ export const DetailEvent = () => {
                         >
                           <Ionicons
                             name="close-outline"
-                            size={24}
+                            size={device === "tablet" ? 40 : 24}
                             color={COLORS.lighter}
                           />
                         </TouchableOpacity>
