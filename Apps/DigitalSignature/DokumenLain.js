@@ -41,7 +41,6 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
     dispatch(getDetailDigisign(params));
   };
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
-  console.log(item);
   return (
     <View
       key={item.id}
@@ -66,7 +65,7 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
         onPress={() => {
           getDetail(item.id);
-          navigation.navigate("DetailDokumenLain");
+          navigation.navigate("DetailDokumenLain", { variant: variant });
         }}
       >
         {/* {variant === "inprogress" ? (

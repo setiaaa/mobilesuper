@@ -140,7 +140,7 @@ const CardTodoEvent = ({ item, device }) => {
   );
 };
 
-const CardEventFilter = ({ item, device }) => {
+const CardEventFilter = ({ item, device, token }) => {
   const [collapse, setCollapse] = useState({
     toggle: false,
   });
@@ -151,6 +151,14 @@ const CardEventFilter = ({ item, device }) => {
     collapse.toggle
       ? setCollapse({ toggle: false })
       : setCollapse({ toggle: true });
+  };
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const getDetail = (id) => {
+    const params = { token, id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getEventDetail(params));
   };
 
   return (
@@ -193,7 +201,7 @@ const CardEventFilter = ({ item, device }) => {
       {collapse.toggle ? (
         <View style={{ marginBottom: 10 }}>
           {children.map((data) => (
-            <View
+            <TouchableOpacity
               key={data.id}
               style={{
                 backgroundColor: COLORS.white,
@@ -208,6 +216,10 @@ const CardEventFilter = ({ item, device }) => {
                 paddingVertical: 10,
                 borderRadius: 8,
                 rowGap: 10,
+              }}
+              onPress={() => {
+                getDetail(data.id);
+                navigation.navigate("MainDetailEvent");
               }}
             >
               <Text
@@ -283,7 +295,7 @@ const CardEventFilter = ({ item, device }) => {
                   </View>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       ) : null}
@@ -753,7 +765,11 @@ export const HalamanUtama = () => {
                   <FlatList
                     data={eventFilter.list}
                     renderItem={({ item }) => (
-                      <CardEventFilter item={item} device={device} />
+                      <CardEventFilter
+                        item={item}
+                        token={token}
+                        device={device}
+                      />
                     )}
                     // keyExtractor={(item) => item.id}
                     ListEmptyComponent={() => <ListEmpty />}
@@ -838,7 +854,12 @@ export const HalamanUtama = () => {
               <FlatList
                 data={filterDataHariIni}
                 renderItem={({ item }) => (
-                  <CardListEvent token={token} item={item} loading={loading} />
+                  <CardListEvent
+                    token={token}
+                    item={item}
+                    loading={loading}
+                    device={device}
+                  />
                 )}
                 keyExtractor={(item) => item.id}
                 style={{ marginBottom: 300 }}
