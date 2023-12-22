@@ -155,11 +155,6 @@ const CardEventFilter = ({ item, token, device }) => {
       : setCollapse({ toggle: true });
   };
 
-  const getDetail = (id) => {
-    const params = { token, id };
-    dispatch(getEventDetail(params));
-  };
-
   return (
     <View>
       <TouchableOpacity
@@ -219,6 +214,10 @@ const CardEventFilter = ({ item, token, device }) => {
                 paddingVertical: 10,
                 borderRadius: 8,
                 rowGap: 10,
+              }}
+              onPress={() => {
+                getDetail(data.id);
+                navigation.navigate("MainDetailEvent");
               }}
             >
               <Text
@@ -853,7 +852,12 @@ export const HalamanUtama = () => {
               <FlatList
                 data={filterDataHariIni}
                 renderItem={({ item }) => (
-                  <CardListEvent token={token} item={item} loading={loading} />
+                  <CardListEvent
+                    token={token}
+                    item={item}
+                    loading={loading}
+                    device={device}
+                  />
                 )}
                 keyExtractor={(item) => item.id}
                 style={{ marginBottom: 300 }}

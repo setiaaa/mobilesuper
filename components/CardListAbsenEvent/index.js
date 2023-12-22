@@ -51,6 +51,7 @@ export const CardListAbsenEvent = ({
           shadowOpacity: 0.2,
           //shadow android
           elevation: 2,
+          marginBottom: device == "tablet" ? 20 : 5,
         }}
         // onPress={() => {
         //     navigation.navigate('DetailAbsen')
@@ -202,7 +203,7 @@ export const CardListAbsenEvent = ({
                 ) : (
                   <View
                     style={{
-                      width: device === "tablet" ? 300 : 150,
+                      width: device === "tablet" ? 300 : 160,
                       paddingVertical: 5,
                       borderRadius: 30,
                       backgroundColor: COLORS.ExtraDivinder,
@@ -223,7 +224,7 @@ export const CardListAbsenEvent = ({
               </View>
             )}
           </View>
-          {(eventpic === true &&
+          {/* {(eventpic === true &&
             item.status !== "hadir" &&
             status !== "persiapan") ||
           (role.is_pic === true &&
@@ -267,7 +268,7 @@ export const CardListAbsenEvent = ({
             </TouchableOpacity>
           ) : (
             <></>
-          )}
+          )} */}
         </View>
       </View>
     </View>
