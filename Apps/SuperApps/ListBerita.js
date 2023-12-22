@@ -127,7 +127,7 @@ export const ListBerita = () => {
             <Text
               style={{
                 color: "white",
-                fontSize: fontSizeResponsive("H3", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
               }}
             >

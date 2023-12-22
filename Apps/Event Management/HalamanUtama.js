@@ -140,7 +140,9 @@ const CardTodoEvent = ({ item, device }) => {
   );
 };
 
-const CardEventFilter = ({ item, device }) => {
+const CardEventFilter = ({ item, token, device }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [collapse, setCollapse] = useState({
     toggle: false,
   });
@@ -151,6 +153,11 @@ const CardEventFilter = ({ item, device }) => {
     collapse.toggle
       ? setCollapse({ toggle: false })
       : setCollapse({ toggle: true });
+  };
+
+  const getDetail = (id) => {
+    const params = { token, id };
+    dispatch(getEventDetail(params));
   };
 
   return (
@@ -193,7 +200,11 @@ const CardEventFilter = ({ item, device }) => {
       {collapse.toggle ? (
         <View style={{ marginBottom: 10 }}>
           {children.map((data) => (
-            <View
+            <TouchableOpacity
+              onPress={() => {
+                getDetail(data.id);
+                navigation.navigate("MainDetailEvent");
+              }}
               key={data.id}
               style={{
                 backgroundColor: COLORS.white,
@@ -283,7 +294,7 @@ const CardEventFilter = ({ item, device }) => {
                   </View>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       ) : null}
@@ -753,7 +764,11 @@ export const HalamanUtama = () => {
                   <FlatList
                     data={eventFilter.list}
                     renderItem={({ item }) => (
-                      <CardEventFilter item={item} device={device} />
+                      <CardEventFilter
+                        item={item}
+                        token={token}
+                        device={device}
+                      />
                     )}
                     // keyExtractor={(item) => item.id}
                     ListEmptyComponent={() => <ListEmpty />}
@@ -890,7 +905,7 @@ export const HalamanUtama = () => {
                           borderColor: COLORS.secondaryLighter,
                         }}
                       >
-                        <Ionicons name="filter-outline" size={24} />
+                        <Ionicons name="funnel-outline" size={24} />
                       </View>
                     </TouchableOpacity>
 
@@ -935,9 +950,6 @@ export const HalamanUtama = () => {
                   />
                 }
               />
-              {search === "" && !isFiltered
-                ? console.log("event.listprogress")
-                : console.log("filterData")}
             </View>
           )}
 
