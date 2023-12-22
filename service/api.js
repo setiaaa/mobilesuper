@@ -176,6 +176,19 @@ export const getEvent = createAsyncThunk("calendar/getEvent", async (token) => {
   return respon?.data.results;
 });
 
+export const getEventFilter = createAsyncThunk(
+  "calendar/getEventFilter",
+  async ({ token, status, search }) => {
+    const respon = await axios.get(
+      `${kalender}event/?limit=999&status=${status}&title=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
 export const getEventToday = createAsyncThunk(
   "calendar/getEventToday",
   async (token) => {
@@ -305,7 +318,7 @@ export const getDetailAbsen = createAsyncThunk(
 
 export const putAbsen = createAsyncThunk("calendar/putAbsen", async (data) => {
   const respon = await axios.put(
-    `${kalender}event/agenda/presensi/${data.idabsen}/update/`,
+    `${kalender}event/agenda/presensi/qrcode/${data.id_Qr}`,
     { status: data.status, is_scan: data.is_scan },
     { headers: { Authorization: data.token } }
   );

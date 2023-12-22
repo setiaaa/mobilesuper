@@ -72,7 +72,7 @@ const ListCompleteProject = ({ item, device }) => {
       <View>
         <Text
           style={{
-            fontSize: fontSizeResponsive("H1", device),
+            fontSize: fontSizeResponsive("H4", device),
             fontWeight: FONTWEIGHT.bold,
           }}
         >
@@ -80,7 +80,7 @@ const ListCompleteProject = ({ item, device }) => {
         </Text>
         <Text
           style={{
-            fontSize: fontSizeResponsive("H1", device),
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {item.title}

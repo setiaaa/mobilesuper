@@ -98,7 +98,8 @@ export const DetailEvent = () => {
 
   const data = event.detailEvent;
 
-  console.log(data?.creator?.nip);
+  // console.log(data.user_role?.is_pic);
+  console.log(data.creator?.nip === profile.nip);
 
   const { device } = useSelector((state) => state.apps);
 
