@@ -57,7 +57,6 @@ export const DetailKorespondensiTM = () => {
 
         return titleCase
     }
-    console.log("ini task detail")
     return (
         <>
             {taskDetail !== null ? (

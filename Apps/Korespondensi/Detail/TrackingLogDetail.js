@@ -38,7 +38,6 @@ function TrackingLogDetail({ route, data }) {
       }
       setIsLoading(false);
     } catch (error) {
-      console.log(error.response);
       Alert.alert("Warning!", "Log Disposition not working!");
       setIsLoading(false);
     }

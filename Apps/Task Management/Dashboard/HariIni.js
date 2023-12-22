@@ -31,10 +31,8 @@ export const HariIni = () => {
     if (filterData % 5 === 0) {
       setPage(page + 5);
     }
-    console.log("page dari harini" + page);
   };
 
-  // console.log(list)
 
   const renderShimmerList = () => {
     const arr = [];
@@ -75,7 +73,6 @@ export const HariIni = () => {
     } else {
       setFilterData(filterDataStatus);
     }
-    console.log(filterData);
   }, [search, taskLists]);
 
   const { device } = useSelector((state) => state.apps);

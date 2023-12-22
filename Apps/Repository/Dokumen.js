@@ -51,7 +51,6 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDocument(params));
   };
-  console.log(item.published);
   return (
     <BottomSheetModalProvider>
       <View
@@ -396,10 +395,8 @@ export const Dokumen = () => {
     try {
       if (token !== "") {
         dispatch(getDocument({ token: token, page: page, type: type.key }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

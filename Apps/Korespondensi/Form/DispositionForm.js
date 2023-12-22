@@ -172,7 +172,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
       setTindakanList(response.data);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       handlerError(error, "Peringatan!", "Nota Tindakan tidak berfungsi!");
       setIsLoading(false);
     }
@@ -268,7 +267,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
             request[i].send_priority_todo = items.send_priority_todo1.value;
           }
         });
-        console.log(request);
         let payload = {
           request: request,
           copy_log: "1",
@@ -293,7 +291,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
       }
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       handlerError(error, "Peringatan!", "Disposisi tidak berfungsi!");
       setIsLoading(false);
     }

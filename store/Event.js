@@ -253,11 +253,9 @@ const EventSlice = createSlice({
         state.loading = false;
       })
       .addCase(putAbsen.fulfilled, (state, action) => {
-        console.log(action.payload);
         alert("Scan Berhasil");
       })
       .addCase(putAbsen.rejected, (state, action) => {
-        console.log(action.payload);
         alert("Scan Gagal");
       })
       .addCase(getlistKalender.fulfilled, (state, action) => {
@@ -287,11 +285,9 @@ const EventSlice = createSlice({
         state.todo.detail = newDetailTodo;
       })
       .addCase(postAttachment.fulfilled, (state, action) => {
-        console.log("berhasi");
         state.attachment = [...state.attachment, action.payload];
       })
       .addCase(postAttachment.rejected, (state, action) => {
-        console.log("gagal");
       })
       .addCase(postEvent.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -302,7 +298,6 @@ const EventSlice = createSlice({
         state.loading = false;
       })
       .addCase(postEvent.rejected, (state, action) => {
-        console.log(action.payload);
         state.status = "error";
         state.loading = false;
       })
@@ -318,7 +313,6 @@ const EventSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateEvent.rejected, (state, action) => {
-        console.log(action.payload);
         state.status = "error";
         state.loading = false;
       })
@@ -331,7 +325,6 @@ const EventSlice = createSlice({
         state.loading = true;
       })
       .addCase(postSubAgenda.rejected, (state, action) => {
-        console.log(action.payload, "error");
         state.status = "error";
         state.loading = false;
       })
@@ -348,12 +341,10 @@ const EventSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateSubAgenda.rejected, (state, action) => {
-        console.log(action.payload);
         state.status = "error";
         state.loading = false;
       })
       .addCase(readyToApprove.rejected, (state, action) => {
-        console.log(action.payload);
         state.status = "error";
       })
       .addCase(readyToApprove.fulfilled, (state, action) => {
@@ -361,32 +352,26 @@ const EventSlice = createSlice({
         state.refresh = true;
       })
       .addCase(postTodo.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.status = "berhasil";
         state.loading = false;
       })
       .addCase(postTodo.pending, (state, action) => {
-        console.log(action.payload);
         state.status = "berhasil";
         state.loading = true;
       })
       .addCase(postTodo.rejected, (state, action) => {
-        console.log(action.payload);
         state.status = "error";
         state.loading = false;
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.status = "berhasil";
         state.loading = false;
       })
       .addCase(updateTodo.pending, (state, action) => {
-        console.log(action.payload);
         state.status = "berhasil";
         state.loading = true;
       })
       .addCase(updateTodo.rejected, (state, action) => {
-        console.log(action.payload);
         state.status = "error";
         state.loading = false;
       });

@@ -404,7 +404,6 @@ export const EditEvent = () => {
     };
     dispatch(updateEvent(datas));
   };
-  console.log(Tamu);
 
   const { device } = useSelector((state) => state.apps);
 

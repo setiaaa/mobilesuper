@@ -33,7 +33,6 @@ function ListTodo({ title, result }) {
           };
         }
       } catch (error) {
-        console.log(JSON.stringify(error));
         Alert.alert("Warning!", "Avatar " + title + " not working!");
       }
     }
@@ -154,7 +153,6 @@ function ListTodo({ title, result }) {
                             height: 32,
                           }}
                           onError={(error) => {
-                            console.log(error);
                             setErrorAvatarSender(true);
                           }}
                         />

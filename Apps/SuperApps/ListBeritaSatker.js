@@ -37,7 +37,6 @@ export const ListBeritaSatker = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getSatkerNews({ token, page }));
-      console.log("page", page);
     }
   }, [token, page]);
 
@@ -75,11 +74,8 @@ export const ListBeritaSatker = () => {
     try {
       if (token !== "") {
         dispatch(getSatkerNews({ token, page }));
-        console.log(page, "page");
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

@@ -203,7 +203,6 @@ export const Notulensi = () => {
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
 
-  console.log(notu);
 
   const { device } = useSelector((state) => state.apps);
 

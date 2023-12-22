@@ -50,7 +50,6 @@ export const TerlewatKorespondensi = () => {
         if (filterData % 5 === 0) {
           setPage(page + 5);
         }
-        console.log("page dari terlewatkors" + page);
     };
 
     // const renderShimmerList = () => {

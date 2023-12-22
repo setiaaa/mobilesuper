@@ -105,7 +105,6 @@ const CardLists = ({
   };
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const { width } = useWindowDimensions();
-  console.log(item);
   return (
     <View>
       {/* {value === 'taspen' ? (
@@ -234,10 +233,8 @@ export const Kesejahteraan = () => {
     try {
       if (token !== "") {
         dispatch(getKesejahteraan({ token: token, value: value, page: page }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

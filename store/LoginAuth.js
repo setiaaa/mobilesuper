@@ -23,13 +23,10 @@ const LoginAuthSlice = createSlice({
         state.token = action.payload;
         state.error = action.payload.error;
         state.msg = action.payload.msg;
-        console.log("berhasil");
       })
       .addCase(Login.rejected, (state, action) => {
-        console.log("gagal!");
         state.error = false;
         state.error = action.payload.error;
-        console.log(action);
         state.msg = action.payload.msg;
       });
   },

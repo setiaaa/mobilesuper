@@ -49,11 +49,9 @@ export const Semua = () => {
         if (taskLists % 5 === 0) {
             setPage(page + 5);
         }
-        console.log(page)
         return page
     };
 
-    // console.log(list)
 
     const renderShimmerList = () => {
         const arr = []
@@ -94,7 +92,6 @@ export const Semua = () => {
         } else {
             setFilterData(item)
         }
-        console.log(filterData)
     }, [search, taskLists])
     return (
         <>

@@ -96,7 +96,6 @@ export const TambahCutiTahunan = () => {
     tipe = tipe[tipe.length - 1];
     setDocument([...document, result]);
     setType([...type, tipe]);
-    // console.log(result);
 
     const data = {
       // token: token,
@@ -160,7 +159,6 @@ export const TambahCutiTahunan = () => {
       payload: payload,
     };
     dispatch(postPengajuanCuti(data));
-    // console.log(data);
   };
 
   const handleSubmitDraft = () => {
@@ -183,7 +181,6 @@ export const TambahCutiTahunan = () => {
       payload: payload,
     };
     dispatch(postPengajuanCutiDraft(data));
-    // console.log(data);
   };
 
   const selectDate = () => {
@@ -198,7 +195,6 @@ export const TambahCutiTahunan = () => {
       payload: payload,
     };
     dispatch(postTanggalCuti(data));
-    // console.log(data);
   };
 
   useEffect(() => {
@@ -259,8 +255,6 @@ export const TambahCutiTahunan = () => {
         };
     }
   };
-
-  console.log(jumlahCuti.jumlah_cuti);
 
   const { device } = useSelector((state) => state.apps);
 

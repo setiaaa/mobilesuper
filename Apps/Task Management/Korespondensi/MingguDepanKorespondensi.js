@@ -47,7 +47,6 @@ export const MingguDepanKorespondensi = () => {
         if (filterData % 5 === 0) {
           setPage(page + 5);
         }
-        console.log("page dari nextweekkores" + page);
     };
 
     // const renderShimmerList = () => {

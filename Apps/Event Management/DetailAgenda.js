@@ -203,8 +203,6 @@ export const DetailAgenda = () => {
     }
   }, [refresh]);
 
-  // console.log(absenLists);
-  console.log(data);
   const { device } = useSelector((state) => state.apps);
   const { profile } = useSelector((state) => state.superApps);
 

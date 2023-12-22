@@ -17,7 +17,6 @@ const PdfViewer = ({ route }) => {
   const { data } = route.params;
   const navigation = useNavigation();
   useEffect(() => {
-    console.log(data);
   }, []);
   const { device } = useSelector((state) => state.apps);
   return (

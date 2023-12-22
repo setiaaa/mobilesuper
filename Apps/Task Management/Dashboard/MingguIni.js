@@ -39,7 +39,6 @@ export const MingguIni = () => {
     return arr;
   };
 
-  console.log(filterData);
   const renderShimmerGrid = () => {
     const arr = [];
     for (let i = 0; i < 6; i++) {
@@ -67,7 +66,6 @@ export const MingguIni = () => {
     } else {
       setFilterData(filterDataStatus);
     }
-    console.log(filterData);
   }, [search, taskLists]);
 
   const { device } = useSelector((state) => state.apps);

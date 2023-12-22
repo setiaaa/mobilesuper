@@ -186,7 +186,6 @@ export const DetailPenilaian = () => {
   const { penilaian, nilai, error } = useSelector((state) => state.pengetahuan);
   const { profile } = useSelector((state) => state.superApps);
   const data = penilaian.detail !== null ? penilaian.detail : null;
-  console.log(data);
 
   useEffect(() => {
     var date = new Date().getDate();

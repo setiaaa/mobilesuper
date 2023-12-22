@@ -151,8 +151,6 @@ export const LaporanDigitalSign = () => {
     }
   }
 
-  console.log(summary);
-
   const { device } = useSelector((state) => state.apps);
 
   return (

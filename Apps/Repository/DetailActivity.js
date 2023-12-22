@@ -99,7 +99,6 @@ export const DetailActivity = () => {
     });
   }, []);
   const ratingCompleted = (rating) => {
-    console.log(token);
     const payload = {
       rating: rating,
     };
@@ -108,11 +107,9 @@ export const DetailActivity = () => {
       token: token,
       payload: payload,
     };
-    console.log(data);
     dispatch(postRating(data));
   };
 
-  // console.log(dokumen);
 
   const { device } = useSelector((state) => state.apps);
 

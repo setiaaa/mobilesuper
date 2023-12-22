@@ -192,7 +192,6 @@ export const TambahSubAgenda = () => {
         tipe = tipe[tipe.length - 1]
         setDocument([...document, result])
         setType([...type, tipe])
-        console.log(result)
         const data = {
             token: token,
             result: result
@@ -276,8 +275,6 @@ export const TambahSubAgenda = () => {
         }
         setArrIsChecked(arr)
     }
-
-    console.log(pilihanPesertaTambahanInternal)
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>

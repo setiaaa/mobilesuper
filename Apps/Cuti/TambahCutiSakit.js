@@ -60,10 +60,7 @@ export const CardlPimpinan = ({ item }) => {
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
-  console.log(lampiran);
 
-  // console.log(name);
-  // console.log(size);
   return type === "png" || type === "jpg" || type === "jpeg" ? (
     <TouchableOpacity key={id} onPress={onClick}>
       <View
@@ -331,7 +328,6 @@ const CardKomen = ({
       toggle: temp,
       id: id,
     });
-    console.log(id);
   };
 
   const handleClickBalas = () => {
@@ -713,7 +709,6 @@ export const TambahCutiSakit = () => {
     tipe = tipe[tipe.length - 1];
     setDocument([...document, result]);
     setType([...type, tipe]);
-    // console.log(result);
 
     const data = {
       // token: token,
@@ -791,8 +786,6 @@ export const TambahCutiSakit = () => {
     dispatch(postPembatalanCuti(data));
     dispatch(setAttachmentCuti([]));
   };
-
-  console.log(arsipDetail.detail_dokumen?.dokumen?.id);
 
   const { device } = useSelector((state) => state.apps);
   return (

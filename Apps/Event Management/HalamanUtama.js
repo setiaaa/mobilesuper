@@ -445,10 +445,8 @@ export const HalamanUtama = () => {
         } else {
           dispatch(getEventProgress(token));
         }
-        // console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -467,7 +465,6 @@ export const HalamanUtama = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  // console.log(event.listsprogress);
   return (
     <View style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -935,9 +932,6 @@ export const HalamanUtama = () => {
                   />
                 }
               />
-              {search === "" && !isFiltered
-                ? console.log("event.listprogress")
-                : console.log("filterData")}
             </View>
           )}
 

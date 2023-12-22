@@ -72,7 +72,6 @@ const DashboardSlice = createSlice({
 
                 state.kesejahteraan.lists = newData
 
-                // console.log(newData)
                 state.loading = false
             })
             .addCase(getKesejahteraan.pending, (state, action) => {
@@ -92,7 +91,6 @@ const DashboardSlice = createSlice({
 
                 state.perencanaan.lists = newData
 
-                // console.log(newData)
                 state.loading = false
             })
             .addCase(getPerencanaan.pending, (state, action) => {

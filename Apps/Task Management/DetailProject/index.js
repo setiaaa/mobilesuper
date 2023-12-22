@@ -111,7 +111,6 @@ export const DetailProject = ({
                 value: item.name
             })
         })
-        // console.log(index)
         // setChoiceList(arrList.length > 0 ? arrList[0] : '')
         setDataList(arrList)
     }, [choiceKategori])
@@ -120,13 +119,11 @@ export const DetailProject = ({
   {
     treeView.map((item) => {
       if (detailProject.id === item.id) {
-        // console.log('masuk')
         item.list_tasks.map((task) => {
           arrTask.push({
             key: task.id,
             value: task.name,
           });
-          // console.log("task id", task.id)
           // setDataList(arrTask)
         });
       } else {
@@ -139,10 +136,7 @@ export const DetailProject = ({
       key: "1",
       value: "Dashboard",
     };
-    // console.log(type)
   };
-  // console.log("ini type")
-  // console.log(type)
 
   const { device } = useSelector((state) => state.apps);
 
@@ -551,7 +545,6 @@ export const DetailProject = ({
                       token: token,
                       id: detailProject.id,
                     };
-                    console.log(datas);
                     dispatch(deleteTaskProject(datas));
                     setTimeout(() => {
                       dispatch(getListDashboardTM({ token: token, page: 5 }));

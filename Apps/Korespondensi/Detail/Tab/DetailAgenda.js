@@ -184,11 +184,9 @@ function DetailAgenda({ id, noAgenda, data, style, tipe, preview, title }) {
             }
           });
         } catch (error) {
-          console.log(error);
         }
       },
       (error) => {
-        console.log(error);
       }
     );
   };

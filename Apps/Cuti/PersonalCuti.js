@@ -71,10 +71,8 @@ export const PersonalCuti = () => {
         dispatch(getCutiPersonal(profile?.nip));
         dispatch(getKuotaCuti(profile?.nip));
         dispatch(getArsipCuti(profile?.nip));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -103,11 +101,9 @@ export const PersonalCuti = () => {
       setJumlahDraft(draftData.length);
       setJumlahReject(rejectedData.length);
     } else {
-      console.log("Tidak dapat membaca properti 'status' dari arsipLists.");
     }
   }, [arsipLists]);
 
-  // console.log(kuota);
 
   const { device } = useSelector((state) => state.apps);
 

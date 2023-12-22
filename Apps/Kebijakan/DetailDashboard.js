@@ -32,7 +32,6 @@ export default function DetailDashboard({ route }) {
 
   let judul = data.subjek.replace(/\s/g, "-");
 
-  console.log(data);
 
   const downloadFromUrl = () => {
     let remoteUrl = data.link;

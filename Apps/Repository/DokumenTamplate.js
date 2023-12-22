@@ -327,10 +327,8 @@ export const DokumenTamplate = () => {
             satker: filterSatker ? filterSatker.value : "",
           })
         );
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

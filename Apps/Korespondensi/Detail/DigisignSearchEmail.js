@@ -58,7 +58,6 @@ function DigisignSearchEmail({ route }) {
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
       handlerError(error, "Warning!", "Send email not working");
       setIsLoading(false);
     }

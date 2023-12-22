@@ -1155,7 +1155,6 @@ function AppNavigator() {
       cekValidVersion(response.data.version);
     } catch (error) {
       if (error.status == null) {
-        console.log("cek", error);
         Alert.alert("Warning!", "Please check your connection");
       } else {
         handlerError(error, "Warning!", "Check Version Ios not working!");

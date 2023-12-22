@@ -72,7 +72,6 @@ export const DetailDokumenSPPD = ({ route }) => {
   //       encoding: FileSystem.EncodingType.Base64,
   //     });
 
-  //     console.log("File PDF berhasil disimpan:", directory);
 
   //     // Sekarang Anda dapat menggunakan file URL untuk merujuk ke file PDF
   //     // Misalnya, membuka file menggunakan expo-document-viewer
@@ -108,13 +107,10 @@ export const DetailDokumenSPPD = ({ route }) => {
         console.error("download error:", e);
       }
     } catch (e) {
-      console.log("Error");
-      console.log(e);
     }
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
-      console.log(fileUri);
       const fileString = await FileSystem.readAsStringAsync(fileUri, {
         encoding: FileSystem.EncodingType.Base64,
       });
@@ -155,7 +151,6 @@ export const DetailDokumenSPPD = ({ route }) => {
         dialogTitle: "Share PDF",
       });
     } catch (error) {
-      console.log(fileUri);
       console.error("Error sharing file:", error);
     }
   };
@@ -189,8 +184,6 @@ export const DetailDokumenSPPD = ({ route }) => {
   //   }
   // });
   // };
-  // console.log(cetak);
-  // console.log(surat)
 
   return (
     <>

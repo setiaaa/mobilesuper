@@ -224,7 +224,6 @@ export const DetailTodo = () => {
       toggle: temp,
       id: id,
     });
-    console.log(id);
   };
   const handleClickBalas = (id, creator) => {
     setParentId({ id: id, creator: creator });
@@ -1124,11 +1123,9 @@ export const DetailTodo = () => {
                                               </TouchableOpacity>
                                             ) : null}
                                           </View>
-                                          {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
                                         </View>
                                       )
                                     )}
-                                    {/* {console.log(items.Komentar[0].balas[0].idBalas)} */}
                                   </View>
                                 ) : null}
                               </View>

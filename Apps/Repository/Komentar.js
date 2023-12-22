@@ -40,8 +40,6 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
       id: id,
     });
   };
-  console.log("ini items");
-  console.log(items);
 
   return (
     <View
@@ -301,8 +299,6 @@ export const Komentar = () => {
   const detail = dokumen.detail;
 
   const comment = detail.comments;
-  console.log(dokumen);
-  // console.log(comment);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -321,8 +317,6 @@ export const Komentar = () => {
       token: token,
       payload: payload,
     };
-    console.log(parentId.id);
-    console.log(payload.parent_id);
     dispatch(postCommentRepo(data));
     setKomen("");
     setParentId({ id: "", creator: "" });

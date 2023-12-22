@@ -64,7 +64,6 @@ export const ListPegawai = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getPegawai({ token, page }));
-      console.log(page, "page");
     }
   }, [token, page]);
 
@@ -125,11 +124,8 @@ export const ListPegawai = () => {
     try {
       if (token !== "") {
         dispatch(getPegawai({ token, page }));
-        console.log(page, "page");
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

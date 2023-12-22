@@ -249,7 +249,6 @@ function DetailAttachment({ data, id, tipeRef }) {
       const UTI = "public.item";
       const shareResult = await Sharing.shareAsync(fileUri, { UTI });
     } catch (error) {
-      console.log(error);
     }
   };
   const loadingOverlay = (

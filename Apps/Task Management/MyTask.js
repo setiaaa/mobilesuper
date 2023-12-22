@@ -124,7 +124,6 @@ export const MyTask = () => {
   //     if (taskLists.length % 5 === 0) {
   //         setPage(page + 5);
   //     }
-  //     console.log(page);
   // };
 
   const [search, setSearch] = useState("");
@@ -179,7 +178,6 @@ export const MyTask = () => {
 
   useEffect(() => {
     let arrList = [];
-    console.log(choiceKategori);
     const index = treeView.map((e) => e.id).indexOf(choiceKategori.key);
     treeView[index]?.list_tasks?.map((item) => {
       arrList.push({
@@ -187,12 +185,10 @@ export const MyTask = () => {
         value: item.name,
       });
     });
-    // console.log("index mytask" + index)
     // setChoiceList(arrList.length > 0 ? arrList[0] : '')
     setDataList(arrList);
   }, [choiceKategori]);
 
-  // console.log(choiceKategori)
 
   const handleChoiceSubmit = () => {
     if (choiceTipe.value === "Dashboard") {
@@ -279,7 +275,6 @@ export const MyTask = () => {
         })
       );
     } else if (refresh === "detail_project") {
-      console.log("refresh detail project");
       dispatch(getTreeTM({ token: token }));
       dispatch(
         getDetailProjectTM({

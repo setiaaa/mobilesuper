@@ -96,10 +96,8 @@ export const PersetujanCuti = () => {
     try {
       if (profile.nip !== "") {
         dispatch(getDokumenPersetujuan(profile?.nip));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

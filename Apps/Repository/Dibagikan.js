@@ -275,10 +275,8 @@ export const Dibagikan = () => {
         dispatch(
           getDocumentDibagikan({ token: token, page: page, general: general })
         );
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -287,7 +285,6 @@ export const Dibagikan = () => {
     }, 2000);
   }, [token, page]);
 
-  console.log(load);
 
   const { device } = useSelector((state) => state.apps);
 

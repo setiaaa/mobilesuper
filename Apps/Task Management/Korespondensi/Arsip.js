@@ -27,7 +27,6 @@ export const Arsip = () => {
         if (filterData % 5 === 0) {
           setPage(page + 5);
         }
-        console.log("page dari arsp" + page);
     };
 
     const data = []

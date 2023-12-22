@@ -44,10 +44,8 @@ export const Terlewat = () => {
     if (filterData % 5 === 0) {
       setPage(page + 5);
     }
-    console.log("page dari terlewat" + page);
   };
 
-  console.log(filterData);
   const renderShimmerGrid = () => {
     const arr = [];
     for (let i = 0; i < 6; i++) {

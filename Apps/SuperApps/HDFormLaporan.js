@@ -52,7 +52,6 @@ export const HDFormLaporan = () => {
       setToken(val);
     });
   }, []);
-  console.log(token)
   const handleSubmit = () => {
     const payload = {
       requestor: profile.nip,
@@ -64,8 +63,6 @@ export const HDFormLaporan = () => {
       token: token,
       payload: payload,
     };
-    console.log("datadalemsubmit");
-    console.log(data);
     dispatch(postTicket(data));
   };
 

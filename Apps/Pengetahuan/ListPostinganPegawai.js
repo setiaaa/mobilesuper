@@ -18,7 +18,6 @@ import { StatusBar } from "expo-status-bar";
 import { Loading } from "../../components/Loading";
 
 const CardListPostingan = ({ item, device }) => {
-  // console.log(item);
   return (
     <View
       style={{
@@ -98,9 +97,6 @@ export const ListPostinganPegawai = (param) => {
     (state) => state.pengetahuan
   );
 
-  // console.log(postinganPegawai);
-
-  // console.log(param.route.params);
 
   const nama = param?.route?.params;
 
@@ -108,7 +104,6 @@ export const ListPostinganPegawai = (param) => {
     postinganPegawai.lists = [];
   };
 
-  console.log(postinganPegawai.lists);
 
   const { device } = useSelector((state) => state.apps);
 

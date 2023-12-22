@@ -64,7 +64,6 @@ const DataGrid = ({ judul, id, icon, device }) => {
 
   // const getId = (ids) => {
   //   const params = { token: token, id: ids, page: 10 };
-  //   console.log("ini id : " + ids);
   //   dispatch(getUnitKerjaTematikId(params));
   // };
 
@@ -142,7 +141,6 @@ export const Tematik = () => {
 
   const unitKerjaTematik = unitKerja.lists;
 
-  // console.log(unitKerjaTematik);
 
   const { device } = useSelector((state) => state.apps);
 

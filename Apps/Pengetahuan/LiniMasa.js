@@ -66,7 +66,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
       toggle: temp,
       id: id,
     });
-    // console.log(id);
   };
 
   const handleClickBalas = () => {
@@ -343,9 +342,6 @@ const CardLiniMasa = ({ item, token, device }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
-  // console.log(item)
-
-  // console.log(item)
 
   const handleLike = () => {
     const data = {
@@ -367,7 +363,6 @@ const CardLiniMasa = ({ item, token, device }) => {
   };
 
   const { linimasa, refresh } = useSelector((state) => state.pengetahuan);
-  // console.log(linimasa?.detail);
   const detail = linimasa?.detail;
 
   const [komen, setKomen] = useState("");
@@ -1533,7 +1528,6 @@ export const LiniMasa = () => {
 
     setCategory(category);
 
-    console.log(category);
   }, [kegiatan, infografis, videoJurnal]);
 
   useEffect(() => {
@@ -1559,7 +1553,6 @@ export const LiniMasa = () => {
 
     setCompetence(competence);
 
-    console.log(competence);
   }, [kepemimpinan, manajerial, sosialKultural, teknisFungsional]);
 
   const [filterUnker, setFilterUnker] = useState();
@@ -1626,10 +1619,7 @@ export const LiniMasa = () => {
         setPage(page + 5);
       }
     }
-    console.log(page);
   };
-
-  // console.log(linimasa.listsLike)
 
   const filterSearch = () => {
     setSearch(inputValue);
@@ -1669,7 +1659,6 @@ export const LiniMasa = () => {
   //   setIsFiltered(true);
   // };
 
-  // console.log(linimasa.lists.like_list[0])
 
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalFilterRef = useRef(null);
@@ -1730,10 +1719,8 @@ export const LiniMasa = () => {
           })
         );
         dispatch(setRefresh(false));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -1748,7 +1735,6 @@ export const LiniMasa = () => {
     }
   }, [linimasa]);
 
-  // console.log(filterData);
 
   const { device } = useSelector((state) => state.apps);
 

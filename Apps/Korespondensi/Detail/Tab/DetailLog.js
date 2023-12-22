@@ -50,7 +50,6 @@ function DetailLog({ route, data }) {
       setLog(response?.data);
       setIsLoading(false);
     } catch (error) {
-      console.log(error.response);
       Alert.alert("Warning!", "Log Disposition not working!");
       setIsLoading(false);
     }

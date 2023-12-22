@@ -306,7 +306,6 @@ export const EditSubAgenda = () => {
     tipe = tipe[tipe.length - 1];
     setDocument([...document, result]);
     setType([...type, tipe]);
-    console.log(result);
     const data = {
       token: token,
       result: result,
@@ -390,7 +389,6 @@ export const EditSubAgenda = () => {
     setArrIsChecked(arr);
   };
 
-  console.log(agendaDetail);
 
   const { device } = useSelector((state) => state.apps);
 

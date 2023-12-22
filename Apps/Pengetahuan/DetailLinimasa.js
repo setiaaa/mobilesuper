@@ -55,8 +55,6 @@ import { TextInput } from "react-native";
 const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
   const navigation = useNavigation();
 
-  // console.log(lampiran);
-  // console.log(size);
   return type === "png" || type === "jpg" || type === "jpeg" ? (
     <TouchableOpacity key={id} onPress={onClick}>
       <View
@@ -307,7 +305,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
       toggle: temp,
       id: id,
     });
-    // console.log(id);
   };
 
   const handleClickBalas = () => {
@@ -715,7 +712,6 @@ export const DetailLinimasa = (item) => {
       id: detail.id,
     };
     if (refresh) {
-      // console.log("masukkkkkkk");
       dispatch(getDetailLinimasa(data));
       dispatch(setRefresh(false));
     }
@@ -723,12 +719,9 @@ export const DetailLinimasa = (item) => {
 
   const [flatListScrolling, setFlatListScrolling] = useState(false);
 
-  // console.log(linimasa.detail.li)
 
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
-
-  // console.log(linimasa.lists?.like_list)
 
   const { device } = useSelector((state) => state.apps);
 

@@ -52,7 +52,6 @@ function IncomingDetail({ route }) {
     try {
       let response = await getHTTP(nde_api.agendainread.replace("{$id}", id));
     } catch (error) {
-      console.log(error.response);
     }
   };
 

@@ -55,13 +55,10 @@ const LihatSuratSPPD = ({ route }) => {
         console.error("download error:", e);
       }
     } catch (e) {
-      console.log("Error");
-      console.log(e);
     }
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
-      console.log(fileUri);
       const fileString = await FileSystem.readAsStringAsync(fileUri, {
         encoding: FileSystem.EncodingType.Base64,
       });
@@ -102,13 +99,11 @@ const LihatSuratSPPD = ({ route }) => {
         dialogTitle: "Share PDF",
       });
     } catch (error) {
-      console.log(fileUri);
       console.error("Error sharing file:", error);
     }
   };
 
   const fileName = data?.replace(/\s/g, "_");
-  console.log(fileName);
 
   return (
     <>
@@ -189,14 +184,13 @@ const LihatSuratSPPD = ({ route }) => {
             base64: surat,
           }}
           onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`Number of pages: ${numberOfPages}`);
-            console.log(`File path: ${filePath}`);
+
           }}
           onPageChanged={(page, numberOfPages) => {
-            console.log(`Current page: ${page}`);
+            
           }}
           onError={(error) => {
-            console.log(`Error: ${error}`);
+
           }}
         />
         {/* <Image

@@ -158,7 +158,6 @@ export const DetailTask = () => {
 
     return titleCase;
   };
-  console.log(taskDetail);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -867,7 +866,6 @@ export const DetailTask = () => {
                           token: token,
                           id: taskDetail.id,
                         };
-                        console.log(datas);
                         dispatch(deleteTask(datas));
                         setTimeout(() => {
                           dispatch(

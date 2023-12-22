@@ -57,10 +57,8 @@ export const HDLaporanSaya = () => {
     try {
       if (token !== "") {
         dispatch(getTicket({ nip, token }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -84,8 +82,6 @@ export const HDLaporanSaya = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(tiket);
-  // console.log(nip)
   return (
     <>
       <View

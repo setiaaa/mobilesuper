@@ -348,7 +348,6 @@ export const Home = () => {
                       </Text>
                       <TouchableOpacity
                         onPress={() => {
-                          console.log();
                           closeBottomSheet();
                         }}
                       >

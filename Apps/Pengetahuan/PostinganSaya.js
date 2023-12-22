@@ -53,7 +53,6 @@ const CardPostinganSaya = ({ item, token, device }) => {
     dispatch(getViewLinimasa(params));
   };
 
-  // console.log(item);
 
   return (
     <View style={{ width: "90%", alignSelf: "center", marginVertical: 10 }}>
@@ -590,7 +589,6 @@ export const PostinganSaya = () => {
         setPage(page + 5);
       }
     }
-    console.log(page);
   };
 
   const [search, setSearch] = useState("");
@@ -623,10 +621,8 @@ export const PostinganSaya = () => {
     try {
       if (token !== "") {
         dispatch(getMyPostList({ token: token, page: page }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -635,7 +631,6 @@ export const PostinganSaya = () => {
     }, 2000);
   }, [token, page]);
 
-  // console.log(postinganSaya.lists);
 
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);

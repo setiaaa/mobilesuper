@@ -135,8 +135,6 @@ export const AddressBookPegawai = ({ route }) => {
     }
   }, [search]);
 
-  console.log(addressbook?.employee);
-
   const { device } = useSelector((state) => state.apps);
 
   return (

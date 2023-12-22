@@ -95,10 +95,8 @@ export const AgendaEvent = () => {
     try {
       if (token !== "") {
         dispatch(getEventAgenda({ token: token, id: event.detailEvent.id }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -122,7 +120,6 @@ export const AgendaEvent = () => {
   //     }
   // }, [search])
 
-  console.log(agenda.lists);
 
   const { device } = useSelector((state) => state.apps);
 

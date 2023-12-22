@@ -204,7 +204,6 @@ export const Laporan = () => {
     setAscending(false);
   };
 
-  console.log("complete.list", complete.list);
 
   const { device } = useSelector((state) => state.apps);
 
