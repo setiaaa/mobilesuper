@@ -535,7 +535,7 @@ export const DetailSertifikat = (route) => {
                             </View>
                           )}
                         </View>
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={{ flexDirection: "row", columnGap:10 }}>
                           <Image
                             source={{ uri: data.avatar_url }}
                             style={{
