@@ -159,6 +159,11 @@ export const ListPegawai = () => {
     setIsFiltered(true);
   };
 
+  const filter = () => {
+    setIsFiltered(false);
+    setSearch(inputValue);
+  };
+
   return (
     <>
       <>
@@ -213,12 +218,32 @@ export const ListPegawai = () => {
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: "85%" }}>
-              <Search
-                placeholder={"Cari"}
-                onSearch={filter}
-                iconColor={COLORS.primary}
-              />
+            <View
+              style={{
+                width: "85%",
+                borderRadius: 8,
+                backgroundColor: COLORS.white,
+              }}
+            >
+              <View style={styles.input}>
+                <Ionicons
+                  name="search"
+                  size={fontSizeResponsive("H3", device)}
+                  color={COLORS.primary}
+                />
+                <TextInput
+                  placeholder={"Cari..."}
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    flex: 1,
+                  }}
+                  maxLength={30}
+                  value={inputValue}
+                  onChangeText={(text) => setInputValue(text)}
+                  onEndEditing={filter}
+                  clearButtonMode="always"
+                />
+              </View>
             </View>
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
@@ -241,7 +266,7 @@ export const ListPegawai = () => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={filterData}
+            data={isFiltered ? filterData : pegawai.lists}
             renderItem={({ item }) => (
               <CardListPegawai
                 item={item}
