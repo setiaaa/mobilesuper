@@ -71,7 +71,7 @@ export const CardApps = ({ handlePressModal }) => {
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/korespondensi-ikon3.png")}
+              source={require("../../assets/superApp/korespondensi.png")}
             />
           </View>
         </TouchableOpacity>
@@ -109,10 +109,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 30,
+                height: device === "tablet" ? 50 : 30,
               }}
-              source={require("../../assets/superApp/kebijakan-ikon.png")}
+              source={require("../../assets/superApp/kebijakan.png")}
             />
           </View>
         </TouchableOpacity>
@@ -150,10 +150,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 24,
+                height: device === "tablet" ? 50 : 34,
               }}
-              source={require("../../assets/superApp/pengetahuan-ikon.png")}
+              source={require("../../assets/superApp/pengetahuan.png")}
             />
           </View>
         </TouchableOpacity>
@@ -197,7 +197,7 @@ export const CardApps = ({ handlePressModal }) => {
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/digital-ikon.png")}
+              source={require("../../assets/superApp/digitalsign.png")}
             />
           </View>
         </TouchableOpacity>
@@ -233,10 +233,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 32,
+                height: device === "tablet" ? 50 : 32,
               }}
-              source={require("../../assets/superApp/cuti-ikon.png")}
+              source={require("../../assets/superApp/cuti.png")}
             />
           </View>
         </TouchableOpacity>
@@ -272,10 +272,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 32,
+                height: device === "tablet" ? 50 : 32,
               }}
-              source={require("../../assets/superApp/sppd-ikon.png")}
+              source={require("../../assets/superApp/sppd.png")}
             />
           </View>
         </TouchableOpacity>
@@ -394,10 +394,10 @@ export const CardApps = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 28,
-                  height: device === "tablet" ? 50 : 28,
+                  width: device === "tablet" ? 50 : 30,
+                  height: device === "tablet" ? 50 : 24,
                 }}
-                source={require("../../assets/superApp/preparing-ikon.png")}
+                source={require("../../assets/superApp/repositori.png")}
               />
             </View>
           </TouchableOpacity>
@@ -575,10 +575,10 @@ export const CardApps = ({ handlePressModal }) => {
               >
                 <Image
                   style={{
-                    width: device === "tablet" ? 50 : 28,
-                    height: device === "tablet" ? 50 : 28,
+                    width: device === "tablet" ? 50 : 32,
+                    height: device === "tablet" ? 50 : 32,
                   }}
-                  source={require("../../assets/superApp/more-ikon.png")}
+                  source={require("../../assets/superApp/more.png")}
                 />
               </View>
             </TouchableOpacity>

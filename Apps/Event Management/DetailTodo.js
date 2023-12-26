@@ -34,6 +34,7 @@ import { getTokenValue } from "../../service/session";
 import { getDetailTodo, postKomenTodo } from "../../service/api";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { setRefresh } from "../../store/Event";
 
 const CardLampiran = ({ lampiran, onClick, type }) => {
   const navigation = useNavigation();
@@ -258,7 +259,7 @@ export const DetailTodo = () => {
     });
   }, []);
 
-  const { todo, agenda, loading } = useSelector((state) => state.event);
+  const { todo, agenda, loading, refresh } = useSelector((state) => state.event);
   const detail = todo.detail;
   const agendaDetail = agenda.detail;
 
@@ -276,8 +277,17 @@ export const DetailTodo = () => {
         detailTodo: detail,
       };
       dispatch(postKomenTodo(payload));
+      dispatch(setRefresh(true));
     }
   };
+
+  useEffect(() => {
+    if (refresh === true) {
+      const params = { token: token, id: detail.id };
+      dispatch(getDetailTodo(params))
+      dispatch(setRefresh(false));
+    }
+  }, [refresh]);
 
   const { device } = useSelector((state) => state.apps);
 
