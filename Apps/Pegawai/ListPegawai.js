@@ -94,9 +94,9 @@ export const ListPegawai = () => {
 
   const loadMore = () => {
     if (filterData.length !== 0) {
-      if (filterData.length % 10 === 0) {
-        setPage(page + 1);
-      }
+      // if (filterData.length % 10 === 0) {
+      setPage(page + 1);
+      // }
     }
   };
 
@@ -266,7 +266,7 @@ export const ListPegawai = () => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={isFiltered ? filterData : pegawai.lists}
+            data={filterData}
             renderItem={({ item }) => (
               <CardListPegawai
                 item={item}

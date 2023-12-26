@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  deleteTodo,
   getDetailNotulensi,
   getDetailTodo,
   getDivision,
@@ -68,6 +69,7 @@ const EventSlice = createSlice({
     statusEvent: {},
     loading: false,
     refresh: false,
+    deleteRefresh: false,
   },
   reducers: {
     setEventLists: (state, action) => {
@@ -117,6 +119,9 @@ const EventSlice = createSlice({
     },
     setRefresh: (state, action) => {
       state.refresh = action.payload;
+    },
+    setDeleteRefresh: (state, action) => {
+      state.deleteRefresh = action.payload;
     },
   },
   extraReducers(builder) {
@@ -389,6 +394,10 @@ const EventSlice = createSlice({
         console.log(action.payload);
         state.status = "error";
         state.loading = false;
+      })
+      .addCase(deleteTodo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.deleteRefresh = true;
       });
   },
 });
@@ -410,5 +419,6 @@ export const {
   setAttachment,
   setStatus,
   setRefresh,
+  setDeleteRefresh,
 } = EventSlice.actions;
 export default EventSlice.reducer;
