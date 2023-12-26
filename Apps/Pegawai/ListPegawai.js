@@ -5,6 +5,7 @@ import {
   Pressable,
   RefreshControl,
   Text,
+  TextInput,
   TouchableOpacity,
 } from "react-native";
 import {} from "react-native-safe-area-context";
@@ -49,6 +50,7 @@ export const ListPegawai = () => {
   // }, []);
   const [token, setToken] = useState("");
 
+  const [inputValue, setInputValue] = useState("");
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [page, setPage] = useState(0);
@@ -64,6 +66,7 @@ export const ListPegawai = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getPegawai({ token, page, search }));
+      // console.log(page, "page");
     }
   }, [token, page, search]);
 
@@ -74,36 +77,32 @@ export const ListPegawai = () => {
   //     setSearch(event)
   // }
 
-  // useEffect(() => {
-  //     setFilterData(pegawai.lists)
-  // }, [pegawai])
-
-  // useEffect(() => {
-  //     if (search !== '') {
-  //         const data = pegawai.lists.filter((item) => {
-  //             return item.nama.toLowerCase().includes(search.toLowerCase());
-  //         })
-  //         setFilterData(data)
-  //     } else {
-  //         setFilterData(pegawai.lists)
-  //     }
-  // }, [search])
-
-  const loadMore = () => {
-    if (filterData.length !== 0) {
-      if (filterData.length % 10 === 0) {
-        setPage(page + 1);
-      }
-    }
-  };
-
-  const filter = (event) => {
-    setSearch(event);
-  };
-
   useEffect(() => {
     setFilterData(pegawai.lists);
   }, [pegawai]);
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = pegawai.lists.filter((item) => {
+        return item.nama.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(pegawai.lists);
+    }
+  }, [search]);
+
+  const loadMore = () => {
+    if (filterData.length !== 0) {
+      // if (filterData.length % 10 === 0) {
+      setPage(page + 1);
+      // }
+    }
+  };
+
+  // useEffect(() => {
+  //   setFilterData(pegawai.lists);
+  // }, [pegawai]);
 
   useEffect(() => {
     if (search !== "") {
@@ -123,7 +122,9 @@ export const ListPegawai = () => {
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        dispatch(getPegawai({ token, page }));
+        dispatch(getPegawai({ token, page, search }));
+        console.log(page, "page");
+        console.log("Refresh Berhasil");
       }
     } catch (error) {
     }
@@ -156,9 +157,16 @@ export const ListPegawai = () => {
     setAscending(false);
     setIsFiltered(true);
   };
+
+  const filter = () => {
+    setIsFiltered(false);
+    setSearch(inputValue);
+  };
+
   return (
     <>
       <>
+        {loading ? <Loading /> : null}
         <View
           style={{
             flexDirection: "row",
@@ -203,18 +211,38 @@ export const ListPegawai = () => {
           <View
             style={{
               flexDirection: "row",
-              paddingVertical: 20,
+              marginVertical: 20,
               alignItems: "center",
               marginHorizontal: "5%",
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: "85%" }}>
-              <Search
-                placeholder={"Cari"}
-                onSearch={setSearch}
-                iconColor={COLORS.primary}
-              />
+            <View
+              style={{
+                width: "85%",
+                borderRadius: 8,
+                backgroundColor: COLORS.white,
+              }}
+            >
+              <View style={styles.input}>
+                <Ionicons
+                  name="search"
+                  size={fontSizeResponsive("H3", device)}
+                  color={COLORS.primary}
+                />
+                <TextInput
+                  placeholder={"Cari..."}
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    flex: 1,
+                  }}
+                  maxLength={30}
+                  value={inputValue}
+                  onChangeText={(text) => setInputValue(text)}
+                  onEndEditing={filter}
+                  clearButtonMode="always"
+                />
+              </View>
             </View>
             <TouchableOpacity onPress={!ascending ? asc : desc}>
               <View
@@ -236,9 +264,8 @@ export const ListPegawai = () => {
               </View>
             </TouchableOpacity>
           </View>
-
           <FlatList
-            data={pegawai.lists}
+            data={filterData}
             renderItem={({ item }) => (
               <CardListPegawai
                 item={item}
@@ -251,14 +278,27 @@ export const ListPegawai = () => {
               />
             )}
             // style={{ flex: 1 }}
+            // ListFooterComponent={() =>
+            //   loading && (
+            //     <View
+            //       style={{ justifyContent: "center", alignItems: "center" }}
+            //     >
+            //       <ActivityIndicator size="large" color={COLORS.primary} />
+            //     </View>
+            //   )
+            // }
             ListFooterComponent={() =>
-              loading && (
+              loading === true ? (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 24,
+                  }}
                 >
                   <ActivityIndicator size="large" color={COLORS.primary} />
                 </View>
-              )
+              ) : null
             }
             keyExtractor={(item) => item.id}
             scrollEnabled={true}
@@ -276,6 +316,16 @@ export const ListPegawai = () => {
 };
 
 const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
   card: {
     marginHorizontal: 20,
     borderRadius: 8,

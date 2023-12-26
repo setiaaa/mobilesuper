@@ -27,9 +27,12 @@ import { getTokenValue } from "../../service/session";
 import { deleteTodo, getDetailTodo, getlistTodo } from "../../service/api";
 import { CardListTodo } from "../../components/CardListTodoEvent";
 import { RefreshControl } from "react-native";
+import { setDeleteRefresh } from "../../store/Event";
 
 export const Todo = () => {
-  const { agenda, todo, event, loading } = useSelector((state) => state.event);
+  const { agenda, todo, event, loading, deleteRefresh } = useSelector(
+    (state) => state.event
+  );
   const id = agenda.detail?.notulensi?.id;
   const data = todo.lists;
 
@@ -111,6 +114,13 @@ export const Todo = () => {
   // }, [search])
 
   const { device } = useSelector((state) => state.apps);
+
+  useEffect(() => {
+    if (deleteRefresh === true) {
+      dispatch(getlistTodo({ token, id }));
+      dispatch(setDeleteRefresh(false));
+    }
+  }, [deleteRefresh]);
 
   return (
     <>
@@ -302,6 +312,7 @@ export const Todo = () => {
                   onPress={() => {
                     dispatch(deleteTodo({ token: token, id: idEdit }));
                     bottomSheetAttachClose();
+                    // setRefreshing(true)
                   }}
                 >
                   <Text

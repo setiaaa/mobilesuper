@@ -140,7 +140,9 @@ const CardTodoEvent = ({ item, device }) => {
   );
 };
 
-const CardEventFilter = ({ item, device, token }) => {
+const CardEventFilter = ({ item, token, device }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [collapse, setCollapse] = useState({
     toggle: false,
   });
@@ -152,12 +154,9 @@ const CardEventFilter = ({ item, device, token }) => {
       ? setCollapse({ toggle: false })
       : setCollapse({ toggle: true });
   };
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const getDetail = (id) => {
     const params = { token, id };
-    // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getEventDetail(params));
   };
 
@@ -202,6 +201,10 @@ const CardEventFilter = ({ item, device, token }) => {
         <View style={{ marginBottom: 10 }}>
           {children.map((data) => (
             <TouchableOpacity
+              onPress={() => {
+                getDetail(data.id);
+                navigation.navigate("MainDetailEvent");
+              }}
               key={data.id}
               style={{
                 backgroundColor: COLORS.white,
@@ -216,10 +219,6 @@ const CardEventFilter = ({ item, device, token }) => {
                 paddingVertical: 10,
                 borderRadius: 8,
                 rowGap: 10,
-              }}
-              onPress={() => {
-                getDetail(data.id);
-                navigation.navigate("MainDetailEvent");
               }}
             >
               <Text
@@ -851,12 +850,7 @@ export const HalamanUtama = () => {
               <FlatList
                 data={filterDataHariIni}
                 renderItem={({ item }) => (
-                  <CardListEvent
-                    token={token}
-                    item={item}
-                    loading={loading}
-                    device={device}
-                  />
+                  <CardListEvent token={token} item={item} loading={loading} />
                 )}
                 keyExtractor={(item) => item.id}
                 style={{ marginBottom: 300 }}
@@ -908,7 +902,7 @@ export const HalamanUtama = () => {
                           borderColor: COLORS.secondaryLighter,
                         }}
                       >
-                        <Ionicons name="filter-outline" size={24} />
+                        <Ionicons name="funnel-outline" size={24} />
                       </View>
                     </TouchableOpacity>
 

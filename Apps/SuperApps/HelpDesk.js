@@ -86,7 +86,7 @@ export const HelpDesk = () => {
           <View style={{ flex: 1, alignItems: "center" }}>
             <Text
               style={{
-                fontSize: fontSizeResponsive("H3", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
                 color: COLORS.white,
               }}
@@ -151,7 +151,9 @@ export const HelpDesk = () => {
             </Text>
             <Text>198505042009122001</Text>
           </View> */}
-          <View style={{ padding: PADDING.Page }}>
+          <View
+            style={{ paddingVertical: PADDING.Page, paddingHorizontal: "5%" }}
+          >
             <View
               style={{
                 justifyContent: "center",

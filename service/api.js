@@ -521,14 +521,15 @@ export const getPegawai = createAsyncThunk(
   "calendar/getPegawai",
   async ({ token, page, search }) => {
     const offset = page * 10;
-    console.log(search);
-
-    const respon = await axios.get(
-      `${pegawai}profile/all/?search=${search}&limit=10&offset=${offset}`,
-      {
-        headers: { Authorization: token },
-      }
-    );
+    console.log(page);
+    const respon =
+      search === ""
+        ? await axios.get(`${pegawai}profile/all/?limit=10&offset=${offset}`, {
+            headers: { Authorization: token },
+          })
+        : await axios.get(`${pegawai}profile/all/?search=${search}`, {
+            headers: { Authorization: token },
+          });
     return respon?.data.results;
   }
 );
