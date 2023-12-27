@@ -86,7 +86,8 @@ export const Dropdown = ({
           style={{
             backgroundColor: backgroundColor,
             width: "100%",
-            height: 43,
+            minHeight: 43,
+            paddingBottom:12,
             borderRadius: 8,
             borderColor: borderColor,
             borderWidth: borderWidth,
@@ -127,7 +128,7 @@ export const Dropdown = ({
                 style={{
                   backgroundColor: backgroundColor,
                   width: "100%",
-                  height: 43,
+                  minHeight: 43,
                   borderRadius: 8,
                   borderWidth: borderwidthDrop,
                   borderColor: borderColorDrop,
