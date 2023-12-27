@@ -56,7 +56,9 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile.profile);
   let dispoMulti = useSelector((state) => state.dispoMulti.data);
-  const addressbook = useSelector((state) => state.addressbook.selected);
+  // const addressbook = useSelector((state) => state.addressbook.selected);
+  const [stateConfig, setStateConfig] = useState({});
+  const { addressbook } = useSelector((state) => state.addressBookKKP);
   const [selectedAddressbook, setSelectedAddressbook] = useState(addressbook);
   const [ids, setid] = useState();
   const [detail, setDetail] = useState();
@@ -87,6 +89,16 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
   const bottomSheetRefNotaTindakan = useRef(null);
   const snapPoint = useMemo(() => [50, "100%"], []);
+
+  const [pilihanKepada, setPilihanKepada] = useState([]);
+
+  useEffect(() => {
+    if (stateConfig.title === "Addressbook\nDisposition") {
+      setPilihanKepada(addressbook.selected);
+    }
+    // console.log("addressbook", pilihanKepada);
+  }, [addressbook.selected]);
+
   useEffect(() => {
     setid(route?.params?.id);
     // setDetail(route?.params?.data);
@@ -204,7 +216,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
       let status = 1;
       // validasi
       dispoMulti.map((items) => {
-        if (items.kepadaDispo == [] || items.kepadaDispo == "") {
+        if (pilihanKepada.length == 0 || pilihanKepada == "") {
           status = 0;
         } else if (
           items.tindakan1 &&
@@ -254,7 +266,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           });
           let temp = [];
           let temp_ids = [];
-          items.kepadaDispo.map((item, j) => {
+          pilihanKepada.map((item, j) => {
             temp.push(item.fullname ? item.fullname : item.title);
             temp_ids.push(item.nik ? item.nik : item.code);
           });
@@ -268,11 +280,12 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
             request[i].send_priority_todo = items.send_priority_todo1.value;
           }
         });
-        console.log(request);
+        // console.log(request);
         let payload = {
           request: request,
           copy_log: "1",
         };
+        // console.log("payload", payload);
         //post api dispo
         const response = await postHTTP(
           nde_api.postDisposition
@@ -337,24 +350,37 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
 
               <View style={styles.containerTitle}>
                 <Text style={styles.title}>Disposisi Kepada</Text>
-                {item.kepadaDispo != undefined &&
-                  item.kepadaDispo.length != 0 && (
-                    <IconButton
-                      icon="plus"
-                      onPress={() => {
-                        navigation.navigate("Addressbook", {
-                          title: "Addressbook\nDisposition",
-                          multiple: true,
-                          indexDispo: index,
-                          tipe: "receivers",
-                        });
-                      }}
-                    />
-                  )}
+                {pilihanKepada != undefined && pilihanKepada.length != 0 && (
+                  <IconButton
+                    icon="plus"
+                    // onPress={() => {
+                    //   navigation.navigate("Addressbook", {
+                    //     title: "Addressbook\nDisposition",
+                    //     multiple: true,
+                    //     indexDispo: index,
+                    //     tipe: "receivers",
+                    //   });
+                    // }}
+                    onPress={() => {
+                      const config = {
+                        title: "Addressbook\nDisposition",
+                        tipeAddress: "korespodensi",
+                        tabs: {
+                          jabatan: true,
+                          pegawai: true,
+                        },
+                        multiselect: true,
+                        payload: pilihanKepada,
+                      };
+                      setStateConfig(config);
+                      navigation.navigate("AddressBook", { config: config });
+                    }}
+                  />
+                )}
               </View>
               <View>
-                {item.kepadaDispo != undefined &&
-                  item.kepadaDispo.map((items, index) => (
+                {pilihanKepada != undefined &&
+                  pilihanKepada.map((items, index) => (
                     <Fragment key={index}>
                       <Text style={styles.titleLabel}>
                         {index + 1}.{" "}
@@ -363,8 +389,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     </Fragment>
                   ))}
 
-                {(item.kepadaDispo == undefined ||
-                  item.kepadaDispo.length == 0) && (
+                {(pilihanKepada == undefined || pilihanKepada.length == 0) && (
                   <TextInput
                     mode="outlined"
                     theme={{ roundness: 6 }}
@@ -373,12 +398,28 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                       <TextInput.Icon
                         size={24}
                         icon="account-plus"
+                        // onPress={() => {
+                        //   navigation.navigate("Addressbook", {
+                        //     title: "Addressbook\nDisposition",
+                        //     multiple: true,
+                        //     indexDispo: index,
+                        //     tipe: "receivers",
+                        //   });
+                        // }}
                         onPress={() => {
-                          navigation.navigate("Addressbook", {
+                          const config = {
                             title: "Addressbook\nDisposition",
-                            multiple: true,
-                            indexDispo: index,
-                            tipe: "receivers",
+                            tipeAddress: "korespodensi",
+                            tabs: {
+                              jabatan: true,
+                              pegawai: true,
+                            },
+                            multiselect: true,
+                            payload: pilihanKepada,
+                          };
+                          setStateConfig(config);
+                          navigation.navigate("AddressBook", {
+                            config: config,
                           });
                         }}
                       />
