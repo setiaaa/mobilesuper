@@ -109,7 +109,7 @@ export const AddressBookPegawai = ({ route }) => {
 
   useEffect(() => {
     if (token !== "") {
-      if (config.tipeAddress === "korespodensi") {
+      if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(nde_api.employee);
           addressbook.employee = response.data;

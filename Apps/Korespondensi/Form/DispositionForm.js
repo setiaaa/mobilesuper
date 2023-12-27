@@ -270,8 +270,8 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
             temp.push(item.fullname ? item.fullname : item.title);
             temp_ids.push(item.nik ? item.nik : item.code);
           });
-          request[i].kepada = temp.join(",");
-          request[i].kepada_ids = temp_ids.join(",");
+          request[i].kepada = temp.join("\n");
+          request[i].kepada_ids = temp_ids.join("\n");
 
           if (items.create_todo1) {
             request[i].duedate_todo = moment(items.duedate_todo1).format(
@@ -285,7 +285,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           request: request,
           copy_log: "1",
         };
-        // console.log("payload", payload);
+        // console.log("payload", JSON.stringify(payload));
         //post api dispo
         const response = await postHTTP(
           nde_api.postDisposition
@@ -364,7 +364,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                     onPress={() => {
                       const config = {
                         title: "Addressbook\nDisposition",
-                        tipeAddress: "korespodensi",
+                        tipeAddress: "korespondensi",
                         tabs: {
                           jabatan: true,
                           pegawai: true,
@@ -409,7 +409,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                         onPress={() => {
                           const config = {
                             title: "Addressbook\nDisposition",
-                            tipeAddress: "korespodensi",
+                            tipeAddress: "korespondensi",
                             tabs: {
                               jabatan: true,
                               pegawai: true,
@@ -823,10 +823,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   placeholderStyle: {
-    fontSize:  GlobalStyles.font.md,
+    fontSize: GlobalStyles.font.md,
   },
   selectedTextStyle: {
-    fontSize:  GlobalStyles.font.md,
+    fontSize: GlobalStyles.font.md,
   },
   labelRemind: {
     fontSize: GlobalStyles.font.md,
