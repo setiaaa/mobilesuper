@@ -6,7 +6,7 @@ import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getEmployee } from "../service/api";
 import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
-import { setAddressbookSelected } from "../store/AddressbookKKP";
+import { setAddressbookEmployee, setAddressbookSelected } from "../store/AddressbookKKP";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../components/Search";
 import { nde_api } from "../utils/api.config";
@@ -112,7 +112,7 @@ export const AddressBookPegawai = ({ route }) => {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(nde_api.employee);
-          addressbook.employee = response.data;
+          dispatch(setAddressbookEmployee(response.data));
         })();
       } else {
         dispatch(getEmployee({ token: token, search: search }));
@@ -134,9 +134,9 @@ export const AddressBookPegawai = ({ route }) => {
   };
 
   useEffect(() => {
-    if (search !== "") {
+    if (search.length != 0) {
       let data;
-      if (config.tipeAddress === "korespodensi") {
+      if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(
             nde_api.employeeSearch.replace("{$word}", search)
@@ -151,9 +151,19 @@ export const AddressBookPegawai = ({ route }) => {
         setFilterData(data);
       }
     } else {
-      setFilterData(addressbook.employee);
+      if (config.tipeAddress === "korespondensi") {
+        (async () => {
+          let response = await getHTTP(
+            nde_api.employeeSearch.replace("{$word}", search)
+          );
+          data = response.data;
+          setFilterData(data);
+        })();
+      } else {
+        setFilterData(addressbook.employee);
+      }
     }
-  }, [search]);
+  }, [search, filterData]);
 
   const { device } = useSelector((state) => state.apps);
 

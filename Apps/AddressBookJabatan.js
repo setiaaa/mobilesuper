@@ -51,15 +51,18 @@ export const AddressBookJabatan = ({ route }) => {
           // let response = await getHTTP(nde_api.employee);
           // addressbook.employee = response.data;
         })();
+        //initial default
         getDiv(profileOrganization?.fucfu_id);
+        setKategori({"key": profileOrganization?.division_id, "value": profileOrganization?.division})
         setselectedDivision(profileOrganization?.division_id);
+        getTitleHirarki(profileOrganization?.division_id);
       } else {
         dispatch(getDivision(token));
         // dispatch(getEmployee(token))
         // dispatch(getDivisionTree({ token: token, id: kategori.key }))
       }
     }
-  }, [token, profileOrganization]);
+  }, [token, profileOrganization, listTree]);
 
   async function getDiv(id) {
     // setIsLoading(true);
@@ -111,7 +114,7 @@ export const AddressBookJabatan = ({ route }) => {
     }
   }
 
-  const [kategori, setKategori] = useState("");
+  const [kategori, setKategori] = useState();
 
   const { addressbook } = useSelector((state) => state.addressBookKKP);
   function getIndicator(isExpanded) {
@@ -289,6 +292,7 @@ export const AddressBookJabatan = ({ route }) => {
             <Dropdown
               data={addressbook?.listsDivision}
               heightValue={"75%"}
+              selected={kategori}
               setSelected={setKategori}
               handleClick={(item) => {
                 if (config.tipeAddress == "korespondensi") {
@@ -307,7 +311,7 @@ export const AddressBookJabatan = ({ route }) => {
               backgroundColor={COLORS.white}
               search={true}
             />
-            {kategori !== "" ? (
+            {kategori !== undefined ? (
               <Text
                 style={{
                   fontWeight: FONTWEIGHT.bold,
@@ -319,7 +323,7 @@ export const AddressBookJabatan = ({ route }) => {
             ) : null}
           </View>
 
-          {kategori !== "" ? (
+          {kategori !== undefined ? (
             <ScrollView
               style={{
                 backgroundColor: COLORS.white,
