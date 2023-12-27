@@ -68,8 +68,8 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? wp(5.5) : 28,
+                height: device === "tablet" ? hp(4) : 28,
               }}
               source={require("../../assets/superApp/korespondensi.png")}
             />
@@ -150,8 +150,8 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? wp(6) : 24,
-                height: device === "tablet" ? hp(5) : 34,
+                width: device === "tablet" ? 40 : 24,
+                height: device === "tablet" ? 55 : 34,
               }}
               source={require("../../assets/superApp/pengetahuan.png")}
             />
@@ -234,7 +234,7 @@ export const CardApps = ({ handlePressModal }) => {
             <Image
               style={{
                 width: device === "tablet" ? 60 : 32,
-                height: device === "tablet" ? 60 : 32,
+                height: device === "tablet" ? 50 : 32,
               }}
               source={require("../../assets/superApp/cuti.png")}
             />
@@ -394,8 +394,8 @@ export const CardApps = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 60 : 30,
-                  height: device === "tablet" ? 50 : 24,
+                  width: device === "tablet" ? 50 : 30,
+                  height: device === "tablet" ? 40 : 24,
                 }}
                 source={require("../../assets/superApp/repositori.png")}
               />
@@ -575,8 +575,8 @@ export const CardApps = ({ handlePressModal }) => {
               >
                 <Image
                   style={{
-                    width: device === "tablet" ? 50 : 32,
-                    height: device === "tablet" ? 50 : 32,
+                    width: device === "tablet" ? 60 : 32,
+                    height: device === "tablet" ? 60 : 32,
                   }}
                   source={require("../../assets/superApp/more.png")}
                 />
@@ -604,10 +604,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     flexDirection: "column",
     width: "90%",
-    height: hp(25),
+    height: hp(30),
     borderRadius: 12,
     marginTop: 60,
-    padding: 5,
+    padding: 10,
     //shadow ios
     shadowOffset: { width: -2, height: 4 },
     shadowColor: COLORS.primary,
@@ -624,7 +624,7 @@ const styles = StyleSheet.create({
   },
   cardApps: {
     width: wp(15),
-    height: hp(7),
+    height: hp(10),
     borderRadius: 8,
   },
 });
