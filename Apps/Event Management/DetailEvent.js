@@ -98,7 +98,8 @@ export const DetailEvent = () => {
 
   const data = event.detailEvent;
 
-  console.log(data?.creator?.nip);
+  // console.log(data.user_role?.is_pic);
+  console.log(data.creator?.nip === profile.nip);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -135,7 +136,7 @@ export const DetailEvent = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: fontSizeResponsive("H4", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -393,8 +394,8 @@ export const DetailEvent = () => {
                             <Image
                               source={{ uri: data.avatar_url }}
                               style={{
-                                width: 26,
-                                height: 26,
+                                width: device === "tablet" ? 60 : 26,
+                                height: device === "tablet" ? 60 : 26,
                                 marginLeft: index !== 0 ? -7 : 0,
                                 borderRadius: 50,
                               }}
@@ -407,7 +408,10 @@ export const DetailEvent = () => {
                         bottomSheetAttach();
                       }}
                     >
-                      <Ionicons name="chevron-forward" size={24} />
+                      <Ionicons
+                        name="chevron-forward"
+                        size={device === "tablet" ? 40 : 24}
+                      />
                     </TouchableOpacity>
                   </View>
                 ) : (
@@ -416,8 +420,8 @@ export const DetailEvent = () => {
                       <Image
                         source={{ uri: data.avatar_url }}
                         style={{
-                          width: 26,
-                          height: 26,
+                          width: device === "tablet" ? 60 : 26,
+                          height: device === "tablet" ? 60 : 26,
                           marginLeft: index !== 0 ? -7 : 0,
                           borderRadius: 50,
                         }}
@@ -476,7 +480,7 @@ export const DetailEvent = () => {
                         >
                           <Ionicons
                             name="close-outline"
-                            size={24}
+                            size={device === "tablet" ? 40 : 24}
                             color={COLORS.lighter}
                           />
                         </TouchableOpacity>
@@ -852,76 +856,82 @@ export const DetailEvent = () => {
                   rowGap: 10,
                 }}
               >
-                <TouchableOpacity
+                <View
                   style={{
-                    backgroundColor: COLORS.lightBrown,
-                    width: "100%",
-                    height: 50,
-                    borderRadius: 8,
-                  }}
-                  onPress={() => {
-                    navigation.navigate("EditEvent");
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                   }}
                 >
-                  <View
+                  <TouchableOpacity
                     style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexDirection: "row",
-                      flex: 1,
-                      gap: 20,
+                      backgroundColor: COLORS.lightBrown,
+                      width: "49%",
+                      paddingVertical: 15,
+                      borderRadius: 8,
+                    }}
+                    onPress={() => {
+                      navigation.navigate("EditEvent");
                     }}
                   >
-                    <Text
+                    <View
                       style={{
-                        color: COLORS.white,
-                        fontSize: fontSizeResponsive("H3", device),
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        flex: 1,
+                        gap: 20,
                       }}
                     >
-                      Edit Agenda rapat
-                    </Text>
-                    <Ionicons
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H3", device),
+                        }}
+                      >
+                        Ubah Agenda Rapat
+                      </Text>
+                      {/* <Ionicons
                       name="pencil-outline"
                       size={device === "tablet" ? 30 : 20}
                       color={COLORS.white}
-                    />
-                  </View>
-                </TouchableOpacity>
+                    /> */}
+                    </View>
+                  </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: COLORS.infoDanger,
-                    width: "100%",
-                    height: 50,
-                    borderRadius: 8,
-                  }}
-                  onPress={() => setVisibleModal(true)}
-                >
-                  <View
+                  <TouchableOpacity
                     style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexDirection: "row",
-                      flex: 1,
-                      gap: 20,
+                      backgroundColor: COLORS.infoDanger,
+                      width: "49%",
+                      paddingVertical: 15,
+                      borderRadius: 8,
                     }}
+                    onPress={() => setVisibleModal(true)}
                   >
-                    <Text
+                    <View
                       style={{
-                        color: COLORS.white,
-                        fontSize: fontSizeResponsive("H4", device),
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        flex: 1,
+                        gap: 20,
                       }}
                     >
-                      Hapus Event
-                    </Text>
-                    <Ionicons
-                      name="trash-outline"
-                      size={device === "tablet" ? 30 : 20}
-                      color={COLORS.white}
-                    />
-                  </View>
-                </TouchableOpacity>
-
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Hapus Agenda Rapat
+                      </Text>
+                      {/* <Ionicons
+                        name="trash-outline"
+                        size={device === "tablet" ? 30 : 20}
+                        color={COLORS.white}
+                      /> */}
+                    </View>
+                  </TouchableOpacity>
+                </View>
                 <Modal
                   animationType="fade"
                   transparent={true}

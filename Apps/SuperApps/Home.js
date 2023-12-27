@@ -9,6 +9,7 @@ import {
   Linking,
   BackHandler,
   Alert,
+  RefreshControl,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
@@ -93,9 +94,21 @@ export const Home = () => {
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
+  const [refresh, setRefresh] = useState(false);
 
   const dispatch = useDispatch();
   const route = useRoute();
+
+  const refreshPage = () => {
+    setRefresh(true);
+    dispatch(getProfileMe(token));
+    dispatch(getBanner(token));
+    dispatch(getGaleri({ token, page }));
+    dispatch(getBerita({ token, page }));
+    setTimeout(() => {
+      setRefresh(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -205,7 +218,11 @@ export const Home = () => {
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
         {loading === true ? <Loading /> : null}
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refresh} onRefresh={refreshPage} />
+          }
+        >
           <View
             style={{
               width: "100%",

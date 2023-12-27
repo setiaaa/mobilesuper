@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
@@ -33,6 +33,7 @@ import { getTokenValue } from "../../service/session";
 import {
   deleteNotulensi,
   getDetailNotulensi,
+  getEventAgendaDetail,
   getlistAbsen,
   getlistApprover,
   getlistNotulensi,
@@ -50,6 +51,7 @@ import { CardApprovalEvent } from "../../components/CardApprovalEvent";
 import { CardListAbsenEvent } from "../../components/CardListAbsenEvent";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { setRefresh } from "../../store/Event";
 
 export const DetailAgenda = () => {
   const navigation = useNavigation();
@@ -68,9 +70,8 @@ export const DetailAgenda = () => {
 
   const video = useRef(null);
 
-  const { agenda, approver, notulensi, absen, event, loading } = useSelector(
-    (state) => state.event
-  );
+  const { agenda, approver, notulensi, absen, event, loading, refresh } =
+    useSelector((state) => state.event);
   const data = agenda.detail;
   const id = agenda.detail?.notulensi?.id;
   const idagenda = agenda.detail?.id;
@@ -150,19 +151,9 @@ export const DetailAgenda = () => {
           idabsen: idabsen,
           status: "hadir",
           is_scan: true,
+          id_Qr: data,
         })
       );
-      alert("berhasil");
-    } else {
-      dispatch(
-        putAbsen({
-          token: token,
-          idabsen: idabsen,
-          status: "waiting",
-          is_scan: true,
-        })
-      );
-      alert("gagal");
     }
   };
 
@@ -200,14 +191,47 @@ export const DetailAgenda = () => {
       id: notu[0].id,
     };
     dispatch(deleteNotulensi(item));
+    dispatch(setRefresh(true));
   };
 
-  console.log(absenLists);
+  useEffect(() => {
+    if (refresh === true) {
+      dispatch(getlistNotulensi({ token, idagenda }));
+      const params = { token: token, id: data.id };
+      dispatch(getEventAgendaDetail(params));
+      dispatch(setRefresh(false));
+    }
+  }, [refresh]);
 
+  // console.log(absenLists);
+  // console.log(notu[0].pdf);
   const { device } = useSelector((state) => state.apps);
+  const { profile } = useSelector((state) => state.superApps);
+
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(absenLists);
+  }, [absenLists]);
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = absenLists?.filter((item) => {
+        return item.member?.nama.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(absenLists);
+    }
+  }, [search]);
 
   return (
-    <>
+    <KeyboardAvoidingView>
       <ScrollView>
         <View
           style={{
@@ -589,8 +613,8 @@ export const DetailAgenda = () => {
                     <Image
                       source={{ uri: data.avatar_url }}
                       style={{
-                        width: 26,
-                        height: 26,
+                        width: device === "tablet" ? 60 : 26,
+                        height: device === "tablet" ? 60 : 26,
                         marginLeft: index !== 0 ? -7 : 0,
                         borderRadius: 50,
                       }}
@@ -604,7 +628,7 @@ export const DetailAgenda = () => {
               >
                 <Ionicons
                   name="chevron-forward-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.lighter}
                 />
               </TouchableOpacity>
@@ -652,7 +676,7 @@ export const DetailAgenda = () => {
                     >
                       <Ionicons
                         name="close-outline"
-                        size={24}
+                        size={device === "tablet" ? 40 : 24}
                         color={COLORS.lighter}
                       />
                     </TouchableOpacity>
@@ -686,7 +710,7 @@ export const DetailAgenda = () => {
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
-                  width: "55%",
+                  width: "45%",
                   fontWeight: FONTWEIGHT.bold,
                   fontSize: fontSizeResponsive("H4", device),
                 }}
@@ -709,8 +733,8 @@ export const DetailAgenda = () => {
                     <Image
                       source={{ uri: data.avatar_url }}
                       style={{
-                        width: 26,
-                        height: 26,
+                        width: device === "tablet" ? 60 : 26,
+                        height: device === "tablet" ? 60 : 26,
                         marginLeft: index !== 0 ? -7 : 0,
                         borderRadius: 50,
                       }}
@@ -837,7 +861,10 @@ export const DetailAgenda = () => {
                 bottomSheetAttach();
               }}
             >
-              <Ionicons name="document-outline" size={24} />
+              <Ionicons
+                name="document-outline"
+                size={device === "tablet" ? 40 : 24}
+              />
               <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 Info Approval
               </Text>
@@ -939,7 +966,8 @@ export const DetailAgenda = () => {
 
             {data.user_role?.is_pic === true &&
             !notu[0]?.ready_to_approve &&
-            notu.length !== 0 ? (
+            notu.length !== 0 &&
+            data?.notulensi?.ready_to_approve === false ? (
               <TouchableOpacity
                 style={{
                   width: "100%",
@@ -1005,10 +1033,11 @@ export const DetailAgenda = () => {
                   event.detailEvent.status !== "persiapan") ||
                 (data.user_role?.is_notulensi === true &&
                   event.detailEvent.status !== "persiapan") ||
-                (data.user_role?.is_notulensi === false &&
-                  data.user_role?.is_presensi === false &&
-                  data.user_role?.is_member === false &&
-                  data.user_role?.is_pic === false &&
+                (data.user_role?.is_member === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.user_role?.is_presensi === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.creator?.nip === profile.nip &&
                   event.detailEvent.status !== "persiapan") ? (
                   <View>
                     <TouchableOpacity
@@ -1060,30 +1089,35 @@ export const DetailAgenda = () => {
                                             <Ionicons name='trash-outline' size={24} color={COLORS.white} />
                                             <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
                                         </TouchableOpacity> */}
-
-                    <TouchableOpacity
-                      style={{
-                        width: "100%",
-                        height: 50,
-                        borderRadius: 8,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 10,
-                        backgroundColor: COLORS.infoDanger,
-                        marginTop: 10,
-                      }}
-                      onPress={() => setVisibleModal(true)}
-                    >
-                      <Text
+                    {(data.user_role?.is_member === true &&
+                      event.detailEvent.status !== "persiapan") ||
+                    (data.user_role?.is_presensi === true &&
+                      event.detailEvent.status !== "persiapan") ||
+                    data?.notulensi?.ready_to_approve === true ? null : (
+                      <TouchableOpacity
                         style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H4", device),
+                          width: "100%",
+                          height: 50,
+                          borderRadius: 8,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: 10,
+                          backgroundColor: COLORS.infoDanger,
+                          marginTop: 10,
                         }}
+                        onPress={() => setVisibleModal(true)}
                       >
-                        Take Down Artikel
-                      </Text>
-                    </TouchableOpacity>
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Hapus Notulensi
+                        </Text>
+                      </TouchableOpacity>
+                    )}
 
                     <Modal
                       animationType="fade"
@@ -1188,7 +1222,7 @@ export const DetailAgenda = () => {
                                   fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
-                                Take Down Artikel
+                                Hapus Notulensi
                               </Text>
                             </TouchableOpacity>
                           </ScrollView>
@@ -1564,41 +1598,98 @@ export const DetailAgenda = () => {
             width: "90%",
             flex: 1,
             alignSelf: "center",
-            padding: 15,
+            padding: 5,
             borderRadius: 8,
+            marginBottom: 40,
           }}
         >
-          <Text
+          <View
             style={{
-              fontWeight: FONTWEIGHT.bold,
-              fontSize: fontSizeResponsive("H4", device),
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              marginHorizontal: "5%",
+              marginTop: 10,
             }}
           >
-            Absensi
-          </Text>
-          {/* <View style={{ marginTop: 10 }}>
-                        <Search />
-                    </View> */}
-        </View>
-
-        <FlatList
-          data={absenLists}
-          renderItem={({ item }) => (
-            <CardListAbsenEvent
-              item={item}
-              role={data.user_role}
-              eventpic={event.detailEvent?.user_role?.is_pic}
-              status={event.detailEvent.status}
-              setScanData={setScanData}
-              setIdAbsen={setIdAbsen}
-              loading={loading}
-              device={device}
+            <Ionicons
+              name="people-outline"
+              size={device === "tablet" ? 40 : 24}
             />
-          )}
-          scrollEnabled={false}
-          style={{ marginBottom: 10 }}
-          ListEmptyComponent={() => <ListEmpty />}
-        />
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.bold,
+              }}
+            >
+              Presensi
+            </Text>
+          </View>
+          <View style={{ marginHorizontal: "5%", marginVertical: 10 }}>
+            <Search
+              placeholder={"Cari"}
+              iconColor={COLORS.primary}
+              onSearch={filter}
+            />
+          </View>
+          <FlatList
+            data={filterData}
+            renderItem={({ item }) => (
+              <CardListAbsenEvent
+                item={item}
+                role={data.user_role}
+                eventpic={event.detailEvent?.user_role?.is_pic}
+                status={event.detailEvent.status}
+                setScanData={setScanData}
+                setIdAbsen={setIdAbsen}
+                loading={loading}
+                device={device}
+                creator={data.creator?.nip}
+                profile={profile.nip}
+              />
+            )}
+            scrollEnabled={true}
+            nestedScrollEnabled
+            style={{ maxHeight: 300 }}
+            ListEmptyComponent={() => <ListEmpty />}
+          />
+          {(data.creator?.nip === profile?.nip &&
+            event.detailEvent?.status !== "persiapan") ||
+          (data.user_role?.is_pic === true &&
+            event.detailEvent?.status !== "persiapan") ||
+          (data.user_role?.is_presensi === true &&
+            event.detailEvent?.status !== "persiapan") ? (
+            <TouchableOpacity
+              style={{
+                width: "90%",
+                borderWidth: 1,
+                height: 50,
+                borderRadius: 8,
+                justifyContent: "center",
+                alignItems: "center",
+                marginHorizontal: "5%",
+                marginVertical: "5%",
+                borderColor: COLORS.primary,
+              }}
+              onPress={() => {
+                setScanData(false);
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+              >
+                <Ionicons
+                  name="qr-code-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Scan QRCode
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
+        </View>
 
         {/* {event.detailEvent?.user_role?.is_pic === true ||
                     data.user_role?.is_pic === true ||
@@ -1634,8 +1725,42 @@ export const DetailAgenda = () => {
                     ) : (
                         <></>
                     )} */}
+        {data.user_role?.is_pic === true &&
+        event.detailEvent.status !== "persiapan" &&
+        data?.notulensi?.ready_to_approve === true ? (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity
+              style={{
+                width: "90%",
+                height: 50,
+                borderRadius: 8,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 10,
+                marginTop: 10,
+                marginBottom: 40,
+                backgroundColor: COLORS.primary,
+              }}
+              onPress={() => {
+                navigation.navigate("TandaTanganNotulensi", {
+                  item: notu[0]?.pdf,
+                });
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  color: COLORS.white,
+                }}
+              >
+                Tanda Tangan Notulensi
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </ScrollView>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

@@ -69,7 +69,7 @@ export const Profile = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: fontSizeResponsive("H3", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
                 color: COLORS.white,
               }}
@@ -437,13 +437,13 @@ export const Profile = () => {
             marginVertical: 20,
             justifyContent: "center",
             alignItems: "center",
-            paddingHorizontal: PADDING.Page,
+            paddingHorizontal: "5%",
           }}
         >
           <TouchableOpacity
             style={{
               backgroundColor: COLORS.primary,
-              width: "97%",
+              width: "100%",
               height: 50,
               borderRadius: 8,
               justifyContent: "center",

@@ -78,7 +78,7 @@ import { DetailAcara } from "../Kalender/DetailAcara";
 import { ListSuka } from "../Kalender/ListSuka";
 import { MyTask } from "../Task Management/MyTask";
 import MainDetailTask from "../Task Management/DetailTask/MainDetailTask";
-import MainDetailKorespondensiTM from "../Task Management/DetailKorespondensiTM/MainDetailKorespondensiTM"
+import MainDetailKorespondensiTM from "../Task Management/DetailKorespondensiTM/MainDetailKorespondensiTM";
 import { AddTask } from "../Task Management/AddTask";
 import { ListGaleri } from "../SuperApps/ListGaleri";
 import { Kepegawaian } from "../Dashboard/Kepegawaian";
@@ -160,6 +160,7 @@ import NeedFollowUpList from "./List/NeedFollowUpList";
 import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
 import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
+import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 
 const Stack = createNativeStackNavigator();
 
@@ -830,6 +831,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="ScannerBarCode"
             component={ScannerBarCode}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TandaTanganNotulensi"
+            component={TandaTanganNotulensi}
             options={{
               headerShown: false,
             }}
