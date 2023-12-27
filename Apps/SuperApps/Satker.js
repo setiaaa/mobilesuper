@@ -42,6 +42,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import RenderHTML from "react-native-render-html";
 
 const BannerSetjen = [
   {
@@ -107,7 +108,6 @@ export const Satker = () => {
     useSelector((state) => state.satker);
   const { profile } = useSelector((state) => state.superApps);
 
-
   const renderItem = ({ item, index }, parallaxProps) => {
     return (
       <View style={[styles.item, { marginVertical: 20 }]}>
@@ -143,11 +143,11 @@ export const Satker = () => {
             paddingHorizontal: 20,
           }}
         >
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <Image
+          <View style={{ marginTop: 20 }}>
+            {/* <Image
               source={{ uri: BASE_URL + item.avatar }}
               style={{ borderRadius: 50, width: 60, height: 60 }}
-            />
+            /> */}
             <View>
               <Text
                 style={{
@@ -166,7 +166,8 @@ export const Satker = () => {
               </Text>
             </View>
           </View>
-          <Text style={{ marginVertical: 20 }}>{item.content}</Text>
+          {/* <Text style={{ marginVertical: 20 }}>{item.content}</Text> */}
+          <RenderHTML source={{ html: item.content }} />
         </View>
       </>
     );
@@ -372,7 +373,6 @@ export const Satker = () => {
 
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
-
   return (
     <View style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -543,12 +543,12 @@ export const Satker = () => {
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={screenWidth - 60}
-            data={pesan}
+            data={[pesan[pesan.length - 1]]}
             renderItem={renderItem2}
             hasParallaxImages={true}
             onSnapToItem={setSlide2}
           />
-          <Pagination
+          {/* <Pagination
             dotsLength={pesan?.length}
             dotColor={"black"}
             inactiveDotColor={COLORS.grey}
@@ -558,7 +558,7 @@ export const Satker = () => {
             activeDotIndex={slide2}
             carouselRef={carouselRef}
             tappableDots={!!carouselRef}
-          />
+          /> */}
         </View>
         {/* <Calendar
                     onDayPress={day => {

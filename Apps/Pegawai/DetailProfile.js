@@ -458,7 +458,7 @@ export const DetailProfile = () => {
               />
             </View>
           ) : (
-            <CollapseCardBiodata profile={item} />
+            <CollapseCardBiodata profile={item} device={device} />
           )}
           {/* <CollapseCardLinimasa linimasa={item.dataLinimasa} /> */}
         </View>
