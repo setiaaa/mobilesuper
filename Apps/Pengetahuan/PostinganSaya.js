@@ -53,7 +53,6 @@ const CardPostinganSaya = ({ item, token, device }) => {
     dispatch(getViewLinimasa(params));
   };
 
-  // console.log(item);
 
   return (
     <View style={{ width: "90%", alignSelf: "center", marginVertical: 10 }}>
@@ -590,7 +589,6 @@ export const PostinganSaya = () => {
         setPage(page + 5);
       }
     }
-    console.log(page);
   };
 
   const [search, setSearch] = useState("");
@@ -623,10 +621,8 @@ export const PostinganSaya = () => {
     try {
       if (token !== "") {
         dispatch(getMyPostList({ token: token, page: page }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -635,7 +631,6 @@ export const PostinganSaya = () => {
     }, 2000);
   }, [token, page]);
 
-  // console.log(postinganSaya.lists);
 
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -675,8 +670,8 @@ export const PostinganSaya = () => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
@@ -688,7 +683,7 @@ export const PostinganSaya = () => {
           >
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
@@ -708,8 +703,8 @@ export const PostinganSaya = () => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginRight: 20,
@@ -721,7 +716,7 @@ export const PostinganSaya = () => {
           >
             <Ionicons
               name="document-text-outline"
-              size={24}
+              size={device === "tablet" ? 30 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>

@@ -13,6 +13,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../../config/SuperAppps";
 import { Loading } from "../../../components/Loading";
 import { Search } from "../../../components/Search";
@@ -25,7 +26,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { getTokenValue } from "../../../service/session";
 import { getChoiceListTM, getCompleteTM } from "../../../service/api";
 
-const ListCompleteProject = ({ item }) => {
+const ListCompleteProject = ({ item, device }) => {
   return (
     <View
       style={{
@@ -46,26 +47,32 @@ const ListCompleteProject = ({ item }) => {
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Nama Project
         </Text>
-        <Text>{item.project}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.project}
+        </Text>
       </View>
       <View>
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Nama List
         </Text>
-        <Text>{item.list_task}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.list_task}
+        </Text>
       </View>
       <View>
         <Text
           style={{
-            fontSize: FONTSIZE.H1,
+            fontSize: fontSizeResponsive("H4", device),
             fontWeight: FONTWEIGHT.bold,
           }}
         >
@@ -73,7 +80,7 @@ const ListCompleteProject = ({ item }) => {
         </Text>
         <Text
           style={{
-            fontSize: FONTSIZE.H1,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           {item.title}
@@ -83,6 +90,7 @@ const ListCompleteProject = ({ item }) => {
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Penanggung Jawab
@@ -107,11 +115,14 @@ const ListCompleteProject = ({ item }) => {
         <Text
           style={{
             fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
           }}
         >
           Lama Penyelesaian
         </Text>
-        <Text>{item.lama_penyelesaian}</Text>
+        <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+          {item.lama_penyelesaian}
+        </Text>
       </View>
     </View>
   );
@@ -193,7 +204,8 @@ export const Laporan = () => {
     setAscending(false);
   };
 
-  console.log("complete.list", complete.list);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <>
@@ -210,8 +222,8 @@ export const Laporan = () => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
@@ -225,13 +237,19 @@ export const Laporan = () => {
           >
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: 600,
+              color: COLORS.white,
+            }}
+          >
             Laporan
           </Text>
         </View>
@@ -264,10 +282,14 @@ export const Laporan = () => {
           </View>
 
           <View key={"ViewSearch"} style={styles.input}>
-            <Ionicons name="search" size={20} color={COLORS.primary} />
+            <Ionicons
+              name="search"
+              size={fontSizeResponsive("H3", device)}
+              color={COLORS.primary}
+            />
             <TextInput
               placeholder={"Cari..."}
-              style={{ fontSize: 16, flex: 1 }}
+              style={{ fontSize: fontSizeResponsive("H3", device), flex: 1 }}
               maxLength={30}
               value={inputValue}
               onChangeText={(text) => setInputValue(text)}
@@ -312,7 +334,7 @@ export const Laporan = () => {
               data={dataList}
               renderItem={({ item }) => (
                 <View key={item.id}>
-                  <ListCompleteProject item={item} />
+                  <ListCompleteProject item={item} device={device} />
                 </View>
               )}
               ListEmptyComponent={() => <ListEmpty />}

@@ -107,7 +107,6 @@ export const Satker = () => {
     useSelector((state) => state.satker);
   const { profile } = useSelector((state) => state.superApps);
 
-  console.log(profile.satuan_kerja_nama);
 
   const renderItem = ({ item, index }, parallaxProps) => {
     return (

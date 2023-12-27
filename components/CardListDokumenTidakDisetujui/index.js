@@ -2,17 +2,16 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { getDetailArsipCuti } from "../../service/api";
 import { Text, TouchableOpacity, View } from "react-native";
-import { COLORS, DATETIME } from "../../config/SuperAppps";
+import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
 import moment from "moment";
 import { Ionicons } from "@expo/vector-icons";
 
-export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
+export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const getDetail = (id) => {
     const params = { nip, id };
     // const data = event.listsprogress.find(item => item.id === id)
-    console.log(nip, id);
     dispatch(getDetailArsipCuti(params));
   };
 
@@ -36,23 +35,38 @@ export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
               marginTop: 10,
             }}
           >
-            <Text style={{ fontSize: 12 }}>
+            <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
               Tanggal Pengajuan:{" "}
               {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss").format(
                 DATETIME.LONG_DATETIME
               )}
             </Text>
-            <Text style={{ fontSize: 12, color: COLORS.lighter }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                color: COLORS.lighter,
+              }}
+            >
               Jenis: {item.jenis_cuti}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ fontSize: 12, color: COLORS.lighter }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  color: COLORS.lighter,
+                }}
+              >
                 Tipe Dokumen:{" "}
               </Text>
               <View
                 style={{ backgroundColor: "red", borderRadius: 10, padding: 5 }}
               >
-                <Text style={{ fontSize: 12, color: COLORS.white }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    color: COLORS.white,
+                  }}
+                >
                   {item.tipe_dokumen}
                 </Text>
               </View>
@@ -66,7 +80,12 @@ export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontSize: 12, color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    color: COLORS.lighter,
+                  }}
+                >
                   Mulai:{" "}
                   {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(
                     DATETIME.LONG_DATETIME
@@ -86,7 +105,12 @@ export const CardListDokumenTidakDisetujui = ({ item, nip }) => {
                   size={18}
                   color={COLORS.primary}
                 />
-                <Text style={{ fontSize: 12, color: COLORS.lighter }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    color: COLORS.lighter,
+                  }}
+                >
                   Mulai:{" "}
                   {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(
                     DATETIME.LONG_DATETIME

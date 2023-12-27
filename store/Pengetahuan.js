@@ -144,11 +144,9 @@ const PengetahuanSlice = createSlice({
         state.loading = false;
       })
       .addCase(postComment.fulfilled, (state, action) => {
-        console.log(action.payload + "berhasil");
         state.refresh = true;
       })
       .addCase(postComment.rejected, (state, action) => {
-        console.log(action.payload + "gagal");
       })
       .addCase(getListsLike.fulfilled, (state, action) => {
         state.linimasa.listsLike = action.payload;
@@ -208,7 +206,6 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(putTakeDown.fulfilled, (state, action) => {
         state.error = false;
-        console.log("berhasil");
         state.loading = false;
       })
       .addCase(putTakeDown.pending, (state, action) => {
@@ -218,7 +215,6 @@ const PengetahuanSlice = createSlice({
       .addCase(putTakeDown.rejected, (state, action) => {
         state.error = true;
         state.loading = false;
-        console.log("gagal");
       })
       .addCase(getMyPostList.fulfilled, (state, action) => {
         state.postinganSaya.lists = action.payload;

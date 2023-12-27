@@ -114,15 +114,12 @@ export const TambahAgendaEvent = () => {
 
     const pickDocument = async () => {
         let result = await DocumentPicker.getDocumentAsync({});
-        // console.log(result.uri);
-        // console.log(result);
         let tipe = result.uri.split('/')
         tipe = tipe[tipe.length - 1]
         tipe = tipe.split('.')
         tipe = tipe[tipe.length - 1]
         setDocument([...document, result])
         setType([...type, tipe])
-        console.log(document)
     };
 
     const [time, setTime] = useState('');

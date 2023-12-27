@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive, PADDING } from "../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { CardListGaleriHome } from "../../components/CardListGaleriHome";
 import { getTokenValue } from "../../service/session";
@@ -44,7 +44,6 @@ export const ListGaleri = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getGaleri({ token, page }));
-      console.log("page", page);
     }
   }, [token, page]);
 
@@ -82,11 +81,8 @@ export const ListGaleri = () => {
     try {
       if (token !== "") {
         dispatch(getGaleri({ token, page }));
-        console.log(page, "page");
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -97,27 +93,32 @@ export const ListGaleri = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
+      <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{
             backgroundColor: COLORS.primary,
             height: "10%",
             flexDirection: "row",
+            alignItems: "center",
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <View
-              style={[
-                styles.backIcon,
-                {
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 25,
-                  marginLeft: 20,
-                },
-              ]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 20,
+                backgroundColor: "white",
+                height: device === "tablet" ? 46 : 28,
+                width: device === "tablet" ? 46 : 28,
+                borderRadius: 50,
+              }}
             >
-              <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
+              <Ionicons
+                name="chevron-back"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
             </View>
           </TouchableOpacity>
           <View
@@ -131,7 +132,7 @@ export const ListGaleri = () => {
             <Text
               style={{
                 color: "white",
-                fontSize: fontSizeResponsive("H3", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
               }}
             >
@@ -146,42 +147,44 @@ export const ListGaleri = () => {
             onSearch={filter}
           />
         </View>
-        <FlatList
-          key={"#"}
-          data={filterData}
-          renderItem={({ item }) => (
-            <CardListGaleriHome
-              image={item.main_images?.image}
-              deskripsi={item.main_images.title}
-              onclick={() => {
-                setVisibleModal(true);
-                setGaleriById(item);
-              }}
-            />
-          )}
-          ListEmptyComponent={() => <ListEmpty />}
-          ListFooterComponent={() =>
-            loading && (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 24,
+        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+          <FlatList
+            key={"#"}
+            data={filterData}
+            renderItem={({ item }) => (
+              <CardListGaleriHome
+                image={item.main_images?.image}
+                deskripsi={item.main_images.title}
+                onclick={() => {
+                  setVisibleModal(true);
+                  setGaleriById(item);
                 }}
-              >
-                <ActivityIndicator size="large" color={COLORS.primary} />
-              </View>
-            )
-          }
-          numColumns={2}
-          keyExtractor={(item) => "#" + item.id}
-          onEndReached={
-            search === "" && galeri.lists.length !== 0 ? loadMore : null
-          }
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
+              />
+            )}
+            ListEmptyComponent={() => <ListEmpty />}
+            ListFooterComponent={() =>
+              loading && (
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 24,
+                  }}
+                >
+                  <ActivityIndicator size="large" color={COLORS.primary} />
+                </View>
+              )
+            }
+            numColumns={2}
+            keyExtractor={(item) => "#" + item.id}
+            onEndReached={
+              search === "" && galeri.lists.length !== 0 ? loadMore : null
+            }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        </View>
       </View>
 
       <Modal
@@ -193,7 +196,6 @@ export const ListGaleri = () => {
           setGaleriById({});
         }}
       >
-        {console.log(galeriById)}
         <TouchableOpacity
           style={[
             Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop,

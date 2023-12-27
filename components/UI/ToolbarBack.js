@@ -1,15 +1,15 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { IconButton } from "react-native-paper";
-import { Config } from "../../constants/config";
 import { GlobalStyles } from "../../constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { COLORS } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setFAB } from "../../store/snackbar";
+import { initDownload } from "../../utils/agenda";
 
 //toolbar custom
 export const toolbarBack = ({ navigation, title, route, options, back }) => {
+  const dispatch = useDispatch();
   return (
     <SafeAreaView
       style={{
@@ -28,7 +28,12 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
       >
         <View style={styles.containerHeaderLeft}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+              if (route?.params?.title == "Lihat Surat") {
+                dispatch(setFAB(false));
+              }
+              navigation.goBack();
+            }}
             style={{
               backgroundColor: COLORS.white,
               width: 30,
@@ -56,29 +61,40 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
           />
         </View>
 
-        <Text style={{ fontSize: 15, fontWeight: 600, textAlign:"right" }}>
+        <Text style={{ fontSize: 15, fontWeight: 600, textAlign: "right" }}>
           {title ? title : route?.params?.title}
         </Text>
+        {route?.params?.title == "Lihat Surat" && (
+          <TouchableOpacity
+            onPress={() => {
+              initDownload(route?.params?.selected);
+            }}
+            style={{
+              backgroundColor: COLORS.white,
+              width: 30,
+              height: 30,
+              borderRadius: 15,
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: 5,
+              //shadow ios
+              shadowOffset: { width: -2, height: 4 },
+              shadowColor: "#171717",
+              shadowOpacity: 0.2,
+              //shadow android
+              elevation: 2,
+            }}
+          >
+            <Ionicons name="share-social" size={16} />
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
-    // <View style={styles.containerHeader}>
-    //   <View style={styles.containerHeaderLeft}>
-    //     <IconButton
-    //       icon="chevron-left"
-    //       size={26}
-    //       color="black"
-    //       onPress={() => navigation.goBack()}
-    //     />
-    //     <Image style={styles.logoHeader} source={Config.logoHeader} />
-    //   </View>
-    //   <Text style={styles.titleHeader}>{route.params.title}</Text>
-    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   containerHeader: {
-    // flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingRight: 16,

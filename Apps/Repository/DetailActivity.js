@@ -99,7 +99,6 @@ export const DetailActivity = () => {
     });
   }, []);
   const ratingCompleted = (rating) => {
-    console.log(token);
     const payload = {
       rating: rating,
     };
@@ -108,11 +107,9 @@ export const DetailActivity = () => {
       token: token,
       payload: payload,
     };
-    console.log(data);
     dispatch(postRating(data));
   };
 
-  // console.log(dokumen);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -134,8 +131,8 @@ export const DetailActivity = () => {
               style={{
                 backgroundColor: "white",
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -144,7 +141,7 @@ export const DetailActivity = () => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={"#800000"}
                 />
               </TouchableOpacity>

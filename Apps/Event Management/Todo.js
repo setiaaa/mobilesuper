@@ -3,7 +3,12 @@ import { FlatList, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -22,9 +27,12 @@ import { getTokenValue } from "../../service/session";
 import { deleteTodo, getDetailTodo, getlistTodo } from "../../service/api";
 import { CardListTodo } from "../../components/CardListTodoEvent";
 import { RefreshControl } from "react-native";
+import { setDeleteRefresh } from "../../store/Event";
 
 export const Todo = () => {
-  const { agenda, todo, event, loading } = useSelector((state) => state.event);
+  const { agenda, todo, event, loading, deleteRefresh } = useSelector(
+    (state) => state.event
+  );
   const id = agenda.detail?.notulensi?.id;
   const data = todo.lists;
 
@@ -45,7 +53,6 @@ export const Todo = () => {
     }
   }, [token]);
 
-  // console.log(data)
 
   const navigation = useNavigation();
 
@@ -78,19 +85,17 @@ export const Todo = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
-      try {
-          if (token !== '') {
-            dispatch(getlistTodo({ token, id }));
-            console.log('Refresh Berhasil')
-          }
-      } catch (error) {
-          console.log('Refresh gagal:', error)
+    try {
+      if (token !== "") {
+        dispatch(getlistTodo({ token, id }));
       }
+    } catch (error) {
+    }
 
-      setRefreshing(true);
-      setTimeout(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setRefreshing(false);
-      }, 2000);
+    }, 2000);
   }, [token]);
 
   // useEffect(() => {
@@ -108,6 +113,15 @@ export const Todo = () => {
   //     }
   // }, [search])
 
+  const { device } = useSelector((state) => state.apps);
+
+  useEffect(() => {
+    if (deleteRefresh === true) {
+      dispatch(getlistTodo({ token, id }));
+      dispatch(setDeleteRefresh(false));
+    }
+  }, [deleteRefresh]);
+
   return (
     <>
       <View
@@ -123,8 +137,8 @@ export const Todo = () => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
@@ -133,7 +147,7 @@ export const Todo = () => {
           <TouchableOpacity onPress={() => navigation.navigate("AgendaEvent")}>
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
@@ -141,7 +155,7 @@ export const Todo = () => {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: FONTSIZE.H1,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: FONTWEIGHT.bold,
               color: COLORS.white,
             }}
@@ -261,8 +275,8 @@ export const Todo = () => {
               >
                 <TouchableOpacity
                   style={{
-                    width: "80%",
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.lightBrown,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -274,13 +288,20 @@ export const Todo = () => {
                     navigation.navigate("EditTodo");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Ubah</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Ubah
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={{
-                    width: "80%",
-                    height: 50,
+                    width: "90%",
+                    height: device === "tablet" ? 65 : 50,
                     backgroundColor: COLORS.infoDanger,
                     borderRadius: 8,
                     justifyContent: "center",
@@ -291,9 +312,17 @@ export const Todo = () => {
                   onPress={() => {
                     dispatch(deleteTodo({ token: token, id: idEdit }));
                     bottomSheetAttachClose();
+                    // setRefreshing(true)
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Hapus</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Hapus
+                  </Text>
                 </TouchableOpacity>
               </View>
             </BottomSheetView>

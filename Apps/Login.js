@@ -325,10 +325,6 @@ function Login() {
     // Log the user in on success
     if (biometricAuth.success) validasi();
 
-    // console.log({ isBiometricAvailable });
-    // console.log({ supportedBiometrics });
-    // console.log({ savedBiometrics });
-    // console.log({ biometricAuth });
   };
 
   async function handlerConfirmPassword() {

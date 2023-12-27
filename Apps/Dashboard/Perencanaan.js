@@ -10,7 +10,12 @@ import { TouchableOpacity } from "react-native";
 import { getKesejahteraan, getPerencanaan } from "../../service/api";
 import { FlatList } from "react-native";
 import moment from "moment";
-import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import RenderHTML from "react-native-render-html";
 import { useWindowDimensions } from "react-native";
@@ -20,9 +25,16 @@ import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
-import { RefreshControl } from 'react-native'
+import { RefreshControl } from "react-native";
 
-const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
+const CardLists = ({
+  item,
+  setDetail,
+  setDetailContent,
+  value,
+  loading,
+  device,
+}) => {
   const source = {
     html: `<section id="services" className="services">
         <div className="container">
@@ -124,7 +136,9 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
             height={20}
           />
         ) : (
-          <Text>{moment(item.created_date).format(DATETIME.LONG_DATE)}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {moment(item.created_date).format(DATETIME.LONG_DATE)}
+          </Text>
         )}
 
         {loading ? (
@@ -134,7 +148,13 @@ const CardLists = ({ item, setDetail, setDetailContent, value, loading }) => {
             height={20}
           />
         ) : (
-          <Text style={{ marginTop: 10, fontWeight: FONTWEIGHT.bold }}>
+          <Text
+            style={{
+              marginTop: 10,
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
             {item.title}
           </Text>
         )}
@@ -161,6 +181,7 @@ export const Perencanaan = () => {
   }, []);
 
   const { perencanaan, loading } = useSelector((state) => state.dashboard);
+  const { device } = useSelector((state) => state.apps);
   const lists = perencanaan.lists.results;
 
   const { width } = useWindowDimensions();
@@ -182,39 +203,54 @@ export const Perencanaan = () => {
         setPage(page + 1);
       }
     }
-
-    const [refreshing, setRefreshing] = useState(false);
-
-    const onRefresh = React.useCallback(() => {
-        try {
-            getTokenValue().then(val => {
-                setToken(val)
-                dispatch(getPerencanaan({ token: val, value: 'ropeg', page: page }))
-            })
-        } catch (error) {
-            console.log('Refresh gagal:', error)
-        }
-
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, []);
   };
 
-    return (
-        // <View style={styles.card}>
-        //     <Image source={require('../../assets/superApp/logoKecil.png')} />
-        //     <Text>Ropeg</Text>
-        // </View>
-        <View>
-            {detail === '' ? (
-                <>
-                    <View style={{ marginTop: 20, marginHorizontal: 20, marginBottom:10 }}>
-                        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Berita</Text>
-                        {/* custom divider */}
-                        <View style={{ height: 1, width: '100%', backgroundColor: '#DBDADE', marginTop: 10 }} />
-                    </View>
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    try {
+      getTokenValue().then((val) => {
+        setToken(val);
+        dispatch(getPerencanaan({ token: val, value: "ropeg", page: page }));
+      });
+    } catch (error) {
+    }
+
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
+  return (
+    // <View style={styles.card}>
+    //     <Image source={require('../../assets/superApp/logoKecil.png')} />
+    //     <Text>Ropeg</Text>
+    // </View>
+    <View>
+      {detail === "" ? (
+        <>
+          <View
+            style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 10 }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Berita
+            </Text>
+            {/* custom divider */}
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: "#DBDADE",
+                marginTop: 10,
+              }}
+            />
+          </View>
 
           <FlatList
             data={lists}
@@ -225,6 +261,7 @@ export const Perencanaan = () => {
                 setDetailContent={setDetailContent}
                 value={value}
                 loading={loading}
+                device={device}
               />
             )}
             style={{ height: 600 }}
@@ -244,9 +281,9 @@ export const Perencanaan = () => {
             }
             ListEmptyComponent={() => <ListEmpty />}
             onEndReached={loadMore}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                        }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         </>
       ) : (
@@ -265,9 +302,19 @@ export const Perencanaan = () => {
                 setDetail("");
               }}
             >
-              <Ionicons name="chevron-back-outline" size={24} />
+              <Ionicons
+                name="chevron-back-outline"
+                size={device === "tabelt" ? 40 : 24}
+              />
             </TouchableOpacity>
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Detail Berita</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H3", device),
+              }}
+            >
+              Detail Berita
+            </Text>
           </View>
           {/* custom divider */}
           <View
@@ -289,7 +336,12 @@ export const Perencanaan = () => {
               borderRadius: 8,
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               {detailContent.title}
             </Text>
             <View
@@ -300,9 +352,15 @@ export const Perencanaan = () => {
                 marginTop: 5,
               }}
             >
-              <Ionicons name="time-outline" size={20} color={COLORS.grey} />
+              <Ionicons
+                name="time-outline"
+                size={device === "tablet" ? 40 : 20}
+                color={COLORS.grey}
+              />
               {/* <Text>{moment(detailContent.created_date).format(DATETIME.LONG_DATE)}</Text> */}
-              <Text>{formatDate(detailContent.created_date)}</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                {formatDate(detailContent.created_date)}
+              </Text>
             </View>
             {/* custom divider */}
             <View

@@ -7,10 +7,15 @@ import {
   editTaskTM,
   getChoiceListTM,
   getCompleteTM,
+  getDetailKorespondensiTM,
   getDetailProjectTM,
   getDetailTaskTM,
   getListDashboardTM,
+  getListKorespondensiArsipTM,
+  getListKorespondensiNextWeekTM,
+  getListKorespondensiOverdueTM,
   getListKorespondensiTM,
+  getListKorespondensiTodayTM,
   getListTaskTM,
   getTreeTM,
   postAttachmentTM,
@@ -41,6 +46,14 @@ const TaskSlice = createSlice({
     refresh: null,
     status: "",
     loading: false,
+    listKorespondensi: {
+      today: [],
+      overdue: [],
+      nextweek: [],
+    },
+    loadingtoday: false,
+    loadingoverdue: false,
+    loadingnextweek: false,
   },
   reducers: {
     setVariant: (state, action) => {
@@ -92,32 +105,82 @@ const TaskSlice = createSlice({
         state.loading = true;
       })
       .addCase(getListKorespondensiTM.fulfilled, (state, action) => {
-        let datas = action.payload
-        function renameChildrenToDescendants(datas) {
-            datas.forEach(member => {
-                if (member.nodes) {
-                    member.children = member.nodes; // Mengganti atribut "nodes" dengan "descendants"
-                    delete member.nodes; // Menghapus atribut "nodes" yang lama
-                    renameChildrenToDescendants(member.children); // Rekursif untuk anggota keluarga berikutnya
-                }
-            });
-        }
-        renameChildrenToDescendants(datas)
+        const data = action.payload;
         const newDataList = {
           id: "2",
           name: "Korespondensi",
           type: "Korespondensi",
-          data: datas,
+          data: data,
           detail: null,
         };
         state.list = newDataList;
         state.loading = false;
-        console.log("in store")
-        console.log(newDataList)
-        
-    })
+      })
       .addCase(getListKorespondensiTM.pending, (state, action) => {
         state.loading = true;
+      })
+      .addCase(getListKorespondensiArsipTM.fulfilled, (state, action) => {
+        const data = action.payload;
+        const newDataList = {
+          id: "2",
+          name: "Korespondensi",
+          type: "Korespondensi",
+          data: data,
+          detail: null,
+        };
+        state.list = newDataList;
+        state.loading = false;
+      })
+      .addCase(getListKorespondensiArsipTM.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListKorespondensiTodayTM.fulfilled, (state, action) => {
+        const data = action.payload;
+        const newDataList = {
+          id: "2",
+          name: "Korespondensi",
+          type: "Korespondensi",
+          data: data,
+          detail: null,
+        };
+        // state.list = newDataList;
+        state.listKorespondensi.today = action.payload;
+        state.loadingtoday = false;
+      })
+      .addCase(getListKorespondensiTodayTM.pending, (state, action) => {
+        state.loadingtoday = true;
+      })
+      .addCase(getListKorespondensiOverdueTM.fulfilled, (state, action) => {
+        const data = action.payload;
+        const newDataList = {
+          id: "2",
+          name: "Korespondensi",
+          type: "Korespondensi",
+          data: data,
+          detail: null,
+        };
+        // state.list = newDataList;
+        state.listKorespondensi.overdue = action.payload;
+        state.loadingoverdue = false;
+      })
+      .addCase(getListKorespondensiOverdueTM.pending, (state, action) => {
+        state.loadingoverdue = true;
+      })
+      .addCase(getListKorespondensiNextWeekTM.fulfilled, (state, action) => {
+        const data = action.payload;
+        const newDataList = {
+          id: "2",
+          name: "Korespondensi",
+          type: "Korespondensi",
+          data: data,
+          detail: null,
+        };
+        // state.list = newDataList;
+        state.listKorespondensi.nextweek = action.payload;
+        state.loadingnextweek = false;
+      })
+      .addCase(getListKorespondensiNextWeekTM.pending, (state, action) => {
+        state.loadingnextweek = true;
       })
       .addCase(getDetailTaskTM.fulfilled, (state, action) => {
         state.list = {
@@ -127,6 +190,16 @@ const TaskSlice = createSlice({
         state.loading = false;
       })
       .addCase(getDetailTaskTM.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDetailKorespondensiTM.fulfilled, (state, action) => {
+        state.list = {
+          ...state.list,
+          detail: action.payload,
+        };
+        state.loading = false;
+      })
+      .addCase(getDetailKorespondensiTM.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(postCommentTM.fulfilled, (state, action) => {
@@ -274,7 +347,7 @@ const TaskSlice = createSlice({
       .addCase(deleteListTask.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-      })
+      });
   },
 });
 

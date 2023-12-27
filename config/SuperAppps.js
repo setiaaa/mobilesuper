@@ -19,6 +19,7 @@ export const COLORS = {
   secondaryLighter: "#d9d9d9",
   lightBrown: "#D2B48C",
   foundation: "#474747",
+  bgLightGrey: "#F8F8F8",
 };
 export const FONTSIZE = {
   H1: 15,

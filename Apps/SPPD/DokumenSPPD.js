@@ -68,10 +68,8 @@ export const DokumenSPPD = () => {
     try {
       if (token !== "") {
         dispatch(getDocumentListSPPD(token));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

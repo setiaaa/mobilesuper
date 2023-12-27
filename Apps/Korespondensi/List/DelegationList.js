@@ -148,7 +148,6 @@ function DelegationList() {
       }
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setIsSearchFilter(false);
       setIsLoading(false);
     }

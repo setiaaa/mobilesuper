@@ -1,13 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
 import { useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
+import {
+  COLORS,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export const PdfPerisai = ({ route }) => {
   const { item } = route.params;
   const webViewRef = useRef(null);
   const [token, setToken] = useState("");
+  const navigation = useNavigation();
+  const { device } = useSelector((state) => state.apps);
+
   // const type = "dokumen_lain";
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -68,13 +78,55 @@ export const PdfPerisai = ({ route }) => {
   })
   `;
   return (
-    <WebView
-      ref={webViewRef}
-      source={{
-        uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/index.html",
-      }}
-      style={{ flex: 1 }}
-      injectedJavaScript={myInjectedJs}
-    />
+    <>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "flex-end",
+          backgroundColor: COLORS.primary,
+          height: 80,
+          paddingBottom: 20,
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
+            alignItems: "center",
+            justifyContent: "center",
+            marginLeft: 20,
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons
+              name="chevron-back-outline"
+              size={device === "tablet" ? 40 : 24}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: FONTWEIGHT.bold,
+              color: COLORS.white,
+            }}
+          >
+            Tanda Tangan Notulensi
+          </Text>
+        </View>
+      </View>
+      <WebView
+        ref={webViewRef}
+        source={{
+          uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/index.html",
+        }}
+        style={{ flex: 1 }}
+        injectedJavaScript={myInjectedJs}
+      />
+    </>
   );
 };

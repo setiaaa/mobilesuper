@@ -249,7 +249,6 @@ function DetailAttachment({ data, id, tipeRef }) {
       const UTI = "public.item";
       const shareResult = await Sharing.shareAsync(fileUri, { UTI });
     } catch (error) {
-      console.log(error);
     }
   };
   const loadingOverlay = (
@@ -334,7 +333,7 @@ function DetailAttachment({ data, id, tipeRef }) {
                 >
                   Lihat Surat
                 </Button>
-                <Button
+                {/* <Button
                   onPress={() => initDownload(item)}
                   mode="contained"
                   style={[
@@ -353,7 +352,7 @@ function DetailAttachment({ data, id, tipeRef }) {
                   )}
                 >
                   Unduh Surat
-                </Button>
+                </Button> */}
               </View>
             ))}
         </View>

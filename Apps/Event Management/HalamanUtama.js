@@ -1,8 +1,14 @@
 import React, { useMemo, useRef } from "react";
-import { RefreshControl, View } from "react-native";
+import { RefreshControl, StyleSheet, View } from "react-native";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -20,6 +26,7 @@ import {
   BottomSheetView,
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
+  BottomSheetFlatList,
 } from "@gorhom/bottom-sheet";
 import { Search } from "../../components/Search";
 import ListEmpty from "../../components/ListEmpty";
@@ -27,6 +34,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   getEvent,
   getEventDetail,
+  getEventFilter,
   getEventProgress,
   getEventToday,
 } from "../../service/api";
@@ -37,6 +45,7 @@ import { CardProgresEvent } from "../../components/CardProgresEvent";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { Loading } from "../../components/Loading";
+import { TextInput } from "react-native";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -54,7 +63,7 @@ const tanggalBesok = new Date(
   `${tahun}-${bulan}-${tanggal + 1}`
 ).toDateString();
 
-const CardTodoEvent = ({ item }) => {
+const CardTodoEvent = ({ item, device }) => {
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <View
@@ -72,7 +81,14 @@ const CardTodoEvent = ({ item }) => {
           elevation: 2,
         }}
       >
-        <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.judul}</Text>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          {item.judul}
+        </Text>
         <View
           style={{
             flexDirection: "row",
@@ -81,12 +97,16 @@ const CardTodoEvent = ({ item }) => {
             marginVertical: 10,
           }}
         >
-          <Text>PIC</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            PIC
+          </Text>
           <Image
             source={item.pic}
             style={{ width: 26, height: 26, borderRadius: 30 }}
           />
-          <Text>{item.nama}</Text>
+          <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+            {item.nama}
+          </Text>
         </View>
 
         <View
@@ -98,15 +118,186 @@ const CardTodoEvent = ({ item }) => {
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Ionicons name="calendar-outline" size={24} />
-            <Text>{item.tanggal}</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              {item.tanggal}
+            </Text>
           </View>
 
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Ionicons name="time-outline" size={24} />
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>{item.progres}</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {item.progres}
+            </Text>
           </View>
         </View>
       </View>
+    </View>
+  );
+};
+
+const CardEventFilter = ({ item, token, device }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [collapse, setCollapse] = useState({
+    toggle: false,
+  });
+
+  const children = item.children;
+
+  const handleCollapse = () => {
+    collapse.toggle
+      ? setCollapse({ toggle: false })
+      : setCollapse({ toggle: true });
+  };
+
+  const getDetail = (id) => {
+    const params = { token, id };
+    dispatch(getEventDetail(params));
+  };
+
+  return (
+    <View>
+      <TouchableOpacity
+        style={{
+          backgroundColor: COLORS.primary,
+          paddingHorizontal: 15,
+          paddingVertical: 5,
+          borderRadius: 8,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+        onPress={handleCollapse}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            color: COLORS.white,
+          }}
+        >
+          {item.date}
+        </Text>
+        {collapse.toggle === true ? (
+          <Ionicons
+            name="chevron-up"
+            size={device === "tablet" ? 40 : 24}
+            color={COLORS.white}
+          />
+        ) : (
+          <Ionicons
+            name="chevron-down"
+            size={device === "tablet" ? 40 : 24}
+            color={COLORS.white}
+          />
+        )}
+      </TouchableOpacity>
+      {collapse.toggle ? (
+        <View style={{ marginBottom: 10 }}>
+          {children.map((data) => (
+            <TouchableOpacity
+              onPress={() => {
+                getDetail(data.id);
+                navigation.navigate("MainDetailEvent");
+              }}
+              key={data.id}
+              style={{
+                backgroundColor: COLORS.white,
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
+                marginVertical: 5,
+                paddingHorizontal: 10,
+                paddingVertical: 10,
+                borderRadius: 8,
+                rowGap: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: FONTWEIGHT.bold,
+                }}
+              >
+                {data.title}
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {data.pic.department}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H4", device),
+                    color: COLORS.lighter,
+                  }}
+                >
+                  {data.user_role.is_member
+                    ? "Peserta"
+                    : data.user_role.is_notulensi
+                    ? "Notulen"
+                    : data.user_role.is_pic
+                    ? "PIC"
+                    : data.user_role.is_presensi
+                    ? "Presensi"
+                    : "Pembuat"}
+                </Text>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    gap: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      color: COLORS.lighter,
+                    }}
+                  >
+                    Status
+                  </Text>
+                  <View
+                    style={{
+                      borderRadius: device === "tablet" ? 28 : 14,
+                      paddingVertical: "1%",
+                      paddingHorizontal: "5%",
+                      backgroundColor: COLORS.infoLight,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        color: COLORS.info,
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {data.status}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -123,6 +314,11 @@ export const HalamanUtama = () => {
   // useEffect(() => {
   //     dispatch(setEventLists(listsEvent))
   // }, [])
+
+  const [inputValue, setInputValue] = useState("");
+  const [searchFilter, setSearchFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -136,7 +332,19 @@ export const HalamanUtama = () => {
     }
   }, [token]);
 
-  const { event, loading } = useSelector((state) => state.event);
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(
+        getEventFilter({
+          token: token,
+          status: statusFilter,
+          search: searchFilter,
+        })
+      );
+    }
+  }, [token, searchFilter, statusFilter]);
+
+  const { event, loading, eventFilter } = useSelector((state) => state.event);
   const list = event.lists;
   const progreslist = event.listsprogress;
   // const [loading, setLoading] = useState(true)
@@ -145,8 +353,9 @@ export const HalamanUtama = () => {
 
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalAddRef = useRef(null);
+  const bottomSheetModalFilterRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT", "50%", "90%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -169,6 +378,15 @@ export const HalamanUtama = () => {
 
   const bottomSheetAttachAddClose = () => {
     if (bottomSheetModalAddRef.current) bottomSheetModalAddRef.current?.close();
+  };
+
+  const bottomSheetAttachFilter = () => {
+    bottomSheetModalFilterRef.current?.present();
+  };
+
+  const bottomSheetAttachFilterClose = () => {
+    if (bottomSheetModalFilterRef.current)
+      bottomSheetModalFilterRef.current?.close();
   };
 
   const [search, setSearch] = useState("");
@@ -238,10 +456,8 @@ export const HalamanUtama = () => {
         } else {
           dispatch(getEventProgress(token));
         }
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -250,7 +466,16 @@ export const HalamanUtama = () => {
     }, 2000);
   }, [token]);
 
-  // console.log(event.listsprogress);
+  const handleSearchFilter = () => {
+    setSearchFilter(inputValue);
+  };
+
+  const handleStatusFilter = (status) => {
+    setStatusFilter(status);
+  };
+
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ flex: 1 }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -267,8 +492,8 @@ export const HalamanUtama = () => {
               style={{
                 backgroundColor: COLORS.white,
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -277,7 +502,7 @@ export const HalamanUtama = () => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
@@ -285,7 +510,7 @@ export const HalamanUtama = () => {
             <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
               <Text
                 style={{
-                  fontSize: FONTSIZE.H1,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.white,
                 }}
@@ -295,13 +520,266 @@ export const HalamanUtama = () => {
             </View>
           </View>
 
-          <View style={{ marginTop: 20, paddingHorizontal: "5%" }}>
-            {variant === "hariini" ? (
-              <Search placeholder={"Cari"} onSearch={filterHariIni} />
-            ) : (
-              <Search placeholder={"Cari"} onSearch={filter} />
-            )}
+          <View
+            style={{
+              marginTop: 20,
+              paddingHorizontal: "5%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={{ width: "85%" }}>
+              {variant === "hariini" ? (
+                <Search
+                  placeholder={"Cari"}
+                  onSearch={filterHariIni}
+                  iconColor={COLORS.primary}
+                />
+              ) : (
+                <Search
+                  placeholder={"Cari"}
+                  onSearch={filter}
+                  iconColor={COLORS.primary}
+                />
+              )}
+            </View>
+            <TouchableOpacity onPress={bottomSheetAttachFilter}>
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 30,
+                  backgroundColor: COLORS.white,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderColor: COLORS.secondaryLighter,
+                }}
+              >
+                <Ionicons name="filter-outline" size={24} />
+              </View>
+            </TouchableOpacity>
           </View>
+
+          <BottomSheetModal
+            ref={bottomSheetModalFilterRef}
+            snapPoints={animatedSnapPoints}
+            handleHeight={animatedHandleHeight}
+            contentHeight={animatedContentHeight}
+            index={0}
+            style={{ borderRadius: 50 }}
+            keyboardBlurBehavior="restore"
+            android_keyboardInputMode="adjust"
+            backdropComponent={({ style }) => (
+              <View
+                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+              />
+            )}
+          >
+            <BottomSheetView onLayout={handleContentLayout}>
+              <View
+                style={{
+                  paddingVertical: 20,
+                }}
+              >
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomColor: COLORS.ExtraDivinder,
+                  }}
+                >
+                  <View style={{ marginHorizontal: "5%" }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "85%",
+                        }}
+                      >
+                        <View style={styles.input}>
+                          <Ionicons
+                            name="search"
+                            size={fontSizeResponsive("H3", device)}
+                            color={COLORS.primary}
+                          />
+                          <TextInput
+                            placeholder={"Cari..."}
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                              flex: 1,
+                            }}
+                            maxLength={30}
+                            value={inputValue}
+                            onChangeText={(text) => setInputValue(text)}
+                            onEndEditing={handleSearchFilter}
+                            clearButtonMode="always"
+                          />
+                        </View>
+                      </View>
+                      <View style={{ width: "15%", alignItems: "center" }}>
+                        <TouchableOpacity
+                          onPress={bottomSheetAttachFilterClose}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.danger,
+                              fontSize: fontSizeResponsive("H2", device),
+                            }}
+                          >
+                            Batal
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        paddingVertical: 20,
+                        gap: 10,
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: device === "tablet" ? 28 : 14,
+                          paddingVertical: "1%",
+                          paddingHorizontal: "3%",
+                          borderColor:
+                            statusFilter === ""
+                              ? COLORS.infoDangerLight
+                              : COLORS.ExtraDivinder,
+                          backgroundColor:
+                            statusFilter === ""
+                              ? COLORS.infoDangerLight
+                              : COLORS.white,
+                        }}
+                        onPress={() => handleStatusFilter("")}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            color: COLORS.primary,
+                          }}
+                        >
+                          Semua
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: device === "tablet" ? 28 : 14,
+                          paddingVertical: "1%",
+                          paddingHorizontal: "3%",
+                          borderColor:
+                            statusFilter === "persiapan"
+                              ? COLORS.infoDangerLight
+                              : COLORS.ExtraDivinder,
+                          backgroundColor:
+                            statusFilter === "persiapan"
+                              ? COLORS.infoDangerLight
+                              : COLORS.white,
+                        }}
+                        onPress={() => handleStatusFilter("persiapan")}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            color: COLORS.primary,
+                          }}
+                        >
+                          Persiapan
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: device === "tablet" ? 28 : 14,
+                          paddingVertical: "1%",
+                          paddingHorizontal: "3%",
+                          borderColor:
+                            statusFilter === "pelaksanaan"
+                              ? COLORS.infoDangerLight
+                              : COLORS.ExtraDivinder,
+                          backgroundColor:
+                            statusFilter === "pelaksanaan"
+                              ? COLORS.infoDangerLight
+                              : COLORS.white,
+                        }}
+                        onPress={() => handleStatusFilter("pelaksanaan")}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            color: COLORS.primary,
+                          }}
+                        >
+                          Pelaksanaan
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: device === "tablet" ? 28 : 14,
+                          paddingVertical: "1%",
+                          paddingHorizontal: "3%",
+                          borderColor:
+                            statusFilter === "paska"
+                              ? COLORS.infoDangerLight
+                              : COLORS.ExtraDivinder,
+                          backgroundColor:
+                            statusFilter === "paska"
+                              ? COLORS.infoDangerLight
+                              : COLORS.white,
+                        }}
+                        onPress={() => handleStatusFilter("paska")}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H3", device),
+                            color: COLORS.primary,
+                          }}
+                        >
+                          Paska
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    marginHorizontal: "5%",
+                    marginTop: 20,
+                  }}
+                >
+                  <FlatList
+                    data={eventFilter.list}
+                    renderItem={({ item }) => (
+                      <CardEventFilter
+                        item={item}
+                        token={token}
+                        device={device}
+                      />
+                    )}
+                    // keyExtractor={(item) => item.id}
+                    ListEmptyComponent={() => <ListEmpty />}
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                      />
+                    }
+                  />
+                </View>
+              </View>
+            </BottomSheetView>
+          </BottomSheetModal>
 
           <View
             style={{
@@ -317,7 +795,7 @@ export const HalamanUtama = () => {
             <TouchableOpacity
               style={{
                 width: "48%",
-                height: 41,
+                paddingVertical: 10,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "hariini" ? COLORS.primary : COLORS.white,
@@ -333,7 +811,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "hariini" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3,
+                  fontSize: fontSizeResponsive("H3", device),
                 }}
               >
                 Agenda Rapat Hari Ini
@@ -343,7 +821,7 @@ export const HalamanUtama = () => {
             <TouchableOpacity
               style={{
                 width: "48%",
-                height: 41,
+                paddingVertical: 10,
                 borderWidth: 1,
                 backgroundColor:
                   variant === "progres" ? COLORS.primary : COLORS.white,
@@ -359,7 +837,7 @@ export const HalamanUtama = () => {
                 style={{
                   color: variant === "progres" ? COLORS.white : COLORS.primary,
                   fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.H3,
+                  fontSize: fontSizeResponsive("H3", device),
                 }}
               >
                 Progres Agenda Rapat
@@ -405,6 +883,7 @@ export const HalamanUtama = () => {
                     style={{
                       fontWeight: FONTWEIGHT.bold,
                       color: COLORS.lighter,
+                      fontSize: fontSizeResponsive("H2", device),
                     }}
                   >
                     Event
@@ -421,10 +900,9 @@ export const HalamanUtama = () => {
                           justifyContent: "center",
                           alignItems: "center",
                           borderColor: COLORS.secondaryLighter,
-                          borderWidth: isFiltered ? 1 : 0,
                         }}
                       >
-                        <Ionicons name="filter-outline" size={24} />
+                        <Ionicons name="funnel-outline" size={24} />
                       </View>
                     </TouchableOpacity>
 
@@ -456,6 +934,7 @@ export const HalamanUtama = () => {
                     item={item}
                     bottomSheetAttach={bottomSheetAttach}
                     loading={loading}
+                    device={device}
                   />
                 )}
                 keyExtractor={(item) => item.id}
@@ -468,9 +947,6 @@ export const HalamanUtama = () => {
                   />
                 }
               />
-              {search === "" && !isFiltered
-                ? console.log("event.listprogress")
-                : console.log("filterData")}
             </View>
           )}
 
@@ -529,7 +1005,14 @@ export const HalamanUtama = () => {
                     navigation.navigate("TambahEvent");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Tambah Event</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Tambah Event
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -546,7 +1029,14 @@ export const HalamanUtama = () => {
                     navigation.navigate("TambahAgendaEvent");
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Tambah Agenda</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Tambah Agenda
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -564,7 +1054,14 @@ export const HalamanUtama = () => {
                     navigation.navigate("TambahTodo", { item: event.lists });
                   }}
                 >
-                  <Text style={{ color: COLORS.white }}>Tambah ToDo</Text>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Tambah ToDo
+                  </Text>
                 </TouchableOpacity>
               </View>
             </BottomSheetView>
@@ -588,7 +1085,9 @@ export const HalamanUtama = () => {
             <BottomSheetView onLayout={handleContentLayout}>
               <FlatList
                 data={progres}
-                renderItem={({ item }) => <CardTodoEvent item={item} />}
+                renderItem={({ item }) => (
+                  <CardTodoEvent item={item} device={device} />
+                )}
                 style={{ marginBottom: 40 }}
               />
             </BottomSheetView>
@@ -598,3 +1097,16 @@ export const HalamanUtama = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
+});

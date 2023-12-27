@@ -4,6 +4,8 @@ export function initAgenda(data) {
   data.copytos_display = [];
   data.kepada_addressbook = [];
   data.kepada_addressbook_ids = [];
+  data.internal_satker = "";
+  data.tembusan_external = "";
   data.additional_approver = [];
   data.office_city = "";
   data.salam = "";
@@ -40,6 +42,18 @@ export function initAgenda(data) {
       }
     }
 
+    //tembusan_external
+    if (e.key == "tembusan_external") {
+      if (e.value != "") {
+        data.tembusan_external = e.value;
+      }
+    }
+    //internal_satker
+    if (e.key == "internal_satker") {
+      if (e.value != "") {
+        data.internal_satker = e.value;
+      }
+    }
     //additional_approver
     if (e.key == "additional_approver") {
       if (e.value != "") {
@@ -140,6 +154,9 @@ export function initLetter(data) {
   data.kepada_addressbook_ids = [];
   data.additional_approver = [];
   data.additional_approver_ids = [];
+  data.tembusan_external = "";
+  data.internal_satker = "";
+  data.tipe_penerima = "";
   data.office_city = "";
   data.salam = "";
   data.kepada_bank = "";
@@ -174,6 +191,24 @@ export function initLetter(data) {
       }
     }
 
+    //tembusan_external
+    if (e.key == "tembusan_external") {
+      if (e.value != "") {
+        data.tembusan_external = e.value;
+      }
+    }
+    //internal_satker
+    if (e.key == "internal_satker") {
+      if (e.value != "") {
+        data.internal_satker = e.value;
+      }
+    }
+    //tipe_penerima
+    if (e.key == "tipe_penerima") {
+      if (e.value != "") {
+        data.tipe_penerima = e.value;
+      }
+    }
     //Parsing additional_approver dari migrasi
     if (e.key == "additional_approver") {
       if (e.value != "") {
@@ -310,7 +345,7 @@ export const initDownload = (item) => {
     fileUrl = item.file;
     fileType = item.description;
     fileName = item.filename;
-    fileName = item.filename.split("/")[3];
+    fileName = item.filename.split("/")[3].replaceAll(" ", "_");
   }
   downloadFile(fileUrl, fileType, fileName);
 };
@@ -331,9 +366,10 @@ const downloadFile = async (fileUrl, fileType, fileName) => {
   );
   try {
     const { uri } = await downloadResumable.downloadAsync();
-    if (Platform.OS == "android") {
-      saveAndroidFile(uri, fileName, fileType);
-    } else saveIosFile(uri);
+    // if (Platform.OS == "android") {
+    //   saveAndroidFile(uri, fileName, fileType);
+    // } else
+    saveIosFile(uri);
   } catch (e) {
     setIsLoading(false);
     console.error("download error:", e);
@@ -381,7 +417,6 @@ const saveIosFile = async (fileUri) => {
     const UTI = "public.item";
     const shareResult = await Sharing.shareAsync(fileUri, { UTI });
   } catch (error) {
-    console.log(error);
   }
 };
 

@@ -1,9 +1,13 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { View } from "react-native";
+import { FlatList, ScrollView, View } from "react-native";
 import { Text } from "react-native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { Image } from "react-native";
 import moment from "moment";
 import { Portal } from "react-native-portalize";
@@ -22,10 +26,12 @@ import ListEmpty from "../../../components/ListEmpty";
 import {
   deleteTask,
   deleteTaskProject,
+  getListDashboardTM,
   getListTaskTM,
 } from "../../../service/api";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-const CardListKategori = ({ item, token, id_list, type }) => {
+const CardListKategori = ({ item, token, id_list, type, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
@@ -52,7 +58,12 @@ const CardListKategori = ({ item, token, id_list, type }) => {
         }}
       >
         <View style={{ marginVertical: 10, marginLeft: 10 }}>
-          <Text style={{ fontWeight: FONTWEIGHT.bold, fontSize: FONTSIZE.H2 }}>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H2", device),
+            }}
+          >
             {item.value}
           </Text>
         </View>
@@ -84,37 +95,35 @@ export const DetailProject = ({
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
-  const bottomSheetMember = () => {
-    bottomSheetModalMemberRef.current?.present();
-  };
-
-  useEffect(() => {
-    let arrList = [];
-    const index = treeView.map((e) => e.id).indexOf(choiceKategori.key);
-    treeView[index]?.list_tasks?.map((item) => {
-      arrList.push({
-        key: item.id,
-        value: item.name,
-      });
-    });
-    // console.log(index)
-    // setChoiceList(arrList.length > 0 ? arrList[0] : '')
-    setDataList(arrList);
-  }, [choiceKategori]);
-
-  // console.log(choiceKategori)
+    const bottomSheetMember = () => {
+        bottomSheetModalMemberRef.current?.present()
+    }
+    const bottomsheetMemberClose = () => {
+      if (bottomSheetModalMemberRef.current)
+      bottomSheetModalMemberRef.current?.close();
+    };
+    useEffect(() => {
+        let arrList = []
+        const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+        treeView[index]?.list_tasks?.map(item => {
+            arrList.push({
+                key: item.id,
+                value: item.name
+            })
+        })
+        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
+        setDataList(arrList)
+    }, [choiceKategori])
 
   let arrTask = [];
   {
     treeView.map((item) => {
       if (detailProject.id === item.id) {
-        // console.log('masuk')
         item.list_tasks.map((task) => {
           arrTask.push({
             key: task.id,
             value: task.name,
           });
-          // console.log("task id", task.id)
           // setDataList(arrTask)
         });
       } else {
@@ -122,11 +131,19 @@ export const DetailProject = ({
     });
   }
 
-  console.log(type);
+  const setType = () => {
+    type = {
+      key: "1",
+      value: "Dashboard",
+    };
+  };
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <>
       {loading === true ? null : (
+        <BottomSheetModalProvider>
         <View style={{ flex: 1 }}>
           <ScrollView>
             <View
@@ -150,7 +167,7 @@ export const DetailProject = ({
                 >
                   <Text
                     style={{
-                      fontSize: FONTSIZE.Judul,
+                      fontSize: fontSizeResponsive("Judul", device),
                       color: COLORS.lighter,
                       fontWeight: FONTWEIGHT.bold,
                     }}
@@ -158,7 +175,10 @@ export const DetailProject = ({
                     {detailProject.name}
                   </Text>
                   <Text
-                    style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      color: COLORS.lighter,
+                    }}
                   >
                     {detailProject.description}
                   </Text>
@@ -170,7 +190,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -179,7 +199,7 @@ export const DetailProject = ({
                     </Text>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         flex: 1,
                       }}
@@ -191,7 +211,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -206,7 +226,10 @@ export const DetailProject = ({
                       }}
                     >
                       <Text
-                        style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
                       >
                         :{" "}
                       </Text>
@@ -231,8 +254,8 @@ export const DetailProject = ({
                                       borderWidth: 2,
                                       borderRadius: 50,
                                       borderColor: COLORS.white,
-                                      width: 30,
-                                      height: 30,
+                                      width: device === "tablet" ? 60 : 30,
+                                      height: device === "tablet" ? 60 : 30,
                                     }}
                                   />
                                 </View>
@@ -243,7 +266,7 @@ export const DetailProject = ({
                             <View>
                               <Ionicons
                                 name="chevron-forward-outline"
-                                size={24}
+                                size={device === "tablet" ? 40 : 24}
                                 color={COLORS.grey}
                               />
                             </View>
@@ -263,15 +286,15 @@ export const DetailProject = ({
                               borderWidth: 2,
                               borderRadius: 50,
                               borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
+                              width: device === "tablet" ? 60 : 30,
+                              height: device === "tablet" ? 60 : 30,
                             }}
                           />
                           <View style={{ flex: 1 }}>
                             <Text
                               style={{
                                 fontWeight: FONTWEIGHT.bold,
-                                fontSize: FONTSIZE.H4,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
                               {detailProject.pic[0]?.title?.name !== ""
@@ -282,7 +305,7 @@ export const DetailProject = ({
                               <Text
                                 style={{
                                   fontWeight: FONTWEIGHT.normal,
-                                  fontSize: FONTSIZE.H4,
+                                  fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
                                 {" "}
@@ -298,7 +321,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -313,7 +336,10 @@ export const DetailProject = ({
                       }}
                     >
                       <Text
-                        style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
                       >
                         :{" "}
                       </Text>
@@ -338,8 +364,8 @@ export const DetailProject = ({
                                       borderWidth: 2,
                                       borderRadius: 50,
                                       borderColor: COLORS.white,
-                                      width: 30,
-                                      height: 30,
+                                      width: device === "tablet" ? 60 : 30,
+                                      height: device === "tablet" ? 60 : 30,
                                     }}
                                   />
                                 </View>
@@ -350,7 +376,7 @@ export const DetailProject = ({
                             <View>
                               <Ionicons
                                 name="chevron-forward-outline"
-                                size={24}
+                                size={device === "tablet" ? 40 : 24}
                                 color={COLORS.grey}
                               />
                             </View>
@@ -380,7 +406,7 @@ export const DetailProject = ({
                             <Text
                               style={{
                                 fontWeight: FONTWEIGHT.bold,
-                                fontSize: FONTSIZE.H4,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
                               {detailProject.members[0]?.title?.name !== ""
@@ -391,7 +417,7 @@ export const DetailProject = ({
                               <Text
                                 style={{
                                   fontWeight: FONTWEIGHT.normal,
-                                  fontSize: FONTSIZE.H4,
+                                  fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
                                 {" "}
@@ -407,7 +433,7 @@ export const DetailProject = ({
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H4,
+                        fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
                         width: "40%",
                       }}
@@ -422,7 +448,10 @@ export const DetailProject = ({
                       }}
                     >
                       <Text
-                        style={{ fontSize: FONTSIZE.H4, color: COLORS.lighter }}
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
                       >
                         :{" "}
                       </Text>
@@ -439,15 +468,15 @@ export const DetailProject = ({
                             borderWidth: 2,
                             borderRadius: 50,
                             borderColor: COLORS.white,
-                            width: 30,
-                            height: 30,
+                            width: device === "tablet" ? 60 : 30,
+                            height: device === "tablet" ? 60 : 30,
                           }}
                         />
                         <View style={{ flex: 1 }}>
                           <Text
                             style={{
                               fontWeight: FONTWEIGHT.bold,
-                              fontSize: FONTSIZE.H4,
+                              fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
                             {detailProject.creator.title?.name !== ""
@@ -458,7 +487,7 @@ export const DetailProject = ({
                             <Text
                               style={{
                                 fontWeight: FONTWEIGHT.normal,
-                                fontSize: FONTSIZE.H4,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
                               {" "}
@@ -476,7 +505,11 @@ export const DetailProject = ({
             {profile.nip === detailProject.creator.nip ||
             profile.nip === detailProject.pic[0].nip ? (
               <View
-                style={{ marginVertical: 20, flexDirection: "column", gap: 10 }}
+                style={{
+                  marginVertical: 20,
+                  flexDirection: "column",
+                  gap: 10,
+                }}
               >
                 <TouchableOpacity
                   onPress={() =>
@@ -489,14 +522,20 @@ export const DetailProject = ({
                     style={{
                       marginHorizontal: 20,
                       backgroundColor: COLORS.lightBrown,
-                      width: Platform.OS === "ios" ? "90%" : "91%",
                       height: 50,
                       justifyContent: "center",
                       alignItems: "center",
                       borderRadius: 6,
                     }}
                   >
-                    <Text style={{ color: COLORS.white }}>Ubah</Text>
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Ubah
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -506,10 +545,9 @@ export const DetailProject = ({
                       token: token,
                       id: detailProject.id,
                     };
-                    console.log(datas);
                     dispatch(deleteTaskProject(datas));
                     setTimeout(() => {
-                      navigation.goBack();
+                      dispatch(getListDashboardTM({ token: token, page: 5 }));
                     }, 3000);
                   }}
                 >
@@ -517,14 +555,20 @@ export const DetailProject = ({
                     style={{
                       marginHorizontal: 20,
                       backgroundColor: COLORS.infoDanger,
-                      width: Platform.OS === "ios" ? "90%" : "91%",
                       height: 50,
                       justifyContent: "center",
                       alignItems: "center",
                       borderRadius: 6,
                     }}
                   >
-                    <Text style={{ color: COLORS.white }}>Hapus</Text>
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Hapus
+                    </Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -537,6 +581,7 @@ export const DetailProject = ({
                   marginVertical: 10,
                   fontWeight: FONTWEIGHT.bold,
                   color: COLORS.lighter,
+                  fontSize: fontSizeResponsive("H4", device),
                 }}
               >
                 List Task
@@ -549,21 +594,20 @@ export const DetailProject = ({
                     token={token}
                     id_list={item.key}
                     type={type}
+                    device={device}
                   />
                 )}
                 ListEmptyComponent={() => <ListEmpty />}
               />
-            </View>
-
-            <Portal>
-              <BottomSheetModalProvider>
+            </View> 
+            {/* <Portal>  */}
                 <BottomSheetModal
                   ref={bottomSheetModalMemberRef}
                   snapPoints={animatedSnapPoints}
                   handleHeight={animatedHandleHeight}
                   contentHeight={animatedContentHeight}
                   index={0}
-                  style={{ borderRadius: 50 }}
+                  style={{ borderTopLeftRadius:50, borderTopRightRadius:50 }}
                   keyboardBlurBehavior="restore"
                   android_keyboardInputMode="adjust"
                   backdropComponent={({ style }) => (
@@ -579,24 +623,47 @@ export const DetailProject = ({
                           marginBottom: 20,
                           justifyContent: "center",
                           alignItems: "center",
+                          flexDirection:"row",
+                          justifyContent:"space-between",
+                          paddingHorizontal:20,
                         }}
                       >
                         <Text
                           style={{
-                            fontSize: FONTSIZE.H2,
+                            fontSize: fontSizeResponsive("H4", device),
                             fontWeight: FONTWEIGHT.bold,
                             color: COLORS.lighter,
                           }}
                         >
                           Penanggung Jawab
                         </Text>
+                        <TouchableOpacity
+                        onPress={() => {
+                          bottomsheetMemberClose()
+                        }}
+                      >
+                        <View
+                          style={{
+                            width: 51,
+                            height: 51,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: 50,
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                          />
+                        </View>
+                      </TouchableOpacity>
                       </View>
                       <View>
                         <FlatList
                           data={detailProject.members}
                           renderItem={({ item }) => (
                             <View key={item.nip}>
-                              <CardItemMember item={item} />
+                              <CardItemMember item={item} device={device} />
                             </View>
                           )}
                           keyExtractor={(item) => item.id}
@@ -605,10 +672,10 @@ export const DetailProject = ({
                     </View>
                   </BottomSheetView>
                 </BottomSheetModal>
-              </BottomSheetModalProvider>
-            </Portal>
+          {/* </Portal> */}
           </ScrollView>
         </View>
+              </BottomSheetModalProvider>
       )}
     </>
   );

@@ -22,7 +22,6 @@ const PegawaiSlice = createSlice({
                 let dataNext = action.payload
                 let gabung = dataPrev.concat(dataNext)
                 state.pegawai.lists = gabung
-                // console.log(action.payload)
                 state.loading = false
             })
             .addCase(getPegawai.pending, (state, action) => {

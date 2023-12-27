@@ -28,7 +28,6 @@ export async function getHTTP(url) {
 }
 
 export const handlerError = (error, title, msg) => {
-  console.log(title+msg)
   // const dispatch = useDispatch();
   // function showError(error, title, msg) {
   if (error?.response?.status == null) {

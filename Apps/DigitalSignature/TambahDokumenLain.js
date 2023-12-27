@@ -64,7 +64,6 @@ export const TambahDokumenLain = () => {
         tipe = tipe[tipe.length - 1]
         setDocument([...document, result])
         setType([...type, tipe])
-        console.log(result)
         const data = {
             token: token,
             result: result
@@ -128,7 +127,6 @@ export const TambahDokumenLain = () => {
             token: token,
             payload: payload
         }
-        console.log(data)
         dispatch(addDocumentDigiSign(data))
     }
 
@@ -167,7 +165,6 @@ export const TambahDokumenLain = () => {
             token: token,
             payload: payload
         }
-        console.log(data)
         // dispatch(addDocumentDigiSign(data))
     }
 

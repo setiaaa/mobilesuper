@@ -9,6 +9,7 @@ import {
   FONTSIZE,
   FONTWEIGHT,
   PADDING,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";
@@ -67,10 +68,8 @@ export const DokumenCuti = () => {
     try {
       if (profile.nip !== "") {
         dispatch(getArsipCuti(profile?.nip));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -100,6 +99,8 @@ export const DokumenCuti = () => {
     setIsFiltered(true);
   };
 
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <GestureHandlerRootView>
       {loading ? <Loading /> : null}
@@ -116,8 +117,8 @@ export const DokumenCuti = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -126,7 +127,7 @@ export const DokumenCuti = () => {
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -134,7 +135,7 @@ export const DokumenCuti = () => {
           <View style={{ flex: 1, alignItems: "center" }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -146,8 +147,8 @@ export const DokumenCuti = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginRight: 20,
@@ -156,7 +157,7 @@ export const DokumenCuti = () => {
             <TouchableOpacity onPress={() => navigation.navigate("Libur")}>
               <Ionicons
                 name="calendar-outline"
-                size={18}
+                size={device === "tablet" ? 30 : 18}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -409,16 +410,16 @@ export const DokumenCuti = () => {
                   <View
                     style={{
                       backgroundColor: COLORS.grey,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
                     <Ionicons
                       name="calendar-outline"
-                      size={18}
+                      size={device === "tablet" ? 27 : 18}
                       color={COLORS.white}
                     />
                   </View>
@@ -429,6 +430,7 @@ export const DokumenCuti = () => {
                           ? COLORS.infoDanger
                           : COLORS.foundation,
                       textAlign: "center",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     Draft
@@ -451,16 +453,16 @@ export const DokumenCuti = () => {
                   <View
                     style={{
                       backgroundColor: COLORS.orange,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
                     <Ionicons
                       name="calendar-outline"
-                      size={18}
+                      size={device === "tablet" ? 27 : 18}
                       color={COLORS.white}
                     />
                   </View>
@@ -471,6 +473,7 @@ export const DokumenCuti = () => {
                           ? COLORS.infoDanger
                           : COLORS.foundation,
                       textAlign: "center",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     Proses
@@ -493,16 +496,16 @@ export const DokumenCuti = () => {
                   <View
                     style={{
                       backgroundColor: COLORS.success,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
                     <Ionicons
                       name="calendar-outline"
-                      size={18}
+                      size={device === "tablet" ? 27 : 18}
                       color={COLORS.white}
                     />
                   </View>
@@ -513,6 +516,7 @@ export const DokumenCuti = () => {
                           ? COLORS.infoDanger
                           : COLORS.foundation,
                       textAlign: "center",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     Disetujui
@@ -535,16 +539,16 @@ export const DokumenCuti = () => {
                   <View
                     style={{
                       backgroundColor: COLORS.danger,
-                      borderRadius: 20,
-                      width: 28,
-                      height: 28,
+                      borderRadius: device === "tablet" ? 40 : 20,
+                      width: device === "tablet" ? 42 : 28,
+                      height: device === "tablet" ? 42 : 28,
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
                     <Ionicons
                       name="calendar-outline"
-                      size={18}
+                      size={device === "tablet" ? 27 : 18}
                       color={COLORS.white}
                     />
                   </View>
@@ -555,6 +559,7 @@ export const DokumenCuti = () => {
                           ? COLORS.infoDanger
                           : COLORS.foundation,
                       textAlign: "center",
+                      fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
                     Ditolak
@@ -572,6 +577,7 @@ export const DokumenCuti = () => {
                       item={item}
                       nip={profile.nip}
                       variant={variant}
+                      device={device}
                     />
                   </View>
                 )}
@@ -583,7 +589,7 @@ export const DokumenCuti = () => {
                     onRefresh={onRefresh}
                   />
                 }
-                style={{ height: "70%" }}
+                style={{ height: device === "tablet" ? "79%" : "70%" }}
               />
             ) : variant === "Draft" ? (
               <FlatList
@@ -594,6 +600,7 @@ export const DokumenCuti = () => {
                       item={item}
                       variant={variant}
                       nip={profile.nip}
+                      device={device}
                     />
                   </View>
                 )}
@@ -605,7 +612,9 @@ export const DokumenCuti = () => {
                     onRefresh={onRefresh}
                   />
                 }
-                style={{ height: "70%" }}
+                style={{
+                  height: device === "tablet" ? "79%" : "70%",
+                }}
               />
             ) : variant === "Onprogress" ? (
               <FlatList
@@ -616,6 +625,7 @@ export const DokumenCuti = () => {
                       item={item}
                       variant={variant}
                       nip={profile.nip}
+                      device={device}
                     />
                   </View>
                 )}
@@ -627,7 +637,7 @@ export const DokumenCuti = () => {
                     onRefresh={onRefresh}
                   />
                 }
-                style={{ height: "70%" }}
+                style={{ height: device === "tablet" ? "79%" : "70%" }}
               />
             ) : variant === "Completed" ? (
               <FlatList
@@ -639,6 +649,7 @@ export const DokumenCuti = () => {
                       variant={variant}
                       nip={profile.nip}
                       pembatalan={"pembatalan"}
+                      device={device}
                     />
                   </View>
                 )}
@@ -650,7 +661,7 @@ export const DokumenCuti = () => {
                     onRefresh={onRefresh}
                   />
                 }
-                style={{ height: "70%" }}
+                style={{ height: device === "tablet" ? "79%" : "70%" }}
               />
             ) : null}
           </View>

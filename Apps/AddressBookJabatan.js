@@ -6,15 +6,25 @@ import { getDivision, getDivisionTree } from "../service/api";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import { Dropdown } from "../components/DropDown";
-import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
+import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
 import { ScrollView } from "react-native-gesture-handler";
 import TreeView from "react-native-final-tree-view";
 import { Ionicons } from "@expo/vector-icons";
-import { setAddressbookSelected } from "../store/AddressbookKKP";
+import {
+  setAddressbookListsDivision,
+  setAddressbookListsDivisionTree,
+  setAddressbookSelected,
+} from "../store/AddressbookKKP";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { nde_api } from "../utils/api.config";
+import { getHTTP } from "../utils/http";
 
 export const AddressBookJabatan = ({ route }) => {
   const [token, setToken] = useState("");
+  const [profileOrganization, setProfileOrganization] = useState();
+  const [divisionList, setdivisionList] = useState([]);
   const { config } = route.params;
   const dispatch = useDispatch();
 
@@ -26,16 +36,62 @@ export const AddressBookJabatan = ({ route }) => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDivision(token));
-      // dispatch(getEmployee(token))
-      // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+      if (config.tipeAddress === "korespondensi") {
+        (async () => {
+          if (profileOrganization == undefined) {
+            let data = await AsyncStorage.getItem("profileOrganization");
+            setProfileOrganization(JSON.parse(data));
+          }
+          // let response = await getHTTP(nde_api.employee);
+          // addressbook.employee = response.data;
+        })();
+        getDiv(profileOrganization?.fucfu_id);
+      } else {
+        dispatch(getDivision(token));
+        // dispatch(getEmployee(token))
+        // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+      }
     }
-  }, [token]);
+  }, [token, profileOrganization]);
+
+  async function getDiv(id) {
+    // setIsLoading(true);
+    try {
+      if (id != undefined) {
+        let response = await getHTTP(
+          nde_api.divisionbyunitid.replace("{$id}", id)
+        );
+        const replaceData = response.data.map(({ id, name }) => ({
+          key: id,
+          value: name,
+        }));
+        // setdivisionList(replaceData);
+        dispatch(setAddressbookListsDivision(replaceData));
+      }
+      // setIsLoading(false);
+    } catch (error) {
+      // setIsLoading(false);
+    }
+  }
+
+  async function getTitleHirarki(id) {
+    // setIsLoading(true);
+    try {
+      if (id != undefined) {
+        let response = await getHTTP(
+          nde_api.titlebydivisionid.replace("{$id}", id)
+        );
+        dispatch(setAddressbookListsDivisionTree(response?.data));
+      }
+      // setIsLoading(false);
+    } catch (error) {
+      // setIsLoading(false);
+    }
+  }
 
   const [kategori, setKategori] = useState("");
 
   const { addressbook } = useSelector((state) => state.addressBookKKP);
-  console.log(addressbook);
   function getIndicator(isExpanded) {
     if (isExpanded) {
       return (
@@ -76,7 +132,8 @@ export const AddressBookJabatan = ({ route }) => {
   //     }
 
   // }
-  // console.log(selectedlistTree)
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <View
@@ -88,13 +145,24 @@ export const AddressBookJabatan = ({ route }) => {
       }}
     >
       <View style={{ marginTop: 10, gap: 10, width: "90%" }}>
-        <Text style={{ fontWeight: FONTWEIGHT.bold }}>Jabatan</Text>
+        <Text
+          style={{
+            fontWeight: FONTWEIGHT.bold,
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          Jabatan
+        </Text>
         <Dropdown
           data={addressbook?.listsDivision}
           heightValue={"75%"}
           setSelected={setKategori}
           handleClick={(item) => {
-            dispatch(getDivisionTree({ token: token, id: item.key }));
+            if (config.tipeAddress == "korespondensi") {
+              getTitleHirarki(item.key);
+            } else {
+              dispatch(getDivisionTree({ token: token, id: item.key }));
+            }
           }}
           borderWidth={1}
           borderColor={COLORS.ExtraDivinder}
@@ -107,7 +175,14 @@ export const AddressBookJabatan = ({ route }) => {
           search={true}
         />
         {kategori !== "" ? (
-          <Text style={{ fontWeight: FONTWEIGHT.bold }}>Hirarki</Text>
+          <Text
+            style={{
+              fontWeight: FONTWEIGHT.bold,
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Hirarki
+          </Text>
         ) : null}
       </View>
 
@@ -124,8 +199,11 @@ export const AddressBookJabatan = ({ route }) => {
         >
           <TreeView
             data={listTree} // defined above
+            childrenKey={
+              config.tipeAddress == "korespondensi" ? "nodes" : "children"
+            }
             onNodePress={({ node }) => {
-              if (node?.children === undefined) {
+              if (node?.children === undefined && node?.nodes === undefined) {
                 const checkNode = addressbook.selected.filter(
                   (item) => item.id === node.id
                 );
@@ -187,7 +265,7 @@ export const AddressBookJabatan = ({ route }) => {
                             style={{
                               position: "absolute",
                               top: "25%",
-                              left: "-10%",
+                              left: device === "tablet" ? "-4%" : "-10%",
                             }}
                           >
                             {checkedNodeRadio() ? (
@@ -205,12 +283,13 @@ export const AddressBookJabatan = ({ route }) => {
                           style={{
                             fontWeight: FONTWEIGHT.bold,
                             flexShrink: 1,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
                           {node.title}
                         </Text>
 
-                        {hasChildrenNodes ? null : (
+                        {/* {hasChildrenNodes ? null : (
                           <TouchableOpacity>
                             <Ionicons
                               name="information-circle-outline"
@@ -218,16 +297,26 @@ export const AddressBookJabatan = ({ route }) => {
                               color={COLORS.primary}
                             />
                           </TouchableOpacity>
-                        )}
+                        )} */}
 
                         {hasChildrenNodes ? (
-                          <Text>{getIndicator(isExpanded)}</Text>
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H4", device),
+                            }}
+                          >
+                            {getIndicator(isExpanded)}
+                          </Text>
                         ) : null}
                       </View>
 
                       {hasChildrenNodes ? null : node.officer.official !==
                         "" ? (
-                        <Text>{node.officer.official}</Text>
+                        <Text
+                          style={{ fontSize: fontSizeResponsive("H4", device) }}
+                        >
+                          {node.officer.official}
+                        </Text>
                       ) : null}
                     </View>
                     {/* custom divider */}

@@ -96,7 +96,6 @@ export const EditAgendaGrup = ({ route }) => {
   const { detailGrup, status, acara, loading } = useSelector(
     (state) => state.grupKalender
   );
-  // console.log(detailGrup)
   const editAgenda = acara.detail;
   const [anggotaAcara, setAnggotaAcara] = useState(detailGrup.members);
 
@@ -521,7 +520,6 @@ export const EditAgendaGrup = ({ route }) => {
                                 )
                               );
                             }
-                            console.log(new Date(date));
                           }}
                         />
                         <TouchableOpacity

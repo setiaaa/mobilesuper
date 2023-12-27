@@ -63,7 +63,6 @@ export const JumlahPostingan = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  // console.log(postinganSayaJumlah);
 
   const FirstRoute = () => (
     <View style={{ marginTop: 10 }}>

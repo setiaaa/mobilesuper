@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
@@ -7,6 +7,7 @@ import {
   DATETIME,
   FONTSIZE,
   FONTWEIGHT,
+  fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -32,6 +33,7 @@ import { getTokenValue } from "../../service/session";
 import {
   deleteNotulensi,
   getDetailNotulensi,
+  getEventAgendaDetail,
   getlistAbsen,
   getlistApprover,
   getlistNotulensi,
@@ -49,6 +51,7 @@ import { CardApprovalEvent } from "../../components/CardApprovalEvent";
 import { CardListAbsenEvent } from "../../components/CardListAbsenEvent";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { setRefresh } from "../../store/Event";
 
 export const DetailAgenda = () => {
   const navigation = useNavigation();
@@ -67,9 +70,8 @@ export const DetailAgenda = () => {
 
   const video = useRef(null);
 
-  const { agenda, approver, notulensi, absen, event, loading } = useSelector(
-    (state) => state.event
-  );
+  const { agenda, approver, notulensi, absen, event, loading, refresh } =
+    useSelector((state) => state.event);
   const data = agenda.detail;
   const id = agenda.detail?.notulensi?.id;
   const idagenda = agenda.detail?.id;
@@ -149,19 +151,9 @@ export const DetailAgenda = () => {
           idabsen: idabsen,
           status: "hadir",
           is_scan: true,
+          id_Qr: data,
         })
       );
-      alert("berhasil");
-    } else {
-      dispatch(
-        putAbsen({
-          token: token,
-          idabsen: idabsen,
-          status: "waiting",
-          is_scan: true,
-        })
-      );
-      alert("gagal");
     }
   };
 
@@ -199,12 +191,45 @@ export const DetailAgenda = () => {
       id: notu[0].id,
     };
     dispatch(deleteNotulensi(item));
+    dispatch(setRefresh(true));
   };
 
-  console.log(absenLists);
+  useEffect(() => {
+    if (refresh === true) {
+      dispatch(getlistNotulensi({ token, idagenda }));
+      const params = { token: token, id: data.id };
+      dispatch(getEventAgendaDetail(params));
+      dispatch(setRefresh(false));
+    }
+  }, [refresh]);
+
+  const { device } = useSelector((state) => state.apps);
+  const { profile } = useSelector((state) => state.superApps);
+
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
+
+  const filter = (event) => {
+    setSearch(event);
+  };
+
+  useEffect(() => {
+    setFilterData(absenLists);
+  }, [absenLists]);
+
+  useEffect(() => {
+    if (search !== "") {
+      const data = absenLists?.filter((item) => {
+        return item.member?.nama.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilterData(data);
+    } else {
+      setFilterData(absenLists);
+    }
+  }, [search]);
 
   return (
-    <>
+    <KeyboardAvoidingView>
       <ScrollView>
         <View
           style={{
@@ -219,8 +244,8 @@ export const DetailAgenda = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -229,7 +254,7 @@ export const DetailAgenda = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -237,7 +262,7 @@ export const DetailAgenda = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -273,7 +298,7 @@ export const DetailAgenda = () => {
               ) : (
                 <Text
                   style={{
-                    fontSize: FONTSIZE.Judul,
+                    fontSize: fontSizeResponsive("Judul", device),
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -294,9 +319,23 @@ export const DetailAgenda = () => {
                             </View> */}
             </View>
             {data.note === "" ? (
-              <Text style={{ marginTop: 10 }}>-</Text>
+              <Text
+                style={{
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                -
+              </Text>
             ) : (
-              <Text style={{ marginTop: 10 }}>{data.note}</Text>
+              <Text
+                style={{
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {data.note}
+              </Text>
             )}
 
             {/* custom divider */}
@@ -310,7 +349,13 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 QR Code
               </Text>
               {loading ? (
@@ -320,7 +365,9 @@ export const DetailAgenda = () => {
                   height={20}
                 />
               ) : data.qr_presensi === null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
                 <QRCode value={data.qr_presensi?.qr_code} />
               )}
@@ -337,7 +384,13 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Tanggal
               </Text>
               {loading ? (
@@ -347,9 +400,18 @@ export const DetailAgenda = () => {
                   height={20}
                 />
               ) : data.date === null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <Text style={{width:"55%"}}>{moment(data.date).format(DATETIME.LONG_DATE)}</Text>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {moment(data.date).format(DATETIME.LONG_DATE)}
+                </Text>
               )}
             </View>
 
@@ -364,7 +426,13 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Waktu
               </Text>
               {loading ? (
@@ -374,13 +442,25 @@ export const DetailAgenda = () => {
                   height={20}
                 />
               ) : data.start_time === null || data.end_time === null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <View style={{ flexDirection: "row",width:"55%" }}>
-                  <Text style={{ marginTop: 5 }}>
+                <View style={{ flexDirection: "row", width: "55%" }}>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     {moment(data.start_time, "HH:mm:ss").format("HH:mm")} -{" "}
                   </Text>
-                  <Text style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     {moment(data.end_time, "HH:mm:ss").format("HH:mm")}
                   </Text>
                 </View>
@@ -398,7 +478,13 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Tempat
               </Text>
               {loading ? (
@@ -408,9 +494,18 @@ export const DetailAgenda = () => {
                   height={20}
                 />
               ) : data.location === null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <Text style={{ width: "55%" }}>{data.location}</Text>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {data.location}
+                </Text>
               )}
             </View>
 
@@ -425,7 +520,13 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 PIC
               </Text>
               {/* <Image source={{ uri: data.extra_attrs?.pic?.avatar_url }} style={{ width: 26, height: 26, borderRadius: 50 }} /> */}
@@ -436,9 +537,16 @@ export const DetailAgenda = () => {
                   height={20}
                 />
               ) : data.extra_attrs === null ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <Text style={{ width: "55%" }}>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {data.extra_attrs?.pic.title.name}
                 </Text>
               )}
@@ -482,7 +590,13 @@ export const DetailAgenda = () => {
                         </View>  */}
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Peserta Agenda
               </Text>
               {loading ? (
@@ -497,8 +611,8 @@ export const DetailAgenda = () => {
                     <Image
                       source={{ uri: data.avatar_url }}
                       style={{
-                        width: 26,
-                        height: 26,
+                        width: device === "tablet" ? 60 : 26,
+                        height: device === "tablet" ? 60 : 26,
                         marginLeft: index !== 0 ? -7 : 0,
                         borderRadius: 50,
                       }}
@@ -512,7 +626,7 @@ export const DetailAgenda = () => {
               >
                 <Ionicons
                   name="chevron-forward-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={COLORS.lighter}
                 />
               </TouchableOpacity>
@@ -546,7 +660,7 @@ export const DetailAgenda = () => {
                   >
                     <Text
                       style={{
-                        fontSize: FONTSIZE.H2,
+                        fontSize: fontSizeResponsive("H2", device),
                         fontWeight: FONTWEIGHT.bold,
                         color: COLORS.normal,
                       }}
@@ -560,7 +674,7 @@ export const DetailAgenda = () => {
                     >
                       <Ionicons
                         name="close-outline"
-                        size={24}
+                        size={device === "tablet" ? 40 : 24}
                         color={COLORS.lighter}
                       />
                     </TouchableOpacity>
@@ -570,9 +684,10 @@ export const DetailAgenda = () => {
                       data={data.extra_attrs?.members}
                       renderItem={({ item }) => (
                         <View key={item.nip}>
-                          <CardItemMember item={item} />
+                          <CardItemMember item={item} device={device} />
                         </View>
                       )}
+                      scrollEnabled={true}
                       keyExtractor={(item) => item.id}
                     />
                   </View>
@@ -591,7 +706,13 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "55%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Tamu Agenda Internal
               </Text>
               {loading ? (
@@ -601,15 +722,17 @@ export const DetailAgenda = () => {
                   height={20}
                 />
               ) : data.extra_attrs.guests.length === 0 ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
                 data.extra_attrs?.guests?.map((data, index) => (
                   <View key={index} style={{ position: "relative" }}>
                     <Image
                       source={{ uri: data.avatar_url }}
                       style={{
-                        width: 26,
-                        height: 26,
+                        width: device === "tablet" ? 60 : 26,
+                        height: device === "tablet" ? 60 : 26,
                         marginLeft: index !== 0 ? -7 : 0,
                         borderRadius: 50,
                       }}
@@ -633,7 +756,13 @@ export const DetailAgenda = () => {
             />
 
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ width: "45%", fontWeight: FONTWEIGHT.bold }}>
+              <Text
+                style={{
+                  width: "45%",
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 Tamu Agenda Eksternal
               </Text>
               {loading ? (
@@ -643,13 +772,32 @@ export const DetailAgenda = () => {
                   height={20}
                 />
               ) : data.extra_attrs.guest_external.length === 0 ? (
-                <Text>-</Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  -
+                </Text>
               ) : (
-                <View style={{ position: "relative", flexDirection: "column",width:"55%" }}>
+                <View
+                  style={{
+                    position: "relative",
+                    flexDirection: "column",
+                    width: "55%",
+                  }}
+                >
                   {data.extra_attrs?.guest_external?.map((data, index) => (
                     <View key={index} style={{ flexDirection: "row", gap: 10 }}>
-                      <Text>-</Text>
-                      <Text style={{ width: 150 }}>{data.name}</Text>
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        -
+                      </Text>
+                      <Text
+                        style={{
+                          width: 150,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {data.name}
+                      </Text>
                     </View>
                   ))}
                 </View>
@@ -682,7 +830,14 @@ export const DetailAgenda = () => {
               marginTop: 20,
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Status Approval</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Status Approval
+            </Text>
             {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, marginVertical: 10 }}>
                             <Ionicons name='people-outline' size={24} />
                             <Text>0/15</Text>
@@ -704,8 +859,13 @@ export const DetailAgenda = () => {
                 bottomSheetAttach();
               }}
             >
-              <Ionicons name="document-outline" size={24} />
-              <Text>Info Approval</Text>
+              <Ionicons
+                name="document-outline"
+                size={device === "tablet" ? 40 : 24}
+              />
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                Info Approval
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -748,7 +908,10 @@ export const DetailAgenda = () => {
                         }}
                       >
                         <Text
-                          style={{ fontSize: FONTSIZE.H1, fontWeight: 500 }}
+                          style={{
+                            fontSize: fontSizeResponsive("H1", device),
+                            fontWeight: 500,
+                          }}
                         >
                           Approval
                         </Text>
@@ -765,7 +928,11 @@ export const DetailAgenda = () => {
                       data={approver.lists}
                       renderItem={({ item }) => (
                         <View key={item.id}>
-                          <CardApprovalEvent item={item} id={item.id} />
+                          <CardApprovalEvent
+                            item={item}
+                            id={item.id}
+                            device={device}
+                          />
                         </View>
                       )}
                       keyExtractor={(item) => item.id}
@@ -786,11 +953,19 @@ export const DetailAgenda = () => {
               marginTop: 20,
             }}
           >
-            <Text style={{ fontWeight: FONTWEIGHT.bold }}>Notulensi</Text>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Notulensi
+            </Text>
 
             {data.user_role?.is_pic === true &&
             !notu[0]?.ready_to_approve &&
-            notu.length !== 0 ? (
+            notu.length !== 0 &&
+            data?.notulensi?.ready_to_approve === false ? (
               <TouchableOpacity
                 style={{
                   width: "100%",
@@ -810,7 +985,14 @@ export const DetailAgenda = () => {
                   dispatch(readyToApprove(data));
                 }}
               >
-                <Text style={{ color: COLORS.white }}>Ready To Approve</Text>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Ready To Approve
+                </Text>
               </TouchableOpacity>
             ) : (
               <></>
@@ -832,7 +1014,14 @@ export const DetailAgenda = () => {
                   setModalVisible(true);
                 }}
               >
-                <Text style={{ color: COLORS.white }}>Unggah Notulensi </Text>
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Unggah Notulensi{" "}
+                </Text>
               </TouchableOpacity>
             ) : (
               <>
@@ -842,10 +1031,11 @@ export const DetailAgenda = () => {
                   event.detailEvent.status !== "persiapan") ||
                 (data.user_role?.is_notulensi === true &&
                   event.detailEvent.status !== "persiapan") ||
-                (data.user_role?.is_notulensi === false &&
-                  data.user_role?.is_presensi === false &&
-                  data.user_role?.is_member === false &&
-                  data.user_role?.is_pic === false &&
+                (data.user_role?.is_member === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.user_role?.is_presensi === true &&
+                  event.detailEvent.status !== "persiapan") ||
+                (data.creator?.nip === profile.nip &&
                   event.detailEvent.status !== "persiapan") ? (
                   <View>
                     <TouchableOpacity
@@ -869,7 +1059,12 @@ export const DetailAgenda = () => {
                         size={24}
                         color={COLORS.white}
                       />
-                      <Text style={{ color: COLORS.white }}>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Lihat Notulensi
                       </Text>
                     </TouchableOpacity>
@@ -892,25 +1087,35 @@ export const DetailAgenda = () => {
                                             <Ionicons name='trash-outline' size={24} color={COLORS.white} />
                                             <Text style={{ color: COLORS.white }}>Hapus Notulensi</Text>
                                         </TouchableOpacity> */}
-
-                    <TouchableOpacity
-                      style={{
-                        width: "100%",
-                        height: 50,
-                        borderRadius: 8,
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 10,
-                        backgroundColor: COLORS.infoDanger,
-                        marginTop: 10,
-                      }}
-                      onPress={() => setVisibleModal(true)}
-                    >
-                      <Text style={{ color: COLORS.white }}>
-                        Take Down Artikel
-                      </Text>
-                    </TouchableOpacity>
+                    {(data.user_role?.is_member === true &&
+                      event.detailEvent.status !== "persiapan") ||
+                    (data.user_role?.is_presensi === true &&
+                      event.detailEvent.status !== "persiapan") ||
+                    data?.notulensi?.ready_to_approve === true ? null : (
+                      <TouchableOpacity
+                        style={{
+                          width: "100%",
+                          height: 50,
+                          borderRadius: 8,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: 10,
+                          backgroundColor: COLORS.infoDanger,
+                          marginTop: 10,
+                        }}
+                        onPress={() => setVisibleModal(true)}
+                      >
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Hapus Notulensi
+                        </Text>
+                      </TouchableOpacity>
+                    )}
 
                     <Modal
                       animationType="fade"
@@ -955,7 +1160,7 @@ export const DetailAgenda = () => {
                             <View>
                               <Text
                                 style={{
-                                  fontSize: FONTSIZE.Judul,
+                                  fontSize: fontSizeResponsive("Judul", device),
                                   fontWeight: FONTWEIGHT.bold,
                                 }}
                               >
@@ -1009,8 +1214,13 @@ export const DetailAgenda = () => {
                                 handleDelete();
                               }}
                             >
-                              <Text style={{ color: COLORS.white }}>
-                                Take Down Artikel
+                              <Text
+                                style={{
+                                  color: COLORS.white,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                Hapus Notulensi
                               </Text>
                             </TouchableOpacity>
                           </ScrollView>
@@ -1066,7 +1276,12 @@ export const DetailAgenda = () => {
                     <TouchableOpacity onPress={() => setModalVisible(false)}>
                       <Ionicons name="close-outline" size={24} />
                     </TouchableOpacity>
-                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
                       Unggah Notulensi
                     </Text>
                   </View>
@@ -1079,7 +1294,13 @@ export const DetailAgenda = () => {
                       marginTop: 10,
                     }}
                   />
-                  <Text style={{ marginVertical: 20, color: COLORS.lighter }}>
+                  <Text
+                    style={{
+                      marginVertical: 20,
+                      color: COLORS.lighter,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Unggah File Notulensi
                   </Text>
                   <View
@@ -1106,12 +1327,22 @@ export const DetailAgenda = () => {
                           color={"#66656C"}
                         />
                       </View>
-                      <Text style={{ color: "#66656C" }}>
+                      <Text
+                        style={{
+                          color: "#66656C",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         Klik Untuk Unggah
                       </Text>
                     </Pressable>
                     <View style={{ marginVertical: 10 }}>
-                      <Text style={{ color: COLORS.lighter }}>
+                      <Text
+                        style={{
+                          color: COLORS.lighter,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
                         *) Hanya file pdf yang akan diterima dan ukuran file
                         maks 10 MB
                       </Text>
@@ -1168,7 +1399,14 @@ export const DetailAgenda = () => {
                         setModalVisible(false);
                       }}
                     >
-                      <Text style={{ color: COLORS.white }}>Unggah</Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Unggah
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -1185,7 +1423,13 @@ export const DetailAgenda = () => {
               marginTop: 20,
             }}
           >
-            <Text style={{ width: 150, fontWeight: FONTWEIGHT.bold }}>
+            <Text
+              style={{
+                width: 150,
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Materi Agenda
             </Text>
             {loading ? (
@@ -1195,7 +1439,14 @@ export const DetailAgenda = () => {
                 height={100}
               />
             ) : data.attachments.length === 0 ? (
-              <Text style={{ marginVertical: 5 }}>-</Text>
+              <Text
+                style={{
+                  marginVertical: 5,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                -
+              </Text>
             ) : (
               <FlatList
                 key={"*"}
@@ -1345,33 +1596,98 @@ export const DetailAgenda = () => {
             width: "90%",
             flex: 1,
             alignSelf: "center",
-            padding: 15,
+            padding: 5,
             borderRadius: 8,
+            marginBottom: 40,
           }}
         >
-          <Text style={{ fontWeight: FONTWEIGHT.bold }}>Absensi</Text>
-          {/* <View style={{ marginTop: 10 }}>
-                        <Search />
-                    </View> */}
-        </View>
-
-        <FlatList
-          data={absenLists}
-          renderItem={({ item }) => (
-            <CardListAbsenEvent
-              item={item}
-              role={data.user_role}
-              eventpic={event.detailEvent?.user_role?.is_pic}
-              status={event.detailEvent.status}
-              setScanData={setScanData}
-              setIdAbsen={setIdAbsen}
-              loading={loading}
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              marginHorizontal: "5%",
+              marginTop: 10,
+            }}
+          >
+            <Ionicons
+              name="people-outline"
+              size={device === "tablet" ? 40 : 24}
             />
-          )}
-          scrollEnabled={false}
-          style={{ marginBottom: 10 }}
-          ListEmptyComponent={() => <ListEmpty />}
-        />
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: FONTWEIGHT.bold,
+              }}
+            >
+              Presensi
+            </Text>
+          </View>
+          <View style={{ marginHorizontal: "5%", marginVertical: 10 }}>
+            <Search
+              placeholder={"Cari"}
+              iconColor={COLORS.primary}
+              onSearch={filter}
+            />
+          </View>
+          <FlatList
+            data={filterData}
+            renderItem={({ item }) => (
+              <CardListAbsenEvent
+                item={item}
+                role={data.user_role}
+                eventpic={event.detailEvent?.user_role?.is_pic}
+                status={event.detailEvent.status}
+                setScanData={setScanData}
+                setIdAbsen={setIdAbsen}
+                loading={loading}
+                device={device}
+                creator={data.creator?.nip}
+                profile={profile.nip}
+              />
+            )}
+            scrollEnabled={true}
+            nestedScrollEnabled
+            style={{ maxHeight: 300 }}
+            ListEmptyComponent={() => <ListEmpty />}
+          />
+          {(data.creator?.nip === profile?.nip &&
+            event.detailEvent?.status !== "persiapan") ||
+          (data.user_role?.is_pic === true &&
+            event.detailEvent?.status !== "persiapan") ||
+          (data.user_role?.is_presensi === true &&
+            event.detailEvent?.status !== "persiapan") ? (
+            <TouchableOpacity
+              style={{
+                width: "90%",
+                borderWidth: 1,
+                height: 50,
+                borderRadius: 8,
+                justifyContent: "center",
+                alignItems: "center",
+                marginHorizontal: "5%",
+                marginVertical: "5%",
+                borderColor: COLORS.primary,
+              }}
+              onPress={() => {
+                setScanData(false);
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+              >
+                <Ionicons
+                  name="qr-code-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  Scan QRCode
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
+        </View>
 
         {/* {event.detailEvent?.user_role?.is_pic === true ||
                     data.user_role?.is_pic === true ||
@@ -1407,8 +1723,42 @@ export const DetailAgenda = () => {
                     ) : (
                         <></>
                     )} */}
+        {data.user_role?.is_pic === true &&
+        event.detailEvent.status !== "persiapan" &&
+        data?.notulensi?.ready_to_approve === true ? (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity
+              style={{
+                width: "90%",
+                height: 50,
+                borderRadius: 8,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 10,
+                marginTop: 10,
+                marginBottom: 40,
+                backgroundColor: COLORS.primary,
+              }}
+              onPress={() => {
+                navigation.navigate("TandaTanganNotulensi", {
+                  item: notu[0]?.pdf,
+                });
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  color: COLORS.white,
+                }}
+              >
+                Tanda Tangan Notulensi
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </ScrollView>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

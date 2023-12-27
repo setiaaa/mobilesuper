@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { View, Alert, StyleSheet } from "react-native";
-import CardDLetter from "../../../components/UI/CardDLetter";
+import { ScrollView, View } from "react-native";
+import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
@@ -10,13 +10,14 @@ import { useSelector } from "react-redux";
 function DLetter() {
   const navigation = useNavigation();
   let [isCounter, setIsCounter] = useState([]);
+  let [isLetter, setIsLetter] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const icon = [
     {
       icon: "email-edit-outline",
       color: "rgba(73, 189, 101, 0.6)",
-      navName: "NeedFollowUp",
+      navName: "NeedFollowUpList",
     },
     {
       icon: "inbox-arrow-down",
@@ -32,6 +33,26 @@ function DLetter() {
       icon: "email-outline",
       color: "rgba(180, 179, 179, 0.6)",
       navName: "ConceptNumb",
+    },
+    {
+      icon: "inbox-arrow-down",
+      navName: "IncomingList",
+    },
+    {
+      icon: "email-send-outline",
+      navName: "DispositionList",
+    },
+    {
+      icon: "email-edit-outline",
+      navName: "NeedFollowUpList",
+    },
+    {
+      icon: "email-search-outline",
+      navName: "TrackingList",
+    },
+    {
+      icon: "email-check-outline",
+      navName: "SubmittedList",
     },
   ];
   useEffect(() => {
@@ -62,28 +83,32 @@ function DLetter() {
     try {
       //get isCounter
       const response = await getHTTP(nde_api.dashboard);
-      setIsCounter(response.data);
+      setIsLetter([
+        { count: 1, type: "incoming", value: response.data[1].value },
+        {
+          count: 2,
+          type: "disposition",
+          value: response.data[2].value,
+        },
+        {
+          count: 3,
+          type: "onprogress",
+          value: response.data[0].value,
+        },
+        {
+          count: 4,
+          type: "tracking",
+          value: "",
+        },
+        {
+          count: 5,
+          type: "submitted",
+          value: "",
+        },
+      ]);
       setIsLoading(false);
     } catch (error) {
       if (error.response.status == null && error.status == null) {
-        setIsCounter([
-          { count: 1, type: "onprogress", value: "-" },
-          {
-            count: 2,
-            type: "agenda_in",
-            value: "-",
-          },
-          {
-            count: 3,
-            type: "agenda_disposition",
-            value: "-",
-          },
-          {
-            count: 4,
-            type: "draft",
-            value: "-",
-          },
-        ]);
       } else {
         handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
       }
@@ -97,37 +122,21 @@ function DLetter() {
     </>
   );
   return (
-    <View>
+    <ScrollView style={{ padding: 12 }}>
       {/* {loadingOverlay} */}
       {isCounter?.length != 0 && (
-        <>
-          <CardDLetter
-            key={3}
-            data={isCounter[3]}
-            icon={icon[3]}
-            navigation={navigation}
-          />
-          <CardDLetter
-            key={0}
-            data={isCounter[0]}
-            icon={icon[0]}
-            navigation={navigation}
-          />
-          <CardDLetter
-            key={1}
-            data={isCounter[1]}
-            icon={icon[1]}
-            navigation={navigation}
-          />
-          <CardDLetter
-            key={2}
-            data={isCounter[2]}
-            icon={icon[2]}
-            navigation={navigation}
-          />
-        </>
+        <View style={{ paddingBottom: 30 }}>
+          {isLetter?.map((item, index) => (
+            <CardDCounter
+              key={index}
+              data={item}
+              icon={icon[index + 4]}
+              navigation={navigation}
+            />
+          ))}
+        </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Alert } from "react-native";
 import TabViewBg from "../../../components/TabViewBg";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
-import { initAgenda } from "../../../utils/agenda";
+import { initLetter } from "../../../utils/agenda";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
 
@@ -29,7 +29,7 @@ function TrackingDetail({ route }) {
           },
         ]);
       } else {
-        initAgenda(response.data);
+        initLetter(response.data);
         response.data.preview = "/api/letters/" + id + "/0_0/preview/";
         setDetail(response.data);
       }
@@ -43,7 +43,7 @@ function TrackingDetail({ route }) {
   let routes = [
     { key: "info", title: "Info", icon: "alert-circle-outline" },
     { key: "attachment", title: "Attachment", icon: "attachment" },
-    { key: "comment", title: "Comment", icon: "forum" },
+    { key: "comment", title: "Komentar", icon: "forum" },
   ];
 
   useEffect(() => {

@@ -9,7 +9,13 @@ import {
   Dimensions,
   Alert,
 } from "react-native";
-import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  AVATAR,
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from "../../components/DropDown";
 import { useNavigation } from "@react-navigation/native";
@@ -103,7 +109,6 @@ export const LaporanPengetahuan = () => {
     (state) => state.pengetahuan
   );
 
-  // console.log(exportLaporan?.quarter?.file);
 
   const downloadPath =
     FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
@@ -132,13 +137,10 @@ export const LaporanPengetahuan = () => {
         console.error("download error:", e);
       }
     } catch (e) {
-      console.log("Error");
-      console.log(e);
     }
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
-      console.log(fileUri);
       const fileString = await FileSystem.readAsStringAsync(fileUri, {
         encoding: FileSystem.EncodingType.Base64,
       });
@@ -227,8 +229,8 @@ export const LaporanPengetahuan = () => {
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
@@ -240,14 +242,18 @@ export const LaporanPengetahuan = () => {
             >
               <Ionicons
                 name="chevron-back-outline"
-                size={24}
+                size={device === "tablet" ? 40 : 24}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
-              style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+                color: COLORS.white,
+              }}
             >
               Laporan
             </Text>
@@ -300,7 +306,12 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H4", device),
+              fontWeight: 600,
+            }}
+          >
             Jumlah Postingan pada Triwulan Ke-{quarter.key} Tahun {year.value}
           </Text>
           <View
@@ -320,9 +331,9 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: COLORS.warningLight,
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
+                  width: device === "tablet" ? 56 : 42,
+                  height: device === "tablet" ? 56 : 42,
+                  borderRadius: device === "tablet" ? 28 : 21,
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 10,
@@ -334,14 +345,20 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.warning}
                 />
               </View>
-              <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("Judul", device),
+                  fontWeight: 600,
+                  marginBottom: 5,
+                }}
+              >
                 {totalPost?.post_publish}
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 400,
-                  width: 60,
+                  width: device === "tablet" ? 80 : 60,
                   textAlign: "center",
                 }}
               >
@@ -359,9 +376,9 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: COLORS.successLight,
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
+                  width: device === "tablet" ? 56 : 42,
+                  height: device === "tablet" ? 56 : 42,
+                  borderRadius: device === "tablet" ? 28 : 21,
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 10,
@@ -373,14 +390,20 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.success}
                 />
               </View>
-              <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("Judul", device),
+                  fontWeight: 600,
+                  marginBottom: 5,
+                }}
+              >
                 {totalPost?.post_reviewed}
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 400,
-                  width: 60,
+                  width: device === "tablet" ? 80 : 60,
                   textAlign: "center",
                 }}
               >
@@ -398,9 +421,9 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: COLORS.infoDangerLight,
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
+                  width: device === "tablet" ? 56 : 42,
+                  height: device === "tablet" ? 56 : 42,
+                  borderRadius: device === "tablet" ? 28 : 21,
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 10,
@@ -412,14 +435,20 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.infoDanger}
                 />
               </View>
-              <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 5 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("Judul", device),
+                  fontWeight: 600,
+                  marginBottom: 5,
+                }}
+              >
                 {totalPost?.post_waiting}
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: fontSizeResponsive("H3", device),
                   fontWeight: 400,
-                  width: 60,
+                  width: device === "tablet" ? 80 : 60,
                   textAlign: "center",
                 }}
               >
@@ -456,11 +485,12 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: "#F0F0F0",
-                  width: 26,
-                  height: 26,
-                  borderRadius: 13,
+                  width: device === "tablet" ? 33 : 26,
+                  height: device === "tablet" ? 33 : 26,
+                  borderRadius: device === "tablet" ? 20 : 13,
                   justifyContent: "center",
                   alignItems: "center",
+                  marginRight: 10,
                 }}
               >
                 <Ionicons
@@ -470,12 +500,22 @@ export const LaporanPengetahuan = () => {
                 />
               </View>
               <Text
-                style={{ fontSize: 16, fontWeight: 600, color: COLORS.primary }}
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: COLORS.primary,
+                }}
               >
                 {badUser?.user_count}
               </Text>
             </View>
-            <Text style={{ fontWeight: 400, marginTop: 10 }}>
+            <Text
+              style={{
+                fontWeight: 400,
+                marginTop: 10,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
               Jumlah pegawai belum memenuhi nilai minimum triwulan Ke-
               {quarter.key} Tahun
               {" " + year.value}
@@ -500,11 +540,12 @@ export const LaporanPengetahuan = () => {
               <View
                 style={{
                   backgroundColor: "#F0F0F0",
-                  width: 26,
-                  height: 26,
-                  borderRadius: 13,
+                  width: device === "tablet" ? 33 : 26,
+                  height: device === "tablet" ? 33 : 26,
+                  borderRadius: device === "tablet" ? 20 : 13,
                   justifyContent: "center",
                   alignItems: "center",
+                  marginRight: 10,
                 }}
               >
                 <Ionicons
@@ -513,7 +554,14 @@ export const LaporanPengetahuan = () => {
                   color={COLORS.grey}
                 />
               </View>
-              <Text style={{ fontSize: 16, fontWeight: 600 }}>Report</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                }}
+              >
+                Report
+              </Text>
             </View>
             <View
               style={{
@@ -523,7 +571,14 @@ export const LaporanPengetahuan = () => {
                 marginTop: 20,
               }}
             >
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>Pegawai</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
+                Pegawai
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   // openFileEmployee();
@@ -536,17 +591,17 @@ export const LaporanPengetahuan = () => {
               >
                 <View
                   style={{
-                    width: 24,
-                    height: 24,
+                    width: device === "tablet" ? 36 : 24,
+                    height: device === "tablet" ? 36 : 24,
+                    borderRadius: device === "tablet" ? 6 : 4,
                     backgroundColor: COLORS.primary,
-                    borderRadius: 4,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
                   <Ionicons
                     name="download-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -560,7 +615,14 @@ export const LaporanPengetahuan = () => {
                 marginTop: 20,
               }}
             >
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>Triwulan</Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
+                Triwulan
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   downloadFile(
@@ -572,17 +634,17 @@ export const LaporanPengetahuan = () => {
               >
                 <View
                   style={{
-                    width: 24,
-                    height: 24,
+                    width: device === "tablet" ? 36 : 24,
+                    height: device === "tablet" ? 36 : 24,
+                    borderRadius: device === "tablet" ? 6 : 4,
                     backgroundColor: COLORS.primary,
-                    borderRadius: 4,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
                   <Ionicons
                     name="download-outline"
-                    size={18}
+                    size={device === "tablet" ? 27 : 18}
                     color={COLORS.white}
                   />
                 </View>
@@ -607,7 +669,13 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 10,
+            }}
+          >
             Capaian Mingguan Triwulan {quarter.key} Tahun{" " + year.value}
           </Text>
           <View
@@ -796,7 +864,12 @@ export const LaporanPengetahuan = () => {
                   backgroundColor: COLORS.warning,
                 }}
               />
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
                 Posting Masuk
               </Text>
             </View>
@@ -809,7 +882,12 @@ export const LaporanPengetahuan = () => {
                   backgroundColor: COLORS.primary,
                 }}
               />
-              <Text style={{ fontSize: 12, fontWeight: 400 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  fontWeight: 400,
+                }}
+              >
                 Jumlah Posting belum dinilai
               </Text>
             </View>
@@ -825,7 +903,7 @@ export const LaporanPengetahuan = () => {
           <View style={{ alignItems: "center", marginBottom: 10 }}>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: fontSizeResponsive("H2", device),
                 fontWeight: 400,
                 width: "50%",
                 textAlign: "center",
@@ -836,7 +914,7 @@ export const LaporanPengetahuan = () => {
             </Text>
             <Text
               style={{
-                fontSize: 28,
+                fontSize: fontSizeResponsive("Judul", device),
                 fontWeight: 600,
                 color: COLORS.primary,
                 marginVertical: 10,
@@ -851,15 +929,15 @@ export const LaporanPengetahuan = () => {
               style={{
                 backgroundColor: COLORS.primary,
                 width: "100%",
-                height: 40,
-                borderRadius: 8,
+                paddingVertical: 10,
+                borderRadius: device === "tablet" ? 12 : 8,
                 justifyContent: "center",
                 marginTop: 20,
               }}
             >
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: fontSizeResponsive("H1", device),
                   fontWeight: 500,
                   textAlign: "center",
                   color: COLORS.white,
@@ -887,7 +965,13 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 10,
+            }}
+          >
             Postingan Masuk Triwulan Ke-{quarter.key}
             {" " + year.value}
           </Text>
@@ -915,12 +999,18 @@ export const LaporanPengetahuan = () => {
           )}
 
           <View style={{ marginBottom: 20, alignItems: "center" }}>
-            <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("Judul", device),
+                fontWeight: 600,
+                marginBottom: 10,
+              }}
+            >
               {accumulation?.total_article_all}
             </Text>
             <Text
               style={{
-                fontSize: 12,
+                fontSize: fontSizeResponsive("H3", device),
                 fontWeight: 400,
                 width: "50%",
                 textAlign: "center",
@@ -974,12 +1064,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.info}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Kegiatan
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation?.Kegiatan.total
@@ -1022,12 +1121,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.success}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Video/Jurnal
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation["Video_/_Jurnal"].total
@@ -1071,12 +1179,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.warning}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Infografis
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation?.Infografis.total
@@ -1118,12 +1235,21 @@ export const LaporanPengetahuan = () => {
                         color={COLORS.infoDanger}
                       />
                     </View>
-                    <Text style={{ fontSize: 14, fontWeight: 600 }}>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        fontWeight: 600,
+                      }}
+                    >
                       Tidak Sesuai
                     </Text>
                   </View>
                   <Text
-                    style={{ fontSize: 22, fontWeight: 600, marginBottom: 10 }}
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                      marginBottom: 10,
+                    }}
                   >
                     {Object.keys(accumulation).length !== 0
                       ? accumulation?.Tidak_Sesuai.total
@@ -1161,12 +1287,18 @@ export const LaporanPengetahuan = () => {
             elevation: 2,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 5,
+            }}
+          >
             Post Sudah Dinilai
           </Text>
           <Text
             style={{
-              fontSize: 12,
+              fontSize: fontSizeResponsive("H3", device),
               fontWeight: 400,
               marginBottom: 10,
               color: COLORS.grey,
@@ -1183,17 +1315,29 @@ export const LaporanPengetahuan = () => {
               shadowColor="#999"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
                 {review?.percent_article_reviewed}%
               </Text>
             </ProgressCircle>
           </View>
           <View style={{ marginVertical: 10, alignItems: "center" }}>
-            <Text style={{ fontSize: 38, fontWeight: 600, marginBottom: 10 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("Judul", device),
+                fontWeight: 600,
+                marginBottom: 10,
+              }}
+            >
               {review?.total_article_reviewed}
             </Text>
           </View>
-          <Text style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H2", device),
+              fontWeight: 600,
+              marginBottom: 10,
+            }}
+          >
             {"*) Yang belum dinilai :"}
           </Text>
           <View
@@ -1226,12 +1370,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Kegiatan
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}
@@ -1266,12 +1415,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Video/Jurnal
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}
@@ -1311,12 +1465,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Infografis
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}
@@ -1351,12 +1510,17 @@ export const LaporanPengetahuan = () => {
                   />
                 </View>
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600 }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
                     Tidak Sesuai
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: fontSizeResponsive("H3", device),
                       fontWeight: 400,
                       color: COLORS.grey,
                     }}

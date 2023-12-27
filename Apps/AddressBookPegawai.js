@@ -5,17 +5,19 @@ import { getTokenValue } from "../service/session";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getEmployee } from "../service/api";
-import { COLORS, FONTWEIGHT } from "../config/SuperAppps";
+import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
 import { setAddressbookSelected } from "../store/AddressbookKKP";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../components/Search";
+import { nde_api } from "../utils/api.config";
+import { getHTTP } from "../utils/http";
 
-const CardPegawai = ({ data, addressbook, config }) => {
+const CardPegawai = ({ data, addressbook, config, device }) => {
   const dispatch = useDispatch();
 
   const checkedNodeRadio = () => {
     const checkNode = addressbook.selected.filter(
-      (item) => item.nip === data.nip
+      (item) => item.nip === data.nip && item.nik === data.nik
     );
     if (checkNode.length > 0) {
       return true;
@@ -30,7 +32,7 @@ const CardPegawai = ({ data, addressbook, config }) => {
         style={{
           marginHorizontal: 15,
           paddingVertical: 10,
-          paddingHorizontal: 5,
+          paddingHorizontal: 10,
           borderRadius: 8,
           backgroundColor: COLORS.white,
           //shadow ios
@@ -45,7 +47,7 @@ const CardPegawai = ({ data, addressbook, config }) => {
         }}
         onPress={() => {
           const checkNode = addressbook.selected.filter(
-            (item) => item.nip === data.nip
+            (item) => item.nip === data.nip && item.nik === data.nik
           );
           if (checkNode.length > 0) {
             alert("Data tidak boleh sama");
@@ -65,17 +67,26 @@ const CardPegawai = ({ data, addressbook, config }) => {
             <Ionicons name="ellipse-outline" size={24} />
           )}
           <View style={{ flexDirection: "column" }}>
-            <Text>{data.nama}</Text>
-            <Text style={{ color: COLORS.lighter }}>{data.nip}</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              {data.nama ? data.nama : data.name}
+            </Text>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {data.nip ? data.nip : data.nik}
+            </Text>
           </View>
         </View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Ionicons
             name="information-circle-outline"
             size={24}
             color={COLORS.primary}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </TouchableOpacity>
     </View>
   );
@@ -98,7 +109,14 @@ export const AddressBookPegawai = ({ route }) => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getEmployee({ token: token, search: search }));
+      if (config.tipeAddress === "korespondensi") {
+        (async () => {
+          let response = await getHTTP(nde_api.employee);
+          addressbook.employee = response.data;
+        })();
+      } else {
+        dispatch(getEmployee({ token: token, search: search }));
+      }
       // dispatch(getDivisionTree({ token: token, id: kategori.key }))
     }
   }, [token, search]);
@@ -117,16 +135,28 @@ export const AddressBookPegawai = ({ route }) => {
 
   useEffect(() => {
     if (search !== "") {
-      const data = addressbook.employee?.filter((item) => {
-        return item.nama.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilterData(data);
+      let data;
+      if (config.tipeAddress === "korespodensi") {
+        (async () => {
+          let response = await getHTTP(
+            nde_api.employeeSearch.replace("{$word}", search)
+          );
+          data = response.data;
+          setFilterData(data);
+        })();
+      } else {
+        data = addressbook.employee?.filter((item) => {
+          return item.nama.toLowerCase().includes(search.toLowerCase());
+        });
+        setFilterData(data);
+      }
     } else {
       setFilterData(addressbook.employee);
     }
   }, [search]);
 
-  console.log(addressbook?.employee);
+  const { device } = useSelector((state) => state.apps);
+
   return (
     <View style={{ height: "95%", paddingVertical: 10 }}>
       {/* <View style={{ flexDirection: "row", backgroundColor: COLORS.infoLight }}>
@@ -150,10 +180,14 @@ export const AddressBookPegawai = ({ route }) => {
         }}
       >
         <View style={styles.input}>
-          <Ionicons name="search" size={20} color={COLORS.primary} />
+          <Ionicons
+            name="search"
+            size={fontSizeResponsive("H3", device)}
+            color={COLORS.primary}
+          />
           <TextInput
             placeholder={"Cari..."}
-            style={{ fontSize: 16, flex: 1 }}
+            style={{ fontSize: fontSizeResponsive("H4", device), flex: 1 }}
             maxLength={30}
             value={inputValue}
             onChangeText={(text) => setInputValue(text)}
@@ -165,7 +199,12 @@ export const AddressBookPegawai = ({ route }) => {
       <FlatList
         data={filterData}
         renderItem={({ item }) => (
-          <CardPegawai data={item} addressbook={addressbook} config={config} />
+          <CardPegawai
+            data={item}
+            addressbook={addressbook}
+            config={config}
+            device={device}
+          />
         )}
         style={{ marginBottom: 40 }}
         keyExtractor={(item) => item.nip}

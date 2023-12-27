@@ -275,7 +275,14 @@ function MyTabBar({ props, navigation }) {
                     color={COLORS.primary}
                     size={device === "tablet" ? 40 : 24}
                   />
-                  <Text style={{ color: COLORS.primary }}>Dashboard</Text>
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Dashboard
+                  </Text>
                 </View>
               ) : (
                 <View

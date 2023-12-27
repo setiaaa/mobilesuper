@@ -2,7 +2,12 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { useDispatch } from "react-redux";
-import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  DATETIME,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { Text } from "react-native";
 import moment from "moment";
 import { Image } from "react-native";
@@ -16,6 +21,7 @@ export const CardProgresEvent = ({
   item,
   bottomSheetAttach,
   loading,
+  device,
 }) => {
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
@@ -58,10 +64,18 @@ export const CardProgresEvent = ({
             />
           ) : (
             <>
-              <Text style={{ fontWeight: FONTWEIGHT.bold, width: "50%" }}>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  width: "50%",
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
                 {item.title}
               </Text>
-              <Text>{item.agenda_count} Sub Agenda</Text>
+              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                {item.agenda_count} Sub Agenda
+              </Text>
             </>
           )}
         </View>
@@ -82,7 +96,12 @@ export const CardProgresEvent = ({
               />
             ) : (
               <>
-                <Text style={{ marginVertical: 10 }}>
+                <Text
+                  style={{
+                    marginVertical: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {moment(item.start_date).format(DATETIME.LONG_DATE)} -{" "}
                 </Text>
               </>
@@ -95,7 +114,12 @@ export const CardProgresEvent = ({
               />
             ) : (
               <>
-                <Text style={{ marginVertical: 10 }}>
+                <Text
+                  style={{
+                    marginVertical: 10,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {moment(item.end_date).format(DATETIME.LONG_DATE)}
                 </Text>
               </>
@@ -114,7 +138,9 @@ export const CardProgresEvent = ({
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <Text>PIC</Text>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              PIC
+            </Text>
             {loading ? (
               <ShimmerPlaceHolder
                 style={{ borderRadius: 4 }}
@@ -125,9 +151,20 @@ export const CardProgresEvent = ({
               <>
                 <Image
                   source={{ uri: item.pic.avatar_url }}
-                  style={{ width: 26, height: 26, borderRadius: 30 }}
+                  style={{
+                    width: device === "tablet" ? 50 : 26,
+                    height: device === "tablet" ? 50 : 26,
+                    borderRadius: device === "tablet" ? 60 : 30,
+                  }}
                 />
-                <Text style={{ width: 150 }}>{item.pic.nama}</Text>
+                <Text
+                  style={{
+                    width: device === "tablet" ? 300 : 150,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {item.pic.nama}
+                </Text>
               </>
             )}
           </View>
@@ -142,15 +179,20 @@ export const CardProgresEvent = ({
             ) : (
               <View
                 style={{
-                  width: 50,
-                  height: 24,
+                  width: device === "tablet" ? 70 : 50,
+                  paddingVertical: 6,
                   backgroundColor: COLORS.infoDangerLight,
                   borderRadius: 30,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <Text style={{ color: COLORS.infoDanger }}>
+                <Text
+                  style={{
+                    color: COLORS.infoDanger,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
                   {Math.floor(item.progress)}%
                 </Text>
               </View>

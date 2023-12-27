@@ -33,7 +33,6 @@ export const ListBerita = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getBerita({ token, page }));
-      console.log("page", page);
     }
   }, [token, page]);
 
@@ -73,11 +72,8 @@ export const ListBerita = () => {
     try {
       if (token !== "") {
         dispatch(getBerita({ token, page }));
-        console.log(page, "page");
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -88,27 +84,32 @@ export const ListBerita = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
+      <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{
             backgroundColor: COLORS.primary,
             height: "10%",
             flexDirection: "row",
+            alignItems: "center",
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <View
-              style={[
-                styles.backIcon,
-                {
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 25,
-                  marginLeft: 20,
-                },
-              ]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 20,
+                backgroundColor: "white",
+                height: device === "tablet" ? 46 : 28,
+                width: device === "tablet" ? 46 : 28,
+                borderRadius: 50,
+              }}
             >
-              <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
+              <Ionicons
+                name="chevron-back"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
             </View>
           </TouchableOpacity>
           <View
@@ -122,7 +123,7 @@ export const ListBerita = () => {
             <Text
               style={{
                 color: "white",
-                fontSize: fontSizeResponsive("H3", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
               }}
             >
@@ -137,7 +138,7 @@ export const ListBerita = () => {
             onSearch={filter}
           />
         </View>
-        <View style={{ flex: 1, paddingBottom: 24 }}>
+        <View style={{ flex: 1, paddingHorizontal: PADDING.Page }}>
           <FlatList
             data={filterData}
             renderItem={({ item, index }) => (

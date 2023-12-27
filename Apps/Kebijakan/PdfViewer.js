@@ -9,17 +9,18 @@ import React, { useEffect } from "react";
 import PdfReader from "rn-pdf-reader-js-improved";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { } from "react-native-safe-area-context";
+import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import { useSelector } from "react-redux";
 
 const PdfViewer = ({ route }) => {
   const { data } = route.params;
   const navigation = useNavigation();
   useEffect(() => {
-    console.log(data);
   }, []);
+  const { device } = useSelector((state) => state.apps);
   return (
-    < >
+    <>
       <View
         style={{
           flexDirection: "row",
@@ -33,8 +34,8 @@ const PdfViewer = ({ route }) => {
           style={{
             backgroundColor: COLORS.white,
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
@@ -43,7 +44,7 @@ const PdfViewer = ({ route }) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons
               name="chevron-back-outline"
-              size={24}
+              size={device === "tablet" ? 40 : 24}
               color={COLORS.primary}
             />
           </TouchableOpacity>
@@ -62,7 +63,7 @@ const PdfViewer = ({ route }) => {
           }}
         />
       </View>
-    </ >
+    </>
   );
 };
 

@@ -43,11 +43,9 @@ const HelpDeskSlice = createSlice({
         state.loading = false;
       })
       .addCase(postTicket.rejected, (state, action) => {
-        console.log(action.payload + " Error");
         state.status = "error";
       })
       .addCase(postTicket.fulfilled, (state, action) => {
-        console.log(action.payload + " Berhasil");
         state.status = "berhasil";
       })
   },

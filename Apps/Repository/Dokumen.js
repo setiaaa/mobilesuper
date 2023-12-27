@@ -51,7 +51,6 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDocument(params));
   };
-  console.log(item.published);
   return (
     <BottomSheetModalProvider>
       <View
@@ -396,10 +395,8 @@ export const Dokumen = () => {
     try {
       if (token !== "") {
         dispatch(getDocument({ token: token, page: page, type: type.key }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -427,8 +424,8 @@ export const Dokumen = () => {
               style={{
                 backgroundColor: "white",
                 borderRadius: 20,
-                width: 28,
-                height: 28,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 20,
@@ -437,7 +434,7 @@ export const Dokumen = () => {
               <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                 <Ionicons
                   name="chevron-back-outline"
-                  size={24}
+                  size={device === "tablet" ? 40 : 24}
                   color={"#800000"}
                 />
               </TouchableOpacity>

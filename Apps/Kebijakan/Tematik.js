@@ -5,13 +5,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
 import { getTokenValue } from "../../service/session";
 import { getUnitKerjaTematik, getUnitKerjaTematikId } from "../../service/api";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/Loading";
 
-const DataGrid = ({ judul, id, icon }) => {
+const DataGrid = ({ judul, id, icon, device }) => {
   var iconsPath;
 
   switch (icon) {
@@ -59,7 +64,6 @@ const DataGrid = ({ judul, id, icon }) => {
 
   // const getId = (ids) => {
   //   const params = { token: token, id: ids, page: 10 };
-  //   console.log("ini id : " + ids);
   //   dispatch(getUnitKerjaTematikId(params));
   // };
 
@@ -99,7 +103,7 @@ const DataGrid = ({ judul, id, icon }) => {
         <View style={{ width: "80%" }}>
           <Text
             style={{
-              fontSize: 13,
+              fontSize: fontSizeResponsive("H3", device),
               fontWeight: FONTWEIGHT.normal,
               marginBottom: 10,
               // textAlign: "center",
@@ -137,7 +141,8 @@ export const Tematik = () => {
 
   const unitKerjaTematik = unitKerja.lists;
 
-  // console.log(unitKerjaTematik);
+
+  const { device } = useSelector((state) => state.apps);
 
   return (
     <>
@@ -173,7 +178,7 @@ export const Tematik = () => {
           <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
             <Text
               style={{
-                fontSize: FONTSIZE.H1,
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
@@ -185,22 +190,26 @@ export const Tematik = () => {
         <View
           style={{
             backgroundColor: COLORS.white,
-            width: "95%",
+            width: "90%",
             borderRadius: 16,
-            marginLeft: 10,
+            marginHorizontal: "5%",
             marginVertical: 20,
+
             height: "85%",
           }}
         >
           <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
             <Text
-              style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold }}
+              style={{
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: FONTWEIGHT.bold,
+              }}
             >
               Peraturan Tematik
             </Text>
             <Text
               style={{
-                fontSize: FONTSIZE.H3,
+                fontSize: fontSizeResponsive("H3", device),
                 fontWeight: FONTWEIGHT.normal,
                 marginTop: 20,
               }}
@@ -211,13 +220,9 @@ export const Tematik = () => {
           </View>
           <View
             style={{
-              // backgroundColor: "brown",
               display: "flex",
               alignItems: "center",
-              // marginBottom: 120,
-              marginLeft: "5%",
               height: "80%",
-              width: "90%",
             }}
           >
             <FlatList
@@ -229,11 +234,12 @@ export const Tematik = () => {
                   // tanggal={item.}
                   id={item.kd_unitkerja_eselon1}
                   icon={item.icon}
+                  device={device}
                 />
               )}
               // numColumns={1}
               keyExtractor={(item) => "#" + item.id}
-              style={{}}
+              style={{ width: "100%", paddingHorizontal: 20 }}
             />
           </View>
         </View>

@@ -60,7 +60,7 @@ export const DetailBerita = () => {
 
   const baseStyles = {};
 
-  console.log(berita.detail);
+  const { device } = useSelector((state) => state.apps);
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -70,17 +70,22 @@ export const DetailBerita = () => {
             style={{ position: "absolute", zIndex: 1 }}
           >
             <View
-              style={[
-                styles.backIcon,
-                {
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 25,
-                  marginLeft: 20,
-                },
-              ]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 20,
+                marginTop: 20,
+                backgroundColor: "white",
+                height: device === "tablet" ? 46 : 28,
+                width: device === "tablet" ? 46 : 28,
+                borderRadius: 50,
+              }}
             >
-              <Ionicons name="chevron-back" size={24} color={COLORS.primary} />
+              <Ionicons
+                name="chevron-back"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
             </View>
           </TouchableOpacity>
           <View
@@ -100,7 +105,7 @@ export const DetailBerita = () => {
           </View>
         </View>
       </ScrollView>
-    </View  >
+    </View>
   );
 };
 

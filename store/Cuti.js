@@ -105,7 +105,6 @@ const CutiSlice = createSlice({
       })
       .addCase(getDetailArsipCuti.fulfilled, (state, action) => {
         state.arsip.detail = action.payload;
-        console.log("masuk");
         state.loading = false;
       })
       .addCase(getDetailArsipCuti.pending, (state, action) => {
@@ -138,12 +137,10 @@ const CutiSlice = createSlice({
         state.loading = false;
       })
       .addCase(postPengajuanCuti.fulfilled, (state, action) => {
-        console.log("berhasil");
         state.status = "berhasil";
         state.loading = false;
       })
       .addCase(postPengajuanCuti.pending, (state, action) => {
-        console.log("pending");
         state.status = "";
         state.loading = true;
       })
@@ -152,76 +149,60 @@ const CutiSlice = createSlice({
         state.loading = false;
       })
       .addCase(postApproval.fulfilled, (state, action) => {
-        console.log("berhasil");
         state.status = "berhasil";
         state.loading = false;
       })
       .addCase(postApproval.pending, (state, action) => {
-        console.log("pending");
         state.status = "";
         state.loading = true;
       })
       .addCase(postApproval.rejected, (state, action) => {
-        console.log("error");
         state.status = "error";
         state.loading = false;
       })
       .addCase(postAttachmentCuti.fulfilled, (state, action) => {
         // let id_attachment = [];
         // id_attachment.push({ id: action.payload.data.id });
-        console.log("berhasil");
         state.attachment = [{ id: action.payload.data.id }];
         state.loading = false;
       })
       .addCase(postAttachmentCuti.pending, (state, action) => {
-        console.log("pending");
         state.loading = true;
       })
       .addCase(postAttachmentCuti.rejected, (state, action) => {
-        console.log("error");
-        console.log(action.payload);
         state.loading = false;
       })
       .addCase(postPembatalanCuti.fulfilled, (state, action) => {
-        console.log("berhasil");
         state.status = "berhasil";
         state.loading = false;
       })
       .addCase(postPembatalanCuti.pending, (state, action) => {
-        console.log("pending");
         state.status = "";
         state.loading = true;
       })
       .addCase(postPembatalanCuti.rejected, (state, action) => {
-        console.log("error");
         state.status = "error";
         state.loading = false;
       })
       .addCase(postTanggalCuti.fulfilled, (state, action) => {
-        console.log("berhasil");
         state.jumlahCuti = action.payload;
         state.loading = false;
       })
       .addCase(postTanggalCuti.pending, (state, action) => {
-        console.log("");
         state.loading = true;
       })
       .addCase(postTanggalCuti.rejected, (state, action) => {
-        console.log("gagal");
         state.loading = false;
       })
       .addCase(postPengajuanCutiDraft.fulfilled, (state, action) => {
-        console.log("berhasil");
         state.status = "berhasil";
         state.loading = false;
       })
       .addCase(postPengajuanCutiDraft.pending, (state, action) => {
-        console.log("pending");
         state.status = "";
         state.loading = true;
       })
       .addCase(postPengajuanCutiDraft.rejected, (state, action) => {
-        console.log("error");
         state.status = "error";
         state.loading = false;
       });

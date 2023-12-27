@@ -54,10 +54,10 @@ export const CardApps = ({ handlePressModal }) => {
           display: "flex",
         }}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("Drawer")}>
+        <TouchableOpacity onPress={() => navigation.navigate("MainKoresp")}>
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -71,7 +71,7 @@ export const CardApps = ({ handlePressModal }) => {
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/korespondensi-ikon3.png")}
+              source={require("../../assets/superApp/korespondensi.png")}
             />
           </View>
         </TouchableOpacity>
@@ -98,7 +98,7 @@ export const CardApps = ({ handlePressModal }) => {
         <TouchableOpacity onPress={() => navigation.navigate("MainKeb")}>
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -109,10 +109,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 30,
+                height: device === "tablet" ? 50 : 30,
               }}
-              source={require("../../assets/superApp/kebijakan-ikon.png")}
+              source={require("../../assets/superApp/kebijakan.png")}
             />
           </View>
         </TouchableOpacity>
@@ -139,7 +139,7 @@ export const CardApps = ({ handlePressModal }) => {
         >
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -150,10 +150,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 40 : 24,
+                height: device === "tablet" ? 55 : 34,
               }}
-              source={require("../../assets/superApp/pengetahuan-ikon.png")}
+              source={require("../../assets/superApp/pengetahuan.png")}
             />
           </View>
         </TouchableOpacity>
@@ -183,7 +183,7 @@ export const CardApps = ({ handlePressModal }) => {
         >
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -197,7 +197,7 @@ export const CardApps = ({ handlePressModal }) => {
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/digital-ikon.png")}
+              source={require("../../assets/superApp/digitalsign.png")}
             />
           </View>
         </TouchableOpacity>
@@ -222,7 +222,7 @@ export const CardApps = ({ handlePressModal }) => {
         <TouchableOpacity onPress={() => navigation.navigate("MainCuti")}>
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -233,10 +233,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 60 : 32,
+                height: device === "tablet" ? 50 : 32,
               }}
-              source={require("../../assets/superApp/cuti-ikon.png")}
+              source={require("../../assets/superApp/cuti.png")}
             />
           </View>
         </TouchableOpacity>
@@ -261,7 +261,7 @@ export const CardApps = ({ handlePressModal }) => {
         <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -272,10 +272,10 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 60 : 32,
+                height: device === "tablet" ? 60 : 32,
               }}
-              source={require("../../assets/superApp/sppd-ikon.png")}
+              source={require("../../assets/superApp/sppd.png")}
             />
           </View>
         </TouchableOpacity>
@@ -300,7 +300,7 @@ export const CardApps = ({ handlePressModal }) => {
         <TouchableOpacity onPress={() => navigation.navigate("MyTask")}>
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -339,7 +339,7 @@ export const CardApps = ({ handlePressModal }) => {
         <TouchableOpacity onPress={() => navigation.navigate("ListPegawai")}>
           <View
             style={[
-              styles.cardApps,
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
               {
                 backgroundColor: COLORS.secondary,
                 justifyContent: "center",
@@ -383,7 +383,7 @@ export const CardApps = ({ handlePressModal }) => {
           <TouchableOpacity onPress={() => navigation.navigate("MainRepo")}>
             <View
               style={[
-                styles.cardApps,
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
                 {
                   backgroundColor: COLORS.secondary,
                   justifyContent: "center",
@@ -394,10 +394,10 @@ export const CardApps = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 28,
-                  height: device === "tablet" ? 50 : 28,
+                  width: device === "tablet" ? 50 : 30,
+                  height: device === "tablet" ? 40 : 24,
                 }}
-                source={require("../../assets/superApp/preparing-ikon.png")}
+                source={require("../../assets/superApp/repositori.png")}
               />
             </View>
           </TouchableOpacity>
@@ -430,7 +430,7 @@ export const CardApps = ({ handlePressModal }) => {
           <TouchableOpacity onPress={() => navigation.navigate("GrupKalender")}>
             <View
               style={[
-                styles.cardApps,
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
                 {
                   backgroundColor: COLORS.secondary,
                   justifyContent: "center",
@@ -485,7 +485,7 @@ export const CardApps = ({ handlePressModal }) => {
           <TouchableOpacity onPress={() => navigation.navigate("HalamanUtama")}>
             <View
               style={[
-                styles.cardApps,
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
                 {
                   backgroundColor: COLORS.secondary,
                   justifyContent: "center",
@@ -564,7 +564,7 @@ export const CardApps = ({ handlePressModal }) => {
             <TouchableOpacity onPress={handlePressModal}>
               <View
                 style={[
-                  styles.cardApps,
+                  device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
                   {
                     backgroundColor: COLORS.secondary,
                     justifyContent: "center",
@@ -575,10 +575,10 @@ export const CardApps = ({ handlePressModal }) => {
               >
                 <Image
                   style={{
-                    width: device === "tablet" ? 50 : 28,
-                    height: device === "tablet" ? 50 : 28,
+                    width: device === "tablet" ? 60 : 32,
+                    height: device === "tablet" ? 60 : 32,
                   }}
-                  source={require("../../assets/superApp/more-ikon.png")}
+                  source={require("../../assets/superApp/more.png")}
                 />
               </View>
             </TouchableOpacity>
@@ -604,10 +604,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     flexDirection: "column",
     width: "90%",
-    height: hp(25),
+    height: hp(30),
     borderRadius: 12,
     marginTop: 60,
-    padding: 5,
+    padding: 10,
     //shadow ios
     shadowOffset: { width: -2, height: 4 },
     shadowColor: COLORS.primary,
@@ -625,6 +625,11 @@ const styles = StyleSheet.create({
   cardApps: {
     width: wp(15),
     height: hp(7),
+    borderRadius: 8,
+  },
+  cardAppsTablet: {
+    width: wp(15),
+    height: hp(10),
     borderRadius: 8,
   },
 });

@@ -166,23 +166,23 @@ export const CollapseCardBiodata = ({ profile, device }) => {
                   alignItems: "flex-start",
                 }}
               >
-                {profile.Karpeg == null ? (
+                {profile.karpeg == null ? (
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     -
                   </Text>
                 ) : (
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    {profile.Karpeg}
+                    {profile.karpeg}
                   </Text>
                 )}
                 <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                   /
                 </Text>
-                {profile.Karis == null ? (
+                {profile.karis == null ? (
                   <Text>-</Text>
                 ) : (
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    {profile.Karis}
+                    {profile.karis}
                   </Text>
                 )}
                 <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>

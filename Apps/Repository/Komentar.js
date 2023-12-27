@@ -40,8 +40,6 @@ const DaftarKomentar = ({ items, setParentId, device }) => {
       id: id,
     });
   };
-  console.log("ini items");
-  console.log(items);
 
   return (
     <View
@@ -301,8 +299,6 @@ export const Komentar = () => {
   const detail = dokumen.detail;
 
   const comment = detail.comments;
-  console.log(dokumen);
-  // console.log(comment);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -321,8 +317,6 @@ export const Komentar = () => {
       token: token,
       payload: payload,
     };
-    console.log(parentId.id);
-    console.log(payload.parent_id);
     dispatch(postCommentRepo(data));
     setKomen("");
     setParentId({ id: "", creator: "" });
@@ -351,15 +345,19 @@ export const Komentar = () => {
           style={{
             backgroundColor: "white",
             borderRadius: 20,
-            width: 28,
-            height: 28,
+            width: device === "tablet" ? 40 : 28,
+            height: device === "tablet" ? 40 : 28,
             alignItems: "center",
             justifyContent: "center",
             marginLeft: 20,
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-back-outline" size={24} color={"#800000"} />
+            <Ionicons
+              name="chevron-back-outline"
+              size={device === "tablet" ? 40 : 24}
+              color={"#800000"}
+            />
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>

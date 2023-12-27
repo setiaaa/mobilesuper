@@ -78,6 +78,7 @@ import { DetailAcara } from "../Kalender/DetailAcara";
 import { ListSuka } from "../Kalender/ListSuka";
 import { MyTask } from "../Task Management/MyTask";
 import MainDetailTask from "../Task Management/DetailTask/MainDetailTask";
+import MainDetailKorespondensiTM from "../Task Management/DetailKorespondensiTM/MainDetailKorespondensiTM";
 import { AddTask } from "../Task Management/AddTask";
 import { ListGaleri } from "../SuperApps/ListGaleri";
 import { Kepegawaian } from "../Dashboard/Kepegawaian";
@@ -145,14 +146,21 @@ import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
 import { getTokenValue } from "../../service/session";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
-import { Pencarian } from "./Pencarian/Pencarian";
+import { PencarianKorespondensi } from "./Pencarian/PencarianKorespondensi";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 import LihatSuratSPPD from "../SPPD/LihatSuratSPPD";
 import { Laporan } from "../Task Management/Dashboard/Laporan";
 import { PdfPerisai } from "../DigitalSignature/PdfPerisai";
+import MainKoresp from "./MainKoresp";
+import IncomingList from "./List/IncomingList";
+import DispositionList from "./List/DispositionList";
+import TrackingList from "./List/TrackingList";
+import SubmittedList from "./List/SubmittedList";
+import NeedFollowUpList from "./List/NeedFollowUpList";
 import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
 import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
+import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 
 const Stack = createNativeStackNavigator();
 
@@ -597,6 +605,13 @@ function AuthenticatedStack(route) {
             }}
           />
           <Stack.Screen
+            name="MainDetailKorespondensiTM"
+            component={MainDetailKorespondensiTM}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="DetailDokumenLain"
             component={DetailDokumenLain}
             options={{
@@ -821,6 +836,13 @@ function AuthenticatedStack(route) {
             }}
           />
           <Stack.Screen
+            name="TandaTanganNotulensi"
+            component={TandaTanganNotulensi}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="EditEvent"
             component={EditEvent}
             options={{
@@ -924,6 +946,49 @@ function AuthenticatedStack(route) {
               headerTitle: "",
               headerShown: false,
             }}
+          />
+          <Stack.Screen
+            name="MainKoresp"
+            component={MainKoresp}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="IncomingUnread"
+            component={IncomingList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionUnread"
+            component={DispositionList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="IncomingList"
+            component={IncomingList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionList"
+            component={DispositionList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="NeedFollowUpList"
+            component={NeedFollowUpList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TrackingList"
+            component={TrackingList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SubmittedList"
+            component={SubmittedList}
+            options={{ header: toolbarBack }}
           />
           {/* DETAIL LETTER */}
           <Stack.Screen
@@ -1061,7 +1126,7 @@ function AuthenticatedStack(route) {
           />
           <Stack.Screen
             name="Pencarian"
-            component={Pencarian}
+            component={PencarianKorespondensi}
             options={{
               headerShown: false,
             }}
@@ -1147,7 +1212,6 @@ function AppNavigator() {
       cekValidVersion(response.data.version);
     } catch (error) {
       if (error.status == null) {
-        console.log("cek", error);
         Alert.alert("Warning!", "Please check your connection");
       } else {
         handlerError(error, "Warning!", "Check Version Ios not working!");

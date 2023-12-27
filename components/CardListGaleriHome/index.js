@@ -22,17 +22,21 @@ export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
         flex: 0.5,
       }}
     >
-      <View
-        style={{
-          backgroundColor: COLORS.white,
-          borderRadius: 16,
-          alignItems: "center",
-          justifyContent: "center",
-          marginHorizontal: 14,
-          marginTop: 30,
-        }}
-      >
-        <TouchableOpacity onPress={onclick}>
+      <TouchableOpacity onPress={onclick}>
+        <View
+          style={{
+            backgroundColor: "#fff",
+            shadowOpacity: 0.3,
+            shadowRadius: 3,
+            shadowOffset: {
+              height: 0,
+              width: 0,
+            },
+            borderRadius: 16,
+            marginHorizontal: 8,
+            marginBottom: 16,
+          }}
+        >
           <Image
             source={{ uri: image }}
             style={
@@ -41,9 +45,7 @@ export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
           />
           <View
             style={{
-              marginVertical: 4,
-              marginHorizontal: 3,
-              paddingHorizontal: 10,
+              padding: 10,
             }}
           >
             <Text
@@ -60,14 +62,14 @@ export const CardListGaleriHome = ({ image, deskripsi, onclick }) => {
               {deskripsi}
             </Text>
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 const styles = StyleSheet.create({
   backIcon: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     height: 28,
     width: 28,
     borderRadius: 50,
