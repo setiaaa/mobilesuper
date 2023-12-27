@@ -83,7 +83,7 @@ function AddressbookTitle({
         label={item.title + "\n" + item.officer.official}
         status={
           selected?.findIndex((data) => data.code == item.code) != -1 ||
-            selected?.findIndex((data) => data.title_code == item.code) != -1
+          selected?.findIndex((data) => data.title_code == item.code) != -1
             ? "checked"
             : "unchecked"
         }
@@ -312,9 +312,9 @@ function AddressbookTitle({
                               selected?.findIndex(
                                 (data) => data.code == node.code
                               ) != -1 ||
-                                selected?.findIndex(
-                                  (data) => data.title_code == node.code
-                                ) != -1
+                              selected?.findIndex(
+                                (data) => data.title_code == node.code
+                              ) != -1
                                 ? "checked"
                                 : "unchecked"
                             }
