@@ -456,8 +456,8 @@ export const CardAppsB = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: 35,
-                  height: 55,
+                  width: wp(3.5),
+                  height: hp(4.5),
                 }}
                 source={require("../../assets/superApp/event.png")}
               />
