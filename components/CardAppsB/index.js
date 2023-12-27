@@ -112,7 +112,7 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 30,
                 height: device === "tablet" ? 50 : 30,
               }}
               source={require("../../assets/superApp/kebijakan.png")}
@@ -154,8 +154,8 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 22,
-                height: device === "tablet" ? 50 : 30,
+                width: device === "tablet" ? wp(6) : 22,
+                height: device === "tablet" ? hp(5) : 30,
               }}
               source={require("../../assets/superApp/pengetahuan.png")}
             />
@@ -241,8 +241,8 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 60 : 28,
+                height: device === "tablet" ? 60 : 28,
               }}
               source={require("../../assets/superApp/cuti.png")}
             />
@@ -281,8 +281,8 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 60 : 28,
+                height: device === "tablet" ? 60 : 28,
               }}
               source={require("../../assets/superApp/sppd.png")}
             />
@@ -363,8 +363,8 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 25,
-                height: device === "tablet" ? 50 : 29,
+                width: device === "tablet" ? wp(7) : 25,
+                height: device === "tablet" ? hp(5) : 29,
               }}
               source={require("../../assets/superApp/pegawai.png")}
             />
@@ -408,7 +408,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 28,
+                  width: device === "tablet" ? 60 : 28,
                   height: device === "tablet" ? 50 : 24,
                 }}
                 source={require("../../assets/superApp/repositori.png")}
@@ -456,8 +456,8 @@ export const CardAppsB = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 18,
-                  height: device === "tablet" ? 50 : 30,
+                  width: wp(4),
+                  height: hp(4),
                 }}
                 source={require("../../assets/superApp/event.png")}
               />

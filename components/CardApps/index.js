@@ -150,8 +150,8 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 24,
-                height: device === "tablet" ? 50 : 34,
+                width: device === "tablet" ? wp(6) : 24,
+                height: device === "tablet" ? hp(5) : 34,
               }}
               source={require("../../assets/superApp/pengetahuan.png")}
             />
@@ -233,8 +233,8 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 32,
-                height: device === "tablet" ? 50 : 32,
+                width: device === "tablet" ? 60 : 32,
+                height: device === "tablet" ? 60 : 32,
               }}
               source={require("../../assets/superApp/cuti.png")}
             />
@@ -272,8 +272,8 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 32,
-                height: device === "tablet" ? 50 : 32,
+                width: device === "tablet" ? 60 : 32,
+                height: device === "tablet" ? 60 : 32,
               }}
               source={require("../../assets/superApp/sppd.png")}
             />
@@ -394,7 +394,7 @@ export const CardApps = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 50 : 30,
+                  width: device === "tablet" ? 60 : 30,
                   height: device === "tablet" ? 50 : 24,
                 }}
                 source={require("../../assets/superApp/repositori.png")}
