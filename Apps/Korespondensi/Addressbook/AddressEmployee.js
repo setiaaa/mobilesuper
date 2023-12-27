@@ -72,7 +72,7 @@ function AddressbookEmployee({
         label={item.fullname}
         status={
           selected?.findIndex((data) => data.nik == item.nik) != -1 ||
-            selected?.findIndex((data) => data.code == item.nik) != -1
+          selected?.findIndex((data) => data.code == item.nik) != -1
             ? "checked"
             : "unchecked"
         }

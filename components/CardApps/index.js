@@ -54,7 +54,7 @@ export const CardApps = ({ handlePressModal }) => {
           display: "flex",
         }}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("Drawer")}>
+        <TouchableOpacity onPress={() => navigation.navigate("MainKoresp")}>
           <View
             style={[
               device == "tablet" ? styles.cardAppsTablet : styles.cardApps,

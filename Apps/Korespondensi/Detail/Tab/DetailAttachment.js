@@ -333,7 +333,7 @@ function DetailAttachment({ data, id, tipeRef }) {
                 >
                   Lihat Surat
                 </Button>
-                <Button
+                {/* <Button
                   onPress={() => initDownload(item)}
                   mode="contained"
                   style={[
@@ -352,7 +352,7 @@ function DetailAttachment({ data, id, tipeRef }) {
                   )}
                 >
                   Unduh Surat
-                </Button>
+                </Button> */}
               </View>
             ))}
         </View>

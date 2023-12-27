@@ -1,5 +1,3 @@
-import { Config } from "../constants/config";
-
 export function initData(dataList, arg) {
   if (arg.previous == null) {
     dataList = arg;

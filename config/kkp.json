@@ -59,7 +59,7 @@
       "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
     },
     "id": "telkom",
-    "base_url": "https://portal-crs.kkp.go.id",
+    "base_url": "https://crsfe2.kubekkp.coofis.com",
     "upgrade_url": "https://portal.telkom.co.id/store/experience/apps/8",
     "loginSSO": false,
     "termOfUse": true,

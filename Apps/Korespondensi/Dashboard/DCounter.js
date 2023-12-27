@@ -1,17 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { TextInput } from "react-native-paper";
+import { setToken } from "../../../store/auth";
+import { Keyboard } from "react-native";
 
-function DLetter() {
+function DCounter() {
   const navigation = useNavigation();
   let [isCounter, setIsCounter] = useState([]);
-  let [isLetter, setIsLetter] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
+  const [inputToken, setInputToken] = useState("");
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const icon = [
     {
@@ -33,26 +37,6 @@ function DLetter() {
       icon: "email-outline",
       color: "rgba(180, 179, 179, 0.6)",
       navName: "ConceptNumb",
-    },
-    {
-      icon: "inbox-arrow-down",
-      navName: "IncomingList",
-    },
-    {
-      icon: "email-send-outline",
-      navName: "DispositionList",
-    },
-    {
-      icon: "email-edit-outline",
-      navName: "NeedFollowUpList",
-    },
-    {
-      icon: "email-search-outline",
-      navName: "TrackingList",
-    },
-    {
-      icon: "email-check-outline",
-      navName: "SubmittedList",
     },
   ];
   useEffect(() => {
@@ -76,39 +60,41 @@ function DLetter() {
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
-  }, [token]);
+    dispatch(setToken({ token: inputToken }));
+  }, [token, inputToken]);
 
   async function getisCounter() {
     setIsLoading(true);
     try {
       //get isCounter
       const response = await getHTTP(nde_api.dashboard);
-      setIsLetter([
-        { count: 1, type: "incoming", value: response.data[1].value },
-        {
-          count: 2,
-          type: "disposition",
-          value: response.data[2].value,
-        },
-        {
-          count: 3,
-          type: "onprogress",
-          value: response.data[0].value,
-        },
-        {
-          count: 4,
-          type: "tracking",
-          value: "",
-        },
-        {
-          count: 5,
-          type: "submitted",
-          value: "",
-        },
-      ]);
+      setIsCounter(response.data);
       setIsLoading(false);
     } catch (error) {
       if (error.response.status == null && error.status == null) {
+        setIsCounter([
+          { count: 1, type: "onprogress", value: "-" },
+          {
+            count: 2,
+            type: "agenda_in",
+            value: "-",
+          },
+          {
+            count: 3,
+            type: "agenda_disposition",
+            value: "-",
+          },
+          {
+            count: 4,
+            type: "tracking",
+            value: "-",
+          },
+          {
+            count: 5,
+            type: "agenda_out",
+            value: "-",
+          },
+        ]);
       } else {
         handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
       }
@@ -122,22 +108,40 @@ function DLetter() {
     </>
   );
   return (
-    <ScrollView style={{ padding: 12 }}>
+    <View style={{ margin: 12 }}>
+      <View>
+        <TextInput
+          editable
+          placeholder="Masukan Token"
+          onChangeText={setInputToken}
+          onSubmit={Keyboard.dismiss}
+          style={{ width: "100%" }}
+        />
+      </View>
       {/* {loadingOverlay} */}
       {isCounter?.length != 0 && (
-        <View style={{ paddingBottom: 30 }}>
-          {isLetter?.map((item, index) => (
+        <>
+          <View>
             <CardDCounter
-              key={index}
-              data={item}
-              icon={icon[index + 4]}
+              data={isCounter[0]}
+              icon={icon[0]}
               navigation={navigation}
             />
-          ))}
-        </View>
+            <CardDCounter
+              data={isCounter[1]}
+              icon={icon[1]}
+              navigation={navigation}
+            />
+            <CardDCounter
+              data={isCounter[2]}
+              icon={icon[2]}
+              navigation={navigation}
+            />
+          </View>
+        </>
       )}
-    </ScrollView>
+    </View>
   );
 }
 
-export default DLetter;
+export default DCounter;

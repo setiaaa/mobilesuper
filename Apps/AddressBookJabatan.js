@@ -10,11 +10,21 @@ import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
 import { ScrollView } from "react-native-gesture-handler";
 import TreeView from "react-native-final-tree-view";
 import { Ionicons } from "@expo/vector-icons";
-import { setAddressbookSelected } from "../store/AddressbookKKP";
+import {
+  setAddressbookListsDivision,
+  setAddressbookListsDivisionTree,
+  setAddressbookSelected,
+} from "../store/AddressbookKKP";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { nde_api } from "../utils/api.config";
+import { getHTTP } from "../utils/http";
 
 export const AddressBookJabatan = ({ route }) => {
   const [token, setToken] = useState("");
+  const [profileOrganization, setProfileOrganization] = useState();
+  const [divisionList, setdivisionList] = useState([]);
   const { config } = route.params;
   const dispatch = useDispatch();
 
@@ -26,11 +36,58 @@ export const AddressBookJabatan = ({ route }) => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDivision(token));
-      // dispatch(getEmployee(token))
-      // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+      if (config.tipeAddress === "korespondensi") {
+        (async () => {
+          if (profileOrganization == undefined) {
+            let data = await AsyncStorage.getItem("profileOrganization");
+            setProfileOrganization(JSON.parse(data));
+          }
+          // let response = await getHTTP(nde_api.employee);
+          // addressbook.employee = response.data;
+        })();
+        getDiv(profileOrganization?.fucfu_id);
+      } else {
+        dispatch(getDivision(token));
+        // dispatch(getEmployee(token))
+        // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+      }
     }
-  }, [token]);
+  }, [token, profileOrganization]);
+
+  async function getDiv(id) {
+    // setIsLoading(true);
+    try {
+      if (id != undefined) {
+        let response = await getHTTP(
+          nde_api.divisionbyunitid.replace("{$id}", id)
+        );
+        const replaceData = response.data.map(({ id, name }) => ({
+          key: id,
+          value: name,
+        }));
+        // setdivisionList(replaceData);
+        dispatch(setAddressbookListsDivision(replaceData));
+      }
+      // setIsLoading(false);
+    } catch (error) {
+      // setIsLoading(false);
+    }
+  }
+
+  async function getTitleHirarki(id) {
+    // setIsLoading(true);
+    try {
+      if (id != undefined) {
+        let response = await getHTTP(
+          nde_api.titlebydivisionid.replace("{$id}", id)
+        );
+        dispatch(setAddressbookListsDivisionTree(response?.data));
+      }
+      // setIsLoading(false);
+    } catch (error) {
+      // setIsLoading(false);
+    }
+  }
 
   const [kategori, setKategori] = useState("");
 
@@ -101,7 +158,11 @@ export const AddressBookJabatan = ({ route }) => {
           heightValue={"75%"}
           setSelected={setKategori}
           handleClick={(item) => {
-            dispatch(getDivisionTree({ token: token, id: item.key }));
+            if (config.tipeAddress == "korespondensi") {
+              getTitleHirarki(item.key);
+            } else {
+              dispatch(getDivisionTree({ token: token, id: item.key }));
+            }
           }}
           borderWidth={1}
           borderColor={COLORS.ExtraDivinder}
@@ -138,8 +199,11 @@ export const AddressBookJabatan = ({ route }) => {
         >
           <TreeView
             data={listTree} // defined above
+            childrenKey={
+              config.tipeAddress == "korespondensi" ? "nodes" : "children"
+            }
             onNodePress={({ node }) => {
-              if (node?.children === undefined) {
+              if (node?.children === undefined && node?.nodes === undefined) {
                 const checkNode = addressbook.selected.filter(
                   (item) => item.id === node.id
                 );

@@ -12,6 +12,7 @@ import { nde_api } from "../utils/api.config";
 
 function FABactions({ id, data, noAgenda, tipe }) {
   const profile = useSelector((state) => state.profile.profile);
+  const visibleFab = useSelector((state) => state.snackbar.fab);
   const [state, setState] = useState({ open: false });
   const [visible, setVisible] = useState(true);
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ function FABactions({ id, data, noAgenda, tipe }) {
   };
   const { open } = state;
   const refresh = navigation.addListener("focus", () => {
-    setVisible(true);
+    setVisible(visibleFab);
     getAction();
   });
   const [action, setAction] = useState();
@@ -37,10 +38,10 @@ function FABactions({ id, data, noAgenda, tipe }) {
       dispatch(removeAll());
       dispatch(removeAllDispoMulti());
     }
-    setVisible(true);
+    setVisible(visibleFab);
     if (action == undefined) getAction();
     return refresh;
-  }, [action]);
+  }, [action, visibleFab]);
 
   function confirmForward() {
     Alert.alert("Konfirmasi", "Anda yakin untuk meneruskan surat ini?", [

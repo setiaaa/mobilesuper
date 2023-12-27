@@ -31,12 +31,16 @@ export const CardListBeritaHome = ({
   return (
     <View
       style={{
-        backgroundColor: "white",
+        backgroundColor: "#fff",
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        shadowOffset: {
+          height: 0,
+          width: 0,
+        },
         borderRadius: 16,
-        width: "90%",
-        flex: 1,
-        marginTop: 30,
-        marginHorizontal: "5%",
+        width: "100%",
+        marginBottom: 16,
       }}
     >
       <TouchableOpacity
@@ -53,7 +57,7 @@ export const CardListBeritaHome = ({
             }
           />
         </View>
-        <View style={{ marginVertical: 20, marginHorizontal: 5 }}>
+        <View style={{ padding: 10 }}>
           <Text
             style={{
               color: COLORS.grey,
@@ -68,7 +72,7 @@ export const CardListBeritaHome = ({
             style={{
               marginVertical: 5,
               fontSize: fontSizeResponsive("H5", device),
-              fontWeight: 400,
+              fontWeight: 600,
             }}
           >
             {title}
@@ -80,7 +84,7 @@ export const CardListBeritaHome = ({
 };
 const styles = StyleSheet.create({
   backIcon: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     height: 28,
     width: 28,
     borderRadius: 50,
