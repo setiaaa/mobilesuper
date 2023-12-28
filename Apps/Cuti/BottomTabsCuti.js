@@ -34,7 +34,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -58,11 +58,14 @@ function MyTabCuti({ props, navigation }) {
                   name="home-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 20,
                   }}
                 >
                   Personal
@@ -72,7 +75,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -81,11 +84,14 @@ function MyTabCuti({ props, navigation }) {
                   name="home-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 20,
                   }}
                 >
                   Personal
@@ -106,7 +112,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -130,12 +136,15 @@ function MyTabCuti({ props, navigation }) {
                   name="briefcase-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 20 : 10,
                   }}
                 >
                   Dokumen Persetujuan
@@ -145,7 +154,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -154,12 +163,15 @@ function MyTabCuti({ props, navigation }) {
                   name="briefcase-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 20 : 10,
                   }}
                 >
                   Dokumen Persetujuan
@@ -179,7 +191,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -203,12 +215,15 @@ function MyTabCuti({ props, navigation }) {
                   name="document-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 20 : 10,
                   }}
                 >
                   Dokumen Personal
@@ -218,7 +233,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -227,12 +242,15 @@ function MyTabCuti({ props, navigation }) {
                   name="document-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 20 : 10,
                   }}
                 >
                   Dokumen Personal

@@ -90,10 +90,12 @@ import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/
 import { useSelector } from "react-redux";
 import MyTabBarDetailKorespondensi from "../Apps/Task Management/DetailKorespondensiTM/BottmTabsDetailKorespondensi";
 import { DetailKorespondensiTM } from "../Apps/Task Management/DetailKorespondensiTM/DetailKorespondensiTM";
+import { Dimensions, Platform, View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
+const {width, height} = Dimensions.get("window")
 export const BottomTabs = () => {
   return (
     <Host>
@@ -139,6 +141,10 @@ export const BottomTabs = () => {
 export const BottomTabsRepo = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ 
+      height: Platform.OS === "ios" ? "100%" : height-10,
+      width 
+    }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabBarRepo {...props} />}
         initialRouteName="Dokumen"
@@ -166,6 +172,7 @@ export const BottomTabsRepo = () => {
           }}
         /> */}
       </Tab.Navigator>
+    </View>
     </BottomSheetModalProvider>
   );
 };
@@ -173,6 +180,7 @@ export const BottomTabsRepo = () => {
 export const BottomTabsKeb = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabBarKeb {...props} />}
         initialRouteName="Pencarian"
@@ -200,6 +208,7 @@ export const BottomTabsKeb = () => {
           }}
         /> */}
       </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -207,6 +216,7 @@ export const BottomTabsKeb = () => {
 export const BottomTabsDetailRepo = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabBarDetailRepo {...props} />}
         initialRouteName="DetailActivity"
@@ -227,6 +237,7 @@ export const BottomTabsDetailRepo = () => {
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
+    </View>
     </BottomSheetModalProvider>
   );
 };
@@ -300,6 +311,7 @@ export const BottomTabsDetailKorespondensi = () => {
 export const BottomTabsDigitalSign = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabDigitalSign {...props} />}
         initialRouteName="Bankom"
@@ -320,6 +332,7 @@ export const BottomTabsDigitalSign = () => {
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -327,6 +340,7 @@ export const BottomTabsDigitalSign = () => {
 export const BottomTabsPengetahuan = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabBarPengetahuan {...props} />}
         initialRouteName="LiniMasa"
@@ -357,6 +371,7 @@ export const BottomTabsPengetahuan = () => {
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -364,6 +379,7 @@ export const BottomTabsPengetahuan = () => {
 export const BottomTabsDetailEvent = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabDetailEvent {...props} />}
         initialRouteName="DetailEvent"
@@ -379,6 +395,7 @@ export const BottomTabsDetailEvent = () => {
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -386,6 +403,7 @@ export const BottomTabsDetailEvent = () => {
 export const BottomTabsDetailAgenda = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabDetailAgenda {...props} />}
         initialRouteName="DetailAgenda"
@@ -406,6 +424,7 @@ export const BottomTabsDetailAgenda = () => {
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -413,6 +432,7 @@ export const BottomTabsDetailAgenda = () => {
 export const BottomTabsSPPD = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabBarSPPD {...props} />}
         initialRouteName="Personal"
@@ -428,6 +448,7 @@ export const BottomTabsSPPD = () => {
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -466,6 +487,7 @@ export const BottomTabsOutgoingKorespondensi = () => {
 export const BottomTabsCuti = () => {
   return (
     <BottomSheetModalProvider>
+    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
       <Tab.Navigator
         tabBar={(props) => <MyTabCuti {...props} />}
         initialRouteName="PersonalCuti"
@@ -486,6 +508,7 @@ export const BottomTabsCuti = () => {
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };

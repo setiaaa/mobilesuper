@@ -328,9 +328,9 @@ export const Komentar = () => {
     // <>
     <KeyboardAvoidingView
       style={{ flex: 1, marginBottom: 10 }}
-      behavior={Platform.OS === "ios" ? "padding" : null}
+      behavior={Platform.OS === "ios" ? "padding" : "padding"}
       enabled
-      keyboardVerticalOffset={Platform.select({ ios: 80, android: 500 })}
+      keyboardVerticalOffset={Platform.select({ ios: 80, android:50  })}
     >
       <View
         style={{

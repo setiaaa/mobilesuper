@@ -418,7 +418,7 @@ const CardLiniMasa = ({ item, token, device }) => {
         onPress={(e) => {
           e.stopPropagation();
           getDetail(item.id);
-          navigation.navigate("DetailLinimasa");
+          navigation.navigate("DetailLinimasa", item.like_list);
         }}
       >
         <View

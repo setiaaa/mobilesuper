@@ -33,7 +33,7 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -105,9 +105,9 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 100 : 80,
                 }}
               >
                 <View
@@ -143,9 +143,9 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
-                  width: device === "tablet" ? 95 : 80,
+                  width: device === "tablet" ? 100 : 80,
                 }}
               >
                 <Ionicons

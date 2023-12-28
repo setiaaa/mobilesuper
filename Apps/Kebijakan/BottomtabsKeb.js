@@ -33,7 +33,7 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -71,7 +71,7 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -81,7 +81,7 @@ function MyTabBarKeb({ props, navigation }) {
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.grey }}>Pencarian</Text>
+                <Text style={{ color: COLORS.grey, fontSize: fontSizeResponsive("H3", device) }}>Pencarian</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -98,7 +98,7 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -137,7 +137,7 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -172,7 +172,7 @@ function MyTabBarKeb({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -197,13 +197,13 @@ function MyTabBarKeb({ props, navigation }) {
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.primary }}>Tematik</Text>
+                <Text style={{ color: COLORS.primary, fontSize: fontSizeResponsive("H3", device) }}>Tematik</Text>
               </View>
             ) : (
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
