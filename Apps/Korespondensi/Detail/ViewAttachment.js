@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { headerToken } from "../../../utils/http";
 // import { WebView } from "react-native-webview";
 import PDFReader from "rn-pdf-reader-js-improved";
@@ -29,12 +29,15 @@ function ViewAttachment({ route }) {
             }}
             androidHardwareAccelerationDisabled={true}
           /> */}
-          <PDFReader
-            source={{
-              uri: nde_api.baseurl + data?.file,
-              headers: header,
-            }}
-          />
+          <View>
+            <PDFReader
+              source={{
+                uri: nde_api.baseurl + data?.file,
+                headers: header,
+              }}
+              withScroll={true}
+            />
+          </View>
         </>
       )}
     </>

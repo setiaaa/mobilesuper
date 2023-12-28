@@ -52,7 +52,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Portal } from "react-native-paper";
 import { TextInput } from "react-native";
 
-const CardLampiran = ({ lampiran, onClick, type, id, name, size }) => {
+const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
 
   return type === "png" || type === "jpg" || type === "jpeg" ? (
@@ -626,6 +626,8 @@ export const DetailLinimasa = (item) => {
   const initSnapPoints = useMemo(() => ["20%"], []);
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const { device } = useSelector((state) => state.apps);
+
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -719,11 +721,8 @@ export const DetailLinimasa = (item) => {
 
   const [flatListScrolling, setFlatListScrolling] = useState(false);
 
-
   // const { linimasalike } = useSelector(state => state.pengetahuan)
   // const item = linimasalike.listsLike
-
-  const { device } = useSelector((state) => state.apps);
 
   return (
     <View style={{ flex: 1 }}>
@@ -1514,6 +1513,7 @@ export const DetailLinimasa = (item) => {
                               setVisibleModal(true);
                               setLampiranById(item);
                             }}
+                            device={device}
                           />
                         </View>
                       )}

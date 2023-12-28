@@ -342,7 +342,6 @@ const CardLiniMasa = ({ item, token, device }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
 
-
   const handleLike = () => {
     const data = {
       token: token,
@@ -399,11 +398,10 @@ const CardLiniMasa = ({ item, token, device }) => {
   return (
     <View
       style={{
-        backgroundColor: "white",
+        backgroundColor: COLORS.white,
         borderRadius: 16,
-        width: "100%",
-        flex: 1,
         marginTop: 20,
+        width: wp(90),
         //shadow ios
         shadowOffset: { width: -2, height: 4 },
         shadowColor: "#171717",
@@ -445,8 +443,6 @@ const CardLiniMasa = ({ item, token, device }) => {
               </Text>
               <View
                 style={{
-                  display: "flex",
-                  width: "100%",
                   gap: 14,
                 }}
               >
@@ -1527,7 +1523,6 @@ export const LiniMasa = () => {
     }
 
     setCategory(category);
-
   }, [kegiatan, infografis, videoJurnal]);
 
   useEffect(() => {
@@ -1552,7 +1547,6 @@ export const LiniMasa = () => {
     }
 
     setCompetence(competence);
-
   }, [kepemimpinan, manajerial, sosialKultural, teknisFungsional]);
 
   const [filterUnker, setFilterUnker] = useState();
@@ -1659,7 +1653,6 @@ export const LiniMasa = () => {
   //   setIsFiltered(true);
   // };
 
-
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalFilterRef = useRef(null);
 
@@ -1720,8 +1713,7 @@ export const LiniMasa = () => {
         );
         dispatch(setRefresh(false));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -1734,7 +1726,6 @@ export const LiniMasa = () => {
       setFilterData(linimasa.lists);
     }
   }, [linimasa]);
-
 
   const { device } = useSelector((state) => state.apps);
 

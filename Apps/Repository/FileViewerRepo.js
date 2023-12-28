@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
+import WebView from "react-native-webview";
 
 export const FileViewerRepo = ({ route }) => {
   const navigation = useNavigation();
@@ -51,20 +52,27 @@ export const FileViewerRepo = ({ route }) => {
                   <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail</Text>
               </View> */}
       </View>
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "100%", height: "90%" }}>
         {type === "ppt" ||
         type === "pptx" ||
         type === "xls" ||
         type === "xlsx" ||
         type === "doc" ||
         type === "docx" ? (
-          <PdfReader
+          // <PdfReader
+          //   source={{
+          //     uri: `https://view.officeapps.live.com/op/embed.aspx?src=${lampiran}`,
+          //   }}
+          //   webviewProps={{
+          //     startInLoadingState: true,
+          //   }}
+          //   withScroll={true}
+          // />
+          <WebView
             source={{
-              uri: lampiran,
+              uri: `https://view.officeapps.live.com/op/embed.aspx?src=${lampiran}`,
             }}
-            webviewProps={{
-              startInLoadingState: true,
-            }}
+            style={{ flex: 1 }}
           />
         ) : type === "pdf" ? (
           <PdfReader
@@ -74,6 +82,7 @@ export const FileViewerRepo = ({ route }) => {
             webviewProps={{
               startInLoadingState: true,
             }}
+            withScroll={true}
           />
         ) : null}
       </View>
