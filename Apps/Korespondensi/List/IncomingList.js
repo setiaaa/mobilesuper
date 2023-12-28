@@ -241,7 +241,7 @@ function IncomingList({ route }) {
           : isSearchFilter && unread
           ? "Surat masuk belum dibaca tidak ditemukan"
           : isSearchFilter && !unread
-          ? "Surat masuk tidak ditemukand"
+          ? "Surat masuk tidak ditemukan"
           : list?.count == 0 && unread
           ? "Anda tidak memiliki surat masuk belum dibaca"
           : list?.count == 0 && !unread

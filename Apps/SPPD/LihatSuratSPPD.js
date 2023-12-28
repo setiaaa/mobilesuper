@@ -54,8 +54,7 @@ const LihatSuratSPPD = ({ route }) => {
         // setIsLoading(false);
         console.error("download error:", e);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
@@ -178,20 +177,15 @@ const LihatSuratSPPD = ({ route }) => {
           </View>
         ) : null}
       </View>
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "100%", height: "90%" }}>
         <PdfReader
           source={{
             base64: surat,
           }}
-          onLoadComplete={(numberOfPages, filePath) => {
-
-          }}
-          onPageChanged={(page, numberOfPages) => {
-            
-          }}
-          onError={(error) => {
-
-          }}
+          onLoadComplete={(numberOfPages, filePath) => {}}
+          onPageChanged={(page, numberOfPages) => {}}
+          onError={(error) => {}}
+          withScroll={true}
         />
         {/* <Image
           source={{ uri: pdfBlobData }}

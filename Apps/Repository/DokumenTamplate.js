@@ -328,8 +328,7 @@ export const DokumenTamplate = () => {
           })
         );
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -397,7 +396,7 @@ export const DokumenTamplate = () => {
                 justifyContent: "space-between",
               }}
             >
-              <View style={{ width: "90%" }}>
+              <View style={{ width: device === "tablet" ? "90%" : "85%" }}>
                 <Dropdown
                   data={dropdownFilter}
                   placeHolder={"Filter"}

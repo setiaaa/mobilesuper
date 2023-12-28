@@ -54,7 +54,7 @@ export const CardApps = ({ handlePressModal }) => {
           display: "flex",
         }}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("Drawer")}>
+        <TouchableOpacity onPress={() => navigation.navigate("MainKoresp")}>
           <View
             style={[
               device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
@@ -68,8 +68,8 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? wp(5.5) : 28,
-                height: device === "tablet" ? hp(4) : 28,
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
               }}
               source={require("../../assets/superApp/korespondensi.png")}
             />

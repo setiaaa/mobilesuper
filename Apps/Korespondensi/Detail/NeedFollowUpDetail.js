@@ -45,16 +45,17 @@ function NeedFollowUpDetail({ route }) {
     setisLoading(true);
     try {
       let response = await getHTTP(nde_api.lettersbyid.replace("{$id}", id));
-      let verify = await getHTTP(
-        nde_api.verifytitleprofile.replace("{$id}", id)
-      );
+      // let verify = await getHTTP(
+      //   nde_api.verifytitleprofile.replace("{$id}", id)
+      // );
       initLetter(response?.data);
       response.data.preview = "/api/letters/" + id + "/0_0/preview/";
-      response.data.verifytitleprofile = verify.data;
+      response.data.verifytitleprofile = [];
       setDetail(response?.data);
       //set data edit
       setDataEdit(response?.data);
     } catch (error) {
+      // console.log(error?.response)
       handlerError(
         error,
         "Peringatan",

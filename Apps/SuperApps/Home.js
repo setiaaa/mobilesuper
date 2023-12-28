@@ -537,9 +537,21 @@ export const Home = () => {
                 sliderWidth={screenWidth}
                 sliderHeight={screenWidth}
                 itemWidth={screenWidth - 60}
-                data={berita.lists.slice(0, 3)}
+                data={berita.lists.slice(0, 5)}
                 renderItem={BeritaHome}
                 hasParallaxImages={true}
+                onSnapToItem={setSlide4}
+              />
+              <Pagination
+                dotsLength={berita?.lists?.slice(0, 5).length}
+                dotColor={"black"}
+                inactiveDotColor={COLORS.grey}
+                dotStyle={styles.paginationDot}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.6}
+                activeDotIndex={slide4}
+                carouselRef={carouselRef}
+                tappableDots={!!carouselRef}
               />
             </View>
             {/* <Carousel data={CarouselData} /> */}
@@ -976,7 +988,7 @@ export const Home = () => {
 
           <View
             style={{
-              marginLeft: 30,
+              marginLeft: 25,
               marginVertical: 20,
               flexDirection: "row",
             }}
@@ -1012,19 +1024,19 @@ export const Home = () => {
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={screenWidth - 60}
-              data={galeri.lists.slice(0, 3)}
+              data={galeri.lists.slice(0, 5)}
               renderItem={GaleriHome}
               hasParallaxImages={true}
-              onSnapToItem={setSlide4}
+              onSnapToItem={setSlide3}
             />
             <Pagination
-              dotsLength={galeri?.lists?.slice(0, 3).length}
+              dotsLength={galeri?.lists?.slice(0, 5).length}
               dotColor={"black"}
               inactiveDotColor={COLORS.grey}
               dotStyle={styles.paginationDot}
               inactiveDotOpacity={0.4}
               inactiveDotScale={0.6}
-              activeDotIndex={slide4}
+              activeDotIndex={slide3}
               carouselRef={carouselRef}
               tappableDots={!!carouselRef}
             />

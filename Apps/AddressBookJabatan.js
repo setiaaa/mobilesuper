@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import React, { Fragment, useEffect, useState } from "react";
+import { Alert, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../service/session";
 import { getDivision, getDivisionTree } from "../service/api";
@@ -10,11 +10,27 @@ import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
 import { ScrollView } from "react-native-gesture-handler";
 import TreeView from "react-native-final-tree-view";
 import { Ionicons } from "@expo/vector-icons";
-import { setAddressbookSelected } from "../store/AddressbookKKP";
+import {
+  setAddressbookListsDivision,
+  setAddressbookListsDivisionTree,
+  setAddressbookSelected,
+} from "../store/AddressbookKKP";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { nde_api } from "../utils/api.config";
+import { getHTTP, handlerError } from "../utils/http";
+import { FlatList } from "react-native";
+import { StyleSheet } from "react-native";
+import { TextInput } from "react-native";
 
 export const AddressBookJabatan = ({ route }) => {
   const [token, setToken] = useState("");
+  const [profileOrganization, setProfileOrganization] = useState();
+  const [inputValue, setinputValue] = useState("");
+  const [searchQuery, setsearchQuery] = useState("");
+  const [searchList, setsearchList] = useState([]);
+  const [selectedDivision, setselectedDivision] = useState();
   const { config } = route.params;
   const dispatch = useDispatch();
 
@@ -26,13 +42,79 @@ export const AddressBookJabatan = ({ route }) => {
 
   useEffect(() => {
     if (token !== "") {
-      dispatch(getDivision(token));
-      // dispatch(getEmployee(token))
-      // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+      if (config.tipeAddress === "korespondensi") {
+        (async () => {
+          if (profileOrganization == undefined) {
+            let response = await getHTTP(nde_api.profile);
+            setProfileOrganization(response.data);
+          }
+          // let response = await getHTTP(nde_api.employee);
+          // addressbook.employee = response.data;
+        })();
+        //initial default
+        getDiv(profileOrganization?.fucfu_id);
+        setKategori({"key": profileOrganization?.division_id, "value": profileOrganization?.division})
+        setselectedDivision(profileOrganization?.division_id);
+        getTitleHirarki(profileOrganization?.division_id);
+      } else {
+        dispatch(getDivision(token));
+        // dispatch(getEmployee(token))
+        // dispatch(getDivisionTree({ token: token, id: kategori.key }))
+      }
     }
-  }, [token]);
+  }, [token, profileOrganization, listTree]);
 
-  const [kategori, setKategori] = useState("");
+  async function getDiv(id) {
+    // setIsLoading(true);
+    try {
+      if (id != undefined) {
+        let response = await getHTTP(
+          nde_api.divisionbyunitid.replace("{$id}", id)
+        );
+        const replaceData = response.data.map(({ id, name }) => ({
+          key: id,
+          value: name,
+        }));
+        // setdivisionList(replaceData);
+        dispatch(setAddressbookListsDivision(replaceData));
+      }
+      // setIsLoading(false);
+    } catch (error) {
+      // setIsLoading(false);
+    }
+  }
+
+  async function getTitleHirarki(id) {
+    // setIsLoading(true);
+    try {
+      if (id != undefined) {
+        let response = await getHTTP(
+          nde_api.titlebydivisionid.replace("{$id}", id)
+        );
+        dispatch(setAddressbookListsDivisionTree(response?.data));
+      }
+      // setIsLoading(false);
+    } catch (error) {
+      // setIsLoading(false);
+    }
+  }
+
+  async function getTitleSearch() {
+    try {
+      setsearchQuery(inputValue);
+      let response = await getHTTP(
+        nde_api.titleSearch
+          .replace("{$word}", inputValue)
+          .replace("{$id}", selectedDivision)
+      );
+      setsearchList(response.data);
+    } catch (error) {
+      console.log(error);
+      handlerError(error, "Peringatan!", "Pencarian Jabatan tidak berfungsi");
+    }
+  }
+
+  const [kategori, setKategori] = useState();
 
   const { addressbook } = useSelector((state) => state.addressBookKKP);
   function getIndicator(isExpanded) {
@@ -77,7 +159,74 @@ export const AddressBookJabatan = ({ route }) => {
   // }
 
   const { device } = useSelector((state) => state.apps);
+  const renderItem = ({ item, index }) => (
+    <View style={{ marginBottom: 10 }}>
+      <TouchableOpacity
+        style={{
+          marginHorizontal: 15,
+          paddingVertical: 10,
+          paddingHorizontal: 10,
+          borderRadius: 8,
+          backgroundColor: COLORS.white,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+        onPress={() => {
+          const checkNode = addressbook.selected.filter(
+            (data) => data.id === item.id
+          );
+          if (checkNode.length > 0) {
+            Alert.alert("Peringatan", "Data tidak boleh sama");
+          } else {
+            if (config.multiselect) {
+              dispatch(setAddressbookSelected([...addressbook.selected, item]));
+            } else {
+              dispatch(setAddressbookSelected([item]));
+            }
+          }
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          {checkedNodeRadio(item) ? (
+            <Ionicons name="ellipse" size={24} color={COLORS.primary} />
+          ) : (
+            <Ionicons name="ellipse-outline" size={24} />
+          )}
+          <View style={{ flexDirection: "column", width: "90%" }}>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              {item.title}
+            </Text>
+            <Text
+              style={{
+                color: COLORS.lighter,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              {item.officer.official}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
 
+  const checkedNodeRadio = (node) => {
+    const checkNode = addressbook.selected.filter(
+      (item) => item.id === node.id
+    );
+    if (checkNode.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <View
       style={{
@@ -87,145 +236,195 @@ export const AddressBookJabatan = ({ route }) => {
         maxHeight: "95%",
       }}
     >
-      <View style={{ marginTop: 10, gap: 10, width: "90%" }}>
-        <Text
-          style={{
-            fontWeight: FONTWEIGHT.bold,
-            fontSize: fontSizeResponsive("H4", device),
-          }}
-        >
-          Jabatan
-        </Text>
-        <Dropdown
-          data={addressbook?.listsDivision}
-          heightValue={"75%"}
-          setSelected={setKategori}
-          handleClick={(item) => {
-            dispatch(getDivisionTree({ token: token, id: item.key }));
-          }}
-          borderWidth={1}
-          borderColor={COLORS.ExtraDivinder}
-          borderwidthDrop={1}
-          borderColorDrop={COLORS.ExtraDivinder}
-          borderWidthValue={1}
-          borderColorValue={COLORS.ExtraDivinder}
-          placeHolder={"Berdasarkan"}
-          backgroundColor={COLORS.white}
-          search={true}
-        />
-        {kategori !== "" ? (
-          <Text
+      {config.tipeAddress == "korespondensi" && (
+        <>
+          <View
             style={{
-              fontWeight: FONTWEIGHT.bold,
-              fontSize: fontSizeResponsive("H4", device),
+              marginHorizontal: 15,
+              marginBottom: 20,
+              marginTop: 10,
+              backgroundColor: COLORS.white,
+              borderRadius: 8,
+              width: "95%",
             }}
           >
-            Hirarki
-          </Text>
-        ) : null}
-      </View>
+            <View style={styles.input}>
+              <Ionicons
+                name="search"
+                size={fontSizeResponsive("H3", device)}
+                color={COLORS.primary}
+              />
+              <TextInput
+                placeholder={"Cari..."}
+                style={{ fontSize: fontSizeResponsive("H4", device), flex: 1 }}
+                maxLength={30}
+                value={inputValue}
+                onChangeText={(text) => setinputValue(text)}
+                onEndEditing={getTitleSearch}
+                clearButtonMode="always"
+              />
+            </View>
+          </View>
+          {searchQuery?.length != 0 && (
+            <FlatList
+              keyExtractor={(item) => item.id}
+              data={searchList}
+              renderItem={renderItem}
+              // ListEmptyComponent={listEmpty}
+              // refreshing={isLoading}
+              // onRefresh={refresh}
+              // onEndReached={loadMore}
+            />
+          )}
+        </>
+      )}
+      {searchQuery?.length == 0 && (
+        <>
+          <View style={{ marginTop: 10, gap: 10, width: "90%" }}>
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Jabatan
+            </Text>
+            <Dropdown
+              data={addressbook?.listsDivision}
+              heightValue={"75%"}
+              selected={kategori}
+              setSelected={setKategori}
+              handleClick={(item) => {
+                if (config.tipeAddress == "korespondensi") {
+                  getTitleHirarki(item.key);
+                } else {
+                  dispatch(getDivisionTree({ token: token, id: item.key }));
+                }
+              }}
+              borderWidth={1}
+              borderColor={COLORS.ExtraDivinder}
+              borderwidthDrop={1}
+              borderColorDrop={COLORS.ExtraDivinder}
+              borderWidthValue={1}
+              borderColorValue={COLORS.ExtraDivinder}
+              placeHolder={"Berdasarkan"}
+              backgroundColor={COLORS.white}
+              search={true}
+            />
+            {kategori !== undefined ? (
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                Hirarki
+              </Text>
+            ) : null}
+          </View>
 
-      {kategori !== "" ? (
-        <ScrollView
-          style={{
-            backgroundColor: COLORS.white,
-            marginTop: 10,
-            width: "90%",
-            borderRadius: 8,
-            padding: 10,
-            marginBottom: 50,
-          }}
-        >
-          <TreeView
-            data={listTree} // defined above
-            onNodePress={({ node }) => {
-              if (node?.children === undefined) {
-                const checkNode = addressbook.selected.filter(
-                  (item) => item.id === node.id
-                );
-                if (checkNode.length > 0) {
-                  alert("Data tidak boleh sama");
-                } else {
-                  if (config.multiselect) {
-                    dispatch(
-                      setAddressbookSelected([...addressbook.selected, node])
+          {kategori !== undefined ? (
+            <ScrollView
+              style={{
+                backgroundColor: COLORS.white,
+                marginTop: 10,
+                width: "90%",
+                borderRadius: 8,
+                padding: 10,
+                marginBottom: 50,
+              }}
+            >
+              <TreeView
+                data={listTree} // defined above
+                childrenKey={
+                  config.tipeAddress == "korespondensi" ? "nodes" : "children"
+                }
+                onNodePress={({ node }) => {
+                  if (
+                    node?.children === undefined &&
+                    node?.nodes === undefined
+                  ) {
+                    const checkNode = addressbook.selected.filter(
+                      (item) => item.id === node.id
                     );
-                  } else {
-                    dispatch(setAddressbookSelected([node]));
-                    navigation.goBack();
+                    if (checkNode.length > 0) {
+                      Alert.alert("Peringatan", "Data tidak boleh sama");
+                    } else {
+                      if (config.multiselect) {
+                        dispatch(
+                          setAddressbookSelected([
+                            ...addressbook.selected,
+                            node,
+                          ])
+                        );
+                      } else {
+                        dispatch(setAddressbookSelected([node]));
+                        navigation.goBack();
+                      }
+                    }
                   }
-                }
-              }
-            }}
-            renderNode={({ node, level, isExpanded, hasChildrenNodes }) => {
-              const checkedNodeRadio = () => {
-                const checkNode = addressbook.selected.filter(
-                  (item) => item.id === node.id
-                );
-                if (checkNode.length > 0) {
-                  return true;
-                } else {
-                  return false;
-                }
-              };
-              return (
-                <>
-                  <View
-                    style={{
-                      paddingVertical: 6,
-                    }}
-                  >
-                    <View
-                      style={{
-                        display: "flex",
-                        flex: 1,
-                        flexDirection: "column",
-                        gap: 4,
-                        marginLeft: 30 * level,
-                        // backgroundColor: "red",
-                      }}
-                    >
+                }}
+                renderNode={({ node, level, isExpanded, hasChildrenNodes }) => {
+                  return (
+                    <>
                       <View
                         style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: 10,
-                          justifyContent: "space-between",
-                          backgroundColor: hasChildrenNodes ? "#FDEFD2" : null,
-                          borderRadius: hasChildrenNodes ? 4 : null,
-                          paddingHorizontal: hasChildrenNodes ? 5 : null,
+                          paddingVertical: 6,
                         }}
                       >
-                        {hasChildrenNodes ? null : (
-                          <View
-                            style={{
-                              position: "absolute",
-                              top: "25%",
-                              left: device === "tablet" ? "-4%" : "-10%",
-                            }}
-                          >
-                            {checkedNodeRadio() ? (
-                              <Ionicons
-                                name="ellipse"
-                                size={24}
-                                color={COLORS.primary}
-                              />
-                            ) : (
-                              <Ionicons name="ellipse-outline" size={24} />
-                            )}
-                          </View>
-                        )}
-                        <Text
+                        <View
                           style={{
-                            fontWeight: FONTWEIGHT.bold,
-                            flexShrink: 1,
-                            fontSize: fontSizeResponsive("H4", device),
+                            display: "flex",
+                            flex: 1,
+                            flexDirection: "column",
+                            gap: 4,
+                            marginLeft: 30 * level,
+                            // backgroundColor: "red",
                           }}
                         >
-                          {node.title}
-                        </Text>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: 10,
+                              justifyContent: "space-between",
+                              backgroundColor: hasChildrenNodes
+                                ? "#FDEFD2"
+                                : null,
+                              borderRadius: hasChildrenNodes ? 4 : null,
+                              paddingHorizontal: hasChildrenNodes ? 5 : null,
+                            }}
+                          >
+                            {hasChildrenNodes ? null : (
+                              <View
+                                style={{
+                                  position: "absolute",
+                                  top: "25%",
+                                  left: device === "tablet" ? "-4%" : "-10%",
+                                }}
+                              >
+                                {checkedNodeRadio(node) ? (
+                                  <Ionicons
+                                    name="ellipse"
+                                    size={24}
+                                    color={COLORS.primary}
+                                  />
+                                ) : (
+                                  <Ionicons name="ellipse-outline" size={24} />
+                                )}
+                              </View>
+                            )}
+                            <Text
+                              style={{
+                                fontWeight: FONTWEIGHT.bold,
+                                flexShrink: 1,
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {node.title}
+                            </Text>
 
-                        {/* {hasChildrenNodes ? null : (
+                            {/* {hasChildrenNodes ? null : (
                           <TouchableOpacity>
                             <Ionicons
                               name="information-circle-outline"
@@ -235,55 +434,72 @@ export const AddressBookJabatan = ({ route }) => {
                           </TouchableOpacity>
                         )} */}
 
-                        {hasChildrenNodes ? (
-                          <Text
-                            style={{
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            {getIndicator(isExpanded)}
-                          </Text>
-                        ) : null}
-                      </View>
+                            {hasChildrenNodes ? (
+                              <Text
+                                style={{
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {getIndicator(isExpanded)}
+                              </Text>
+                            ) : null}
+                          </View>
 
-                      {hasChildrenNodes ? null : node.officer.official !==
-                        "" ? (
-                        <Text
-                          style={{ fontSize: fontSizeResponsive("H4", device) }}
-                        >
-                          {node.officer.official}
-                        </Text>
-                      ) : null}
-                    </View>
-                    {/* custom divider */}
-                    {level == 0 && isExpanded ? (
-                      <View
-                        style={{
-                          height: 1,
-                          width: "100%",
-                          backgroundColor: "#DBDADE",
-                          marginVertical: 10,
-                        }}
-                      />
-                    ) : level == 0 && !isExpanded ? (
-                      <></>
-                    ) : (
-                      <View
-                        style={{
-                          height: 1,
-                          width: "100%",
-                          backgroundColor: "#DBDADE",
-                          marginVertical: 10,
-                        }}
-                      />
-                    )}
-                  </View>
-                </>
-              );
-            }}
-          />
-        </ScrollView>
-      ) : null}
+                          {hasChildrenNodes ? null : node.officer.official !==
+                            "" ? (
+                            <Text
+                              style={{
+                                fontSize: fontSizeResponsive("H4", device),
+                              }}
+                            >
+                              {node.officer.official}
+                            </Text>
+                          ) : null}
+                        </View>
+                        {/* custom divider */}
+                        {level == 0 && isExpanded ? (
+                          <View
+                            style={{
+                              height: 1,
+                              width: "100%",
+                              backgroundColor: "#DBDADE",
+                              marginVertical: 10,
+                            }}
+                          />
+                        ) : level == 0 && !isExpanded ? (
+                          <></>
+                        ) : (
+                          <View
+                            style={{
+                              height: 1,
+                              width: "100%",
+                              backgroundColor: "#DBDADE",
+                              marginVertical: 10,
+                            }}
+                          />
+                        )}
+                      </View>
+                    </>
+                  );
+                }}
+              />
+            </ScrollView>
+          ) : null}
+        </>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.ExtraDivinder,
+    borderRadius: 8,
+  },
+});

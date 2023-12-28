@@ -93,7 +93,7 @@ const KebijakanSilce = createSlice({
         state.unitKerjaId.lists = action.payload;
       })
       .addCase(getDokGeneral.pending, (state, action) => {
-        state.loading = false;
+        state.loading = true;
       })
       .addCase(getDokGeneral.fulfilled, (state, action) => {
         state.loading = false;

@@ -84,7 +84,7 @@ export const ListBerita = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ backgroundColor: "#f7f7f7", flex: 1 }}>
+      <View style={{ backgroundColor: COLORS.bgLightGrey, flex: 1 }}>
         <View
           style={{
             backgroundColor: COLORS.primary,
@@ -138,7 +138,7 @@ export const ListBerita = () => {
             onSearch={filter}
           />
         </View>
-        <View style={{ flex: 1, paddingBottom: 24 }}>
+        <View style={{ flex: 1, paddingHorizontal: PADDING.Page }}>
           <FlatList
             data={filterData}
             renderItem={({ item, index }) => (

@@ -146,11 +146,17 @@ import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
 import { getTokenValue } from "../../service/session";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
-import { Pencarian } from "./Pencarian/Pencarian";
+import { PencarianKorespondensi } from "./Pencarian/PencarianKorespondensi";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
 import LihatSuratSPPD from "../SPPD/LihatSuratSPPD";
 import { Laporan } from "../Task Management/Dashboard/Laporan";
 import { PdfPerisai } from "../DigitalSignature/PdfPerisai";
+import MainKoresp from "./MainKoresp";
+import IncomingList from "./List/IncomingList";
+import DispositionList from "./List/DispositionList";
+import TrackingList from "./List/TrackingList";
+import SubmittedList from "./List/SubmittedList";
+import NeedFollowUpList from "./List/NeedFollowUpList";
 import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
 import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
@@ -941,6 +947,49 @@ function AuthenticatedStack(route) {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="MainKoresp"
+            component={MainKoresp}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="IncomingUnread"
+            component={IncomingList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionUnread"
+            component={DispositionList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="IncomingList"
+            component={IncomingList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="DispositionList"
+            component={DispositionList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="NeedFollowUpList"
+            component={NeedFollowUpList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="TrackingList"
+            component={TrackingList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="SubmittedList"
+            component={SubmittedList}
+            options={{ header: toolbarBack }}
+          />
           {/* DETAIL LETTER */}
           <Stack.Screen
             name="IncomingDetail"
@@ -1077,7 +1126,7 @@ function AuthenticatedStack(route) {
           />
           <Stack.Screen
             name="Pencarian"
-            component={Pencarian}
+            component={PencarianKorespondensi}
             options={{
               headerShown: false,
             }}
