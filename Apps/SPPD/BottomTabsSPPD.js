@@ -61,7 +61,7 @@ function MyTabBarSPPD({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -91,7 +91,7 @@ function MyTabBarSPPD({ props, navigation }) {
                   style={{
                     color: COLORS.primary,
                     position: "absolute",
-                    bottom: device === "tablet" ? 40 : 20,
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -102,7 +102,7 @@ function MyTabBarSPPD({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -117,7 +117,7 @@ function MyTabBarSPPD({ props, navigation }) {
                   style={{
                     color: COLORS.grey,
                     position: "absolute",
-                    bottom: device === "tablet" ? 40 : 20,
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -139,7 +139,7 @@ function MyTabBarSPPD({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -171,7 +171,7 @@ function MyTabBarSPPD({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 5,
+                    bottom: device === "tablet" ? 20 : 24,
                   }}
                 >
                   Dokumen SPPD
@@ -181,7 +181,7 @@ function MyTabBarSPPD({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -198,7 +198,7 @@ function MyTabBarSPPD({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 5,
+                    bottom: device === "tablet" ? 20 : 24,
                   }}
                 >
                   Dokumen SPPD

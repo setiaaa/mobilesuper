@@ -33,7 +33,7 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -71,7 +71,7 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 100 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -105,7 +105,7 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 100 : 80,
                 }}
@@ -143,7 +143,7 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 100 : 80,
                 }}
@@ -177,7 +177,7 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 100 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -215,7 +215,7 @@ function MyTabBarRepo({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 100 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
