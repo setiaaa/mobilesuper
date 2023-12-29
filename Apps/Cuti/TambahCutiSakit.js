@@ -47,6 +47,11 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 const kategories = [
   { key: "q", value: "satu" },
   { key: "e", value: "dua" },
@@ -827,7 +832,7 @@ export const TambahCutiSakit = () => {
                   color: COLORS.white,
                 }}
               >
-                Libur
+                Pembatalan Cuti
               </Text>
             </View>
           </View>
@@ -1890,103 +1895,78 @@ export const TambahCutiSakit = () => {
                     </Text>
                   </View>
 
-                  <View
-                    style={{
-                      backgroundColor: COLORS.white,
-                      padding: 20,
-                      borderRadius: 16,
-                    }}
-                  >
-                    <View style={{ gap: 5 }}>
-                      <View
+                  <View style={{ flexDirection: "row", gap: 5 }}>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.info },
+                      ]}
+                    >
+                      <Text
                         style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                            fontWeight: 600,
-                            width: "80%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Penuh
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {arsipDetail.detail_dokumen?.kuota?.full_kuota}
-                        </Text>
-                      </View>
-
-                      <View
+                        Kuota Penuh
+                      </Text>
+                      <Text
                         style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                            fontWeight: 600,
-                            width: "80%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Terpakai
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {arsipDetail.detail_dokumen?.kuota?.kuota_terpakai}
-                        </Text>
-                      </View>
-
-                      <View
+                        {arsipDetail.detail_dokumen?.kuota?.full_kuota}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.danger },
+                      ]}
+                    >
+                      <Text
                         style={{
-                          flexDirection: "row",
-                          borderBottomWidth: 2,
-                          borderBottomColor: "#DBDADE",
-                          padding: 10,
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                            fontWeight: 600,
-                            width: "80%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          Kuota Tersisa
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                            fontWeight: 400,
-                            width: "60%",
-                            paddingRight: 20,
-                          }}
-                        >
-                          {arsipDetail.detail_dokumen?.kuota?.kuota_sisa}
-                        </Text>
-                      </View>
+                        Kuota Terpakai
+                      </Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {arsipDetail.detail_dokumen?.kuota?.kuota_terpakai}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.success },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Kuota Sisa
+                      </Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {arsipDetail.detail_dokumen?.kuota?.kuota_sisa}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -2390,5 +2370,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  cardInfoCuti: {
+    width: wp(35),
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
   },
 });
