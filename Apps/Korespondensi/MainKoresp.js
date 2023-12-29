@@ -1,14 +1,17 @@
 import { View } from "react-native";
 import { BottomTabsKoresp } from "../../utils/menutab";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 export default function MainKoresp() {
   const navigation = useNavigation();
+
+  const { device } = useSelector((state) => state.apps);
   return (
     <>
       <View
@@ -41,7 +44,7 @@ export default function MainKoresp() {
         <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: fontSizeResponsive("H1", device),
               fontWeight: 600,
               color: COLORS.white,
             }}
