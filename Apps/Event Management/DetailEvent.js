@@ -683,7 +683,7 @@ export const DetailEvent = () => {
                 width={100}
                 height={100}
               />
-            ) : data?.attachments.length !== 0 ? (
+            ) : data?.attachments?.length !== 0 ? (
               <FlatList
                 key={"*"}
                 data={data.attachments}
