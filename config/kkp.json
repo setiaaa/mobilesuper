@@ -1,6 +1,6 @@
 {
   "name": "SuperApps KKP",
-  "slug": "superapps-kkp",
+  "slug": "superapps",
   "version": "0.0.1",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
@@ -56,7 +56,7 @@
   ],
   "extra": {
     "eas": {
-      "projectId": "54ebc3f9-8414-44dc-9164-4d285ec148da"
+      "projectId": "b5d8a717-b2bd-42a1-9373-86ad0b8c55dc"
     },
     "id": "telkom",
     "base_url": "https://crsfe2.kubekkp.coofis.com",

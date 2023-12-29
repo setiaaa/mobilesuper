@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "https://apigw.kubekkp.coofis.com/";
+const BASE_URL = "https://portal.kkp.go.id/api/";
 const kebijakan = BASE_URL + "policy/";
 const kalender = BASE_URL + "calendar/";
 const addressbook = BASE_URL + "bridge/";
@@ -54,8 +54,8 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 
 const SPPD = BASE_URL + "monperdin/";
 
-const Cuti = "https://cuti.kubekkp.coofis.com/api/";
-const HelpDesk = "https://helpdesk.kubekkp.coofis.com/api/";
+const Cuti = `https://portal.kkp.go.id/service/cuti`;
+const HelpDesk = `https://portal.kkp.go.id/service/helpdesk`;
 
 //Login
 export const Login = createAsyncThunk(
@@ -67,7 +67,7 @@ export const Login = createAsyncThunk(
         password: password,
       };
       const respon = await axios.post(
-        `https://auth.kubekkp.coofis.com/mobile/login/`,
+        `https://portal.kkp.go.id/service/auth/mobile/login/`, // auth masih kube, belum dirubah ke production
         payload
       );
       return respon?.data;
