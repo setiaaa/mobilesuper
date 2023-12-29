@@ -1281,6 +1281,21 @@ export const TambahCutiTahunan = () => {
                     </Text>
                   </View>
 
+                  <View
+                    style={{
+                      padding: 5,
+                      columnGap: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Kuota Periode Tahun Berjalan
+                    </Text>
+                  </View>
                   <View style={{ flexDirection: "row", gap: 5 }}>
                     <View
                       style={[
@@ -1303,7 +1318,7 @@ export const TambahCutiTahunan = () => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        {form.data_kuota_cuti?.full_kuota}
+                        {form.data_kuota_cuti?.full_kuota_n}
                       </Text>
                     </View>
                     <View
@@ -1327,7 +1342,7 @@ export const TambahCutiTahunan = () => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        {form.data_kuota_cuti?.kuota_terpakai}
+                        {form.data_kuota_cuti?.kuota_terpakai_n}
                       </Text>
                     </View>
                     <View
@@ -1351,7 +1366,97 @@ export const TambahCutiTahunan = () => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        {form.data_kuota_cuti?.kuota_sisa}
+                        {form.data_kuota_cuti?.kuota_sisa_n}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View
+                    style={{
+                      padding: 5,
+                      columnGap: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Kuota Periode Tahun Depan
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", gap: 5 }}>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.info },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Kuota Penuh
+                      </Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {form.data_kuota_cuti?.full_kuota_np1}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.danger },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Kuota Terpakai
+                      </Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {form.data_kuota_cuti?.kuota_terpakai_np1}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.cardInfoCuti,
+                        { backgroundColor: COLORS.success },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          textAlign: "center",
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Kuota Sisa
+                      </Text>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        {form.data_kuota_cuti?.kuota_sisa_np1}
                       </Text>
                     </View>
                   </View>

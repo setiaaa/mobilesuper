@@ -131,7 +131,7 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              {item.nip ? item.nip : item.nik}--
+              {item.nip ? item.nip : item.nik}
             </Text>
           </View>
           {/* <TouchableOpacity>

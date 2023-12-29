@@ -22,6 +22,7 @@ import {} from "react-native-safe-area-context";
 import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
 import { getDetailDocument, postCommentRepo } from "../../service/api";
+import { setRefresh } from "../../store/Repository";
 
 const DaftarKomentar = ({ items, setParentId, device }) => {
   const [toggleComment, setToggleComment] = useState({
@@ -294,7 +295,7 @@ export const Komentar = () => {
   const [parentId, setParentId] = useState({ id: "", creator: "" });
   const [komen, setKomen] = useState("");
   const inputRef = useRef(null);
-  const { dokumen } = useSelector((state) => state.repository);
+  const { dokumen, refresh } = useSelector((state) => state.repository);
   const [token, setToken] = useState("");
   const detail = dokumen.detail;
 
@@ -320,7 +321,16 @@ export const Komentar = () => {
     dispatch(postCommentRepo(data));
     setKomen("");
     setParentId({ id: "", creator: "" });
+    dispatch(setRefresh(true));
   };
+
+  useEffect(() => {
+    if (refresh === true) {
+      const params = { token: token, id: detail.id };
+      dispatch(getDetailDocument(params))
+      dispatch(setRefresh(false));
+    }
+  }, [refresh]);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -328,9 +338,9 @@ export const Komentar = () => {
     // <>
     <KeyboardAvoidingView
       style={{ flex: 1, marginBottom: 10 }}
-      behavior={Platform.OS === "ios" ? "padding" : null}
+      behavior={Platform.OS === "ios" ? "padding" : "padding"}
       enabled
-      keyboardVerticalOffset={Platform.select({ ios: 80, android: 500 })}
+      keyboardVerticalOffset={Platform.select({ ios: 80, android:50  })}
     >
       <View
         style={{
