@@ -613,7 +613,6 @@ const ShimmerParagraph = () => {
 
 export const DetailLinimasa = ({route}) => {
   const like_list = route.params;
-  console.log(like_list)
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
   const [token, setToken] = useState("");
@@ -1124,7 +1123,7 @@ export const DetailLinimasa = ({route}) => {
                           </View>
 
                           <ScrollView style={{ marginBottom: 40 }}>
-                            {like_list.map((data) => {
+                            {like_list?.map((data) => {
                               return (
                                 <View
                                   style={{

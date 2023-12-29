@@ -521,7 +521,6 @@ export const getPegawai = createAsyncThunk(
   "calendar/getPegawai",
   async ({ token, page, search }) => {
     const offset = page * 10;
-    console.log(page);
     const respon =
       search === ""
         ? await axios.get(`${pegawai}profile/all/?limit=10&offset=${offset}`, {

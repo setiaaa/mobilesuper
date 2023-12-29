@@ -171,7 +171,7 @@ function MyTabBarSPPD({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 10,
+                    bottom: device === "tablet" ? 20 : 5,
                   }}
                 >
                   Dokumen SPPD
@@ -198,7 +198,7 @@ function MyTabBarSPPD({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 10,
+                    bottom: device === "tablet" ? 20 : 5,
                   }}
                 >
                   Dokumen SPPD

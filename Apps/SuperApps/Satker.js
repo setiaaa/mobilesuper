@@ -373,7 +373,7 @@ export const Satker = () => {
 
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
-  console.log(pesan);
+  // console.log(pesan);
   const tagsStyles = {
     body: {
       whiteSpace: "normal",
