@@ -1,69 +1,72 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS } from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFAB } from "../../store/snackbar";
 import { initDownload } from "../../utils/agenda";
 
 //toolbar custom
 export const toolbarBack = ({ navigation, title, route, options, back }) => {
   const dispatch = useDispatch();
+  const { device } = useSelector((state) => state.apps);
   return (
-    <SafeAreaView
-      style={{
-        height: 55,
-        backgroundColor: COLORS.white,
-        justifyContent: "center",
-      }}
-    >
+    <SafeAreaView>
       <View
         style={{
-          paddingHorizontal: 20,
           flexDirection: "row",
-          justifyContent: "space-between",
           alignItems: "center",
+          backgroundColor: COLORS.primary,
+          height: 80,
         }}
       >
-        <View style={styles.containerHeaderLeft}>
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            width: 28,
+            height: 28,
+            alignItems: "center",
+            justifyContent: "center",
+            marginLeft: 20,
+          }}
+        >
           <TouchableOpacity
+            style={{}}
             onPress={() => {
               if (route?.params?.title == "Lihat Surat") {
                 dispatch(setFAB(false));
               }
               navigation.goBack();
             }}
-            style={{
-              backgroundColor: COLORS.white,
-              width: 30,
-              height: 30,
-              borderRadius: 15,
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 5,
-              //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
-            }}
           >
             <Ionicons
               name="chevron-back-outline"
-              size={16}
-              // color={COLORS.white}
+              size={24}
+              color={COLORS.primary}
             />
           </TouchableOpacity>
-          <Image
-            source={require("../../assets/superApp/LogoKorespondensi.png")}
-          />
         </View>
-
-        <Text style={{ fontSize: 15, fontWeight: 600, textAlign: "right" }}>
-          {title ? title : route?.params?.title}
-        </Text>
+        <View
+          style={[
+            { flex: 1, alignItems: "center" },
+            route?.params?.title == "Lihat Surat"
+              ? { marginRight: 0 }
+              : { marginRight: 50 },
+          ]}
+        >
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: 600,
+              color: COLORS.white,
+              textAlign: "center",
+            }}
+          >
+            {title ? title : route?.params?.title}
+          </Text>
+        </View>
         {route?.params?.title == "Lihat Surat" && (
           <TouchableOpacity
             onPress={() => {
@@ -77,6 +80,7 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
               alignItems: "center",
               justifyContent: "center",
               marginBottom: 5,
+              marginRight: 20,
               //shadow ios
               shadowOffset: { width: -2, height: 4 },
               shadowColor: "#171717",

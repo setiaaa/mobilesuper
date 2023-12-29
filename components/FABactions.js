@@ -85,6 +85,8 @@ function FABactions({ id, data, noAgenda, tipe }) {
     }
   }
   function getAction() {
+    //sekretaris dan pegawai biasa tidak bisa disposisi
+    //hanya sekretaris yang bisa forward
     if (tipe == "disposition") {
       setAction([
         {
@@ -107,21 +109,6 @@ function FABactions({ id, data, noAgenda, tipe }) {
     } else {
       if (profile?.is_secretary == "true") {
         setAction([
-          {
-            icon: "share",
-            color: GlobalStyles.colors.textWhite,
-            style: { borderRadius: 50, backgroundColor: COLORS.primary },
-            label: "Disposisi",
-            onPress: () => {
-              navigation.navigate("DispositionForm", {
-                title: "Lembar Disposisi",
-                id: id,
-                data: data,
-                noAgenda: noAgenda,
-                tipe: tipe,
-              });
-            },
-          },
           {
             icon: "forward",
             color: GlobalStyles.colors.textWhite,

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextInput } from "react-native-paper";
 import { setToken } from "../../../store/auth";
 import { Keyboard } from "react-native";
+import { setOrganization, setProfile } from "../../../store/profile";
 
 function DCounter() {
   const navigation = useNavigation();
@@ -61,7 +62,22 @@ function DCounter() {
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
     dispatch(setToken({ token: inputToken }));
+    if (inputToken.length != 0) {
+      getProfile();
+    }
   }, [token, inputToken]);
+  async function getProfile() {
+    setIsLoading(true);
+    try {
+      //get isCounter
+      const response = await getHTTP(nde_api.profile);
+      dispatch(setProfile(response.data));
+      dispatch(setOrganization(response.data));
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function getisCounter() {
     setIsLoading(true);

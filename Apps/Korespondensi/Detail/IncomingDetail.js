@@ -11,10 +11,12 @@ import { getHTTP, handlerError } from "../../../utils/http";
 import { ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import DetailAgenda from "./Tab/DetailAgenda";
+import { useSelector } from "react-redux";
 
 function IncomingDetail({ route }) {
   let id = route?.params?.id;
   const navigation = useNavigation();
+  const profile = useSelector((state) => state.profile.profile);
   const [isLoading, setIsLoading] = useState(true);
   const [detail, setDetail] = useState();
   const [preview, setPreview] = useState();
@@ -78,12 +80,15 @@ function IncomingDetail({ route }) {
       {detail && (
         <>
           <DetailAgenda data={detail} tipe="in" />
-          <FABactions
-            id={id}
-            noAgenda={detail?.agenda_number}
-            data={detail}
-            tipe="in"
-          />
+          {profile?.is_secretary == "true" ||
+            (profile.title.length > 0 && (
+              <FABactions
+                id={id}
+                noAgenda={detail?.agenda_number}
+                data={detail}
+                tipe="in"
+              />
+            ))}
         </>
       )}
     </ScrollView>
