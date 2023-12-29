@@ -53,7 +53,6 @@ export const Todo = () => {
     }
   }, [token]);
 
-  // console.log(data)
 
   const navigation = useNavigation();
 
@@ -89,10 +88,8 @@ export const Todo = () => {
     try {
       if (token !== "") {
         dispatch(getlistTodo({ token, id }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

@@ -95,7 +95,6 @@ export const TambahAgenda = () => {
   const { detailGrup, status, loading } = useSelector(
     (state) => state.grupKalender
   );
-  // console.log(detailGrup)
 
   const [anggotaAcara, setAnggotaAcara] = useState(detailGrup.members);
 

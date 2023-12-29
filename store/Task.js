@@ -106,8 +106,6 @@ const TaskSlice = createSlice({
       })
       .addCase(getListKorespondensiTM.fulfilled, (state, action) => {
         const data = action.payload;
-        console.log("distore");
-        console.log(data);
         const newDataList = {
           id: "2",
           name: "Korespondensi",
@@ -123,8 +121,6 @@ const TaskSlice = createSlice({
       })
       .addCase(getListKorespondensiArsipTM.fulfilled, (state, action) => {
         const data = action.payload;
-        console.log("arsipstore");
-        console.log(data);
         const newDataList = {
           id: "2",
           name: "Korespondensi",
@@ -140,8 +136,6 @@ const TaskSlice = createSlice({
       })
       .addCase(getListKorespondensiTodayTM.fulfilled, (state, action) => {
         const data = action.payload;
-        console.log("tdaystore");
-        console.log(data);
         const newDataList = {
           id: "2",
           name: "Korespondensi",
@@ -158,8 +152,6 @@ const TaskSlice = createSlice({
       })
       .addCase(getListKorespondensiOverdueTM.fulfilled, (state, action) => {
         const data = action.payload;
-        console.log("overduesore");
-        console.log(data);
         const newDataList = {
           id: "2",
           name: "Korespondensi",
@@ -176,8 +168,6 @@ const TaskSlice = createSlice({
       })
       .addCase(getListKorespondensiNextWeekTM.fulfilled, (state, action) => {
         const data = action.payload;
-        console.log("nextwekstore");
-        console.log(data);
         const newDataList = {
           id: "2",
           name: "Korespondensi",

@@ -84,7 +84,7 @@ function MyTabBarDetailRepo({ props, navigation }) {
                 <Text
                   style={{
                     color: COLORS.grey,
-                    fontSize: fontSizeResponsive("H4"),
+                    fontSize: fontSizeResponsive("H4", device),
                     device,
                   }}
                 >

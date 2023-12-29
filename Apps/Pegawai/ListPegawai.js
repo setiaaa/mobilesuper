@@ -127,7 +127,6 @@ export const ListPegawai = () => {
         console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

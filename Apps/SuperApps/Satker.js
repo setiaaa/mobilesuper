@@ -42,6 +42,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import RenderHTML from "react-native-render-html";
 
 const BannerSetjen = [
   {
@@ -107,13 +108,11 @@ export const Satker = () => {
     useSelector((state) => state.satker);
   const { profile } = useSelector((state) => state.superApps);
 
-  console.log(profile.satuan_kerja_nama);
-
   const renderItem = ({ item, index }, parallaxProps) => {
     return (
       <View style={[styles.item, { marginVertical: 20 }]}>
         <ParallaxImage
-          source={{ uri: item.main_images.image }}
+          source={{ uri: item.main_images?.image }}
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.4}
@@ -128,13 +127,13 @@ export const Satker = () => {
     return (
       <>
         <View style={[styles.items, { marginTop: 20 }]}>
-          <ParallaxImage
+          {/* <ParallaxImage
             source={{ uri: item.image }}
             containerStyle={styles.imageContainer}
             style={styles.images}
             parallaxFactor={0.4}
             {...parallaxProps}
-          />
+          /> */}
         </View>
         <View
           style={{
@@ -144,13 +143,13 @@ export const Satker = () => {
             paddingHorizontal: 20,
           }}
         >
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <Image
+          <View style={{ marginTop: 20 }}>
+            {/* <Image
               source={{ uri: BASE_URL + item.avatar }}
               style={{ borderRadius: 50, width: 60, height: 60 }}
-            />
+            /> */}
             <View>
-              <Text
+              {/* <Text
                 style={{
                   marginLeft: 10,
                   marginVertical: 10,
@@ -160,14 +159,15 @@ export const Satker = () => {
                 }}
               >
                 {item.nama}
-              </Text>
-              <Text style={{ marginLeft: 8, color: COLORS.lighter }}>
+              </Text> */}
+              {/* <Text style={{ marginLeft: 8, color: COLORS.lighter }}>
                 {" "}
                 {item.created_at}{" "}
-              </Text>
+              </Text> */}
             </View>
           </View>
-          <Text style={{ marginVertical: 20 }}>{item.content}</Text>
+          {/* <Text style={{ marginVertical: 20 }}>{item.content}</Text> */}
+          <RenderHTML source={{ html: item?.content }} />
         </View>
       </>
     );
@@ -209,7 +209,7 @@ export const Satker = () => {
               height: device === "tablet" ? 200 : 80,
             }}
           />
-          <View style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: device === "tablet" ? 20 : 10 }}>
             <View style={{ width: device === "tablet" ? "85%" : "88%" }}>
               <Text
                 style={{
@@ -373,7 +373,43 @@ export const Satker = () => {
 
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
+  console.log(pesan);
+  const tagsStyles = {
+    body: {
+      whiteSpace: "normal",
+      color: "black",
+      fontSize: 18,
+    },
+    img: {
+      width: 300,
+      marginVertical: 40,
+    },
+    p: {
+      fontSize: 14,
+    },
+    h5: {
+      fontSize: 18,
+    },
+  };
 
+  const classesStyles = {
+    content: {
+      padding: 30,
+    },
+    "news-title": {
+      fontSize: 18,
+      textAlign: "center",
+      fontWeight: "bold",
+    },
+    // description: {
+    //   backgroundColor: "red",
+    // },
+    media: {
+      fontSize: 16,
+    },
+  };
+
+  const baseStyles = {};
   return (
     <View style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
@@ -538,18 +574,27 @@ export const Satker = () => {
           </View>
         </View>
 
-        <View style={[styles.containerr, { marginTop: 10 }]}>
-          <Carousel
+        <View
+          style={[
+            styles.containerr,
+            {
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+        >
+          {/* <Carousel
             ref={carouselRef}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={screenWidth - 60}
-            data={pesan}
+            data={[pesan[pesan.length - 1]]}
             renderItem={renderItem2}
             hasParallaxImages={true}
             onSnapToItem={setSlide2}
-          />
-          <Pagination
+          /> */}
+          {/* <Pagination
             dotsLength={pesan?.length}
             dotColor={"black"}
             inactiveDotColor={COLORS.grey}
@@ -559,7 +604,39 @@ export const Satker = () => {
             activeDotIndex={slide2}
             carouselRef={carouselRef}
             tappableDots={!!carouselRef}
-          />
+          /> */}
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 10,
+              backgroundColor: COLORS.white,
+              padding: PADDING.Page,
+              borderRadius: 8,
+              marginHorizontal: device === "tablet" ? 30 : 30,
+            }}
+          >
+            <Image
+              source={{ uri: pesan[pesan.length - 1]?.image }}
+              style={{
+                width: device === "tablet" ? 300 : 100,
+                height: device === "tablet" ? 400 : 150,
+              }}
+            />
+            <ScrollView
+              style={{
+                width: device === "tablet" ? 300 : 100,
+                height: device === "tablet" ? 400 : 150,
+              }}
+              nestedScrollEnabled={true}
+            >
+              <RenderHTML
+                source={{ html: pesan[pesan.length - 1]?.content }}
+                tagsStyles={tagsStyles}
+                classesStyles={classesStyles}
+                baseStyle={baseStyles}
+              />
+            </ScrollView>
+          </View>
         </View>
         {/* <Calendar
                     onDayPress={day => {
@@ -582,7 +659,7 @@ export const Satker = () => {
               flex: 1,
               justifyContent: "center",
               paddingVertical: 20,
-              width: device === "tablet" ? "90%" : "86%",
+              marginHorizontal: device === "tablet" ? 30 : 30,
             },
           ]}
         >
@@ -591,6 +668,7 @@ export const Satker = () => {
               marginLeft: 20,
               fontWeight: FONTWEIGHT.bold,
               fontSize: fontSizeResponsive("Judul", device),
+              marginTop: 20,
             }}
           >
             Linimasa Pengetahuan
@@ -664,7 +742,7 @@ const styles = StyleSheet.create({
     // marginLeft: 25,
     opacity: 0.9,
     borderRadius: 5,
-    marginVertical: 40,
+    marginVertical: 10,
     // marginHorizontal: 20,
     alignSelf: "center",
   },

@@ -162,7 +162,6 @@ const GrupKalenderSlice = createSlice({
         state.loading = true;
       })
       .addCase(putEditGrup.rejected, (state, action) => {
-        console.log(action.payload);
         state.loading = false;
         state.status = "error";
       })

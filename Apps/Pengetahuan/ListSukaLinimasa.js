@@ -15,7 +15,6 @@ export const ListSukaLinimasa = () => {
     const { linimasa } = useSelector(state => state.pengetahuan)
     const item = linimasa.listsLike
     const navigation = useNavigation()
-    console.log(item)
     return (
         < >
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', backgroundColor: COLORS.primary, height: 80, paddingBottom: 20 }}>

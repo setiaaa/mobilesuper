@@ -157,7 +157,6 @@ export const AddressBookJabatan = ({ route }) => {
   //     }
 
   // }
-  // console.log(selectedlistTree)
 
   const { device } = useSelector((state) => state.apps);
   const renderItem = ({ item, index }) => (

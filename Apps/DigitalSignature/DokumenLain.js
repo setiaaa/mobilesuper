@@ -252,10 +252,8 @@ export const DokumenLain = () => {
         if (variant === "signed") {
           dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
         }
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -263,9 +261,6 @@ export const DokumenLain = () => {
       setRefreshing(false);
     }, 2000);
   }, [token, tipe]);
-
-  // console.log(dokumenlain.lists)
-  // console.log(filterData)
 
   const { device } = useSelector((state) => state.apps);
 

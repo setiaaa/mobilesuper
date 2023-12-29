@@ -417,7 +417,6 @@ const saveIosFile = async (fileUri) => {
     const UTI = "public.item";
     const shareResult = await Sharing.shareAsync(fileUri, { UTI });
   } catch (error) {
-    console.log(error);
   }
 };
 

@@ -37,10 +37,7 @@ import {
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
-  console.log(lampiran);
 
-  // console.log(name);
-  // console.log(size);
   return type === "png" || type === "jpg" || type === "jpeg" ? (
     <TouchableOpacity key={id} onPress={onClick}>
       <View
@@ -302,7 +299,6 @@ const CardKomen = ({
       toggle: temp,
       id: id,
     });
-    console.log(id);
   };
 
   const handleClickBalas = () => {
@@ -629,7 +625,6 @@ export const DetailDokumenCuti = ({ route }) => {
   });
   const navigation = useNavigation();
   const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
-  console.log(arsipDetail);
 
   const selisih = () => {
     let tanggalMulaiStr = moment(
@@ -645,7 +640,6 @@ export const DetailDokumenCuti = ({ route }) => {
     let tanggalAkhir = new Date(tanggalAkhirStr);
 
     let selisih = (tanggalAkhir - tanggalMulai) / (1000 * 60 * 60 * 24);
-    console.log(tanggalMulai);
     return selisih;
   };
 
@@ -700,7 +694,6 @@ export const DetailDokumenCuti = ({ route }) => {
     dispatch(postApproval(data));
   };
 
-  // console.log(approval);
   const { device } = useSelector((state) => state.apps);
   return (
     <GestureHandlerRootView>

@@ -16,9 +16,7 @@ import { useSelector } from "react-redux";
 const PdfViewer = ({ route }) => {
   const { data } = route.params;
   const navigation = useNavigation();
-  useEffect(() => {
-    console.log(data);
-  }, []);
+  useEffect(() => {}, []);
   const { device } = useSelector((state) => state.apps);
   return (
     <>
@@ -54,7 +52,7 @@ const PdfViewer = ({ route }) => {
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail</Text>
                 </View> */}
       </View>
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "100%", height: "90%" }}>
         <PdfReader
           source={{
             uri: data.link,
@@ -62,6 +60,7 @@ const PdfViewer = ({ route }) => {
           webviewProps={{
             startInLoadingState: true,
           }}
+          withScroll={true}
         />
       </View>
     </>

@@ -131,7 +131,7 @@ export const DetailDokumenLain = ({ route }) => {
                 ) : (
                   <Text
                     style={{
-                      fontSize: fontSizeResponsive("H1", device),
+                      fontSize: fontSizeResponsive("Judul", device),
                       fontWeight: FONTWEIGHT.bold,
                     }}
                   >
@@ -149,7 +149,7 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     No Dokumen
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -176,7 +176,7 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     Penerima Sertifikat
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
                   <View
                     style={{
                       flexDirection: "row",
@@ -249,6 +249,7 @@ export const DetailDokumenLain = ({ route }) => {
                                   color: COLORS.info,
                                   width: "80%",
                                   marginBottom: 5,
+                                  fontSize: fontSizeResponsive("H4", device),
                                 }}
                               >
                                 -
@@ -271,7 +272,7 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     Tanggal Dibuat
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -300,7 +301,7 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     Jenis Dokumen
                   </Text>
-                  <Text>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
                   <View>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -370,7 +371,7 @@ export const DetailDokumenLain = ({ route }) => {
                         style={{
                           color: COLORS.white,
                           fontWeight: FONTWEIGHT.bold,
-                          fontSize: fontSizeResponsive("H2", device),
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
                         Approval
@@ -484,15 +485,16 @@ export const DetailDokumenLain = ({ route }) => {
                             </View>
                           )}
                         </View>
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={{ flexDirection: "row", columnGap:20 }}>
                           <Image
                             source={{ uri: data.avatar_url }}
                             style={{
-                              width: 50,
-                              height: 50,
-                              borderRadius: 50,
+                              width: device === "tablet" ? 80 : 50,
+                              height: device === "tablet" ? 80 : 50,
+                              borderRadius: device === "tablet" ? 80 : 50,
                               marginVertical: 10,
-                              marginHorizontal: 5,
+                              marginHorizontal: 10,
+                              marginLeft: 5,
                             }}
                           />
                           <View>
@@ -510,6 +512,7 @@ export const DetailDokumenLain = ({ route }) => {
                                       marginTop: 10,
                                       color: COLORS.info,
                                       fontWeight: FONTWEIGHT.bold,
+                                      fontSize: fontSizeResponsive("H4", device)
                                     }}
                                   >
                                     {data.display_title}

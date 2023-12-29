@@ -12,7 +12,6 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
   const getDetail = (id) => {
     const params = { nip, id };
     // const data = event.listsprogress.find(item => item.id === id)
-    console.log(nip, id);
     dispatch(getDetailArsipCuti(params));
   };
 

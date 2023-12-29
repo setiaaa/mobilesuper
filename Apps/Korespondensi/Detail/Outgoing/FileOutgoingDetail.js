@@ -17,7 +17,6 @@ export const FileOutgoingDetail = ({ navigation }) => {
         tipe = tipe[tipe.length - 1];
         setDocument([...document, result]);
         setType([...type, tipe]);
-        console.log(result);
     
         const data = {
           token: token,

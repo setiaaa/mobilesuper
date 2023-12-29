@@ -327,11 +327,8 @@ export const DokumenTamplate = () => {
             satker: filterSatker ? filterSatker.value : "",
           })
         );
-        console.log("Refresh Berhasil");
       }
-    } catch (error) {
-      console.log("Refresh gagal:", error);
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -399,7 +396,7 @@ export const DokumenTamplate = () => {
                 justifyContent: "space-between",
               }}
             >
-              <View style={{ width: "90%" }}>
+              <View style={{ width: device === "tablet" ? "90%" : "85%" }}>
                 <Dropdown
                   data={dropdownFilter}
                   placeHolder={"Filter"}

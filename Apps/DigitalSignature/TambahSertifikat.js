@@ -57,7 +57,6 @@ export const TambahSertifikat = () => {
         tipe = tipe[tipe.length - 1]
         setDocument([...document, result])
         setType([...type, tipe])
-        console.log(result)
         if (result.type === 'success') {
             setSelectedFile(result)
         }
@@ -111,7 +110,6 @@ export const TambahSertifikat = () => {
             token: token,
             payload: payload
         }
-        console.log(data)
         dispatch(addDocumentDigiSign(data))
 
     }
@@ -142,7 +140,6 @@ export const TambahSertifikat = () => {
             token: token,
             payload: payload
         }
-        console.log(data)
         dispatch(addDocumentDigiSign(data))
     }
 
@@ -157,8 +154,6 @@ export const TambahSertifikat = () => {
         });
         return judulCourse
     }
-
-    // console.log(courseList)
 
     return (
         < >

@@ -365,13 +365,10 @@ export const RangkumanIKU = () => {
         console.error("download error:", e);
       }
     } catch (e) {
-      console.log("Error");
-      console.log(e);
     }
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
-      console.log(fileUri);
       const fileString = await FileSystem.readAsStringAsync(fileUri, {
         encoding: FileSystem.EncodingType.Base64,
       });
@@ -429,10 +426,8 @@ export const RangkumanIKU = () => {
       };
       if (token !== "") {
         dispatch(getListPegawai(param));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

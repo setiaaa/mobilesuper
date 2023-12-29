@@ -128,10 +128,8 @@ export const Pencarian = () => {
           page: page,
         };
         dispatch(getDokGeneral(params));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -140,7 +138,6 @@ export const Pencarian = () => {
     }, 2000);
   }, [token, search, page]);
 
-  console.log(general);
 
   const { device } = useSelector((state) => state.apps);
 

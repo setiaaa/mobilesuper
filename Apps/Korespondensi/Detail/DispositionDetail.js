@@ -58,7 +58,6 @@ function DispositionDetail({ route }) {
         nde_api.agendadisporead.replace("{$id}", id)
       );
     } catch (error) {
-      console.log(error.response);
     }
   };
 

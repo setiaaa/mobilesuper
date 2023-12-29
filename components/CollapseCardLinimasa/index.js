@@ -12,7 +12,6 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps'
 
 
 export const CollapseCardLinimasa = ({ linimasa }) => {
-    console.log(linimasa)
     const [collapse, setCollapse] = useState(false)
     return (
         <View>

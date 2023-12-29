@@ -268,10 +268,8 @@ export const Absen = () => {
     try {
       if (token !== "") {
         dispatch(getlistAbsen({ token, idagenda }));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

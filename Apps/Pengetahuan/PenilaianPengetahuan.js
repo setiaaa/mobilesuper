@@ -42,7 +42,6 @@ const CardPenilaian = ({ item, token, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const getDetail = (id) => {
-    // console.log(token);
     // const data = { token: token, id: id }
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailLinimasa({ token, id }));
@@ -257,7 +256,6 @@ export const PenilaianPenggetahaun = () => {
         value: i,
       });
     }
-    // console.log(thn);
     setListYear(thn);
   }, []);
 
@@ -388,9 +386,7 @@ export const PenilaianPenggetahaun = () => {
         dispatch(getTotalPenilaian(data));
         // dispatch(getDivisionTree({ token: token, id: kategori.key }))
       }
-      console.log("Refresh Berhasil");
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -399,11 +395,8 @@ export const PenilaianPenggetahaun = () => {
     }, 2000);
   }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
 
-  // console.log("ditinjau=" + ditinjau);
-  // console.log(dataUnitKerja());
   const { device } = useSelector((state) => state.apps);
 
-  // console.log(device);
 
   return (
     <>

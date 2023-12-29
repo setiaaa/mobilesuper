@@ -68,10 +68,8 @@ export const DokumenCuti = () => {
     try {
       if (profile.nip !== "") {
         dispatch(getArsipCuti(profile?.nip));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

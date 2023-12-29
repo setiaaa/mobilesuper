@@ -95,34 +95,35 @@ export const DetailProject = ({
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
-  const bottomSheetMember = () => {
-    bottomSheetModalMemberRef.current?.present();
-  };
-  useEffect(() => {
-    let arrList = [];
-    const index = treeView.map((e) => e.id).indexOf(choiceKategori.key);
-    treeView[index]?.list_tasks?.map((item) => {
-      arrList.push({
-        key: item.id,
-        value: item.name,
-      });
-    });
-    // console.log(index)
-    // setChoiceList(arrList.length > 0 ? arrList[0] : '')
-    setDataList(arrList);
-  }, [choiceKategori]);
+    const bottomSheetMember = () => {
+        bottomSheetModalMemberRef.current?.present()
+    }
+    const bottomsheetMemberClose = () => {
+      if (bottomSheetModalMemberRef.current)
+      bottomSheetModalMemberRef.current?.close();
+    };
+    useEffect(() => {
+        let arrList = []
+        const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
+        treeView[index]?.list_tasks?.map(item => {
+            arrList.push({
+                key: item.id,
+                value: item.name
+            })
+        })
+        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
+        setDataList(arrList)
+    }, [choiceKategori])
 
   let arrTask = [];
   {
     treeView.map((item) => {
       if (detailProject.id === item.id) {
-        // console.log('masuk')
         item.list_tasks.map((task) => {
           arrTask.push({
             key: task.id,
             value: task.name,
           });
-          // console.log("task id", task.id)
           // setDataList(arrTask)
         });
       } else {
@@ -135,16 +136,14 @@ export const DetailProject = ({
       key: "1",
       value: "Dashboard",
     };
-    // console.log(type)
   };
-  // console.log("ini type")
-  // console.log(type)
 
   const { device } = useSelector((state) => state.apps);
 
   return (
     <>
       {loading === true ? null : (
+        <BottomSheetModalProvider>
         <View style={{ flex: 1 }}>
           <ScrollView>
             <View
@@ -546,7 +545,6 @@ export const DetailProject = ({
                       token: token,
                       id: detailProject.id,
                     };
-                    console.log(datas);
                     dispatch(deleteTaskProject(datas));
                     setTimeout(() => {
                       dispatch(getListDashboardTM({ token: token, page: 5 }));
@@ -601,17 +599,15 @@ export const DetailProject = ({
                 )}
                 ListEmptyComponent={() => <ListEmpty />}
               />
-            </View>
-
-            <Portal>
-              <BottomSheetModalProvider>
+            </View> 
+            {/* <Portal>  */}
                 <BottomSheetModal
                   ref={bottomSheetModalMemberRef}
                   snapPoints={animatedSnapPoints}
                   handleHeight={animatedHandleHeight}
                   contentHeight={animatedContentHeight}
                   index={0}
-                  style={{ borderRadius: 50 }}
+                  style={{ borderTopLeftRadius:50, borderTopRightRadius:50 }}
                   keyboardBlurBehavior="restore"
                   android_keyboardInputMode="adjust"
                   backdropComponent={({ style }) => (
@@ -627,6 +623,9 @@ export const DetailProject = ({
                           marginBottom: 20,
                           justifyContent: "center",
                           alignItems: "center",
+                          flexDirection:"row",
+                          justifyContent:"space-between",
+                          paddingHorizontal:20,
                         }}
                       >
                         <Text
@@ -638,6 +637,26 @@ export const DetailProject = ({
                         >
                           Penanggung Jawab
                         </Text>
+                        <TouchableOpacity
+                        onPress={() => {
+                          bottomsheetMemberClose()
+                        }}
+                      >
+                        <View
+                          style={{
+                            width: 51,
+                            height: 51,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: 50,
+                          }}
+                        >
+                          <Ionicons
+                            name="close-outline"
+                            size={24}
+                          />
+                        </View>
+                      </TouchableOpacity>
                       </View>
                       <View>
                         <FlatList
@@ -653,10 +672,10 @@ export const DetailProject = ({
                     </View>
                   </BottomSheetView>
                 </BottomSheetModal>
-              </BottomSheetModalProvider>
-            </Portal>
+          {/* </Portal> */}
           </ScrollView>
         </View>
+              </BottomSheetModalProvider>
       )}
     </>
   );

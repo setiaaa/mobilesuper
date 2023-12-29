@@ -44,7 +44,6 @@ export const ListGaleri = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getGaleri({ token, page }));
-      console.log("page", page);
     }
   }, [token, page]);
 
@@ -82,11 +81,8 @@ export const ListGaleri = () => {
     try {
       if (token !== "") {
         dispatch(getGaleri({ token, page }));
-        console.log(page, "page");
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -200,7 +196,6 @@ export const ListGaleri = () => {
           setGaleriById({});
         }}
       >
-        {console.log(galeriById)}
         <TouchableOpacity
           style={[
             Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop,

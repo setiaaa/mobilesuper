@@ -6,8 +6,6 @@ import { StyleSheet } from 'react-native'
 export const ScannerBarCode = ({ scanData, setScanData }) => {
     const handleBarCodeScanned = ({ type, data }) => {
         setScanData(true)
-        console.log(`data: ${data}`)
-        console.log(`type: ${type}`)
     }
 
     return (

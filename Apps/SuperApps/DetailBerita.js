@@ -60,7 +60,6 @@ export const DetailBerita = () => {
 
   const baseStyles = {};
 
-  console.log(berita.detail);
   const { device } = useSelector((state) => state.apps);
   return (
     <View style={{ flex: 1 }}>

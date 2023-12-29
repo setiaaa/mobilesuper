@@ -76,7 +76,6 @@ export const DetailSertifikat = (route) => {
       });
     }
   }, [file, item]);
-  console.log(isApprover);
 
   useEffect(() => {
     let nipApprover = [];
@@ -120,7 +119,6 @@ export const DetailSertifikat = (route) => {
       payload: payload,
     };
     dispatch(putTandaTangan(data));
-    // console.log(data);
   };
 
   const { device } = useSelector((state) => state.apps);
@@ -535,7 +533,7 @@ export const DetailSertifikat = (route) => {
                             </View>
                           )}
                         </View>
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={{ flexDirection: "row", columnGap:10 }}>
                           <Image
                             source={{ uri: data.avatar_url }}
                             style={{

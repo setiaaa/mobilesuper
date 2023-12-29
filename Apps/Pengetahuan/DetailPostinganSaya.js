@@ -25,7 +25,6 @@ export const DetailPostinganSaya = () => {
   };
   const { width } = useWindowDimensions();
 
-  console.log(postinganSaya?.detail);
 
   return (
     <>

@@ -494,8 +494,6 @@ export const Lampiran = () => {
         console.error("download error:", e);
       }
     } catch (e) {
-      console.log("Error");
-      console.log(e);
     }
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
@@ -865,7 +863,6 @@ export const Lampiran = () => {
                 //   bottomSheetAttachClose();
                 // }}
                 onPress={() => {
-                  console.log(file, jenis, fileDetail);
                 }}
                 onClick={() => {
                   setVisibleModal(true);

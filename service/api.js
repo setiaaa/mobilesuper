@@ -81,8 +81,6 @@ export const Login = createAsyncThunk(
 export const getCategory = createAsyncThunk(
   "kebijakan/getCategory",
   async ({ token, page }) => {
-    // console.log(token);
-    // console.log("page dari api " + page);
     const respon = await axios.get(`${kebijakan}category/?limit=${page}`, {
       headers: { Authorization: token },
     });
@@ -101,7 +99,6 @@ export const getCategoryId = createAsyncThunk(
 );
 
 export const getCategoryIdPage = async (id, page) => {
-  // console.log(id, page);
   try {
     const respon = await axios.get(`${kebijakan}category/${id}/?page=${page}`, {
       headers: { Authorization: "cf50a5b6-d640-49df-a45d-29f3e7ca1f1c" },
@@ -116,9 +113,6 @@ export const getCategoryIdPage = async (id, page) => {
 export const getDokHukum = createAsyncThunk(
   "kebijakan/getDokHukum",
   async ({ token, id, page, search }) => {
-    // console.log("dari api id " + id);
-    // console.log("dari api page " + page);
-    // console.log("dari api token " + token);
     const respon = await axios.get(
       `${kebijakan}category/${id}/?limit=${page}&tentang=${search}`,
       {
@@ -132,7 +126,6 @@ export const getDokHukum = createAsyncThunk(
 export const getUnitKerjaTematik = createAsyncThunk(
   "kebijakan/getUnitKerjaTematik",
   async ({ token }) => {
-    // console.log(token);
     const respon = await axios.get(`${UNITKERJA}`, {
       headers: { Authorization: token },
     });
@@ -156,8 +149,6 @@ export const getDokGeneral = createAsyncThunk(
 export const getUnitKerjaTematikId = createAsyncThunk(
   "kebijakan/getUniteKerjaTematikId",
   async ({ token, id, page, search }) => {
-    console.log("id dari api : " + id);
-    console.log("token dari api : " + token);
     const respon = await axios.get(
       `${UNITKERJAID}${id}/?&limit=${page}&tentang=${search}`,
       {
@@ -629,8 +620,6 @@ export const getDivision = createAsyncThunk(
 export const getEmployee = createAsyncThunk(
   "calendar/getEmployee",
   async ({ token, search }) => {
-    console.log(token);
-    console.log(search);
     if (search === "") {
       const respon = await axios.get(`${addressbook}addressbook/employee/`, {
         headers: { Authorization: token },
@@ -710,7 +699,6 @@ export const getDocumentDibagikan = createAsyncThunk(
 export const getDocumentTamplate = createAsyncThunk(
   "repository/getDocumentTamplate",
   async ({ token, page, general, by_title, unker, satker }) => {
-    console.log(satker);
     const respon = await axios.get(
       `${repository}my-documents/?limit=${page}&published=true&public=true&general=${general}&by_title=${by_title}&unker=${unker}&satker${satker}=`,
       {
@@ -824,13 +812,6 @@ export const getDetailBerita = createAsyncThunk(
 export const getLinimasa = createAsyncThunk(
   "mp/getLinimasa",
   async ({ token, page, category, competence, unker, satker, search }) => {
-    // console.log(page);
-    // console.log(category);
-    // console.log(competence);
-    // console.log(unker);
-    // console.log(satker);
-    // console.log(search);
-
     const respon = await axios.get(
       `${Linimasa}linimasa/?limit=${page}&category=${category}&competence=${competence}&unker=${unker}&satker=${satker}&type=&search=${search}`,
       {
@@ -911,7 +892,6 @@ export const getListsLike = createAsyncThunk(
 export const getTreeTM = createAsyncThunk(
   "taskmanagement/getTreeTM",
   async ({ token, page }) => {
-    console.log("api tree " + page);
     const respon = await axios.get(
       `${taskManagement}project/tree/?limit=10&page=${page}`,
       {
@@ -925,7 +905,6 @@ export const getTreeTM = createAsyncThunk(
 export const getListDashboardTM = createAsyncThunk(
   "taskmanagement/getListDashboardTM",
   async ({ token, page }) => {
-    console.log("ini api " + page);
     const respon = await axios.get(
       `${taskManagement}dashboard/list/?limit=10&page=${page}&my_task=true`,
       {
@@ -1064,7 +1043,6 @@ export const postAttachmentTM = createAsyncThunk(
 export const getChoiceListTM = createAsyncThunk(
   "taskmanagement/getChoiceListTM",
   async ({ token }) => {
-    // console.log("getChoice token", token);
     const respon = await axios.get(`${taskManagement}project/choice/`, {
       headers: { Authorization: token },
     });
@@ -1075,7 +1053,6 @@ export const getChoiceListTM = createAsyncThunk(
 export const getCompleteTM = createAsyncThunk(
   "taskmanagement/getCompleteTM",
   async ({ token, id, search }) => {
-    // console.log("getChoice token", token);
     const respon = await axios.get(
       `${taskManagement}task/completed/?project_id=${id}&general=${search}`,
       {
@@ -1089,8 +1066,6 @@ export const getCompleteTM = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
   "taskmanagement/deleteTask",
   async (data) => {
-    console.log("masuk api");
-    console.log(data);
     const respon = await axios.delete(
       `${taskManagement}task/${data.id}/destroy/`,
       { headers: { Authorization: data.token } }
@@ -1102,7 +1077,6 @@ export const deleteTask = createAsyncThunk(
 export const deleteTaskProject = createAsyncThunk(
   "taskmanagement/deleteTaskProject",
   async (data) => {
-    console.log(data);
     const respon = await axios.delete(
       `${taskManagement}project/${data.id}/destroy/`,
       { headers: { Authorization: data.token } }
@@ -1114,7 +1088,6 @@ export const deleteTaskProject = createAsyncThunk(
 export const deleteListTask = createAsyncThunk(
   "taskmanagement/deleteListTask",
   async (data) => {
-    console.log(data);
     const respon = await axios.delete(
       `${taskManagement}list-task/${data.id}/destroy/`,
       { headers: { Authorization: data.token } }
@@ -1132,7 +1105,6 @@ export const getListKorespondensiTM = createAsyncThunk(
         headers: { Authorization: token },
       }
     );
-    console.log(respon?.data.results);
     return respon?.data.results;
   }
 );
@@ -1347,7 +1319,6 @@ export const getDetailAgendaAcara = createAsyncThunk(
 export const getListSubAgenda = createAsyncThunk(
   "calendar/getListSubAgenda",
   async ({ token, id }) => {
-    console.log(id);
     const respon = await axios.get(`${kalender}event/${id}/agenda/`, {
       headers: { Authorization: token },
     });
@@ -1356,7 +1327,6 @@ export const getListSubAgenda = createAsyncThunk(
 );
 
 export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
-  console.log(data.payload);
   const respon = await axios.post(`${kalender}calendar/create/`, data.payload, {
     headers: { Authorization: data.token },
   });
@@ -1366,7 +1336,6 @@ export const postGrup = createAsyncThunk("calendar/postGrup", async (data) => {
 export const postAgendaAcara = createAsyncThunk(
   "calendar/postAgendaAcara",
   async (data) => {
-    console.log(data.payload);
     const respon = await axios.post(
       `${kalender}calendar/event/create/`,
       data.payload,
@@ -1379,7 +1348,6 @@ export const postAgendaAcara = createAsyncThunk(
 export const getDetailGrup = createAsyncThunk(
   "calendar/getDetailGrup",
   async ({ token, id }) => {
-    console.log(id);
     const respon = await axios.get(`${kalender}calendar/${id}`, {
       headers: { Authorization: token },
     });
@@ -1402,7 +1370,6 @@ export const putEditGrup = createAsyncThunk(
 export const putEditAgendaGrup = createAsyncThunk(
   "calendar/putEditAgendaGrup",
   async (data) => {
-    console.log(data);
     const respon = await axios.put(
       `${kalender}calendar/event/${data.id}/update/`,
       data.payload,
@@ -1414,7 +1381,6 @@ export const putEditAgendaGrup = createAsyncThunk(
 export const deleteAgendaGrup = createAsyncThunk(
   "calendar/deleteAgendaGrup",
   async (data) => {
-    console.log(data);
     const respon = await axios.delete(
       `${kalender}calendar/event/${data.id}/destroy/`,
       { headers: { Authorization: data.token } }
@@ -1425,7 +1391,6 @@ export const deleteAgendaGrup = createAsyncThunk(
 export const deleteGrup = createAsyncThunk(
   "calendar/deleteGrup",
   async (data) => {
-    console.log(data);
     const respon = await axios.delete(
       `${kalender}calendar/${data.id}/destroy/`,
       { headers: { Authorization: data.token } }
@@ -1566,9 +1531,6 @@ export const getSummaryTotalPost = createAsyncThunk(
 export const getSummaryBadUser = createAsyncThunk(
   "mp/admin/summary/bad-user/",
   async (data) => {
-    // console.log(data.year);
-    // console.log(data.quarter);
-
     const respon = await axios.get(
       `${SUMMARY_BAD_USER}?year=${data.year}&quarter=${data.quarter}`,
       {
@@ -1671,17 +1633,12 @@ export const getListUnitKerja = createAsyncThunk(
 export const getListPegawai = createAsyncThunk(
   "mp/admin/iku/employee",
   async (data) => {
-    // console.log(data.token);
-    // console.log(data.year);
-    // console.log(data.quarter);
-    // console.log(data.unitKerja);
     const respon = await axios.get(
       `${GET_LIST_PEGAWAI}?year=${data.year}&quarter=${data.quarter}&unit_kerja=${data.unitKerja}&limit=${data.page}`,
       {
         headers: { Authorization: data.token },
       }
     );
-    console.log(data.page);
     return respon?.data.results;
   }
 );
@@ -1689,8 +1646,6 @@ export const getListPegawai = createAsyncThunk(
 export const getListPostPegawai = createAsyncThunk(
   "mp/admin/iku/employee/id",
   async ({ token, id }) => {
-    // console.log("token : " + token);
-    // console.log("id : " + id);
     const respon = await axios.get(`${GET_LIST_POSTINGAN_PEGAWAI}${id}`, {
       headers: { Authorization: token },
     });
@@ -2012,7 +1967,6 @@ export const getDokumenPersetujuan = createAsyncThunk(
 export const postPengajuanCuti = createAsyncThunk(
   "cuti/postPengajuanCuti",
   async (data) => {
-    console.log(data);
     const respon = await axios.post(
       `${Cuti}pengajuan-cuti/`,
       data.payload
@@ -2025,7 +1979,6 @@ export const postPengajuanCuti = createAsyncThunk(
 export const postPengajuanCutiDraft = createAsyncThunk(
   "cuti/postPengajuanCutiDraft",
   async (data) => {
-    console.log(data);
     const respon = await axios.post(
       `${Cuti}simpan-draft/`,
       data.payload
@@ -2078,7 +2031,6 @@ export const postAttachmentCuti = createAsyncThunk(
 export const postPembatalanCuti = createAsyncThunk(
   "cuti/postPembatalanCuti",
   async (data) => {
-    console.log(data);
     const respon = await axios.post(
       `${Cuti}pembatalan-cuti/`,
       data.payload
@@ -2135,7 +2087,6 @@ export const getDocumentAttachmentSPPD = createAsyncThunk(
 export const getDocumentCetakSPPD = createAsyncThunk(
   "sppd/getDocumentCetakSPPD",
   async ({ token, id }) => {
-    console.log(id);
     const respon = await axios.get(
       `${SPPD}document/back-form/${id}/?mode=base64`,
       {
@@ -2167,12 +2118,9 @@ export const getParts = createAsyncThunk("helpDesk/getParts", async () => {
 export const postTicket = createAsyncThunk(
   "ticket/postTicket",
   async (data) => {
-    console.log("api post");
-    console.log(data.payload);
     const respon = await axios.post(`${HelpDesk}ticket/store`, data.payload, {
       headers: { Authorization: data.token },
     });
-    console.log(respon);
     return respon?.data;
   }
 );

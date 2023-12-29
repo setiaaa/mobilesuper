@@ -67,7 +67,6 @@ export const HelpDesk = () => {
       setPending(pending.length);
       setApprove(approve.length);
     } else {
-      console.log("Tidak dapat membaca properti 'status'.");
     }
   }, [tiket.list]);
 

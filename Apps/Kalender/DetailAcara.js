@@ -83,8 +83,6 @@ export const DetailAcara = ({ route }) => {
   const detail = acara.detail;
   const gambar = agenda.detail.gambar;
 
-  console.log(detail);
-
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     // id: data[0].Komentar[0].id

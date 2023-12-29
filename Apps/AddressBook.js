@@ -25,7 +25,7 @@ import { FlatList } from "react-native";
 import { Portal } from "react-native-portalize";
 import { TopAddressBook } from "../utils/menutab";
 
-const CardListPilih = ({ item, addressbook, device }) => {
+const CardListPilih = ({ item, addressbook, device, config }) => {
   const dispatch = useDispatch();
   const deleteItem = (id, state) => {
     let data;
@@ -36,7 +36,11 @@ const CardListPilih = ({ item, addressbook, device }) => {
       });
       dispatch(setAddressbookSelected(data));
     } else {
-      data = addressbook.selected.filter((data) => data.nip !== id);
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => data.nik !== id);
+      } else {
+        data = addressbook.selected.filter((data) => data.nip !== id);
+      }
       dispatch(setAddressbookSelected(data));
     }
   };
@@ -108,14 +112,18 @@ const CardListPilih = ({ item, addressbook, device }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              deleteItem(item.nip, "pegawai");
+              if (config.tipeAddress == "korespondensi") {
+                deleteItem(item.nik, "pegawai");
+              } else {
+                deleteItem(item.nip, "pegawai");
+              }
             }}
           >
             <Ionicons name="close-circle" size={24} />
           </TouchableOpacity>
           <View style={{ width: "80%" }}>
             <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-              {item.nama || item.fullname}
+              {item.nama || item.fullname}-
             </Text>
             <Text
               style={{
@@ -123,7 +131,7 @@ const CardListPilih = ({ item, addressbook, device }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              {item.nip}
+              {item.nip ? item.nip : item.nik}--
             </Text>
           </View>
           {/* <TouchableOpacity>
@@ -349,6 +357,7 @@ export const AddressBook = ({ route }) => {
                           item={item}
                           addressbook={addressbook}
                           device={device}
+                          config={config}
                         />
                       )}
                       keyExtractor={(item) => item.id}

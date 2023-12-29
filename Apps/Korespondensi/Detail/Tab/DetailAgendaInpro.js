@@ -194,11 +194,9 @@ function DetailAgendaInpro({
             }
           });
         } catch (error) {
-          console.log(error);
         }
       },
       (error) => {
-        console.log(error);
       }
     );
   };
@@ -228,7 +226,6 @@ function DetailAgendaInpro({
             Alert.alert("Success!", "Download Successfully.");
           })
           .catch((e) => {
-            console.log(e);
             Alert.alert(
               "Failed!",
               "Download Unsuccessful. Please choose another folder to download file."

@@ -114,7 +114,6 @@ export const PostinganBaru = () => {
     tipe = tipe[tipe.length - 1];
     setDocument([...document, result]);
     setType([...type, tipe]);
-    console.log(result);
 
     const data = {
       token: token,
@@ -145,7 +144,6 @@ export const PostinganBaru = () => {
     return valueKompetensi;
   };
 
-  console.log(kompetensi);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

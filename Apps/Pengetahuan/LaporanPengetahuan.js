@@ -109,7 +109,6 @@ export const LaporanPengetahuan = () => {
     (state) => state.pengetahuan
   );
 
-  // console.log(exportLaporan?.quarter?.file);
 
   const downloadPath =
     FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
@@ -138,13 +137,10 @@ export const LaporanPengetahuan = () => {
         console.error("download error:", e);
       }
     } catch (e) {
-      console.log("Error");
-      console.log(e);
     }
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
-      console.log(fileUri);
       const fileString = await FileSystem.readAsStringAsync(fileUri, {
         encoding: FileSystem.EncodingType.Base64,
       });

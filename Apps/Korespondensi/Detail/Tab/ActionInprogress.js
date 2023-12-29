@@ -289,11 +289,9 @@ function ActionInprogress({ id, data, page }) {
           //   result[0] == "Setujui" &&
           //   data?.tracker.lastposition
           // ) {
-          //   // console.log(receivers_external);
           //   // receivers_external_display =
           //   //   document.getElementById("receivers_external")?.innerText;
           // } else if (result[0] == "Setujui" && data?.tracker.lastposition) {
-          //   // console.log(document.getElementById("receivers_external"));
           //   // receivers_external_display =
           //   //   document.getElementById("receivers_external")?.innerText;
           // }
@@ -441,7 +439,6 @@ function ActionInprogress({ id, data, page }) {
           if (test == 0) {
             if (cekChar == "," || cekChar == ".") {
               let hasil = cek[i].slice(0, cek[i].length - 1);
-              //console.log(hasil);
               cek[i] =
                 "<a href='" +
                 hasil +
@@ -634,7 +631,6 @@ function ActionInprogress({ id, data, page }) {
             break;
         }
       }
-      // console.log("data-" + JSON.stringify(payload));
       let response;
       if (payload == undefined) {
         response = {};
@@ -699,7 +695,6 @@ function ActionInprogress({ id, data, page }) {
       }
       setisLoading(false);
     } catch (error) {
-      console.log(error);
       // handlerError(error, "Peringatan!", tipe + " tidak berfungsi.");
       setisLoading(false);
     }

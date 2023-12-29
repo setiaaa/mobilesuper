@@ -137,7 +137,6 @@ export const TeknologiTerbaru = () => {
   }, [token]);
 
   const { teknologi, loading } = useSelector((state) => state.dashboard);
-  console.log(teknologi.lists);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -145,10 +144,8 @@ export const TeknologiTerbaru = () => {
     try {
       if (token !== "") {
         dispatch(getTeknologi(token));
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

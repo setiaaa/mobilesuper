@@ -158,7 +158,6 @@ export const DetailTask = () => {
 
     return titleCase;
   };
-  console.log(taskDetail);
 
   const { device } = useSelector((state) => state.apps);
 
@@ -867,7 +866,6 @@ export const DetailTask = () => {
                           token: token,
                           id: taskDetail.id,
                         };
-                        console.log(datas);
                         dispatch(deleteTask(datas));
                         setTimeout(() => {
                           dispatch(
@@ -990,7 +988,9 @@ export const DetailTask = () => {
                             style={{
                               borderWidth: 1,
                               width: "90%",
-                              marginLeft: 17,
+                              justifyContent:'center',
+                              alignItems:"center",
+                              marginHorizontal:20,
                               borderRadius: 16,
                               borderColor: COLORS.ExtraDivinder,
                               flexDirection: "row",
@@ -1004,7 +1004,7 @@ export const DetailTask = () => {
                               maxLength={40}
                               placeholder="Ketik Komentar Disini"
                               ref={inputRef}
-                              style={{ padding: 10, width: "90%" }}
+                              style={{ padding: 10, width: "90%", }}
                               onChangeText={setKomen}
                               value={komen}
                               placeholderTextColor={COLORS.grey}

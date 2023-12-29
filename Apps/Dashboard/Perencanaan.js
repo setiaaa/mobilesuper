@@ -214,7 +214,6 @@ export const Perencanaan = () => {
         dispatch(getPerencanaan({ token: val, value: "ropeg", page: page }));
       });
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);

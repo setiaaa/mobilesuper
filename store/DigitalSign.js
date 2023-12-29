@@ -118,11 +118,9 @@ const DigitalSignSlice = createSlice({
         state.loading = true;
       })
       .addCase(addDocumentDigiSign.rejected, (state, action) => {
-        console.log(action.payload + " Error");
         state.status = "error";
       })
       .addCase(addDocumentDigiSign.fulfilled, (state, action) => {
-        console.log(action.payload + " Berhasil");
         state.status = "berhasil";
       })
       .addCase(getSummaryCount.fulfilled, (state, action) => {

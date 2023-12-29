@@ -50,7 +50,6 @@ import { TextInput } from "react-native-gesture-handler";
 
 export default function Dashboard(params) {
   const id = params?.route.params;
-  console.log(id);
   const [open, setOpen] = useState(false);
   const [openTentang, setOpenTentang] = useState(false);
   const [openTahun, setOpenTahun] = useState(false);
@@ -176,12 +175,10 @@ export default function Dashboard(params) {
   };
 
   useEffect(() => {
-    // console.log("key changed!");
     setPage(5);
   }, [selectedList.key]);
 
   useEffect(() => {
-    // console.log("setfilterdata");
     setFilterData(dokumenList);
   }, [dokumenList]);
 
@@ -203,7 +200,6 @@ export default function Dashboard(params) {
   // }, [search]);
 
   const filterData = () => {
-    // console.log(event);
     setSearch(inputValue);
   };
 
@@ -263,10 +259,8 @@ export default function Dashboard(params) {
           })
         );
         // dispatch(setRefresh(false));
-        console.log("Refresh berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -275,20 +269,7 @@ export default function Dashboard(params) {
     }, 2000);
   }, [token, selectedList.key, page, search]);
 
-  // console.log("ini page dari dashboarfd" + page);
-  // console.log(lists?.results?.datas);
   const navigation = useNavigation();
-
-  // console.log(lists.results?.datas);
-
-  // console.log("page : " + page);
-  // console.log(selectedList.key);
-  // console.log("search value : (" + search + ")");
-  // console.log(dokumenList);
-  console.log(unitKerjaId.lists);
-
-  // console.log(inputValue);
-
   const { device } = useSelector((state) => state.apps);
 
   return (

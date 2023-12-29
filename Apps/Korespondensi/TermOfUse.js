@@ -38,7 +38,6 @@ function TermOfUse() {
       setTOU(atob(response.data.body));
       setIsLoading(false);
     } catch (error) {
-      console.log(error.response);
       if (error.status == null) {
       } else {
         handlerError(error, "Warning!", "Terms of Use not working!");

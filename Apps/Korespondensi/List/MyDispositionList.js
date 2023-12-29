@@ -117,7 +117,6 @@ function MyDispositionList() {
     } catch (error) {
       setIsSearchFilter(false);
       bottomSheetModalRef.current?.dismiss();
-      console.log(JSON.stringify(error.response));
       setIsLoading(false);
     }
   }

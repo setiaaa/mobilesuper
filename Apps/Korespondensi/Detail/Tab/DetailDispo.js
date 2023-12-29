@@ -151,7 +151,6 @@ function DetailDispo({ data, noAgenda, preview, title }) {
       const UTI = "public.item";
       const shareResult = await Sharing.shareAsync(fileUri, { UTI });
     } catch (error) {
-      console.log(error);
     }
   };
   return (

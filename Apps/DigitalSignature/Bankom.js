@@ -303,10 +303,8 @@ export const Bankom = () => {
         if (variant === "signed") {
           dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
         }
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
@@ -358,10 +356,8 @@ export const Bankom = () => {
       payload: payload,
     };
     dispatch(putTandaTangan(data));
-    // console.log(data);
   };
 
-  // console.log(digitalsign.lists)
 
   const { device } = useSelector((state) => state.apps);
 

@@ -15,7 +15,6 @@ export const CardArsipCuti = ({ item, nip }) => {
         const params = { nip, id };
         // const data = event.listsprogress.find(item => item.id === id)
         // dispatch(getDetailBerita(params));
-        console.log(params)
     };
     return (
         <TouchableOpacity onPress={() => {

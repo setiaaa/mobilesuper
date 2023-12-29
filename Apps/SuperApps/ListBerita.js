@@ -33,7 +33,6 @@ export const ListBerita = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getBerita({ token, page }));
-      console.log("page", page);
     }
   }, [token, page]);
 
@@ -73,11 +72,8 @@ export const ListBerita = () => {
     try {
       if (token !== "") {
         dispatch(getBerita({ token, page }));
-        console.log(page, "page");
-        console.log("Refresh Berhasil");
       }
     } catch (error) {
-      console.log("Refresh gagal:", error);
     }
 
     setRefreshing(true);
