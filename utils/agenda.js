@@ -344,8 +344,8 @@ export const initDownload = (item) => {
     // setIsLoading(true);
     fileUrl = item.file;
     fileType = item.description;
-    fileName = item.filename;
-    fileName = item.filename.split("/")[3].replaceAll(" ", "_");
+    fileName = item.name ? item.name : item.filename;
+    fileName = fileName.replaceAll(" ", "_");
   }
   downloadFile(fileUrl, fileType, fileName);
 };
@@ -416,8 +416,7 @@ const saveIosFile = async (fileUri) => {
   try {
     const UTI = "public.item";
     const shareResult = await Sharing.shareAsync(fileUri, { UTI });
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 const ensureDirAsync = async (dir, intermediates = true) => {

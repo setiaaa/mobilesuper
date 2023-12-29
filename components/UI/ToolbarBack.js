@@ -12,88 +12,86 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.apps);
   return (
-    <SafeAreaView>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: COLORS.primary,
+        height: 80,
+      }}
+    >
       <View
         style={{
-          flexDirection: "row",
+          backgroundColor: COLORS.white,
+          borderRadius: 20,
+          width: 28,
+          height: 28,
           alignItems: "center",
-          backgroundColor: COLORS.primary,
-          height: 80,
+          justifyContent: "center",
+          marginLeft: 20,
         }}
       >
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderRadius: 20,
-            width: 28,
-            height: 28,
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: 20,
+        <TouchableOpacity
+          style={{}}
+          onPress={() => {
+            if (route?.params?.title == "Lihat Surat") {
+              dispatch(setFAB(false));
+            }
+            navigation.goBack();
           }}
         >
-          <TouchableOpacity
-            style={{}}
-            onPress={() => {
-              if (route?.params?.title == "Lihat Surat") {
-                dispatch(setFAB(false));
-              }
-              navigation.goBack();
-            }}
-          >
-            <Ionicons
-              name="chevron-back-outline"
-              size={24}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-        </View>
-        <View
-          style={[
-            { flex: 1, alignItems: "center" },
-            route?.params?.title == "Lihat Surat"
-              ? { marginRight: 0 }
-              : { marginRight: 50 },
-          ]}
-        >
-          <Text
-            style={{
-              fontSize: fontSizeResponsive("H1", device),
-              fontWeight: 600,
-              color: COLORS.white,
-              textAlign: "center",
-            }}
-          >
-            {title ? title : route?.params?.title}
-          </Text>
-        </View>
-        {route?.params?.title == "Lihat Surat" && (
-          <TouchableOpacity
-            onPress={() => {
-              initDownload(route?.params?.selected);
-            }}
-            style={{
-              backgroundColor: COLORS.white,
-              width: 30,
-              height: 30,
-              borderRadius: 15,
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 5,
-              marginRight: 20,
-              //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
-            }}
-          >
-            <Ionicons name="share-social" size={16} />
-          </TouchableOpacity>
-        )}
+          <Ionicons
+            name="chevron-back-outline"
+            size={24}
+            color={COLORS.primary}
+          />
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      <View
+        style={[
+          { flex: 1, alignItems: "center" },
+          route?.params?.title == "Lihat Surat"
+            ? { marginRight: 0 }
+            : { marginRight: 50 },
+        ]}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H1", device),
+            fontWeight: 600,
+            color: COLORS.white,
+            textAlign: "center",
+          }}
+        >
+          {title ? title : route?.params?.title}
+        </Text>
+      </View>
+      {route?.params?.title == "Lihat Surat" && (
+        <TouchableOpacity
+          onPress={() => {
+            initDownload(route?.params?.selected);
+          }}
+          style={{
+            backgroundColor: COLORS.white,
+            width: 30,
+            height: 30,
+            borderRadius: 15,
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 5,
+            marginRight: 20,
+            //shadow ios
+            shadowOffset: { width: -2, height: 4 },
+            shadowColor: "#171717",
+            shadowOpacity: 0.2,
+            //shadow android
+            elevation: 2,
+          }}
+        >
+          <Ionicons name="share-social" size={16} />
+        </TouchableOpacity>
+      )}
+    </View>
   );
 };
 

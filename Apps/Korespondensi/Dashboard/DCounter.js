@@ -1,6 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
@@ -13,6 +13,7 @@ import { setOrganization, setProfile } from "../../../store/profile";
 
 function DCounter() {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   let [isCounter, setIsCounter] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
   const [inputToken, setInputToken] = useState("");
@@ -65,7 +66,7 @@ function DCounter() {
     if (inputToken.length != 0) {
       getProfile();
     }
-  }, [token, inputToken]);
+  }, [token, inputToken, isFocused]);
   async function getProfile() {
     setIsLoading(true);
     try {
@@ -123,6 +124,10 @@ function DCounter() {
       <LoadingOverlay visible={isLoading} />
     </>
   );
+  const renderItem = ({ item, index }) =>
+    index != 3 && (
+      <CardDCounter data={item} icon={icon[index]} navigation={navigation} />
+    );
   return (
     <View style={{ margin: 12 }}>
       <View>
@@ -136,25 +141,15 @@ function DCounter() {
       </View>
       {/* {loadingOverlay} */}
       {isCounter?.length != 0 && (
-        <>
-          <View>
-            <CardDCounter
-              data={isCounter[0]}
-              icon={icon[0]}
-              navigation={navigation}
-            />
-            <CardDCounter
-              data={isCounter[1]}
-              icon={icon[1]}
-              navigation={navigation}
-            />
-            <CardDCounter
-              data={isCounter[2]}
-              icon={icon[2]}
-              navigation={navigation}
-            />
-          </View>
-        </>
+        <View style={{ height: "85%" }}>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            data={isCounter}
+            renderItem={renderItem}
+            refreshing={isLoading}
+            onRefresh={getisCounter}
+          />
+        </View>
       )}
     </View>
   );
