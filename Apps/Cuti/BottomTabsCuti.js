@@ -144,7 +144,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 10,
+                    bottom: device === "tablet" ? 20 : 5,
                   }}
                 >
                   Dokumen Persetujuan
@@ -171,7 +171,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 10,
+                    bottom: device === "tablet" ? 20 : 5,
                   }}
                 >
                   Dokumen Persetujuan
@@ -223,7 +223,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 10,
+                    bottom: device === "tablet" ? 20 : 5,
                   }}
                 >
                   Dokumen Personal
@@ -250,7 +250,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 10,
+                    bottom: device === "tablet" ? 20 : 5,
                   }}
                 >
                   Dokumen Personal

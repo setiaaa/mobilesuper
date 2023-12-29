@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
@@ -154,7 +154,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 40 : 20,
+                    bottom: device === "tablet" ? 40 : Platform.OS === 'ios' ? 5: 20,
                   }}
                 >
                   Dokumen Lain
@@ -181,7 +181,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 40 : 20,
+                    bottom: device === "tablet" ? 40 : Platform.OS === 'ios' ? 5: 20,
                   }}
                 >
                   Dokumen Lain

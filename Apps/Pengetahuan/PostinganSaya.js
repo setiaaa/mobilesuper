@@ -45,7 +45,6 @@ import {
 const CardPostinganSaya = ({ item, token, device }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   const getDetail = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
@@ -297,7 +296,7 @@ const CardPostinganSaya = ({ item, token, device }) => {
         <TouchableOpacity
           onPress={() => {
             getDetail(item.id);
-            navigation.navigate("DetailLinimasa");
+            navigation.navigate("DetailLinimasa", item.like_list);
           }}
         >
           <View
