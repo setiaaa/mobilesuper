@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
@@ -8,6 +8,7 @@ import { getHTTP, handlerError } from "../../../utils/http";
 import { useSelector } from "react-redux";
 
 function DLetter() {
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
   let [isCounter, setIsCounter] = useState([]);
   let [isLetter, setIsLetter] = useState([]);
@@ -76,7 +77,7 @@ function DLetter() {
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
-  }, [token]);
+  }, [token, isFocused]);
 
   async function getisCounter() {
     setIsLoading(true);

@@ -29,7 +29,7 @@ function ViewAttachment({ route }) {
             }}
             androidHardwareAccelerationDisabled={true}
           /> */}
-          <View>
+          <View style={{ width: "100%", height: "100%" }}>
             <PDFReader
               source={{
                 uri: nde_api.baseurl + data?.file,
