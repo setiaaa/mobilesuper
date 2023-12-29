@@ -17,6 +17,7 @@ export const PdfPerisai = ({ route }) => {
   const [token, setToken] = useState("");
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
+  const [open, setOpen] = useState(false);
 
   // const type = "dokumen_lain";
   useEffect(() => {
@@ -77,6 +78,47 @@ export const PdfPerisai = ({ route }) => {
     }
   })
   `;
+
+  let inject = `
+  $("#reject").click(function () {
+   alert("cek")
+})
+
+$("#submit").click(function () {
+  var paraphrase = $('#paraphrase').val()
+  var kiri_bawah_x = parseInt($('input[name="lower_left_x"]').val());
+  var kiri_bawah_y = parseInt($('input[name="lower_left_y"]').val());
+  var kanan_atas_x = parseInt($('input[name="upper_right_x"]').val());
+  var kanan_atas_y = parseInt($('input[name="upper_right_y"]').val());
+  if (paraphrase === '') {
+     alert("Mohon masukan passphrase anda")
+  } else {
+    let data = {
+      "passphrase": paraphrase,
+      "id_documents": ["${item.id}"],
+  }
+  $.ajax({
+    url: "https://apigw.kubekkp.coofis.com/digitalsign/document/approve/",
+    type: 'PUT',
+    contentType: 'application/json; charset=utf-8',
+    headers: {
+        'Authorization': '${token}'
+    },
+    data: JSON.stringify(data),
+    success: function (data, textStatus, xhr) {
+      if (data.success) {
+        alert("berhasil")
+      } else {
+        alert("gagal")
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert('error')
+    }
+});  
+      };
+  })
+  `;
   return (
     <>
       <View
@@ -115,17 +157,17 @@ export const PdfPerisai = ({ route }) => {
               color: COLORS.white,
             }}
           >
-            Tanda Tangan Notulensi
+            Tanda Tangan Sertifikat
           </Text>
         </View>
       </View>
       <WebView
         ref={webViewRef}
         source={{
-          uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/index.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/newPdfViewer.html",
         }}
         style={{ flex: 1 }}
-        injectedJavaScript={myInjectedJs}
+        injectedJavaScript={inject}
       />
     </>
   );
