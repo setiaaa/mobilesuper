@@ -24,7 +24,8 @@ const RepositorySlice = createSlice({
     },
     download: {
       detail: {}
-    }
+    },
+    refresh: false,
   },
   reducers: {
     // setDokumentlists: (state, action) => {
@@ -36,6 +37,9 @@ const RepositorySlice = createSlice({
     // setDibagikanLists: (state, action) => {
     //   state.dibagikan.lists = action.payload;
     // },
+    setRefresh: (state, action) => {
+      state.refresh = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -103,7 +107,7 @@ const RepositorySlice = createSlice({
   },
 });
 
-export const { setDokumentlists, setDokumenDetail, setDibagikanLists, setLoadMore } =
+export const { setDokumentlists, setDokumenDetail, setDibagikanLists, setLoadMore, setRefresh, } =
   RepositorySlice.actions;
 
 export default RepositorySlice.reducer;

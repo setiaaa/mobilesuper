@@ -203,7 +203,7 @@ export const CardListAbsenEvent = ({
                 ) : (
                   <View
                     style={{
-                      width: device === "tablet" ? 300 : 160,
+                      width: device === "tablet" ? 300 : "50%",
                       paddingVertical: 5,
                       borderRadius: 30,
                       backgroundColor: COLORS.ExtraDivinder,

@@ -43,7 +43,7 @@ function MyTabDigitalSign({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 100 : 65,
+                    height: device === "tablet" ? 120 : 65,
                     justifyContent: "center",
                     width: device === "tablet" ? 95 : 80,
                   }}
@@ -73,7 +73,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     style={{
                       color: COLORS.primary,
                       position: "absolute",
-                      bottom: 15,
+                      bottom: device === "tablet" ? 40 : 20,
                       fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
@@ -84,7 +84,7 @@ function MyTabDigitalSign({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 100 : 65,
+                    height: device === "tablet" ? 120 : 65,
                     justifyContent: "center",
                     width: device === "tablet" ? 95 : 80,
                   }}
@@ -99,7 +99,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     style={{
                       color: COLORS.grey,
                       position: "absolute",
-                      bottom: 15,
+                      bottom: device === "tablet" ? 40 : 20,
                       fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
@@ -122,7 +122,7 @@ function MyTabDigitalSign({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -146,12 +146,15 @@ function MyTabDigitalSign({ props, navigation }) {
                   name="attach-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     textAlign: "center",
+                    position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
+                    bottom: device === "tablet" ? 40 : 20,
                   }}
                 >
                   Dokumen Lain
@@ -161,7 +164,7 @@ function MyTabDigitalSign({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 100 : 65,
+                  height: device === "tablet" ? 120 : 65,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -170,12 +173,15 @@ function MyTabDigitalSign({ props, navigation }) {
                   name="attach-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     textAlign: "center",
+                    position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
+                    bottom: device === "tablet" ? 40 : 20,
                   }}
                 >
                   Dokumen Lain
@@ -197,7 +203,7 @@ function MyTabDigitalSign({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 100 : 65,
+                    height: device === "tablet" ? 120 : 65,
                     justifyContent: "center",
                     width: device === "tablet" ? 95 : 80,
                   }}
@@ -227,7 +233,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     style={{
                       color: COLORS.primary,
                       position: "absolute",
-                      bottom: 15,
+                      bottom: device === "tablet" ? 40 : 20,
                       fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
@@ -238,7 +244,7 @@ function MyTabDigitalSign({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 100 : 65,
+                    height: device === "tablet" ? 120 : 65,
                     justifyContent: "center",
                     width: device === "tablet" ? 95 : 80,
                   }}
@@ -253,7 +259,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     style={{
                       color: COLORS.grey,
                       position: "absolute",
-                      bottom: 15,
+                      bottom: device === "tablet" ? 40 : 20,
                       fontSize: fontSizeResponsive("H3", device),
                     }}
                   >
