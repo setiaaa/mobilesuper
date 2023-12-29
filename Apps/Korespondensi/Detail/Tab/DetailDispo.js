@@ -177,13 +177,13 @@ function DetailDispo({ data, noAgenda, preview, title }) {
                 ))}
             </View>
             <View>
-              <Text style={styles.title}>Untuk</Text>
+              <Text style={styles.title}>Aksi Disposisi</Text>
             </View>
             <View>
               <Text>{data?.action ? data?.action : "-"}</Text>
             </View>
             <View>
-              <Text style={styles.title}>Catatan</Text>
+              <Text style={styles.title}>Catatan Disposisi</Text>
             </View>
             <View>
               <Text>{data?.action_manual ? data?.action_manual : "-"}</Text>

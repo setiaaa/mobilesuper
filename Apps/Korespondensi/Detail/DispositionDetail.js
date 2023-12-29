@@ -8,11 +8,13 @@ import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { initAgenda } from "../../../utils/agenda";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
+import { useSelector } from "react-redux";
 
 function DispositionDetail({ route }) {
   let id = route.params.id;
   let hideFormDispo = route.params.hideFormDispo;
   const navigation = useNavigation();
+  const profile = useSelector((state) => state.profile.profile);
   const [isLoading, setisLoading] = useState(true);
   const [detail, setDetail] = useState();
   const [preview, setPreview] = useState();
@@ -67,12 +69,20 @@ function DispositionDetail({ route }) {
       { key: "attachment", title: "Attachment", icon: "attachment" },
     ];
   } else {
-    routes = [
-      { key: "info", title: "Info", icon: "alert-circle-outline" },
-      { key: "log", title: "Log", icon: "clipboard-text" },
-      { key: "attachment", title: "Attachment", icon: "attachment" },
-      { key: "dispo", title: "Disposisi", icon: "share" },
-    ];
+    if (profile?.title?.length > 0) {
+      routes = [
+        { key: "info", title: "Info", icon: "alert-circle-outline" },
+        { key: "log", title: "Log", icon: "clipboard-text" },
+        { key: "attachment", title: "Attachment", icon: "attachment" },
+        { key: "dispo", title: "Disposisi", icon: "share" },
+      ];
+    } else {
+      routes = [
+        { key: "info", title: "Info", icon: "alert-circle-outline" },
+        { key: "log", title: "Log", icon: "clipboard-text" },
+        { key: "attachment", title: "Attachment", icon: "attachment" },
+      ];
+    }
   }
   const loadingOverlay = (
     <>
