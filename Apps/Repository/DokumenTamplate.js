@@ -42,6 +42,7 @@ import { Divider } from "react-native-paper";
 import moment from "moment";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
+import { setRating } from "../../store/Repository";
 
 const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
@@ -86,9 +87,11 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
           >
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("MainDetailRepo", getDetailRepo(item.id));
+                navigation.navigate("MainDetailRepo");
+                getDetailRepo(item.id);
                 // bottomSheetAttach(item);
                 // getDetailRepo(item.id);
+                dispatch(setRating(false));
               }}
             >
               <Text

@@ -35,10 +35,11 @@ import { getTokenValue } from "../../service/session";
 import moment from "moment";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
+import { setRating } from "../../store/Repository";
 
 const DataList = ({ token, item, bottomSheetAttach, device }) => {
   const dispatch = useDispatch();
-
+  const navigation = useNavigation();
   const getDetailRepo = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
@@ -79,8 +80,10 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
           >
             <TouchableOpacity
               onPress={() => {
-                bottomSheetAttach(item);
+                // bottomSheetAttach(item);
+                navigation.navigate("MainDetailRepo");
                 getDetailRepo(item.id);
+                dispatch(setRating(true));
               }}
             >
               <Text
@@ -276,15 +279,13 @@ export const Dibagikan = () => {
           getDocumentDibagikan({ token: token, page: page, general: general })
         );
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
   }, [token, page]);
-
 
   const { device } = useSelector((state) => state.apps);
 

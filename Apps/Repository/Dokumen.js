@@ -27,7 +27,11 @@ import {
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { setDokumentlists, setLoadMore } from "../../store/Repository";
+import {
+  setDokumentlists,
+  setLoadMore,
+  setRating,
+} from "../../store/Repository";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {} from "react-native-safe-area-context";
@@ -90,6 +94,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                   // bottomSheetAttach(item);
                   navigation.navigate("MainDetailRepo");
                   getDetailRepo(item.id);
+                  dispatch(setRating(true));
                 }}
               >
                 <Text
@@ -396,8 +401,7 @@ export const Dokumen = () => {
       if (token !== "") {
         dispatch(getDocument({ token: token, page: page, type: type.key }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
