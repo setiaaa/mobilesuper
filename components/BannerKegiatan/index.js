@@ -12,7 +12,7 @@ export const bannerKegiatan = ({ item }, parallaxProps) => {
   return (
     <View style={styles.items}>
       <ParallaxImage
-        source={{ uri: item.image }}
+        source={{ uri: item?.image }}
         containerStyle={styles.imageContainer}
         style={styles.images}
         parallaxFactor={0.4}

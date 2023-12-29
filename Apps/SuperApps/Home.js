@@ -373,7 +373,7 @@ export const Home = () => {
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={screenWidth - 60}
-              data={{ banner }}
+              data={banner}
               renderItem={bannerKegiatan}
               hasParallaxImages={true}
             />
