@@ -5,17 +5,18 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { COLORS } from "../../config/SuperAppps";
 import {} from "react-native";
 import { Config } from "../../constants/config";
+import { useSelector } from "react-redux";
 
 function MyTabKoresp({ props, navigation }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
 
+  const { device } = useSelector((state) => state.apps);
   return (
     <>
       <BottomSheetModalProvider>
         <View
           style={{
             flexDirection: "row",
-            height: 68,
             backgroundColor: COLORS.white,
             justifyContent: "space-around",
             borderTopLeftRadius: 16,
@@ -34,9 +35,9 @@ function MyTabKoresp({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 120 : 90,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <View
@@ -61,9 +62,9 @@ function MyTabKoresp({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 120 : 90,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <Ionicons name="home-outline" color={COLORS.grey} size={24} />
@@ -84,9 +85,9 @@ function MyTabKoresp({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 120 : 90,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <View
@@ -111,9 +112,9 @@ function MyTabKoresp({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 120 : 90,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <Ionicons name="mail-outline" color={COLORS.grey} size={24} />
@@ -133,9 +134,9 @@ function MyTabKoresp({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 120 : 90,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <View
@@ -160,9 +161,9 @@ function MyTabKoresp({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: 65,
+                  height: device === "tablet" ? 120 : 90,
                   justifyContent: "center",
-                  width: 80,
+                  width: device === "tablet" ? 150 : 80,
                 }}
               >
                 <Ionicons name="search-outline" color={COLORS.grey} size={24} />

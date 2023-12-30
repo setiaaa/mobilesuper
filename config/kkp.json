@@ -81,7 +81,7 @@
       "signOutAPI": "crsbe/auth/out",
       "searchglobal": "crsbe/search/",
 
-      "profile": "crsbe/profile/",
+      "profile": "nde/api/v2/mobile/profile/",
       "profiletitle": "crsbe/profile/title/",
       "checkdevice": "crsbe/device/check-device/",
       "switchoffdevice": "crsbe/device/switchoff-device/",
