@@ -6,20 +6,16 @@ import { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
-  Image,
-  Alert,
-  SafeAreaView,
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import { Avatar, Drawer, Text, IconButton, List } from "react-native-paper";
+import { Avatar, Drawer, Text, List } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import { DrawerActions } from "@react-navigation/native";
 
 import { setOrganization, setProfile } from "../../store/profile";
 import { logout, setFirstLogin, setToken } from "../../store/auth";
 import { nde_api } from "../../utils/api.config";
-import { getHTTP, postHTTP } from "../../utils/http";
+import { getHTTP, headerToken, postHTTP } from "../../utils/http";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import IncomingList from "./List/IncomingList";
 import DispositionList from "./List/DispositionList";
@@ -37,7 +33,6 @@ import MyDispositionList from "./List/MyDispositionList";
 import ScanLogList from "./List/ScanLogList";
 import SearchGlobalList from "./List/SearchGlobalList";
 import { GlobalStyles } from "../../constants/styles";
-import { androidId, getIosIdForVendorAsync } from "expo-application";
 import { COLORS, FONTSIZE } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { OutgoingList } from "./List/OutgoingList";
@@ -164,7 +159,7 @@ const CustomDrawerContent = (props) => {
   const profileLogin = useSelector((state) => state.profile.profile);
   const device_uuid = useSelector((state) => state.profile.device_uuid);
   const token = useSelector((state) => state.auth.token);
-  const header = {};
+  let header = {};
   const [inputToken, setInputToken] = useState("");
 
   useEffect(() => {
@@ -183,13 +178,7 @@ const CustomDrawerContent = (props) => {
         let response = await getHTTP(nde_api.profile);
         dispatch(setProfile(response.data));
         dispatch(setOrganization(response.data));
-        let data2 = await AsyncStorage.getItem("tokenKorespondensi");
-        if (data2 != null) {
-          let token = JSON.parse(data2);
-          header = {
-            Authorization: "token " + token,
-          };
-        }
+        header = await headerToken();
       }
     } catch (error) {
       if (error?.response?.status == 401) {

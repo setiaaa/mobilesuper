@@ -1172,8 +1172,8 @@ function AppNavigator() {
     setIsLoading(true);
     //get token
     let token;
-    await AsyncStorage.getItem("token").then((data) => {
-      token = JSON.parse(data);
+    getTokenValue.then((data) => {
+      token = data;
     });
     if (token != null) {
       // setIsAuthenticated(true);

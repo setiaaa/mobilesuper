@@ -80,7 +80,7 @@ function IncomingDetail({ route }) {
         <>
           <DetailAgenda data={detail} tipe="in" />
           {profile?.is_secretary == "true" ||
-            (profile.title.length > 0 && (
+            (profile?.title?.length > 0 && (
               <FABactions
                 id={id}
                 noAgenda={detail?.agenda_number}

@@ -8,10 +8,10 @@ import { nde_api } from "./api.config";
 
 export async function headerToken() {
   let token;
-  await AsyncStorage.getItem("tokenKorespondensi").then((data) => {
-    token = JSON.parse(data);
+  await AsyncStorage.getItem("token").then((data) => {
+    token = data;
   });
-  return { Authorization: "token " + token };
+  return { Authorization: token };
 }
 
 export async function postAuth(data) {

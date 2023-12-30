@@ -16,6 +16,7 @@ import { nde_api } from "../../utils/api.config";
 import { Image } from "react-native";
 import { COLORS } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
+import { headerToken } from "../../utils/http";
 
 function ListTodo({ title, result }) {
   const [errorAvatarSender, setErrorAvatarSender] = useState(false);
@@ -25,13 +26,7 @@ function ListTodo({ title, result }) {
   useEffect(() => {
     async function getToken() {
       try {
-        let data2 = await AsyncStorage.getItem("tokenKorespondensi");
-        if (data2 != null) {
-          let token = JSON.parse(data2);
-          header = {
-            Authorization: "token " + token,
-          };
-        }
+        header = await headerToken();
       } catch (error) {
         Alert.alert("Warning!", "Avatar " + title + " not working!");
       }
