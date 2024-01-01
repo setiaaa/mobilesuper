@@ -210,6 +210,33 @@ const ListBankom = ({
                 : item?.approvers[1]?.nama}
             </Text>
           </View>
+          {variant === "signed" ? (
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  width: 110,
+                  textAlign: "auto",
+                  paddingRight: 12,
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "45%",
+                }}
+              >
+                Status
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  width: 200,
+                  textAlign: "auto",
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                }}
+              >
+                :{item.state === "in_progress" ? "In Progress" : "Done"}
+              </Text>
+            </View>
+          ) : null}
         </View>
       </TouchableOpacity>
     </View>
@@ -304,8 +331,7 @@ export const Bankom = () => {
           dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
         }
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -357,7 +383,6 @@ export const Bankom = () => {
     };
     dispatch(putTandaTangan(data));
   };
-
 
   const { device } = useSelector((state) => state.apps);
 
@@ -448,8 +473,8 @@ export const Bankom = () => {
               style={{
                 paddingVertical: 10,
                 flexDirection: "row",
-                justifyContent: "space-between",
                 marginHorizontal: "5%",
+                gap: 16,
               }}
             >
               <TouchableOpacity
@@ -578,7 +603,7 @@ export const Bankom = () => {
                   Signed
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
@@ -609,7 +634,7 @@ export const Bankom = () => {
                 >
                   Selesai
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             {/* </ScrollView> */}
             <FlatList

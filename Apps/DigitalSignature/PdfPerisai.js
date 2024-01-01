@@ -81,7 +81,27 @@ export const PdfPerisai = ({ route }) => {
 
   let inject = `
   $("#reject").click(function () {
-   alert("cek")
+    $.ajax({
+      url: "https://apigw.kubekkp.coofis.com/digitalsign/document/reject_document/",
+      type: 'PUT',
+      contentType: 'application/json; charset=utf-8',
+      headers: {
+          'Authorization': '${token}'
+      },
+      data: JSON.stringify({
+        id_documents: ["${item.id}"]
+      }),
+      success: function (data, textStatus, xhr) {
+        if (data.success) {
+          alert("berhasil")
+        } else {
+          alert("gagal")
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert('error')
+      }
+          });
 })
 
 $("#submit").click(function () {
@@ -115,9 +135,11 @@ $("#submit").click(function () {
     error: function (jqXHR, textStatus, errorThrown) {
       alert('error')
     }
-});  
+        });  
       };
   })
+
+
   `;
   return (
     <>
