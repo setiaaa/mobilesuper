@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Config } from "../constants/config";
 
-const BASE_URL = Config.base_url;
+const BASE_URL = "https://apigw.kubekkp.coofis.com/";
 const kebijakan = BASE_URL + "policy/";
 const kalender = BASE_URL + "calendar/";
 const addressbook = BASE_URL + "bridge/";
@@ -55,8 +54,8 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 
 const SPPD = BASE_URL + "monperdin/";
 
-const Cuti = Config.base_url_cuti;
-const HelpDesk = Config.base_url_helpdesk;
+const Cuti = "https://cuti.kubekkp.coofis.com/api/";
+const HelpDesk = "https://helpdesk.kubekkp.coofis.com/api/";
 
 //Login
 export const Login = createAsyncThunk(
@@ -68,7 +67,7 @@ export const Login = createAsyncThunk(
         password: password,
       };
       const respon = await axios.post(
-        Config.base_url_auth,
+        `https://auth.kubekkp.coofis.com/mobile/login/`,
         payload
       );
       return respon?.data;
@@ -1707,6 +1706,18 @@ export const getListCompleted = createAsyncThunk(
     return {
       data: respon?.data.results,
       tipe: tipe,
+    };
+  }
+);
+
+export const getListRejected = createAsyncThunk(
+  "digitalsign/getListRejected",
+  async ({ token }) => {
+    const respon = await axios.get(`${digitalSign}document/reject/`, {
+      headers: { Authorization: token },
+    });
+    return {
+      data: respon?.data.results,
     };
   }
 );
