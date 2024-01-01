@@ -168,7 +168,7 @@ export const RangkumanIKU = () => {
     value: "Dashboard",
   });
 
-  const listYear = [
+  const datalistYear = [
     { key: "year1", value: "2023" },
     { key: "year2", value: "2024" },
     { key: "year3", value: "2025" },
@@ -225,12 +225,18 @@ export const RangkumanIKU = () => {
     key: "q3",
     value: "TW 3",
   });
-  const [savedUnitKerja, setSavedUnitKerja] = useState({ key: "", value: "" });
 
   const handlePilihSimpan = () => {
-    setSavedYear(selectedYear);
-    setSavedQuarter(selectedQuarter);
-    setSavedUnitKerja(selectedUnitKerja);
+    const param = {
+      token: token,
+      page: page,
+      year: year.value,
+      quarter: quarter?.key,
+      unitKerja: selectedUnitKerja.value,
+    };
+    if (token !== "") {
+      dispatch(getListPegawai(param));
+    }
   };
 
   const [page, setPage] = useState(10);
@@ -239,19 +245,19 @@ export const RangkumanIKU = () => {
     const param = {
       token: token,
       page: page,
-      year: savedYear.value,
-      quarter: savedQuarter.key,
-      unitKerja: savedUnitKerja.value,
+      year: year.value,
+      quarter: quarter?.key,
+      unitKerja: selectedUnitKerja.value,
     };
     if (token !== "") {
       dispatch(getListPegawai(param));
     }
-  }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
+  }, [token]);
 
   const loadMore = () => {
     if (
       filterData.length % 10 === 0 &&
-      (savedYear.value || savedQuarter.value || savedUnitKerja.value)
+      (year.value || quarter.value || selectedUnitKerja.value)
     ) {
       if (filterData.length > page) {
         setPage(page + 10);
@@ -262,14 +268,14 @@ export const RangkumanIKU = () => {
   useEffect(() => {
     const param = {
       token: token,
-      year: savedYear.value,
-      quarter: savedQuarter.key,
-      unitKerja: savedUnitKerja.value,
+      year: year.value,
+      quarter: quarter?.key,
+      unitKerja: selectedUnitKerja.value,
     };
     if (token !== "") {
       dispatch(getListPegawaiExport(param));
     }
-  }, [token, savedYear, savedQuarter, savedUnitKerja, download]);
+  }, [token, year, quarter, selectedUnitKerja, download]);
 
   const { pegawai, refresh, loading } = useSelector(
     (state) => state.pengetahuan
@@ -298,7 +304,7 @@ export const RangkumanIKU = () => {
 
   useEffect(() => {
     setFilterData(pegawai?.lists);
-  }, [pegawai]);
+  }, [pegawai, year, quarter]);
 
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
@@ -364,8 +370,7 @@ export const RangkumanIKU = () => {
         // setIsLoading(false);
         console.error("download error:", e);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
@@ -420,23 +425,59 @@ export const RangkumanIKU = () => {
       const param = {
         token: token,
         page: page,
-        year: savedYear.value,
-        quarter: savedQuarter.key,
-        unitKerja: savedUnitKerja.value,
+        year: year.value,
+        quarter: quarter?.key,
+        unitKerja: selectedUnitKerja.value,
       };
       if (token !== "") {
         dispatch(getListPegawai(param));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, savedYear, savedQuarter, savedUnitKerja, page]);
+  }, [token, year, quarter, selectedUnitKerja, page]);
 
   const { device } = useSelector((state) => state.apps);
+  const [listYear, setListYear] = useState();
+  const [quarter, setQuarter] = useState();
+
+  const [year, setYear] = useState({
+    key: new Date().getFullYear(),
+    value: new Date().getFullYear(),
+  });
+
+  const month = new Date().getMonth() + 1;
+
+  useEffect(() => {
+    let q = "";
+    if (1 <= month && month <= 3) {
+      q = "1";
+    } else if (4 <= month && month <= 6) {
+      q = "2";
+    } else if (7 <= month && month <= 9) {
+      q = "3";
+    } else {
+      q = "4";
+    }
+    setQuarter({
+      key: q,
+      value: q == 1 ? "TW1" : q == 2 ? "TW2" : q == 3 ? "TW3" : "TW4",
+    });
+
+    let thn = [];
+    for (let i = 2023; i <= year; i++) {
+      thn.push({
+        key: i,
+        value: i,
+      });
+    }
+    setListYear(thn);
+  }, []);
+
+  // console.log(year);
 
   return (
     <>
@@ -587,7 +628,10 @@ export const RangkumanIKU = () => {
               }}
             >
               <TouchableOpacity
-                onPress={bottomSheetAttachSelect}
+                onPress={() => {
+                  bottomSheetAttachSelect();
+                  // setFilterData([]);
+                }}
                 // style={{ width: "46%" }}
               >
                 <View
@@ -674,13 +718,13 @@ export const RangkumanIKU = () => {
                       }}
                     >
                       <View style={{ width: "47%" }}>
-                        {savedYear.key === "" ? (
+                        {year?.key === "" ? (
                           <Dropdown
                             placeHolder={"Pilih Tahun"}
                             borderWidth={1}
-                            data={listYear}
-                            // selected={selectedYear}
-                            setSelected={setSelectedYear}
+                            data={datalistYear}
+                            // selected={year}
+                            setSelected={setYear}
                             borderColor={COLORS.ExtraDivinder}
                             borderwidthDrop={1}
                             borderColorDrop={COLORS.ExtraDivinder}
@@ -691,9 +735,9 @@ export const RangkumanIKU = () => {
                           <Dropdown
                             // placeHolder={"Pilih Tahun"}
                             borderWidth={1}
-                            data={listYear}
-                            selected={savedYear}
-                            setSelected={setSelectedYear}
+                            data={datalistYear}
+                            selected={year}
+                            setSelected={setYear}
                             borderColor={COLORS.ExtraDivinder}
                             borderwidthDrop={1}
                             borderColorDrop={COLORS.ExtraDivinder}
@@ -704,13 +748,13 @@ export const RangkumanIKU = () => {
                       </View>
 
                       <View style={{ width: "47%" }}>
-                        {savedQuarter.key === "" ? (
+                        {quarter?.key === "" ? (
                           <Dropdown
                             placeHolder={"Pilih Triwulan"}
                             borderWidth={1}
                             data={dataKuartal}
-                            // selected={selectedQuarter}
-                            setSelected={setSelectedQuarter}
+                            // selected={quarter}
+                            setSelected={setQuarter}
                             borderColor={COLORS.ExtraDivinder}
                             borderwidthDrop={1}
                             borderColorDrop={COLORS.ExtraDivinder}
@@ -722,8 +766,8 @@ export const RangkumanIKU = () => {
                             // placeHolder={"Pilih Triwulan"}
                             borderWidth={1}
                             data={dataKuartal}
-                            selected={savedQuarter}
-                            setSelected={setSelectedQuarter}
+                            selected={quarter}
+                            setSelected={setQuarter}
                             borderColor={COLORS.ExtraDivinder}
                             borderwidthDrop={1}
                             borderColorDrop={COLORS.ExtraDivinder}
@@ -735,7 +779,7 @@ export const RangkumanIKU = () => {
                     </View>
 
                     <View style={{ marginHorizontal: "5%" }}>
-                      {savedUnitKerja.key === "" ? (
+                      {selectedUnitKerja?.key === "" ? (
                         <Dropdown
                           placeHolder={"Pilih Unit Kerja"}
                           borderWidth={1}
@@ -751,7 +795,7 @@ export const RangkumanIKU = () => {
                         <Dropdown
                           borderWidth={1}
                           data={dataUnitKerja()}
-                          selected={savedUnitKerja}
+                          selected={selectedUnitKerja}
                           setSelected={setSelectedUnitKerja}
                           borderColor={COLORS.ExtraDivinder}
                           borderwidthDrop={1}
@@ -958,9 +1002,9 @@ export const RangkumanIKU = () => {
                   fontWeight: 700,
                 }}
               >
-                {savedYear.value ? savedYear.value : "-"} /{" "}
-                {savedQuarter.value ? savedQuarter.value : "-"} /{" "}
-                {savedUnitKerja.value ? savedUnitKerja.value : "-"}
+                {year.value ? year.value : "-"} /{" "}
+                {quarter.value ? quarter.value : "-"} /{" "}
+                {selectedUnitKerja.value ? selectedUnitKerja.value : "-"}
               </Text>
             </View>
 
@@ -972,11 +1016,7 @@ export const RangkumanIKU = () => {
                 }}
               >
                 <FlatList
-                  data={
-                    (filterData && filterData.length > 0) || isFiltered
-                      ? filterData
-                      : pegawai?.lists
-                  }
+                  data={filterData}
                   renderItem={({ item }) => (
                     <View key={item.id} style={{ marginVertical: 10 }}>
                       <ListDaftarPegawai

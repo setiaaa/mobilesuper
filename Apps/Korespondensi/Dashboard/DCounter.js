@@ -1,21 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { TextInput } from "react-native-paper";
-import { setToken } from "../../../store/auth";
-import { Keyboard } from "react-native";
 import { setOrganization, setProfile } from "../../../store/profile";
 
 function DCounter() {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   let [isCounter, setIsCounter] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
-  const [inputToken, setInputToken] = useState("");
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const icon = [
@@ -61,11 +58,8 @@ function DCounter() {
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
-    dispatch(setToken({ token: inputToken }));
-    if (inputToken.length != 0) {
-      getProfile();
-    }
-  }, [token, inputToken]);
+    getProfile();
+  }, [token, isFocused]);
   async function getProfile() {
     setIsLoading(true);
     try {
@@ -75,7 +69,7 @@ function DCounter() {
       dispatch(setOrganization(response.data));
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   }
 
@@ -123,38 +117,23 @@ function DCounter() {
       <LoadingOverlay visible={isLoading} />
     </>
   );
+  const renderItem = ({ item, index }) =>
+    index != 3 && (
+      <CardDCounter data={item} icon={icon[index]} navigation={navigation} />
+    );
   return (
     <View style={{ margin: 12 }}>
-      <View>
-        <TextInput
-          editable
-          placeholder="Masukan Token"
-          onChangeText={setInputToken}
-          onSubmit={Keyboard.dismiss}
-          style={{ width: "100%" }}
-        />
-      </View>
       {/* {loadingOverlay} */}
       {isCounter?.length != 0 && (
-        <>
-          <View>
-            <CardDCounter
-              data={isCounter[0]}
-              icon={icon[0]}
-              navigation={navigation}
-            />
-            <CardDCounter
-              data={isCounter[1]}
-              icon={icon[1]}
-              navigation={navigation}
-            />
-            <CardDCounter
-              data={isCounter[2]}
-              icon={icon[2]}
-              navigation={navigation}
-            />
-          </View>
-        </>
+        <View style={{ height: "85%" }}>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            data={isCounter}
+            renderItem={renderItem}
+            refreshing={isLoading}
+            onRefresh={getisCounter}
+          />
+        </View>
       )}
     </View>
   );

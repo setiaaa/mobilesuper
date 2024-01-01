@@ -1107,7 +1107,7 @@ const CardLiniMasa = ({ item, token, device }) => {
                 />
               </View>
               <ScrollView style={{ marginBottom: 40 }}>
-                {item.like_list.map((data) => {
+                {item.like_list?.map((data) => {
                   return (
                     <View
                       style={{

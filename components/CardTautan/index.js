@@ -130,9 +130,9 @@ export const CardTautan = ({ setModalVisible }) => {
             </Text>
           </TouchableOpacity>
 
-          {device === "tablet" ? (
+          {/* {device === "tablet" ? (
             <>
-              {/* <TouchableOpacity
+               <TouchableOpacity
                 onPress={() => {
                   Linking.openURL("https://e-monev.bappenas.go.id/fe/");
                 }}
@@ -156,7 +156,7 @@ export const CardTautan = ({ setModalVisible }) => {
                     Emonev{"\n"} Bapennas
                   </Text>
                 </View>
-              </TouchableOpacity> */}
+              </TouchableOpacity> 
 
               <TouchableOpacity
                 style={{
@@ -210,7 +210,7 @@ export const CardTautan = ({ setModalVisible }) => {
                 More
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
       </ScrollView>
     </View>

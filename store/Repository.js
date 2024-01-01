@@ -1,5 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailDocument, getDivisionFilter, getDocument, getDocumentDibagikan, getDocumentTamplate, getDownloadLampiran, getSubDivisionFilter, postRating } from "../service/api";
+import {
+  getDetailDocument,
+  getDivisionFilter,
+  getDocument,
+  getDocumentDibagikan,
+  getDocumentTamplate,
+  getDownloadLampiran,
+  getSubDivisionFilter,
+  postRating,
+} from "../service/api";
 
 const RepositorySlice = createSlice({
   name: "Repository",
@@ -14,18 +23,19 @@ const RepositorySlice = createSlice({
     },
     tamplate: {
       lists: [],
-      detail: {}
+      detail: {},
     },
     loading: false,
     load: false,
     filter: {
       unker: [],
-      satker: []
+      satker: [],
     },
     download: {
-      detail: {}
+      detail: {},
     },
     refresh: false,
+    rating: false,
   },
   reducers: {
     // setDokumentlists: (state, action) => {
@@ -40,50 +50,53 @@ const RepositorySlice = createSlice({
     setRefresh: (state, action) => {
       state.refresh = action.payload;
     },
+    setRating: (state, action) => {
+      state.rating = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(getDocument.fulfilled, (state, action) => {
         state.dokumen.lists = action.payload;
-        state.loading = false
-        state.load = false
+        state.loading = false;
+        state.load = false;
       })
       .addCase(getDocument.pending, (state, action) => {
-        state.loading = true
-        state.load = true
+        state.loading = true;
+        state.load = true;
       })
       .addCase(getDocument.rejected, (state, action) => {
-        state.loading = false
-        state.load = false
+        state.loading = false;
+        state.load = false;
       })
       .addCase(getDetailDocument.fulfilled, (state, action) => {
         state.dokumen.detail = action.payload;
       })
       .addCase(getDocumentDibagikan.fulfilled, (state, action) => {
         state.dibagikan.lists = action.payload;
-        state.loading = false
-        state.load = false
+        state.loading = false;
+        state.load = false;
       })
       .addCase(getDocumentDibagikan.pending, (state, action) => {
-        state.loading = true
-        state.load = true
+        state.loading = true;
+        state.load = true;
       })
       .addCase(getDocumentDibagikan.rejected, (state, action) => {
-        state.loading = false
-        state.load = false
+        state.loading = false;
+        state.load = false;
       })
       .addCase(getDocumentTamplate.fulfilled, (state, action) => {
         state.tamplate.lists = action.payload;
-        state.loading = false
-        state.load = false
+        state.loading = false;
+        state.load = false;
       })
       .addCase(getDocumentTamplate.pending, (state, action) => {
-        state.loading = true
-        state.load = true
+        state.loading = true;
+        state.load = true;
       })
       .addCase(getDocumentTamplate.rejected, (state, action) => {
-        state.loading = false
-        state.load = false
+        state.loading = false;
+        state.load = false;
       })
       .addCase(getDivisionFilter.fulfilled, (state, action) => {
         state.filter.unker = action.payload;
@@ -93,21 +106,27 @@ const RepositorySlice = createSlice({
       })
       .addCase(getDownloadLampiran.fulfilled, (state, action) => {
         state.download.detail = action.payload;
-        state.loading = false
-        state.load = false
+        state.loading = false;
+        state.load = false;
       })
       .addCase(getDownloadLampiran.pending, (state, action) => {
-        state.loading = true
-        state.load = true
+        state.loading = true;
+        state.load = true;
       })
       .addCase(getDownloadLampiran.rejected, (state, action) => {
-        state.loading = false
-        state.load = false
-      })
+        state.loading = false;
+        state.load = false;
+      });
   },
 });
 
-export const { setDokumentlists, setDokumenDetail, setDibagikanLists, setLoadMore, setRefresh, } =
-  RepositorySlice.actions;
+export const {
+  setDokumentlists,
+  setDokumenDetail,
+  setDibagikanLists,
+  setLoadMore,
+  setRefresh,
+  setRating,
+} = RepositorySlice.actions;
 
 export default RepositorySlice.reducer;

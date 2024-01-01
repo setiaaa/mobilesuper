@@ -91,7 +91,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -115,13 +115,13 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="school-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     position: "absolute",
-                    bottom: device === "tablet" ? 40 : 20,
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -132,7 +132,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -141,13 +141,13 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="school-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
-                  style={{ position: "absolute", top: 5 }}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     position: "absolute",
-                    bottom: device === "tablet" ? 40 : 20,
+                    bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -169,7 +169,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -193,13 +193,15 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="home-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 10 : 5,
+                    bottom: device === "tablet" ? 10 : 24,
+                    position: "absolute",
                   }}
                 >
                   Postingan Saya
@@ -209,7 +211,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 65,
+                  height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 80,
                 }}
@@ -218,13 +220,15 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   name="home-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 10 : 5,
+                    bottom: device === "tablet" ? 10 : 24,
+                    position: "absolute",
                   }}
                 >
                   Postingan Saya
@@ -246,7 +250,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 120 : 65,
+                    height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
                     width: device === "tablet" ? 150 : 80,
                   }}
@@ -270,13 +274,15 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     name="document-text-outline"
                     color={COLORS.primary}
                     size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 10 }}
                   />
                   <Text
                     style={{
                       color: COLORS.primary,
                       textAlign: "center",
                       fontSize: fontSizeResponsive("H3", device),
-                      bottom: device === "tablet" ? 10 : 5,
+                      bottom: device === "tablet" ? 10 : 24,
+                      position:"absolute",
                     }}
                   >
                     Rangkuman IKU
@@ -286,7 +292,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 120 : 65,
+                    height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
                     width: device === "tablet" ? 150 : 80,
                   }}
@@ -295,13 +301,15 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     name="document-text-outline"
                     color={COLORS.grey}
                     size={device === "tablet" ? 40 : 24}
+                    style={{ position: "absolute", top: 10 }}
                   />
                   <Text
                     style={{
                       color: COLORS.grey,
                       textAlign: "center",
                       fontSize: fontSizeResponsive("H3", device),
-                      bottom: device === "tablet" ? 10 : 5,
+                      bottom: device === "tablet" ? 10 : 24,
+                      position:"absolute",
                     }}
                   >
                     Rangkuman IKU
@@ -324,7 +332,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 120 : 65,
+                    height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
                     width: device === "tablet" ? 150 : 80,
                   }}
@@ -356,7 +364,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                       position: "absolute",
                       bottom: 20,
                       fontSize: fontSizeResponsive("H3", device),
-                      bottom: device === "tablet" ? 40 : 20,
+                      bottom: device === "tablet" ? 40 : 40,
                     }}
                   >
                     Laporan
@@ -366,7 +374,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 120 : 65,
+                    height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
                     width: device === "tablet" ? 150 : 80,
                   }}
@@ -383,7 +391,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                       position: "absolute",
                       bottom: 15,
                       fontSize: fontSizeResponsive("H3", device),
-                      bottom: device === "tablet" ? 40 : 20,
+                      bottom: device === "tablet" ? 40 : 40,
                     }}
                   >
                     Laporan
@@ -406,7 +414,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 120 : 65,
+                    height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
                     width: device === "tablet" ? 150 : 80,
                   }}
@@ -438,7 +446,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                       position: "absolute",
                       bottom: 15,
                       fontSize: fontSizeResponsive("H3", device),
-                      bottom: device === "tablet" ? 40 : 20,
+                      bottom: device === "tablet" ? 40 : 40,
                     }}
                   >
                     Penilaian
@@ -448,7 +456,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 <View
                   style={{
                     alignItems: "center",
-                    height: device === "tablet" ? 120 : 65,
+                    height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
                     width: device === "tablet" ? 150 : 80,
                   }}
@@ -465,7 +473,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                       position: "absolute",
                       bottom: 15,
                       fontSize: fontSizeResponsive("H3", device),
-                      bottom: device === "tablet" ? 40 : 20,
+                      bottom: device === "tablet" ? 40 : 40,
                     }}
                   >
                     Penilaian

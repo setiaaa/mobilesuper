@@ -88,7 +88,7 @@ export const DetailActivity = () => {
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
   };
-  const { dokumen, loading } = useSelector((state) => state.repository);
+  const { dokumen, loading, rating } = useSelector((state) => state.repository);
   const detail = dokumen.detail;
   const comment = dokumen.comments;
   const [token, setToken] = useState("");
@@ -109,7 +109,6 @@ export const DetailActivity = () => {
     };
     dispatch(postRating(data));
   };
-
 
   const { device } = useSelector((state) => state.apps);
 
@@ -293,42 +292,45 @@ export const DetailActivity = () => {
               <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
                 <Divider bold />
               </View>
-              <View
-                style={{
-                  paddingHorizontal: PADDING.Page,
-                  marginBottom: 20,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text
+              {rating === true ? (
+                <View
                   style={{
-                    textAlign: "justify",
-                    fontSize: fontSizeResponsive("H2", device),
-                    fontWeight: FONTWEIGHT.normal,
-                    color: COLORS.lighter,
-                    marginBottom: 4,
+                    paddingHorizontal: PADDING.Page,
+                    marginBottom: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  Rating
-                </Text>
-                {detail.logged_in_user_avatar === detail.creator_avatar ? (
-                  <Rating
-                    key={token}
-                    onFinishRating={(value) => ratingCompleted(value)}
-                    fractions={2}
-                    startingValue={detail.my_rating}
-                    readonly
-                  />
-                ) : (
-                  <Rating
-                    key={token}
-                    onFinishRating={(value) => ratingCompleted(value)}
-                    fractions={2}
-                    startingValue={detail.my_rating}
-                  />
-                )}
-              </View>
+                  <Text
+                    style={{
+                      textAlign: "justify",
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: FONTWEIGHT.normal,
+                      color: COLORS.lighter,
+                      marginBottom: 4,
+                    }}
+                  >
+                    Rating
+                  </Text>
+                  {detail.logged_in_user_avatar === detail.creator_avatar ? (
+                    <Rating
+                      key={token}
+                      onFinishRating={(value) => ratingCompleted(value)}
+                      fractions={2}
+                      startingValue={detail.my_rating}
+                      readonly
+                    />
+                  ) : (
+                    <Rating
+                      key={token}
+                      onFinishRating={(value) => ratingCompleted(value)}
+                      fractions={2}
+                      startingValue={detail.my_rating}
+                    />
+                  )}
+                </View>
+              ) : null}
+
               <View
                 style={{
                   marginHorizontal: 20,

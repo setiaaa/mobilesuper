@@ -20,7 +20,7 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload.token;
       state.isAuthenticated = true;
-      AsyncStorage.setItem("tokenKorespondensi", JSON.stringify(action.payload.token));
+      AsyncStorage.setItem("token", JSON.stringify(action.payload.token));
     },
     setRememberMe: (state, action) => {
       state.rememberMe = action.payload.rememberMe;
@@ -39,7 +39,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.token = "";
       state.isAuthenticated = false;
-      AsyncStorage.removeItem("tokenKorespondensi");
+      AsyncStorage.removeItem("token");
       // AsyncStorage.removeItem("profileLogin");
     },
   },

@@ -2,48 +2,47 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getDetailPegawai, getPegawai } from "../service/api";
 
 const PegawaiSlice = createSlice({
-    name: 'Pegawai',
-    initialState: {
-        pegawai: {
-            lists: [],
-            detail: {}
-        },
-        loading: false,
+  name: "Pegawai",
+  initialState: {
+    pegawai: {
+      lists: [],
+      detail: {},
     },
-    reducers: {
-        setPegawai: (state, action) => {
-            state.pegawai.lists = action.payload;
-        },
+    loading: false,
+  },
+  reducers: {
+    setPegawai: (state, action) => {
+      state.pegawai.lists = action.payload;
     },
-    extraReducers(builder) {
-        builder
-            .addCase(getPegawai.fulfilled, (state, action) => {
-                let dataPrev = state.pegawai.lists
-                let dataNext = action.payload
-                let gabung = dataPrev.concat(dataNext)
-                state.pegawai.lists = gabung
-                state.loading = false
-            })
-            .addCase(getPegawai.pending, (state, action) => {
-                state.loading = true
-            })
-            .addCase(getPegawai.rejected, (state, action) => {
-                state.loading = false
-            })
-            .addCase(getDetailPegawai.fulfilled, (state, action) => {
-                state.pegawai.detail = action.payload;
-                state.loading = false
-            })
-            .addCase(getDetailPegawai.pending, (state, action) => {
-                state.loading = true
-            })
-            .addCase(getDetailPegawai.rejected, (state, action) => {
-                state.loading = false
-            })
-    }
-})
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getPegawai.fulfilled, (state, action) => {
+        // let dataPrev = state.pegawai.lists
+        // let dataNext = action.payload
+        // let gabung = dataPrev.concat(dataNext)
+        state.pegawai.lists = action.payload;
+        state.loading = false;
+      })
+      .addCase(getPegawai.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getPegawai.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getDetailPegawai.fulfilled, (state, action) => {
+        state.pegawai.detail = action.payload;
+        state.loading = false;
+      })
+      .addCase(getDetailPegawai.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDetailPegawai.rejected, (state, action) => {
+        state.loading = false;
+      });
+  },
+});
 
-export const { setPegawai } =
-    PegawaiSlice.actions;
+export const { setPegawai } = PegawaiSlice.actions;
 
 export default PegawaiSlice.reducer;
