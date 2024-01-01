@@ -379,23 +379,42 @@ export const Home = () => {
             />
           </View>
 
-          <View style={{ marginHorizontal: 25, marginTop: 20 }}>
+          <View
+            style={{
+              marginVertical: 20,
+              marginLeft: 25,
+              flexDirection: "row",
+            }}
+          >
             <Text
               style={{
                 fontWeight: FONTWEIGHT.bold,
-                fontSize: fontSizeResponsive("H4", device),
+                fontSize: fontSizeResponsive("H2", device),
               }}
             >
               Tautan Pintas
             </Text>
+            <TouchableOpacity
+              onPress={() => setModalVisible(true)}
+              style={{ flex: 1, alignItems: "flex-end", marginRight: 30 }}
+            >
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                  fontSize: fontSizeResponsive("H3", device),
+                  flex: 1,
+                  color: "#1868AB",
+                }}
+              >
+                Selengkapnya
+              </Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
               justifyContent: "center",
               alignItems: "center",
               flex: 1,
-              marginTop: 20,
-              marginLeft: 25,
             }}
           >
             <CardTautan setModalVisible={setModalVisible} />

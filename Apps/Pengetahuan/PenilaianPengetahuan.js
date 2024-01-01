@@ -99,7 +99,9 @@ const CardPenilaian = ({ item, token, device }) => {
               }}
             >
               Tanggal:{" "}
-              {moment(item.published_date, "HH:mm:ss").format("DD MMM YYYY")}
+              {moment(item.published_date, "DD MMMM YYYY HH:mm:ss").format(
+                "DD MMMM YYYY"
+              )}
             </Text>
             <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
               <Text
@@ -157,6 +159,12 @@ const CardPenilaian = ({ item, token, device }) => {
     </View>
   );
 };
+
+const datalistYear = [
+  { key: "year1", value: "2023" },
+  { key: "year2", value: "2024" },
+  { key: "year3", value: "2025" },
+];
 
 const dataKuartal = [
   {
@@ -386,8 +394,7 @@ export const PenilaianPenggetahaun = () => {
         dispatch(getTotalPenilaian(data));
         // dispatch(getDivisionTree({ token: token, id: kategori.key }))
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -396,7 +403,6 @@ export const PenilaianPenggetahaun = () => {
   }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
 
   const { device } = useSelector((state) => state.apps);
-
 
   return (
     <>
@@ -523,7 +529,7 @@ export const PenilaianPenggetahaun = () => {
               Pilih Tahun
             </Text>
             <Dropdown
-              data={listYear}
+              data={datalistYear}
               placeHolder={"Pilih Tahun"}
               backgroundColor={COLORS.white}
               selected={year}
