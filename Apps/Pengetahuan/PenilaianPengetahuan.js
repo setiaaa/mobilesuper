@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   COLORS,
+  DATETIME,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -99,8 +100,8 @@ const CardPenilaian = ({ item, token, device }) => {
               }}
             >
               Tanggal:{" "}
-              {moment(item.published_date, "DD MMMM YYYY HH:mm:ss").format(
-                "DD MMMM YYYY"
+              {moment(item.published_date, "HH:mm:ss").format(
+                DATETIME.LONG_DATE
               )}
             </Text>
             <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
