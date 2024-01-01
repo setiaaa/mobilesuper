@@ -523,7 +523,7 @@ export const getPegawai = createAsyncThunk(
     const offset = page * 10;
     const respon =
       search === ""
-        ? await axios.get(`${pegawai}profile/all/?limit=10&offset=${offset}`, {
+        ? await axios.get(`${pegawai}profile/all/?limit=${offset}`, {
             headers: { Authorization: token },
           })
         : await axios.get(`${pegawai}profile/all/?search=${search}`, {

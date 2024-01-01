@@ -5,17 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  screenWidth,
-  Dimensions,
   Alert,
 } from "react-native";
-import {
-  AVATAR,
-  COLORS,
-  FONTSIZE,
-  FONTWEIGHT,
-  fontSizeResponsive,
-} from "../../config/SuperAppps";
+import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from "../../components/DropDown";
 import { useNavigation } from "@react-navigation/native";
@@ -37,7 +29,6 @@ import * as Progress from "react-native-progress";
 import ProgressCircle from "react-native-progress-circle";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
-import * as IntentLauncher from "expo-intent-launcher";
 const { StorageAccessFramework } = FileSystem;
 
 export const LaporanPengetahuan = () => {
@@ -109,7 +100,6 @@ export const LaporanPengetahuan = () => {
     (state) => state.pengetahuan
   );
 
-
   const downloadPath =
     FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
 
@@ -136,8 +126,7 @@ export const LaporanPengetahuan = () => {
         // setIsLoading(false);
         console.error("download error:", e);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
@@ -211,6 +200,8 @@ export const LaporanPengetahuan = () => {
   const sliceColorHandle = [COLORS.grey];
 
   const { device } = useSelector((state) => state.apps);
+
+  console.log(review?.percent_article_reviewed);
 
   return (
     <View style={{ flex: 1 }}>
@@ -1308,7 +1299,11 @@ export const LaporanPengetahuan = () => {
           </Text>
           <View style={{ alignSelf: "center", marginVertical: 20 }}>
             <ProgressCircle
-              percent={review?.percent_article_reviewed}
+              percent={
+                Object.keys(review).length !== 0
+                  ? review?.percent_article_reviewed
+                  : 0
+              }
               radius={100}
               borderWidth={15}
               color={COLORS.success}
@@ -1316,7 +1311,10 @@ export const LaporanPengetahuan = () => {
               bgColor="#fff"
             >
               <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
-                {review?.percent_article_reviewed}%
+                {Object.keys(review).length !== 0
+                  ? review?.percent_article_reviewed
+                  : 0}
+                %
               </Text>
             </ProgressCircle>
           </View>
@@ -1328,7 +1326,9 @@ export const LaporanPengetahuan = () => {
                 marginBottom: 10,
               }}
             >
-              {review?.total_article_reviewed}
+              {Object.keys(review).length !== 0
+                ? review?.total_article_reviewed
+                : 0}
             </Text>
           </View>
           <Text
