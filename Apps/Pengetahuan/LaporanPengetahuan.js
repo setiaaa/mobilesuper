@@ -182,10 +182,16 @@ export const LaporanPengetahuan = () => {
 
   const widthAndHeight = 200;
   const dataPie = [
-    accumulation?.kegiatan?.total,
-    accumulation["video_/_jurnal"]?.total,
-    accumulation?.infografis?.total,
-    accumulation?.Tidak_Sesuai?.total,
+    Object.keys(accumulation).length !== 0 ? accumulation?.Kegiatan?.total : 0,
+    Object.keys(accumulation).length !== 0
+      ? accumulation["Video_/_Jurnal"]?.total
+      : 0,
+    Object.keys(accumulation).length !== 0
+      ? accumulation?.Infografis?.total
+      : 0,
+    Object.keys(accumulation).length !== 0
+      ? accumulation?.Tidak_Sesuai?.total
+      : 0,
   ];
 
   const handleDataPie = [1];
@@ -201,7 +207,7 @@ export const LaporanPengetahuan = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log("review-" + review?.percent_article_reviewed);
+  console.log(review?.total_article_unreview?.Kegiatan);
 
   return (
     <View style={{ flex: 1 }}>
@@ -997,7 +1003,9 @@ export const LaporanPengetahuan = () => {
                 marginBottom: 10,
               }}
             >
-              {accumulation?.total_article_all}
+              {Object.keys(accumulation).length !== 0
+                ? accumulation?.total_article_all
+                : 0}
             </Text>
             <Text
               style={{
@@ -1071,14 +1079,16 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
-                      ? accumulation?.kegiatan?.total
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation?.Kegiatan?.total !== undefined
+                      ? accumulation?.Kegiatan?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
-                        ? accumulation?.kegiatan?.percent / 100
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation?.Kegiatan?.percent !== undefined
+                        ? accumulation?.Kegiatan?.percent / 100
                         : 0
                     }
                     width={110}
@@ -1128,14 +1138,16 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
-                      ? accumulation["video_/_jurnal"]?.total
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation["Video_/_Jurnal"]?.total !== undefined
+                      ? accumulation["Video_/_Jurnal"]?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
-                        ? accumulation["video_/_jurnal"]?.percent / 100
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation["Video_/_Jurnal"]?.percent !== undefined
+                        ? accumulation["Video_/_Jurnal"]?.percent / 100
                         : 0
                     }
                     width={110}
@@ -1186,14 +1198,16 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
-                      ? accumulation?.infografis?.total
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation?.Infografis?.total !== undefined
+                      ? accumulation?.Infografis?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
-                        ? accumulation?.infografis?.percent / 100
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation?.Infografis?.percent !== undefined
+                        ? accumulation?.Infografis?.percent / 100
                         : 0
                     }
                     width={110}
@@ -1242,13 +1256,15 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation?.Tidak_Sesuai?.total !== undefined
                       ? accumulation?.Tidak_Sesuai?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation?.Tidak_Sesuai?.percent !== undefined
                         ? accumulation?.Tidak_Sesuai?.percent / 100
                         : 0
                     }
@@ -1311,7 +1327,8 @@ export const LaporanPengetahuan = () => {
               bgColor="#fff"
             >
               <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
-                {Object.keys(review).length !== 0
+                {Object.keys(review).length !== 0 &&
+                review?.percent_article_reviewed !== undefined
                   ? review?.percent_article_reviewed
                   : 0}
                 %
@@ -1326,7 +1343,8 @@ export const LaporanPengetahuan = () => {
                 marginBottom: 10,
               }}
             >
-              {Object.keys(review).length !== 0
+              {Object.keys(review).length !== 0 &&
+              review?.total_article_reviewed !== undefined
                 ? review?.total_article_reviewed
                 : 0}
             </Text>
@@ -1385,7 +1403,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {review?.total_article_unreview?.kegiatan}
+                    {review?.total_article_unreview?.Kegiatan !== undefined
+                      ? review?.total_article_unreview?.Kegiatan
+                      : "-"}
                   </Text>
                 </View>
               </View>
@@ -1430,8 +1450,10 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {Object.keys(review).length !== 0
-                      ? review?.total_article_unreview["video_/_jurnal"]
+                    {Object.keys(review).length !== 0 &&
+                    review?.total_article_unreview["Video_/_Jurnal"] !==
+                      undefined
+                      ? review?.total_article_unreview["Video_/_Jurnal"]
                       : "-"}
                   </Text>
                 </View>
@@ -1480,7 +1502,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {review?.total_article_unreview?.infografis}
+                    {review?.total_article_unreview?.Infografis !== undefined
+                      ? review?.total_article_unreview?.Infografis
+                      : "-"}
                   </Text>
                 </View>
               </View>
@@ -1525,7 +1549,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {review?.total_article_unreview?.Tidak_Sesuai}
+                    {review?.total_article_unreview?.Tidak_Sesuai !== undefined
+                      ? review?.total_article_unreview?.Tidak_Sesuai
+                      : "-"}
                   </Text>
                 </View>
               </View>
