@@ -94,10 +94,10 @@ export const ListPegawai = () => {
 
   const loadMore = () => {
     if (filterData.length !== 0) {
-      // if (filterData.length % 10 === 0) {
-      setPage(page + 1);
-      // console.log(page);
-      // }
+      if (filterData.length % 10 === 0) {
+        setPage(page + 1);
+        // console.log(page);
+      }
     }
   };
 
