@@ -207,7 +207,7 @@ export const LaporanPengetahuan = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(review?.total_article_unreview?.Kegiatan);
+  // console.log(review?.total_article_unreview?.Kegiatan);
 
   return (
     <View style={{ flex: 1 }}>
