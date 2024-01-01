@@ -6,7 +6,10 @@ import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getEmployee } from "../service/api";
 import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
-import { setAddressbookEmployee, setAddressbookSelected } from "../store/AddressbookKKP";
+import {
+  setAddressbookEmployee,
+  setAddressbookSelected,
+} from "../store/AddressbookKKP";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../components/Search";
 import { nde_api } from "../utils/api.config";
@@ -109,7 +112,7 @@ export const AddressBookPegawai = ({ route }) => {
 
   useEffect(() => {
     if (token !== "") {
-      if (config.tipeAddress === "korespondensi") {
+      if (config.tipeAddress === "korespondensi" && search.length == 0) {
         (async () => {
           let response = await getHTTP(nde_api.employee);
           dispatch(setAddressbookEmployee(response.data));
@@ -163,7 +166,7 @@ export const AddressBookPegawai = ({ route }) => {
         setFilterData(addressbook.employee);
       }
     }
-  }, [search, filterData]);
+  }, [search]);
 
   const { device } = useSelector((state) => state.apps);
 

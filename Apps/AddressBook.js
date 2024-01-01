@@ -243,7 +243,7 @@ export const AddressBook = ({ route }) => {
           <View style={{ flex: 1, alignItems: "center" }}>
             <Text
               style={{
-                fontSize: fontSizeResponsive("H4", device),
+                fontSize: fontSizeResponsive("H1", device),
                 fontWeight: 600,
                 color: COLORS.white,
               }}
