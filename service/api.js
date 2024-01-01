@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Config } from "../constants/config";
 
-const BASE_URL = "https://portal.kkp.go.id/api/";
+const BASE_URL = Config.base_url;
 const kebijakan = BASE_URL + "policy/";
 const kalender = BASE_URL + "calendar/";
 const addressbook = BASE_URL + "bridge/";
@@ -54,8 +55,8 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 
 const SPPD = BASE_URL + "monperdin/";
 
-const Cuti = `https://portal.kkp.go.id/service/cuti`;
-const HelpDesk = `https://portal.kkp.go.id/service/helpdesk`;
+const Cuti = Config.base_url_cuti;
+const HelpDesk = Config.base_url_helpdesk;
 
 //Login
 export const Login = createAsyncThunk(
@@ -67,7 +68,7 @@ export const Login = createAsyncThunk(
         password: password,
       };
       const respon = await axios.post(
-        `https://portal.kkp.go.id/service/auth/mobile/login/`, // auth masih kube, belum dirubah ke production
+        Config.base_url_auth, // auth masih kube, belum dirubah ke production
         payload
       );
       return respon?.data;

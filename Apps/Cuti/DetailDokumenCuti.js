@@ -34,6 +34,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { Config } from "../../constants/config";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
@@ -624,7 +625,7 @@ export const DetailDokumenCuti = ({ route }) => {
     toggle: false,
   });
   const navigation = useNavigation();
-  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const BASE_URL = Config.base_url + "bridge";
 
   const selisih = () => {
     let tanggalMulaiStr = moment(

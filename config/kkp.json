@@ -58,12 +58,12 @@
     "eas": {
       "projectId": "12f26272-9cc5-4b5e-a441-139f928af44b"
     },
-    "id": "telkom",
-    "base_url": "https://apigw.kubekkp.coofis.com/",
-    "base_url_auth": "https://auth.kubekkp.coofis.com/mobile/login/",
-    "base_url_cuti": "https://cuti.kubekkp.coofis.com/api/",
-    "base_url_helpdesk": "https://helpdesk.kubekkp.coofis.com/api/",
-    "upgrade_url": "https://portal.telkom.co.id/store/experience/apps/8",
+    "id": "kkp",
+    "base_url": "https://portal.kkp.go.id/api/",
+    "base_url_auth": "https://portal.kkp.go.id/service/auth/mobile/login/",
+    "base_url_cuti": "https://portal.kkp.go.id/service/cuti/api/",
+    "base_url_helpdesk": "https://portal.kkp.go.id/service/helpdesk",
+    "upgrade_url": "",
     "loginSSO": false,
     "termOfUse": true,
     "editInpro": false,

@@ -30,6 +30,7 @@ import { getTokenValue } from "../../service/session";
 import { setDigitalSignLists } from "../../store/DigitalSign";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
+import { Config } from "../../constants/config";
 
 const ListDokumenLain = ({ item, variant, token, device }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDigisign(params));
   };
-  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const BASE_URL = Config.base_url + "bridge";
   return (
     <View
       key={item.id}

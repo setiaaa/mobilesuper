@@ -25,6 +25,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { Config } from "../../constants/config";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -33,7 +34,7 @@ export const Profile = () => {
     (state) => state.superApps
   );
   const { device } = useSelector((state) => state.apps);
-  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const BASE_URL = Config.base_url + "bridge";
   return (
     <>
       {loading ? <Loading /> : null}

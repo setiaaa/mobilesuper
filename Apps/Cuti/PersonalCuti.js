@@ -30,6 +30,7 @@ import { Loading } from "../../components/Loading";
 import { CardArsipCuti } from "../../components/CardArsipCuti";
 import { RefreshControl } from "react-native";
 import { CardFormPengajuanCuti } from "../../components/CardFormPengajuanCuti";
+import { Config } from "../../constants/config";
 
 export const PersonalCuti = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ export const PersonalCuti = () => {
   }, [profile?.nip]);
 
   const navigation = useNavigation();
-  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const BASE_URL = Config.base_url + "bridge";
   const { personal, kuota, loading, arsip } = useSelector(
     (state) => state.cuti
   );
@@ -72,8 +73,7 @@ export const PersonalCuti = () => {
         dispatch(getKuotaCuti(profile?.nip));
         dispatch(getArsipCuti(profile?.nip));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -103,7 +103,6 @@ export const PersonalCuti = () => {
     } else {
     }
   }, [arsipLists]);
-
 
   const { device } = useSelector((state) => state.apps);
 
