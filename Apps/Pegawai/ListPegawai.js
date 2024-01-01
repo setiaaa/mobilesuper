@@ -93,7 +93,7 @@ export const ListPegawai = () => {
   }, [search]);
 
   const loadMore = () => {
-    if (filterData.length !== 0) {
+    if (filterData.length !== 0 && inputValue === "") {
       if (filterData.length % 10 === 0) {
         setPage(page + 1);
         // console.log(page);
@@ -162,6 +162,8 @@ export const ListPegawai = () => {
     setIsFiltered(false);
     setSearch(inputValue);
   };
+
+  console.log(pegawai.lists);
 
   return (
     <>
@@ -307,6 +309,7 @@ export const ListPegawai = () => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
             ListEmptyComponent={() => <ListEmpty />}
+            style={{ height: "75%" }}
           />
           {/* {loading && <Loading />} */}
         </View>
