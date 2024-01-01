@@ -66,9 +66,9 @@ export const ListPegawai = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getPegawai({ token, page, search }));
-      // console.log(page, "page");
+      console.log(page, "page");
     }
-  }, [token, page, search]);
+  }, [token, search, page]);
 
   const { pegawai, loading } = useSelector((state) => state.Pegawai);
   const { device } = useSelector((state) => state.apps);
@@ -96,6 +96,7 @@ export const ListPegawai = () => {
     if (filterData.length !== 0) {
       // if (filterData.length % 10 === 0) {
       setPage(page + 1);
+      // console.log(page);
       // }
     }
   };
@@ -126,8 +127,7 @@ export const ListPegawai = () => {
         console.log(page, "page");
         console.log("Refresh Berhasil");
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -301,8 +301,8 @@ export const ListPegawai = () => {
               ) : null
             }
             keyExtractor={(item) => item.id}
-            scrollEnabled={true}
-            onEndReached={loadMore}
+            // scrollEnabled={true}
+            onEndReached={filterData.length !== 0 ? loadMore : null}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

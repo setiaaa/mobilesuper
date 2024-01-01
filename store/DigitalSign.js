@@ -11,6 +11,7 @@ import {
   getSummaryCount,
   getSummaryList,
   putTandaTangan,
+  getListRejected,
 } from "../service/api";
 
 const DigitalSignSlice = createSlice({
@@ -154,6 +155,13 @@ const DigitalSignSlice = createSlice({
       .addCase(putTandaTangan.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+      })
+      .addCase(getListRejected.fulfilled, (state, action) => {
+        state.loading = false;
+        state.dokumenlain.lists = action.payload.data;
+      })
+      .addCase(getListRejected.pending, (state, action) => {
+        state.loading = true;
       });
   },
 });

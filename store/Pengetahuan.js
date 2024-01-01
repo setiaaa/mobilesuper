@@ -81,8 +81,8 @@ const PengetahuanSlice = createSlice({
     },
     download: {},
     exportLaporan: {
-      quarter:{},
-      employee:{},
+      quarter: {},
+      employee: {},
     },
     penilaian: {
       lists: [],
@@ -146,8 +146,7 @@ const PengetahuanSlice = createSlice({
       .addCase(postComment.fulfilled, (state, action) => {
         state.refresh = true;
       })
-      .addCase(postComment.rejected, (state, action) => {
-      })
+      .addCase(postComment.rejected, (state, action) => {})
       .addCase(getListsLike.fulfilled, (state, action) => {
         state.linimasa.listsLike = action.payload;
         state.loading = false;
@@ -359,12 +358,14 @@ const PengetahuanSlice = createSlice({
       .addCase(getListPegawai.fulfilled, (state, action) => {
         state.pegawai.lists = action.payload;
         state.loading = false;
+        console.log(action.payload);
       })
       .addCase(getListPegawai.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(getListPegawai.rejected, (state, action) => {
         state.loading = false;
+        console.log("error");
       })
       .addCase(getListPostPegawai.fulfilled, (state, action) => {
         state.postinganPegawai.lists = action.payload;
@@ -405,7 +406,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getExportFileEmployee.rejected, (state, action) => {
         state.loading = false;
-      })
+      });
   },
 });
 

@@ -523,7 +523,7 @@ export const getPegawai = createAsyncThunk(
     const offset = page * 10;
     const respon =
       search === ""
-        ? await axios.get(`${pegawai}profile/all/?limit=10&offset=${offset}`, {
+        ? await axios.get(`${pegawai}profile/all/?limit=${offset}`, {
             headers: { Authorization: token },
           })
         : await axios.get(`${pegawai}profile/all/?search=${search}`, {
@@ -1706,6 +1706,18 @@ export const getListCompleted = createAsyncThunk(
     return {
       data: respon?.data.results,
       tipe: tipe,
+    };
+  }
+);
+
+export const getListRejected = createAsyncThunk(
+  "digitalsign/getListRejected",
+  async ({ token }) => {
+    const respon = await axios.get(`${digitalSign}document/reject/`, {
+      headers: { Authorization: token },
+    });
+    return {
+      data: respon?.data.results,
     };
   }
 );

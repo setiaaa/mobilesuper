@@ -99,7 +99,7 @@ import { Dimensions, Platform, View } from "react-native";
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
-const {width, height} = Dimensions.get("window")
+const { width, height } = Dimensions.get("window");
 export const BottomTabs = () => {
   return (
     <Host>
@@ -173,38 +173,40 @@ export const BottomTabsKoresp = () => {
 export const BottomTabsRepo = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ 
-      height: Platform.OS === "ios" ? "100%" : height-10,
-      width 
-    }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarRepo {...props} />}
-        initialRouteName="Dokumen"
+      <View
+        style={{
+          height: Platform.OS === "ios" ? "100%" : height - 10,
+          width,
+        }}
       >
-        <Tab.Screen
-          name="Dokumen"
-          component={Dokumen}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Dibagikan"
-          component={Dibagikan}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenTamplate"
-          component={DokumenTamplate}
-          options={{ headerShown: false }}
-        />
-        {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
+        <Tab.Navigator
+          tabBar={(props) => <MyTabBarRepo {...props} />}
+          initialRouteName="Dokumen"
+        >
+          <Tab.Screen
+            name="Dokumen"
+            component={Dokumen}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Dibagikan"
+            component={Dibagikan}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DokumenTamplate"
+            component={DokumenTamplate}
+            options={{ headerShown: false }}
+          />
+          {/* <Tab.Screen name='Kebijakan' component={DrawerNavigation}
           options={{
             headerShown: false,
             tabBarStyle: { display: 'none' },
             tabBarItemStyle: { display: 'none' }
           }}
         /> */}
-      </Tab.Navigator>
-    </View>
+        </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -212,34 +214,34 @@ export const BottomTabsRepo = () => {
 export const BottomTabsKeb = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarKeb {...props} />}
-        initialRouteName="Pencarian"
-      >
-        <Tab.Screen
-          name="Pencarian"
-          component={Pencarian}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Tematik"
-          component={Tematik}
-          options={{ headerShown: false }}
-        />
-        {/* <Tab.Screen name='Pencarian' component={Pencarian}
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabBarKeb {...props} />}
+          initialRouteName="Pencarian"
+        >
+          <Tab.Screen
+            name="Pencarian"
+            component={Pencarian}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Dashboard"
+            component={Dashboard}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Tematik"
+            component={Tematik}
+            options={{ headerShown: false }}
+          />
+          {/* <Tab.Screen name='Pencarian' component={Pencarian}
           options={{
             headerShown: false,
             tabBarStyle: { display: 'none' },
             tabBarItemStyle: { display: 'none' }
           }}
         /> */}
-      </Tab.Navigator>
+        </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
   );
@@ -248,28 +250,28 @@ export const BottomTabsKeb = () => {
 export const BottomTabsDetailRepo = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarDetailRepo {...props} />}
-        initialRouteName="DetailActivity"
-      >
-        <Stack.Screen
-          name="DetailActivity"
-          component={DetailActivity}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Lampiran"
-          component={Lampiran}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Komentar"
-          component={Komentar}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </View>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabBarDetailRepo {...props} />}
+          initialRouteName="DetailActivity"
+        >
+          <Stack.Screen
+            name="DetailActivity"
+            component={DetailActivity}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Lampiran"
+            component={Lampiran}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Komentar"
+            component={Komentar}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </View>
     </BottomSheetModalProvider>
   );
 };
@@ -343,27 +345,27 @@ export const BottomTabsDetailKorespondensi = () => {
 export const BottomTabsDigitalSign = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabDigitalSign {...props} />}
-        initialRouteName="Bankom"
-      >
-        <Tab.Screen
-          name="Bankom"
-          component={Bankom}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenLain"
-          component={DokumenLain}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="LaporanDigitalSign"
-          component={LaporanDigitalSign}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabDigitalSign {...props} />}
+          initialRouteName="Bankom"
+        >
+          <Tab.Screen
+            name="Bankom"
+            component={Bankom}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DokumenLain"
+            component={DokumenLain}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="LaporanDigitalSign"
+            component={LaporanDigitalSign}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
   );
@@ -372,37 +374,37 @@ export const BottomTabsDigitalSign = () => {
 export const BottomTabsPengetahuan = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarPengetahuan {...props} />}
-        initialRouteName="LiniMasa"
-      >
-        <Tab.Screen
-          name="LiniMasa"
-          component={LiniMasa}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="PostinganSaya"
-          component={PostinganSaya}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="RangkumanIKU"
-          component={RangkumanIKU}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="PenilaianPenggetahaun"
-          component={PenilaianPenggetahaun}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="LaporanPengetahuan"
-          component={LaporanPengetahuan}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabBarPengetahuan {...props} />}
+          initialRouteName="LiniMasa"
+        >
+          <Tab.Screen
+            name="LiniMasa"
+            component={LiniMasa}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="PostinganSaya"
+            component={PostinganSaya}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="RangkumanIKU"
+            component={RangkumanIKU}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="PenilaianPenggetahaun"
+            component={PenilaianPenggetahaun}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="LaporanPengetahuan"
+            component={LaporanPengetahuan}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
   );
@@ -411,22 +413,22 @@ export const BottomTabsPengetahuan = () => {
 export const BottomTabsDetailEvent = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabDetailEvent {...props} />}
-        initialRouteName="DetailEvent"
-      >
-        <Tab.Screen
-          name="DetailEvent"
-          component={DetailEvent}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="AgendaEvent"
-          component={AgendaEvent}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabDetailEvent {...props} />}
+          initialRouteName="DetailEvent"
+        >
+          <Tab.Screen
+            name="DetailEvent"
+            component={DetailEvent}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="AgendaEvent"
+            component={AgendaEvent}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
   );
@@ -435,27 +437,27 @@ export const BottomTabsDetailEvent = () => {
 export const BottomTabsDetailAgenda = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabDetailAgenda {...props} />}
-        initialRouteName="DetailAgenda"
-      >
-        <Tab.Screen
-          name="DetailAgenda"
-          component={DetailAgenda}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Todo"
-          component={Todo}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Absen"
-          component={Absen}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabDetailAgenda {...props} />}
+          initialRouteName="DetailAgenda"
+        >
+          <Tab.Screen
+            name="DetailAgenda"
+            component={DetailAgenda}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Todo"
+            component={Todo}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Absen"
+            component={Absen}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
   );
@@ -464,22 +466,22 @@ export const BottomTabsDetailAgenda = () => {
 export const BottomTabsSPPD = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabBarSPPD {...props} />}
-        initialRouteName="Personal"
-      >
-        <Tab.Screen
-          name="Personal"
-          component={Personal}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenSPPD"
-          component={DokumenSPPD}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabBarSPPD {...props} />}
+          initialRouteName="Personal"
+        >
+          <Tab.Screen
+            name="Personal"
+            component={Personal}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DokumenSPPD"
+            component={DokumenSPPD}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
   );
@@ -519,27 +521,27 @@ export const BottomTabsOutgoingKorespondensi = () => {
 export const BottomTabsCuti = () => {
   return (
     <BottomSheetModalProvider>
-    <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
-      <Tab.Navigator
-        tabBar={(props) => <MyTabCuti {...props} />}
-        initialRouteName="PersonalCuti"
-      >
-        <Tab.Screen
-          name="PersonalCuti"
-          component={PersonalCuti}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="PersetujuanCuti"
-          component={PersetujanCuti}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="DokumenCuti"
-          component={DokumenCuti}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabCuti {...props} />}
+          initialRouteName="PersonalCuti"
+        >
+          <Tab.Screen
+            name="PersonalCuti"
+            component={PersonalCuti}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="PersetujuanCuti"
+            component={PersetujanCuti}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DokumenCuti"
+            component={DokumenCuti}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
       </View>
     </BottomSheetModalProvider>
   );

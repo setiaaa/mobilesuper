@@ -52,10 +52,17 @@ export const AddressBookJabatan = ({ route }) => {
           // addressbook.employee = response.data;
         })();
         //initial default
-        getDiv(profileOrganization?.fucfu_id);
-        setKategori({"key": profileOrganization?.division_id, "value": profileOrganization?.division})
-        setselectedDivision(profileOrganization?.division_id);
-        getTitleHirarki(profileOrganization?.division_id);
+        getDiv(
+          profileOrganization?.fucfu_id ? profileOrganization?.fucfu_id : 1
+        );
+        if (profileOrganization?.fucfu_id) {
+          setKategori({
+            key: profileOrganization?.division_id,
+            value: profileOrganization?.division,
+          });
+          setselectedDivision(profileOrganization?.division_id);
+          getTitleHirarki(profileOrganization?.division_id);
+        }
       } else {
         dispatch(getDivision(token));
         // dispatch(getEmployee(token))

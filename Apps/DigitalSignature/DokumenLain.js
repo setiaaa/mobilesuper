@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import ListEmpty from "../../components/ListEmpty";
 import {
   getDetailDigisign,
-  getListCompleted,
+  getListRejected,
   getListComposer,
   getListDraft,
   getListInProgress,
@@ -162,6 +162,33 @@ const ListDokumenLain = ({ item, variant, token, device }) => {
                 />
               ))}
             </View>
+            {variant === "signed" ? (
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    width: 110,
+                    textAlign: "auto",
+                    paddingRight: 12,
+                    fontWeight: FONTWEIGHT.normal,
+                    width: "45%",
+                  }}
+                >
+                  Status
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H3", device),
+                    width: 200,
+                    textAlign: "auto",
+                    fontWeight: FONTWEIGHT.normal,
+                    width: "55%",
+                  }}
+                >
+                  :{item.state === "in_progress" ? "In Progress" : "Done"}
+                </Text>
+              </View>
+            ) : null}
           </View>
         </View>
       </TouchableOpacity>
@@ -197,9 +224,9 @@ export const DokumenLain = () => {
     SetVariant("inprogress");
     dispatch(getListInProgress({ token: token, tipe: tipe }));
   };
-  const filterHandlerCompleted = () => {
-    SetVariant("completed");
-    dispatch(getListCompleted({ token: token, tipe: tipe }));
+  const filterHandlerRejected = () => {
+    SetVariant("rejected");
+    dispatch(getListRejected({ token: token }));
   };
   const filterHandlerDraft = () => {
     SetVariant("draft");
@@ -243,8 +270,8 @@ export const DokumenLain = () => {
         if (variant === "inprogress") {
           dispatch(getListInProgress({ token: token, tipe: tipe }));
         }
-        if (variant === "completed") {
-          dispatch(getListCompleted({ token: token, tipe: tipe }));
+        if (variant === "rejected") {
+          dispatch(getListRejected({ token: token, tipe: tipe }));
         }
         if (variant === "draft") {
           dispatch(getListDraft({ token: token, tipe: tipe }));
@@ -253,8 +280,7 @@ export const DokumenLain = () => {
           dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
         }
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -421,6 +447,37 @@ export const DokumenLain = () => {
               paddingVertical: 6,
               borderWidth: 1,
               backgroundColor:
+                variant === "rejected" ? COLORS.infoDangerLight : COLORS.input,
+              borderRadius: 30,
+              borderColor:
+                variant === "rejected"
+                  ? COLORS.infoDangerLight
+                  : COLORS.ExtraDivinder,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => filterHandlerRejected()}
+          >
+            <Text
+              style={{
+                color:
+                  variant === "rejected"
+                    ? COLORS.infoDanger
+                    : COLORS.foundation,
+                fontSize: fontSizeResponsive("H4", device),
+              }}
+            >
+              Rejected
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: device === "tablet" ? "19%" : null,
+
+              paddingHorizontal: 6,
+              paddingVertical: 6,
+              borderWidth: 1,
+              backgroundColor:
                 variant === "signed" ? COLORS.infoDangerLight : COLORS.input,
               borderRadius: 30,
               borderColor:
@@ -440,37 +497,6 @@ export const DokumenLain = () => {
               }}
             >
               Signed
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              width: device === "tablet" ? "19%" : null,
-
-              paddingHorizontal: 6,
-              paddingVertical: 6,
-              borderWidth: 1,
-              backgroundColor:
-                variant === "completed" ? COLORS.infoDangerLight : COLORS.input,
-              borderRadius: 30,
-              borderColor:
-                variant === "completed"
-                  ? COLORS.infoDangerLight
-                  : COLORS.ExtraDivinder,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onPress={() => filterHandlerCompleted()}
-          >
-            <Text
-              style={{
-                color:
-                  variant === "completed"
-                    ? COLORS.infoDanger
-                    : COLORS.foundation,
-                fontSize: fontSizeResponsive("H4", device),
-              }}
-            >
-              Selesai
             </Text>
           </TouchableOpacity>
         </View>
