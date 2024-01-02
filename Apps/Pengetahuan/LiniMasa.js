@@ -453,7 +453,10 @@ const CardLiniMasa = ({ item, token, device }) => {
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {item?.published_date?.slice(0, -9)}
+                  {/* {item?.published_date?.slice(0, -9)} */}
+                  {moment(item?.published_date, DATETIME.LONG_DATETIME).format(
+                    DATETIME.LONG_DATE
+                  )}
                 </Text>
                 <View
                   style={{

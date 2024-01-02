@@ -611,7 +611,7 @@ const ShimmerParagraph = () => {
   );
 };
 
-export const DetailLinimasa = ({route}) => {
+export const DetailLinimasa = ({ route }) => {
   const like_list = route.params;
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
@@ -889,7 +889,11 @@ export const DetailLinimasa = ({route}) => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        {detail.published_date?.slice(0, -9)}
+                        {/* {detail.published_date?.slice(0, -9)} */}
+                        {moment(
+                          detail?.published_date,
+                          DATETIME.LONG_DATETIME
+                        ).format(DATETIME.LONG_DATE)}
                       </Text>
                     )}
                   </View>

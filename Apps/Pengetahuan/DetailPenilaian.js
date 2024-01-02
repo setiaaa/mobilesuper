@@ -388,7 +388,7 @@ export const DetailPenilaian = () => {
                 :{" "}
                 {data?.published_date === null || data?.published_date === ""
                   ? "-"
-                  : moment(data?.published_date, "HH:mm:ss").format(
+                  : moment(data?.published_date, DATETIME.LONG_DATETIME).format(
                       DATETIME.LONG_DATE
                     )}
               </Text>
