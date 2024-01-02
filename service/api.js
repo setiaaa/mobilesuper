@@ -812,6 +812,7 @@ export const getDetailBerita = createAsyncThunk(
 export const getLinimasa = createAsyncThunk(
   "mp/getLinimasa",
   async ({ token, page, category, competence, unker, satker, search }) => {
+    console.log(category);
     const respon = await axios.get(
       `${Linimasa}linimasa/?limit=${page}&category=${category}&competence=${competence}&unker=${unker}&satker=${satker}&type=&search=${search}`,
       {
