@@ -100,7 +100,7 @@ const CardPenilaian = ({ item, token, device }) => {
               }}
             >
               Tanggal:{" "}
-              {moment(item.published_date, "HH:mm:ss").format(
+              {moment(item.published_date, DATETIME.LONG_DATETIME).format(
                 DATETIME.LONG_DATE
               )}
             </Text>

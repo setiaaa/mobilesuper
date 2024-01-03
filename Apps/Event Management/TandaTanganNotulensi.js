@@ -10,6 +10,7 @@ import {
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Config } from "../../constants/config";
 
 export const TandaTanganNotulensi = ({ route }) => {
   const { item } = route.params;
@@ -54,7 +55,7 @@ export const TandaTanganNotulensi = ({ route }) => {
               "tampilan": "visible",
           }
             $.ajax({
-              url: 'https://apigw.kubekkp.coofis.com/digitalsign/document/approve/',
+              url: ' ${Config.base_url}digitalsign/document/approve/',
               type: 'PUT',
               contentType: 'application/json; charset=utf-8',
               headers: {

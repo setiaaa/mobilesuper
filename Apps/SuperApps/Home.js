@@ -75,6 +75,7 @@ import {
 } from "react-native-responsive-screen";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { setDevice } from "../../store/Apps";
+import { Config } from "../../constants/config";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -294,10 +295,7 @@ export const Home = () => {
               <View>
                 <Image
                   source={{
-                    uri:
-                      "https://apigw.kubekkp.coofis.com/" +
-                      "bridge/" +
-                      profile.avatar,
+                    uri: Config.base_url + "bridge/" + profile.avatar,
                   }}
                   style={{
                     width: device === "tablet" ? 100 : 50,

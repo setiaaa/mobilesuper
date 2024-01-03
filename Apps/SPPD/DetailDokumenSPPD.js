@@ -72,7 +72,6 @@ export const DetailDokumenSPPD = ({ route }) => {
   //       encoding: FileSystem.EncodingType.Base64,
   //     });
 
-
   //     // Sekarang Anda dapat menggunakan file URL untuk merujuk ke file PDF
   //     // Misalnya, membuka file menggunakan expo-document-viewer
   //     // (pastikan untuk menginstal expo-document-viewer terlebih dahulu)
@@ -106,8 +105,7 @@ export const DetailDokumenSPPD = ({ route }) => {
         // setIsLoading(false);
         console.error("download error:", e);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {
@@ -665,7 +663,7 @@ export const DetailDokumenSPPD = ({ route }) => {
               }}
               onPress={() => {
                 // downloadFile(
-                //   "https://apigw.kubekkp.coofis.com/monperdin/document/back-form/" +
+                //   "https://portal.kkp.go.id/api/monperdin/document/back-form/" +
                 //     dokumen.detail?.id +
                 //     "/",
                 //   "application/pdf",
