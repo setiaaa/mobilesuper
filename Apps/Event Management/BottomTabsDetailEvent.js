@@ -57,11 +57,14 @@ function MyTabDetailEvent({ props, navigation }) {
                   name="information-circle-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Detail
@@ -80,11 +83,14 @@ function MyTabDetailEvent({ props, navigation }) {
                   name="information-circle-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Detail
@@ -129,11 +135,14 @@ function MyTabDetailEvent({ props, navigation }) {
                   name="reorder-four-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Agenda
@@ -152,11 +161,14 @@ function MyTabDetailEvent({ props, navigation }) {
                   name="reorder-four-outline"
                   color={COLORS.grey}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.grey,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Agenda

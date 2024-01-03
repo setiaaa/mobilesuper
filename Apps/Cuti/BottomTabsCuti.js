@@ -34,7 +34,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
+                  height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 95 : 80,
                 }}
@@ -65,7 +65,7 @@ function MyTabCuti({ props, navigation }) {
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 40 : 40,
+                    bottom: device === "tablet" ? 52 : 40,
                   }}
                 >
                   Personal
@@ -75,9 +75,9 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
+                  height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
+                  width: device === "tablet" ? 95 : 80,
                 }}
               >
                 <Ionicons
@@ -91,7 +91,7 @@ function MyTabCuti({ props, navigation }) {
                     color: COLORS.grey,
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 40 : 40,
+                    bottom: device === "tablet" ? 52 : 40,
                   }}
                 >
                   Personal
@@ -112,7 +112,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
+                  height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -144,7 +144,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 24,
+                    bottom: device === "tablet" ? 32 : 24,
                   }}
                 >
                   Dokumen Persetujuan
@@ -154,7 +154,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
+                  height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -171,7 +171,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 24,
+                    bottom: device === "tablet" ? 32 : 24,
                   }}
                 >
                   Dokumen Persetujuan
@@ -191,7 +191,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
+                  height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -223,7 +223,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 24,
+                    bottom: device === "tablet" ? 32 : 24,
                   }}
                 >
                   Dokumen Personal
@@ -233,7 +233,7 @@ function MyTabCuti({ props, navigation }) {
               <View
                 style={{
                   alignItems: "center",
-                  height: device === "tablet" ? 120 : 95,
+                  height: device === "tablet" ? 140 : 95,
                   justifyContent: "center",
                   width: device === "tablet" ? 150 : 90,
                 }}
@@ -250,7 +250,7 @@ function MyTabCuti({ props, navigation }) {
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     position:"absolute",
-                    bottom: device === "tablet" ? 20 : 24,
+                    bottom: device === "tablet" ? 32 : 24,
                   }}
                 >
                   Dokumen Personal
