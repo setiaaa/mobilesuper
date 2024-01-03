@@ -182,9 +182,6 @@ const LihatSuratSPPD = ({ route }) => {
           source={{
             base64: surat,
           }}
-          onLoadComplete={(numberOfPages, filePath) => {}}
-          onPageChanged={(page, numberOfPages) => {}}
-          onError={(error) => {}}
           withScroll={true}
         />
         {/* <Image
