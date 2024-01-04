@@ -891,11 +891,13 @@ export const DetailLinimasa = ({ route }) => {
                         }}
                       >
                         {/* {detail.published_date?.slice(0, -9)} */}
-                        {DateFormat({
-                          date: detail?.published_date,
-                          fromDate: DATETIME.LONG_DATETIME,
-                          toDate: DATETIME.LONG_DATE,
-                        })}
+                        {detail.published_date !== undefined
+                          ? DateFormat({
+                              date: detail?.published_date,
+                              fromDate: DATETIME.LONG_DATETIME,
+                              toDate: DATETIME.LONG_DATE,
+                            })
+                          : null}
                       </Text>
                     )}
                   </View>

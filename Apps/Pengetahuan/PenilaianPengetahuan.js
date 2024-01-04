@@ -107,7 +107,7 @@ const CardPenilaian = ({ item, token, device }) => {
               }}
             >
               {/* Tanggal: {engDate.locale("id").format("LL")} */}
-              Tanggal:
+              Tanggal:{" "}
               {DateFormat({
                 date: item.published_date,
                 fromDate: DATETIME.LONG_DATETIME,
