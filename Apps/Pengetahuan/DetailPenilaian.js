@@ -14,6 +14,7 @@ import {
   FONTWEIGHT,
   FONTSIZE,
   fontSizeResponsive,
+  DateFormat,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -388,9 +389,11 @@ export const DetailPenilaian = () => {
                 :{" "}
                 {data?.published_date === null || data?.published_date === ""
                   ? "-"
-                  : moment(data?.published_date, DATETIME.LONG_DATETIME)
-                      .locale("id")
-                      .format(DATETIME.LONG_DATE)}
+                  : DateFormat({
+                      date: data.published_date,
+                      fromDate: DATETIME.LONG_DATETIME,
+                      toDate: DATETIME.LONG_DATE,
+                    })}
               </Text>
             </View>
 

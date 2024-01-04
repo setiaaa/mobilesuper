@@ -3,8 +3,11 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
+  FORMATDATE,
+  fixedDateString,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -48,6 +51,8 @@ const CardPenilaian = ({ item, token, device }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailLinimasa({ token, id }));
   };
+
+  // const tanggal = item.published_date;
 
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -103,9 +108,11 @@ const CardPenilaian = ({ item, token, device }) => {
             >
               {/* Tanggal: {engDate.locale("id").format("LL")} */}
               Tanggal:
-              {moment(item.published_date, DATETIME.LONG_DATETIME)
-                .locale("id")
-                .format(DATETIME.LONG_DATE)}
+              {DateFormat({
+                date: item.published_date,
+                fromDate: DATETIME.LONG_DATETIME,
+                toDate: DATETIME.LONG_DATE,
+              })}
             </Text>
             <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
               <Text

@@ -13,6 +13,7 @@ import { Image } from "react-native";
 import {
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -890,9 +891,11 @@ export const DetailLinimasa = ({ route }) => {
                         }}
                       >
                         {/* {detail.published_date?.slice(0, -9)} */}
-                        {moment(detail?.published_date, DATETIME.LONG_DATETIME)
-                          .locale("id")
-                          .format(DATETIME.LONG_DATE)}
+                        {DateFormat({
+                          date: detail?.published_date,
+                          fromDate: DATETIME.LONG_DATETIME,
+                          toDate: DATETIME.LONG_DATE,
+                        })}
                       </Text>
                     )}
                   </View>

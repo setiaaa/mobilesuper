@@ -6,6 +6,7 @@ import {
   AVATAR,
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -454,9 +455,11 @@ const CardLiniMasa = ({ item, token, device }) => {
                   }}
                 >
                   {/* {item?.published_date?.slice(0, -9)} */}
-                  {moment(item?.published_date, DATETIME.LONG_DATETIME)
-                    .locale("id")
-                    .format(DATETIME.LONG_DATE)}
+                  {DateFormat({
+                    date: item.published_date,
+                    fromDate: DATETIME.LONG_DATETIME,
+                    toDate: DATETIME.LONG_DATE,
+                  })}
                 </Text>
                 <View
                   style={{

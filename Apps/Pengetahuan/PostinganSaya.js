@@ -15,6 +15,7 @@ import {
   AVATAR,
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -122,7 +123,12 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Tanggal : {item.created_at?.slice(0, -9)}
+                    Tanggal :{" "}
+                    {DateFormat({
+                      date: item.created_at,
+                      fromDate: DATETIME.LONG_DATETIME,
+                      toDate: DATETIME.LONG_DATE,
+                    })}
                   </Text>
                 </View>
                 <View

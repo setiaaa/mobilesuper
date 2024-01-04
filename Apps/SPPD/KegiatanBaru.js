@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { CardLiburTahunan } from "../../components/CardLiburTahunan";
 import { Loading } from "../../components/Loading";
 import { CardKegiatanTerbaru } from "../../components/CardKegitanTerbaru";
+import ListEmpty from "../../components/ListEmpty";
 
 export const KegiatanBaru = () => {
   const navigation = useNavigation();
