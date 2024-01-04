@@ -33,7 +33,7 @@ import {
   postComment,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { ScrollView } from "react-native";
 import { Loading } from "../../components/Loading";
 import { ActivityIndicator } from "react-native";
@@ -454,9 +454,9 @@ const CardLiniMasa = ({ item, token, device }) => {
                   }}
                 >
                   {/* {item?.published_date?.slice(0, -9)} */}
-                  {moment(item?.published_date, DATETIME.LONG_DATETIME).format(
-                    DATETIME.LONG_DATE
-                  )}
+                  {moment(item?.published_date, DATETIME.LONG_DATETIME)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATE)}
                 </Text>
                 <View
                   style={{

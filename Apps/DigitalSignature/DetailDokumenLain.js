@@ -24,7 +24,7 @@ import {
 import { useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
-import moment from "moment/moment";
+import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -149,7 +149,9 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     No Dokumen
                   </Text>
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -176,7 +178,9 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     Penerima Sertifikat
                   </Text>
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View
                     style={{
                       flexDirection: "row",
@@ -272,7 +276,9 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     Tanggal Dibuat
                   </Text>
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View style={{ width: "45%" }}>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -283,9 +289,9 @@ export const DetailDokumenLain = ({ route }) => {
                       <Text
                         style={{ fontSize: fontSizeResponsive("H2", device) }}
                       >
-                        {moment(item.extra_attributes?.tanggalDokumen).format(
-                          "DD MMMM yyyy"
-                        )}
+                        {moment(item.extra_attributes?.tanggalDokumen)
+                          .locale("id")
+                          .format("DD MMMM yyyy")}
                       </Text>
                     )}
                   </View>
@@ -301,7 +307,9 @@ export const DetailDokumenLain = ({ route }) => {
                   >
                     Jenis Dokumen
                   </Text>
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>:</Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
                   <View>
                     {loading ? (
                       <ShimmerPlaceHolder
@@ -485,7 +493,7 @@ export const DetailDokumenLain = ({ route }) => {
                             </View>
                           )}
                         </View>
-                        <View style={{ flexDirection: "row", columnGap:20 }}>
+                        <View style={{ flexDirection: "row", columnGap: 20 }}>
                           <Image
                             source={{ uri: data.avatar_url }}
                             style={{
@@ -512,7 +520,10 @@ export const DetailDokumenLain = ({ route }) => {
                                       marginTop: 10,
                                       color: COLORS.info,
                                       fontWeight: FONTWEIGHT.bold,
-                                      fontSize: fontSizeResponsive("H4", device)
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
                                     }}
                                   >
                                     {data.display_title}

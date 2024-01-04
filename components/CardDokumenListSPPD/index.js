@@ -8,7 +8,7 @@ import {
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -107,7 +107,9 @@ export const CardDokumenListSPPD = ({ item, token, device }) => {
             }}
           >
             Tanggal Mulai:{" "}
-            {moment(item.start_date, "DD-MM-YYYY").format(DATETIME.LONG_DATE)}
+            {moment(item.start_date, "DD-MM-YYYY")
+              .locale("id")
+              .format(DATETIME.LONG_DATE)}
           </Text>
           <Text
             style={{
@@ -118,7 +120,9 @@ export const CardDokumenListSPPD = ({ item, token, device }) => {
             }}
           >
             Tanggal Selesai:{" "}
-            {moment(item.end_date, "DD-MM-YYYY").format(DATETIME.LONG_DATE)}
+            {moment(item.end_date, "DD-MM-YYYY")
+              .locale("id")
+              .format(DATETIME.LONG_DATE)}
           </Text>
         </View>
         <View>

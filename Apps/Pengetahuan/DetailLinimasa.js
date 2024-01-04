@@ -33,7 +33,7 @@ import { ResizeMode, Video } from "expo-av";
 import PdfReader from "rn-pdf-reader-js-improved";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { useWindowDimensions } from "react-native";
 import RenderHTML from "react-native-render-html";
 import {
@@ -890,10 +890,9 @@ export const DetailLinimasa = ({ route }) => {
                         }}
                       >
                         {/* {detail.published_date?.slice(0, -9)} */}
-                        {moment(
-                          detail?.published_date,
-                          DATETIME.LONG_DATETIME
-                        ).format(DATETIME.LONG_DATE)}
+                        {moment(detail?.published_date, DATETIME.LONG_DATETIME)
+                          .locale("id")
+                          .format(DATETIME.LONG_DATE)}
                       </Text>
                     )}
                   </View>

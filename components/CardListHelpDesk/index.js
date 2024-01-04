@@ -9,7 +9,6 @@ import {
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Text } from "react-native";
-import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";

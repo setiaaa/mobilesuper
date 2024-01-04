@@ -32,7 +32,7 @@ import ListEmpty from "../../components/ListEmpty";
 import { Dropdown } from "../../components/DropDown";
 import { getDetailDocument, getDocumentDibagikan } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { setRating } from "../../store/Repository";
@@ -152,7 +152,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                     color: COLORS.lighter,
                   }}
                 >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
+                  {moment(item.updated_at).locale("id").format("DD MMMM yyyy")}
                 </Text>
               </View>
 
@@ -181,7 +181,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                     color: COLORS.lighter,
                   }}
                 >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
+                  {moment(item.updated_at).locale("id").format("DD MMMM yyyy")}
                 </Text>
               </View>
             </TouchableOpacity>

@@ -9,7 +9,6 @@ import {
   SelectList,
 } from "react-native-dropdown-select-list";
 import { Calendar, modeToNum } from "react-native-big-calendar";
-import moment from "moment";
 import { AVATAR, COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { CardAgenda } from "../../components/CardAgenda";
 import {

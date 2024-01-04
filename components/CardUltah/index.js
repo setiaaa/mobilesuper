@@ -24,7 +24,7 @@ import {
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import "moment/locale/id";
 moment.locale("id");
 
@@ -119,7 +119,7 @@ export const CardUltah = ({ ultah, device }) => {
               fontSize: fontSizeResponsive("H1", device),
             }}
           >
-            pada Bulan {moment(ultah.date_birth).format("MMMM")}
+            pada Bulan {moment(ultah.date_birth).locale("id").format("MMMM")}
           </Text>
         </View>
         <View style={{ alignItems: "center" }}>

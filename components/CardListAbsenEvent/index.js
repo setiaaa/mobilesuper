@@ -8,7 +8,6 @@ import {
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Text } from "react-native";
-import moment from "moment";
 import { TouchableOpacity } from "react-native";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";

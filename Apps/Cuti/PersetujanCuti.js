@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import { getDetailArsipCuti, getDokumenPersetujuan } from "../../service/api";
-import moment from "moment";
 import { CardListDokumenDisetujui } from "../../components/CardListDokumenDisetujui";
 import {
   CardListDokumenTidakDisetujui,
@@ -97,8 +96,7 @@ export const PersetujanCuti = () => {
       if (profile.nip !== "") {
         dispatch(getDokumenPersetujuan(profile?.nip));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

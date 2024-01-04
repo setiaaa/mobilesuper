@@ -28,7 +28,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Search } from "../../components/Search";
 import { Portal } from "react-native-portalize";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { getTokenValue } from "../../service/session";
 import {
   deleteNotulensi,
@@ -410,7 +410,7 @@ export const DetailAgenda = () => {
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {moment(data.date).format(DATETIME.LONG_DATE)}
+                  {moment(data.date).locale("id").format(DATETIME.LONG_DATE)}
                 </Text>
               )}
             </View>
@@ -453,7 +453,10 @@ export const DetailAgenda = () => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    {moment(data.start_time, "HH:mm:ss").format("HH:mm")} -{" "}
+                    {moment(data.start_time, "HH:mm:ss")
+                      .locale("id")
+                      .format("HH:mm")}{" "}
+                    -{" "}
                   </Text>
                   <Text
                     style={{
@@ -461,7 +464,9 @@ export const DetailAgenda = () => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    {moment(data.end_time, "HH:mm:ss").format("HH:mm")}
+                    {moment(data.end_time, "HH:mm:ss")
+                      .locale("id")
+                      .format("HH:mm")}
                   </Text>
                 </View>
               )}
