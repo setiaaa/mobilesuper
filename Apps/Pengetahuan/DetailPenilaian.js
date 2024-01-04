@@ -390,7 +390,7 @@ export const DetailPenilaian = () => {
                 {data?.published_date === null || data?.published_date === ""
                   ? "-"
                   : DateFormat({
-                      date: data.published_date,
+                      date: data?.published_date,
                       fromDate: DATETIME.LONG_DATETIME,
                       toDate: DATETIME.LONG_DATE,
                     })}
