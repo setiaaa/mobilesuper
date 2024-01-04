@@ -34,7 +34,7 @@ import { CardPilihMember } from "../../components/CardPilihMember";
 import { Search } from "../../components/Search";
 import { FlatList } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Dropdown } from "../../components/DropDown";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch, useSelector } from "react-redux";
@@ -275,8 +275,8 @@ export const EditEvent = () => {
     }
     dispatch(setAttachment([]));
     setJudul(data.title);
-    setTanggalMulai(moment(data.start_date).format("YYYY-MM-DD"));
-    setTanggalSelsai(moment(data.end_date).format("YYYY-MM-DD"));
+    setTanggalMulai(moment(data.start_date).locale("id").format("YYYY-MM-DD"));
+    setTanggalSelsai(moment(data.end_date).locale("id").format("YYYY-MM-DD"));
     setTempat(data.location);
     setPilihanPimpinanEvent([data.pic]);
     setPilihanPesertaEvent(data.members);
@@ -752,7 +752,9 @@ export const EditEvent = () => {
                             textSecondaryColor: COLORS.primary,
                             borderColor: "rgba(122, 146, 165, 0.1)",
                           }}
-                          current={moment(Date.now()).format("YYYY-MM-DD")}
+                          current={moment(Date.now())
+                            .locale("id")
+                            .format("YYYY-MM-DD")}
                           mode="calendar"
                           minuteInterval={30}
                           style={{ borderRadius: 10 }}
@@ -767,11 +769,15 @@ export const EditEvent = () => {
                             );
                             if (modalVisiblePicker === "mulai") {
                               setTanggalMulai(
-                                moment(formattedDate).format("YYYY-MM-DD")
+                                moment(formattedDate)
+                                  .locale("id")
+                                  .format("YYYY-MM-DD")
                               );
                             } else if (modalVisiblePicker === "selesai") {
                               setTanggalSelsai(
-                                moment(formattedDate).format("YYYY-MM-DD")
+                                moment(formattedDate)
+                                  .locale("id")
+                                  .format("YYYY-MM-DD")
                               );
                             }
                           }}

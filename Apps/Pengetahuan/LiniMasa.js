@@ -6,6 +6,7 @@ import {
   AVATAR,
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -33,7 +34,7 @@ import {
   postComment,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { ScrollView } from "react-native";
 import { Loading } from "../../components/Loading";
 import { ActivityIndicator } from "react-native";
@@ -453,14 +454,19 @@ const CardLiniMasa = ({ item, token, device }) => {
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {item?.published_date?.slice(0, -9)}
+                  {/* {item?.published_date?.slice(0, -9)} */}
+                  {DateFormat({
+                    date: item.published_date,
+                    fromDate: DATETIME.LONG_DATETIME,
+                    toDate: DATETIME.LONG_DATE,
+                  })}
                 </Text>
                 <View
                   style={{
                     backgroundColor:
-                      item.category === "Video / Jurnal"
+                      item.category === "video / jurnal"
                         ? COLORS.successLight
-                        : item.category === "Infografis"
+                        : item.category === "infografis"
                         ? COLORS.warningLight
                         : COLORS.infoLight,
                     height: 30,
@@ -472,13 +478,13 @@ const CardLiniMasa = ({ item, token, device }) => {
                     gap: 5,
                   }}
                 >
-                  {item.category === "Infografis" ? (
+                  {item.category === "infografis" ? (
                     <Ionicons
                       name="document-outline"
                       color={"#F6AD1D"}
                       style={{ marginTop: 2 }}
                     />
-                  ) : item.category === "Kegiatan" ? (
+                  ) : item.category === "kegiatan" ? (
                     <Ionicons
                       name="analytics-outline"
                       color={"#1868AB"}
@@ -494,9 +500,9 @@ const CardLiniMasa = ({ item, token, device }) => {
                   <Text
                     style={{
                       color:
-                        item.category === "Infografis"
+                        item.category === "infografis"
                           ? COLORS.warning
-                          : item.category === "Kegiatan"
+                          : item.category === "kegiatan"
                           ? COLORS.info
                           : COLORS.success,
                       fontSize: fontSizeResponsive("H4", device),
@@ -1511,15 +1517,15 @@ export const LiniMasa = () => {
     let category = "";
 
     if (kegiatan) {
-      category += "Kegiatan";
+      category += "kegiatan";
     }
 
     if (infografis) {
-      category += category.length > 0 ? ",Infografis" : "Infografis";
+      category += category.length > 0 ? ",infografis" : "infografis";
     }
 
     if (videoJurnal) {
-      category += category.length > 0 ? ",Video / Jurnal" : "Video / Jurnal";
+      category += category.length > 0 ? ",video / jurnal" : "video / jurnal";
     }
 
     setCategory(category);

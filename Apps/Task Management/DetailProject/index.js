@@ -9,7 +9,6 @@ import {
 } from "../../../config/SuperAppps";
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "react-native";
-import moment from "moment";
 import { Portal } from "react-native-portalize";
 import {
   BottomSheetModal,
@@ -95,25 +94,25 @@ export const DetailProject = ({
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
-    const bottomSheetMember = () => {
-        bottomSheetModalMemberRef.current?.present()
-    }
-    const bottomsheetMemberClose = () => {
-      if (bottomSheetModalMemberRef.current)
+  const bottomSheetMember = () => {
+    bottomSheetModalMemberRef.current?.present();
+  };
+  const bottomsheetMemberClose = () => {
+    if (bottomSheetModalMemberRef.current)
       bottomSheetModalMemberRef.current?.close();
-    };
-    useEffect(() => {
-        let arrList = []
-        const index = treeView.map(e => e.id).indexOf(choiceKategori.key)
-        treeView[index]?.list_tasks?.map(item => {
-            arrList.push({
-                key: item.id,
-                value: item.name
-            })
-        })
-        // setChoiceList(arrList.length > 0 ? arrList[0] : '')
-        setDataList(arrList)
-    }, [choiceKategori])
+  };
+  useEffect(() => {
+    let arrList = [];
+    const index = treeView.map((e) => e.id).indexOf(choiceKategori.key);
+    treeView[index]?.list_tasks?.map((item) => {
+      arrList.push({
+        key: item.id,
+        value: item.name,
+      });
+    });
+    // setChoiceList(arrList.length > 0 ? arrList[0] : '')
+    setDataList(arrList);
+  }, [choiceKategori]);
 
   let arrTask = [];
   {
@@ -144,135 +143,329 @@ export const DetailProject = ({
     <>
       {loading === true ? null : (
         <BottomSheetModalProvider>
-        <View style={{ flex: 1 }}>
-          <ScrollView>
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                marginHorizontal: 20,
-                borderRadius: 8,
-              }}
-            >
+          <View style={{ flex: 1 }}>
+            <ScrollView>
               <View
                 style={{
+                  backgroundColor: COLORS.white,
                   marginHorizontal: 20,
-                  marginVertical: 20,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 20,
+                  borderRadius: 8,
                 }}
               >
                 <View
-                  style={{ display: "flex", flexDirection: "column", gap: 6 }}
+                  style={{
+                    marginHorizontal: 20,
+                    marginVertical: 20,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 20,
+                  }}
                 >
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("Judul", device),
-                      color: COLORS.lighter,
-                      fontWeight: FONTWEIGHT.bold,
-                    }}
+                  <View
+                    style={{ display: "flex", flexDirection: "column", gap: 6 }}
                   >
-                    {detailProject.name}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H4", device),
-                      color: COLORS.lighter,
-                    }}
-                  >
-                    {detailProject.description}
-                  </Text>
-                </View>
-
-                <View
-                  style={{ display: "flex", flexDirection: "column", gap: 10 }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
-                        fontSize: fontSizeResponsive("H4", device),
+                        fontSize: fontSizeResponsive("Judul", device),
                         color: COLORS.lighter,
-                        width: "40%",
+                        fontWeight: FONTWEIGHT.bold,
                       }}
                     >
-                      Tanggal Dibuat
+                      {detailProject.name}
                     </Text>
                     <Text
                       style={{
                         fontSize: fontSizeResponsive("H4", device),
                         color: COLORS.lighter,
-                        flex: 1,
                       }}
                     >
-                      : {detailProject.created_at}
+                      {detailProject.description}
                     </Text>
                   </View>
 
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                        color: COLORS.lighter,
-                        width: "40%",
-                      }}
-                    >
-                      PIC
-                    </Text>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
+                  >
                     <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
+                      style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <Text
                         style={{
                           fontSize: fontSizeResponsive("H4", device),
                           color: COLORS.lighter,
+                          width: "40%",
                         }}
                       >
-                        :{" "}
+                        Tanggal Dibuat
                       </Text>
-                      {detailProject.pic.length > 1 ? (
-                        <>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                          flex: 1,
+                        }}
+                      >
+                        : {detailProject.created_at}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                          width: "40%",
+                        }}
+                      >
+                        PIC
+                      </Text>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H4", device),
+                            color: COLORS.lighter,
+                          }}
+                        >
+                          :{" "}
+                        </Text>
+                        {detailProject.pic.length > 1 ? (
+                          <>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                flex: 1,
+                                position: "relative",
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              {detailProject.pic.map((data, index) => {
+                                return (
+                                  <View key={data.nip}>
+                                    <Image
+                                      source={{ uri: data?.avatar_url }}
+                                      style={{
+                                        marginLeft: index === 0 ? 0 : -8,
+                                        borderWidth: 2,
+                                        borderRadius: 50,
+                                        borderColor: COLORS.white,
+                                        width: device === "tablet" ? 60 : 30,
+                                        height: device === "tablet" ? 60 : 30,
+                                      }}
+                                    />
+                                  </View>
+                                );
+                              })}
+                            </View>
+                            <TouchableOpacity onPress={bottomSheetMember}>
+                              <View>
+                                <Ionicons
+                                  name="chevron-forward-outline"
+                                  size={device === "tablet" ? 40 : 24}
+                                  color={COLORS.grey}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                          </>
+                        ) : (
                           <View
                             style={{
                               flexDirection: "row",
-                              flex: 1,
-                              position: "relative",
-                              display: "flex",
                               alignItems: "center",
+                              gap: 4,
                             }}
                           >
-                            {detailProject.pic.map((data, index) => {
-                              return (
-                                <View key={data.nip}>
-                                  <Image
-                                    source={{ uri: data?.avatar_url }}
-                                    style={{
-                                      marginLeft: index === 0 ? 0 : -8,
-                                      borderWidth: 2,
-                                      borderRadius: 50,
-                                      borderColor: COLORS.white,
-                                      width: device === "tablet" ? 60 : 30,
-                                      height: device === "tablet" ? 60 : 30,
-                                    }}
-                                  />
-                                </View>
-                              );
-                            })}
-                          </View>
-                          <TouchableOpacity onPress={bottomSheetMember}>
-                            <View>
-                              <Ionicons
-                                name="chevron-forward-outline"
-                                size={device === "tablet" ? 40 : 24}
-                                color={COLORS.grey}
-                              />
+                            <Image
+                              source={{ uri: detailProject.pic[0]?.avatar_url }}
+                              style={{
+                                borderWidth: 2,
+                                borderRadius: 50,
+                                borderColor: COLORS.white,
+                                width: device === "tablet" ? 60 : 30,
+                                height: device === "tablet" ? 60 : 30,
+                              }}
+                            />
+                            <View style={{ flex: 1 }}>
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {detailProject.pic[0]?.title?.name !== ""
+                                  ? detailProject.pic[0]?.title?.name
+                                  : detailProject.pic[0]?.nama}
+                              </Text>
+                              {detailProject.pic[0]?.title?.name !== "" ? (
+                                <Text
+                                  style={{
+                                    fontWeight: FONTWEIGHT.normal,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  {" "}
+                                  {detailProject.pic[0]?.nama}
+                                </Text>
+                              ) : null}
                             </View>
-                          </TouchableOpacity>
-                        </>
-                      ) : (
+                          </View>
+                        )}
+                      </View>
+                    </View>
+
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                          width: "40%",
+                        }}
+                      >
+                        Penanggung Jawab
+                      </Text>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H4", device),
+                            color: COLORS.lighter,
+                          }}
+                        >
+                          :{" "}
+                        </Text>
+                        {detailProject.members.length > 1 ? (
+                          <>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                flex: 1,
+                                position: "relative",
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              {detailProject.members.map((data, index) => {
+                                return (
+                                  <View key={data.nip}>
+                                    <Image
+                                      source={{ uri: data?.avatar_url }}
+                                      style={{
+                                        marginLeft: index === 0 ? 0 : -8,
+                                        borderWidth: 2,
+                                        borderRadius: 50,
+                                        borderColor: COLORS.white,
+                                        width: device === "tablet" ? 60 : 30,
+                                        height: device === "tablet" ? 60 : 30,
+                                      }}
+                                    />
+                                  </View>
+                                );
+                              })}
+                            </View>
+                            <TouchableOpacity onPress={bottomSheetMember}>
+                              <View>
+                                <Ionicons
+                                  name="chevron-forward-outline"
+                                  size={device === "tablet" ? 40 : 24}
+                                  color={COLORS.grey}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                          </>
+                        ) : (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: 4,
+                            }}
+                          >
+                            <Image
+                              source={{
+                                uri: detailProject.members[0]?.avatar_url,
+                              }}
+                              style={{
+                                borderWidth: 2,
+                                borderRadius: 50,
+                                borderColor: COLORS.white,
+                                width: 30,
+                                height: 30,
+                              }}
+                            />
+                            <View style={{ flex: 1 }}>
+                              <Text
+                                style={{
+                                  fontWeight: FONTWEIGHT.bold,
+                                  fontSize: fontSizeResponsive("H4", device),
+                                }}
+                              >
+                                {detailProject.members[0]?.title?.name !== ""
+                                  ? detailProject.members[0]?.title?.name
+                                  : detailProject.members[0]?.nama}
+                              </Text>
+                              {detailProject.members[0]?.title?.name !== "" ? (
+                                <Text
+                                  style={{
+                                    fontWeight: FONTWEIGHT.normal,
+                                    fontSize: fontSizeResponsive("H4", device),
+                                  }}
+                                >
+                                  {" "}
+                                  {detailProject.members[0]?.nama}
+                                </Text>
+                              ) : null}
+                            </View>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                          width: "40%",
+                        }}
+                      >
+                        Pembuat Project
+                      </Text>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: fontSizeResponsive("H4", device),
+                            color: COLORS.lighter,
+                          }}
+                        >
+                          :{" "}
+                        </Text>
                         <View
                           style={{
                             flexDirection: "row",
@@ -281,7 +474,7 @@ export const DetailProject = ({
                           }}
                         >
                           <Image
-                            source={{ uri: detailProject.pic[0]?.avatar_url }}
+                            source={{ uri: detailProject.creator.avatar_url }}
                             style={{
                               borderWidth: 2,
                               borderRadius: 50,
@@ -297,11 +490,11 @@ export const DetailProject = ({
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
-                              {detailProject.pic[0]?.title?.name !== ""
-                                ? detailProject.pic[0]?.title?.name
-                                : detailProject.pic[0]?.nama}
+                              {detailProject.creator.title?.name !== ""
+                                ? detailProject.creator.title?.name
+                                : detailProject.creator.nama}
                             </Text>
-                            {detailProject.pic[0]?.title?.name !== "" ? (
+                            {detailProject.creator.title?.name !== "" ? (
                               <Text
                                 style={{
                                   fontWeight: FONTWEIGHT.normal,
@@ -309,337 +502,155 @@ export const DetailProject = ({
                                 }}
                               >
                                 {" "}
-                                {detailProject.pic[0]?.nama}
+                                {detailProject.creator.nama}
                               </Text>
                             ) : null}
                           </View>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                        color: COLORS.lighter,
-                        width: "40%",
-                      }}
-                    >
-                      Penanggung Jawab
-                    </Text>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: fontSizeResponsive("H4", device),
-                          color: COLORS.lighter,
-                        }}
-                      >
-                        :{" "}
-                      </Text>
-                      {detailProject.members.length > 1 ? (
-                        <>
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              flex: 1,
-                              position: "relative",
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
-                            {detailProject.members.map((data, index) => {
-                              return (
-                                <View key={data.nip}>
-                                  <Image
-                                    source={{ uri: data?.avatar_url }}
-                                    style={{
-                                      marginLeft: index === 0 ? 0 : -8,
-                                      borderWidth: 2,
-                                      borderRadius: 50,
-                                      borderColor: COLORS.white,
-                                      width: device === "tablet" ? 60 : 30,
-                                      height: device === "tablet" ? 60 : 30,
-                                    }}
-                                  />
-                                </View>
-                              );
-                            })}
-                          </View>
-                          <TouchableOpacity onPress={bottomSheetMember}>
-                            <View>
-                              <Ionicons
-                                name="chevron-forward-outline"
-                                size={device === "tablet" ? 40 : 24}
-                                color={COLORS.grey}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                        </>
-                      ) : (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 4,
-                          }}
-                        >
-                          <Image
-                            source={{
-                              uri: detailProject.members[0]?.avatar_url,
-                            }}
-                            style={{
-                              borderWidth: 2,
-                              borderRadius: 50,
-                              borderColor: COLORS.white,
-                              width: 30,
-                              height: 30,
-                            }}
-                          />
-                          <View style={{ flex: 1 }}>
-                            <Text
-                              style={{
-                                fontWeight: FONTWEIGHT.bold,
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              {detailProject.members[0]?.title?.name !== ""
-                                ? detailProject.members[0]?.title?.name
-                                : detailProject.members[0]?.nama}
-                            </Text>
-                            {detailProject.members[0]?.title?.name !== "" ? (
-                              <Text
-                                style={{
-                                  fontWeight: FONTWEIGHT.normal,
-                                  fontSize: fontSizeResponsive("H4", device),
-                                }}
-                              >
-                                {" "}
-                                {detailProject.members[0]?.nama}
-                              </Text>
-                            ) : null}
-                          </View>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H4", device),
-                        color: COLORS.lighter,
-                        width: "40%",
-                      }}
-                    >
-                      Pembuat Project
-                    </Text>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: fontSizeResponsive("H4", device),
-                          color: COLORS.lighter,
-                        }}
-                      >
-                        :{" "}
-                      </Text>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: 4,
-                        }}
-                      >
-                        <Image
-                          source={{ uri: detailProject.creator.avatar_url }}
-                          style={{
-                            borderWidth: 2,
-                            borderRadius: 50,
-                            borderColor: COLORS.white,
-                            width: device === "tablet" ? 60 : 30,
-                            height: device === "tablet" ? 60 : 30,
-                          }}
-                        />
-                        <View style={{ flex: 1 }}>
-                          <Text
-                            style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              fontSize: fontSizeResponsive("H4", device),
-                            }}
-                          >
-                            {detailProject.creator.title?.name !== ""
-                              ? detailProject.creator.title?.name
-                              : detailProject.creator.nama}
-                          </Text>
-                          {detailProject.creator.title?.name !== "" ? (
-                            <Text
-                              style={{
-                                fontWeight: FONTWEIGHT.normal,
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              {" "}
-                              {detailProject.creator.nama}
-                            </Text>
-                          ) : null}
                         </View>
                       </View>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>
 
-            {profile.nip === detailProject.creator.nip ||
-            profile.nip === detailProject.pic[0].nip ? (
-              <View
-                style={{
-                  marginVertical: 20,
-                  flexDirection: "column",
-                  gap: 10,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("EditCategory", {
-                      id: detailProject.id,
-                    })
-                  }
-                >
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      backgroundColor: COLORS.lightBrown,
-                      height: 50,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 6,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        fontSize: fontSizeResponsive("H4", device),
-                      }}
-                    >
-                      Ubah
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    const datas = {
-                      token: token,
-                      id: detailProject.id,
-                    };
-                    dispatch(deleteTaskProject(datas));
-                    setTimeout(() => {
-                      dispatch(getListDashboardTM({ token: token, page: 5 }));
-                    }, 3000);
+              {profile.nip === detailProject.creator.nip ||
+              profile.nip === detailProject.pic[0].nip ? (
+                <View
+                  style={{
+                    marginVertical: 20,
+                    flexDirection: "column",
+                    gap: 10,
                   }}
                 >
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      backgroundColor: COLORS.infoDanger,
-                      height: 50,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 6,
-                    }}
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("EditCategory", {
+                        id: detailProject.id,
+                      })
+                    }
                   >
-                    <Text
+                    <View
                       style={{
-                        color: COLORS.white,
-                        fontSize: fontSizeResponsive("H4", device),
+                        marginHorizontal: 20,
+                        backgroundColor: COLORS.lightBrown,
+                        height: 50,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 6,
                       }}
                     >
-                      Hapus
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            ) : null}
-
-            <View>
-              <Text
-                style={{
-                  marginHorizontal: 20,
-                  marginVertical: 10,
-                  fontWeight: FONTWEIGHT.bold,
-                  color: COLORS.lighter,
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                List Task
-              </Text>
-              <FlatList
-                data={arrTask}
-                renderItem={({ item }) => (
-                  <CardListKategori
-                    item={item}
-                    token={token}
-                    id_list={item.key}
-                    type={type}
-                    device={device}
-                  />
-                )}
-                ListEmptyComponent={() => <ListEmpty />}
-              />
-            </View> 
-            {/* <Portal>  */}
-                <BottomSheetModal
-                  ref={bottomSheetModalMemberRef}
-                  snapPoints={animatedSnapPoints}
-                  handleHeight={animatedHandleHeight}
-                  contentHeight={animatedContentHeight}
-                  index={0}
-                  style={{ borderTopLeftRadius:50, borderTopRightRadius:50 }}
-                  keyboardBlurBehavior="restore"
-                  android_keyboardInputMode="adjust"
-                  backdropComponent={({ style }) => (
-                    <View
-                      style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                    />
-                  )}
-                >
-                  <BottomSheetView onLayout={handleContentLayout}>
-                    <View style={{ marginTop: 20, marginBottom: 40 }}>
-                      <View
+                      <Text
                         style={{
-                          marginBottom: 20,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          flexDirection:"row",
-                          justifyContent:"space-between",
-                          paddingHorizontal:20,
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        <Text
-                          style={{
-                            fontSize: fontSizeResponsive("H4", device),
-                            fontWeight: FONTWEIGHT.bold,
-                            color: COLORS.lighter,
-                          }}
-                        >
-                          Penanggung Jawab
-                        </Text>
-                        <TouchableOpacity
+                        Ubah
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      const datas = {
+                        token: token,
+                        id: detailProject.id,
+                      };
+                      dispatch(deleteTaskProject(datas));
+                      setTimeout(() => {
+                        dispatch(getListDashboardTM({ token: token, page: 5 }));
+                      }, 3000);
+                    }}
+                  >
+                    <View
+                      style={{
+                        marginHorizontal: 20,
+                        backgroundColor: COLORS.infoDanger,
+                        height: 50,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 6,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: fontSizeResponsive("H4", device),
+                        }}
+                      >
+                        Hapus
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+
+              <View>
+                <Text
+                  style={{
+                    marginHorizontal: 20,
+                    marginVertical: 10,
+                    fontWeight: FONTWEIGHT.bold,
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  List Task
+                </Text>
+                <FlatList
+                  data={arrTask}
+                  renderItem={({ item }) => (
+                    <CardListKategori
+                      item={item}
+                      token={token}
+                      id_list={item.key}
+                      type={type}
+                      device={device}
+                    />
+                  )}
+                  ListEmptyComponent={() => <ListEmpty />}
+                />
+              </View>
+              {/* <Portal>  */}
+              <BottomSheetModal
+                ref={bottomSheetModalMemberRef}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                  />
+                )}
+              >
+                <BottomSheetView onLayout={handleContentLayout}>
+                  <View style={{ marginTop: 20, marginBottom: 40 }}>
+                    <View
+                      style={{
+                        marginBottom: 20,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        paddingHorizontal: 20,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          fontWeight: FONTWEIGHT.bold,
+                          color: COLORS.lighter,
+                        }}
+                      >
+                        Penanggung Jawab
+                      </Text>
+                      <TouchableOpacity
                         onPress={() => {
-                          bottomsheetMemberClose()
+                          bottomsheetMemberClose();
                         }}
                       >
                         <View
@@ -651,31 +662,28 @@ export const DetailProject = ({
                             borderRadius: 50,
                           }}
                         >
-                          <Ionicons
-                            name="close-outline"
-                            size={24}
-                          />
+                          <Ionicons name="close-outline" size={24} />
                         </View>
                       </TouchableOpacity>
-                      </View>
-                      <View>
-                        <FlatList
-                          data={detailProject.members}
-                          renderItem={({ item }) => (
-                            <View key={item.nip}>
-                              <CardItemMember item={item} device={device} />
-                            </View>
-                          )}
-                          keyExtractor={(item) => item.id}
-                        />
-                      </View>
                     </View>
-                  </BottomSheetView>
-                </BottomSheetModal>
-          {/* </Portal> */}
-          </ScrollView>
-        </View>
-              </BottomSheetModalProvider>
+                    <View>
+                      <FlatList
+                        data={detailProject.members}
+                        renderItem={({ item }) => (
+                          <View key={item.nip}>
+                            <CardItemMember item={item} device={device} />
+                          </View>
+                        )}
+                        keyExtractor={(item) => item.id}
+                      />
+                    </View>
+                  </View>
+                </BottomSheetView>
+              </BottomSheetModal>
+              {/* </Portal> */}
+            </ScrollView>
+          </View>
+        </BottomSheetModalProvider>
       )}
     </>
   );

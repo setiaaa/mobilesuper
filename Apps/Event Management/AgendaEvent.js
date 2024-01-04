@@ -31,7 +31,6 @@ import {
   getEventAgendaDetail,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import moment from "moment";
 import { CardListDetailAgenda } from "../../components/CardListDetailAgenda";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
@@ -96,8 +95,7 @@ export const AgendaEvent = () => {
       if (token !== "") {
         dispatch(getEventAgenda({ token: token, id: event.detailEvent.id }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -119,7 +117,6 @@ export const AgendaEvent = () => {
   //         setFilterData(agenda.lists)
   //     }
   // }, [search])
-
 
   const { device } = useSelector((state) => state.apps);
 

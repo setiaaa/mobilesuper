@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
 import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 
 export const CardKegiatanTerbaru = ({ item }) => {
   return (
@@ -29,8 +29,13 @@ export const CardKegiatanTerbaru = ({ item }) => {
         }}
       >
         <Text style={{ marginTop: 10, color: COLORS.lighter }}>
-          {moment(item.start_date, "DD-MM-YYYY").format(DATETIME.LONG_DATE)} -{" "}
-          {moment(item.end_date, "DD-MM-YYYY").format(DATETIME.LONG_DATE)}
+          {moment(item.start_date, "DD-MM-YYYY")
+            .locale("id")
+            .format(DATETIME.LONG_DATE)}{" "}
+          -{" "}
+          {moment(item.end_date, "DD-MM-YYYY")
+            .locale("id")
+            .format(DATETIME.LONG_DATE)}
         </Text>
         <Text style={{ marginTop: 5, fontWeight: FONTWEIGHT.bold }}>
           {item.fullname}

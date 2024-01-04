@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from "../../components/DropDown";
@@ -59,7 +59,7 @@ export const PostinganBaru = () => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-    })
+    });
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -103,7 +103,7 @@ export const PostinganBaru = () => {
     dispatch(postEvent(data));
   };
 
-  const [type, setType] = useState([])
+  const [type, setType] = useState([]);
 
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
@@ -143,7 +143,6 @@ export const PostinganBaru = () => {
     });
     return valueKompetensi;
   };
-
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -422,7 +421,7 @@ export const PostinganBaru = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                      modalVisiblePicker === "selesai"
+                    modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }
@@ -499,11 +498,15 @@ export const PostinganBaru = () => {
                             );
                             if (modalVisiblePicker === "mulai") {
                               setTanggalMulai(
-                                moment(formattedDate).format("YYYY-MM-DD")
+                                moment(formattedDate)
+                                  .locale("id")
+                                  .format("YYYY-MM-DD")
                               );
                             } else if (modalVisiblePicker === "selesai") {
                               setTanggalSelsai(
-                                moment(formattedDate).format("YYYY-MM-DD")
+                                moment(formattedDate)
+                                  .locale("id")
+                                  .format("YYYY-MM-DD")
                               );
                             }
                           }}
@@ -903,8 +906,8 @@ export const PostinganBaru = () => {
             </View>
           </Pressable>
         </ScrollView>
-      </View >
-    </GestureHandlerRootView >
+      </View>
+    </GestureHandlerRootView>
   );
 };
 const styles = StyleSheet.create({

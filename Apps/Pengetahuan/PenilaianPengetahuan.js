@@ -2,8 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   COLORS,
+  DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
+  FORMATDATE,
+  fixedDateString,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -32,7 +36,8 @@ import {
   getNilai,
   getTotalPenilaian,
 } from "../../service/api";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
+// import "moment/locale/id";
 import {} from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
 import { TextInput } from "react-native-gesture-handler";
@@ -46,6 +51,9 @@ const CardPenilaian = ({ item, token, device }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailLinimasa({ token, id }));
   };
+
+  // const tanggal = item.published_date;
+
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <TouchableOpacity
@@ -98,10 +106,13 @@ const CardPenilaian = ({ item, token, device }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
-              Tanggal:{" "}
-              {moment(item.published_date, "DD MMMM YYYY HH:mm:ss").format(
-                "DD MMMM YYYY"
-              )}
+              {/* Tanggal: {engDate.locale("id").format("LL")} */}
+              Tanggal:
+              {DateFormat({
+                date: item.published_date,
+                fromDate: DATETIME.LONG_DATETIME,
+                toDate: DATETIME.LONG_DATE,
+              })}
             </Text>
             <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
               <Text
@@ -403,7 +414,6 @@ export const PenilaianPenggetahaun = () => {
   }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
 
   const { device } = useSelector((state) => state.apps);
-
   return (
     <>
       {loading ? <Loading /> : null}

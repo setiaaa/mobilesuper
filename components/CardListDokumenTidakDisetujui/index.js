@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getDetailArsipCuti } from "../../service/api";
 import { Text, TouchableOpacity, View } from "react-native";
 import { COLORS, DATETIME, fontSizeResponsive } from "../../config/SuperAppps";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Ionicons } from "@expo/vector-icons";
 
 export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
@@ -37,9 +37,9 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
           >
             <Text style={{ fontSize: fontSizeResponsive("H3", device) }}>
               Tanggal Pengajuan:{" "}
-              {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss").format(
-                DATETIME.LONG_DATETIME
-              )}
+              {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss")
+                .locale("id")
+                .format(DATETIME.LONG_DATETIME)}
             </Text>
             <Text
               style={{
@@ -87,9 +87,9 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
                   }}
                 >
                   Mulai:{" "}
-                  {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(
-                    DATETIME.LONG_DATETIME
-                  )}
+                  {moment(item.mulai_cuti, DATETIME.LONG_DATETIME)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATETIME)}
                 </Text>
               </View>
               <View
@@ -112,9 +112,9 @@ export const CardListDokumenTidakDisetujui = ({ item, nip, device }) => {
                   }}
                 >
                   Mulai:{" "}
-                  {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(
-                    DATETIME.LONG_DATETIME
-                  )}
+                  {moment(item.akhir_cuti, DATETIME.LONG_DATETIME)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATETIME)}
                 </Text>
               </View>
             </View>

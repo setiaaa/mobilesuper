@@ -1,3 +1,5 @@
+import moment from "moment/min/moment-with-locales";
+
 export const COLORS = {
   primary: "#800000",
   secondary: "#F0F0F0",
@@ -63,4 +65,16 @@ export const DATETIME = {
 
 export const PADDING = {
   Page: 20,
+};
+
+export const fixedDateString = (tanggal) => {
+  return tanggal
+    .replace("May", "Mei")
+    .replace("August", "Agustus")
+    .replace("October", "Oktober")
+    .replace("December", "Desember");
+};
+
+export const DateFormat = ({ date, fromDate, toDate }) => {
+  return moment(fixedDateString(date), fromDate).locale("id").format(toDate);
 };

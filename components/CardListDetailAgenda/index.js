@@ -9,7 +9,7 @@ import {
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { useState } from "react";
 import { Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -123,7 +123,7 @@ export const CardListDetailAgenda = ({
               />
             ) : (
               <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                {moment(item.date).format(DATETIME.LONG_DATE)}
+                {moment(item.date).locale("id").format(DATETIME.LONG_DATE)}
               </Text>
             )}
             {loading ? (
@@ -140,7 +140,10 @@ export const CardListDetailAgenda = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {moment(item.start_time, "HH:mm:ss").format("HH:mm")} -{" "}
+                  {moment(item.start_time, "HH:mm:ss")
+                    .locale("id")
+                    .format("HH:mm")}{" "}
+                  -{" "}
                 </Text>
                 <Text
                   style={{
@@ -148,7 +151,9 @@ export const CardListDetailAgenda = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {moment(item.end_time, "HH:mm:ss").format("HH:mm")}
+                  {moment(item.end_time, "HH:mm:ss")
+                    .locale("id")
+                    .format("HH:mm")}
                 </Text>
               </View>
             )}

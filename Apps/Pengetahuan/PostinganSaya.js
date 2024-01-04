@@ -15,6 +15,7 @@ import {
   AVATAR,
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -31,7 +32,6 @@ import {
   getViewLinimasa,
 } from "../../service/api";
 import { FlatList } from "react-native-gesture-handler";
-import moment from "moment/moment";
 import ListEmpty from "../../components/ListEmpty";
 import { setRefresh } from "../../store/Pengetahuan";
 import { Loading } from "../../components/Loading";
@@ -51,7 +51,6 @@ const CardPostinganSaya = ({ item, token, device }) => {
     dispatch(getDetailLinimasa(params));
     dispatch(getViewLinimasa(params));
   };
-
 
   return (
     <View style={{ width: "90%", alignSelf: "center", marginVertical: 10 }}>
@@ -124,7 +123,12 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Tanggal : {item.created_at?.slice(0, -9)}
+                    Tanggal :{" "}
+                    {DateFormat({
+                      date: item.created_at,
+                      fromDate: DATETIME.LONG_DATETIME,
+                      toDate: DATETIME.LONG_DATE,
+                    })}
                   </Text>
                 </View>
                 <View
@@ -621,15 +625,13 @@ export const PostinganSaya = () => {
       if (token !== "") {
         dispatch(getMyPostList({ token: token, page: page }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
   }, [token, page]);
-
 
   const [ascending, setAscending] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);

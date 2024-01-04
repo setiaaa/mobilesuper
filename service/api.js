@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Config } from "../constants/config";
 
-const BASE_URL = "https://apigw.kubekkp.coofis.com/";
+const BASE_URL = Config.base_url;
 const kebijakan = BASE_URL + "policy/";
 const kalender = BASE_URL + "calendar/";
 const addressbook = BASE_URL + "bridge/";
@@ -54,8 +55,8 @@ const DOKGENERAL = BASE_URL + "policy/search/";
 
 const SPPD = BASE_URL + "monperdin/";
 
-const Cuti = "https://cuti.kubekkp.coofis.com/api/";
-const HelpDesk = "https://helpdesk.kubekkp.coofis.com/api/";
+const Cuti = Config.base_url_cuti;
+const HelpDesk = Config.base_url_helpdesk;
 
 //Login
 export const Login = createAsyncThunk(
@@ -67,7 +68,7 @@ export const Login = createAsyncThunk(
         password: password,
       };
       const respon = await axios.post(
-        `https://auth.kubekkp.coofis.com/mobile/login/`,
+        Config.base_url_auth, // auth masih kube, belum dirubah ke production
         payload
       );
       return respon?.data;
@@ -811,6 +812,7 @@ export const getDetailBerita = createAsyncThunk(
 export const getLinimasa = createAsyncThunk(
   "mp/getLinimasa",
   async ({ token, page, category, competence, unker, satker, search }) => {
+    console.log(category);
     const respon = await axios.get(
       `${Linimasa}linimasa/?limit=${page}&category=${category}&competence=${competence}&unker=${unker}&satker=${satker}&type=&search=${search}`,
       {

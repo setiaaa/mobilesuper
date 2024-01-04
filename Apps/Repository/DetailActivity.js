@@ -32,7 +32,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {} from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
-import moment from "moment/moment";
+import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import { postRating } from "../../service/api";
 import { Rating } from "react-native-ratings";
@@ -247,7 +247,10 @@ export const DetailActivity = () => {
                     fontWeight: FONTWEIGHT.normal,
                   }}
                 >
-                  : {moment(detail?.attributes?.tanggal).format("DD MMMM YYYY")}
+                  :{" "}
+                  {moment(detail?.attributes?.tanggal)
+                    .locale("id")
+                    .format("DD MMMM YYYY")}
                 </Text>
               </View>
               <View

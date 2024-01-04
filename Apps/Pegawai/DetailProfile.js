@@ -22,6 +22,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { Config } from "../../constants/config";
 
 export const DetailProfile = () => {
   const { pegawai, loading } = useSelector((state) => state.Pegawai);
@@ -29,7 +30,7 @@ export const DetailProfile = () => {
   const item = pegawai.detail;
   const { device } = useSelector((state) => state.apps);
 
-  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const BASE_URL = Config.base_url + "bridge";
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   return (
     <>

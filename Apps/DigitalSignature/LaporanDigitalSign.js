@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSummaryCount, getSummaryList } from "../../service/api";
 import { useEffect } from "react";
 import { getTokenValue } from "../../service/session";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import {
   widthPercentageToDP as wp,
@@ -38,7 +38,7 @@ const CardLaporanList = ({ item, token, device }) => {
             fontWeight: 400,
           }}
         >
-          {moment(item.tanggalSertif).format(DATETIME.LONG_DATE)}
+          {moment(item.tanggalSertif).locale("id").format(DATETIME.LONG_DATE)}
         </Text>
         <Text
           style={{

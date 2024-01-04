@@ -16,6 +16,7 @@ import * as Sharing from "expo-sharing";
 import { useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { Platform } from "react-native";
+import { Config } from "../../constants/config";
 
 const LihatSuratSPPD = ({ route }) => {
   const { surat, status, data } = route.params;
@@ -160,7 +161,8 @@ const LihatSuratSPPD = ({ route }) => {
             <TouchableOpacity
               onPress={() => {
                 downloadFile(
-                  "https://apigw.kubekkp.coofis.com/monperdin/document/back-form/" +
+                  Config.base_url +
+                    "monperdin/document/back-form/" +
                     dokumen.detail?.id +
                     "/",
                   "application/pdf",
@@ -182,9 +184,6 @@ const LihatSuratSPPD = ({ route }) => {
           source={{
             base64: surat,
           }}
-          onLoadComplete={(numberOfPages, filePath) => {}}
-          onPageChanged={(page, numberOfPages) => {}}
-          onError={(error) => {}}
           withScroll={true}
         />
         {/* <Image

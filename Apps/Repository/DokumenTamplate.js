@@ -39,7 +39,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "react-native-portalize";
 import { Divider } from "react-native-paper";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Loading } from "../../components/Loading";
 import { RefreshControl } from "react-native";
 import { setRating } from "../../store/Repository";
@@ -190,7 +190,7 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                     color: COLORS.lighter,
                   }}
                 >
-                  {moment(item.updated_at).format("DD MMMM yyyy")}
+                  {moment(item.updated_at).locale("id").format("DD MMMM yyyy")}
                 </Text>
               </View>
             </TouchableOpacity>

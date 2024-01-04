@@ -9,7 +9,7 @@ import { getTokenValue } from "../../service/session";
 import { TouchableOpacity } from "react-native";
 import { getKesejahteraan } from "../../service/api";
 import { FlatList } from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import {
   COLORS,
   DATETIME,
@@ -135,7 +135,7 @@ const CardLists = ({
           />
         ) : (
           <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-            {moment(item.created_date).format(DATETIME.LONG_DATE)}
+            {moment(item.created_date).locale("id").format(DATETIME.LONG_DATE)}
           </Text>
         )}
 
@@ -234,8 +234,7 @@ export const Kesejahteraan = () => {
       if (token !== "") {
         dispatch(getKesejahteraan({ token: token, value: value, page: page }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

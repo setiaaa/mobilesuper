@@ -35,9 +35,9 @@ export const LaporanPengetahuan = () => {
   const navigation = useNavigation();
 
   const listYear = [
-    { key: "year1", value: "2023" },
-    { key: "year2", value: "2024" },
-    { key: "year3", value: "2025" },
+    { key: "2023", value: "2023" },
+    { key: "2024", value: "2024" },
+    { key: "2025", value: "2025" },
   ];
 
   const dataKuartal = [
@@ -47,7 +47,11 @@ export const LaporanPengetahuan = () => {
     { key: "4", value: "TW 4" },
   ];
 
-  const [year, setYear] = useState({ key: "year1", value: "2023" });
+  const [year, setYear] = useState({
+    key: new Date().getFullYear(),
+    value: new Date().getFullYear(),
+  });
+
   const [quarter, setQuarter] = useState({ key: "1", value: "TW 1" });
 
   const [token, setToken] = useState("");
@@ -182,10 +186,16 @@ export const LaporanPengetahuan = () => {
 
   const widthAndHeight = 200;
   const dataPie = [
-    accumulation?.Kegiatan?.total,
-    accumulation["Video_/_Jurnal"]?.total,
-    accumulation?.Infografis?.total,
-    accumulation?.Tidak_Sesuai?.total,
+    Object.keys(accumulation).length !== 0 ? accumulation?.Kegiatan?.total : 0,
+    Object.keys(accumulation).length !== 0
+      ? accumulation["Video_/_Jurnal"]?.total
+      : 0,
+    Object.keys(accumulation).length !== 0
+      ? accumulation?.Infografis?.total
+      : 0,
+    Object.keys(accumulation).length !== 0
+      ? accumulation?.Tidak_Sesuai?.total
+      : 0,
   ];
 
   const handleDataPie = [1];
@@ -201,7 +211,7 @@ export const LaporanPengetahuan = () => {
 
   const { device } = useSelector((state) => state.apps);
 
-  console.log(review?.percent_article_reviewed);
+  // console.log(review?.total_article_unreview?.Kegiatan);
 
   return (
     <View style={{ flex: 1 }}>
@@ -997,7 +1007,9 @@ export const LaporanPengetahuan = () => {
                 marginBottom: 10,
               }}
             >
-              {accumulation?.total_article_all}
+              {Object.keys(accumulation).length !== 0
+                ? accumulation?.total_article_all
+                : 0}
             </Text>
             <Text
               style={{
@@ -1071,14 +1083,16 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
-                      ? accumulation?.Kegiatan.total
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation?.Kegiatan?.total !== undefined
+                      ? accumulation?.Kegiatan?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
-                        ? accumulation?.Kegiatan.percent / 100
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation?.Kegiatan?.percent !== undefined
+                        ? accumulation?.Kegiatan?.percent / 100
                         : 0
                     }
                     width={110}
@@ -1128,14 +1142,16 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
-                      ? accumulation["Video_/_Jurnal"].total
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation["Video_/_Jurnal"]?.total !== undefined
+                      ? accumulation["Video_/_Jurnal"]?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
-                        ? accumulation["Video_/_Jurnal"].percent / 100
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation["Video_/_Jurnal"]?.percent !== undefined
+                        ? accumulation["Video_/_Jurnal"]?.percent / 100
                         : 0
                     }
                     width={110}
@@ -1186,14 +1202,16 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
-                      ? accumulation?.Infografis.total
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation?.Infografis?.total !== undefined
+                      ? accumulation?.Infografis?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
-                        ? accumulation?.Infografis.percent / 100
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation?.Infografis?.percent !== undefined
+                        ? accumulation?.Infografis?.percent / 100
                         : 0
                     }
                     width={110}
@@ -1242,14 +1260,16 @@ export const LaporanPengetahuan = () => {
                       marginBottom: 10,
                     }}
                   >
-                    {Object.keys(accumulation).length !== 0
-                      ? accumulation?.Tidak_Sesuai.total
+                    {Object.keys(accumulation).length !== 0 &&
+                    accumulation?.Tidak_Sesuai?.total !== undefined
+                      ? accumulation?.Tidak_Sesuai?.total
                       : "-"}
                   </Text>
                   <Progress.Bar
                     progress={
-                      Object.keys(accumulation).length !== 0
-                        ? accumulation?.Tidak_Sesuai.percent / 100
+                      Object.keys(accumulation).length !== 0 &&
+                      accumulation?.Tidak_Sesuai?.percent !== undefined
+                        ? accumulation?.Tidak_Sesuai?.percent / 100
                         : 0
                     }
                     width={110}
@@ -1311,7 +1331,8 @@ export const LaporanPengetahuan = () => {
               bgColor="#fff"
             >
               <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
-                {Object.keys(review).length !== 0
+                {Object.keys(review).length !== 0 &&
+                review?.percent_article_reviewed !== undefined
                   ? review?.percent_article_reviewed
                   : 0}
                 %
@@ -1326,7 +1347,8 @@ export const LaporanPengetahuan = () => {
                 marginBottom: 10,
               }}
             >
-              {Object.keys(review).length !== 0
+              {Object.keys(review).length !== 0 &&
+              review?.total_article_reviewed !== undefined
                 ? review?.total_article_reviewed
                 : 0}
             </Text>
@@ -1385,7 +1407,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {review?.total_article_unreview?.Kegiatan}
+                    {review?.total_article_unreview?.Kegiatan !== undefined
+                      ? review?.total_article_unreview?.Kegiatan
+                      : "-"}
                   </Text>
                 </View>
               </View>
@@ -1430,7 +1454,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {Object.keys(review).length !== 0
+                    {Object.keys(review).length !== 0 &&
+                    review?.total_article_unreview["Video_/_Jurnal"] !==
+                      undefined
                       ? review?.total_article_unreview["Video_/_Jurnal"]
                       : "-"}
                   </Text>
@@ -1480,7 +1506,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {review?.total_article_unreview?.Infografis}
+                    {review?.total_article_unreview?.Infografis !== undefined
+                      ? review?.total_article_unreview?.Infografis
+                      : "-"}
                   </Text>
                 </View>
               </View>
@@ -1525,7 +1553,9 @@ export const LaporanPengetahuan = () => {
                       color: COLORS.grey,
                     }}
                   >
-                    {review?.total_article_unreview?.Tidak_Sesuai}
+                    {review?.total_article_unreview?.Tidak_Sesuai !== undefined
+                      ? review?.total_article_unreview?.Tidak_Sesuai
+                      : "-"}
                   </Text>
                 </View>
               </View>

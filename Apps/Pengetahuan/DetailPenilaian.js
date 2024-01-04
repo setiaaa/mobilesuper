@@ -14,13 +14,14 @@ import {
   FONTWEIGHT,
   FONTSIZE,
   fontSizeResponsive,
+  DateFormat,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "react-native";
 import { Dropdown } from "../../components/DropDown";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import RenderHTML from "react-native-render-html";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
@@ -191,7 +192,7 @@ export const DetailPenilaian = () => {
     var date = new Date().getDate();
     var month = new Date().getMonth();
     var year = new Date().getFullYear();
-    setTanggal(date + "-" + month + "-" + year);
+    setTanggal(date + "-" + month + 1 + "-" + year);
     if (data !== null) {
       setNilai({
         key: data.category_id,
@@ -388,9 +389,11 @@ export const DetailPenilaian = () => {
                 :{" "}
                 {data?.published_date === null || data?.published_date === ""
                   ? "-"
-                  : moment(data?.published_date, "HH:mm:ss").format(
-                      DATETIME.LONG_DATE
-                    )}
+                  : DateFormat({
+                      date: data.published_date,
+                      fromDate: DATETIME.LONG_DATETIME,
+                      toDate: DATETIME.LONG_DATE,
+                    })}
               </Text>
             </View>
 
