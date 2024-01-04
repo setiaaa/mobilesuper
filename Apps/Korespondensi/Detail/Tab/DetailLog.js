@@ -121,12 +121,12 @@ function DetailLog({ route, data }) {
                     styles.badgeText,
                   ]}
                 >
-                  Log Disposition
+                  My Disposisi
                 </Text>
               </View>
               <View style={styles.headerDate}>
                 <Text style={styles.badgeText}>
-                  There is no log disposition
+                  Tidak ada My Disposisi
                 </Text>
               </View>
             </View>
