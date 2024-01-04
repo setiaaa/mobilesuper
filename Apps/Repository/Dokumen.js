@@ -40,7 +40,7 @@ import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
 import { getDocument } from "../../service/api";
 import { getDetailDocument } from "../../service/api";
-import moment from "moment/moment";
+import moment from "moment/min/moment-with-locales";
 import { ActivityIndicator } from "react-native";
 import { Dropdown } from "../../components/DropDown";
 import { Loading } from "../../components/Loading";
@@ -163,7 +163,9 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                    {moment(item.updated_at)
+                      .locale("id")
+                      .format("DD MMMM yyyy")}
                   </Text>
                 </View>
 
@@ -192,7 +194,9 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                    {moment(item.updated_at)
+                      .locale("id")
+                      .format("DD MMMM yyyy")}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -264,7 +268,9 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                    {moment(item.updated_at)
+                      .locale("id")
+                      .format("DD MMMM yyyy")}
                   </Text>
                 </View>
 
@@ -293,7 +299,9 @@ const DataList = ({ token, item, bottomSheetAttach, device }) => {
                       color: COLORS.lighter,
                     }}
                   >
-                    {moment(item.updated_at).format("DD MMMM yyyy")}
+                    {moment(item.updated_at)
+                      .locale("id")
+                      .format("DD MMMM yyyy")}
                   </Text>
                 </View>
               </View>

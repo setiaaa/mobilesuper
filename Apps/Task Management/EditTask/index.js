@@ -28,7 +28,7 @@ import {
   postTaskTM,
 } from "../../../service/api";
 import DatePicker from "react-native-modern-datepicker";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Dropdown } from "../../../components/DropDown";
 import { Pressable } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
@@ -149,7 +149,9 @@ export const EditTask = ({ route }) => {
           key: list.detail.reminder,
           value: transformCapitalize(list.detail.reminder),
         });
-        setTargetTanggal(moment(list.detail.due_date).format("YYYY-MM-DD"));
+        setTargetTanggal(
+          moment(list.detail.due_date).locale("id").format("YYYY-MM-DD")
+        );
         setMemberIsChecked(list.detail.members);
       }
     }
@@ -990,14 +992,16 @@ export const EditTask = ({ route }) => {
                   textSecondaryColor: COLORS.primary,
                   borderColor: "rgba(122, 146, 165, 0.1)",
                 }}
-                current={moment(Date.now()).format("YYYY-MM-DD")}
+                current={moment(Date.now()).locale("id").format("YYYY-MM-DD")}
                 mode="calendar"
                 minuteInterval={30}
                 style={{ borderRadius: 10 }}
                 onSelectedChange={(date) => {
                   const [year, month, day] = date.split("/").map(Number);
                   const formattedDate = new Date(year, month - 1, day);
-                  setTargetTanggal(moment(formattedDate).format("YYYY-MM-DD"));
+                  setTargetTanggal(
+                    moment(formattedDate).locale("id").format("YYYY-MM-DD")
+                  );
                 }}
               />
               <TouchableOpacity

@@ -18,7 +18,6 @@ import { setAbsen } from "../../store/Event";
 import ListEmpty from "../../components/ListEmpty";
 import { getTokenValue } from "../../service/session";
 import { getlistAbsen } from "../../service/api";
-import moment from "moment";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator } from "react-native";
@@ -269,8 +268,7 @@ export const Absen = () => {
       if (token !== "") {
         dispatch(getlistAbsen({ token, idagenda }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

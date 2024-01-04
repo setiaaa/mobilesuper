@@ -33,7 +33,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setAgendaDetail } from "../../store/GrupKalender";
 import {} from "react-native-safe-area-context";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { deleteAgendaGrup, getDetailGrup } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
@@ -298,9 +298,9 @@ export const DetailAcara = ({ route }) => {
                     ) : (
                       <View style={{ justifyContent: "center" }}>
                         <Text>
-                          {moment(detail?.start_date).format(
-                            DATETIME.LONG_DATETIME
-                          )}
+                          {moment(detail?.start_date)
+                            .locale("id")
+                            .format(DATETIME.LONG_DATETIME)}
                         </Text>
                       </View>
                     )}
@@ -345,9 +345,9 @@ export const DetailAcara = ({ route }) => {
                     ) : (
                       <View style={{ justifyContent: "center" }}>
                         <Text>
-                          {moment(detail?.end_date).format(
-                            DATETIME.LONG_DATETIME
-                          )}
+                          {moment(detail?.end_date)
+                            .locale("id")
+                            .format(DATETIME.LONG_DATETIME)}
                         </Text>
                       </View>
                     )}

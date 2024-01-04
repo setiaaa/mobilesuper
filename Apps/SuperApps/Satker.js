@@ -43,6 +43,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import RenderHTML from "react-native-render-html";
+import { Config } from "../../constants/config";
 
 const BannerSetjen = [
   {
@@ -123,7 +124,7 @@ export const Satker = () => {
   };
 
   const renderItem2 = ({ item, index }, parallaxProps) => {
-    const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+    const BASE_URL = Config.base_url + "bridge";
     return (
       <>
         <View style={[styles.items, { marginTop: 20 }]}>
@@ -473,10 +474,7 @@ export const Satker = () => {
             <View>
               <Image
                 source={{
-                  uri:
-                    "https://apigw.kubekkp.coofis.com/" +
-                    "bridge/" +
-                    profile.avatar,
+                  uri: Config.base_url + "bridge/" + profile.avatar,
                 }}
                 style={{
                   width: device === "tablet" ? 100 : 50,

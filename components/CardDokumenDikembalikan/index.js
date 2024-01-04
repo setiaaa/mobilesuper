@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getDetailArsipCuti } from "../../service/api";
 import { Text, TouchableOpacity, View } from "react-native";
 import { COLORS, DATETIME } from "../../config/SuperAppps";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Ionicons } from "@expo/vector-icons";
 
 export const CardListDokumenDikembalikan = ({ item, nip, token }) => {
@@ -37,9 +37,9 @@ export const CardListDokumenDikembalikan = ({ item, nip, token }) => {
           >
             <Text style={{ fontSize: 12 }}>
               Tanggal Pengajuan:{" "}
-              {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss").format(
-                DATETIME.LONG_DATETIME
-              )}
+              {moment(item.tanggal_pembuatan, "DD MMMM YYYY HH:mm:ss")
+                .locale("id")
+                .format(DATETIME.LONG_DATETIME)}
             </Text>
             <Text style={{ fontSize: 12, color: COLORS.lighter }}>
               Jenis: {item.jenis_cuti}
@@ -67,9 +67,9 @@ export const CardListDokumenDikembalikan = ({ item, nip, token }) => {
                 />
                 <Text style={{ fontSize: 12, color: COLORS.lighter }}>
                   Mulai:{" "}
-                  {moment(item.mulai_cuti, DATETIME.LONG_DATETIME).format(
-                    DATETIME.LONG_DATETIME
-                  )}
+                  {moment(item.mulai_cuti, DATETIME.LONG_DATETIME)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATETIME)}
                 </Text>
               </View>
               <View
@@ -87,9 +87,9 @@ export const CardListDokumenDikembalikan = ({ item, nip, token }) => {
                 />
                 <Text style={{ fontSize: 12, color: COLORS.lighter }}>
                   Mulai:{" "}
-                  {moment(item.akhir_cuti, DATETIME.LONG_DATETIME).format(
-                    DATETIME.LONG_DATETIME
-                  )}
+                  {moment(item.akhir_cuti, DATETIME.LONG_DATETIME)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATETIME)}
                 </Text>
               </View>
             </View>

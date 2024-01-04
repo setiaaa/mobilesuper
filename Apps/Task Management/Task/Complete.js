@@ -6,7 +6,7 @@ import { FlatList } from "react-native";
 import { CardListTask } from "../../../components/CardListTask";
 import { useSelector } from "react-redux";
 import { CardListGridTask } from "../../../components/CardListGridTask";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import ListEmpty from "../../../components/ListEmpty";
 import { CardShimmerListGridTask } from "../../../components/CardListGridTask/CardShimmerListGridTask";
 import { CardShimmerListTask } from "../../../components/CardListTask/CardShimmerListTask";
@@ -66,7 +66,9 @@ export const Complete = () => {
                   <CardListTask
                     id={item.id}
                     title={item.title}
-                    duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
+                    duedate={moment(item.due_date)
+                      .locale("id")
+                      .format(DATETIME.LONG_DATE)}
                     device={device}
                   />
                 )}
@@ -89,7 +91,9 @@ export const Complete = () => {
                 <CardListGridTask
                   id={item.id}
                   title={item.title}
-                  duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
+                  duedate={moment(item.due_date)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATE)}
                   priority={item.priority}
                   members={item.members}
                 />

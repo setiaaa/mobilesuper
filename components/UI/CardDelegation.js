@@ -3,7 +3,7 @@ import { Alert, Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { nde_api } from "../../utils/api.config";
 import { headerToken } from "../../utils/http";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Config } from "../../constants/config";
 import { COLORS, DATETIME } from "../../config/SuperAppps";
 import { Image } from "react-native";
@@ -127,7 +127,7 @@ function CardDelegation({ data, onPress }) {
                   onError={() => setErrorAvatarDelegasi(true)}
                 />
               )}
-              <View style={{ gap: 2, width:"90%" }}>
+              <View style={{ gap: 2, width: "90%" }}>
                 <Text
                   style={{ fontSize: 11, fontWeight: 400, color: COLORS.white }}
                 >
@@ -169,7 +169,9 @@ function CardDelegation({ data, onPress }) {
                   Mulai :{" "}
                 </Text>
                 <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                  {moment(data.start_date).format(DATETIME.LONG_DATE)}
+                  {moment(data.start_date)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATE)}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", gap: 10 }}>
@@ -185,7 +187,9 @@ function CardDelegation({ data, onPress }) {
                   Selesai :{" "}
                 </Text>
                 <Text style={{ fontSize: 13, fontWeight: 600 }}>
-                  {moment(data.end_date).format(DATETIME.LONG_DATE)}
+                  {moment(data.end_date)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATE)}
                 </Text>
               </View>
             </View>

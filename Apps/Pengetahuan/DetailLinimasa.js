@@ -33,7 +33,7 @@ import { ResizeMode, Video } from "expo-av";
 import PdfReader from "rn-pdf-reader-js-improved";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { useWindowDimensions } from "react-native";
 import RenderHTML from "react-native-render-html";
 import {
@@ -611,7 +611,7 @@ const ShimmerParagraph = () => {
   );
 };
 
-export const DetailLinimasa = ({route}) => {
+export const DetailLinimasa = ({ route }) => {
   const like_list = route.params;
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
@@ -889,7 +889,10 @@ export const DetailLinimasa = ({route}) => {
                           fontSize: fontSizeResponsive("H4", device),
                         }}
                       >
-                        {detail.published_date?.slice(0, -9)}
+                        {/* {detail.published_date?.slice(0, -9)} */}
+                        {moment(detail?.published_date, DATETIME.LONG_DATETIME)
+                          .locale("id")
+                          .format(DATETIME.LONG_DATE)}
                       </Text>
                     )}
                   </View>

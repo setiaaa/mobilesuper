@@ -25,6 +25,7 @@ import { getParts, getProfileMe, getTicket } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { setTiket } from "../../store/HelpDesk";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Config } from "../../constants/config";
 
 export const HelpDesk = () => {
   const navigation = useNavigation();
@@ -38,7 +39,7 @@ export const HelpDesk = () => {
   const [pending, setPending] = useState("");
   const [approve, setApprove] = useState("");
   const [token, setToken] = useState("");
-  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const BASE_URL = Config.base_url + "bridge";
 
   useEffect(() => {
     getTokenValue().then((val) => {

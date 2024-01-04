@@ -33,7 +33,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setAgendaDetail } from "../../store/GrupKalender";
 import {} from "react-native-safe-area-context";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { deleteGrup, getDetailGrup } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
@@ -119,7 +119,7 @@ export const DetailGrup = () => {
     const second = parseInt(time[2]);
 
     const date = new Date(year, month, day, hour, minute, second);
-    const formatedDate = moment(date).format(DATETIME.LONG_DATE);
+    const formatedDate = moment(date).locale("id").format(DATETIME.LONG_DATE);
 
     return formatedDate;
   };

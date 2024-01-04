@@ -8,7 +8,7 @@ import {
 } from "../../config/SuperAppps";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -43,9 +43,9 @@ export const CardKuotaCuti = ({ item, device }) => {
                 }}
               >
                 Mulai Berlaku:{" "}
-                {moment(item.mulai_berlaku, "DD MMMM YYYY HH:mm:ss").format(
-                  DATETIME.LONG_DATE
-                )}
+                {moment(item.mulai_berlaku, "DD MMMM YYYY HH:mm:ss")
+                  .locale("id")
+                  .format(DATETIME.LONG_DATE)}
               </Text>
               <Text
                 style={{
@@ -54,9 +54,9 @@ export const CardKuotaCuti = ({ item, device }) => {
                 }}
               >
                 Akhir Berlaku:{" "}
-                {moment(item.akhir_berlaku, "DD MMMM YYYY HH:mm:ss").format(
-                  DATETIME.LONG_DATE
-                )}
+                {moment(item.akhir_berlaku, "DD MMMM YYYY HH:mm:ss")
+                  .locale("id")
+                  .format(DATETIME.LONG_DATE)}
               </Text>
             </View>
           </View>

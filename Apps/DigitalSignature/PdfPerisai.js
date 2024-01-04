@@ -10,6 +10,7 @@ import {
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Config } from "../../constants/config";
 
 export const PdfPerisai = ({ route }) => {
   const { item } = route.params;
@@ -56,7 +57,7 @@ export const PdfPerisai = ({ route }) => {
             "halaman": __CURRENT_PAGE
         }
           $.ajax({
-            url: 'https://apigw.kubekkp.coofis.com/digitalsign/document/approve/',
+            url: 'https://portal.kkp.go.id/api/digitalsign/document/approve/',
             type: 'PUT',
             contentType: 'application/json; charset=utf-8',
             headers: {
@@ -82,7 +83,7 @@ export const PdfPerisai = ({ route }) => {
   let inject = `
   $("#reject").click(function () {
     $.ajax({
-      url: "https://apigw.kubekkp.coofis.com/digitalsign/document/reject_document/",
+      url:" ${Config.base_url}digitalsign/document/reject_document/",
       type: 'PUT',
       contentType: 'application/json; charset=utf-8',
       headers: {
@@ -118,7 +119,7 @@ $("#submit").click(function () {
       "id_documents": ["${item.id}"],
   }
   $.ajax({
-    url: "https://apigw.kubekkp.coofis.com/digitalsign/document/approve/",
+    url: " ${Config.base_url}digitalsign/document/approve/",
     type: 'PUT',
     contentType: 'application/json; charset=utf-8',
     headers: {

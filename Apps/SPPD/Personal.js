@@ -30,6 +30,7 @@ import { getTokenValue } from "../../service/session";
 import { getDashboardSPPD } from "../../service/api";
 import { Loading } from "../../components/Loading";
 import { StyleSheet } from "react-native";
+import { Config } from "../../constants/config";
 
 export const Personal = () => {
   const navigation = useNavigation();
@@ -63,7 +64,7 @@ export const Personal = () => {
   let jmlProv = dashboard.stats?.province?.counter.toString();
   let jmlKota = dashboard.stats?.city?.counter.toString();
 
-  const BASE_URL = "https://apigw.kubekkp.coofis.com/bridge";
+  const BASE_URL = Config.base_url + "bridge";
 
   return (
     <>

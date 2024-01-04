@@ -34,7 +34,7 @@ import { CardPilihMember } from "../../components/CardPilihMember";
 import { Search } from "../../components/Search";
 import { FlatList } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import {} from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import * as DocumentPicker from "expo-document-picker";
@@ -388,7 +388,6 @@ export const EditSubAgenda = () => {
     }
     setArrIsChecked(arr);
   };
-
 
   const { device } = useSelector((state) => state.apps);
 
@@ -926,7 +925,9 @@ export const EditSubAgenda = () => {
                               day
                             );
                             setTanggalMulai(
-                              moment(formattedDate).format("YYYY-MM-DD")
+                              moment(formattedDate)
+                                .locale("id")
+                                .format("YYYY-MM-DD")
                             );
                           }}
                         />
