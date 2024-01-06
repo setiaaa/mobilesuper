@@ -145,7 +145,11 @@ function CardListSearch({ data, tipe, onPress }) {
               {!errorAvatar && (
                 <Image
                   source={{
-                    uri: `${nde_api.baseurl + data.avatar}`,
+                    uri: `${
+                      nde_api.baseurl +
+                      "crsbe" +
+                      data.avatar.slice(4, data.avatar.length)
+                    }`,
                     method: "GET",
                     headers: header,
                   }}
