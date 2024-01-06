@@ -150,8 +150,7 @@ function DetailDispo({ data, noAgenda, preview, title }) {
     try {
       const UTI = "public.item";
       const shareResult = await Sharing.shareAsync(fileUri, { UTI });
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   return (
     <>
@@ -235,15 +234,13 @@ function DetailDispo({ data, noAgenda, preview, title }) {
             mode="contained"
             style={{ backgroundColor: GlobalStyles.colors.tertiery }}
             onPress={() => {
-              navigation.navigate("LetterDetail", {
-                id: data?.obj?.id,
-                data: data?.obj,
-                preview: preview,
-                title: "Detail Surat",
+              navigation.navigate("ViewAttachment", {
+                selected: data?.obj?.attachments[0],
+                title: "Lihat Surat",
               });
             }}
           >
-            Lihat Dokumen
+            Lihat Surat
           </Button>
         </View>
       </ScrollView>

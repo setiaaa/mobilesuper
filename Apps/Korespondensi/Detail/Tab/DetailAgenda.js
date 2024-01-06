@@ -286,7 +286,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 paddingRight: 20,
               }}
             >
-              {data?.template?.display_name}
+              {data?.jenis_surat}
             </Text>
           </View>
 
@@ -799,7 +799,30 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 <Text style={{ fontSize: 13 }}>-</Text>
               )}
               {data && data.tembusan_external?.length !== 0 && (
-                <Text style={{ fontSize: 13 }}>{data.tembusan_external}</Text>
+                <Text style={{ fontSize: 13 }}>
+                  {data.tembusan_external === "\n"
+                    ? "-"
+                    : data.tembusan_external}
+                </Text>
+              )}
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                Internal Satker
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                padding: 20,
+                borderRadius: 16,
+              }}
+            >
+              {data && data.internal_satker?.length == 0 && (
+                <Text style={{ fontSize: 13 }}>-</Text>
+              )}
+              {data && data.internal_satker?.length !== 0 && (
+                <Text style={{ fontSize: 13 }}>{data.internal_satker}</Text>
               )}
             </View>
           </>
