@@ -141,7 +141,7 @@ export const DetailActivity = () => {
                 <Ionicons
                   name="chevron-back-outline"
                   size={device === "tablet" ? 40 : 24}
-                  color={"#800000"}
+                  color={COLORS.primary}
                 />
               </TouchableOpacity>
             </View>

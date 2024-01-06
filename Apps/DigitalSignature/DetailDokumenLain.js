@@ -344,7 +344,10 @@ export const DetailDokumenLain = ({ route }) => {
                     />
                   ) : (
                     <Text
-                      style={{ fontSize: fontSizeResponsive("H2", device) }}
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        width: 150,
+                      }}
                     >
                       {item.extra_attributes?.keterangan === undefined ||
                       item.extra_attributes?.keterangan === ""

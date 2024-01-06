@@ -314,7 +314,7 @@ export const CardApps = ({ handlePressModal }) => {
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/task-ikon.png")}
+              source={require("../../assets/superApp/taskmanagement.png")}
             />
           </View>
         </TouchableOpacity>

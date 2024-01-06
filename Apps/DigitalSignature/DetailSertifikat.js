@@ -371,7 +371,12 @@ export const DetailSertifikat = (route) => {
                   >
                     keterangan
                   </Text>
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      width: 150,
+                    }}
+                  >
                     :
                   </Text>
                   <View style={{ width: "45%" }}>

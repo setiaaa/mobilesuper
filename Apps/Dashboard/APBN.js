@@ -10,7 +10,7 @@ export const APBN = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

@@ -187,7 +187,7 @@ $("#submit").click(function () {
       <WebView
         ref={webViewRef}
         source={{
-          uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/newPdfViewer.html",
+          uri: "https://portal.kkp.go.id/api/assets/pdfViewer/newPdfViewer.html",
         }}
         style={{ flex: 1 }}
         injectedJavaScript={inject}

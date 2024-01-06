@@ -523,7 +523,6 @@ export const RangkumanIKU = () => {
           </Text>
         </View>
       </View>
-
       <View
         style={{
           flexDirection: "row",
@@ -595,7 +594,6 @@ export const RangkumanIKU = () => {
           </Text>
         </TouchableOpacity>
       </View>
-
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
           <View
@@ -608,7 +606,7 @@ export const RangkumanIKU = () => {
             <WebView
               originWhitelist={["*"]}
               source={{
-                uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+                uri: "https://portal.kkp.go.id/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
               }}
               style={{ flex: 1, borderRadius: 8 }}
               allowFileAccess={true}
@@ -1131,6 +1129,7 @@ export const RangkumanIKU = () => {
           </>
         )}
       </View>
+          
     </>
   );
 };

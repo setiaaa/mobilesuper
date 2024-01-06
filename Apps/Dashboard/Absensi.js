@@ -9,7 +9,7 @@ export const Absensi = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DAbsensi.html",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DAbsensi.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

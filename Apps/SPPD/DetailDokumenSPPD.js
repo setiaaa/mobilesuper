@@ -45,16 +45,7 @@ export const DetailDokumenSPPD = ({ route }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (token !== "") {
-      dispatch(
-        getDocumentAttachmentSPPD({ token: token, id: dokumen.detail?.id })
-      );
-      dispatch(getDocumentCetakSPPD({ token: token, id: dokumen.detail?.id }));
-    }
-  }, [token, surat, cetak]);
-
-  const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
+  const { dokumen } = useSelector((state) => state.sppd);
   const { device } = useSelector((state) => state.apps);
 
   const hari = dokumen.detail?.days?.toString();
@@ -640,7 +631,10 @@ export const DetailDokumenSPPD = ({ route }) => {
                 justifyContent: "center",
               }}
               onPress={() => {
-                navigation.navigate("LihatSuratSPPD", { surat: surat });
+                navigation.navigate("LihatSuratSPPD", {
+                  status: "",
+                  data: data,
+                });
               }}
             >
               <Text
@@ -670,7 +664,6 @@ export const DetailDokumenSPPD = ({ route }) => {
                 //   data + ".pdf"
                 // );
                 navigation.navigate("LihatSuratSPPD", {
-                  surat: cetak,
                   status: "share",
                   data: data,
                 });
