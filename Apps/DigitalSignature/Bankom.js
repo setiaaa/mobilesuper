@@ -484,14 +484,10 @@ export const Bankom = () => {
                   paddingVertical: 6,
                   borderWidth: 1,
                   backgroundColor:
-                    variant === "composer"
-                      ? COLORS.infoDangerLight
-                      : COLORS.input,
+                    variant === "composer" ? COLORS.primary : COLORS.input,
                   borderRadius: 30,
                   borderColor:
-                    variant === "composer"
-                      ? COLORS.infoDangerLight
-                      : COLORS.ExtraDivinder,
+                    variant === "composer" ? null : COLORS.ExtraDivinder,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -500,9 +496,7 @@ export const Bankom = () => {
                 <Text
                   style={{
                     color:
-                      variant === "composer"
-                        ? COLORS.infoDanger
-                        : COLORS.foundation,
+                      variant === "composer" ? COLORS.white : COLORS.foundation,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -516,12 +510,10 @@ export const Bankom = () => {
                   paddingVertical: 6,
                   borderWidth: 1,
                   backgroundColor:
-                    variant === "draft" ? COLORS.infoDangerLight : COLORS.input,
+                    variant === "draft" ? COLORS.primary : COLORS.input,
                   borderRadius: 30,
                   borderColor:
-                    variant === "draft"
-                      ? COLORS.infoDangerLight
-                      : COLORS.ExtraDivinder,
+                    variant === "draft" ? null : COLORS.ExtraDivinder,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -530,9 +522,7 @@ export const Bankom = () => {
                 <Text
                   style={{
                     color:
-                      variant === "draft"
-                        ? COLORS.infoDanger
-                        : COLORS.foundation,
+                      variant === "draft" ? COLORS.white : COLORS.foundation,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -546,14 +536,10 @@ export const Bankom = () => {
                   paddingVertical: 6,
                   borderWidth: 1,
                   backgroundColor:
-                    variant === "inprogress"
-                      ? COLORS.infoDangerLight
-                      : COLORS.input,
+                    variant === "inprogress" ? COLORS.primary : COLORS.input,
                   borderRadius: 30,
                   borderColor:
-                    variant === "inprogress"
-                      ? COLORS.infoDangerLight
-                      : COLORS.ExtraDivinder,
+                    variant === "inprogress" ? null : COLORS.ExtraDivinder,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -563,7 +549,7 @@ export const Bankom = () => {
                   style={{
                     color:
                       variant === "inprogress"
-                        ? COLORS.infoDanger
+                        ? COLORS.white
                         : COLORS.foundation,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
@@ -578,14 +564,10 @@ export const Bankom = () => {
                   paddingVertical: 6,
                   borderWidth: 1,
                   backgroundColor:
-                    variant === "signed"
-                      ? COLORS.infoDangerLight
-                      : COLORS.input,
+                    variant === "signed" ? COLORS.primary : COLORS.input,
                   borderRadius: 30,
                   borderColor:
-                    variant === "signed"
-                      ? COLORS.infoDangerLight
-                      : COLORS.ExtraDivinder,
+                    variant === "signed" ? null : COLORS.ExtraDivinder,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -594,9 +576,7 @@ export const Bankom = () => {
                 <Text
                   style={{
                     color:
-                      variant === "signed"
-                        ? COLORS.infoDanger
-                        : COLORS.foundation,
+                      variant === "signed" ? COLORS.white : COLORS.foundation,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >

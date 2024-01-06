@@ -355,12 +355,9 @@ export const DokumenLain = () => {
               paddingVertical: 6,
               borderWidth: 1,
               backgroundColor:
-                variant === "composer" ? COLORS.infoDangerLight : COLORS.input,
+                variant === "composer" ? COLORS.primary : COLORS.input,
               borderRadius: 30,
-              borderColor:
-                variant === "composer"
-                  ? COLORS.infoDangerLight
-                  : COLORS.ExtraDivinder,
+              borderColor: variant === "composer" ? null : COLORS.ExtraDivinder,
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -369,9 +366,7 @@ export const DokumenLain = () => {
             <Text
               style={{
                 color:
-                  variant === "composer"
-                    ? COLORS.infoDanger
-                    : COLORS.foundation,
+                  variant === "composer" ? COLORS.white : COLORS.foundation,
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
@@ -386,12 +381,9 @@ export const DokumenLain = () => {
               paddingVertical: 6,
               borderWidth: 1,
               backgroundColor:
-                variant === "draft" ? COLORS.infoDangerLight : COLORS.input,
+                variant === "draft" ? COLORS.primary : COLORS.input,
               borderRadius: 30,
-              borderColor:
-                variant === "draft"
-                  ? COLORS.infoDangerLight
-                  : COLORS.ExtraDivinder,
+              borderColor: variant === "draft" ? null : COLORS.ExtraDivinder,
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -399,8 +391,7 @@ export const DokumenLain = () => {
           >
             <Text
               style={{
-                color:
-                  variant === "draft" ? COLORS.infoDanger : COLORS.foundation,
+                color: variant === "draft" ? COLORS.white : COLORS.foundation,
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
@@ -415,14 +406,10 @@ export const DokumenLain = () => {
               paddingVertical: 6,
               borderWidth: 1,
               backgroundColor:
-                variant === "inprogress"
-                  ? COLORS.infoDangerLight
-                  : COLORS.input,
+                variant === "inprogress" ? COLORS.primary : COLORS.input,
               borderRadius: 30,
               borderColor:
-                variant === "inprogress"
-                  ? COLORS.infoDangerLight
-                  : COLORS.ExtraDivinder,
+                variant === "inprogress" ? null : COLORS.ExtraDivinder,
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -431,9 +418,7 @@ export const DokumenLain = () => {
             <Text
               style={{
                 color:
-                  variant === "inprogress"
-                    ? COLORS.infoDanger
-                    : COLORS.foundation,
+                  variant === "inprogress" ? COLORS.white : COLORS.foundation,
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
@@ -448,12 +433,9 @@ export const DokumenLain = () => {
               paddingVertical: 6,
               borderWidth: 1,
               backgroundColor:
-                variant === "rejected" ? COLORS.infoDangerLight : COLORS.input,
+                variant === "rejected" ? COLORS.primary : COLORS.input,
               borderRadius: 30,
-              borderColor:
-                variant === "rejected"
-                  ? COLORS.infoDangerLight
-                  : COLORS.ExtraDivinder,
+              borderColor: variant === "rejected" ? null : COLORS.ExtraDivinder,
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -462,9 +444,7 @@ export const DokumenLain = () => {
             <Text
               style={{
                 color:
-                  variant === "rejected"
-                    ? COLORS.infoDanger
-                    : COLORS.foundation,
+                  variant === "rejected" ? COLORS.white : COLORS.foundation,
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
@@ -479,12 +459,9 @@ export const DokumenLain = () => {
               paddingVertical: 6,
               borderWidth: 1,
               backgroundColor:
-                variant === "signed" ? COLORS.infoDangerLight : COLORS.input,
+                variant === "signed" ? COLORS.primary : COLORS.input,
               borderRadius: 30,
-              borderColor:
-                variant === "signed"
-                  ? COLORS.infoDangerLight
-                  : COLORS.ExtraDivinder,
+              borderColor: variant === "signed" ? null : COLORS.ExtraDivinder,
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -492,8 +469,7 @@ export const DokumenLain = () => {
           >
             <Text
               style={{
-                color:
-                  variant === "signed" ? COLORS.infoDanger : COLORS.foundation,
+                color: variant === "signed" ? COLORS.white : COLORS.foundation,
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
