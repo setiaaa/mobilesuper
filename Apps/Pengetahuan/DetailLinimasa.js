@@ -314,6 +314,7 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
       setParentId({ id: listData.id, creator: listData.creator });
     }
   };
+  console.log(listData.created_at);
   return (
     <View
       style={{
@@ -374,7 +375,12 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
                   marginBottom: 10,
                 }}
               >
-                {listData.created_at}
+                {/* {listData.created_at} */}
+                {DateFormat({
+                  date: listData?.created_at,
+                  fromDate: DATETIME.LONG_DATETIME,
+                  toDate: DATETIME.LONG_DATETIME,
+                })}
               </Text>
             </View>
             <Text

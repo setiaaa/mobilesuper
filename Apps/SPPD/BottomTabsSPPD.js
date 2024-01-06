@@ -109,13 +109,13 @@ function MyTabBarSPPD({ props, navigation }) {
               >
                 <Ionicons
                   name="school-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                   style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     position: "absolute",
                     bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
@@ -170,7 +170,7 @@ function MyTabBarSPPD({ props, navigation }) {
                     color: COLORS.primary,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
-                    position:"absolute",
+                    position: "absolute",
                     bottom: device === "tablet" ? 20 : 24,
                   }}
                 >
@@ -197,7 +197,7 @@ function MyTabBarSPPD({ props, navigation }) {
                     color: COLORS.grey,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
-                    position:"absolute",
+                    position: "absolute",
                     bottom: device === "tablet" ? 20 : 24,
                   }}
                 >

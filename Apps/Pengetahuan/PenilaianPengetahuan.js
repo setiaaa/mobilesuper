@@ -435,6 +435,8 @@ export const PenilaianPenggetahaun = () => {
 
   const { device } = useSelector((state) => state.apps);
 
+  console.log(penilaian?.total);
+
   return (
     <>
       {loading ? <Loading /> : null}

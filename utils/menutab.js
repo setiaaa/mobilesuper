@@ -553,7 +553,7 @@ export const TopsTP = () => {
       <Top.Navigator
         initialRouteName="KRT"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: "#800000" },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarLabelStyle: { fontSize: 10, textTransform: "none" },
         }}
       >
@@ -589,7 +589,7 @@ export const TopsTask = ({ device }) => {
       <Top.Navigator
         initialRouteName={"InProgres"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
@@ -638,7 +638,7 @@ export const TopsTaskDashboard = ({ device }) => {
       <Top.Navigator
         initialRouteName={"HariIni"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
@@ -680,7 +680,7 @@ export const TopsTaskKorespondensi = ({ device }) => {
       <Top.Navigator
         initialRouteName={"Arsip"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
@@ -729,7 +729,7 @@ export const TopsPencarianKorespondensi = (data) => {
       <Top.Navigator
         initialRouteName={"PAll"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
@@ -780,7 +780,7 @@ export const TopsDash = () => {
       <Top.Navigator
         initialRouteName="Demografi"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
@@ -845,7 +845,7 @@ export const TopsProduksiBudidaya = () => {
       <Top.Navigator
         initialRouteName="Produksi"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
@@ -883,7 +883,7 @@ export const TopsKeuanganKinerja = () => {
       <Top.Navigator
         initialRouteName="APBN"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
           tabBarActiveTintColor: "#C34647",
           tabBarInactiveTintColor: "black",
           tabBarLabelStyle: {
@@ -927,7 +927,7 @@ export const TopAddressBook = ({ config, device }) => {
         <Top.Navigator
           initialRouteName={"AddressBookJabatan"}
           screenOptions={{
-            tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
+            tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
             tabBarActiveTintColor: "#C34647",
             tabBarInactiveTintColor: "black",
             tabBarLabelStyle: {

@@ -78,12 +78,12 @@ function MyTabDetailEvent({ props, navigation }) {
               >
                 <Ionicons
                   name="information-circle-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -150,12 +150,12 @@ function MyTabDetailEvent({ props, navigation }) {
               >
                 <Ionicons
                   name="reorder-four-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >

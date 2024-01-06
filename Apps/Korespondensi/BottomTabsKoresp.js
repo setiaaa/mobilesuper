@@ -67,8 +67,12 @@ function MyTabKoresp({ props, navigation }) {
                   width: device === "tablet" ? 150 : 80,
                 }}
               >
-                <Ionicons name="home-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Dashboard</Text>
+                <Ionicons
+                  name="home-outline"
+                  color={COLORS.tertiary}
+                  size={24}
+                />
+                <Text style={{ color: COLORS.tertiary }}>Dashboard</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -117,8 +121,12 @@ function MyTabKoresp({ props, navigation }) {
                   width: device === "tablet" ? 150 : 80,
                 }}
               >
-                <Ionicons name="mail-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Dokumen</Text>
+                <Ionicons
+                  name="mail-outline"
+                  color={COLORS.tertiary}
+                  size={24}
+                />
+                <Text style={{ color: COLORS.tertiary }}>Dokumen</Text>
               </View>
             )}
           </TouchableOpacity>
@@ -166,8 +174,12 @@ function MyTabKoresp({ props, navigation }) {
                   width: device === "tablet" ? 150 : 80,
                 }}
               >
-                <Ionicons name="search-outline" color={COLORS.grey} size={24} />
-                <Text style={{ color: COLORS.grey }}>Pencarian</Text>
+                <Ionicons
+                  name="search-outline"
+                  color={COLORS.tertiary}
+                  size={24}
+                />
+                <Text style={{ color: COLORS.tertiary }}>Pencarian</Text>
               </View>
             )}
           </TouchableOpacity>

@@ -78,12 +78,12 @@ function MyTabBarDetailRepo({ props, navigation }) {
               >
                 <Ionicons
                   name="information-circle-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                     device,
                   }}
@@ -151,12 +151,12 @@ function MyTabBarDetailRepo({ props, navigation }) {
               >
                 <Ionicons
                   name="attach-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -223,12 +223,12 @@ function MyTabBarDetailRepo({ props, navigation }) {
               >
                 <Ionicons
                   name="chatbox-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >

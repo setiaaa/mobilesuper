@@ -183,7 +183,7 @@ function TabViewBg({
     return (
       <IconButton
         icon={route.icon}
-        iconColor={focused ? "black" : "grey"}
+        iconColor={focused ? COLORS.primary : COLORS.tertiary}
         size={18}
         style={{ margin: -10 }}
       />
@@ -195,8 +195,8 @@ function TabViewBg({
       renderIcon={tipe == "dashboard" ? null : renderIcon}
       indicatorStyle={
         tipe == "dashboard"
-          ? { backgroundColor: COLORS.danger }
-          : { backgroundColor: null }
+          ? { backgroundColor: COLORS.project }
+          : { backgroundColor: COLORS.tertiary }
       }
       style={[
         {
@@ -211,7 +211,7 @@ function TabViewBg({
         color: GlobalStyles.colors.textBlack,
         fontSize: GlobalStyles.font.sm,
       }}
-      activeColor={COLORS.danger}
+      activeColor={COLORS.primary}
       inactiveColor={GlobalStyles.colors.textBlack}
     />
   );

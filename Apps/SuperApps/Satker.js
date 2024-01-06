@@ -426,7 +426,7 @@ export const Satker = () => {
           }}
         >
           <Image
-            source={require("../../assets/superApp/headerfix.png")}
+            source={require("../../assets/superApp/headerdark.png")}
             style={{
               width: "100%",
               height: "100%",

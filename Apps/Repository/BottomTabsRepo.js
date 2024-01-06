@@ -78,12 +78,12 @@ function MyTabBarRepo({ props, navigation }) {
               >
                 <Ionicons
                   name="list"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -150,12 +150,12 @@ function MyTabBarRepo({ props, navigation }) {
               >
                 <Ionicons
                   name="people-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -222,12 +222,12 @@ function MyTabBarRepo({ props, navigation }) {
               >
                 <Ionicons
                   name="documents-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >

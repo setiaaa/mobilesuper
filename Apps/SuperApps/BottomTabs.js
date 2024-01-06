@@ -116,12 +116,12 @@ function MyTabBar({ props, navigation }) {
               >
                 <Ionicons
                   name="home"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -188,12 +188,12 @@ function MyTabBar({ props, navigation }) {
               >
                 <Ionicons
                   name="business-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
@@ -295,12 +295,12 @@ function MyTabBar({ props, navigation }) {
                 >
                   <Ionicons
                     name="grid-outline"
-                    color={COLORS.grey}
+                    color={COLORS.tertiary}
                     size={device === "tablet" ? 40 : 24}
                   />
                   <Text
                     style={{
-                      color: COLORS.grey,
+                      color: COLORS.tertiary,
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
@@ -368,12 +368,12 @@ function MyTabBar({ props, navigation }) {
               >
                 <Ionicons
                   name="reader"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
@@ -440,12 +440,12 @@ function MyTabBar({ props, navigation }) {
               >
                 <Ionicons
                   name="person"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >

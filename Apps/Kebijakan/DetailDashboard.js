@@ -32,25 +32,13 @@ export default function DetailDashboard({ route }) {
 
   let judul = data.subjek.replace(/\s/g, "-");
 
-
   const downloadFromUrl = () => {
     let remoteUrl = data.link;
     let localPath = `${FileSystem.documentDirectory}/${judul}.pdf`;
     FileSystem.downloadAsync(remoteUrl, localPath).then(async ({ uri }) => {
       const contentURL = await FileSystem.getContentUriAsync(uri);
       try {
-        if (Platform.OS == "android") {
-          await IntentLauncher.startActivityAsync(
-            "android.intent.action.VIEW",
-            {
-              data: contentURL,
-              flags: 1,
-              type: "application/pdf",
-            }
-          );
-        } else if (Platform.OS == "ios") {
-          Sharing.shareAsync(localPath);
-        }
+        Sharing.shareAsync(localPath);
       } catch (error) {
         Alert.alert("INFO", JSON.stringify(error));
       }
@@ -220,7 +208,7 @@ export default function DetailDashboard({ route }) {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.buttonBuka}
+              style={[styles.buttonBuka, { backgroundColor: COLORS.primary }]}
               onPress={() => {
                 navigation.navigate("PdfViewer", {
                   data: data,
@@ -278,7 +266,6 @@ const styles = StyleSheet.create({
     fontWeight: "300",
   },
   buttonBuka: {
-    backgroundColor: "#800000",
     borderRadius: 12,
     marginTop: 20,
     width: wp(90),
