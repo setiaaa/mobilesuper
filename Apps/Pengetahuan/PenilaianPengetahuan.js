@@ -107,7 +107,7 @@ const CardPenilaian = ({ item, token, device }) => {
               }}
             >
               {/* Tanggal: {engDate.locale("id").format("LL")} */}
-              Tanggal:
+              Tanggal:{" "}
               {DateFormat({
                 date: item.published_date,
                 fromDate: DATETIME.LONG_DATETIME,
@@ -324,7 +324,17 @@ export const PenilaianPenggetahaun = () => {
       dispatch(getTotalPenilaian(data));
       // dispatch(getDivisionTree({ token: token, id: kategori.key }))
     }
-  }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
+  }, [
+    token,
+    quarter,
+    year,
+    isFocused,
+    ditinjau,
+    savedUnitKerja,
+    page,
+    search,
+    penilaian,
+  ]);
 
   const { penilaian, unitKerja, loading } = useSelector(
     (state) => state.pengetahuan
@@ -411,9 +421,20 @@ export const PenilaianPenggetahaun = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
+  }, [
+    token,
+    quarter,
+    year,
+    isFocused,
+    ditinjau,
+    savedUnitKerja,
+    page,
+    search,
+    penilaian,
+  ]);
 
   const { device } = useSelector((state) => state.apps);
+
   return (
     <>
       {loading ? <Loading /> : null}

@@ -387,10 +387,12 @@ export const DetailPenilaian = () => {
               </Text>
               <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 :{" "}
-                {data?.published_date === null || data?.published_date === ""
+                {data?.published_date === null ||
+                data?.published_date === "" ||
+                data?.published_date === undefined
                   ? "-"
                   : DateFormat({
-                      date: data.published_date,
+                      date: data?.published_date,
                       fromDate: DATETIME.LONG_DATETIME,
                       toDate: DATETIME.LONG_DATE,
                     })}
