@@ -523,6 +523,7 @@ export const RangkumanIKU = () => {
           </Text>
         </View>
       </View>
+
       <View
         style={{
           flexDirection: "row",
@@ -594,6 +595,7 @@ export const RangkumanIKU = () => {
           </Text>
         </TouchableOpacity>
       </View>
+
       <View style={{ paddingHorizontal: 5 }}>
         {switchView ? (
           <View
@@ -1129,7 +1131,6 @@ export const RangkumanIKU = () => {
           </>
         )}
       </View>
-          
     </>
   );
 };
