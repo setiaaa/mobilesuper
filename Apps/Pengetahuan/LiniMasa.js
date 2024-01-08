@@ -1764,7 +1764,7 @@ export const LiniMasa = () => {
             <TouchableOpacity
               style={{}}
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate("Main");
               }}
             >
               <Ionicons

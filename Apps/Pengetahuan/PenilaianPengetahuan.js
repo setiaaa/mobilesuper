@@ -462,7 +462,7 @@ export const PenilaianPenggetahaun = () => {
           >
             <TouchableOpacity
               style={{}}
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("Main")}
             >
               <Ionicons
                 name="chevron-back-outline"

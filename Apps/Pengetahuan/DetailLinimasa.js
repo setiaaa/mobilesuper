@@ -752,7 +752,7 @@ export const DetailLinimasa = ({ route }) => {
     "apps/KnowledgeManagement/detail/" +
     item.id +
     "/" +
-    detail.creator.id;
+    detail?.creator?.id;
   const handleShare = async () => {
     try {
       const result = await Share.share({
@@ -786,7 +786,7 @@ export const DetailLinimasa = ({ route }) => {
               <TouchableOpacity
                 onPress={() => {
                   resetData();
-                  navigation.goBack();
+                  navigation.navigate("MainPengetahuan");
                 }}
                 style={{ position: "absolute", zIndex: 1 }}
               >

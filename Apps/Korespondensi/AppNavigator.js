@@ -1274,7 +1274,7 @@ function AppNavigator() {
     <>
       <Host>
         {/* awas lupa */}
-        <NavigationContainer linking={linking}>
+        <NavigationContainer linking={!token ? null : linking}>
           {/* {!isLoading && isToken == null && <AuthStack />} */}
           {!isLoading && <AuthenticatedStack route={route} />}
         </NavigationContainer>
