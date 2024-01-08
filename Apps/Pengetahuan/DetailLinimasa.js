@@ -756,7 +756,7 @@ export const DetailLinimasa = ({ route }) => {
   const handleShare = async () => {
     try {
       const result = await Share.share({
-        message: "cek" + "\n" + urlToShare,
+        message: urlToShare,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
