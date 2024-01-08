@@ -786,7 +786,7 @@ export const DetailLinimasa = ({ route }) => {
               <TouchableOpacity
                 onPress={() => {
                   resetData();
-                  navigation.goBack();
+                  navigation.navigate("MainPengetahuan");
                 }}
                 style={{ position: "absolute", zIndex: 1 }}
               >
