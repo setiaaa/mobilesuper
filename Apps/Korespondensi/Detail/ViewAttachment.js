@@ -18,6 +18,9 @@ function ViewAttachment({ route }) {
     let response = await headerToken();
     setHeader(response);
   }
+  console.log(
+    nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length)
+  );
   return (
     <>
       {header && (
@@ -27,8 +30,8 @@ function ViewAttachment({ route }) {
               source={{
                 uri:
                   nde_api.baseurl +
-                  "crsbe" +
-                  data?.file.slice(4, data?.file.length),
+                  "crsbe/" +
+                  data?.file.slice(5, data?.file.length),
                 headers: header,
               }}
               withScroll={true}

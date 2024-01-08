@@ -94,6 +94,14 @@ function DetailLog({ route, data }) {
                 title={<Text numberOfLines={3}>{item.creator_name}</Text>}
                 titleNumberOfLines={5}
               />
+              <View style={styles.row}>
+                <Text style={styles.title}>Tindakan :</Text>
+              </View>
+              <Card.Title
+                style={[styles.containerCardTitle]}
+                title={<Text>{item.notes.replace("\n", ", ")}</Text>}
+                titleNumberOfLines={100}
+              />
               <View style={[styles.row, { marginBottom: 12 }]}>
                 <RenderHTML
                   source={{ html: item?.message }}
@@ -125,9 +133,7 @@ function DetailLog({ route, data }) {
                 </Text>
               </View>
               <View style={styles.headerDate}>
-                <Text style={styles.badgeText}>
-                  Tidak ada My Disposisi
-                </Text>
+                <Text style={styles.badgeText}>Tidak ada My Disposisi</Text>
               </View>
             </View>
           </Card>
