@@ -2,7 +2,9 @@ import React, { useEffect, useMemo, useRef } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
+  Linking,
   Platform,
+  Share,
   TouchableOpacity,
 } from "react-native";
 import { View } from "react-native";
@@ -40,6 +42,7 @@ import RenderHTML from "react-native-render-html";
 import {
   getDetailLinimasa,
   getListsLike,
+  getViewLinimasa,
   patchLike,
   patchUnlike,
   postComment,
@@ -52,6 +55,10 @@ import ShimmerPlaceHolder, {
 import { LinearGradient } from "expo-linear-gradient";
 import { Portal } from "react-native-paper";
 import { TextInput } from "react-native";
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+import { Config } from "../../constants/config";
+const { StorageAccessFramework } = FileSystem;
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
@@ -619,7 +626,7 @@ const ShimmerParagraph = () => {
 };
 
 export const DetailLinimasa = ({ route }) => {
-  const like_list = route.params;
+  const item = route.params;
   const navigation = useNavigation();
   const [like, setLike] = useState(0);
   const [token, setToken] = useState("");
@@ -691,7 +698,7 @@ export const DetailLinimasa = ({ route }) => {
   const handleLike = () => {
     const data = {
       token: token,
-      id: detail.id,
+      id: item.id,
     };
     if (detail.liked == false) {
       dispatch(patchLike(data));
@@ -718,6 +725,18 @@ export const DetailLinimasa = ({ route }) => {
   useEffect(() => {
     const data = {
       token: token,
+      id: item.id,
+    };
+    if (token !== "") {
+      dispatch(getDetailLinimasa(data));
+      dispatch(getViewLinimasa(data));
+      dispatch(getListsLike(data));
+    }
+  }, [token]);
+
+  useEffect(() => {
+    const data = {
+      token: token,
       id: detail.id,
     };
     if (refresh) {
@@ -725,6 +744,33 @@ export const DetailLinimasa = ({ route }) => {
       dispatch(setRefresh(false));
     }
   }, [refresh]);
+
+  console.log(item.id);
+
+  const urlToShare =
+    Config.base_url.replace("api/", "") +
+    "apps/KnowledgeManagement/detail/" +
+    item.id +
+    "/" +
+    detail.creator.id;
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "cek" + "\n" + urlToShare,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log("Shared with activity type of : ", result.activityType);
+        } else {
+          console.log("shared");
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log("dismissed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [flatListScrolling, setFlatListScrolling] = useState(false);
 
@@ -795,7 +841,7 @@ export const DetailLinimasa = ({ route }) => {
                     borderTopRightRadius: 100,
                   }}
                 />
-                {/* <TouchableOpacity
+                <TouchableOpacity
                   style={{
                     backgroundColor: COLORS.primary,
                     width: 42,
@@ -804,8 +850,11 @@ export const DetailLinimasa = ({ route }) => {
                     alignItems: "center",
                     borderRadius: 50,
                     position: "absolute",
-                    right: 35,
+                    right: 15,
                     bottom: 30,
+                  }}
+                  onPress={() => {
+                    handleShare();
                   }}
                 >
                   <Ionicons
@@ -813,7 +862,7 @@ export const DetailLinimasa = ({ route }) => {
                     size={24}
                     color={COLORS.white}
                   />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
               <View style={{ backgroundColor: COLORS.white }}>
                 {loading ? (
@@ -1137,7 +1186,7 @@ export const DetailLinimasa = ({ route }) => {
                           </View>
 
                           <ScrollView style={{ marginBottom: 40 }}>
-                            {like_list?.map((data) => {
+                            {listsLike?.map((data) => {
                               return (
                                 <View
                                   style={{

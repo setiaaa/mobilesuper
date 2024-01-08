@@ -52,6 +52,7 @@ import { CardListAbsenEvent } from "../../components/CardListAbsenEvent";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { setRefresh } from "../../store/Event";
+import { ResizeMode, Video } from "expo-av";
 
 export const DetailAgenda = () => {
   const navigation = useNavigation();

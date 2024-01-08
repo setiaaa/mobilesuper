@@ -24,7 +24,7 @@ import { Portal } from "react-native-portalize";
 import { FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Modal } from "react-native";
-import { Video } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";

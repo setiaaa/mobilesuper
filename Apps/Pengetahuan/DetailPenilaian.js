@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -34,6 +34,7 @@ import {
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { color } from "react-native-reanimated";
+import { ResizeMode, Video } from "expo-av";
 
 const CardLampiran = ({ lampiran, onClick, type, id, device }) => {
   const navigation = useNavigation();
@@ -164,6 +165,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, device }) => {
 
 export const DetailPenilaian = () => {
   const [visibleModal, setVisibleModal] = useState(false);
+  const [visibleModalVideo, setVisibleModalVideo] = useState(false);
   const [lampiranById, setLampiranById] = useState(null);
   const navigation = useNavigation();
 
@@ -249,6 +251,8 @@ export const DetailPenilaian = () => {
   };
 
   const { device } = useSelector((state) => state.apps);
+  const video = useRef(null);
+  const [status, setStatus] = useState({});
 
   return (
     <View style={{ flex: 1 }}>
@@ -545,7 +549,7 @@ export const DetailPenilaian = () => {
                       id={item.id}
                       type={getFileExtension(item.name)}
                       onClick={() => {
-                        setVisibleModal(true);
+                        setVisibleModalVideo(true);
                         setLampiranById(item);
                       }}
                       device={device}
@@ -574,9 +578,9 @@ export const DetailPenilaian = () => {
               <Modal
                 animationType="fade"
                 transparent={true}
-                visible={visibleModal}
+                visible={visibleModalVideo}
                 onRequestClose={() => {
-                  setVisibleModal(false);
+                  setVisibleModalVideo(false);
                   setLampiranById(null);
                 }}
               >
@@ -598,7 +602,7 @@ export const DetailPenilaian = () => {
                 >
                   <TouchableOpacity
                     onPress={() => {
-                      setVisibleModal(false);
+                      setVisibleModalVideo(false);
                       setLampiranById(null);
                     }}
                     style={{

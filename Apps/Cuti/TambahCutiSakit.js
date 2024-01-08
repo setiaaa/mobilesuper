@@ -51,6 +51,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { ResizeMode, Video } from "expo-av";
 
 const kategories = [
   { key: "q", value: "satu" },

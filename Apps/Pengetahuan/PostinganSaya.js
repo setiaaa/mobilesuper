@@ -71,10 +71,11 @@ const CardPostinganSaya = ({ item, token, device }) => {
             <View
               style={{
                 flexDirection: "row",
-                paddingHorizontal: 20,
+                paddingHorizontal: 10,
                 paddingTop: 20,
                 paddingBottom: 10,
                 marginVertical: 5,
+                display: "flex",
               }}
             >
               <View style={{ justifyContent: "center" }}>
@@ -97,7 +98,12 @@ const CardPostinganSaya = ({ item, token, device }) => {
                   />
                 </View>
               </View>
-              <View style={{ marginHorizontal: 10, width: wp(56) }}>
+              <View
+                style={{
+                  marginHorizontal: 10,
+                  flex: 1,
+                }}
+              >
                 <Text
                   style={{
                     // width: 270,
@@ -114,7 +120,10 @@ const CardPostinganSaya = ({ item, token, device }) => {
                 </Text>
                 <View
                   style={{
-                    marginVertical: 15,
+                    marginVertical: 10,
+                    flexDirection: "row",
+                    gap: 15,
+                    justifyContent: "space-between",
                   }}
                 >
                   <Text
@@ -123,20 +132,14 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Tanggal :{" "}
+                    Tanggal :
                     {DateFormat({
                       date: item.created_at,
                       fromDate: DATETIME.LONG_DATETIME,
                       toDate: DATETIME.LONG_DATE,
                     })}
                   </Text>
-                </View>
-                <View
-                  style={{
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                  }}
-                >
+
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
@@ -164,6 +167,69 @@ const CardPostinganSaya = ({ item, token, device }) => {
                         {item.score}
                       </Text>
                     </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View
+                      style={{
+                        borderRadius: 8,
+                        width: 33,
+                        height: 26,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="thumbs-up-outline"
+                        size={18}
+                        color={COLORS.grey}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        color: COLORS.primary,
+                        marginStart: 5,
+                      }}
+                    >
+                      {item.likes_count}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons
+                      name="chatbox-ellipses-outline"
+                      size={18}
+                      color={COLORS.grey}
+                    />
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        marginStart: 5,
+                      }}
+                    >
+                      {item.comment_count}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons
+                      name="eye-outline"
+                      size={18}
+                      color={COLORS.grey}
+                    />
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        marginStart: 5,
+                      }}
+                    >
+                      {item.views_count}
+                    </Text>
                   </View>
 
                   {item?.state === "publish" ? (
@@ -228,70 +294,6 @@ const CardPostinganSaya = ({ item, token, device }) => {
                     </View>
                   )}
                 </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                gap: 50,
-                paddingVertical: 10,
-                borderTopWidth: 1,
-                borderColor: "#E0E0E0",
-              }}
-            >
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    borderRadius: 8,
-                    width: 33,
-                    height: 26,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Ionicons
-                    name="thumbs-up-outline"
-                    size={18}
-                    color="#FFFFFF"
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H4", device),
-                    color: COLORS.primary,
-                    marginStart: 5,
-                  }}
-                >
-                  {item.likes_count}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons
-                  name="chatbox-ellipses-outline"
-                  size={18}
-                  color={COLORS.grey}
-                />
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H4", device),
-                    marginStart: 5,
-                  }}
-                >
-                  {item.comment_count}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H4", device),
-                    marginStart: 5,
-                  }}
-                >
-                  {item.views_count}
-                </Text>
               </View>
             </View>
           </View>
@@ -306,7 +308,7 @@ const CardPostinganSaya = ({ item, token, device }) => {
           <View
             key={item.id}
             style={{
-              backgroundColor: COLORS.white,
+              backgroundColor: COLORS.secondaryLighter,
               shadowOffset: { width: -2, height: 4 },
               shadowColor: "#171717",
               shadowOpacity: 0.2,
@@ -318,10 +320,11 @@ const CardPostinganSaya = ({ item, token, device }) => {
             <View
               style={{
                 flexDirection: "row",
-                paddingHorizontal: 20,
+                paddingHorizontal: 10,
                 paddingTop: 20,
                 paddingBottom: 10,
                 marginVertical: 5,
+                display: "flex",
               }}
             >
               <View style={{ justifyContent: "center" }}>
@@ -344,7 +347,12 @@ const CardPostinganSaya = ({ item, token, device }) => {
                   />
                 </View>
               </View>
-              <View style={{ marginHorizontal: 10, width: wp(56) }}>
+              <View
+                style={{
+                  marginHorizontal: 10,
+                  flex: 1,
+                }}
+              >
                 <Text
                   style={{
                     // width: 270,
@@ -361,7 +369,10 @@ const CardPostinganSaya = ({ item, token, device }) => {
                 </Text>
                 <View
                   style={{
-                    marginVertical: 15,
+                    marginVertical: 10,
+                    flexDirection: "row",
+                    gap: 15,
+                    justifyContent: "space-between",
                   }}
                 >
                   <Text
@@ -370,15 +381,14 @@ const CardPostinganSaya = ({ item, token, device }) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Tanggal : {item.created_at?.slice(0, -9)}
+                    Tanggal :
+                    {DateFormat({
+                      date: item.created_at,
+                      fromDate: DATETIME.LONG_DATETIME,
+                      toDate: DATETIME.LONG_DATE,
+                    })}
                   </Text>
-                </View>
-                <View
-                  style={{
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                  }}
-                >
+
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text
                       style={{
@@ -406,6 +416,69 @@ const CardPostinganSaya = ({ item, token, device }) => {
                         {item.score}
                       </Text>
                     </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View
+                      style={{
+                        borderRadius: 8,
+                        width: 33,
+                        height: 26,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="thumbs-up-outline"
+                        size={18}
+                        color={COLORS.grey}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        color: COLORS.primary,
+                        marginStart: 5,
+                      }}
+                    >
+                      {item.likes_count}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons
+                      name="chatbox-ellipses-outline"
+                      size={18}
+                      color={COLORS.grey}
+                    />
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        marginStart: 5,
+                      }}
+                    >
+                      {item.comment_count}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons
+                      name="eye-outline"
+                      size={18}
+                      color={COLORS.grey}
+                    />
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H4", device),
+                        marginStart: 5,
+                      }}
+                    >
+                      {item.views_count}
+                    </Text>
                   </View>
 
                   {item?.state === "publish" ? (
@@ -470,70 +543,6 @@ const CardPostinganSaya = ({ item, token, device }) => {
                     </View>
                   )}
                 </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                gap: 50,
-                paddingVertical: 10,
-                borderTopWidth: 1,
-                borderColor: "#E0E0E0",
-              }}
-            >
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    borderRadius: 8,
-                    width: 33,
-                    height: 26,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Ionicons
-                    name="thumbs-up-outline"
-                    size={18}
-                    color="#FFFFFF"
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H4", device),
-                    color: COLORS.primary,
-                    marginStart: 5,
-                  }}
-                >
-                  {item.likes_count}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons
-                  name="chatbox-ellipses-outline"
-                  size={18}
-                  color={COLORS.grey}
-                />
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H4", device),
-                    marginStart: 5,
-                  }}
-                >
-                  {item.comment_count}
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons name="eye-outline" size={18} color={COLORS.grey} />
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H4", device),
-                    marginStart: 5,
-                  }}
-                >
-                  {item.views_count}
-                </Text>
               </View>
             </View>
           </View>

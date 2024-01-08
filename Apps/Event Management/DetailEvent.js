@@ -11,7 +11,7 @@ import {
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native";
-import { Video } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { FlatList } from "react-native";
 import { Modal } from "react-native";
 import { StyleSheet } from "react-native";

@@ -27,6 +27,7 @@ import RenderHTML from "react-native-render-html";
 import { FlatList } from "react-native-gesture-handler";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { ResizeMode, Video } from "expo-av";
 
 const CardLampiran = ({ lampiran, onClick, type, id }) => {
   const navigation = useNavigation();

@@ -35,6 +35,7 @@ const { StorageAccessFramework } = FileSystem;
 import { getTokenValue } from "../../service/session";
 import { getDownloadLampiran } from "../../service/api";
 import { Portal } from "react-native-portalize";
+import { ResizeMode, Video } from "expo-av";
 
 const DataLampiran = ({
   lampiran,
@@ -493,8 +494,7 @@ export const Lampiran = () => {
         // setIsLoading(false);
         console.error("download error:", e);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   const saveAndroidFile = async (fileUri, fileName, fileType) => {
     try {

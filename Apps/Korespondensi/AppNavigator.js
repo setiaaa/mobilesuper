@@ -161,8 +161,20 @@ import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
 import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
+import * as Linking from "expo-linking";
 
 const Stack = createNativeStackNavigator();
+const prefix = Linking.makeUrl("/");
+
+const linking = {
+  prefixes: [prefix, "https://portal.kkp.go.id/"],
+  config: {
+    initialRouteName: "LoginToken",
+    screens: {
+      DetailLinimasa: "apps/KnowledgeManagement/detail/:id/:id_user",
+    },
+  },
+};
 
 function AuthenticatedStack(route) {
   const profile = useSelector((state) => state.profile.profile);
@@ -1262,7 +1274,7 @@ function AppNavigator() {
     <>
       <Host>
         {/* awas lupa */}
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
           {/* {!isLoading && isToken == null && <AuthStack />} */}
           {!isLoading && <AuthenticatedStack route={route} />}
         </NavigationContainer>

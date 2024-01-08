@@ -1,4 +1,5 @@
 {
+  "schema": "kkp", 
   "name": "SuperApps KKP",
   "slug": "SuperAppsKKP",
   "version": "0.0.1",

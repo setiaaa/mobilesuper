@@ -416,8 +416,11 @@ const CardLiniMasa = ({ item, token, device }) => {
       <TouchableOpacity
         onPress={(e) => {
           e.stopPropagation();
-          getDetail(item.id);
-          navigation.navigate("DetailLinimasa", item.like_list);
+          // getDetail(item.id);
+          navigation.navigate("DetailLinimasa", {
+            // like_list: item.like_list,
+            id: item.id,
+          });
         }}
       >
         <View
