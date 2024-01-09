@@ -48,7 +48,7 @@ export const LoginToken = () => {
       isSelected == true
     ) {
       dispatch(getProfileMe(loginAuth?.token?.token));
-      if (url.includes("apps/KnowledgeManagement/detail")) {
+      if (url?.includes("apps/KnowledgeManagement/detail")) {
         Linking.openURL(url);
       } else {
         navigation.replace("Main");
