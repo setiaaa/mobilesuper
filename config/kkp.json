@@ -42,8 +42,8 @@
         "autoVerify": true,
         "data": [
           {
-            "scheme": "https://portal.kkp.go.id/",
-            "host": "*.kkp.io",
+            "scheme": "https",
+            "host": "portal.kkp.go.id",
             "pathPrefix": "apps/KnowledgeManagement/detail/:id/:id_user"
           }
         ],
