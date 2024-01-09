@@ -44,7 +44,7 @@
           {
             "scheme": "https",
             "host": "portal.kkp.go.id",
-            "pathPrefix": "apps/KnowledgeManagement/detail/:id/:id_user"
+            "pathPrefix": "/apps/KnowledgeManagement/detail/:id/:id_user"
           }
         ],
         "category": ["BROWSABLE", "DEFAULT"]
