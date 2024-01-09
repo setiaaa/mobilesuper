@@ -217,6 +217,7 @@ function IncomingList({ route }) {
             onPress={() => {
               navigation.navigate("IncomingDetail", {
                 id: data.id,
+                hideForward: data.disposisi,
                 title: "Detail Surat Masuk",
               });
             }}
