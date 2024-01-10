@@ -167,11 +167,11 @@ const Stack = createNativeStackNavigator();
 const prefix = Linking.makeUrl("/");
 
 const linking = {
-  prefixes: [prefix, "https://portal.kkp.go.id/"],
+  prefixes: [prefix, "https://portal.kkp.go.id"],
   config: {
     initialRouteName: "LoginToken",
     screens: {
-      DetailLinimasa: "apps/KnowledgeManagement/detail/:id/:id_user",
+      DetailLinimasa: "/apps/KnowledgeManagement/detail/:id/:id_user",
     },
   },
 };
