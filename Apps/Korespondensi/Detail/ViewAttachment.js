@@ -18,21 +18,20 @@ function ViewAttachment({ route }) {
     let response = await headerToken();
     setHeader(response);
   }
+  console.log(
+    nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length)
+  );
   return (
     <>
       {header && (
         <>
-          {/* <WebView
-            source={{
-              uri: BASE_URL + data?.file,
-              headers: header,
-            }}
-            androidHardwareAccelerationDisabled={true}
-          /> */}
           <View style={{ width: "100%", height: "100%" }}>
             <PDFReader
               source={{
-                uri: nde_api.baseurl + data?.file,
+                uri:
+                  nde_api.baseurl +
+                  "crsbe/" +
+                  data?.file.slice(5, data?.file.length),
                 headers: header,
               }}
               withScroll={true}

@@ -139,13 +139,13 @@ function MyTabBarPengetahuan({ props, navigation }) {
               >
                 <Ionicons
                   name="school-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                   style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     position: "absolute",
                     bottom: device === "tablet" ? 40 : 40,
                     fontSize: fontSizeResponsive("H3", device),
@@ -171,7 +171,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
+                  width: device === "tablet" ? 150 : 70,
                 }}
               >
                 <View
@@ -213,18 +213,18 @@ function MyTabBarPengetahuan({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
+                  width: device === "tablet" ? 150 : 70,
                 }}
               >
                 <Ionicons
                   name="home-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                   style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     textAlign: "center",
                     fontSize: fontSizeResponsive("H3", device),
                     bottom: device === "tablet" ? 10 : 24,
@@ -252,7 +252,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     alignItems: "center",
                     height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
-                    width: device === "tablet" ? 150 : 80,
+                    width: device === "tablet" ? 150 : 70,
                   }}
                 >
                   <View
@@ -282,7 +282,7 @@ function MyTabBarPengetahuan({ props, navigation }) {
                       textAlign: "center",
                       fontSize: fontSizeResponsive("H3", device),
                       bottom: device === "tablet" ? 10 : 24,
-                      position:"absolute",
+                      position: "absolute",
                     }}
                   >
                     Rangkuman IKU
@@ -294,22 +294,22 @@ function MyTabBarPengetahuan({ props, navigation }) {
                     alignItems: "center",
                     height: device === "tablet" ? 120 : 95,
                     justifyContent: "center",
-                    width: device === "tablet" ? 150 : 80,
+                    width: device === "tablet" ? 150 : 70,
                   }}
                 >
                   <Ionicons
                     name="document-text-outline"
-                    color={COLORS.grey}
+                    color={COLORS.tertiary}
                     size={device === "tablet" ? 40 : 24}
                     style={{ position: "absolute", top: 10 }}
                   />
                   <Text
                     style={{
-                      color: COLORS.grey,
+                      color: COLORS.tertiary,
                       textAlign: "center",
                       fontSize: fontSizeResponsive("H3", device),
                       bottom: device === "tablet" ? 10 : 24,
-                      position:"absolute",
+                      position: "absolute",
                     }}
                   >
                     Rangkuman IKU
@@ -381,13 +381,13 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 >
                   <Ionicons
                     name="chatbubbles-outline"
-                    color={COLORS.grey}
+                    color={COLORS.tertiary}
                     size={device === "tablet" ? 40 : 24}
                     style={{ position: "absolute", top: 5 }}
                   />
                   <Text
                     style={{
-                      color: COLORS.grey,
+                      color: COLORS.tertiary,
                       position: "absolute",
                       bottom: 15,
                       fontSize: fontSizeResponsive("H3", device),
@@ -463,13 +463,13 @@ function MyTabBarPengetahuan({ props, navigation }) {
                 >
                   <Ionicons
                     name="document-text-outline"
-                    color={COLORS.grey}
+                    color={COLORS.tertiary}
                     size={device === "tablet" ? 40 : 24}
                     style={{ position: "absolute", top: 5 }}
                   />
                   <Text
                     style={{
-                      color: COLORS.grey,
+                      color: COLORS.tertiary,
                       position: "absolute",
                       bottom: 15,
                       fontSize: fontSizeResponsive("H3", device),

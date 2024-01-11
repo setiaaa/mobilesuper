@@ -24,11 +24,11 @@ import { Portal } from "react-native-portalize";
 import { FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Modal } from "react-native";
-import { Video } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { TextInput } from "react-native";
 import { getTokenValue } from "../../service/session";
 import { getDetailTodo, postKomenTodo } from "../../service/api";
@@ -259,7 +259,9 @@ export const DetailTodo = () => {
     });
   }, []);
 
-  const { todo, agenda, loading, refresh } = useSelector((state) => state.event);
+  const { todo, agenda, loading, refresh } = useSelector(
+    (state) => state.event
+  );
   const detail = todo.detail;
   const agendaDetail = agenda.detail;
 
@@ -284,7 +286,7 @@ export const DetailTodo = () => {
   useEffect(() => {
     if (refresh === true) {
       const params = { token: token, id: detail.id };
-      dispatch(getDetailTodo(params))
+      dispatch(getDetailTodo(params));
       dispatch(setRefresh(false));
     }
   }, [refresh]);
@@ -577,9 +579,9 @@ export const DetailTodo = () => {
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
-                            {moment(agendaDetail.start_time, "HH:mm:ss").format(
-                              "HH:mm"
-                            )}{" "}
+                            {moment(agendaDetail.start_time, "HH:mm:ss")
+                              .locale("id")
+                              .format("HH:mm")}{" "}
                             -{" "}
                           </Text>
                         )}
@@ -599,9 +601,9 @@ export const DetailTodo = () => {
                               fontSize: fontSizeResponsive("H4", device),
                             }}
                           >
-                            {moment(agendaDetail.end_time, "HH:mm:ss").format(
-                              "HH:mm"
-                            )}
+                            {moment(agendaDetail.end_time, "HH:mm:ss")
+                              .locale("id")
+                              .format("HH:mm")}
                           </Text>
                         )}
                       </View>

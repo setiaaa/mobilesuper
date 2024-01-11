@@ -1,4 +1,5 @@
 {
+  "scheme": "kkp", 
   "name": "SuperApps KKP",
   "slug": "SuperAppsKKP",
   "version": "0.0.1",
@@ -34,7 +35,21 @@
       "foregroundImage": "./assets/superApp/kkp-ikon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "com.kubekkp.portal"
+    "package": "com.kubekkp.portal",
+    "intentFilters": [
+      {
+        "action": "VIEW",
+        "autoVerify": true,
+        "data": [
+          {
+            "scheme": "https",
+            "host": "portal.kkp.go.id",
+            "pathPrefix": "/apps/KnowledgeManagement/detail/:id/:id_user"
+          }
+        ],
+        "category": ["BROWSABLE", "DEFAULT"]
+      }
+    ]
   },
   "web": {
     "favicon": "./assets/favicon.png"
@@ -223,7 +238,7 @@
       "profileapproverssave": "crsbe/tools/approvers-list/save/"
     },
     "colors": {
-      "primary": "#cb012a",
+      "primary": "#323247",
       "primaryVariant": "#f92c39",
       "secondary": "#ffffff",
       "tertiery": "#25282b",

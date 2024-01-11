@@ -22,11 +22,12 @@ import {
   getlistNotulensi,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import RenderHTML from "react-native-render-html";
 import { FlatList } from "react-native-gesture-handler";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { ResizeMode, Video } from "expo-av";
 
 const CardLampiran = ({ lampiran, onClick, type, id }) => {
   const navigation = useNavigation();
@@ -203,7 +204,6 @@ export const Notulensi = () => {
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
 
-
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -366,10 +366,15 @@ export const Notulensi = () => {
               ) : (
                 <View style={{ flexDirection: "row" }}>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    {moment(data.start_time, "HH:mm:ss").format("HH:mm")} -{" "}
+                    {moment(data.start_time, "HH:mm:ss")
+                      .locale("id")
+                      .format("HH:mm")}{" "}
+                    -{" "}
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                    {moment(data.end_time, "HH:mm:ss").format("HH:mm")}
+                    {moment(data.end_time, "HH:mm:ss")
+                      .locale("id")
+                      .format("HH:mm")}
                   </Text>
                 </View>
               )}

@@ -19,7 +19,7 @@ import { Image } from "react-native";
 import { FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {} from "react-native-safe-area-context";
-import moment from "moment/moment";
+import moment from "moment/min/moment-with-locales";
 import {
   getDetailKorespondensiTM,
   postMarkKorespondensiTM,
@@ -188,9 +188,9 @@ export const DetailKorespondensiTM = () => {
                           }}
                         >
                           :{" "}
-                          {moment(taskDetail.due_date).format(
-                            DATETIME.LONG_DATE
-                          )}
+                          {moment(taskDetail.due_date)
+                            .locale("id")
+                            .format(DATETIME.LONG_DATE)}
                         </Text>
                       </View>
 

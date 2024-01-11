@@ -260,8 +260,7 @@ export default function Dashboard(params) {
         );
         // dispatch(setRefresh(false));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -295,7 +294,10 @@ export default function Dashboard(params) {
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+            <TouchableOpacity
+              style={{}}
+              onPress={() => navigation.navigate("Home")}
+            >
               <Ionicons
                 name="chevron-back-outline"
                 size={24}

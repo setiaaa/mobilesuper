@@ -26,7 +26,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
 import {
@@ -971,17 +971,15 @@ export const TambahCutiTahunan = () => {
                                   onDateChange={(date) => {
                                     if (modalVisiblePicker === "mulai") {
                                       setTanggalMulai(
-                                        moment(
-                                          date,
-                                          "YYYY-MM-DD HH:mm:ss"
-                                        ).format("YYYY-MM-DD")
+                                        moment(date, "YYYY-MM-DD HH:mm:ss")
+                                          .locale("id")
+                                          .format("YYYY-MM-DD")
                                       );
                                     } else {
                                       setTanggalSelsai(
-                                        moment(
-                                          date,
-                                          "YYYY-MM-DD HH:mm:ss"
-                                        ).format("YYYY-MM-DD")
+                                        moment(date, "YYYY-MM-DD HH:mm:ss")
+                                          .locale("id")
+                                          .format("YYYY-MM-DD")
                                       );
                                     }
                                   }}

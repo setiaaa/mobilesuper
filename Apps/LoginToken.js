@@ -15,10 +15,11 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from "../config/SuperAppps";
 import Checkbox from "expo-checkbox";
 import { setTokenValue } from "../service/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Login } from "../service/api";
+import { Login, getProfileMe } from "../service/api";
 import { Ionicons } from "@expo/vector-icons";
 import { Alert } from "react-native";
 import { setLogout } from "../store/LoginAuth";
+import * as Linking from "expo-linking";
 
 export const LoginToken = () => {
   const navigation = useNavigation();
@@ -36,6 +37,7 @@ export const LoginToken = () => {
   const dispatch = useDispatch();
 
   const loginAuth = useSelector((state) => state.login);
+  const url = Linking.useURL();
 
   useEffect(() => {
     if (loginAuth.error !== null && loginAuth.error && isSelected == true) {
@@ -45,7 +47,13 @@ export const LoginToken = () => {
       !loginAuth.error &&
       isSelected == true
     ) {
-      navigation.replace("Main");
+      dispatch(getProfileMe(loginAuth?.token?.token));
+      if (url?.includes("apps/KnowledgeManagement/detail")) {
+        navigation.replace("Main");
+        Linking.openURL(url);
+      } else {
+        navigation.replace("Main");
+      }
     } else {
       setUserName("");
       setPassword("");

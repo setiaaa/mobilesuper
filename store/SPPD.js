@@ -18,8 +18,8 @@ const SPPDSlice = createSlice({
       lists: [],
       detail: {},
     },
-    surat: {},
-    cetak: {},
+    surat: null,
+    cetak: null,
   },
   reducers: {},
   extraReducers(builder) {

@@ -5,7 +5,7 @@ import { CardListTask } from "../../../components/CardListTask";
 import { CardShimmerListTask } from "../../../components/CardListTask/CardShimmerListTask";
 import { useSelector } from "react-redux";
 import { CardListGridTask } from "../../../components/CardListGridTask";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import ListEmpty from "../../../components/ListEmpty";
 import { CardShimmerListGridTask } from "../../../components/CardListGridTask/CardShimmerListGridTask";
 import { COLORS, DATETIME } from "../../../config/SuperAppps";
@@ -32,7 +32,6 @@ export const HariIni = () => {
       setPage(page + 5);
     }
   };
-
 
   const renderShimmerList = () => {
     const arr = [];
@@ -98,7 +97,9 @@ export const HariIni = () => {
                   <CardListTask
                     id={item.id}
                     title={item.title}
-                    duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
+                    duedate={moment(item.due_date)
+                      .locale("id")
+                      .format(DATETIME.LONG_DATE)}
                     device={device}
                   />
                 )}
@@ -136,7 +137,9 @@ export const HariIni = () => {
                 <CardListGridTask
                   id={item.id}
                   title={item.title}
-                  duedate={moment(item.due_date).format(DATETIME.LONG_DATE)}
+                  duedate={moment(item.due_date)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATE)}
                   priority={item.priority}
                   members={item.members}
                 />

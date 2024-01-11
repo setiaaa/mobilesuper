@@ -10,7 +10,7 @@ import { handlerError, postHTTP } from "../utils/http";
 import { Alert } from "react-native";
 import { nde_api } from "../utils/api.config";
 
-function FABactions({ id, data, noAgenda, tipe }) {
+function FABactions({ id, data, noAgenda, tipe, hideForward }) {
   const profile = useSelector((state) => state.profile.profile);
   const visibleFab = useSelector((state) => state.snackbar.fab);
   const [state, setState] = useState({ open: false });
@@ -86,8 +86,8 @@ function FABactions({ id, data, noAgenda, tipe }) {
   }
   function getAction() {
     //sekretaris dan pegawai biasa tidak bisa disposisi
-    //hanya sekretaris yang bisa forward
-    if (tipe == "disposition") {
+    //hanya sekretaris yang bisa forward, jika sudah forward tombol forward dihide
+    if (tipe == "disposition" && profile?.title?.length != 0) {
       setAction([
         {
           icon: "share",
@@ -106,46 +106,44 @@ function FABactions({ id, data, noAgenda, tipe }) {
           },
         },
       ]);
-    } else {
-      if (profile?.is_secretary == "true") {
-        setAction([
-          {
-            icon: "forward",
-            color: GlobalStyles.colors.textWhite,
-            style: { borderRadius: 50, backgroundColor: COLORS.primary },
-            label: "Teruskan",
-            onPress: () => {
-              confirmForward();
-              // navigation.navigate("ForwardForm", {
-              //   title: "Teruskan",
-              //   id: id,
-              //   data: data,
-              //   noAgenda: noAgenda,
-              //   tipe: tipe,
-              // });
-            },
+    } else if (profile?.is_secretary == "true" && !hideForward) {
+      setAction([
+        {
+          icon: "forward",
+          color: GlobalStyles.colors.textWhite,
+          style: { borderRadius: 50, backgroundColor: COLORS.primary },
+          label: "Teruskan",
+          onPress: () => {
+            confirmForward();
+            // navigation.navigate("ForwardForm", {
+            //   title: "Teruskan",
+            //   id: id,
+            //   data: data,
+            //   noAgenda: noAgenda,
+            //   tipe: tipe,
+            // });
           },
-        ]);
-      } else {
-        setAction([
-          {
-            icon: "share",
-            color: GlobalStyles.colors.textWhite,
-            style: { borderRadius: 50, backgroundColor: COLORS.primary },
-            label: "Disposisi",
-            onPress: () => {
-              navigation.navigate("DispositionForm", {
-                title: "Lembar Disposisi",
-                id: id,
-                data: data,
-                noAgenda: noAgenda,
-                tipe: tipe,
-              });
-              setVisible(false);
-            },
+        },
+      ]);
+    } else if (profile?.title?.length != 0) {
+      setAction([
+        {
+          icon: "share",
+          color: GlobalStyles.colors.textWhite,
+          style: { borderRadius: 50, backgroundColor: COLORS.primary },
+          label: "Disposisi",
+          onPress: () => {
+            navigation.navigate("DispositionForm", {
+              title: "Lembar Disposisi",
+              id: id,
+              data: data,
+              noAgenda: noAgenda,
+              tipe: tipe,
+            });
+            setVisible(false);
           },
-        ]);
-      }
+        },
+      ]);
     }
   }
   return (

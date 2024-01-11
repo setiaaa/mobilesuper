@@ -35,8 +35,8 @@ import { CardPilihMember } from "../../components/CardPilihMember";
 import { Search } from "../../components/Search";
 import { FlatList } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import moment from "moment";
-import { } from "react-native-safe-area-context";
+import moment from "moment/min/moment-with-locales";
+import {} from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
@@ -190,7 +190,7 @@ export const TambahAgenda = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {loading ? <Loading /> : null}
-      < >
+      <>
         <BottomSheetModalProvider>
           <ScrollView>
             <Pressable>
@@ -323,9 +323,9 @@ export const TambahAgenda = () => {
                     maxLength={40}
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
-                    value={moment(TanggalMulai, "HH:mm:ss").format(
-                      DATETIME.SHORT_DATETIME
-                    )}
+                    value={moment(TanggalMulai, "HH:mm:ss")
+                      .locale("id")
+                      .format(DATETIME.SHORT_DATETIME)}
                   />
                   <View
                     style={{
@@ -382,9 +382,9 @@ export const TambahAgenda = () => {
                     maxLength={40}
                     placeholder="Pilih member"
                     style={{ padding: 10 }}
-                    value={moment(TanggalSelesai, "HH:mm:ss").format(
-                      DATETIME.SHORT_DATETIME
-                    )}
+                    value={moment(TanggalSelesai, "HH:mm:ss")
+                      .locale("id")
+                      .format(DATETIME.SHORT_DATETIME)}
                   />
                   <View
                     style={{
@@ -411,7 +411,7 @@ export const TambahAgenda = () => {
                   transparent={true}
                   visible={
                     modalVisiblePicker === "mulai" ||
-                      modalVisiblePicker === "selesai"
+                    modalVisiblePicker === "selesai"
                       ? true
                       : false
                   }
@@ -480,7 +480,9 @@ export const TambahAgenda = () => {
                             textSecondaryColor: COLORS.primary,
                             borderColor: "rgba(122, 146, 165, 0.1)",
                           }}
-                          current={moment(Date.now()).format("YYYY-MM-DD")}
+                          current={moment(Date.now())
+                            .locale("id")
+                            .format("YYYY-MM-DD")}
                           minuteInterval={5}
                           style={{ borderRadius: 10 }}
                           onSelectedChange={(date) => {
@@ -488,15 +490,15 @@ export const TambahAgenda = () => {
                             // const formattedDate = new Date(year, month - 1, day)
                             if (modalVisiblePicker === "mulai") {
                               setTanggalMulai(
-                                moment(date, "HH:mm:ss").format(
-                                  "YYYY-MM-DD HH:MM:ss"
-                                )
+                                moment(date, "HH:mm:ss")
+                                  .locale("id")
+                                  .format("YYYY-MM-DD HH:MM:ss")
                               );
                             } else if (modalVisiblePicker === "selesai") {
                               setTanggalSelsai(
-                                moment(date, "HH:mm:ss").format(
-                                  "YYYY-MM-DD HH:MM:ss"
-                                )
+                                moment(date, "HH:mm:ss")
+                                  .locale("id")
+                                  .format("YYYY-MM-DD HH:MM:ss")
                               );
                             }
                           }}
@@ -1056,7 +1058,7 @@ export const TambahAgenda = () => {
                         </Modal> */}
           </ScrollView>
         </BottomSheetModalProvider>
-      </ >
+      </>
     </GestureHandlerRootView>
   );
 };

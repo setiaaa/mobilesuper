@@ -3,8 +3,11 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
+  FORMATDATE,
+  fixedDateString,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,7 +36,8 @@ import {
   getNilai,
   getTotalPenilaian,
 } from "../../service/api";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
+// import "moment/locale/id";
 import {} from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
 import { TextInput } from "react-native-gesture-handler";
@@ -47,6 +51,9 @@ const CardPenilaian = ({ item, token, device }) => {
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailLinimasa({ token, id }));
   };
+
+  // const tanggal = item.published_date;
+
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <TouchableOpacity
@@ -99,10 +106,13 @@ const CardPenilaian = ({ item, token, device }) => {
                 fontSize: fontSizeResponsive("H4", device),
               }}
             >
+              {/* Tanggal: {engDate.locale("id").format("LL")} */}
               Tanggal:{" "}
-              {moment(item.published_date, DATETIME.LONG_DATETIME).format(
-                DATETIME.LONG_DATE
-              )}
+              {DateFormat({
+                date: item.published_date,
+                fromDate: DATETIME.LONG_DATETIME,
+                toDate: DATETIME.LONG_DATE,
+              })}
             </Text>
             <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
               <Text
@@ -314,7 +324,17 @@ export const PenilaianPenggetahaun = () => {
       dispatch(getTotalPenilaian(data));
       // dispatch(getDivisionTree({ token: token, id: kategori.key }))
     }
-  }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
+  }, [
+    token,
+    quarter,
+    year,
+    isFocused,
+    ditinjau,
+    savedUnitKerja,
+    page,
+    search,
+    penilaian,
+  ]);
 
   const { penilaian, unitKerja, loading } = useSelector(
     (state) => state.pengetahuan
@@ -401,9 +421,21 @@ export const PenilaianPenggetahaun = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token, quarter, year, isFocused, ditinjau, savedUnitKerja, page, search]);
+  }, [
+    token,
+    quarter,
+    year,
+    isFocused,
+    ditinjau,
+    savedUnitKerja,
+    page,
+    search,
+    penilaian,
+  ]);
 
   const { device } = useSelector((state) => state.apps);
+
+  console.log(penilaian?.total);
 
   return (
     <>
@@ -430,7 +462,7 @@ export const PenilaianPenggetahaun = () => {
           >
             <TouchableOpacity
               style={{}}
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("Main")}
             >
               <Ionicons
                 name="chevron-back-outline"

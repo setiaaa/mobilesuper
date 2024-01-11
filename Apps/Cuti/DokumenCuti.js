@@ -19,7 +19,6 @@ import { getArsipCuti } from "../../service/api";
 import { useEffect } from "react";
 import { FlatList } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
-import moment from "moment";
 import { CardListDokumenTidakDisetujui } from "../../components/CardListDokumenTidakDisetujui";
 import { CardListDokumenDisetujui } from "../../components/CardListDokumenDisetujui";
 import { CardListDokumenOnProgress } from "../../components/CardListDokumenOnProgress";
@@ -69,8 +68,7 @@ export const DokumenCuti = () => {
       if (profile.nip !== "") {
         dispatch(getArsipCuti(profile?.nip));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

@@ -27,6 +27,7 @@ function ActionInprogress({ id, data, page }) {
   const [tipe, setTipe] = useState();
   const [comment, setComment] = useState("");
   const [passphrase, setPassphrase] = useState("");
+  const [showPassphrase, setShowPassphrase] = useState(true);
   const navigation = useNavigation();
   let perihal = useSelector((state) => state.payload.subject);
   let masalah = useSelector((state) => state.addressbook.km);
@@ -932,7 +933,7 @@ function ActionInprogress({ id, data, page }) {
             >
               <Ionicons name="arrow-back" size={20} color={COLORS.white} />
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 showComment("Batalkan", page);
               }}
@@ -947,7 +948,7 @@ function ActionInprogress({ id, data, page }) {
               }}
             >
               <Ionicons name="close" size={20} color={COLORS.white} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </>
         )}
       </View>
@@ -999,7 +1000,7 @@ function ActionInprogress({ id, data, page }) {
                     </Text>
                   </View>
                   <BottomSheetTextInput
-                    value={comment}
+                    defaultValue={comment}
                     onChangeText={(text) => setComment(text)}
                     style={styles.input}
                     multiline={true}
@@ -1013,12 +1014,48 @@ function ActionInprogress({ id, data, page }) {
                           <Text>Passphrase</Text>
                         </View>
 
-                        <BottomSheetTextInput
-                          value={passphrase}
-                          onChangeText={(text) => setPassphrase(text)}
-                          style={styles.input}
-                          multiline={true}
-                        />
+                        <View style={[styles.input, { flexDirection: "row" }]}>
+                          <BottomSheetTextInput
+                            defaultValue={passphrase}
+                            onChangeText={(text) => setPassphrase(text)}
+                            style={{ paddingHorizontal: 10, width: "70%" }}
+                            secureTextEntry={showPassphrase}
+                          />
+                          <View
+                            style={{
+                              alignItems: "flex-end",
+                              flex: 1,
+                              marginRight: 10,
+                              justifyContent: "center",
+                            }}
+                          >
+                            {showPassphrase == false ? (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  setShowPassphrase(true);
+                                }}
+                              >
+                                <Ionicons
+                                  name="eye-off-sharp"
+                                  size={20}
+                                  color={COLORS.grey}
+                                />
+                              </TouchableOpacity>
+                            ) : (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  setShowPassphrase(false);
+                                }}
+                              >
+                                <Ionicons
+                                  name="eye-sharp"
+                                  size={20}
+                                  color={COLORS.grey}
+                                />
+                              </TouchableOpacity>
+                            )}
+                          </View>
+                        </View>
                       </>
                     )}
                   <Button
@@ -1053,6 +1090,7 @@ function ActionInprogress({ id, data, page }) {
                     onPress={() => {
                       bottomSheetModalRef.current?.dismiss();
                       setComment("");
+                      setPassphrase("");
                     }}
                   >
                     Kembali

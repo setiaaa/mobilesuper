@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -14,13 +14,14 @@ import {
   FONTWEIGHT,
   FONTSIZE,
   fontSizeResponsive,
+  DateFormat,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "react-native";
 import { Dropdown } from "../../components/DropDown";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import RenderHTML from "react-native-render-html";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
@@ -33,6 +34,7 @@ import {
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
 import { color } from "react-native-reanimated";
+import { ResizeMode, Video } from "expo-av";
 
 const CardLampiran = ({ lampiran, onClick, type, id, device }) => {
   const navigation = useNavigation();
@@ -163,6 +165,7 @@ const CardLampiran = ({ lampiran, onClick, type, id, device }) => {
 
 export const DetailPenilaian = () => {
   const [visibleModal, setVisibleModal] = useState(false);
+  const [visibleModalVideo, setVisibleModalVideo] = useState(false);
   const [lampiranById, setLampiranById] = useState(null);
   const navigation = useNavigation();
 
@@ -191,7 +194,7 @@ export const DetailPenilaian = () => {
     var date = new Date().getDate();
     var month = new Date().getMonth();
     var year = new Date().getFullYear();
-    setTanggal(date + "-" + month + "-" + year);
+    setTanggal(date + "-" + month + 1 + "-" + year);
     if (data !== null) {
       setNilai({
         key: data.category_id,
@@ -248,6 +251,8 @@ export const DetailPenilaian = () => {
   };
 
   const { device } = useSelector((state) => state.apps);
+  const video = useRef(null);
+  const [status, setStatus] = useState({});
 
   return (
     <View style={{ flex: 1 }}>
@@ -386,11 +391,15 @@ export const DetailPenilaian = () => {
               </Text>
               <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                 :{" "}
-                {data?.published_date === null || data?.published_date === ""
+                {data?.published_date === null ||
+                data?.published_date === "" ||
+                data?.published_date === undefined
                   ? "-"
-                  : moment(data?.published_date, DATETIME.LONG_DATETIME).format(
-                      DATETIME.LONG_DATE
-                    )}
+                  : DateFormat({
+                      date: data?.published_date,
+                      fromDate: DATETIME.LONG_DATETIME,
+                      toDate: DATETIME.LONG_DATE,
+                    })}
               </Text>
             </View>
 
@@ -540,7 +549,7 @@ export const DetailPenilaian = () => {
                       id={item.id}
                       type={getFileExtension(item.name)}
                       onClick={() => {
-                        setVisibleModal(true);
+                        setVisibleModalVideo(true);
                         setLampiranById(item);
                       }}
                       device={device}
@@ -569,9 +578,9 @@ export const DetailPenilaian = () => {
               <Modal
                 animationType="fade"
                 transparent={true}
-                visible={visibleModal}
+                visible={visibleModalVideo}
                 onRequestClose={() => {
-                  setVisibleModal(false);
+                  setVisibleModalVideo(false);
                   setLampiranById(null);
                 }}
               >
@@ -593,7 +602,7 @@ export const DetailPenilaian = () => {
                 >
                   <TouchableOpacity
                     onPress={() => {
-                      setVisibleModal(false);
+                      setVisibleModalVideo(false);
                       setLampiranById(null);
                     }}
                     style={{

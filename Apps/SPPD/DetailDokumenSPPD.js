@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/Loading";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { getTokenValue } from "../../service/session";
 import {
   getDocumentAttachmentSPPD,
@@ -45,16 +45,7 @@ export const DetailDokumenSPPD = ({ route }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (token !== "") {
-      dispatch(
-        getDocumentAttachmentSPPD({ token: token, id: dokumen.detail?.id })
-      );
-      dispatch(getDocumentCetakSPPD({ token: token, id: dokumen.detail?.id }));
-    }
-  }, [token, surat, cetak]);
-
-  const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
+  const { dokumen } = useSelector((state) => state.sppd);
   const { device } = useSelector((state) => state.apps);
 
   const hari = dokumen.detail?.days?.toString();
@@ -271,9 +262,9 @@ export const DetailDokumenSPPD = ({ route }) => {
                   paddingRight: 20,
                 }}
               >
-                {moment(dokumen.detail?.start_date, "DD-MM-YYYY").format(
-                  DATETIME.LONG_DATE
-                )}
+                {moment(dokumen.detail?.start_date, "DD-MM-YYYY")
+                  .locale("id")
+                  .format(DATETIME.LONG_DATE)}
               </Text>
             </View>
 
@@ -303,9 +294,9 @@ export const DetailDokumenSPPD = ({ route }) => {
                   paddingRight: 20,
                 }}
               >
-                {moment(dokumen.detail?.end_date, "DD-MM-YYYY").format(
-                  DATETIME.LONG_DATE
-                )}
+                {moment(dokumen.detail?.end_date, "DD-MM-YYYY")
+                  .locale("id")
+                  .format(DATETIME.LONG_DATE)}
               </Text>
             </View>
 
@@ -640,7 +631,10 @@ export const DetailDokumenSPPD = ({ route }) => {
                 justifyContent: "center",
               }}
               onPress={() => {
-                navigation.navigate("LihatSuratSPPD", { surat: surat });
+                navigation.navigate("LihatSuratSPPD", {
+                  status: "",
+                  data: data,
+                });
               }}
             >
               <Text
@@ -670,7 +664,6 @@ export const DetailDokumenSPPD = ({ route }) => {
                 //   data + ".pdf"
                 // );
                 navigation.navigate("LihatSuratSPPD", {
-                  surat: cetak,
                   status: "share",
                   data: data,
                 });

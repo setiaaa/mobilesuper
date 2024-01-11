@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
@@ -91,13 +97,13 @@ function MyTabDigitalSign({ props, navigation }) {
                 >
                   <Ionicons
                     name="briefcase-outline"
-                    color={COLORS.grey}
+                    color={COLORS.tertiary}
                     size={device === "tablet" ? 40 : 24}
                     style={{ position: "absolute", top: 5 }}
                   />
                   <Text
                     style={{
-                      color: COLORS.grey,
+                      color: COLORS.tertiary,
                       position: "absolute",
                       bottom: device === "tablet" ? 40 : 40,
                       fontSize: fontSizeResponsive("H3", device),
@@ -154,7 +160,12 @@ function MyTabDigitalSign({ props, navigation }) {
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 40 : Platform.OS === 'ios' ? 24 : 40,
+                    bottom:
+                      device === "tablet"
+                        ? 40
+                        : Platform.OS === "ios"
+                        ? 24
+                        : 40,
                   }}
                 >
                   Dokumen Lain
@@ -171,17 +182,22 @@ function MyTabDigitalSign({ props, navigation }) {
               >
                 <Ionicons
                   name="attach-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                   style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom: device === "tablet" ? 40 : Platform.OS === 'ios' ? 24: 40,
+                    bottom:
+                      device === "tablet"
+                        ? 40
+                        : Platform.OS === "ios"
+                        ? 24
+                        : 40,
                   }}
                 >
                   Dokumen Lain
@@ -251,13 +267,13 @@ function MyTabDigitalSign({ props, navigation }) {
                 >
                   <Ionicons
                     name="chatbubbles-outline"
-                    color={COLORS.grey}
+                    color={COLORS.tertiary}
                     size={device === "tablet" ? 40 : 24}
                     style={{ position: "absolute", top: 5 }}
                   />
                   <Text
                     style={{
-                      color: COLORS.grey,
+                      color: COLORS.tertiary,
                       position: "absolute",
                       bottom: device === "tablet" ? 40 : 40,
                       fontSize: fontSizeResponsive("H3", device),

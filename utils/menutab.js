@@ -553,8 +553,14 @@ export const TopsTP = () => {
       <Top.Navigator
         initialRouteName="KRT"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: "#800000" },
-          tabBarLabelStyle: { fontSize: 10, textTransform: "none" },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H4", device),
+            textTransform: "none",
+            fontWeight: FONTWEIGHT.bold,
+          },
         }}
       >
         <Top.Screen
@@ -589,9 +595,9 @@ export const TopsTask = ({ device }) => {
       <Top.Navigator
         initialRouteName={"InProgres"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
             fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
@@ -638,9 +644,9 @@ export const TopsTaskDashboard = ({ device }) => {
       <Top.Navigator
         initialRouteName={"HariIni"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
             fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
@@ -680,9 +686,9 @@ export const TopsTaskKorespondensi = ({ device }) => {
       <Top.Navigator
         initialRouteName={"Arsip"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
             fontSize: fontSizeResponsive("H4", device),
             textTransform: "none",
@@ -729,9 +735,9 @@ export const TopsPencarianKorespondensi = (data) => {
       <Top.Navigator
         initialRouteName={"PAll"}
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
             fontSize: 12,
             textTransform: "none",
@@ -780,9 +786,9 @@ export const TopsDash = () => {
       <Top.Navigator
         initialRouteName="Demografi"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
             fontSize: fontSizeResponsive("H2", device),
             textTransform: "none",
@@ -845,9 +851,9 @@ export const TopsProduksiBudidaya = () => {
       <Top.Navigator
         initialRouteName="Produksi"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
             fontSize: fontSizeResponsive("H2", device),
             textTransform: "none",
@@ -883,9 +889,9 @@ export const TopsKeuanganKinerja = () => {
       <Top.Navigator
         initialRouteName="APBN"
         screenOptions={{
-          tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-          tabBarActiveTintColor: "#C34647",
-          tabBarInactiveTintColor: "black",
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
             fontSize: fontSizeResponsive("H2", device),
             textTransform: "none",
@@ -927,9 +933,9 @@ export const TopAddressBook = ({ config, device }) => {
         <Top.Navigator
           initialRouteName={"AddressBookJabatan"}
           screenOptions={{
-            tabBarIndicatorStyle: { backgroundColor: COLORS.infoDanger },
-            tabBarActiveTintColor: "#C34647",
-            tabBarInactiveTintColor: "black",
+            tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+            tabBarActiveTintColor: COLORS.primary,
+            tabBarInactiveTintColor: COLORS.tertiary,
             tabBarLabelStyle: {
               fontSize: fontSizeResponsive("H3", device),
               textTransform: "none",

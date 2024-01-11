@@ -327,7 +327,7 @@ export const Komentar = () => {
   useEffect(() => {
     if (refresh === true) {
       const params = { token: token, id: detail.id };
-      dispatch(getDetailDocument(params))
+      dispatch(getDetailDocument(params));
       dispatch(setRefresh(false));
     }
   }, [refresh]);
@@ -340,13 +340,13 @@ export const Komentar = () => {
       style={{ flex: 1, marginBottom: 10 }}
       behavior={Platform.OS === "ios" ? "padding" : "padding"}
       enabled
-      keyboardVerticalOffset={Platform.select({ ios: 80, android:50  })}
+      keyboardVerticalOffset={Platform.select({ ios: 80, android: 50 })}
     >
       <View
         style={{
           flexDirection: "row",
           alignItems: "flex-end",
-          backgroundColor: "#800000",
+          backgroundColor: COLORS.primary,
           height: 80,
           paddingBottom: 20,
         }}
@@ -366,7 +366,7 @@ export const Komentar = () => {
             <Ionicons
               name="chevron-back-outline"
               size={device === "tablet" ? 40 : 24}
-              color={"#800000"}
+              color={COLORS.primary}
             />
           </TouchableOpacity>
         </View>

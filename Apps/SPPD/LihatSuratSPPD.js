@@ -13,21 +13,37 @@ import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import * as FileSystem from "expo-file-system";
 const { StorageAccessFramework } = FileSystem;
 import * as Sharing from "expo-sharing";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { Platform } from "react-native";
 import { Config } from "../../constants/config";
+import {
+  getDocumentAttachmentSPPD,
+  getDocumentCetakSPPD,
+} from "../../service/api";
+import { Loading } from "../../components/Loading";
 
 const LihatSuratSPPD = ({ route }) => {
-  const { surat, status, data } = route.params;
+  const { status, data } = route.params;
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { dokumen } = useSelector((state) => state.sppd);
+  const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
   const id = dokumen.detail?.id;
   const [token, setToken] = useState("");
 
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
+      if (status === "share") {
+        dispatch(getDocumentCetakSPPD({ token: val, id: dokumen.detail?.id }));
+      } else {
+        dispatch(
+          getDocumentAttachmentSPPD({
+            token: val,
+            id: dokumen.detail?.id,
+          })
+        );
+      }
     });
   }, []);
 
@@ -180,12 +196,24 @@ const LihatSuratSPPD = ({ route }) => {
         ) : null}
       </View>
       <View style={{ width: "100%", height: "90%" }}>
-        <PdfReader
-          source={{
-            base64: surat,
-          }}
-          withScroll={true}
-        />
+        {status === "share" && cetak !== null ? (
+          <PdfReader
+            source={{
+              base64: cetak,
+            }}
+            withScroll={true}
+          />
+        ) : status === "" && surat !== null ? (
+          <PdfReader
+            source={{
+              base64: surat,
+            }}
+            withScroll={true}
+          />
+        ) : (
+          <Loading />
+        )}
+
         {/* <Image
           source={{ uri: pdfBlobData }}
           style={{ width: 100, height: 100 }}

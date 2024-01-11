@@ -18,6 +18,7 @@ import {
 import { Host } from "react-native-portalize";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomTabs } from "../../utils/menutab";
+import * as Linking from "expo-linking";
 
 //     id: 1,
 //     tanggal: "Senin, 5 Juni 2023",
@@ -321,6 +322,7 @@ const banner = [
 
 export default function Main() {
   const dispatch = useDispatch();
+  const url = Linking.useURL();
 
   useEffect(() => {
     // dispatch(setProfile(dataProfile));
@@ -333,7 +335,10 @@ export default function Main() {
     dispatch(setUltah(dataUltah));
     dispatch(setVisiMisi(visimisi));
     // dispatch(setBanner(banner));
-  }, []);
+    if (url?.includes("apps/KnowledgeManagement/detail")) {
+      Linking.openURL(url);
+    }
+  }, [url]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Host>

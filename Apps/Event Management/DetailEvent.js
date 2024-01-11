@@ -11,13 +11,13 @@ import {
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native";
-import { Video } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { FlatList } from "react-native";
 import { Modal } from "react-native";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Platform } from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Dropdown } from "../../components/DropDown";
 import { deleteEvent, getEventDetail, updateStatus } from "../../service/api";
 import { getTokenValue } from "../../service/session";
@@ -250,7 +250,8 @@ export const DetailEvent = () => {
                     <Text
                       style={{ fontSize: fontSizeResponsive("H4", device) }}
                     >
-                      {moment(data.start_date).format("d MMM yyy")} -{" "}
+                      {moment(data.start_date).locale("id").format("d MMM yyy")}{" "}
+                      -{" "}
                     </Text>
                   ) : (
                     "-"
@@ -259,7 +260,7 @@ export const DetailEvent = () => {
                     <Text
                       style={{ fontSize: fontSizeResponsive("H4", device) }}
                     >
-                      {moment(data.end_date).format("d MMM yyy")}
+                      {moment(data.end_date).locale("id").format("d MMM yyy")}
                     </Text>
                   ) : (
                     ""

@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 
 function IncomingDetail({ route }) {
   let id = route?.params?.id;
+  let hideForward = route?.params?.hideForward;
   const navigation = useNavigation();
   const profile = useSelector((state) => state.profile.profile);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,8 +54,7 @@ function IncomingDetail({ route }) {
   const getAgendaInRead = async () => {
     try {
       let response = await getHTTP(nde_api.agendainread.replace("{$id}", id));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // let routes = [
@@ -79,15 +79,13 @@ function IncomingDetail({ route }) {
       {detail && (
         <>
           <DetailAgenda data={detail} tipe="in" />
-          {profile?.is_secretary == "true" ||
-            (profile?.title?.length > 0 && (
-              <FABactions
-                id={id}
-                noAgenda={detail?.agenda_number}
-                data={detail}
-                tipe="in"
-              />
-            ))}
+          <FABactions
+            id={id}
+            noAgenda={detail?.agenda_number}
+            data={detail}
+            hideForward={hideForward}
+            tipe="in"
+          />
         </>
       )}
     </ScrollView>

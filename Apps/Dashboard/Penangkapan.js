@@ -64,7 +64,7 @@ export const Penangkapan = () => {
         <WebView
           originWhitelist={["*"]}
           source={{
-            uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
+            uri: "https://portal.kkp.go.id/assets/dashboardExt/DProduksiTangkap/DProduksiTangkap.html",
           }}
           style={{ flex: 1 }}
           allowFileAccess={true}

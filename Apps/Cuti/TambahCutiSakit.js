@@ -26,7 +26,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
 import {
@@ -51,6 +51,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { ResizeMode, Video } from "expo-av";
 
 const kategories = [
   { key: "q", value: "satu" },
@@ -464,9 +465,9 @@ const CardKomen = ({
                   marginBottom: 5,
                 }}
               >
-                {moment(listData.tanggal, DATETIME.LONG_DATETIME).format(
-                  DATETIME.LONG_DATETIME
-                )}
+                {moment(listData.tanggal, DATETIME.LONG_DATETIME)
+                  .locale("id")
+                  .format(DATETIME.LONG_DATETIME)}
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 5 }}>
@@ -683,13 +684,17 @@ export const TambahCutiSakit = () => {
     moment(
       arsipDetail.detail_dokumen?.dokumen?.mulai_cuti,
       DATETIME.LONG_DATETIME
-    ).format(DATETIME.LONG_DATE)
+    )
+      .locale("id")
+      .format(DATETIME.LONG_DATE)
   );
   const [akhirCuti, setAkhirCuti] = useState(
     moment(
       arsipDetail.detail_dokumen?.dokumen?.akhir_cuti,
       DATETIME.LONG_DATETIME
-    ).format(DATETIME.LONG_DATE)
+    )
+      .locale("id")
+      .format(DATETIME.LONG_DATE)
   );
 
   const [komentarPembatalan, setKomentarPembatan] = useState("");
@@ -1363,9 +1368,9 @@ export const TambahCutiSakit = () => {
                                   textSecondaryColor: COLORS.primary,
                                   borderColor: "rgba(122, 146, 165, 0.1)",
                                 }}
-                                current={moment(Date.now()).format(
-                                  "YYYY-MM-DD"
-                                )}
+                                current={moment(Date.now())
+                                  .locale("id")
+                                  .format("YYYY-MM-DD")}
                                 mode="calendar"
                                 minuteInterval={30}
                                 style={{ borderRadius: 10 }}
@@ -1403,7 +1408,9 @@ export const TambahCutiSakit = () => {
                                     !dataSppd
                                   ) {
                                     setTanggalMulai(
-                                      moment(formattedDate).format("YYYY-MM-DD")
+                                      moment(formattedDate)
+                                        .locale("id")
+                                        .format("YYYY-MM-DD")
                                     );
                                   } else if (
                                     modalVisiblePicker === "selesai" &&
@@ -1412,7 +1419,9 @@ export const TambahCutiSakit = () => {
                                     !dataSppd
                                   ) {
                                     setTanggalSelsai(
-                                      moment(formattedDate).format("YYYY-MM-DD")
+                                      moment(formattedDate)
+                                        .locale("id")
+                                        .format("YYYY-MM-DD")
                                     );
                                   } else {
                                     alert(

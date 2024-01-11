@@ -5,7 +5,6 @@ import { CardListTask } from "../../../components/CardListTask";
 import { CardShimmerListTask } from "../../../components/CardListTask/CardShimmerListTask";
 import { useDispatch, useSelector } from "react-redux";
 import { CardListGridTask } from "../../../components/CardListGridTask";
-import moment from "moment";
 import ListEmpty from "../../../components/ListEmpty";
 import { CardShimmerListGridTask } from "../../../components/CardListGridTask/CardShimmerListGridTask";
 import {
@@ -203,7 +202,6 @@ export const Laporan = () => {
     setDataList(sortedDescending);
     setAscending(false);
   };
-
 
   const { device } = useSelector((state) => state.apps);
 

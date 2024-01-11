@@ -235,7 +235,7 @@ export const Home = () => {
             }}
           >
             <Image
-              source={require("../../assets/superApp/headerfix.png")}
+              source={require("../../assets/superApp/headerdark.png")}
               style={{
                 width: "100%",
                 height: "100%",
@@ -270,7 +270,7 @@ export const Home = () => {
                 marginRight: "11%",
               }}
             >
-              <View style={{}}>
+              <View style={{ width: "80%" }}>
                 <Text
                   style={{
                     color: COLORS.white,

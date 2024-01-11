@@ -78,10 +78,17 @@ function MyTabBarKeb({ props, navigation }) {
               >
                 <Ionicons
                   name="document-text-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.grey, fontSize: fontSizeResponsive("H3", device) }}>Pencarian</Text>
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Pencarian
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -144,12 +151,12 @@ function MyTabBarKeb({ props, navigation }) {
               >
                 <Ionicons
                   name="list"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
                     textAlign: "center",
                   }}
@@ -197,7 +204,14 @@ function MyTabBarKeb({ props, navigation }) {
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
                 />
-                <Text style={{ color: COLORS.primary, fontSize: fontSizeResponsive("H3", device) }}>Tematik</Text>
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Tematik
+                </Text>
               </View>
             ) : (
               <View
@@ -210,12 +224,12 @@ function MyTabBarKeb({ props, navigation }) {
               >
                 <Ionicons
                   name="pencil-outline"
-                  color={COLORS.grey}
+                  color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
                 />
                 <Text
                   style={{
-                    color: COLORS.grey,
+                    color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
                   }}
                 >

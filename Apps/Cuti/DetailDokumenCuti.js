@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native";
 import { StyleSheet } from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { FlatList } from "react-native";
 import {
   BottomSheetModal,
@@ -35,6 +35,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
+import { ResizeMode, Video } from "expo-av";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
@@ -431,9 +432,9 @@ const CardKomen = ({
                   marginBottom: 5,
                 }}
               >
-                {moment(listData.tanggal, DATETIME.LONG_DATETIME).format(
-                  DATETIME.LONG_DATETIME
-                )}
+                {moment(listData.tanggal, DATETIME.LONG_DATETIME)
+                  .locale("id")
+                  .format(DATETIME.LONG_DATETIME)}
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 5 }}>

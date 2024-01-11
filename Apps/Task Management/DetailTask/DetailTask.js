@@ -28,7 +28,6 @@ import { FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {} from "react-native-safe-area-context";
 import { Portal } from "react-native-portalize";
-import moment from "moment/moment";
 import { CardItemMember } from "../../../components/CardItemMember";
 import { setRefresh } from "../../../store/Pengetahuan";
 import {
@@ -40,6 +39,7 @@ import { KeyboardAvoidingView } from "react-native";
 import { getTokenValue } from "../../../service/session";
 import { Dropdown } from "../../../components/DropDown";
 import { ShimmerDetailTask } from "./ShimmerDetailTask";
+import moment from "moment/min/moment-with-locales";
 
 const dataStatus = [
   {
@@ -988,9 +988,9 @@ export const DetailTask = () => {
                             style={{
                               borderWidth: 1,
                               width: "90%",
-                              justifyContent:'center',
-                              alignItems:"center",
-                              marginHorizontal:20,
+                              justifyContent: "center",
+                              alignItems: "center",
+                              marginHorizontal: 20,
                               borderRadius: 16,
                               borderColor: COLORS.ExtraDivinder,
                               flexDirection: "row",
@@ -1004,7 +1004,7 @@ export const DetailTask = () => {
                               maxLength={40}
                               placeholder="Ketik Komentar Disini"
                               ref={inputRef}
-                              style={{ padding: 10, width: "90%", }}
+                              style={{ padding: 10, width: "90%" }}
                               onChangeText={setKomen}
                               value={komen}
                               placeholderTextColor={COLORS.grey}

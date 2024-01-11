@@ -6,6 +6,7 @@ import {
   AVATAR,
   COLORS,
   DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -33,7 +34,7 @@ import {
   postComment,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { ScrollView } from "react-native";
 import { Loading } from "../../components/Loading";
 import { ActivityIndicator } from "react-native";
@@ -415,8 +416,11 @@ const CardLiniMasa = ({ item, token, device }) => {
       <TouchableOpacity
         onPress={(e) => {
           e.stopPropagation();
-          getDetail(item.id);
-          navigation.navigate("DetailLinimasa", item.like_list);
+          // getDetail(item.id);
+          navigation.navigate("DetailLinimasa", {
+            // like_list: item.like_list,
+            id: item.id,
+          });
         }}
       >
         <View
@@ -454,9 +458,11 @@ const CardLiniMasa = ({ item, token, device }) => {
                   }}
                 >
                   {/* {item?.published_date?.slice(0, -9)} */}
-                  {moment(item?.published_date, DATETIME.LONG_DATETIME).format(
-                    DATETIME.LONG_DATE
-                  )}
+                  {DateFormat({
+                    date: item.published_date,
+                    fromDate: DATETIME.LONG_DATETIME,
+                    toDate: DATETIME.LONG_DATE,
+                  })}
                 </Text>
                 <View
                   style={{
@@ -1758,7 +1764,7 @@ export const LiniMasa = () => {
             <TouchableOpacity
               style={{}}
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate("Main");
               }}
             >
               <Ionicons

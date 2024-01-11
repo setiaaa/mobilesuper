@@ -39,7 +39,6 @@ import {
   getEventToday,
 } from "../../service/api";
 import { getTokenValue } from "../../service/session";
-import moment from "moment/moment";
 import { CardListEvent } from "../../components/CardListEvent";
 import { CardProgresEvent } from "../../components/CardProgresEvent";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
@@ -457,8 +456,7 @@ export const HalamanUtama = () => {
           dispatch(getEventProgress(token));
         }
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

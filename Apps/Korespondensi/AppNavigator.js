@@ -161,6 +161,7 @@ import { HDLaporanSaya } from "../SuperApps/HDLaporanSaya";
 import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
+import * as Linking from "expo-linking";
 
 const Stack = createNativeStackNavigator();
 
@@ -1151,6 +1152,11 @@ function AppNavigator() {
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useSelector((state) => state.login);
   const [route, setRoute] = useState("");
+
+  const prefix = Linking.makeUrl("/");
+
+  const [linking, setLinking] = useState();
+
   useEffect(() => {
     //checkversion
     // if (Platform.OS == "android") {
@@ -1161,8 +1167,26 @@ function AppNavigator() {
     getTokenValue().then((val) => {
       if (val === null) {
         setRoute("LoginToken");
+        setLinking({
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          config: {
+            initialRouteName: "LoginToken",
+            screens: {
+              DetailLinimasa: "apps/KnowledgeManagement/detail/:id/:id_user",
+            },
+          },
+        });
       } else {
         setRoute("Main");
+        setLinking({
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          config: {
+            initialRouteName: "Main",
+            screens: {
+              DetailLinimasa: "apps/KnowledgeManagement/detail/:id/:id_user",
+            },
+          },
+        });
       }
       setIsLoading(false);
     });
@@ -1262,7 +1286,7 @@ function AppNavigator() {
     <>
       <Host>
         {/* awas lupa */}
-        <NavigationContainer>
+        <NavigationContainer linking={!token ? null : linking}>
           {/* {!isLoading && isToken == null && <AuthStack />} */}
           {!isLoading && <AuthenticatedStack route={route} />}
         </NavigationContainer>

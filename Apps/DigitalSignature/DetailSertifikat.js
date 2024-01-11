@@ -23,7 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import ListEmpty from "../../components/ListEmpty";
-import moment from "moment/moment";
+import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { getTokenValue } from "../../service/session";
@@ -322,9 +322,9 @@ export const DetailSertifikat = (route) => {
                       <Text
                         style={{ fontSize: fontSizeResponsive("H4", device) }}
                       >
-                        {moment(item.extra_attributes?.tanggalSertif).format(
-                          "DD MMMM yyyy"
-                        )}
+                        {moment(item.extra_attributes?.tanggalSertif)
+                          .locale("id")
+                          .format("DD MMMM yyyy")}
                       </Text>
                     )}
                   </View>
@@ -371,7 +371,12 @@ export const DetailSertifikat = (route) => {
                   >
                     keterangan
                   </Text>
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H4", device),
+                      width: 150,
+                    }}
+                  >
                     :
                   </Text>
                   <View style={{ width: "45%" }}>
@@ -533,7 +538,7 @@ export const DetailSertifikat = (route) => {
                             </View>
                           )}
                         </View>
-                        <View style={{ flexDirection: "row", columnGap:10 }}>
+                        <View style={{ flexDirection: "row", columnGap: 10 }}>
                           <Image
                             source={{ uri: data.avatar_url }}
                             style={{

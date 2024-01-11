@@ -1,5 +1,7 @@
+import moment from "moment/min/moment-with-locales";
+
 export const COLORS = {
-  primary: "#800000",
+  primary: "#323247",
   secondary: "#F0F0F0",
   white: "#FFFFFF",
   input: "#f5f6f8",
@@ -20,6 +22,7 @@ export const COLORS = {
   lightBrown: "#D2B48C",
   foundation: "#474747",
   bgLightGrey: "#F8F8F8",
+  tertiary: "#B3B2B5",
 };
 export const FONTSIZE = {
   H1: 15,
@@ -63,4 +66,16 @@ export const DATETIME = {
 
 export const PADDING = {
   Page: 20,
+};
+
+export const fixedDateString = (tanggal) => {
+  return tanggal
+    .replace("May", "Mei")
+    .replace("August", "Agustus")
+    .replace("October", "Oktober")
+    .replace("December", "Desember");
+};
+
+export const DateFormat = ({ date, fromDate, toDate }) => {
+  return moment(fixedDateString(date), fromDate).locale("id").format(toDate);
 };

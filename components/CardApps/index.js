@@ -68,7 +68,7 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 24,
                 height: device === "tablet" ? 50 : 28,
               }}
               source={require("../../assets/superApp/korespondensi.png")}
@@ -110,7 +110,7 @@ export const CardApps = ({ handlePressModal }) => {
             <Image
               style={{
                 width: device === "tablet" ? 50 : 30,
-                height: device === "tablet" ? 50 : 30,
+                height: device === "tablet" ? 50 : 33,
               }}
               source={require("../../assets/superApp/kebijakan.png")}
             />
@@ -195,7 +195,7 @@ export const CardApps = ({ handlePressModal }) => {
             <Image
               style={{
                 width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 35,
               }}
               source={require("../../assets/superApp/digitalsign.png")}
             />
@@ -233,8 +233,8 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 60 : 32,
-                height: device === "tablet" ? 50 : 32,
+                width: device === "tablet" ? 60 : 40,
+                height: device === "tablet" ? 50 : 28,
               }}
               source={require("../../assets/superApp/cuti.png")}
             />
@@ -314,7 +314,7 @@ export const CardApps = ({ handlePressModal }) => {
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/task-ikon.png")}
+              source={require("../../assets/superApp/taskmanagement.png")}
             />
           </View>
         </TouchableOpacity>

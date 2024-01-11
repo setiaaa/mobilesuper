@@ -4,6 +4,8 @@ import {} from "react-native-safe-area-context";
 import {
   AVATAR,
   COLORS,
+  DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   PADDING,
@@ -69,7 +71,12 @@ const CardListPostingan = ({ item, device }) => {
                   color: COLORS.grey,
                 }}
               >
-                Tanggal : {item?.created_at}
+                Tanggal :{" "}
+                {DateFormat({
+                  date: item.created_at,
+                  fromDate: DATETIME.LONG_DATETIME,
+                  toDate: DATETIME.LONG_DATE,
+                })}
               </Text>
             </View>
             <View>
@@ -97,13 +104,11 @@ export const ListPostinganPegawai = (param) => {
     (state) => state.pengetahuan
   );
 
-
   const nama = param?.route?.params;
 
   const resetData = () => {
     postinganPegawai.lists = [];
   };
-
 
   const { device } = useSelector((state) => state.apps);
 

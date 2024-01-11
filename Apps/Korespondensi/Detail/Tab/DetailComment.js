@@ -5,8 +5,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Avatar, Card, IconButton } from "react-native-paper";
 import { GlobalStyles } from "../../../../constants/styles";
 import { nde_api } from "../../../../utils/api.config";
+import { useState } from "react";
+import { Config } from "../../../../constants/config";
 
 function DetailComment({ data }) {
+  const [errorAvatar, setErrorAvatar] = useState(false);
   function getIndicator(isExpanded, hasChildrenNodes) {
     if (!hasChildrenNodes) {
       return "";
@@ -103,18 +106,36 @@ function DetailComment({ data }) {
                       titleNumberOfLines={5}
                       left={(props) => (
                         <View style={{ alignItems: "center", flex: 1 }}>
-                          <Avatar.Image
-                            {...props}
-                            source={{
-                              uri: `${nde_api.baseurl + node?.avatar}`,
-                              method: "GET",
-                            }}
-                            theme={{
-                              colors: {
-                                primary: GlobalStyles.colors.textWhite,
-                              },
-                            }}
-                          />
+                          {errorAvatar && (
+                            <Avatar.Image
+                              {...props}
+                              source={Config.avatar}
+                              theme={{
+                                colors: {
+                                  primary: GlobalStyles.colors.textWhite,
+                                },
+                              }}
+                            />
+                          )}
+                          {!errorAvatar && (
+                            <Avatar.Image
+                              {...props}
+                              source={{
+                                uri: `${
+                                  nde_api.baseurl +
+                                  "crsbe" +
+                                  node?.avatar.slice(4, node?.avatar.length)
+                                }`,
+                                method: "GET",
+                              }}
+                              theme={{
+                                colors: {
+                                  primary: GlobalStyles.colors.textWhite,
+                                },
+                              }}
+                              onError={() => setErrorAvatar(true)}
+                            />
+                          )}
                         </View>
                       )}
                     />

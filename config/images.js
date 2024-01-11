@@ -7,6 +7,7 @@ export const logoHeader = {
   pegadaian: require("../assets/pegadaian/images/logo/logo-pegadaian.png"),
 };
 export const avatar = {
+  kkp: require("../assets/superApp/profile.png"),
   telkom: require("../assets/telkom/images/profile.png"),
   pegadaian: require("../assets/pegadaian/images/profile.png"),
 };

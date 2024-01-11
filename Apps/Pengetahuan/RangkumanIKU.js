@@ -502,7 +502,7 @@ export const RangkumanIKU = () => {
         >
           <TouchableOpacity
             style={{}}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("Main")}
           >
             <Ionicons
               name="chevron-back-outline"
@@ -608,7 +608,7 @@ export const RangkumanIKU = () => {
             <WebView
               originWhitelist={["*"]}
               source={{
-                uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+                uri: "https://portal.kkp.go.id/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
               }}
               style={{ flex: 1, borderRadius: 8 }}
               allowFileAccess={true}

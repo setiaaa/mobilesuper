@@ -71,7 +71,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             <Image
               style={{
                 width: device === "tablet" ? 50 : 24,
-                height: device === "tablet" ? 50 : 24,
+                height: device === "tablet" ? 50 : 28,
               }}
               source={require("../../assets/superApp/korespondensi.png")}
             />
@@ -113,7 +113,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             <Image
               style={{
                 width: device === "tablet" ? 50 : 30,
-                height: device === "tablet" ? 50 : 30,
+                height: device === "tablet" ? 50 : 33,
               }}
               source={require("../../assets/superApp/kebijakan.png")}
             />
@@ -154,8 +154,8 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 40 : 22,
-                height: device === "tablet" ? 55 : 30,
+                width: device === "tablet" ? 40 : 23,
+                height: device === "tablet" ? 55 : 34,
               }}
               source={require("../../assets/superApp/pengetahuan.png")}
             />
@@ -200,7 +200,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             <Image
               style={{
                 width: device === "tablet" ? 50 : 27,
-                height: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 35,
               }}
               source={require("../../assets/superApp/digitalsign.png")}
             />
@@ -241,7 +241,7 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 60 : 28,
+                width: device === "tablet" ? 60 : 40,
                 height: device === "tablet" ? 50 : 28,
               }}
               source={require("../../assets/superApp/cuti.png")}
@@ -321,7 +321,7 @@ export const CardAppsB = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 60 : 32,
+                width: device === "tablet" ? 60 : 35,
                 height: device === "tablet" ? 60 : 32,
               }}
               source={require("../../assets/superApp/taskmanagement.png")}
@@ -456,10 +456,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 40: 20,
+                  width: device === "tablet" ? 60 : 35,
                   height: device === "tablet" ? 60 : 35,
                 }}
-                source={require("../../assets/superApp/event.png")}
+                source={require("../../assets/superApp/kalender.png")}
               />
             </View>
           </TouchableOpacity>
@@ -514,10 +514,10 @@ export const CardAppsB = ({ handlePressModal }) => {
             >
               <Image
                 style={{
-                  width: device === "tablet" ? 60 : 32,
-                  height: device === "tablet" ? 60 : 32,
+                  width: device === "tablet" ? 40 : 20,
+                  height: device === "tablet" ? 60 : 35,
                 }}
-                source={require("../../assets/superApp/agenda.png")}
+                source={require("../../assets/superApp/event.png")}
               />
             </View>
           </TouchableOpacity>

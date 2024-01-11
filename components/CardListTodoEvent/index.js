@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native";
 import { COLORS, DATETIME, FONTWEIGHT } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -98,7 +98,7 @@ export const CardListTodo = ({
             />
           ) : (
             <Text style={{ marginVertical: 10, color: COLORS.lighter }}>
-              {moment(item.due_date).format(DATETIME.LONG_DATE)}
+              {moment(item.due_date).locale("id").format(DATETIME.LONG_DATE)}
             </Text>
           )}
         </View>

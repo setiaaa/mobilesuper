@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "kkp",
     "name": "KKP SuperApps",
     "slug": "superapps-kkp",
     "version": "0.0.1",

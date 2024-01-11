@@ -11,6 +11,7 @@ export function initAgenda(data) {
   data.salam = "";
   data.kepada_bank = "";
   data.keterangan = "";
+  data.jenis_surat = "";
   data.attributes.forEach((e, i) => {
     //Parsing receiver dari migrasi
     if (e.key == "receivers_display") {
@@ -52,6 +53,12 @@ export function initAgenda(data) {
     if (e.key == "internal_satker") {
       if (e.value != "") {
         data.internal_satker = e.value;
+      }
+    }
+    //jenis_surat
+    if (e.key == "jenisSurat") {
+      if (e.value != "") {
+        data.jenis_surat = e.value;
       }
     }
     //additional_approver
@@ -156,6 +163,7 @@ export function initLetter(data) {
   data.additional_approver_ids = [];
   data.tembusan_external = "";
   data.internal_satker = "";
+  data.jenis_surat = "";
   data.tipe_penerima = "";
   data.office_city = "";
   data.salam = "";
@@ -201,6 +209,12 @@ export function initLetter(data) {
     if (e.key == "internal_satker") {
       if (e.value != "") {
         data.internal_satker = e.value;
+      }
+    }
+    //jenis_surat
+    if (e.key == "jenisSurat") {
+      if (e.value != "") {
+        data.jenis_surat = e.value;
       }
     }
     //tipe_penerima

@@ -9,7 +9,7 @@ import {
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { Text } from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { Image } from "react-native";
 import { getEventDetail } from "../../service/api";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
@@ -102,7 +102,10 @@ export const CardProgresEvent = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {moment(item.start_date).format(DATETIME.LONG_DATE)} -{" "}
+                  {moment(item.start_date)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATE)}{" "}
+                  -{" "}
                 </Text>
               </>
             )}
@@ -120,7 +123,9 @@ export const CardProgresEvent = ({
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  {moment(item.end_date).format(DATETIME.LONG_DATE)}
+                  {moment(item.end_date)
+                    .locale("id")
+                    .format(DATETIME.LONG_DATE)}
                 </Text>
               </>
             )}
