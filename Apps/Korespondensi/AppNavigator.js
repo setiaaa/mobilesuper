@@ -164,17 +164,6 @@ import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
 
 const Stack = createNativeStackNavigator();
-const prefix = Linking.makeUrl("/");
-
-const linking = {
-  prefixes: [prefix, "https://portal.kkp.go.id"],
-  config: {
-    initialRouteName: "LoginToken",
-    screens: {
-      DetailLinimasa: "/apps/KnowledgeManagement/detail/:id/:id_user",
-    },
-  },
-};
 
 function AuthenticatedStack(route) {
   const profile = useSelector((state) => state.profile.profile);
@@ -1163,6 +1152,11 @@ function AppNavigator() {
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useSelector((state) => state.login);
   const [route, setRoute] = useState("");
+
+  const prefix = Linking.makeUrl("/");
+
+  const [linking, setLinking] = useState();
+
   useEffect(() => {
     //checkversion
     // if (Platform.OS == "android") {
@@ -1173,8 +1167,26 @@ function AppNavigator() {
     getTokenValue().then((val) => {
       if (val === null) {
         setRoute("LoginToken");
+        setLinking({
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          config: {
+            initialRouteName: "LoginToken",
+            screens: {
+              DetailLinimasa: "apps/KnowledgeManagement/detail/:id/:id_user",
+            },
+          },
+        });
       } else {
         setRoute("Main");
+        setLinking({
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          config: {
+            initialRouteName: "Main",
+            screens: {
+              DetailLinimasa: "apps/KnowledgeManagement/detail/:id/:id_user",
+            },
+          },
+        });
       }
       setIsLoading(false);
     });

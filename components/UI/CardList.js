@@ -81,8 +81,8 @@ function CardList({ data, tipe, onPress }) {
                 source={{
                   uri: `${
                     nde_api.baseurl +
-                    "crsbe" +
-                    data.avatar.slice(4, data.avatar.length)
+                    "crsbe/" +
+                    data.avatar.slice(5, data.avatar.length)
                   }`,
                   method: "GET",
                   headers: header,
