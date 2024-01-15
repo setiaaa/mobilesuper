@@ -27,6 +27,8 @@ export const PdfPerisai = ({ route }) => {
     });
   }, []);
 
+  console.log(item.attachments[0]?.file);
+
   let myInjectedJs = `(function(){ 
     let attach = window.localStorage.getItem('attachment');
     if(!attach || (attach && attach != '${item.attachments[0]?.file}')){
@@ -81,6 +83,14 @@ export const PdfPerisai = ({ route }) => {
   `;
 
   let inject = `
+  (function(){ 
+    let attach = window.localStorage.getItem('attachment');
+    if(!attach || (attach && attach != '${item.attachments[0]?.file}')){
+      window.localStorage.setItem('attachment', '${item.attachments[0]?.file}');
+      window.location.reload();
+    }
+  })();
+
   $("#reject").click(function () {
     $.ajax({
       url:" ${Config.base_url}digitalsign/document/reject_document/",
@@ -140,7 +150,6 @@ $("#submit").click(function () {
       };
   })
 
-
   `;
   return (
     <>
@@ -187,7 +196,7 @@ $("#submit").click(function () {
       <WebView
         ref={webViewRef}
         source={{
-          uri: "https://portal.kkp.go.id/api/assets/pdfViewer/newPdfViewer.html",
+          uri: "https://portal.kkp.go.id/assets/pdfViewer/newPdfViewer.html",
         }}
         style={{ flex: 1 }}
         injectedJavaScript={inject}
