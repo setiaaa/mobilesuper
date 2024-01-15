@@ -373,7 +373,7 @@ const downloadFile = async (fileUrl, fileType, fileName) => {
   let header = await headerToken();
   //alert(fileName)
   const downloadResumable = FileSystem.createDownloadResumable(
-    nde_api.baseurl + fileUrl,
+    nde_api.baseurl + "crsbe/" + fileUrl.slice(5, fileUrl?.length),
     downloadPath + fileName,
     { headers: header },
     downloadCallback
