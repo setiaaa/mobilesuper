@@ -200,7 +200,7 @@ export const Satker = () => {
           style={{ flexDirection: "row", marginVertical: 20 }}
           onPress={() => {
             getDetail(item.id);
-            navigation.navigate("DetailLinimasa");
+            navigation.navigate("DetailLinimasa", item.like_list);
           }}
         >
           <Image
