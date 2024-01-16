@@ -30,10 +30,17 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
   const deleteItem = (id, state) => {
     let data;
     if (state === "jabatan") {
-      data = addressbook.selected.filter((data) => {
-        let nip = data.nip || data.officer.official.split("/")[1];
-        return nip !== id;
-      });
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => {
+          let code = data.code;
+          return code !== id;
+        });
+      } else {
+        data = addressbook.selected.filter((data) => {
+          let nip = data.nip || data.officer.official.split("/")[1];
+          return nip !== id;
+        });
+      }
       dispatch(setAddressbookSelected(data));
     } else {
       if (config.tipeAddress == "korespondensi") {
@@ -45,9 +52,8 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
     }
   };
   return (
-    <View style={{ paddingBottom: 10 }}>
-      {item.code !== undefined ||
-      (item.title !== undefined && item.title.name !== "") ? (
+    <View style={{ paddingBottom: 10 }} key={item.nip ? item.nip : item.code}>
+      {item.code !== undefined || item.title !== undefined ? (
         <View
           style={{
             flexDirection: "row",
@@ -69,10 +75,14 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              deleteItem(
-                item.nip || item.officer.official.split("/")[1],
-                "jabatan"
-              );
+              if (config.tipeAddress == "korespondensi") {
+                deleteItem(item.code, "jabatan");
+              } else {
+                deleteItem(
+                  item.nip || item.officer.official.split("/")[1],
+                  "jabatan"
+                );
+              }
             }}
           >
             <Ionicons name="close-circle" size={24} />
@@ -360,7 +370,7 @@ export const AddressBook = ({ route }) => {
                           config={config}
                         />
                       )}
-                      keyExtractor={(item) => item.id}
+                      keyExtractor={(item) => (item.nip ? item.nip : item.code)}
                     />
                   </View>
                 )}

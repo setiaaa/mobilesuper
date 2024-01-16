@@ -218,14 +218,10 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         if (pilihanKepada.length == 0 || pilihanKepada == "") {
           status = 0;
         } else if (
-          items.tindakan1 &&
-          (items.nota_tindakan1 == undefined || items.nota_tindakan1 == "")
-        ) {
-          status = 0;
-        } else if (
-          !items.tindakan1 &&
+          (items.nota_tindakan1 == undefined ||
+            items.nota_tindakan1.length == 0) &&
           (items.nota_tindakan_free1 == undefined ||
-            items.nota_tindakan_free1 == "")
+            items.nota_tindakan_free1.length == 0)
         ) {
           status = 0;
         } else if (
@@ -285,7 +281,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           copy_log: "1",
         };
         // console.log("payload", JSON.stringify(payload));
-        //post api dispo
+        // post api dispo
         const response = await postHTTP(
           nde_api.postDisposition
             .replace("{$type}", tipes)
@@ -366,6 +362,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                         tabs: {
                           jabatan: true,
                           pegawai: true,
+                          para: true,
                         },
                         multiselect: true,
                         payload: pilihanKepada,
@@ -411,6 +408,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                             tabs: {
                               jabatan: true,
                               pegawai: true,
+                              para: true,
                             },
                             multiselect: true,
                             payload: pilihanKepada,
