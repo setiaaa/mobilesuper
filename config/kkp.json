@@ -183,6 +183,7 @@
       "unit": "crsbe/addressbook/units/",
       "divisionbyunitid": "crsbe/addressbook/divisions/{$id}/",
       "titlebydivisionid": "crsbe/addressbook/title/tree/{$id}/",
+      "parabydivisionid": "crsbe/addressbook/para/{$id}/",
       "titleSearch": "crsbe/addressbook/title/tree/{$id}/?query={$word}",
       "personallist": "crsbe/addressbook/personals/",
       "personaladd": "crsbe/addressbook/personals/add/",

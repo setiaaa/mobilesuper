@@ -26,6 +26,7 @@ const AddressbookKKPSlice = createSlice({
     addressbook: {
       listsDivision: [],
       listsDivisiontree: [],
+      listsDivisionPara: [],
       selected: [],
       employee: [],
       id: null,
@@ -37,6 +38,9 @@ const AddressbookKKPSlice = createSlice({
     },
     setAddressbookListsDivisionTree: (state, action) => {
       state.addressbook.listsDivisiontree = action.payload;
+    },
+    setAddressbookListsDivisionPara: (state, action) => {
+      state.addressbook.listsDivisionPara = action.payload;
     },
     setAddressbookEmployee: (state, action) => {
       state.addressbook.employee = action.payload;
@@ -86,6 +90,7 @@ const AddressbookKKPSlice = createSlice({
 export const {
   setAddressbookListsDivision,
   setAddressbookListsDivisionTree,
+  setAddressbookListsDivisionPara,
   setAddressbookEmployee,
   setAddressbookSelected,
 } = AddressbookKKPSlice.actions;

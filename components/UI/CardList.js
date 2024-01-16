@@ -98,7 +98,10 @@ function CardList({ data, tipe, onPress }) {
               />
             )}
 
-            {(data?.priority == "Segera" || data?.prio == "Segera") && (
+            {(data?.priority == "Sangat Segera" ||
+              data?.prio == "Sangat Segera" ||
+              data?.priority == "Segera" ||
+              data?.prio == "Segera") && (
               <IconButton
                 icon="alert"
                 size={GlobalStyles.font.xxl}

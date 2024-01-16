@@ -125,6 +125,7 @@ export const Config = {
     unit: extra.api.unit,
     divisionbyunitid: extra.api.divisionbyunitid,
     titlebydivisionid: extra.api.titlebydivisionid,
+    parabydivisionid: extra.api.parabydivisionid,
     titleSearch: extra.api.titleSearch,
     personallist: extra.api.personallist,
     personaladd: extra.api.personaladd,
