@@ -1,11 +1,10 @@
 {
   "name": "nde-mobile-apps-js",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eas-build-pre-install": "npm config set legacy-peer-deps true"
   },
@@ -31,7 +30,7 @@
     "buffer": "^6.0.3",
     "dayjs": "^1.11.10",
     "deprecated-react-native-prop-types": "^4.2.1",
-    "expo": "^48.0.17",
+    "expo": "~48.0.21",
     "expo-application": "~5.1.1",
     "expo-av": "~13.2.1",
     "expo-barcode-scanner": "~12.3.2",
@@ -63,7 +62,7 @@
     "moment": "^2.29.4",
     "patch-package": "^8.0.0",
     "react": "18.2.0",
-    "react-native": "^0.71.14",
+    "react-native": "0.71.14",
     "react-native-base64": "^0.2.1",
     "react-native-big-calendar": "^4.5.0",
     "react-native-calendar-picker": "^7.1.4",
