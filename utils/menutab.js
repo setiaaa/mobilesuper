@@ -94,7 +94,8 @@ import { MingguDepanKorespondensi } from "../Apps/Task Management/Korespondensi/
 import { useSelector } from "react-redux";
 import MyTabBarDetailKorespondensi from "../Apps/Task Management/DetailKorespondensiTM/BottmTabsDetailKorespondensi";
 import { DetailKorespondensiTM } from "../Apps/Task Management/DetailKorespondensiTM/DetailKorespondensiTM";
-import { Dimensions, Platform, View } from "react-native";
+import { Dimensions, Platform, View, useWindowDimensions } from "react-native";
+import { AddressbookPara } from "../Apps/AddressbookPara";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -940,24 +941,15 @@ export const TopAddressBook = ({ config, device }) => {
               fontSize: fontSizeResponsive("H3", device),
               textTransform: "none",
             },
-            tabBarScrollEnabled: true,
-            tabBarItemStyle: { width: "auto" },
           }}
         >
-          {config.tabs.jabatan && config.tabs.pegawai ? (
+          {config.tabs.jabatan && config.tabs.pegawai && config.tabs.para ? (
             <>
               <Top.Screen
                 name="AddressBookJabatan"
                 component={AddressBookJabatan}
                 options={{
                   title: "Jabatan",
-                  tabBarItemStyle: { width: "50%" },
-                  tabBarLabelStyle: {
-                    width: device === "tablet" ? 500 : 200,
-                    fontSize: fontSizeResponsive("H3", device),
-                    textTransform: "none",
-                    paddingLeft: 80,
-                  },
                 }}
                 initialParams={{ config: config }}
               />
@@ -966,13 +958,33 @@ export const TopAddressBook = ({ config, device }) => {
                 component={AddressBookPegawai}
                 options={{
                   title: "Pegawai",
-                  tabBarItemStyle: { width: "50%" },
-                  tabBarLabelStyle: {
-                    width: device === "tablet" ? 500 : 200,
-                    fontSize: fontSizeResponsive("H3", device),
-                    textTransform: "none",
-                    paddingLeft: 50,
-                  },
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookPara"
+                component={AddressbookPara}
+                options={{
+                  title: "Para",
+                }}
+                initialParams={{ config: config }}
+              />
+            </>
+          ) : config.tabs.jabatan && config.tabs.pegawai ? (
+            <>
+              <Top.Screen
+                name="AddressBookJabatan"
+                component={AddressBookJabatan}
+                options={{
+                  title: "Jabatan",
+                }}
+                initialParams={{ config: config }}
+              />
+              <Top.Screen
+                name="AddressBookPegawai"
+                component={AddressBookPegawai}
+                options={{
+                  title: "Pegawai",
                 }}
                 initialParams={{ config: config }}
               />
@@ -983,13 +995,6 @@ export const TopAddressBook = ({ config, device }) => {
               component={AddressBookJabatan}
               options={{
                 title: "Jabatan",
-                tabBarItemStyle: { width: "50%" },
-                tabBarLabelStyle: {
-                  width: 200,
-                  fontSize: fontSizeResponsive("H3", device),
-                  textTransform: "none",
-                  paddingLeft: 80,
-                },
               }}
               initialParams={{ config: config }}
             />
@@ -999,13 +1004,6 @@ export const TopAddressBook = ({ config, device }) => {
               component={AddressBookPegawai}
               options={{
                 title: "Pegawai",
-                tabBarItemStyle: { width: "50%" },
-                tabBarLabelStyle: {
-                  width: 200,
-                  fontSize: fontSizeResponsive("H3", device),
-                  textTransform: "none",
-                  paddingLeft: 50,
-                },
               }}
               initialParams={{ config: config }}
             />
