@@ -23,9 +23,9 @@ import * as Linking from "expo-linking";
 
 export const LoginToken = () => {
   const navigation = useNavigation();
-  const [isSelected, setSelection] = useState(false);
+  const [isSelected, setSelection] = useState(true);
   const [count, setCount] = useState(0);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("Admin");
   const [onChange, setOnChange] = useState("");
   const [token, setToken] = useState("");
   const [username, setUserName] = useState("");
@@ -72,10 +72,14 @@ export const LoginToken = () => {
       nip: nipField,
       pass: passField,
     });
-    if (username === "" || password === "" || isSelected === false) {
+    if (username === "" && password === "" && isSelected === false) {
       Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
-    } else if ((username !== "" || password !== "") && isSelected === false) {
+    } else if (username !== "" && password === "" && isSelected === false) {
       Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
+    } else if (username === "" && password !== "" && isSelected === false) {
+      Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
+    } else if (username !== "" && password !== "" && isSelected === false) {
+      Alert.alert("Peringatan", "Harap Menyetujui Ketentuan");
     } else if (isSelected === true) {
       dispatch(Login({ username, password }));
     }
@@ -109,6 +113,62 @@ export const LoginToken = () => {
               style={{ width: 150, height: 150 }}
             />
           </Pressable>
+
+          {/* {count >= 5 ? (
+            <View
+              style={{
+                borderWidth: 1,
+                marginTop: 20,
+                padding: 20,
+                borderRadius: 8,
+                borderColor: COLORS.ExtraDivinder,
+                width: "80%",
+              }}
+            >
+              <View>
+                {password === onChange ? (
+                  <View style={{ marginTop: 10 }}>
+                    <Text>INPUT TOKEN</Text>
+                    <View>
+                      <TextInput
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: 5,
+                          height: 35,
+                          marginTop: 5,
+                          borderColor: COLORS.ExtraDivinder,
+                          padding: 10,
+                        }}
+                        onChangeText={(e) => {
+                          setToken(e);
+                        }}
+                      />
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (token !== "") {
+                          setTokenValue(token);
+                          navigation.navigate("Main");
+                        }
+                      }}
+                      style={{
+                        backgroundColor: COLORS.primary,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: 20,
+                        borderRadius: 8,
+                        height: 35,
+                      }}
+                    >
+                      <Text style={{ color: COLORS.white }}>Masuk</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <></>
+                )}
+              </View>
+            </View>
+          ) : null} */}
 
           <View style={{ flexDirection: "row", gap: 5, marginTop: 20 }}>
             <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>
@@ -277,52 +337,6 @@ export const LoginToken = () => {
             <Text style={{ color: COLORS.lighter }}>Terintegrasi</Text>
             <Image source={require("../assets/superApp/bse.png")} />
           </View>
-
-          {/* {count >= 5 ? (
-                                <View style={{ borderWidth: 1, marginTop: 20, padding: 20, borderRadius: 8, borderColor: COLORS.ExtraDivinder, width: '80%' }}>
-                                    <Text>FORM KODE ADMIN</Text>
-                                    <View>
-                                        <TextInput
-                                            style={{ borderWidth: 1, borderRadius: 5, height: 35, marginTop: 5, borderColor: COLORS.ExtraDivinder, padding: 10 }}
-                                            onChangeText={(e) => setOnChange(e)}
-                                        />
-                                        {password === onChange ? (
-                                            <View style={{ marginTop: 10 }}>
-                                                <Text>INPUT TOKEN</Text>
-                                                <View>
-                                                    <TextInput
-                                                        style={{ borderWidth: 1, borderRadius: 5, height: 35, marginTop: 5, borderColor: COLORS.ExtraDivinder, padding: 10 }}
-                                                        onChangeText={(e) => {
-                                                            setToken(e)
-                                                        }}
-                                                    />
-                                                </View>
-                                                <TouchableOpacity onPress={() => {
-                                                    if (token !== '') {
-                                                        setTokenValue(token)
-                                                        navigation.navigate('Main')
-                                                    }
-                                                }}
-                                                    style={{
-                                                        backgroundColor: COLORS.primary,
-                                                        justifyContent: 'center',
-                                                        alignItems: 'center',
-                                                        marginTop: 20,
-                                                        borderRadius: 8,
-                                                        height: 35
-                                                    }}
-                                                >
-                                                    <Text style={{ color: COLORS.white }}>Masuk</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </View>
-                                </View>
-                            ) : (
-                                null
-                            )} */}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

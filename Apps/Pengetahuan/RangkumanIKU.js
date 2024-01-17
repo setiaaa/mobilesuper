@@ -606,9 +606,10 @@ export const RangkumanIKU = () => {
             }}
           >
             <WebView
-              originWhitelist={["*"]}
+              // originWhitelist={["*"]}
               source={{
                 uri: "https://portal.kkp.go.id/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+                headers: { Authorization: `${token}` },
               }}
               style={{ flex: 1, borderRadius: 8 }}
               allowFileAccess={true}

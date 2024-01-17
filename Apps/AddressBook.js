@@ -37,7 +37,7 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
         });
       } else {
         data = addressbook.selected.filter((data) => {
-          let nip = data.nip || data.officer.official.split("/")[1];
+          let nip = data.nip || data?.officer?.official.split("/")[1];
           return nip !== id;
         });
       }
