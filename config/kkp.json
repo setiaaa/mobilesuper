@@ -1,7 +1,7 @@
 {
   "scheme": "kkp",
   "name": "SuperApps KKP",
-  "slug": "SuperAppsKKP",
+  "slug": "superappskkp",
   "version": "0.0.1",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
@@ -70,8 +70,9 @@
     ]
   ],
   "extra": {
+    "oneSignalAppId": "617936ea-19da-4669-a204-1eaa27825a8a",
     "eas": {
-      "projectId": "a16ddb1c-a4a4-4cc1-a3c4-e78f53295f67"
+      "projectId": "a501cd5f-dc07-4d90-b59d-1c2097fe6aa2"
     },
     "id": "kkp",
     "base_url": "https://apigw.kubekkp.coofis.com/",

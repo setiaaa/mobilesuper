@@ -184,7 +184,14 @@ function AuthenticatedStack(route) {
 
   const getDeviceId = async () => {};
   async function checkDevice() {
+    console.log("1");
     try {
+      console.log("1.1");
+      console.log("device NIK", deviceNIK);
+      console.log("device UUID", deviceUUID);
+      console.log("device ID", deviceId);
+      console.log("device Name", deviceName);
+      console.log("device OSS", deviceOS);
       if (
         deviceNIK != undefined &&
         deviceNIK != null &&
@@ -197,6 +204,7 @@ function AuthenticatedStack(route) {
         deviceOS != null &&
         deviceOS != undefined
       ) {
+        console.log("1.1.1");
         data = {
           fullname: deviceNIK,
           device_id: deviceId,
@@ -205,15 +213,18 @@ function AuthenticatedStack(route) {
           os: deviceOS,
         };
         //send data
+        alert("data", data);
         const response = await postHTTP(nde_api.checkdevice, data);
         // Alert.alert(
         //   "Info check device",
         //   JSON.stringify(response?.data?.message)
         // );
       } else {
+        console.log("1.1.2");
         // Alert.alert("Warning!", "Push notification may not work"+deviceNIK+"-"+deviceId+"-"+deviceUUID+"-"+deviceName+"-"+deviceOS);
       }
     } catch (error) {
+      console.log("2");
       // Alert.alert("Warning!", "Push notification may not work" + error);
       setIsLoading(false);
     }
