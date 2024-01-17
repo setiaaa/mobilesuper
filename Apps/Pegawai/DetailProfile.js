@@ -24,7 +24,8 @@ import {
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
 
-export const DetailProfile = () => {
+export const DetailProfile = ({ route }) => {
+  const data = route.params;
   const { pegawai, loading } = useSelector((state) => state.Pegawai);
   const navigation = useNavigation();
   const item = pegawai.detail;
@@ -153,10 +154,9 @@ export const DetailProfile = () => {
           </View>
         </View>
 
-        <View
+        {/* <View
           style={{
-            flexDirection: "row",
-            gap: 7,
+            alignItems: "center",
             justifyContent: "center",
             marginBottom: 20,
           }}
@@ -261,7 +261,7 @@ export const DetailProfile = () => {
           <View
             style={{
               backgroundColor: COLORS.white,
-              paddingHorizontal: 10,
+              paddingHorizontal: 40,
               paddingTop: 20,
               borderRadius: 8,
               //shadow ios
@@ -270,12 +270,12 @@ export const DetailProfile = () => {
               shadowOpacity: 0.2,
               //shadow android
               elevation: 2,
-              width: wp(43),
+              width: wp(87),
             }}
           >
             <Text
               style={{
-                fontSize: fontSizeResponsive("Judul", device),
+                fontSize: device === "tablet" ? 40 : 20,
                 fontWeight: FONTWEIGHT.bold,
               }}
             >
@@ -286,14 +286,15 @@ export const DetailProfile = () => {
               <View
                 style={{
                   flexDirection: "row",
-                  marginTop: 20,
+                  marginTop: 5,
                   width: "60%",
                   gap: wp(5),
+                  alignItems: "center",
                 }}
               >
                 <Text
                   style={{
-                    fontSize: device === "tablet" ? 60 : 30,
+                    fontSize: device === "tablet" ? 120 : 60,
                     fontWeight: FONTWEIGHT.bold,
                   }}
                 >
@@ -302,14 +303,16 @@ export const DetailProfile = () => {
                 <View
                   style={{
                     backgroundColor: "#CED06C",
-                    width: wp(18),
-                    height: wp(5),
+                    width: wp(20),
+                    height: wp(7),
                     borderRadius: 30,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  <Text
+                    style={{ fontSize: fontSizeResponsive("Judul", device) }}
+                  >
                     Tinggi
                   </Text>
                 </View>
@@ -325,21 +328,21 @@ export const DetailProfile = () => {
               >
                 <Text
                   style={{
-                    width: "72%",
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: "75%",
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   Kualifikasi
                 </Text>
                 <View
                   style={{
-                    width: wp(3),
-                    height: wp(3),
+                    width: wp(6),
+                    height: wp(6),
                     backgroundColor: "#FF9900",
                     borderRadius: 30,
                   }}
                 />
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
                   {pegawai.detail.ipasn_kualifikasi}
                 </Text>
               </View>
@@ -354,21 +357,21 @@ export const DetailProfile = () => {
               >
                 <Text
                   style={{
-                    width: "72%",
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: "75%",
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   Kompetensi
                 </Text>
                 <View
                   style={{
-                    width: wp(3),
-                    height: wp(3),
+                    width: wp(6),
+                    height: wp(6),
                     backgroundColor: COLORS.success,
                     borderRadius: 30,
                   }}
                 />
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
                   {pegawai.detail.ipasn_kompetensi}
                 </Text>
               </View>
@@ -383,21 +386,21 @@ export const DetailProfile = () => {
               >
                 <Text
                   style={{
-                    width: "72%",
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: "75%",
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   Kinerja
                 </Text>
                 <View
                   style={{
-                    width: wp(3),
-                    height: wp(3),
+                    width: wp(6),
+                    height: wp(6),
                     backgroundColor: "#CED06C",
                     borderRadius: 30,
                   }}
                 />
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
                   {pegawai.detail.ipasn_kinerja}
                 </Text>
               </View>
@@ -412,27 +415,27 @@ export const DetailProfile = () => {
               >
                 <Text
                   style={{
-                    width: "72%",
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: "75%",
+                    fontSize: fontSizeResponsive("Judul", device),
                   }}
                 >
                   Disiplin
                 </Text>
                 <View
                   style={{
-                    width: wp(3),
-                    height: wp(3),
+                    width: wp(6),
+                    height: wp(6),
                     backgroundColor: COLORS.success,
                     borderRadius: 30,
                   }}
                 />
-                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                <Text style={{ fontSize: fontSizeResponsive("Judul", device) }}>
                   {pegawai.detail.ipasn_disiplin}
                 </Text>
               </View>
             </View>
           </View>
-        </View>
+        </View> */}
 
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           {loading ? (
@@ -459,7 +462,7 @@ export const DetailProfile = () => {
               />
             </View>
           ) : (
-            <CollapseCardBiodata profile={item} device={device} />
+            <CollapseCardBiodata profile={item} device={device} data={data} />
           )}
           {/* <CollapseCardLinimasa linimasa={item.dataLinimasa} /> */}
         </View>

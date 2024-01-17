@@ -18,7 +18,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export const CollapseCardBiodata = ({ profile, device }) => {
+export const CollapseCardBiodata = ({ profile, device, data }) => {
   const [collapse, setCollapse] = useState(false);
   return (
     <View>
@@ -227,66 +227,69 @@ export const CollapseCardBiodata = ({ profile, device }) => {
                 {profile.place_birth}/{profile.date_birth}
               </Text>
             </View>
+            {data === "detailpegawai" ? null : (
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginHorizontal: 20,
+                  marginTop: 10,
+                  gap: 5,
+                  width: wp(82),
+                }}
+              >
+                <Text
+                  style={{
+                    width: "40%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Telepon Seluler
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  :
+                </Text>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {profile.mobile}
+                </Text>
+              </View>
+            )}
 
-            <View
-              style={{
-                flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
-              }}
-            >
-              <Text
+            {data === "detailpegawai" ? null : (
+              <View
                 style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
+                  flexDirection: "row",
+                  marginHorizontal: 20,
+                  marginTop: 10,
+                  gap: 5,
+                  width: wp(82),
                 }}
               >
-                Telepon Seluler
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
-              <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                {profile.mobile}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginHorizontal: 20,
-                marginTop: 10,
-                gap: 5,
-                width: wp(82),
-              }}
-            >
-              <Text
-                style={{
-                  width: "40%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                No KTP
-              </Text>
-              <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-                :
-              </Text>
-              <Text
-                style={{
-                  width: "55%",
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                {profile.ktp}
-              </Text>
-            </View>
+                <Text
+                  style={{
+                    width: "40%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  No KTP
+                </Text>
+                <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                  :
+                </Text>
+                <Text
+                  style={{
+                    width: "55%",
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {profile.ktp}
+                </Text>
+              </View>
+            )}
 
             <View
               style={{
