@@ -745,8 +745,6 @@ export const DetailLinimasa = ({ route }) => {
     }
   }, [refresh]);
 
-  console.log(item.id);
-
   const urlToShare =
     Config.base_url.replace("api/", "") +
     "apps/KnowledgeManagement/detail/" +
@@ -1346,7 +1344,7 @@ export const DetailLinimasa = ({ route }) => {
                       style={{ flex: 1 }}
                     >
                       <KeyboardAvoidingView
-                        behavior={Platform.OS === "ios" ? "position" : "height"}
+                        behavior="position"
                         keyboardVerticalOffset={parentId !== "" ? 120 : 80}
                       >
                         <View style={{ marginLeft: 20, marginVertical: 20 }}>
@@ -1470,7 +1468,7 @@ export const DetailLinimasa = ({ route }) => {
                                 fontSize: fontSizeResponsive("H4", device),
                               }}
                               onChangeText={setKomen}
-                              value={komen}
+                              defaultValue={komen}
                               placeholderTextColor={COLORS.grey}
                             />
                             <View
