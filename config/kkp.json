@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "SuperAppsKKP",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
   "userInterfaceStyle": "automatic",
@@ -16,7 +16,7 @@
   },
   "assetBundlePatterns": ["**/*"],
   "ios": {
-    "buildNumber": "1.3.8",
+    "buildNumber": "7.2.3",
     "supportsTablet": true,
     "bundleIdentifier": "com.kubekkp.portal",
     "infoPlist": {
@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 138,
+    "versionCode": 723,
     "permissions": [
       "ACCESS_FINE_LOCATION",
       "WRITE_EXTERNAL_STORAGE",
