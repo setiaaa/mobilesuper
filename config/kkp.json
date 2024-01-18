@@ -110,6 +110,7 @@
       "agendainread": "crsbe/agenda/in/{$id}/read/",
       "agendainlog": "crsbe/agenda/in/{$id}/log/",
 
+      "dispoaction": "crsbe/agenda/disposition/header/",
       "agendadispo": "crsbe/agenda/disposition/?page={$page}",
       "agendadisposearch": "crsbe/agenda/disposition/?query={$word}",
       "agendadispounread": "crsbe/agenda/disposition/unread/?page={$page}",
@@ -203,7 +204,6 @@
       "searchEmailSign": "crsbe/digisign/search_email/?key={$keyword}",
       "sendPenandatangan": "crsbe/digisign/send_penandatangan/",
       "docSigned": "crsbe/agenda/out/1557952/",
-      "dispositionAction": "crsbe/addressbook/actions/",
       "postDisposition": "crsbe/agenda/{$type}/{$id}/disposition/",
       "downloadDisposisi": "crsbe/agenda/disposition/{$id}/detail-download/",
 
