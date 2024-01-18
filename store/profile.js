@@ -7,6 +7,7 @@ const profileSlice = createSlice({
     profile: [],
     organization: [],
     device_uuid: "",
+    selectedAttr: "",
   },
   reducers: {
     setProfile: (state, action) => {
@@ -31,10 +32,13 @@ const profileSlice = createSlice({
     setDeviceUUID: (state, action) => {
       state.device_uuid = action.payload;
     },
+    setSelectedAttr: (state, action) => {
+      state.selectedAttr = action.payload;
+    },
   },
 });
 
-export const { setProfile, setOrganization, setDeviceUUID } =
+export const { setProfile, setOrganization, setDeviceUUID, setSelectedAttr } =
   profileSlice.actions;
 
 export default profileSlice.reducer;

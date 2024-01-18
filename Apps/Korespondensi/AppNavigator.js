@@ -162,6 +162,7 @@ import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
+import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 
 const Stack = createNativeStackNavigator();
 
@@ -1043,6 +1044,14 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="DetailDokumenSPPD"
             component={DetailDokumenSPPD}
+            options={{
+              headerTitle: "",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailDokumenPersonal"
+            component={DetailDokumenPersonal}
             options={{
               headerTitle: "",
               headerShown: false,

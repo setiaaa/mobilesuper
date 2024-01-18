@@ -2084,6 +2084,16 @@ export const getDocumentDetailSPPD = createAsyncThunk(
   }
 );
 
+export const getDocumentDetailPersonalSPPD = createAsyncThunk(
+  "sppd/getDocumentDetailPersonalSPPD",
+  async (data) => {
+    const respon = await axios.get(`${SPPD}document-personal/${data.id}/`, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data;
+  }
+);
+
 export const getDocumentAttachmentSPPD = createAsyncThunk(
   "sppd/getDocumentAttachmentSPPD",
   async ({ token, id }) => {

@@ -312,7 +312,12 @@ export const LoginToken = () => {
                 <Text style={{ color: COLORS.lighter }}>08.00 - 17.00 WIB</Text>
               </View>
             </View>
-            <TouchableOpacity style={{ flexDirection: "row", gap: 10 }}>
+            <TouchableOpacity
+              style={{ flexDirection: "row", gap: 10 }}
+              onPress={() => {
+                Linking.openURL("https://wa.me/6282211593987");
+              }}
+            >
               <Ionicons name="call-outline" size={24} color={COLORS.lighter} />
               <View
                 style={{

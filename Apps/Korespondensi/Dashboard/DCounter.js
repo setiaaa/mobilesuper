@@ -1,12 +1,23 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Image, Text, View } from "react-native";
 import CardDCounter from "../../../components/UI/CardDCounter";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { setOrganization, setProfile } from "../../../store/profile";
+import {
+  setOrganization,
+  setProfile,
+  setSelectedAttr,
+} from "../../../store/profile";
+import { Button, Divider, Menu, Provider } from "react-native-paper";
+import {
+  COLORS,
+  PADDING,
+  fontSizeResponsive,
+} from "../../../config/SuperAppps";
+import { TouchableOpacity } from "@gorhom/bottom-sheet";
 
 function DCounter() {
   const navigation = useNavigation();
@@ -77,7 +88,9 @@ function DCounter() {
     setIsLoading(true);
     try {
       //get isCounter
-      const response = await getHTTP(nde_api.dashboard);
+      const response = await getHTTP(
+        nde_api.dashboard + "?attr=" + selectedAttr
+      );
       setIsCounter(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -121,9 +134,73 @@ function DCounter() {
     index != 3 && (
       <CardDCounter data={item} icon={icon[index]} navigation={navigation} />
     );
+
+  // const [visible, setVisible] = useState(false);
+
+  // const openMenu = () => setVisible(true);
+
+  // const closeMenu = () => setVisible(false);
+  // const { profile, selectedAttr } = useSelector((state) => state.profile);
+  // const { device } = useSelector((state) => state.apps);
+  // //const name = profile?.fullname?.split("/")[0];
+  // const [labelName, setLabelName] = useState();
   return (
     <View style={{ margin: 12 }}>
       {/* {loadingOverlay} */}
+      {/* {profile?.attr?.length > 1 ? (
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <View style={{ backgroundColor: COLORS.white, borderRadius: 8 }}>
+              <TouchableOpacity
+                style={{
+                  flexDirection: "row",
+                  padding: 10,
+                  alignItems: "center",
+                  gap: 10,
+                }}
+                onPress={openMenu}
+              >
+                <Image
+                  source={require("../../../assets/superApp/userChange.png")}
+                  style={{ width: 40, height: 40 }}
+                />
+                <Text style={{ maxWidth: "90%" }}>{labelName}</Text>
+              </TouchableOpacity>
+            </View>
+          }
+          style={{ marginTop: "13%", marginLeft: "5%" }}
+        >
+          <Menu.Item
+            titleStyle={{ fontSize: fontSizeResponsive("H5", device) }}
+            onPress={() => {
+              dispatch(setSelectedAttr(""));
+              setLabelName(profile?.attr?.name);
+              closeMenu();
+            }}
+            title="SEMUA"
+          />
+          <Divider />
+          {profile?.attr?.map((item) => {
+            return (
+              <>
+                <Menu.Item
+                  style={{}}
+                  titleStyle={{ fontSize: fontSizeResponsive("H5", device) }}
+                  onPress={() => {
+                    dispatch(setSelectedAttr(item.code));
+                    setLabelName(item.name);
+                    closeMenu();
+                  }}
+                  title={item.name}
+                />
+                <Divider />
+              </>
+            );
+          })}
+        </Menu>
+      ) : null} */}
       {isCounter?.length != 0 && (
         <View style={{ height: "85%" }}>
           <FlatList
