@@ -129,7 +129,9 @@ export const AddressBookPegawai = ({ route }) => {
   const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
-    setFilterData(addressbook.employee);
+    if (config.tipeAddress != "korespondensi") {
+      setFilterData(addressbook.employee);
+    }
   }, [addressbook]);
 
   filter = () => {
