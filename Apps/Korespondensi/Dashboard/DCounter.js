@@ -88,9 +88,7 @@ function DCounter() {
     setIsLoading(true);
     try {
       //get isCounter
-      const response = await getHTTP(
-        nde_api.dashboard + "?attr=" + selectedAttr
-      );
+      const response = await getHTTP(nde_api.dashboard);
       setIsCounter(response.data);
       setIsLoading(false);
     } catch (error) {
