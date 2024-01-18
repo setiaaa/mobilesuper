@@ -159,7 +159,7 @@ export const nde_api = {
   docSigned: Config.base_url + Config.api.docSigned,
 
   //Disposition
-  dispositionAction: Config.base_url + Config.api.dispositionAction,
+  dispoaction: Config.base_url + Config.api.dispoaction,
   postDisposition: Config.base_url + Config.api.postDisposition,
   downloadDisposisi: Config.base_url + Config.api.downloadDisposisi,
 

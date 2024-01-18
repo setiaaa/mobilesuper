@@ -114,28 +114,10 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
     // } else {
     //   setbtnAdd(true);
     // }
-    // getTindakan();
-    setTindakanList([
-      { name: "Info" },
-      { name: "Aksi" },
-      { name: "Jadwalkan/agendakan" },
-      { name: "Siapkan bahan" },
-      { name: "Beri saran" },
-      { name: "Harap mewakili" },
-      { name: "Hadir bersama saya" },
-      { name: "Untuk dipelajari" },
-      { name: "Tanggapan" },
-      { name: "Bahas" },
-      { name: "Dijawab/dibalas" },
-      { name: "Dilaksanakan" },
-      { name: "Ditindaklanjuti" },
-      { name: "Untuk diketahui" },
-      { name: "File" },
-      { name: "Bicarakan dengan saya" },
-    ]);
+    getTindakan();
     getHeader();
     return refresh;
-  }, [data, selectedTindakan]);
+  }, [data]);
 
   async function getHeader() {
     header = await headerToken();
@@ -177,11 +159,8 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   async function getTindakan() {
     setIsLoading(true);
     try {
-      const response = await getHTTP(nde_api.dispositionAction);
-      response.data = response?.data?.sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-      setTindakanList(response.data);
+      const response = await getHTTP(nde_api.dispoaction);
+      setTindakanList(response.data.action);
       setIsLoading(false);
     } catch (error) {
       handlerError(error, "Peringatan!", "Nota Tindakan tidak berfungsi!");
