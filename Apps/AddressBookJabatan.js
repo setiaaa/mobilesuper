@@ -303,6 +303,7 @@ export const AddressBookJabatan = ({ route }) => {
               setSelected={setKategori}
               handleClick={(item) => {
                 if (config.tipeAddress == "korespondensi") {
+                  setselectedDivision(item.key);
                   getTitleHirarki(item.key);
                 } else {
                   dispatch(getDivisionTree({ token: token, id: item.key }));
