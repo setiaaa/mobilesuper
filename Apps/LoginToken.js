@@ -20,6 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Alert } from "react-native";
 import { setLogout } from "../store/LoginAuth";
 import * as Linking from "expo-linking";
+import { Config } from "../constants/config";
 
 export const LoginToken = () => {
   const navigation = useNavigation();
@@ -331,11 +332,14 @@ export const LoginToken = () => {
               alignItems: "center",
               gap: 10,
               marginVertical: 25,
-              marginBottom: 100,
+              marginBottom: "10%",
             }}
           >
-            <Text style={{ color: COLORS.lighter }}>Terintegrasi</Text>
+            <Text style={{ color: COLORS.grey }}>Terintegrasi</Text>
             <Image source={require("../assets/superApp/bse.png")} />
+            <Text style={{ marginTop: 20, color: COLORS.grey }}>
+              Version {Config.app_version}
+            </Text>
           </View>
         </View>
       </KeyboardAvoidingView>

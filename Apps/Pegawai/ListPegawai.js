@@ -163,8 +163,6 @@ export const ListPegawai = () => {
     setSearch(inputValue);
   };
 
-  console.log(pegawai.lists);
-
   return (
     <>
       <>

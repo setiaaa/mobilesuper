@@ -287,7 +287,7 @@ export const Profile = () => {
                 >
                   {profile.ipasn_nilai}
                 </Text>
-                <View
+                {/* <View
                   style={{
                     backgroundColor: "#CED06C",
                     width: wp(18),
@@ -300,7 +300,7 @@ export const Profile = () => {
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     Tinggi
                   </Text>
-                </View>
+                </View> */}
               </View>
 
               <View
