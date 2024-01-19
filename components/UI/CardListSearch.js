@@ -67,9 +67,32 @@ function CardListSearch({ data, tipe, onPress }) {
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ gap: 10, width: "70%" }}>
-            <Text style={{ fontSize: 13, fontWeight: 600 }}>
-              {data?.sender}
-            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 5,
+              }}
+            >
+              {data?.unread && (
+                <View
+                  style={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: 4,
+                    backgroundColor: COLORS.warning,
+                  }}
+                />
+              )}
+              <Text
+                style={[
+                  data?.unread ? { fontWeight: "bold" } : { fontWeight: 600 },
+                  { fontSize: 13 },
+                ]}
+              >
+                {data?.sender}
+              </Text>
+            </View>
             <Text style={{ fontSize: 11, fontWeight: 400 }}>
               {data?.subject}
             </Text>
