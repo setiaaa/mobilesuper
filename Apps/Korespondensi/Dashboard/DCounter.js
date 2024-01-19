@@ -142,7 +142,7 @@ function DCounter() {
   return (
     <View style={{ margin: 12 }}>
       {/* {loadingOverlay} */}
-      {profile.title.length != 0 && (
+      {profile?.title?.length != 0 && (
         <Card
           style={{
             borderRadius: 10,
@@ -192,7 +192,7 @@ function DCounter() {
                 />
               ))}
             </Menu>
-            {selectedAttr?.code.length == 0 && (
+            {selectedAttr?.code?.length == 0 && (
               <View style={{ width: "85%" }}>
                 {profile?.attr?.map((data, index) => (
                   <Text
@@ -207,7 +207,7 @@ function DCounter() {
                 ))}
               </View>
             )}
-            {selectedAttr.code.length != 0 && (
+            {selectedAttr?.code?.length != 0 && (
               <View style={{ width: "85%" }}>
                 <Text
                   style={{ fontSize: 13, fontWeight: 400, fontWeight: "bold" }}
