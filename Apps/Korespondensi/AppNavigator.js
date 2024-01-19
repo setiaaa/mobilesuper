@@ -163,6 +163,7 @@ import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
 import OneSignal from "react-native-onesignal";
+import InternalSatkerList from "./List/InternalSatkerList";
 
 const Stack = createNativeStackNavigator();
 
@@ -976,6 +977,11 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="IncomingList"
             component={IncomingList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="InternalSatkerList"
+            component={InternalSatkerList}
             options={{ header: toolbarBack }}
           />
           <Stack.Screen

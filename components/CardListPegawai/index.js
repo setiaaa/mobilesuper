@@ -171,7 +171,7 @@ export const CardListPegawai = ({
               }}
               onPress={() => {
                 getDetail(item.nip);
-                navigation.navigate("DetailProfile");
+                navigation.navigate("DetailProfile", "detailpegawai");
               }}
             >
               <Text

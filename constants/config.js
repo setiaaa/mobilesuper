@@ -44,6 +44,7 @@ export const Config = {
     switchoffdevice: extra.api.switchoffdevice,
 
     agendain: extra.api.agendain,
+    agendaininternal: extra.api.agendaininternal,
     agendainsearch: extra.api.agendainsearch,
     agendainunread: extra.api.agendainunread,
     agendainunreadsearch: extra.api.agendainunreadsearch,
@@ -52,6 +53,7 @@ export const Config = {
     agendainread: extra.api.agendainread,
     agendainlog: extra.api.agendainlog,
 
+    dispoaction: extra.api.dispoaction,
     agendadispo: extra.api.agendadispo,
     agendadisposearch: extra.api.agendadisposearch,
     agendadispounread: extra.api.agendadispounread,
@@ -145,7 +147,6 @@ export const Config = {
     searchEmailSign: extra.api.searchEmailSign,
     sendPenandatangan: extra.api.sendPenandatangan,
     docSigned: extra.api.docSigned,
-    dispositionAction: extra.api.dispositionAction,
     postDisposition: extra.api.postDisposition,
     downloadDisposisi: extra.api.downloadDisposisi,
 

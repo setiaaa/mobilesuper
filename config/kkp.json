@@ -1,8 +1,8 @@
 {
   "scheme": "kkp",
   "name": "SuperApps KKP",
-  "slug": "superappskkp",
-  "version": "0.0.1",
+  "slug": "SuperAppsKKP",
+  "version": "0.0.2",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
   "userInterfaceStyle": "automatic",
@@ -16,7 +16,7 @@
   },
   "assetBundlePatterns": ["**/*"],
   "ios": {
-    "buildNumber": "1.3.8",
+    "buildNumber": "7.2.3",
     "supportsTablet": true,
     "bundleIdentifier": "com.kubekkp.portal",
     "infoPlist": {
@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 138,
+    "versionCode": 723,
     "permissions": [
       "ACCESS_FINE_LOCATION",
       "WRITE_EXTERNAL_STORAGE",
@@ -103,6 +103,7 @@
       "switchoffdevice": "crsbe/device/switchoff-device/",
 
       "agendain": "crsbe/agenda/in/?page={$page}",
+      "agendaininternal": "crsbe/agenda/in/internal/?page={$page}",
       "agendainsearch": "crsbe/agenda/in/?query={$word}",
       "agendainunread": "crsbe/agenda/in/unread/?page={$page}",
       "agendainunreadsearch": "crsbe/agenda/in/unread/?query={$word}",
@@ -111,6 +112,7 @@
       "agendainread": "crsbe/agenda/in/{$id}/read/",
       "agendainlog": "crsbe/agenda/in/{$id}/log/",
 
+      "dispoaction": "crsbe/agenda/disposition/header/",
       "agendadispo": "crsbe/agenda/disposition/?page={$page}",
       "agendadisposearch": "crsbe/agenda/disposition/?query={$word}",
       "agendadispounread": "crsbe/agenda/disposition/unread/?page={$page}",
@@ -204,7 +206,6 @@
       "searchEmailSign": "crsbe/digisign/search_email/?key={$keyword}",
       "sendPenandatangan": "crsbe/digisign/send_penandatangan/",
       "docSigned": "crsbe/agenda/out/1557952/",
-      "dispositionAction": "crsbe/addressbook/actions/",
       "postDisposition": "crsbe/agenda/{$type}/{$id}/disposition/",
       "downloadDisposisi": "crsbe/agenda/disposition/{$id}/detail-download/",
 

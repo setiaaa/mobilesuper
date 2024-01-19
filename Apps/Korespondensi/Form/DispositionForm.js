@@ -4,11 +4,9 @@ import { Fragment, useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import {
-  Avatar,
   Button,
   Card,
   Checkbox,
-  Divider,
   IconButton,
   Switch,
   TextInput,
@@ -38,7 +36,7 @@ import {
   switchTodo,
 } from "../../../store/dispoMulti";
 import { Config } from "../../../constants/config";
-import { FlatList, Image } from "react-native";
+import { FlatList } from "react-native";
 import { COLORS } from "../../../config/SuperAppps";
 import {
   BottomSheetModal,
@@ -49,12 +47,13 @@ import { useRef } from "react";
 import { useMemo } from "react";
 import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { setUnker } from "../../../store/profile";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile.profile);
+  const { profile } = useSelector((state) => state.profile);
+  const [senderAttr, setSenderAttr] = useState({ code: "", name: "" });
   let dispoMulti = useSelector((state) => state.dispoMulti.data);
   // const addressbook = useSelector((state) => state.addressbook.selected);
   const [stateConfig, setStateConfig] = useState({});
@@ -65,10 +64,9 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   // const [noAgenda, setNoAgenda] = useState();
   const [tipes, setTipe] = useState();
   const [tindakanList, setTindakanList] = useState();
-  const [isFocusTindakan, setIsFocusTindakan] = useState();
   const [visibleDatePicker, setvisibleDatePicker] = useState();
   const [isFocusPrio, setIsFocusPrio] = useState();
-  const [errorAvatar, setErrorAvatar] = useState();
+  const [isFocusAttr, setIsFocusAttr] = useState();
   let header = {};
   const [btnAdd, setbtnAdd] = useState(false);
   const [isLoading, setIsLoading] = useState();
@@ -91,7 +89,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const snapPoint = useMemo(() => [50, "100%"], []);
 
   const [pilihanKepada, setPilihanKepada] = useState([]);
-
   useEffect(() => {
     if (stateConfig.title === "Addressbook\nDisposition") {
       setPilihanKepada(addressbook.selected);
@@ -100,10 +97,18 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   }, [addressbook.selected]);
 
   useEffect(() => {
-    setid(route?.params?.id);
     // setDetail(route?.params?.data);
     // setNoAgenda(route?.params?.noAgenda);
-    setTipe(route?.params?.tipe);
+    if (id == undefined) {
+      setid(route?.params?.id);
+    } else {
+      setid(id);
+    }
+    if (tipe == undefined) {
+      setTipe(route?.params?.tipe);
+    } else {
+      setTipe(tipe);
+    }
     if (data == undefined) {
       setDetail(route?.params?.data);
     } else {
@@ -114,28 +119,16 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
     // } else {
     //   setbtnAdd(true);
     // }
-    // getTindakan();
-    setTindakanList([
-      { name: "Info" },
-      { name: "Aksi" },
-      { name: "Jadwalkan/agendakan" },
-      { name: "Siapkan bahan" },
-      { name: "Beri saran" },
-      { name: "Harap mewakili" },
-      { name: "Hadir bersama saya" },
-      { name: "Untuk dipelajari" },
-      { name: "Tanggapan" },
-      { name: "Bahas" },
-      { name: "Dijawab/dibalas" },
-      { name: "Dilaksanakan" },
-      { name: "Ditindaklanjuti" },
-      { name: "Untuk diketahui" },
-      { name: "File" },
-      { name: "Bicarakan dengan saya" },
-    ]);
     getHeader();
+    if (profile.title.length == 1) {
+      setSenderAttr(profile.title[0]);
+    }
     return refresh;
-  }, [data, selectedTindakan]);
+  }, [data]);
+
+  useEffect(() => {
+    getTindakan();
+  }, [senderAttr]);
 
   async function getHeader() {
     header = await headerToken();
@@ -177,11 +170,16 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   async function getTindakan() {
     setIsLoading(true);
     try {
-      const response = await getHTTP(nde_api.dispositionAction);
-      response.data = response?.data?.sort((a, b) =>
-        a.name.localeCompare(b.name)
+      const response = await getHTTP(
+        nde_api.dispoaction + "?attr=" + senderAttr?.code
       );
-      setTindakanList(response.data);
+      setTindakanList(response.data.action);
+      dispatch(
+        setUnker({
+          key: response?.data?.unker_id,
+          value: response?.data?.unker,
+        })
+      );
       setIsLoading(false);
     } catch (error) {
       handlerError(error, "Peringatan!", "Nota Tindakan tidak berfungsi!");
@@ -215,7 +213,9 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
       let status = 1;
       // validasi
       dispoMulti.map((items) => {
-        if (pilihanKepada.length == 0 || pilihanKepada == "") {
+        if (senderAttr?.code == undefined) {
+          status = 0;
+        } else if (pilihanKepada.length == 0 || pilihanKepada == "") {
           status = 0;
         } else if (
           (items.nota_tindakan1 == undefined ||
@@ -278,14 +278,16 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         // console.log(request);
         let payload = {
           request: request,
+          id: ids,
           copy_log: "1",
         };
-        // console.log("payload", JSON.stringify(payload));
         // post api dispo
         const response = await postHTTP(
           nde_api.postDisposition
             .replace("{$type}", tipes)
-            .replace("{$id}", ids),
+            .replace("{$id}", ids) +
+            "?attr=" +
+            senderAttr?.code,
           payload
         );
         // alert response
@@ -341,7 +343,37 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   <IconButton icon="close" onPress={() => delDispo(index)} />
                 </View>
               )}
-
+              <View style={styles.containerTitle}>
+                <Text style={styles.title}>Disposisi Sebagai</Text>
+              </View>
+              <View>
+                <Dropdown
+                  style={[
+                    styles.dropdown,
+                    isFocusAttr && {
+                      borderColor: GlobalStyles.colors.tertiery50,
+                    },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  // inputSearchStyle={styles.inputSearchStyle}
+                  iconStyle={styles.iconStyle}
+                  data={profile.title}
+                  // search
+                  maxHeight={300}
+                  labelField="name"
+                  valueField="code"
+                  placeholder={!isFocusAttr ? "Pilih Jabatan" : "..."}
+                  // searchPlaceholder="Search..."
+                  value={senderAttr}
+                  onFocus={() => setIsFocusAttr(true)}
+                  onBlur={() => setIsFocusAttr(false)}
+                  onChange={(item) => {
+                    setSenderAttr(item);
+                    setIsFocusAttr(false);
+                  }}
+                />
+              </View>
               <View style={styles.containerTitle}>
                 <Text style={styles.title}>Disposisi Kepada</Text>
                 {pilihanKepada != undefined && pilihanKepada.length != 0 && (
@@ -437,11 +469,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                   />
                 )}
               </View>
-              <View
-                style={{
-                  paddingBottom: 12,
-                }}
-              >
+              <View>
                 <View style={styles.titleLabel}>
                   {selectedTindakan.length == 0 && (
                     <TextInput
@@ -453,8 +481,15 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                           size={24}
                           icon="menu-down"
                           onPress={() => {
-                            dispatch(switchTindakan(index));
-                            bottomSheetRefNotaTindakan?.current?.present();
+                            if (senderAttr.code.length == 0) {
+                              Alert.alert(
+                                "Peringatan!",
+                                "Silakan pilih jabatan pada Disposisi Sebagai"
+                              );
+                            } else {
+                              dispatch(switchTindakan(index));
+                              bottomSheetRefNotaTindakan?.current?.present();
+                            }
                           }}
                         />
                       }
@@ -508,7 +543,8 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                           <Text style={styles.titleLabelTodo}>Tanggal</Text>
                           <Button
                             style={{
-                              borderColor: GlobalStyles.colors.tertiery50,
+                              height: 55,
+                              borderColor: GlobalStyles.colors.black,
                               borderRadius: 6,
                             }}
                             mode="outlined"
@@ -549,7 +585,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                           <Text style={styles.titleLabelTodo}>Prioritas</Text>
                           <Dropdown
                             style={[
-                              styles.dropdownTodo,
+                              styles.dropdown,
                               isFocusPrio && {
                                 borderColor: GlobalStyles.colors.tertiery50,
                               },
@@ -797,11 +833,11 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.font.md,
     fontWeight: "bold",
   },
-  dropdownTodo: {
-    height: 40,
+  dropdown: {
+    height: 55,
     borderWidth: 1,
     borderRadius: 6,
-    borderColor: GlobalStyles.colors.tertiery50,
+    borderColor: GlobalStyles.colors.black,
     paddingHorizontal: 12,
   },
   containerTanggalPrioritas: {

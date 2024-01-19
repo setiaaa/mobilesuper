@@ -1463,7 +1463,6 @@ export const DetailLinimasa = ({ route }) => {
                               ref={inputRef}
                               style={{
                                 padding: 10,
-                                lineHeight: 20,
                                 width: "90%",
                                 fontSize: fontSizeResponsive("H4", device),
                               }}

@@ -21,7 +21,7 @@ import { TextInput } from "react-native";
 
 export const AddressbookPara = ({ route }) => {
   const [token, setToken] = useState("");
-  const [profileOrganization, setProfileOrganization] = useState();
+  const { profile, unker } = useSelector((state) => state.profile);
   const [inputValue, setinputValue] = useState("");
   const [searchQuery, setsearchQuery] = useState("");
   const [searchList, setsearchList] = useState([]);
@@ -38,27 +38,16 @@ export const AddressbookPara = ({ route }) => {
   useEffect(() => {
     if (token !== "") {
       if (config.tipeAddress === "korespondensi") {
-        (async () => {
-          if (profileOrganization == undefined) {
-            let response = await getHTTP(nde_api.profile);
-            setProfileOrganization(response.data);
-          }
-        })();
         //initial default
-        getDiv(
-          profileOrganization?.fucfu_id ? profileOrganization?.fucfu_id : 1
-        );
-        if (profileOrganization?.fucfu_id) {
-          setKategori({
-            key: profileOrganization?.division_id,
-            value: profileOrganization?.division,
-          });
-          setselectedDivision(profileOrganization?.division_id);
-          getParaHirarki(profileOrganization?.division_id);
+        getDiv(profile?.fucfu_id ? profile?.fucfu_id : 1);
+        if (profile?.fucfu_id) {
+          setKategori(unker);
+          setselectedDivision(unker?.key);
+          getParaHirarki(unker?.key);
         }
       }
     }
-  }, [token, profileOrganization, listTree]);
+  }, [token, profile, listTree]);
 
   async function getDiv(id) {
     // setIsLoading(true);
@@ -111,7 +100,8 @@ export const AddressbookPara = ({ route }) => {
 
   const [kategori, setKategori] = useState();
 
-  const { addressbook } = useSelector((state) => state.addressBookKKP);  const [listTree, setListTree] = useState([]);
+  const { addressbook } = useSelector((state) => state.addressBookKKP);
+  const [listTree, setListTree] = useState([]);
 
   useEffect(() => {
     setListTree(addressbook.listsDivisionPara);

@@ -26,14 +26,13 @@ import { TextInput } from "react-native";
 
 export const AddressBookJabatan = ({ route }) => {
   const [token, setToken] = useState("");
-  const [profileOrganization, setProfileOrganization] = useState();
   const [inputValue, setinputValue] = useState("");
   const [searchQuery, setsearchQuery] = useState("");
   const [searchList, setsearchList] = useState([]);
   const [selectedDivision, setselectedDivision] = useState();
+  const { profile, unker } = useSelector((state) => state.profile);
   const { config } = route.params;
   const dispatch = useDispatch();
-
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
@@ -43,25 +42,12 @@ export const AddressBookJabatan = ({ route }) => {
   useEffect(() => {
     if (token !== "") {
       if (config.tipeAddress === "korespondensi") {
-        (async () => {
-          if (profileOrganization == undefined) {
-            let response = await getHTTP(nde_api.profile);
-            setProfileOrganization(response.data);
-          }
-          // let response = await getHTTP(nde_api.employee);
-          // addressbook.employee = response.data;
-        })();
         //initial default
-        getDiv(
-          profileOrganization?.fucfu_id ? profileOrganization?.fucfu_id : 1
-        );
-        if (profileOrganization?.fucfu_id) {
-          setKategori({
-            key: profileOrganization?.division_id,
-            value: profileOrganization?.division,
-          });
-          setselectedDivision(profileOrganization?.division_id);
-          getTitleHirarki(profileOrganization?.division_id);
+        getDiv(profile?.fucfu_id ? profile?.fucfu_id : 1);
+        if (profile?.fucfu_id) {
+          setKategori(unker);
+          setselectedDivision(unker?.key);
+          getTitleHirarki(unker?.key);
         }
       } else {
         dispatch(getDivision(token));
@@ -69,7 +55,7 @@ export const AddressBookJabatan = ({ route }) => {
         // dispatch(getDivisionTree({ token: token, id: kategori.key }))
       }
     }
-  }, [token, profileOrganization, listTree]);
+  }, [token, profile, listTree]);
 
   async function getDiv(id) {
     // setIsLoading(true);
@@ -303,6 +289,7 @@ export const AddressBookJabatan = ({ route }) => {
               setSelected={setKategori}
               handleClick={(item) => {
                 if (config.tipeAddress == "korespondensi") {
+                  setselectedDivision(item.key);
                   getTitleHirarki(item.key);
                 } else {
                   dispatch(getDivisionTree({ token: token, id: item.key }));

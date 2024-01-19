@@ -941,6 +941,7 @@ export const DetailTask = () => {
                               listData={item}
                               inputRef={inputRef}
                               setParentId={setParentId}
+                              device={device}
                             />
                           )}
                           style={{ height: 500 }}
@@ -1006,7 +1007,7 @@ export const DetailTask = () => {
                               ref={inputRef}
                               style={{ padding: 10, width: "90%" }}
                               onChangeText={setKomen}
-                              value={komen}
+                              defaultValue={komen}
                               placeholderTextColor={COLORS.grey}
                             />
                             <View
@@ -1044,7 +1045,7 @@ export const DetailTask = () => {
   );
 };
 
-const CardKomen = ({ listData, inputRef, setParentId }) => {
+const CardKomen = ({ listData, inputRef, setParentId, device }) => {
   const [toggleComment, setToggleComment] = useState({
     toggle: false,
     // id: data[0].Komentar[0].id

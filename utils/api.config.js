@@ -26,6 +26,7 @@ export const nde_api = {
 
   //AGENDA MASUK
   agendain: Config.base_url + Config.api.agendain,
+  agendaininternal: Config.base_url + Config.api.agendaininternal,
   agendainsearch: Config.base_url + Config.api.agendainsearch,
   agendainunread: Config.base_url + Config.api.agendainunread,
   agendainunreadsearch: Config.base_url + Config.api.agendainunreadsearch,
@@ -159,7 +160,7 @@ export const nde_api = {
   docSigned: Config.base_url + Config.api.docSigned,
 
   //Disposition
-  dispositionAction: Config.base_url + Config.api.dispositionAction,
+  dispoaction: Config.base_url + Config.api.dispoaction,
   postDisposition: Config.base_url + Config.api.postDisposition,
   downloadDisposisi: Config.base_url + Config.api.downloadDisposisi,
 
