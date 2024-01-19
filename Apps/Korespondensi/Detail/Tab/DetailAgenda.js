@@ -41,7 +41,11 @@ function DetailAgenda({ id, data, style, tipe, title }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setDataNotif({}));
-    dispatch(setFAB(true));
+    if (tipe == "in/internal") {
+      dispatch(setFAB(false));
+    } else {
+      dispatch(setFAB(true));
+    }
   }, []);
 
   const copyToClipboard = async (text) => {
@@ -114,6 +118,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                         navigation.navigate("ViewAttachment", {
                           selected: item,
                           title: "Lihat Surat",
+                          tipe: tipe,
                         });
                         dispatch(setFAB(false));
                       }}

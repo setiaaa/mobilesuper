@@ -102,6 +102,7 @@
       "switchoffdevice": "crsbe/device/switchoff-device/",
 
       "agendain": "crsbe/agenda/in/?page={$page}",
+      "agendaininternal": "crsbe/agenda/in/internal/?page={$page}",
       "agendainsearch": "crsbe/agenda/in/?query={$word}",
       "agendainunread": "crsbe/agenda/in/unread/?page={$page}",
       "agendainunreadsearch": "crsbe/agenda/in/unread/?query={$word}",

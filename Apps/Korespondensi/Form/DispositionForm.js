@@ -47,6 +47,7 @@ import { useRef } from "react";
 import { useMemo } from "react";
 import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { setUnker } from "../../../store/profile";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
@@ -88,7 +89,6 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const snapPoint = useMemo(() => [50, "100%"], []);
 
   const [pilihanKepada, setPilihanKepada] = useState([]);
-
   useEffect(() => {
     if (stateConfig.title === "Addressbook\nDisposition") {
       setPilihanKepada(addressbook.selected);
@@ -174,6 +174,12 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         nde_api.dispoaction + "?attr=" + senderAttr?.code
       );
       setTindakanList(response.data.action);
+      dispatch(
+        setUnker({
+          key: response?.data?.unker_id,
+          value: response?.data?.unker,
+        })
+      );
       setIsLoading(false);
     } catch (error) {
       handlerError(error, "Peringatan!", "Nota Tindakan tidak berfungsi!");

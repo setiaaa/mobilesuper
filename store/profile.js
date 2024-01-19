@@ -5,6 +5,8 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     profile: [],
+    selectedAttr: { code: "", name: "" },
+    unker: {},
     organization: [],
     device_uuid: "",
     selectedAttr: "",
@@ -17,6 +19,12 @@ const profileSlice = createSlice({
       } else {
         AsyncStorage.setItem("profileLogin", JSON.stringify(action.payload));
       }
+    },
+    setSelectedAttr: (state, action) => {
+      state.selectedAttr = action.payload;
+    },
+    setUnker: (state, action) => {
+      state.unker = action.payload;
     },
     setOrganization: (state, action) => {
       state.organization = action.payload;
@@ -38,7 +46,12 @@ const profileSlice = createSlice({
   },
 });
 
-export const { setProfile, setOrganization, setDeviceUUID, setSelectedAttr } =
-  profileSlice.actions;
+export const {
+  setProfile,
+  setOrganization,
+  setDeviceUUID,
+  setSelectedAttr,
+  setUnker,
+} = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -34,8 +34,11 @@ export const toolbarBack = ({ navigation, title, route, options, back }) => {
         <TouchableOpacity
           style={{}}
           onPress={() => {
-            if (route?.params?.title == "Lihat Surat") {
-              dispatch(setFAB(false));
+            if (
+              route?.params?.title == "Lihat Surat" &&
+              route?.params?.tipe == "in"
+            ) {
+              dispatch(setFAB(true));
             }
             navigation.goBack();
           }}

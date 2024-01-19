@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 function IncomingDetail({ route }) {
   let id = route?.params?.id;
   let hideForward = route?.params?.hideForward;
+  let tipe = route?.params?.tipe;
   const navigation = useNavigation();
   const profile = useSelector((state) => state.profile.profile);
   const [isLoading, setIsLoading] = useState(true);
@@ -78,13 +79,16 @@ function IncomingDetail({ route }) {
       {loadingOverlay}
       {detail && (
         <>
-          <DetailAgenda data={detail} tipe="in" />
+          <DetailAgenda
+            data={detail}
+            tipe={tipe == "agendaininternal" ? "in/internal" : "in"}
+          />
           <FABactions
             id={id}
             noAgenda={detail?.agenda_number}
             data={detail}
             hideForward={hideForward}
-            tipe="in"
+            tipe={tipe == "agendaininternal" ? "in/internal" : "in"}
           />
         </>
       )}
