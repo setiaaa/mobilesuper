@@ -44,6 +44,7 @@ export const Config = {
     switchoffdevice: extra.api.switchoffdevice,
 
     agendain: extra.api.agendain,
+    agendaininternal: extra.api.agendaininternal,
     agendainsearch: extra.api.agendainsearch,
     agendainunread: extra.api.agendainunread,
     agendainunreadsearch: extra.api.agendainunreadsearch,
