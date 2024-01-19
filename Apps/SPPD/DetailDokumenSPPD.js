@@ -20,6 +20,7 @@ import { getTokenValue } from "../../service/session";
 import {
   getDocumentAttachmentSPPD,
   getDocumentCetakSPPD,
+  getDocumentDetailPersonalSPPD,
 } from "../../service/api";
 import * as FileSystem from "expo-file-system";
 const { StorageAccessFramework } = FileSystem;
@@ -174,6 +175,11 @@ export const DetailDokumenSPPD = ({ route }) => {
   // });
   // };
 
+  const getDetail = (id) => {
+    const params = { token, id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDocumentDetailPersonalSPPD(params));
+  };
   return (
     <>
       <View
@@ -583,6 +589,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                             style={{
                               fontSize: fontSizeResponsive("H2", device),
                               fontWeight: 400,
+                              paddingHorizontal: 10,
                             }}
                           >
                             Golongan
@@ -591,6 +598,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                             style={{
                               fontSize: fontSizeResponsive("H2", device),
                               fontWeight: 600,
+                              paddingHorizontal: 10,
                             }}
                           >
                             {item.tier}
@@ -601,6 +609,7 @@ export const DetailDokumenSPPD = ({ route }) => {
                             style={{
                               fontSize: fontSizeResponsive("H2", device),
                               fontWeight: 400,
+                              paddingHorizontal: 10,
                             }}
                           >
                             Tempat Kedudukan
@@ -609,11 +618,35 @@ export const DetailDokumenSPPD = ({ route }) => {
                             style={{
                               fontSize: fontSizeResponsive("H2", device),
                               fontWeight: 600,
+                              paddingHorizontal: 10,
                             }}
                           >
                             {item.office_city}
                           </Text>
                         </View>
+                        <TouchableOpacity
+                          style={{
+                            backgroundColor: COLORS.info,
+                            height: 50,
+                            borderRadius: 8,
+                            justifyContent: "center",
+                          }}
+                          onPress={() => {
+                            getDetail(item.id);
+                            navigation.navigate("DetailDokumenPersonal");
+                          }}
+                        >
+                          <Text
+                            style={{
+                              textAlign: "center",
+                              fontSize: fontSizeResponsive("H2", device),
+                              fontWeight: 500,
+                              color: COLORS.white,
+                            }}
+                          >
+                            Detail Dokumen Personal
+                          </Text>
+                        </TouchableOpacity>
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -621,66 +654,6 @@ export const DetailDokumenSPPD = ({ route }) => {
               </View>
             );
           })}
-
-          <View style={{ gap: 10, marginVertical: 20 }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: COLORS.info,
-                height: 50,
-                borderRadius: 8,
-                justifyContent: "center",
-              }}
-              onPress={() => {
-                navigation.navigate("LihatSuratSPPD", {
-                  status: "",
-                  data: data,
-                });
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontSize: fontSizeResponsive("H2", device),
-                  fontWeight: 500,
-                  color: COLORS.white,
-                }}
-              >
-                Lihat Surat
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#752A2B",
-                height: 50,
-                borderRadius: 8,
-                justifyContent: "center",
-              }}
-              onPress={() => {
-                // downloadFile(
-                //   "https://portal.kkp.go.id/api/monperdin/document/back-form/" +
-                //     dokumen.detail?.id +
-                //     "/",
-                //   "application/pdf",
-                //   data + ".pdf"
-                // );
-                navigation.navigate("LihatSuratSPPD", {
-                  status: "share",
-                  data: data,
-                });
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontSize: fontSizeResponsive("H2", device),
-                  fontWeight: 500,
-                  color: COLORS.white,
-                }}
-              >
-                Cetak Lembar Belakang
-              </Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
       </View>
     </>

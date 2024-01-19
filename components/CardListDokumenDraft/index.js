@@ -22,7 +22,7 @@ export const CardListDokumenDraft = ({ item, nip, device }) => {
           onPress={
             (onPress = () => {
               getDetail(item.id);
-              navigation.navigate("DetailDokumenCuti", { id: "view" });
+              navigation.navigate("TambahCutiTahunan", { tipe: "draft" });
             })
           }
         >

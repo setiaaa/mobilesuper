@@ -11,7 +11,7 @@ import Carousel, {
 import { useRef } from "react";
 import { Dimensions } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { Divider } from "react-native-paper";
+import { Banner, Divider } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CardUltah } from "../../components/CardUltah";
@@ -45,27 +45,27 @@ import {
 import RenderHTML from "react-native-render-html";
 import { Config } from "../../constants/config";
 
-const BannerSetjen = [
-  {
-    image: require("../../assets/superApp/setjen_1.jpg"),
-    title: "Pelantikan CPNS menjadi PNS di Lingkup Sekretariat Jenderal",
-    additional_title:
-      "Kementerian Kelautan dan Perikanan melantik 10 Kepala Pelabuhan Perikanan pada Jumat ",
-  },
-  {
-    image: require("../../assets/superApp/setjen_2.jpg"),
-    title: "Sekjen KKP, Antam Novambar melantik Dewan Pengawas BLU LPMUKP",
-    additional_title:
-      "Sekretaris Jenderal KKP, Antam Novambar melantik Dewan Pengawas untuk Badan Layanan Umum Lembaga Pengelola Modal Usaha Kelautan dan Perikanan (BLU LPMUKP) di Kantor Pusat KKP",
-  },
-  {
-    image: require("../../assets/superApp/setjen_3.jpg"),
-    title:
-      "Sosialisasi Zona Integritas dan Penandatanganan Pakta Integritas Petugas Pelayanan Terpadu Satu Pintu Kementerian Kelautan dan Perikanan (PTSP KKP)",
-    additional_title:
-      "Pada hari Selasa (20/8) telah dilaksanakan Sosialisasi Zona Integritas dan Penandatanganan Pakta Integritas Petugas Pelayanan Terpadu Satu Pintu Kementerian Kelautan dan Perikanan (PTSP KKP)",
-  },
-];
+// const BannerSetjen = [
+//   {
+//     image: require("../../assets/superApp/setjen_1.jpg"),
+//     title: "Pelantikan CPNS menjadi PNS di Lingkup Sekretariat Jenderal",
+//     additional_title:
+//       "Kementerian Kelautan dan Perikanan melantik 10 Kepala Pelabuhan Perikanan pada Jumat ",
+//   },
+//   {
+//     image: require("../../assets/superApp/setjen_2.jpg"),
+//     title: "Sekjen KKP, Antam Novambar melantik Dewan Pengawas BLU LPMUKP",
+//     additional_title:
+//       "Sekretaris Jenderal KKP, Antam Novambar melantik Dewan Pengawas untuk Badan Layanan Umum Lembaga Pengelola Modal Usaha Kelautan dan Perikanan (BLU LPMUKP) di Kantor Pusat KKP",
+//   },
+//   {
+//     image: require("../../assets/superApp/setjen_3.jpg"),
+//     title:
+//       "Sosialisasi Zona Integritas dan Penandatanganan Pakta Integritas Petugas Pelayanan Terpadu Satu Pintu Kementerian Kelautan dan Perikanan (PTSP KKP)",
+//     additional_title:
+//       "Pada hari Selasa (20/8) telah dilaksanakan Sosialisasi Zona Integritas dan Penandatanganan Pakta Integritas Petugas Pelayanan Terpadu Satu Pintu Kementerian Kelautan dan Perikanan (PTSP KKP)",
+//   },
+// ];
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -199,8 +199,10 @@ export const Satker = () => {
         <TouchableOpacity
           style={{ flexDirection: "row", marginVertical: 20 }}
           onPress={() => {
-            getDetail(item.id);
-            navigation.navigate("DetailLinimasa", item.like_list);
+            // getDetail(item.id);
+            navigation.navigate("DetailLinimasa", {
+              id: item.id,
+            });
           }}
         >
           <Image
@@ -331,7 +333,7 @@ export const Satker = () => {
     return (
       <View style={styles.items}>
         <ParallaxImage
-          source={item.image}
+          source={{ uri: item.image }}
           containerStyle={styles.imageContainer}
           style={styles.images}
           parallaxFactor={0.4}
@@ -501,25 +503,35 @@ export const Satker = () => {
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={screenWidth - 60}
-            data={benner.length === 0 ? BannerSetjen : benner}
+            data={benner}
             renderItem={bannerKegiatan}
             hasParallaxImages={true}
           />
         </View>
 
         <View style={[styles.containerr, { marginTop: 20 }]}>
+          <View style={{ marginLeft: 30 }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: fontSizeResponsive("H2", device),
+              }}
+            >
+              Galeri
+            </Text>
+          </View>
           <Carousel
             ref={carouselRef}
             sliderWidth={screenWidth}
             sliderHeight={screenWidth}
             itemWidth={screenWidth - 60}
-            data={gallery.results?.slice(0, 3)}
+            data={gallery.results}
             renderItem={renderItem}
             hasParallaxImages={true}
             onSnapToItem={setSlide}
           />
           <Pagination
-            dotsLength={gallery?.results?.slice(0, 3).length}
+            dotsLength={gallery?.results?.length}
             dotColor={"black"}
             inactiveDotColor={COLORS.grey}
             dotStyle={styles.paginationDot}

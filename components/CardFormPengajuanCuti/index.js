@@ -24,7 +24,7 @@ export const CardFormPengajuanCuti = ({ item, profile, device }) => {
         <TouchableOpacity
           onPress={() => {
             formCuti(item.id);
-            navigation.navigate("TambahCutiTahunan");
+            navigation.navigate("TambahCutiTahunan", { tipe: "add" });
           }}
           style={{
             backgroundColor: COLORS.infoDanger,

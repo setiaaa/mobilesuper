@@ -27,20 +27,22 @@ const LihatSuratSPPD = ({ route }) => {
   const { status, data } = route.params;
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { dokumen, surat, cetak } = useSelector((state) => state.sppd);
-  const id = dokumen.detail?.id;
+  const { dokumen, surat, cetak, detailPersonal } = useSelector(
+    (state) => state.sppd
+  );
+  const id = detailPersonal?.id;
   const [token, setToken] = useState("");
 
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
       if (status === "share") {
-        dispatch(getDocumentCetakSPPD({ token: val, id: dokumen.detail?.id }));
+        dispatch(getDocumentCetakSPPD({ token: val, id: detailPersonal?.id }));
       } else {
         dispatch(
           getDocumentAttachmentSPPD({
             token: val,
-            id: dokumen.detail?.id,
+            id: detailPersonal?.id,
           })
         );
       }
@@ -179,7 +181,7 @@ const LihatSuratSPPD = ({ route }) => {
                 downloadFile(
                   Config.base_url +
                     "monperdin/document/back-form/" +
-                    dokumen.detail?.id +
+                    detailPersonal.id +
                     "/",
                   "application/pdf",
                   fileName + ".pdf"
