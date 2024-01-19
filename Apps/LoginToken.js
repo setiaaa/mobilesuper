@@ -115,7 +115,7 @@ export const LoginToken = () => {
             />
           </Pressable>
 
-          {count >= 5 ? (
+          {/* {count >= 5 ? (
             <View
               style={{
                 borderWidth: 1,
@@ -169,7 +169,7 @@ export const LoginToken = () => {
                 )}
               </View>
             </View>
-          ) : null}
+          ) : null} */}
 
           <View style={{ flexDirection: "row", gap: 5, marginTop: 20 }}>
             <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>
