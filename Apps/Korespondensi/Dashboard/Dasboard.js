@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Alert, } from "react-native";
+import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import TabViewBg from "../../../components/TabViewBg";
 import { Config } from "../../../constants/config";
@@ -36,9 +36,11 @@ function Dashboard() {
   }
   async function getProfileTitle(action) {
     try {
+      console.log("1");
       //get profile title: untuk cek punya jabatan atau hanya poh, untuk add delegasi dan sekretaris
       const response = await getHTTP(nde_api.profiletitle);
       if (response.data.status) {
+        console.log("1.1");
         response?.data?.title.forEach((e) => {
           if (e.poh == false) {
             setAddDeleSekre(true);
@@ -46,23 +48,29 @@ function Dashboard() {
         });
       }
       if (action == "init") {
+        console.log("1.2");
         if (dataNotif.id != undefined) {
+          console.log("1.2.1");
           if (dataNotif.action == "incoming-detail") {
+            console.log("1.2.1.1");
             navigation.navigate("IncomingDetail", {
               id: dataNotif.id,
               title: "Incoming\nDetail",
             });
           } else if (dataNotif.action == "disposition-detail") {
+            console.log("1.2.1.2");
             navigation.navigate("DispositionDetail", {
               id: dataNotif.id,
               title: "Disposition\nDetail",
             });
           } else if (dataNotif.action == "outgoing-detail") {
+            console.log("1.2.1.3");
             navigation.navigate("SubmittedDetail", {
               id: dataNotif.id,
               title: "Submitted\nDetail",
             });
           } else if (dataNotif.action == "draft-detail") {
+            console.log("1.2.1.4");
             navigation.navigate("NeedFollowUpDetail", {
               id: dataNotif.id,
               title: "Need Follow Up\nDetail",

@@ -12,25 +12,30 @@ function CardDCounter({ data, icon, navigation }) {
       style={styles.card}
       onPress={() => {
         navigation.navigate(icon.navName, {
-            unread: icon.navName == "DispositionUnread"  || icon.navName == "IncomingUnread" ? true:false,
-            title: data?.type == "draft"
-            ? "Nomor Tersedia"
-            : data?.type == "onprogress"
-            ? "Perlu Diproses"
-            : data?.type == "agenda_in"
-            ? "Surat Masuk Belum Dibaca"
-            : data?.type == "agenda_disposition"
-            ? "Disposisi Belum Dibaca"
-            : data?.type == "incoming"
-            ? "Surat Masuk"
-            : data?.type == "disposition"
-            ? "Disposisi"
-            : data?.type == "tracking"
-            ? "Lacak"
-            : data?.type == "submitted"
-            ? "Terkirim"
-            : ""
-          })
+          unread:
+            icon.navName == "DispositionUnread" ||
+            icon.navName == "IncomingUnread"
+              ? true
+              : false,
+          title:
+            data?.type == "draft"
+              ? "Nomor Tersedia"
+              : data?.type == "onprogress"
+              ? "Perlu Diproses"
+              : data?.type == "agenda_in"
+              ? "Surat Masuk Belum Dibaca"
+              : data?.type == "agenda_disposition"
+              ? "Disposisi Belum Dibaca"
+              : data?.type == "incoming"
+              ? "Surat Masuk"
+              : data?.type == "disposition"
+              ? "Disposisi"
+              : data?.type == "tracking"
+              ? "Lacak"
+              : data?.type == "submitted"
+              ? "Terkirim"
+              : "",
+        });
       }}
     >
       <Card.Title
@@ -64,8 +69,12 @@ function CardDCounter({ data, icon, navigation }) {
             style={avatarIcon}
           />
         )}
-        titleStyle={{fontSize:14}}
-        right={() => <Text style={styles.counterText} numberOfLines={5}>{data?.value}</Text>}
+        titleStyle={{ fontSize: 14 }}
+        right={() => (
+          <Text style={styles.counterText} numberOfLines={5}>
+            {data?.value}
+          </Text>
+        )}
       />
     </Card>
   );
@@ -80,7 +89,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 16,
     backgroundColor: GlobalStyles.colors.textWhite,
     width: "98%",
-    paddingVertical:12,
+    paddingVertical: 12,
     alignSelf: "center",
   },
   cardTitle: {

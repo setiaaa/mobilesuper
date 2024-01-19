@@ -162,6 +162,7 @@ import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
+import OneSignal from "react-native-onesignal";
 
 const Stack = createNativeStackNavigator();
 
@@ -182,16 +183,15 @@ function AuthenticatedStack(route) {
     }
   };
 
-  const getDeviceId = async () => {};
+  const getDeviceId = async () => {
+    const deviceState = await OneSignal.getDeviceState();
+    if (deviceState != undefined && deviceState != null) {
+      setDeviceId(deviceState?.userId);
+    }
+  };
+
   async function checkDevice() {
-    console.log("1");
     try {
-      console.log("1.1");
-      console.log("device NIK", deviceNIK);
-      console.log("device UUID", deviceUUID);
-      console.log("device ID", deviceId);
-      console.log("device Name", deviceName);
-      console.log("device OSS", deviceOS);
       if (
         deviceNIK != undefined &&
         deviceNIK != null &&
@@ -204,7 +204,6 @@ function AuthenticatedStack(route) {
         deviceOS != null &&
         deviceOS != undefined
       ) {
-        console.log("1.1.1");
         data = {
           fullname: deviceNIK,
           device_id: deviceId,
@@ -213,18 +212,15 @@ function AuthenticatedStack(route) {
           os: deviceOS,
         };
         //send data
-        alert("data", data);
         const response = await postHTTP(nde_api.checkdevice, data);
         // Alert.alert(
         //   "Info check device",
         //   JSON.stringify(response?.data?.message)
         // );
       } else {
-        console.log("1.1.2");
         // Alert.alert("Warning!", "Push notification may not work"+deviceNIK+"-"+deviceId+"-"+deviceUUID+"-"+deviceName+"-"+deviceOS);
       }
     } catch (error) {
-      console.log("2");
       // Alert.alert("Warning!", "Push notification may not work" + error);
       setIsLoading(false);
     }
@@ -1175,6 +1171,25 @@ function AppNavigator() {
     // } else if (Platform.OS == "ios") {
     //   checkVersionIos();
     // }
+
+    //Method for handling notifications received while app in foreground
+    OneSignal.setNotificationWillShowInForegroundHandler(
+      (notificationReceivedEvent) => {
+        let notification = notificationReceivedEvent.getNotification();
+        const data = notification?.additionalData;
+        console.log("data onesignal", data);
+        //Silence notification by calling complete() with no argument
+        notificationReceivedEvent.complete(notification);
+      }
+    );
+
+    //Method for handling notifications opened
+    OneSignal.setNotificationOpenedHandler((openedEvent) => {
+      const { action, notification } = openedEvent;
+      console.log("data notif", notification?.additionalData);
+      dispatch(setDataNotif(notification?.additionalData));
+    });
+
     getTokenValue().then((val) => {
       if (val === null) {
         setRoute("LoginToken");
