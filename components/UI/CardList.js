@@ -57,7 +57,9 @@ function CardList({ data, tipe, onPress }) {
             : data.disposisi
             ? styles.cardReadDispo
             : styles.cardRead,
-          data.is_pejabat == false ? styles.cardSecre : "",
+          data.is_pejabat == false && tipe !== "agendaininternal"
+            ? styles.cardSecre
+            : "",
           ,
           { padding: 15 },
         ]}
