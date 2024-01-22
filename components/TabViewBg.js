@@ -34,7 +34,7 @@ import { removeAllDispoMulti } from "../store/dispoMulti";
 import { COLORS } from "../config/SuperAppps";
 import DetailAgendaInpro from "../Apps/Korespondensi/Detail/Tab/DetailAgendaInpro";
 
-const project = Constants.manifest.extra.id;
+const project = Constants.expoConfig.extra.id;
 function TabViewBg({
   routes,
   id,

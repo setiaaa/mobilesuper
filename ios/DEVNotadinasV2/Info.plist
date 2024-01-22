@@ -25,7 +25,7 @@
 			<dict>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>co.id.telkom.ndeossitdev</string>
+					<string>com.kubekkp.portal</string>
 				</array>
 			</dict>
 			<dict>
@@ -36,7 +36,7 @@
 			</dict>
 		</array>
 		<key>CFBundleVersion</key>
-		<string>1.3.8</string>
+		<string>0.0.2</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>NSAppTransportSecurity</key>

@@ -48,6 +48,7 @@ import { useMemo } from "react";
 import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { setUnker } from "../../../store/profile";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
@@ -330,6 +331,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   }
   return (
     <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <ScrollView>
         {loadingOverlay}
         <View style={styles.screen}>
@@ -762,6 +764,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
           </View>
         </SafeAreaView>
       </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </>
   );
 }

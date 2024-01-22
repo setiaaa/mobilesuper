@@ -15,7 +15,10 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { BarChart } from "react-native-chart-kit";
-import { ScrollView } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSummaryCount, getSummaryList } from "../../service/api";
@@ -154,154 +157,74 @@ export const LaporanDigitalSign = () => {
   const { device } = useSelector((state) => state.apps);
 
   return (
-    <View style={{ flex: 1 }}>
-      {loading ? <Loading /> : null}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "flex-end",
-          backgroundColor: COLORS.primary,
-          height: 80,
-          paddingBottom: 20,
-        }}
-      >
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        {loading ? <Loading /> : null}
         <View
           style={{
-            backgroundColor: COLORS.white,
-            borderRadius: 20,
-            width: device === "tablet" ? 40 : 28,
-            height: device === "tablet" ? 40 : 28,
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: 20,
+            flexDirection: "row",
+            alignItems: "flex-end",
+            backgroundColor: COLORS.primary,
+            height: 80,
+            paddingBottom: 20,
           }}
         >
-          <TouchableOpacity
-            style={{}}
-            onPress={() => navigation.navigate("Home")}
-          >
-            <Ionicons
-              name="chevron-back-outline"
-              size={device === "tablet" ? 40 : 24}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-          <Text
+          <View
             style={{
-              fontSize: fontSizeResponsive("H1", device),
-              fontWeight: 600,
-              color: COLORS.white,
+              backgroundColor: COLORS.white,
+              borderRadius: 20,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 20,
             }}
           >
-            Laporan
-          </Text>
-        </View>
-      </View>
-      <ScrollView>
-        <View
-          style={{
-            // padding: PADDING.Page,
-            width: "100%",
-            paddingVertical: 20,
-            paddingHorizontal: "5%",
-          }}
-        >
-          <View>
-            <View style={{ ...styles.card, alignItems: "center" }}>
-              <View style={{ flexDirection: "row" }}>
-                <View
-                  style={{
-                    ...styles.circle,
-                    backgroundColor: COLORS.successLight,
-                  }}
-                >
-                  <Ionicons
-                    name="clipboard-outline"
-                    size={24}
-                    color={COLORS.success}
-                  />
-                </View>
-                <View
-                  style={{ justifyContent: "center", marginLeft: 15, gap: 5 }}
-                >
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H1", device),
-                      fontWeight: 700,
-                    }}
-                  >
-                    {summary?.count.total_count}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H3", device),
-                      fontWeight: 400,
-                    }}
-                  >
-                    Total Pelatihan
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View
+            <TouchableOpacity
+              style={{}}
+              onPress={() => navigation.navigate("Home")}
+            >
+              <Ionicons
+                name="chevron-back-outline"
+                size={device === "tablet" ? 40 : 24}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+            <Text
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: 20,
-                width: "100%",
+                fontSize: fontSizeResponsive("H1", device),
+                fontWeight: 600,
+                color: COLORS.white,
               }}
             >
-              <View style={styles.cardsmall}>
+              Laporan
+            </Text>
+          </View>
+        </View>
+        <ScrollView>
+          <View
+            style={{
+              // padding: PADDING.Page,
+              width: "100%",
+              paddingVertical: 20,
+              paddingHorizontal: "5%",
+            }}
+          >
+            <View>
+              <View style={{ ...styles.card, alignItems: "center" }}>
                 <View style={{ flexDirection: "row" }}>
                   <View
                     style={{
                       ...styles.circle,
-                      backgroundColor: COLORS.infoLight,
+                      backgroundColor: COLORS.successLight,
                     }}
                   >
                     <Ionicons
                       name="clipboard-outline"
                       size={24}
-                      color={COLORS.info}
-                    />
-                  </View>
-                  <View
-                    style={{ justifyContent: "center", marginLeft: 15, gap: 4 }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H1", device),
-                        fontWeight: 700,
-                      }}
-                    >
-                      {summary?.count.jenis_sertifikat?.klasikal}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: fontSizeResponsive("H3", device),
-                        fontWeight: 400,
-                        width: "60%",
-                      }}
-                    >
-                      Total Klasikal
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.cardsmall}>
-                <View style={{ flexDirection: "row" }}>
-                  <View
-                    style={{
-                      ...styles.circle,
-                      backgroundColor: COLORS.warningLight,
-                    }}
-                  >
-                    <Ionicons
-                      name="clipboard-outline"
-                      size={24}
-                      color={COLORS.warning}
+                      color={COLORS.success}
                     />
                   </View>
                   <View
@@ -313,831 +236,937 @@ export const LaporanDigitalSign = () => {
                         fontWeight: 700,
                       }}
                     >
-                      {summary?.count.jenis_sertifikat?.non_klasikal}
+                      {summary?.count.total_count}
                     </Text>
                     <Text
                       style={{
                         fontSize: fontSizeResponsive("H3", device),
                         fontWeight: 400,
-                        width: "55%",
                       }}
                     >
-                      Total Non Klasikal
+                      Total Pelatihan
                     </Text>
                   </View>
                 </View>
               </View>
-            </View>
-          </View>
-          <View style={{ ...styles.card, marginTop: 20 }}>
-            <Text
-              style={{
-                fontSize: fontSizeResponsive("H2", device),
-                fontWeight: 600,
-              }}
-            >
-              Jumlah pelatihan Klasikal
-            </Text>
-            <BarChart
-              data={{
-                labels: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
-                datasets: [
-                  {
-                    data: [
-                      [tmpKlasikal[0]?.jumlah],
-                      [tmpKlasikal[1]?.jumlah],
-                      [tmpKlasikal[2]?.jumlah],
-                      [tmpKlasikal[3]?.jumlah],
-                      [tmpKlasikal[4]?.jumlah],
-                      [tmpKlasikal[5]?.jumlah],
-                      [tmpKlasikal[6]?.jumlah],
-                      [tmpKlasikal[7]?.jumlah],
-                      [tmpKlasikal[8]?.jumlah],
-                      [tmpKlasikal[9]?.jumlah],
-                      [tmpKlasikal[10]?.jumlah],
-                    ],
-                  },
-                ],
-              }}
-              hide
-              legend
-              width={wp(85)}
-              height={300}
-              chartConfig={{
-                backgroundGradientFrom: COLORS.white,
-                backgroundGradientFromOpacity: 0,
-                backgroundGradientTo: COLORS.white,
-                backgroundGradientToOpacity: 1,
-                color: () => COLORS.lighter,
-                barPercentage: 0.2,
-                propsForBackgroundLines: {
-                  x1: 60,
-                },
-                fillShadowGradientFromOffset: 1,
-                fillShadowGradientFrom: COLORS.info,
-                fillShadowGradientFromOpacity: 1,
-              }}
-              style={{ marginHorizontal: -20, marginTop: 20 }}
-              withInnerLines={false}
-            />
-            <View style={{ gap: 5 }}>
-              <Text
+              <View
                 style={{
-                  fontSize: fontSizeResponsive("H2", device),
-                  fontWeight: 500,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 20,
+                  width: "100%",
                 }}
               >
-                Keterangan:
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  A
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pelatihan Struktural Kepemimpinan
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  B
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pelatihan Manajerial
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  C
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pelatihan Teknis
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  D
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pelatihan Fungsional
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  E
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pelatihan Sosial Kultural
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  F
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Seminar/Konferensi/Sarasehan
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  G
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Workshop atau Lokarya
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  H
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Kursus
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  I
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Penataran
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  J
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Bimbingan Teknis
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  K
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Sosialisasi
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={{ ...styles.card, marginTop: 20 }}>
-            <Text
-              style={{
-                fontSize: fontSizeResponsive("H2", device),
-                fontWeight: 600,
-              }}
-            >
-              Jumlah pelatihan Non Klasikal
-            </Text>
-            <BarChart
-              data={{
-                labels: [
-                  "A",
-                  "B",
-                  "C",
-                  "D",
-                  "E",
-                  "F",
-                  "G",
-                  "H",
-                  "I",
-                  "J",
-                  "K",
-                  "L",
-                  "M",
-                ],
-                datasets: [
-                  {
-                    data: [
-                      [tmpNonKlasikal[0]?.jumlah],
-                      [tmpNonKlasikal[1]?.jumlah],
-                      [tmpNonKlasikal[2]?.jumlah],
-                      [tmpNonKlasikal[3]?.jumlah],
-                      [tmpNonKlasikal[4]?.jumlah],
-                      [tmpNonKlasikal[5]?.jumlah],
-                      [tmpNonKlasikal[6]?.jumlah],
-                      [tmpNonKlasikal[7]?.jumlah],
-                      [tmpNonKlasikal[8]?.jumlah],
-                      [tmpNonKlasikal[9]?.jumlah],
-                      [tmpNonKlasikal[10]?.jumlah],
-                    ],
-                  },
-                ],
-              }}
-              hide
-              legend
-              width={wp(85)}
-              height={300}
-              chartConfig={{
-                backgroundGradientFrom: COLORS.white,
-                backgroundGradientFromOpacity: 0,
-                backgroundGradientTo: COLORS.white,
-                backgroundGradientToOpacity: 1,
-                color: () => COLORS.lighter,
-                barPercentage: 0.2,
-                propsForBackgroundLines: {
-                  x1: 60,
-                },
-                fillShadowGradientFromOffset: 1,
-                fillShadowGradientFrom: COLORS.warning,
-                fillShadowGradientFromOpacity: 1,
-              }}
-              style={{ marginHorizontal: -15, marginTop: 20 }}
-              withInnerLines={false}
-            />
-            <View style={{ gap: 5 }}>
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H2", device),
-                  fontWeight: 500,
-                }}
-              >
-                Keterangan:
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  A
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Coaching
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  B
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Mentoring
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  C
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  e-learning
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  D
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pelatihan Jarak Jauh
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  E
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Detasering (Secondment)
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  F
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pembelajaran Alam Terbuka (Outbond)
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  G
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Patok Banding (Benchmarking)
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  H
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Pertukanan antara PNS dengan Pegawai
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  I
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Swasta/BUMN/BUMD
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  J
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Belajar Mandiri (Self Learning)
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  K
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Komunitas Belajar (Community of Practices)
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  L
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Bimbingan di Tempat Kerja
-                </Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                    width: 15,
-                  }}
-                >
-                  M
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  ={" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H3", device),
-                    fontWeight: 400,
-                  }}
-                >
-                  Magang/Praktik
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={{ ...styles.card, marginTop: 20, height: 500 }}>
-            <Text
-              style={{
-                fontSize: fontSizeResponsive("H1", device),
-                fontWeight: 600,
-                marginBottom: 15,
-              }}
-            >
-              List Laporan
-            </Text>
-            <FlatList
-              data={summary?.lists}
-              renderItem={({ item }) => (
-                <View key={item.id}>
-                  <CardLaporanList item={item} token={token} device={device} />
+                <View style={styles.cardsmall}>
+                  <View style={{ flexDirection: "row" }}>
+                    <View
+                      style={{
+                        ...styles.circle,
+                        backgroundColor: COLORS.infoLight,
+                      }}
+                    >
+                      <Ionicons
+                        name="clipboard-outline"
+                        size={24}
+                        color={COLORS.info}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        marginLeft: 15,
+                        gap: 4,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H1", device),
+                          fontWeight: 700,
+                        }}
+                      >
+                        {summary?.count.jenis_sertifikat?.klasikal}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H3", device),
+                          fontWeight: 400,
+                          width: "60%",
+                        }}
+                      >
+                        Total Klasikal
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-              )}
-              keyExtractor={(item) => item.id}
-            />
+                <View style={styles.cardsmall}>
+                  <View style={{ flexDirection: "row" }}>
+                    <View
+                      style={{
+                        ...styles.circle,
+                        backgroundColor: COLORS.warningLight,
+                      }}
+                    >
+                      <Ionicons
+                        name="clipboard-outline"
+                        size={24}
+                        color={COLORS.warning}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        marginLeft: 15,
+                        gap: 5,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H1", device),
+                          fontWeight: 700,
+                        }}
+                      >
+                        {summary?.count.jenis_sertifikat?.non_klasikal}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H3", device),
+                          fontWeight: 400,
+                          width: "55%",
+                        }}
+                      >
+                        Total Non Klasikal
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View style={{ ...styles.card, marginTop: 20 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Jumlah pelatihan Klasikal
+              </Text>
+              <BarChart
+                data={{
+                  labels: [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H",
+                    "I",
+                    "J",
+                    "K",
+                  ],
+                  datasets: [
+                    {
+                      data: [
+                        [tmpKlasikal[0]?.jumlah],
+                        [tmpKlasikal[1]?.jumlah],
+                        [tmpKlasikal[2]?.jumlah],
+                        [tmpKlasikal[3]?.jumlah],
+                        [tmpKlasikal[4]?.jumlah],
+                        [tmpKlasikal[5]?.jumlah],
+                        [tmpKlasikal[6]?.jumlah],
+                        [tmpKlasikal[7]?.jumlah],
+                        [tmpKlasikal[8]?.jumlah],
+                        [tmpKlasikal[9]?.jumlah],
+                        [tmpKlasikal[10]?.jumlah],
+                      ],
+                    },
+                  ],
+                }}
+                hide
+                legend
+                width={wp(85)}
+                height={300}
+                chartConfig={{
+                  backgroundGradientFrom: COLORS.white,
+                  backgroundGradientFromOpacity: 0,
+                  backgroundGradientTo: COLORS.white,
+                  backgroundGradientToOpacity: 1,
+                  color: () => COLORS.lighter,
+                  barPercentage: 0.2,
+                  propsForBackgroundLines: {
+                    x1: 60,
+                  },
+                  fillShadowGradientFromOffset: 1,
+                  fillShadowGradientFrom: COLORS.info,
+                  fillShadowGradientFromOpacity: 1,
+                }}
+                style={{ marginHorizontal: -20, marginTop: 20 }}
+                withInnerLines={false}
+              />
+              <View style={{ gap: 5 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 500,
+                  }}
+                >
+                  Keterangan:
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    A
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pelatihan Struktural Kepemimpinan
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    B
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pelatihan Manajerial
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    C
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pelatihan Teknis
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    D
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pelatihan Fungsional
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    E
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pelatihan Sosial Kultural
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    F
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Seminar/Konferensi/Sarasehan
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    G
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Workshop atau Lokarya
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    H
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Kursus
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    I
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Penataran
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    J
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Bimbingan Teknis
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    K
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Sosialisasi
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={{ ...styles.card, marginTop: 20 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H2", device),
+                  fontWeight: 600,
+                }}
+              >
+                Jumlah pelatihan Non Klasikal
+              </Text>
+              <BarChart
+                data={{
+                  labels: [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G",
+                    "H",
+                    "I",
+                    "J",
+                    "K",
+                    "L",
+                    "M",
+                  ],
+                  datasets: [
+                    {
+                      data: [
+                        [tmpNonKlasikal[0]?.jumlah],
+                        [tmpNonKlasikal[1]?.jumlah],
+                        [tmpNonKlasikal[2]?.jumlah],
+                        [tmpNonKlasikal[3]?.jumlah],
+                        [tmpNonKlasikal[4]?.jumlah],
+                        [tmpNonKlasikal[5]?.jumlah],
+                        [tmpNonKlasikal[6]?.jumlah],
+                        [tmpNonKlasikal[7]?.jumlah],
+                        [tmpNonKlasikal[8]?.jumlah],
+                        [tmpNonKlasikal[9]?.jumlah],
+                        [tmpNonKlasikal[10]?.jumlah],
+                      ],
+                    },
+                  ],
+                }}
+                hide
+                legend
+                width={wp(85)}
+                height={300}
+                chartConfig={{
+                  backgroundGradientFrom: COLORS.white,
+                  backgroundGradientFromOpacity: 0,
+                  backgroundGradientTo: COLORS.white,
+                  backgroundGradientToOpacity: 1,
+                  color: () => COLORS.lighter,
+                  barPercentage: 0.2,
+                  propsForBackgroundLines: {
+                    x1: 60,
+                  },
+                  fillShadowGradientFromOffset: 1,
+                  fillShadowGradientFrom: COLORS.warning,
+                  fillShadowGradientFromOpacity: 1,
+                }}
+                style={{ marginHorizontal: -15, marginTop: 20 }}
+                withInnerLines={false}
+              />
+              <View style={{ gap: 5 }}>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 500,
+                  }}
+                >
+                  Keterangan:
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    A
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Coaching
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    B
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Mentoring
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    C
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    e-learning
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    D
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pelatihan Jarak Jauh
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    E
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Detasering (Secondment)
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    F
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pembelajaran Alam Terbuka (Outbond)
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    G
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Patok Banding (Benchmarking)
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    H
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Pertukanan antara PNS dengan Pegawai
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    I
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Swasta/BUMN/BUMD
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    J
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Belajar Mandiri (Self Learning)
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    K
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Komunitas Belajar (Community of Practices)
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    L
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Bimbingan di Tempat Kerja
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                      width: 15,
+                    }}
+                  >
+                    M
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    ={" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H3", device),
+                      fontWeight: 400,
+                    }}
+                  >
+                    Magang/Praktik
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={{ ...styles.card, marginTop: 20, height: 500 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  marginBottom: 15,
+                }}
+              >
+                List Laporan
+              </Text>
+              <FlatList
+                data={summary?.lists}
+                renderItem={({ item }) => (
+                  <View key={item.id}>
+                    <CardLaporanList
+                      item={item}
+                      token={token}
+                      device={device}
+                    />
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </GestureHandlerRootView>
   );
 };
 

@@ -23,6 +23,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export const DetailProfile = ({ route }) => {
   const data = route.params;
@@ -35,126 +36,127 @@ export const DetailProfile = ({ route }) => {
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   return (
     <>
-      <ScrollView>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "flex-end",
-            backgroundColor: COLORS.primary,
-            height: 80,
-            paddingBottom: 20,
-          }}
-        >
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ScrollView>
           <View
             style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: device === "tablet" ? 40 : 28,
-              height: device === "tablet" ? 40 : 28,
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
+              flexDirection: "row",
+              alignItems: "flex-end",
+              backgroundColor: COLORS.primary,
+              height: 80,
+              paddingBottom: 20,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-              <Ionicons
-                name="chevron-back-outline"
-                size={device === "tablet" ? 40 : 24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-            <Text
+            <View
               style={{
-                fontSize: fontSizeResponsive("H1", device),
-                fontWeight: 600,
-                color: COLORS.white,
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 20,
               }}
             >
-              Profil Pegawai
-            </Text>
+              <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: COLORS.white,
+                }}
+              >
+                Profil Pegawai
+              </Text>
+            </View>
           </View>
-        </View>
 
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            padding: PADDING.Page,
-          }}
-        >
           <View
             style={{
-              backgroundColor: COLORS.white,
-              width: wp(87),
-              borderRadius: 8,
               justifyContent: "center",
               alignItems: "center",
               padding: PADDING.Page,
-              //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
             }}
           >
-            {loading ? (
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 30 }}
-                width={61}
-                height={61}
-              />
-            ) : (
-              <Image
-                source={{ uri: BASE_URL + item.avatar }}
-                style={{
-                  width: device === "tablet" ? 100 : 61,
-                  height: device === "tablet" ? 100 : 61,
-                  borderRadius: device === "tablet" ? 50 : 30,
-                }}
-              />
-            )}
-            {loading ? (
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 4, marginVertical: 10 }}
-                width={200}
-                height={20}
-              />
-            ) : (
-              <Text
-                style={{
-                  marginVertical: 10,
-                  color: COLORS.info,
-                  fontWeight: FONTWEIGHT.bold,
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                {item.nama}
-              </Text>
-            )}
-            {loading ? (
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 4 }}
-                width={100}
-                height={20}
-              />
-            ) : (
-              <Text
-                style={{
-                  color: COLORS.lighter,
-                  fontSize: fontSizeResponsive("H4", device),
-                  textAlign: "center",
-                }}
-              >
-                {item.satuan_kerja_nama}
-              </Text>
-            )}
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                width: wp(87),
+                borderRadius: 8,
+                justifyContent: "center",
+                alignItems: "center",
+                padding: PADDING.Page,
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
+              }}
+            >
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 30 }}
+                  width={61}
+                  height={61}
+                />
+              ) : (
+                <Image
+                  source={{ uri: BASE_URL + item.avatar }}
+                  style={{
+                    width: device === "tablet" ? 100 : 61,
+                    height: device === "tablet" ? 100 : 61,
+                    borderRadius: device === "tablet" ? 50 : 30,
+                  }}
+                />
+              )}
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4, marginVertical: 10 }}
+                  width={200}
+                  height={20}
+                />
+              ) : (
+                <Text
+                  style={{
+                    marginVertical: 10,
+                    color: COLORS.info,
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  {item.nama}
+                </Text>
+              )}
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : (
+                <Text
+                  style={{
+                    color: COLORS.lighter,
+                    fontSize: fontSizeResponsive("H4", device),
+                    textAlign: "center",
+                  }}
+                >
+                  {item.satuan_kerja_nama}
+                </Text>
+              )}
+            </View>
           </View>
-        </View>
 
-        {/* <View
+          {/* <View
           style={{
             alignItems: "center",
             justifyContent: "center",
@@ -437,36 +439,37 @@ export const DetailProfile = ({ route }) => {
           </View>
         </View> */}
 
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          {loading ? (
-            <View
-              style={{
-                width: "90%",
-                backgroundColor: COLORS.white,
-                height: 50,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 8,
-                //shadow ios
-                shadowOffset: { width: -2, height: 4 },
-                shadowColor: "#171717",
-                shadowOpacity: 0.2,
-                //shadow android
-                elevation: 2,
-              }}
-            >
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 4 }}
-                width={200}
-                height={20}
-              />
-            </View>
-          ) : (
-            <CollapseCardBiodata profile={item} device={device} data={data} />
-          )}
-          {/* <CollapseCardLinimasa linimasa={item.dataLinimasa} /> */}
-        </View>
-      </ScrollView>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            {loading ? (
+              <View
+                style={{
+                  width: "90%",
+                  backgroundColor: COLORS.white,
+                  height: 50,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 8,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowColor: "#171717",
+                  shadowOpacity: 0.2,
+                  //shadow android
+                  elevation: 2,
+                }}
+              >
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={200}
+                  height={20}
+                />
+              </View>
+            ) : (
+              <CollapseCardBiodata profile={item} device={device} data={data} />
+            )}
+            {/* <CollapseCardLinimasa linimasa={item.dataLinimasa} /> */}
+          </View>
+        </ScrollView>
+      </GestureHandlerRootView>
     </>
   );
 };
