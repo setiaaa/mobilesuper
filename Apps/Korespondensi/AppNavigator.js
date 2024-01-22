@@ -162,7 +162,7 @@ import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
-import OneSignal from "react-native-onesignal";
+// import OneSignal from "react-native-onesignal";
 import InternalSatkerList from "./List/InternalSatkerList";
 import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 
@@ -186,10 +186,10 @@ function AuthenticatedStack(route) {
   };
 
   const getDeviceId = async () => {
-    const deviceState = await OneSignal.getDeviceState();
-    if (deviceState != undefined && deviceState != null) {
-      setDeviceId(deviceState?.userId);
-    }
+    // const deviceState = await OneSignal.getDeviceState();
+    // if (deviceState != undefined && deviceState != null) {
+    //   setDeviceId(deviceState?.userId);
+    // }
   };
 
   async function checkDevice() {
@@ -1188,22 +1188,22 @@ function AppNavigator() {
     // }
 
     //Method for handling notifications received while app in foreground
-    OneSignal.setNotificationWillShowInForegroundHandler(
-      (notificationReceivedEvent) => {
-        let notification = notificationReceivedEvent.getNotification();
-        const data = notification?.additionalData;
-        console.log("data onesignal", data);
-        //Silence notification by calling complete() with no argument
-        notificationReceivedEvent.complete(notification);
-      }
-    );
+    // OneSignal.setNotificationWillShowInForegroundHandler(
+    //   (notificationReceivedEvent) => {
+    //     let notification = notificationReceivedEvent.getNotification();
+    //     const data = notification?.additionalData;
+    //     console.log("data onesignal", data);
+    //     //Silence notification by calling complete() with no argument
+    //     notificationReceivedEvent.complete(notification);
+    //   }
+    // );
 
     //Method for handling notifications opened
-    OneSignal.setNotificationOpenedHandler((openedEvent) => {
-      const { action, notification } = openedEvent;
-      console.log("data notif", notification?.additionalData);
-      dispatch(setDataNotif(notification?.additionalData));
-    });
+    // OneSignal.setNotificationOpenedHandler((openedEvent) => {
+    //   const { action, notification } = openedEvent;
+    //   console.log("data notif", notification?.additionalData);
+    //   dispatch(setDataNotif(notification?.additionalData));
+    // });
 
     getTokenValue().then((val) => {
       if (val === null) {

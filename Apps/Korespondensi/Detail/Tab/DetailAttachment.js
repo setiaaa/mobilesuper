@@ -29,6 +29,7 @@ import { setPrevAgenda } from "../../../../store/referensi";
 import { COLORS } from "../../../../config/SuperAppps";
 import { Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // import * as MediaLibrary from "expo-media-library";
 // import * as FileSystem from "expo-file-system";
@@ -248,8 +249,7 @@ function DetailAttachment({ data, id, tipeRef }) {
     try {
       const UTI = "public.item";
       const shareResult = await Sharing.shareAsync(fileUri, { UTI });
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   const loadingOverlay = (
     <>
@@ -258,82 +258,83 @@ function DetailAttachment({ data, id, tipeRef }) {
   );
   return (
     <>
-      <ScrollView keyboardShouldPersistTaps="handled" style={styles.screen}>
-        {loadingOverlay}
-        <View style={[styles.container, { marginBottom: 12 }]}>
-          <View
-            style={[styles.containerRow, { justifyContent: "space-between" }]}
-          >
-            {/* <Text style={styles.titleLabel}>Attachments</Text> */}
-            {/* {data?.attachments?.length != 0 && Platform.OS == "android" && (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ScrollView keyboardShouldPersistTaps="handled" style={styles.screen}>
+          {loadingOverlay}
+          <View style={[styles.container, { marginBottom: 12 }]}>
+            <View
+              style={[styles.containerRow, { justifyContent: "space-between" }]}
+            >
+              {/* <Text style={styles.titleLabel}>Attachments</Text> */}
+              {/* {data?.attachments?.length != 0 && Platform.OS == "android" && (
               <TouchableOpacity onPress={downloadAll}>
                 <Text style={styles.linkText}>Download All</Text>
               </TouchableOpacity>
             )} */}
-          </View>
-          {data?.attachments?.length == 0 && <Text>-</Text>}
-          {data?.attachments?.length != 0 &&
-            data?.attachments?.map((item, index) => (
-              <View
-                key={index}
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+            </View>
+            {data?.attachments?.length == 0 && <Text>-</Text>}
+            {data?.attachments?.length != 0 &&
+              data?.attachments?.map((item, index) => (
                 <View
-                  style={{
-                    backgroundColor: COLORS.white,
-                    borderRadius: 16,
-                    padding: 20,
-                    width: 90,
-                    elevation: 1,
-                  }}
-                >
-                  <Image
-                    source={require("../../../../assets/superApp/pdf.png")}
-                    style={{ width: 50, height: 50 }}
-                  />
-                </View>
-                <View
+                  key={index}
                   style={{
                     flexDirection: "column",
+                    justifyContent: "center",
                     alignItems: "center",
-                    marginBottom: 20,
                   }}
                 >
-                  <Text style={[styles.textContent, { textAlign: "center" }]}>
-                    {item?.name}
-                  </Text>
-                  <Text style={styles.subtextContent}>{item?.size}</Text>
-                </View>
-                <Button
-                  mode="contained"
-                  style={[
-                    {
-                      width: "100%",
-                      backgroundColor: GlobalStyles.colors.primary,
-                      marginBottom: 16,
-                    },
-                  ]}
-                  onPress={() => {
-                    navigation.navigate("ViewAttachment", {
-                      selected: item,
-                      title: "Lihat Surat",
-                    });
-                  }}
-                  icon={() => (
-                    <Ionicons
-                      name="eye-outline"
-                      size={20}
-                      color={COLORS.white}
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      borderRadius: 16,
+                      padding: 20,
+                      width: 90,
+                      elevation: 1,
+                    }}
+                  >
+                    <Image
+                      source={require("../../../../assets/superApp/pdf.png")}
+                      style={{ width: 50, height: 50 }}
                     />
-                  )}
-                >
-                  Lihat Surat
-                </Button>
-                {/* <Button
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      alignItems: "center",
+                      marginBottom: 20,
+                    }}
+                  >
+                    <Text style={[styles.textContent, { textAlign: "center" }]}>
+                      {item?.name}
+                    </Text>
+                    <Text style={styles.subtextContent}>{item?.size}</Text>
+                  </View>
+                  <Button
+                    mode="contained"
+                    style={[
+                      {
+                        width: "100%",
+                        backgroundColor: GlobalStyles.colors.primary,
+                        marginBottom: 16,
+                      },
+                    ]}
+                    onPress={() => {
+                      navigation.navigate("ViewAttachment", {
+                        selected: item,
+                        title: "Lihat Surat",
+                      });
+                    }}
+                    icon={() => (
+                      <Ionicons
+                        name="eye-outline"
+                        size={20}
+                        color={COLORS.white}
+                      />
+                    )}
+                  >
+                    Lihat Surat
+                  </Button>
+                  {/* <Button
                   onPress={() => initDownload(item)}
                   mode="contained"
                   style={[
@@ -353,68 +354,70 @@ function DetailAttachment({ data, id, tipeRef }) {
                 >
                   Unduh Surat
                 </Button> */}
-              </View>
-            ))}
-        </View>
-        {downloadProgress != 1 && (
-          <Dialog visible={downloadProgress != 1 && downloadProgress != 0}>
-            <Dialog.Content>
-              <ProgressBar progress={downloadProgress} />
-              <Text>{downloadProgress.toFixed(2) * 100} %</Text>
-            </Dialog.Content>
-          </Dialog>
-        )}
-        <View style={[styles.container, { marginBottom: 12 }]}>
-          {data?.references && <Text style={styles.titleLabel}>Referensi</Text>}
-          <View>
-            {data?.references?.length == 0 && <Text>-</Text>}
-            {data?.references?.length != 0 &&
-              data?.references?.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    if (item.new_url?.split("/")[3] == "0") {
-                      Alert.alert("Warning!", "Document not found");
-                    } else {
-                      if (tipeRef == "in") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "m" }));
-                      } else if (tipeRef == "disposition") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "d" }));
-                      } else if (tipeRef == "out") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "k" }));
-                      } else if (tipeRef == "scanlog") {
-                        dispatch(setPrevAgenda({ id: id, tipe: "m" }));
-                      } else if (
-                        tipeRef == "TrackingDetail" ||
-                        tipeRef == "NeedFollowUpDetail" ||
-                        tipeRef == "ReferenceDetail"
-                      ) {
-                        dispatch(
-                          setPrevAgenda({ id: item?.notadinas, tipe: "s" })
-                        );
-                      }
-                      navigation.navigate("ReferenceDetail", {
-                        id: item?.new_url?.split("/")[3],
-                        title: "Detail Referensi",
-                      });
-                    }
-                  }}
-                >
-                  <View style={[styles.containerContent, { width: "100%" }]}>
-                    <IconButton
-                      icon="file"
-                      size={18}
-                      style={styles.iconContent}
-                    />
-                    <Text style={[styles.textContent, { width: "85%" }]}>
-                      {item.subject}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+                </View>
               ))}
           </View>
-        </View>
-        {/* {data?.template?.name == "nota_external" && (
+          {downloadProgress != 1 && (
+            <Dialog visible={downloadProgress != 1 && downloadProgress != 0}>
+              <Dialog.Content>
+                <ProgressBar progress={downloadProgress} />
+                <Text>{downloadProgress.toFixed(2) * 100} %</Text>
+              </Dialog.Content>
+            </Dialog>
+          )}
+          <View style={[styles.container, { marginBottom: 12 }]}>
+            {data?.references && (
+              <Text style={styles.titleLabel}>Referensi</Text>
+            )}
+            <View>
+              {data?.references?.length == 0 && <Text>-</Text>}
+              {data?.references?.length != 0 &&
+                data?.references?.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      if (item.new_url?.split("/")[3] == "0") {
+                        Alert.alert("Warning!", "Document not found");
+                      } else {
+                        if (tipeRef == "in") {
+                          dispatch(setPrevAgenda({ id: id, tipe: "m" }));
+                        } else if (tipeRef == "disposition") {
+                          dispatch(setPrevAgenda({ id: id, tipe: "d" }));
+                        } else if (tipeRef == "out") {
+                          dispatch(setPrevAgenda({ id: id, tipe: "k" }));
+                        } else if (tipeRef == "scanlog") {
+                          dispatch(setPrevAgenda({ id: id, tipe: "m" }));
+                        } else if (
+                          tipeRef == "TrackingDetail" ||
+                          tipeRef == "NeedFollowUpDetail" ||
+                          tipeRef == "ReferenceDetail"
+                        ) {
+                          dispatch(
+                            setPrevAgenda({ id: item?.notadinas, tipe: "s" })
+                          );
+                        }
+                        navigation.navigate("ReferenceDetail", {
+                          id: item?.new_url?.split("/")[3],
+                          title: "Detail Referensi",
+                        });
+                      }
+                    }}
+                  >
+                    <View style={[styles.containerContent, { width: "100%" }]}>
+                      <IconButton
+                        icon="file"
+                        size={18}
+                        style={styles.iconContent}
+                      />
+                      <Text style={[styles.textContent, { width: "85%" }]}>
+                        {item.subject}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+            </View>
+          </View>
+          {/* {data?.template?.name == "nota_external" && (
           <View style={styles.container}>
             <Text style={styles.titleLabel}>Digital Signed</Text>
             <View>
@@ -448,127 +451,128 @@ function DetailAttachment({ data, id, tipeRef }) {
             </View>
           </View>
         )} */}
-      </ScrollView>
-      <BottomSheetModalProvider>
-        <SafeAreaView>
-          <View>
-            <BottomSheetModal
-              name="download"
-              ref={bottomSheetRefAttach}
-              index={1}
-              snapPoints={
-                extensionPdf && selectedAttach?.tipe != "sign"
-                  ? snapPointPdf
-                  : snapPoint
-              }
-              keyboardBehavior={
-                Platform?.OS == "android" ? "fillParent" : "interactive"
-              }
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-            >
-              <View style={styles.contentContainer}>
-                <View>
-                  <Text style={styles.title}>
-                    {selectedAttach?.tipe == "sign"
-                      ? "Digital Signed"
-                      : "Attachment"}
-                  </Text>
-                  <View style={[styles.containerRow, styles.border]}>
-                    <IconButton
-                      icon={selectedIconAttach}
-                      // icon="file"
-                      size={18}
-                      style={styles.icon}
-                    />
-                    {selectedAttach && (
-                      <View style={styles.containerColumn}>
-                        <Text>
-                          {selectedAttach.name
-                            ? selectedAttach.name
-                            : selectedAttach?.tipe == "sign"
-                            ? selectedAttach.description
-                            : selectedAttach.filename}
-                        </Text>
-                        <Text>
-                          {selectedAttach.size
-                            ? selectedAttach.size
-                            : selectedAttach.signed_by}
-                        </Text>
-                      </View>
-                    )}
+        </ScrollView>
+        <BottomSheetModalProvider>
+          <SafeAreaView>
+            <View>
+              <BottomSheetModal
+                name="download"
+                ref={bottomSheetRefAttach}
+                index={1}
+                snapPoints={
+                  extensionPdf && selectedAttach?.tipe != "sign"
+                    ? snapPointPdf
+                    : snapPoint
+                }
+                keyboardBehavior={
+                  Platform?.OS == "android" ? "fillParent" : "interactive"
+                }
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+              >
+                <View style={styles.contentContainer}>
+                  <View>
+                    <Text style={styles.title}>
+                      {selectedAttach?.tipe == "sign"
+                        ? "Digital Signed"
+                        : "Attachment"}
+                    </Text>
+                    <View style={[styles.containerRow, styles.border]}>
+                      <IconButton
+                        icon={selectedIconAttach}
+                        // icon="file"
+                        size={18}
+                        style={styles.icon}
+                      />
+                      {selectedAttach && (
+                        <View style={styles.containerColumn}>
+                          <Text>
+                            {selectedAttach.name
+                              ? selectedAttach.name
+                              : selectedAttach?.tipe == "sign"
+                              ? selectedAttach.description
+                              : selectedAttach.filename}
+                          </Text>
+                          <Text>
+                            {selectedAttach.size
+                              ? selectedAttach.size
+                              : selectedAttach.signed_by}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
                   </View>
-                </View>
-                {extensionPdf && (
-                  <>
-                    {selectedAttach?.tipe != "sign" && (
+                  {extensionPdf && (
+                    <>
+                      {selectedAttach?.tipe != "sign" && (
+                        <Button
+                          mode="contained"
+                          style={[
+                            {
+                              marginBottom: 16,
+                              backgroundColor: GlobalStyles.colors.green,
+                            },
+                          ]}
+                          onPress={() => {
+                            navigation.navigate("ViewAttachment", {
+                              selected: selectedAttach,
+                              title: "View Attachment",
+                            });
+                          }}
+                        >
+                          View
+                        </Button>
+                      )}
                       <Button
                         mode="contained"
                         style={[
                           {
                             marginBottom: 16,
-                            backgroundColor: GlobalStyles.colors.green,
+                            backgroundColor: GlobalStyles.colors.blue,
                           },
                         ]}
-                        onPress={() => {
-                          navigation.navigate("ViewAttachment", {
-                            selected: selectedAttach,
-                            title: "View Attachment",
-                          });
-                        }}
+                        onPress={() => initDownload(selectedAttach)}
                       >
-                        View
+                        Download
                       </Button>
-                    )}
-                    <Button
-                      mode="contained"
-                      style={[
-                        {
-                          marginBottom: 16,
-                          backgroundColor: GlobalStyles.colors.blue,
-                        },
-                      ]}
-                      onPress={() => initDownload(selectedAttach)}
-                    >
-                      Download
-                    </Button>
-                  </>
-                )}
-                {!extensionPdf && (
-                  <>
-                    <Button
-                      mode="contained"
-                      style={[
-                        {
-                          marginBottom: 16,
-                          backgroundColor: GlobalStyles.colors.blue,
-                        },
-                      ]}
-                      onPress={() => initDownload(selectedAttach)}
-                    >
-                      Download
-                    </Button>
-                  </>
-                )}
-                <Button
-                  mode="contained"
-                  style={[
-                    {
-                      backgroundColor: GlobalStyles.colors.gray500,
-                      marginBottom: 16,
-                    },
-                  ]}
-                  onPress={() => {
-                    bottomSheetRefAttach.current?.dismiss();
-                  }}
-                >
-                  Cancel
-                </Button>
-              </View>
-            </BottomSheetModal>
-          </View>
-        </SafeAreaView>
-      </BottomSheetModalProvider>
+                    </>
+                  )}
+                  {!extensionPdf && (
+                    <>
+                      <Button
+                        mode="contained"
+                        style={[
+                          {
+                            marginBottom: 16,
+                            backgroundColor: GlobalStyles.colors.blue,
+                          },
+                        ]}
+                        onPress={() => initDownload(selectedAttach)}
+                      >
+                        Download
+                      </Button>
+                    </>
+                  )}
+                  <Button
+                    mode="contained"
+                    style={[
+                      {
+                        backgroundColor: GlobalStyles.colors.gray500,
+                        marginBottom: 16,
+                      },
+                    ]}
+                    onPress={() => {
+                      bottomSheetRefAttach.current?.dismiss();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </View>
+              </BottomSheetModal>
+            </View>
+          </SafeAreaView>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </>
   );
 }

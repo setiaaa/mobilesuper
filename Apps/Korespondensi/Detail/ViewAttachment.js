@@ -21,6 +21,7 @@ function ViewAttachment({ route }) {
   console.log(
     nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length)
   );
+  console.log(header);
   return (
     <>
       {header && (
@@ -30,10 +31,11 @@ function ViewAttachment({ route }) {
               source={{
                 uri:
                   nde_api.baseurl +
-                  "crsbe/" +
-                  data?.file.slice(5, data?.file.length),
+                    "crsbe/" +
+                    data?.file.slice(5, data?.file.length) || undefined,
                 headers: header,
               }}
+              onError={(error) => console.log(error)}
               withScroll={true}
             />
           </View>

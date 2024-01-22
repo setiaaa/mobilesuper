@@ -14,6 +14,7 @@ function DLetter() {
   let [isLetter, setIsLetter] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
   const token = useSelector((state) => state.auth.token);
+  const { selectedAttr } = useSelector((state) => state.profile);
   const icon = [
     {
       icon: "email-edit-outline",
@@ -38,6 +39,10 @@ function DLetter() {
     {
       icon: "inbox-arrow-down",
       navName: "IncomingList",
+    },
+    {
+      icon: "inbox-arrow-down",
+      navName: "InternalSatkerList",
     },
     {
       icon: "email-send-outline",
@@ -83,26 +88,33 @@ function DLetter() {
     setIsLoading(true);
     try {
       //get isCounter
-      const response = await getHTTP(nde_api.dashboard);
+      const response = await getHTTP(
+        nde_api.dashboard + "?attr=" + selectedAttr.code
+      );
       setIsLetter([
         { count: 1, type: "incoming", value: response.data[1].value },
         {
           count: 2,
+          type: "internalsatker",
+          value: "",
+        },
+        {
+          count: 3,
           type: "disposition",
           value: response.data[2].value,
         },
         {
-          count: 3,
+          count: 4,
           type: "onprogress",
           value: response.data[0].value,
         },
         {
-          count: 4,
+          count: 5,
           type: "tracking",
           value: "",
         },
         {
-          count: 5,
+          count: 6,
           type: "submitted",
           value: "",
         },

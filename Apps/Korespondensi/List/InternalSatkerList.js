@@ -42,6 +42,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-native-modern-datepicker";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function InternalSatkerList({ route }) {
   const [list, setList] = useState([]);
@@ -323,362 +324,364 @@ function InternalSatkerList({ route }) {
   );
   return (
     <>
-      {/* {isLoading && loadingOverlay} */}
-      <View
-        style={{ flex: 1, backgroundColor: GlobalStyles.colors.tertiery20 }}
-      >
-        <SearchFilter
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          clearSearch={clearSearch}
-          showBottomFilter={showBottomFilter}
-          getSearch={() => {
-            setList([]);
-            setIsSearchQuery(searchQuery);
-            setIsSearchFilter(true);
-          }}
-        />
-        {isSearchFilter && (
-          <View
-            style={{
-              flexDirection: "row",
-              backgroundColor: GlobalStyles.colors.tertiery10,
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        {/* {isLoading && loadingOverlay} */}
+        <View
+          style={{ flex: 1, backgroundColor: GlobalStyles.colors.tertiery20 }}
+        >
+          <SearchFilter
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            clearSearch={clearSearch}
+            showBottomFilter={showBottomFilter}
+            getSearch={() => {
+              setList([]);
+              setIsSearchQuery(searchQuery);
+              setIsSearchFilter(true);
             }}
-          >
-            <Text
-              style={[
-                styles.headerList,
-                {
-                  backgroundColor: GlobalStyles.colors.textWhite,
-                  color: GlobalStyles.colors.textBlack,
-                  marginBottom: 8,
-                },
-              ]}
+          />
+          {isSearchFilter && (
+            <View
+              style={{
+                flexDirection: "row",
+                backgroundColor: GlobalStyles.colors.tertiery10,
+              }}
             >
-              {isSearchQuery.length != 0 && startDate == null
-                ? "Cari: "
-                : "Saring : "}
-            </Text>
-            <View style={styles.filter}>
-              {startDate && (
-                <Chip
-                  style={styles.badge}
-                  onClose={() => {
-                    setStartDate(null);
-                    setEndDate(null);
-                    if (searchQuery.length == 0) {
-                      setIsSearchFilter(false);
-                      setIsLoading(true);
-                    }
-                    setList([]);
-                  }}
-                  closeIcon="close"
-                >
-                  {moment(startDate).format("DD/MM/YYYY")} -{" "}
-                  {moment(endDate).format("DD/MM/YYYY")}
-                </Chip>
-              )}
-              {isSearchQuery && (
-                <Chip
-                  style={styles.badge}
-                  onClose={() => {
-                    setSearchQuery("");
-                    setIsSearchQuery("");
-                    if (startDate == null && endDate == null) {
-                      setIsSearchFilter(false);
-                      setIsLoading(true);
-                    }
-                    setList([]);
-                  }}
-                  closeIcon="close"
-                >
-                  {isSearchQuery}
-                </Chip>
-              )}
-            </View>
-          </View>
-        )}
-        <FlatList
-          keyExtractor={(item) => item.date}
-          data={list?.results}
-          renderItem={renderItem}
-          ListEmptyComponent={listEmpty}
-          refreshing={isLoading}
-          onRefresh={refresh}
-          onEndReached={loadMore}
-        />
-      </View>
-
-      <BottomSheetModalProvider>
-        <SafeAreaView>
-          <BottomSheetModal
-            name="filter"
-            ref={bottomSheetModalRef}
-            snapPoints={animatedSnapPoints}
-            handleHeight={animatedHandleHeight}
-            contentHeight={animatedContentHeight}
-            index={0}
-            style={{ borderRadius: 50 }}
-            keyboardBehavior={
-              Platform?.OS == "android" ? "fillParent" : "interactive"
-            }
-            keyboardBlurBehavior="restore"
-            android_keyboardInputMode="adjust"
-            backdropComponent={({ style }) => (
-              <View
-                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-              />
-            )}
-          >
-            <BottomSheetView onLayout={handleContentLayout}>
-              <View style={{ flex: 1, padding: 25 }}>
-                <View
-                  style={{
-                    alignItems: "center",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text style={{ fontSize: 15, fontWeight: 500 }}>
-                    Menyaring Internal Satker
-                  </Text>
-                  <TouchableOpacity onPress={refresh}>
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        fontWeight: 400,
-                        color: COLORS.danger,
-                      }}
-                    >
-                      Reset
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View
-                  style={{
-                    marginBottom: 10,
-                    flex: 1,
-                    marginTop: 20,
-                    gap: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      color: COLORS.lighter,
+              <Text
+                style={[
+                  styles.headerList,
+                  {
+                    backgroundColor: GlobalStyles.colors.textWhite,
+                    color: GlobalStyles.colors.textBlack,
+                    marginBottom: 8,
+                  },
+                ]}
+              >
+                {isSearchQuery.length != 0 && startDate == null
+                  ? "Cari: "
+                  : "Saring : "}
+              </Text>
+              <View style={styles.filter}>
+                {startDate && (
+                  <Chip
+                    style={styles.badge}
+                    onClose={() => {
+                      setStartDate(null);
+                      setEndDate(null);
+                      if (searchQuery.length == 0) {
+                        setIsSearchFilter(false);
+                        setIsLoading(true);
+                      }
+                      setList([]);
                     }}
+                    closeIcon="close"
                   >
-                    Rentang Tanggal
-                  </Text>
+                    {moment(startDate).format("DD/MM/YYYY")} -{" "}
+                    {moment(endDate).format("DD/MM/YYYY")}
+                  </Chip>
+                )}
+                {isSearchQuery && (
+                  <Chip
+                    style={styles.badge}
+                    onClose={() => {
+                      setSearchQuery("");
+                      setIsSearchQuery("");
+                      if (startDate == null && endDate == null) {
+                        setIsSearchFilter(false);
+                        setIsLoading(true);
+                      }
+                      setList([]);
+                    }}
+                    closeIcon="close"
+                  >
+                    {isSearchQuery}
+                  </Chip>
+                )}
+              </View>
+            </View>
+          )}
+          <FlatList
+            keyExtractor={(item) => item.date}
+            data={list?.results}
+            renderItem={renderItem}
+            ListEmptyComponent={listEmpty}
+            refreshing={isLoading}
+            onRefresh={refresh}
+            onEndReached={loadMore}
+          />
+        </View>
+
+        <BottomSheetModalProvider>
+          <SafeAreaView>
+            <BottomSheetModal
+              name="filter"
+              ref={bottomSheetModalRef}
+              snapPoints={animatedSnapPoints}
+              handleHeight={animatedHandleHeight}
+              contentHeight={animatedContentHeight}
+              index={0}
+              style={{ borderRadius: 50 }}
+              keyboardBehavior={
+                Platform?.OS == "android" ? "fillParent" : "interactive"
+              }
+              keyboardBlurBehavior="restore"
+              android_keyboardInputMode="adjust"
+              backdropComponent={({ style }) => (
+                <View
+                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                />
+              )}
+            >
+              <BottomSheetView onLayout={handleContentLayout}>
+                <View style={{ flex: 1, padding: 25 }}>
                   <View
                     style={{
+                      alignItems: "center",
                       flexDirection: "row",
                       justifyContent: "space-between",
                     }}
                   >
-                    <View>
-                      <View
+                    <Text style={{ fontSize: 15, fontWeight: 500 }}>
+                      Menyaring Internal Satker
+                    </Text>
+                    <TouchableOpacity onPress={refresh}>
+                      <Text
                         style={{
-                          borderWidth: 1,
-                          width: 155,
-                          borderRadius: 4,
-                          borderColor: COLORS.ExtraDivinder,
-                          flexDirection: "row",
+                          fontSize: 13,
+                          fontWeight: 400,
+                          color: COLORS.danger,
                         }}
                       >
-                        <TextInput
-                          multiline
-                          numberOfLines={4}
-                          maxLength={40}
-                          placeholder="Mulai"
-                          style={{ padding: 10, height: 40 }}
-                          value={
-                            startDate
-                              ? moment(startDate).format("DD/MM/YYYY")
-                              : "Mulai"
-                          }
-                          disabled
-                        />
-                        <View
-                          style={{
-                            alignItems: "flex-end",
-                            flex: 1,
-                            marginRight: 10,
-                            justifyContent: "center",
-                          }}
-                        >
-                          <TouchableOpacity onPress={showStartDate}>
-                            <Ionicons
-                              name="calendar-outline"
-                              size={24}
-                              color={COLORS.grey}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    </View>
-
-                    <View>
-                      <View
-                        style={{
-                          borderWidth: 1,
-                          width: 155,
-                          borderRadius: 4,
-                          borderColor: COLORS.ExtraDivinder,
-                          flexDirection: "row",
-                        }}
-                      >
-                        <TextInput
-                          multiline
-                          numberOfLines={4}
-                          maxLength={40}
-                          placeholder="Selesai"
-                          style={{ padding: 10, height: 40 }}
-                          value={
-                            endDate
-                              ? moment(endDate).format("DD/MM/YYYY")
-                              : "Selesai"
-                          }
-                          disabled
-                        />
-                        <View
-                          style={{
-                            alignItems: "flex-end",
-                            flex: 1,
-                            marginRight: 10,
-                            justifyContent: "center",
-                          }}
-                        >
-                          <TouchableOpacity onPress={showEndDate}>
-                            <Ionicons
-                              name="calendar-outline"
-                              size={24}
-                              color={COLORS.grey}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    </View>
+                        Reset
+                      </Text>
+                    </TouchableOpacity>
                   </View>
 
-                  <DateTimePickerModal
-                    isVisible={isEndDateVisible || isStartDateVisible}
-                    mode="date"
-                    display={Platform.OS == "android" ? "inline" : "spinner"}
-                    style={{ width: "100%", height: 300 }}
-                    onConfirm={(date) => {
-                      isStartDateVisible
-                        ? handleConfirmStart(date)
-                        : isEndDateVisible
-                        ? handleConfirmEnd(date)
-                        : {};
-                    }}
-                    onCancel={() => {
-                      isStartDateVisible
-                        ? hideStartDate()
-                        : isEndDateVisible
-                        ? hideEndDate()
-                        : {};
-                    }}
-                    maximumDate={new Date()}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    marginBottom: 10,
-                    flex: 1,
-                    marginTop: 10,
-                    gap: 10,
-                  }}
-                >
-                  <Text
+                  <View
                     style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      color: COLORS.lighter,
-                    }}
-                  >
-                    Perihal
-                  </Text>
-                  <TextInput
-                    editable
-                    multiline
-                    numberOfLines={4}
-                    maxLength={40}
-                    placeholder="Masukan Perihal"
-                    style={{
-                      borderWidth: 1,
-                      height: 40,
-                      width: "100%",
-                      padding: 5,
-                      borderRadius: 6,
-                      borderColor: "#D0D5DD",
-                    }}
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                  />
-                </View>
-                <View style={{ flexDirection: "column" }}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: COLORS.infoDanger,
-                      height: 50,
-                      marginVertical: 20,
-                      borderRadius: 6,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    onPress={() => {
-                      setIsSearchQuery(searchQuery);
-                      if (!isSearchFilter) {
-                        setList([]);
-                      }
-                      setIsSearchFilter(true);
-                      bottomSheetAttachClose();
+                      marginBottom: 10,
+                      flex: 1,
+                      marginTop: 20,
+                      gap: 10,
                     }}
                   >
                     <Text
                       style={{
-                        color: COLORS.white,
-                        fontSize: FONTSIZE.H1,
-                        fontWeight: 500,
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.lighter,
                       }}
                     >
-                      Terapkan
+                      Rentang Tanggal
                     </Text>
-                  </TouchableOpacity>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View>
+                        <View
+                          style={{
+                            borderWidth: 1,
+                            width: 155,
+                            borderRadius: 4,
+                            borderColor: COLORS.ExtraDivinder,
+                            flexDirection: "row",
+                          }}
+                        >
+                          <TextInput
+                            multiline
+                            numberOfLines={4}
+                            maxLength={40}
+                            placeholder="Mulai"
+                            style={{ padding: 10, height: 40 }}
+                            value={
+                              startDate
+                                ? moment(startDate).format("DD/MM/YYYY")
+                                : "Mulai"
+                            }
+                            disabled
+                          />
+                          <View
+                            style={{
+                              alignItems: "flex-end",
+                              flex: 1,
+                              marginRight: 10,
+                              justifyContent: "center",
+                            }}
+                          >
+                            <TouchableOpacity onPress={showStartDate}>
+                              <Ionicons
+                                name="calendar-outline"
+                                size={24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </View>
 
-                  <TouchableOpacity
+                      <View>
+                        <View
+                          style={{
+                            borderWidth: 1,
+                            width: 155,
+                            borderRadius: 4,
+                            borderColor: COLORS.ExtraDivinder,
+                            flexDirection: "row",
+                          }}
+                        >
+                          <TextInput
+                            multiline
+                            numberOfLines={4}
+                            maxLength={40}
+                            placeholder="Selesai"
+                            style={{ padding: 10, height: 40 }}
+                            value={
+                              endDate
+                                ? moment(endDate).format("DD/MM/YYYY")
+                                : "Selesai"
+                            }
+                            disabled
+                          />
+                          <View
+                            style={{
+                              alignItems: "flex-end",
+                              flex: 1,
+                              marginRight: 10,
+                              justifyContent: "center",
+                            }}
+                          >
+                            <TouchableOpacity onPress={showEndDate}>
+                              <Ionicons
+                                name="calendar-outline"
+                                size={24}
+                                color={COLORS.grey}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+
+                    <DateTimePickerModal
+                      isVisible={isEndDateVisible || isStartDateVisible}
+                      mode="date"
+                      display={Platform.OS == "android" ? "inline" : "spinner"}
+                      style={{ width: "100%", height: 300 }}
+                      onConfirm={(date) => {
+                        isStartDateVisible
+                          ? handleConfirmStart(date)
+                          : isEndDateVisible
+                          ? handleConfirmEnd(date)
+                          : {};
+                      }}
+                      onCancel={() => {
+                        isStartDateVisible
+                          ? hideStartDate()
+                          : isEndDateVisible
+                          ? hideEndDate()
+                          : {};
+                      }}
+                      maximumDate={new Date()}
+                    />
+                  </View>
+
+                  <View
                     style={{
-                      backgroundColor: GlobalStyles.colors.tertiery80,
-                      height: 50,
-                      borderRadius: 6,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    onPress={() => {
-                      bottomSheetAttachClose();
+                      marginBottom: 10,
+                      flex: 1,
+                      marginTop: 10,
+                      gap: 10,
                     }}
                   >
                     <Text
                       style={{
-                        color: COLORS.white,
-                        fontSize: FONTSIZE.H1,
-                        fontWeight: 500,
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.lighter,
                       }}
                     >
-                      Tutup
+                      Perihal
                     </Text>
-                  </TouchableOpacity>
+                    <TextInput
+                      editable
+                      multiline
+                      numberOfLines={4}
+                      maxLength={40}
+                      placeholder="Masukan Perihal"
+                      style={{
+                        borderWidth: 1,
+                        height: 40,
+                        width: "100%",
+                        padding: 5,
+                        borderRadius: 6,
+                        borderColor: "#D0D5DD",
+                      }}
+                      value={searchQuery}
+                      onChangeText={setSearchQuery}
+                    />
+                  </View>
+                  <View style={{ flexDirection: "column" }}>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: COLORS.infoDanger,
+                        height: 50,
+                        marginVertical: 20,
+                        borderRadius: 6,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onPress={() => {
+                        setIsSearchQuery(searchQuery);
+                        if (!isSearchFilter) {
+                          setList([]);
+                        }
+                        setIsSearchFilter(true);
+                        bottomSheetAttachClose();
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: FONTSIZE.H1,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Terapkan
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: GlobalStyles.colors.tertiery80,
+                        height: 50,
+                        borderRadius: 6,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onPress={() => {
+                        bottomSheetAttachClose();
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontSize: FONTSIZE.H1,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Tutup
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            </BottomSheetView>
-          </BottomSheetModal>
-        </SafeAreaView>
-      </BottomSheetModalProvider>
+              </BottomSheetView>
+            </BottomSheetModal>
+          </SafeAreaView>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </>
   );
 }

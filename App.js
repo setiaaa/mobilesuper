@@ -15,14 +15,14 @@ import { Platform } from "react-native";
 import { useEffect } from "react";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { setDevice } from "./store/Apps";
-import OneSignal from "react-native-onesignal";
+// import OneSignal from "react-native-onesignal";
 import Constants from "expo-constants";
 
-OneSignal.setAppId(Constants.manifest.extra.oneSignalAppId);
+// OneSignal.setAppId(Constants.manifest.extra.oneSignalAppId);
 
 // // promptForPushNotificationsWithUserResponse will show the native iOS or Android notification permission prompt.
 // // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
-OneSignal.promptForPushNotificationsWithUserResponse();
+// OneSignal.promptForPushNotificationsWithUserResponse();
 
 export default function App() {
   const theme = {
