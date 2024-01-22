@@ -10,6 +10,8 @@ import {
 import { Text } from "react-native";
 import {
   COLORS,
+  DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -48,6 +50,7 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { ModalSubmit } from "../../components/ModalSubmit";
+import moment from "moment/moment";
 
 const ListBankom = ({
   item,
@@ -59,6 +62,8 @@ const ListBankom = ({
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  console.log(item);
 
   const getDetail = (id) => {
     const params = { token, id };
@@ -142,9 +147,43 @@ const ListBankom = ({
                 width: "45%",
               }}
             >
-              Penerima
+              Keterangan
             </Text>
-            {item?.receivers[0]?.display_title !== undefined ? (
+
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: 200,
+                textAlign: "justify",
+                fontWeight: FONTWEIGHT.normal,
+              }}
+            >
+              :{" "}
+              {item?.extra_attributes?.keterangan === ""
+                ? "-"
+                : item?.extra_attributes?.keterangan}
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                width: 110,
+                textAlign: "justify",
+                paddingRight: 12,
+                fontWeight: FONTWEIGHT.normal,
+                width: "45%",
+              }}
+            >
+              Tanggal
+            </Text>
+            <Text>
+              :{" "}
+              {moment(item?.extra_attributes?.tanggalSertif).format(
+                DATETIME.LONG_DATE
+              )}
+            </Text>
+            {/* {item?.receivers[0]?.display_title !== undefined ? (
               <Text
                 style={{
                   fontWeight: FONTWEIGHT.normal,
@@ -170,8 +209,8 @@ const ListBankom = ({
                   ? item?.receivers[0]?.nama
                   : "-"}
               </Text>
-            )}
-            <Text
+            )} */}
+            {/* <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
                 width: 200,
@@ -179,10 +218,10 @@ const ListBankom = ({
                 fontWeight: FONTWEIGHT.normal,
               }}
             >
-              {/* {item?.receivers[0]?.nama} */}
-            </Text>
+              {item?.receivers[0]?.nama}
+            </Text> */}
           </View>
-          <View style={{ flexDirection: "row" }}>
+          {/* <View style={{ flexDirection: "row" }}>
             <Text
               style={{
                 fontSize: fontSizeResponsive("H3", device),
@@ -204,12 +243,12 @@ const ListBankom = ({
                 width: "55%",
               }}
             >
-              :
+              :{" "}
               {item?.approvers[1]?.officer !== undefined
                 ? item?.approvers[1]?.officer?.nama
                 : item?.approvers[1]?.nama}
             </Text>
-          </View>
+          </View> */}
           {variant === "signed" ? (
             <View style={{ flexDirection: "row" }}>
               <Text
@@ -233,7 +272,7 @@ const ListBankom = ({
                   width: "55%",
                 }}
               >
-                :{item.state === "in_progress" ? "In Progress" : "Done"}
+                : {item.state === "in_progress" ? "In Progress" : "Done"}
               </Text>
             </View>
           ) : null}
@@ -261,8 +300,12 @@ export const Bankom = () => {
   }, []);
 
   useEffect(() => {
-    SetVariant("composer");
-    dispatch(getListComposer({ token: token, tipe: tipe }));
+    if (!handlePenerimaSertifikat()) {
+      SetVariant("composer");
+      dispatch(getListComposer({ token: token, tipe: tipe }));
+    } else {
+      filterHandlerCompleted();
+    }
   }, [token, tipe]);
 
   const filterHandlerComposer = () => {
@@ -298,6 +341,19 @@ export const Bankom = () => {
     setFilterData(digitalsign.lists);
   }, [digitalsign]);
 
+  const { profile } = useSelector((state) => state.superApps);
+
+  const handlePenerimaSertifikat = () => {
+    if (
+      profile?.roles_access.includes("OPERATOR_BSRE") ||
+      profile?.nip === "197908162002121003"
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   useEffect(() => {
     const item = digitalsign.lists;
     if (search !== "") {
@@ -308,6 +364,7 @@ export const Bankom = () => {
     } else {
       setFilterData(item);
     }
+    handlePenerimaSertifikat();
   }, [search]);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -469,121 +526,124 @@ export const Bankom = () => {
               </View>
             </View>
             {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ backgroundColor: "yellow", }}> */}
-            <View
-              style={{
-                paddingVertical: 10,
-                flexDirection: "row",
-                marginHorizontal: "5%",
-                gap: 16,
-              }}
-            >
-              <TouchableOpacity
+            {handlePenerimaSertifikat() === false ? (
+              <View
                 style={{
-                  width: device === "tablet" ? "19%" : null,
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "composer" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "composer" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  paddingVertical: 10,
+                  flexDirection: "row",
+                  marginHorizontal: "5%",
+                  gap: 16,
                 }}
-                onPress={() => filterHandlerComposer()}
               >
-                <Text
+                <TouchableOpacity
                   style={{
-                    color:
-                      variant === "composer" ? COLORS.white : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "19%" : null,
+                    paddingHorizontal: 6,
+                    paddingVertical: 6,
+                    borderWidth: 1,
+                    backgroundColor:
+                      variant === "composer" ? COLORS.primary : COLORS.input,
+                    borderRadius: 30,
+                    borderColor:
+                      variant === "composer" ? null : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
+                  onPress={() => filterHandlerComposer()}
                 >
-                  List Saya
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: device === "tablet" ? "19%" : null,
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "draft" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "draft" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onPress={() => filterHandlerDraft()}
-              >
-                <Text
+                  <Text
+                    style={{
+                      color:
+                        variant === "composer"
+                          ? COLORS.white
+                          : COLORS.foundation,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    List Saya
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={{
-                    color:
-                      variant === "draft" ? COLORS.white : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "19%" : null,
+                    paddingHorizontal: 6,
+                    paddingVertical: 6,
+                    borderWidth: 1,
+                    backgroundColor:
+                      variant === "draft" ? COLORS.primary : COLORS.input,
+                    borderRadius: 30,
+                    borderColor:
+                      variant === "draft" ? null : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
+                  onPress={() => filterHandlerDraft()}
                 >
-                  Draft
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: device === "tablet" ? "19%" : null,
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "inprogress" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "inprogress" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onPress={() => filterHandlerInProgress()}
-              >
-                <Text
+                  <Text
+                    style={{
+                      color:
+                        variant === "draft" ? COLORS.white : COLORS.foundation,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Draft
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={{
-                    color:
-                      variant === "inprogress"
-                        ? COLORS.white
-                        : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "19%" : null,
+                    paddingHorizontal: 6,
+                    paddingVertical: 6,
+                    borderWidth: 1,
+                    backgroundColor:
+                      variant === "inprogress" ? COLORS.primary : COLORS.input,
+                    borderRadius: 30,
+                    borderColor:
+                      variant === "inprogress" ? null : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
+                  onPress={() => filterHandlerInProgress()}
                 >
-                  Need Sign
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: device === "tablet" ? "19%" : null,
-                  paddingHorizontal: 6,
-                  paddingVertical: 6,
-                  borderWidth: 1,
-                  backgroundColor:
-                    variant === "signed" ? COLORS.primary : COLORS.input,
-                  borderRadius: 30,
-                  borderColor:
-                    variant === "signed" ? null : COLORS.ExtraDivinder,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onPress={() => filterHandlerSigned()}
-              >
-                <Text
+                  <Text
+                    style={{
+                      color:
+                        variant === "inprogress"
+                          ? COLORS.white
+                          : COLORS.foundation,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Need Sign
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={{
-                    color:
-                      variant === "signed" ? COLORS.white : COLORS.foundation,
-                    fontSize: fontSizeResponsive("H4", device),
+                    width: device === "tablet" ? "19%" : null,
+                    paddingHorizontal: 6,
+                    paddingVertical: 6,
+                    borderWidth: 1,
+                    backgroundColor:
+                      variant === "signed" ? COLORS.primary : COLORS.input,
+                    borderRadius: 30,
+                    borderColor:
+                      variant === "signed" ? null : COLORS.ExtraDivinder,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
+                  onPress={() => filterHandlerSigned()}
                 >
-                  Signed
-                </Text>
-              </TouchableOpacity>
-              {/* <TouchableOpacity
+                  <Text
+                    style={{
+                      color:
+                        variant === "signed" ? COLORS.white : COLORS.foundation,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Signed
+                  </Text>
+                </TouchableOpacity>
+                {/* <TouchableOpacity
                 style={{
                   width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
@@ -615,7 +675,9 @@ export const Bankom = () => {
                   Selesai
                 </Text>
               </TouchableOpacity> */}
-            </View>
+              </View>
+            ) : null}
+
             {/* </ScrollView> */}
             <FlatList
               data={filterData}
