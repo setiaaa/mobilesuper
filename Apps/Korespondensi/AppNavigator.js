@@ -164,6 +164,7 @@ import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
 import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 import InternalSatkerList from "./List/InternalSatkerList";
+import { SurveyLayanan } from "../Survey/SurveyLayanan";
 
 const Stack = createNativeStackNavigator();
 
@@ -708,6 +709,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="ListPegawai"
             component={ListPegawai}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="SurveyLayanan"
+            component={SurveyLayanan}
             options={{
               headerShown: false,
             }}

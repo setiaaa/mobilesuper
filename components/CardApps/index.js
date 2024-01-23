@@ -367,6 +367,46 @@ export const CardApps = ({ handlePressModal }) => {
         >
           Pegawai
         </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("SurveyLayanan")}>
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            {/* <Image
+              style={{
+                width: device === "tablet" ? 50 : 28,
+                height: device === "tablet" ? 50 : 28,
+              }}
+              source={require("../../assets/superApp/pegawai-ikon.png")}
+            /> */}
+            <Ionicons name="pencil-outline" size={30} color={COLORS.primary} />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          Survey Layanan
+        </Text>
       </View>
     );
     if (isRolePreShare) {

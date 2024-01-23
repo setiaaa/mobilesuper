@@ -63,8 +63,6 @@ const ListBankom = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  console.log(item);
-
   const getDetail = (id) => {
     const params = { token, id };
     // const data = event.listsprogress.find(item => item.id === id)
