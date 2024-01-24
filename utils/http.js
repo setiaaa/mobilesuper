@@ -23,6 +23,7 @@ export async function postHTTP(url, data) {
 }
 
 export async function getHTTP(url) {
+  console.log(url);
   let header = await headerToken();
   return await axios.get(url, { headers: header });
 }

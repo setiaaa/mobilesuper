@@ -88,6 +88,7 @@ function DCounter() {
       console.log(error.response);
     }
   }
+  // console.log(profile.attr);
 
   async function getisCounter() {
     setIsLoading(true);
@@ -125,6 +126,7 @@ function DCounter() {
         ]);
       } else {
         handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
+        console.log(error);
       }
       setIsLoading(false);
     }
@@ -139,10 +141,20 @@ function DCounter() {
     index != 3 && (
       <CardDCounter data={item} icon={icon[index]} navigation={navigation} />
     );
+
+  // const [visible, setVisible] = useState(false);
+
+  // const openMenu = () => setVisible(true);
+
+  // const closeMenu = () => setVisible(false);
+  // const { profile, selectedAttr } = useSelector((state) => state.profile);
+  // const { device } = useSelector((state) => state.apps);
+  // //const name = profile?.fullname?.split("/")[0];
+  // const [labelName, setLabelName] = useState();
   return (
     <View style={{ margin: 12 }}>
       {/* {loadingOverlay} */}
-      {profile?.title?.length != 0 && (
+      {/* {profile?.title?.length != 0 && (
         <Card
           style={{
             borderRadius: 10,
@@ -218,7 +230,7 @@ function DCounter() {
             )}
           </View>
         </Card>
-      )}
+      )} */}
       {isCounter?.length != 0 && (
         <View style={{ height: "85%" }}>
           <FlatList

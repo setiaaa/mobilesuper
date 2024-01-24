@@ -398,232 +398,328 @@ export const DetailSertifikat = (route) => {
                   </View>
                 </View>
               </View>
-              {item.approvers?.slice(1).map((data, index) => {
-                //if (index > 0) {
-                return (
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      borderRadius: 4,
-                      width: "95%",
-                      marginHorizontal: 10,
-                      marginBottom: 20,
-                      borderColor: "#DBDADE",
-                    }}
-                  >
+              {item.approvers?.map((data, index) => {
+                if (index > 0) {
+                  return (
                     <View
                       style={{
-                        backgroundColor: COLORS.primary,
-                        alignItems: "center",
-                        height: 30,
-                        justifyContent: "center",
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        width: "95%",
+                        marginHorizontal: 10,
+                        marginBottom: 20,
+                        borderColor: "#DBDADE",
                       }}
                     >
-                      <Text
+                      <View
                         style={{
-                          color: COLORS.white,
-                          fontWeight: FONTWEIGHT.bold,
-                          fontSize: fontSizeResponsive("H4", device),
+                          backgroundColor: COLORS.primary,
+                          alignItems: "center",
+                          height: 30,
+                          justifyContent: "center",
                         }}
                       >
-                        Approval
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <View style={{ width: "98%" }}>
-                        <View
+                        <Text
                           style={{
-                            flexDirection: "row",
-                            gap: 5,
-                            marginTop: 10,
-                            alignItems: "center",
+                            color: COLORS.white,
+                            fontWeight: FONTWEIGHT.bold,
+                            fontSize: fontSizeResponsive("H4", device),
                           }}
                         >
-                          <Text
+                          Approval
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          gap: 10,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <View style={{ width: "98%" }}>
+                          <View
                             style={{
-                              fontWeight: FONTWEIGHT.bold,
-                              fontSize: fontSizeResponsive("H4", device),
+                              flexDirection: "row",
+                              gap: 5,
+                              marginTop: 10,
+                              alignItems: "center",
                             }}
                           >
-                            Penandatangan
-                          </Text>
-                          {item.sequence > index ? (
-                            <View
+                            <Text
                               style={{
-                                flexDirection: "row",
-                                width: "60%",
-                                justifyContent: "center",
-                                alignItems: "center",
+                                fontWeight: FONTWEIGHT.bold,
+                                fontSize: fontSizeResponsive("H4", device),
                               }}
                             >
+                              Penandatangan
+                            </Text>
+                            {item.sequence === 1 && item.sequence <= index ? (
                               <View
                                 style={{
-                                  backgroundColor: COLORS.success,
-                                  borderRadius: 50,
-                                  height: 20,
-                                  width: 20,
+                                  flexDirection: "row",
+                                  width: "60%",
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
                               >
-                                <Ionicons
-                                  name="checkmark-outline"
-                                  color={COLORS.white}
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.successLight,
-                                  paddingVertical: 5,
-                                  borderRadius: 20,
-                                  paddingHorizontal: 15,
-                                }}
-                              >
-                                <Text
+                                <View
                                   style={{
-                                    color: COLORS.success,
-                                    fontSize: fontSizeResponsive("H4", device),
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginHorizontal: 3,
                                   }}
                                 >
-                                  Ditandatangani
-                                </Text>
+                                  <Ionicons name="close" color={COLORS.white} />
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDangerLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      color: COLORS.infoDanger,
+                                      fontSize: fontSizeResponsive(
+                                        "H4",
+                                        device
+                                      ),
+                                    }}
+                                  >
+                                    Belum Ditandatangani
+                                  </Text>
+                                </View>
                               </View>
-                            </View>
-                          ) : (
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                width: "60%",
-                                justifyContent: "center",
-                                alignItems: "center",
-                              }}
-                            >
+                            ) : item.sequence === 2 &&
+                              item.sequence !== index ? (
                               <View
                                 style={{
-                                  backgroundColor: COLORS.infoDanger,
-                                  borderRadius: 50,
-                                  height: 20,
-                                  width: 20,
+                                  flexDirection: "row",
+                                  width: "60%",
                                   justifyContent: "center",
                                   alignItems: "center",
-                                  marginHorizontal: 3,
                                 }}
                               >
-                                <Ionicons name="close" color={COLORS.white} />
-                              </View>
-                              <View
-                                style={{
-                                  backgroundColor: COLORS.infoDangerLight,
-                                  paddingVertical: 5,
-                                  borderRadius: 20,
-                                  paddingHorizontal: 15,
-                                }}
-                              >
-                                <Text
+                                <View
                                   style={{
-                                    color: COLORS.infoDanger,
-                                    fontSize: fontSizeResponsive("H4", device),
+                                    backgroundColor: COLORS.success,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                   }}
                                 >
-                                  Belum Ditandatangani
-                                </Text>
-                              </View>
-                            </View>
-                          )}
-                        </View>
-                        <View style={{ flexDirection: "row", columnGap: 10 }}>
-                          <Image
-                            source={{ uri: data.avatar_url }}
-                            style={{
-                              width: device === "tablet" ? 80 : 50,
-                              height: device === "tablet" ? 80 : 50,
-                              borderRadius: device === "tablet" ? 80 : 50,
-                              marginVertical: 10,
-                              marginHorizontal: 10,
-                              marginLeft: 5,
-                            }}
-                          />
-                          <View>
-                            {data?.officer ? (
-                              <View style={{ width: "95%" }}>
-                                {loading ? (
-                                  <ShimmerPlaceHolder
-                                    style={{ borderRadius: 4, marginTop: 5 }}
-                                    width={330}
-                                    height={20}
+                                  <Ionicons
+                                    name="checkmark-outline"
+                                    color={COLORS.white}
                                   />
-                                ) : (
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.successLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
                                   <Text
                                     style={{
-                                      marginTop: 10,
-                                      color: COLORS.info,
-                                      fontWeight: FONTWEIGHT.bold,
-                                      textAlign: "left",
+                                      color: COLORS.success,
                                       fontSize: fontSizeResponsive(
                                         "H4",
                                         device
                                       ),
                                     }}
                                   >
-                                    {data.display_title}
+                                    Ditandatangani
                                   </Text>
-                                )}
-                                {loading ? (
-                                  <ShimmerPlaceHolder
-                                    style={{ borderRadius: 4, marginTop: 5 }}
-                                    width={165}
-                                    height={20}
-                                  />
-                                ) : (
+                                </View>
+                              </View>
+                            ) : item.sequence === 2 &&
+                              item.sequence === index ? (
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  width: "60%",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDanger,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginHorizontal: 3,
+                                  }}
+                                >
+                                  <Ionicons name="close" color={COLORS.white} />
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.infoDangerLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
                                   <Text
                                     style={{
-                                      marginTop: 2,
-                                      color: COLORS.lighter,
-                                      fontWeight: FONTWEIGHT.bold,
-                                      textAlign: "left",
+                                      color: COLORS.infoDanger,
                                       fontSize: fontSizeResponsive(
                                         "H4",
                                         device
                                       ),
                                     }}
                                   >
-                                    {data.officer.nama}
+                                    Belum Ditandatangani
                                   </Text>
-                                )}
+                                </View>
                               </View>
-                            ) : (
-                              <View style={{ width: "95%" }}>
-                                {loading ? (
-                                  <ShimmerPlaceHolder
-                                    style={{ borderRadius: 4, marginTop: 5 }}
-                                    width={330}
-                                    height={20}
+                            ) : item.sequence === 3 ? (
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  width: "60%",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.success,
+                                    borderRadius: 50,
+                                    height: 20,
+                                    width: 20,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Ionicons
+                                    name="checkmark-outline"
+                                    color={COLORS.white}
                                   />
-                                ) : (
+                                </View>
+                                <View
+                                  style={{
+                                    backgroundColor: COLORS.successLight,
+                                    paddingVertical: 5,
+                                    borderRadius: 20,
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
                                   <Text
                                     style={{
-                                      marginTop: 10,
-                                      color: COLORS.lighter,
-                                      fontWeight: FONTWEIGHT.bold,
+                                      color: COLORS.success,
                                       fontSize: fontSizeResponsive(
                                         "H4",
                                         device
                                       ),
                                     }}
                                   >
-                                    {data.nama}
+                                    Ditandatangani
                                   </Text>
-                                )}
+                                </View>
                               </View>
-                            )}
-                            {/* {index < item?.logs?.length ? (
+                            ) : null}
+                          </View>
+                          <View style={{ flexDirection: "row", columnGap: 10 }}>
+                            <Image
+                              source={{ uri: data.avatar_url }}
+                              style={{
+                                width: device === "tablet" ? 80 : 50,
+                                height: device === "tablet" ? 80 : 50,
+                                borderRadius: device === "tablet" ? 80 : 50,
+                                marginVertical: 10,
+                                marginHorizontal: 10,
+                                marginLeft: 5,
+                              }}
+                            />
+                            <View>
+                              {data?.officer ? (
+                                <View style={{ width: "95%" }}>
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={330}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        marginTop: 10,
+                                        color: COLORS.info,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        textAlign: "left",
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {data.display_title}
+                                    </Text>
+                                  )}
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={165}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        marginTop: 2,
+                                        color: COLORS.lighter,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        textAlign: "left",
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {data.officer.nama}
+                                    </Text>
+                                  )}
+                                </View>
+                              ) : (
+                                <View style={{ width: "95%" }}>
+                                  {loading ? (
+                                    <ShimmerPlaceHolder
+                                      style={{ borderRadius: 4, marginTop: 5 }}
+                                      width={330}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <Text
+                                      style={{
+                                        marginTop: 10,
+                                        color: COLORS.lighter,
+                                        fontWeight: FONTWEIGHT.bold,
+                                        fontSize: fontSizeResponsive(
+                                          "H4",
+                                          device
+                                        ),
+                                      }}
+                                    >
+                                      {data.nama}
+                                    </Text>
+                                  )}
+                                </View>
+                              )}
+                              {/* {index < item?.logs?.length ? (
                                 <View
                                   style={{
                                     flexDirection: "row",
@@ -673,13 +769,13 @@ export const DetailSertifikat = (route) => {
                                   -
                                 </Text>
                               )} */}
+                            </View>
                           </View>
                         </View>
                       </View>
                     </View>
-                  </View>
-                );
-                //}
+                  );
+                }
               })}
             </View>
           ) : (

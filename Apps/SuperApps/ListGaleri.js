@@ -82,8 +82,7 @@ export const ListGaleri = () => {
       if (token !== "") {
         dispatch(getGaleri({ token, page }));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {

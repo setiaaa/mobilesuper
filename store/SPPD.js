@@ -5,6 +5,7 @@ import {
   getDashboardSPPD,
   getDocumentAttachmentSPPD,
   getDocumentCetakSPPD,
+  getDocumentDetailPersonalSPPD,
   getDocumentDetailSPPD,
   getDocumentListSPPD,
 } from "../service/api";
@@ -18,6 +19,7 @@ const SPPDSlice = createSlice({
       lists: [],
       detail: {},
     },
+    detailPersonal: {},
     surat: null,
     cetak: null,
   },
@@ -72,6 +74,16 @@ const SPPDSlice = createSlice({
         state.loading = true;
       })
       .addCase(getDocumentCetakSPPD.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getDocumentDetailPersonalSPPD.fulfilled, (state, action) => {
+        state.detailPersonal = action.payload;
+        state.loading = false;
+      })
+      .addCase(getDocumentDetailPersonalSPPD.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDocumentDetailPersonalSPPD.rejected, (state, action) => {
         state.loading = false;
       });
   },

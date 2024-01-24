@@ -57,6 +57,7 @@ const SPPD = BASE_URL + "monperdin/";
 
 const Cuti = Config.base_url_cuti;
 const HelpDesk = Config.base_url_helpdesk;
+const Survey = BASE_URL + "bridge/survey/";
 
 //Login
 export const Login = createAsyncThunk(
@@ -2084,6 +2085,16 @@ export const getDocumentDetailSPPD = createAsyncThunk(
   }
 );
 
+export const getDocumentDetailPersonalSPPD = createAsyncThunk(
+  "sppd/getDocumentDetailPersonalSPPD",
+  async (data) => {
+    const respon = await axios.get(`${SPPD}document-personal/${data.id}/`, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data;
+  }
+);
+
 export const getDocumentAttachmentSPPD = createAsyncThunk(
   "sppd/getDocumentAttachmentSPPD",
   async ({ token, id }) => {
@@ -2132,6 +2143,16 @@ export const postTicket = createAsyncThunk(
   "ticket/postTicket",
   async (data) => {
     const respon = await axios.post(`${HelpDesk}ticket/store`, data.payload, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data;
+  }
+);
+
+export const postSurvey = createAsyncThunk(
+  "ticket/postSurvey",
+  async (data) => {
+    const respon = await axios.post(`${Survey}`, data.payload, {
       headers: { Authorization: data.token },
     });
     return respon?.data;
