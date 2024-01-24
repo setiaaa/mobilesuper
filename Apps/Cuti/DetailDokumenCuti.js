@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import { useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { Platform, TextInput, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
 import {

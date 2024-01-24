@@ -10,6 +10,7 @@ import {
   BackHandler,
   Alert,
   RefreshControl,
+  Platform,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";

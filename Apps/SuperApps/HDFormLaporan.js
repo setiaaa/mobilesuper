@@ -9,6 +9,7 @@ import {
   Image,
   Modal,
   StyleSheet,
+  Platform,
 } from "react-native";
 import {
   COLORS,
