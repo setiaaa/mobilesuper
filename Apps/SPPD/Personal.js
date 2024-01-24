@@ -24,7 +24,7 @@ import {
   AccordionList,
 } from "accordion-collapse-react-native";
 // import profile from '../../store/profile';
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { getDashboardSPPD } from "../../service/api";

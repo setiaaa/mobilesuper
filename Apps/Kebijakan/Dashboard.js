@@ -46,7 +46,7 @@ import { Dropdown } from "../../components/DropDown";
 import { setRefresh } from "../../store/Kebijakan";
 import ListEmpty from "../../components/ListEmpty";
 import { event } from "react-native-reanimated";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput } from "react-native";
 
 export default function Dashboard(params) {
   const id = params?.route.params;

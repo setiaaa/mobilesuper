@@ -45,7 +45,6 @@ import {
 } from "../../config/SuperAppps";
 import {
   GestureHandlerRootView,
-  PanGestureHandler,
 } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";

@@ -1,10 +1,7 @@
 import moment from "moment";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, ScrollView } from "react-native";
 import TreeView from "react-native-final-tree-view";
-import {
-  GestureHandlerRootView,
-  ScrollView,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Avatar, Card, IconButton } from "react-native-paper";
 import { GlobalStyles } from "../../../../constants/styles";
 import { nde_api } from "../../../../utils/api.config";

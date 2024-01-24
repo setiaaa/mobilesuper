@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { CardKebijakan } from "../../components/CardKebijakan/";
@@ -48,7 +49,6 @@ import ListEmpty from "../../components/ListEmpty";
 import { event } from "react-native-reanimated";
 import {
   GestureHandlerRootView,
-  TextInput,
 } from "react-native-gesture-handler";
 import { RefreshControl } from "react-native";
 

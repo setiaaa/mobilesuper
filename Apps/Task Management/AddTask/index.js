@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { View } from "react-native";
-import { Text } from "react-native";
-import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
+import { Text, FlatList } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";

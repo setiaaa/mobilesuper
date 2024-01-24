@@ -22,7 +22,7 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { useSelector } from "react-redux";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import moment from "moment/min/moment-with-locales";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";

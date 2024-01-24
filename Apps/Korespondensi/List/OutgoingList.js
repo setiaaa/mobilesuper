@@ -10,7 +10,7 @@ import {
     useBottomSheetDynamicSnapPoints,
     BottomSheetView
 } from "@gorhom/bottom-sheet";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import DatePicker from 'react-native-modern-datepicker'
 import moment from "moment";
 
