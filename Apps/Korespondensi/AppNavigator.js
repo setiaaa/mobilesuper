@@ -165,6 +165,8 @@ import * as Linking from "expo-linking";
 import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 import InternalSatkerList from "./List/InternalSatkerList";
 import { SurveyLayanan } from "../Survey/SurveyLayanan";
+import { HasilSurvey } from "../Survey/HasilSurvey";
+import { DetailSurvey } from "../Survey/DetailSurvey";
 
 const Stack = createNativeStackNavigator();
 
@@ -721,6 +723,20 @@ function AuthenticatedStack(route) {
             }}
           />
           <Stack.Screen
+            name="HasilSurvey"
+            component={HasilSurvey}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailSurvey"
+            component={DetailSurvey}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="DetailProfile"
             component={DetailProfile}
             options={{
@@ -1181,12 +1197,12 @@ function AppNavigator() {
   const [linking, setLinking] = useState();
 
   useEffect(() => {
-    //checkversion
-    // if (Platform.OS == "android") {
-    //   checkVersionAndroid();
-    // } else if (Platform.OS == "ios") {
-    //   checkVersionIos();
-    // }
+    // checkversion
+    if (Platform.OS === "android") {
+      checkVersionAndroid();
+    } else if (Platform.OS === "ios") {
+      checkVersionIos();
+    }
     getTokenValue().then((val) => {
       if (val === null) {
         setRoute("LoginToken");
@@ -1244,50 +1260,50 @@ function AppNavigator() {
   async function checkVersionAndroid() {
     try {
       const response = await getHTTP(nde_api.getVersionAndroid);
-      cekValidVersion(response.data.version);
+      cekValidVersion(response?.data?.results?.android);
     } catch (error) {
       if (error.status == null) {
-        Alert.alert("Warning!", "Please check your connection");
+        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
       } else {
-        handlerError(error, "Warning!", "Check Version Android not working!");
+        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
       }
     }
   }
   async function checkVersionIos() {
     try {
       const response = await getHTTP(nde_api.getVersionIos);
-      cekValidVersion(response.data.version);
+      cekValidVersion(response?.data?.results?.ios);
     } catch (error) {
       if (error.status == null) {
-        Alert.alert("Warning!", "Please check your connection");
+        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
       } else {
-        handlerError(error, "Warning!", "Check Version Ios not working!");
+        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
       }
     }
   }
   function cekValidVersion(server_version) {
     if (server_version != app_version) {
       Alert.alert(
-        "Warning!",
-        "You are using an old version of the " +
+        "Peringatan!",
+        "Anda menggunakan versi lama " +
           app_name +
-          ". Do you want to upgrade?",
+          ". Apakah anda ingin memperbaharui?",
         [
           {
-            text: "Upgrade",
+            text: "Perbaharui",
             onPress: () => {
-              getToken();
-              getProfile();
-              // handleUpgradeLink();
+              // getToken();
+              // getProfile();
+              handleUpgradeLink();
             },
             style: "cancel",
           },
         ],
         {
-          cancelable: true,
+          cancelable: false,
           onDismiss: () => {
-            getToken();
-            getProfile();
+            // getToken();
+            // getProfile();
           },
         }
       );

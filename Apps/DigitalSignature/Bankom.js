@@ -247,7 +247,7 @@ const ListBankom = ({
                 : item?.approvers[1]?.nama}
             </Text>
           </View> */}
-          {variant === "signed" ? (
+          {/* {variant === "signed" ? (
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
@@ -273,7 +273,7 @@ const ListBankom = ({
                 : {item.state === "in_progress" ? "In Progress" : "Done"}
               </Text>
             </View>
-          ) : null}
+          ) : null} */}
         </View>
       </TouchableOpacity>
     </View>

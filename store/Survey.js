@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { postSurvey } from "../service/api";
+import {
+  getSurveyCount,
+  getSurveyDetail,
+  getSurveyReport,
+  postSurvey,
+} from "../service/api";
 
 const SurveySlice = createSlice({
   name: "Survey",
   initialState: {
     loading: true,
     status: "",
+    report: [],
+    count: null,
+    detail: {},
   },
   reducers: {
     setStatus: (state, action) => {
@@ -26,6 +34,37 @@ const SurveySlice = createSlice({
         state.status = "error";
         console.log("gagal");
         state.loading = true;
+      })
+      .addCase(getSurveyReport.fulfilled, (state, action) => {
+        state.report = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyReport.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyReport.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getSurveyCount.fulfilled, (state, action) => {
+        state.count = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyCount.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyCount.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getSurveyDetail.fulfilled, (state, action) => {
+        state.detail = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyDetail.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyDetail.rejected, (state, action) => {
+        state.loading = false;
+        console.log("gagal");
       });
   },
 });

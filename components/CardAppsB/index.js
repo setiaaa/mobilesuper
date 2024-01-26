@@ -401,14 +401,13 @@ export const CardAppsB = ({ handlePressModal }) => {
               },
             ]}
           >
-            {/* <Image
+            <Image
               style={{
-                width: device === "tablet" ? 50 : 25,
-                height: device === "tablet" ? 55 : 29,
+                width: device === "tablet" ? 50 : 38,
+                height: device === "tablet" ? 55 : 38,
               }}
-              source={require("../../assets/superApp/pegawai.png")}
-            /> */}
-            <Ionicons name="pencil-outline" size={30} color={COLORS.primary} />
+              source={require("../../assets/superApp/surveylayanan.png")}
+            />
           </View>
         </TouchableOpacity>
         <Text
