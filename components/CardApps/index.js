@@ -124,7 +124,7 @@ export const CardApps = ({ handlePressModal }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          Kebijakan
+          Regulasi
         </Text>
       </View>,
       <View
