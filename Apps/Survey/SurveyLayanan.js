@@ -105,6 +105,7 @@ export const SurveyLayanan = () => {
       ...penilaian,
       [realKey]: [actualValue],
     });
+    alert(value);
   };
 
   const [menuKonfirmasi, setMenuKonfirmasi] = useState({
@@ -255,7 +256,7 @@ export const SurveyLayanan = () => {
               marginRight: 50,
             }}
           >
-            Survey Layanan
+            Survei Layanan
           </Text>
         </View>
       </View>
@@ -371,7 +372,7 @@ export const SurveyLayanan = () => {
               color: COLORS.primary,
             }}
           >
-            Hasil survey
+            Hasil survei
           </Text>
         </TouchableOpacity>
       ) : null}

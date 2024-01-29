@@ -404,7 +404,7 @@ export const CardApps = ({ handlePressModal }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          Survey Layanan
+          Survei Layanan
         </Text>
       </View>
     );

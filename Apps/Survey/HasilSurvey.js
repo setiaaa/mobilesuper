@@ -338,7 +338,7 @@ export const HasilSurvey = () => {
               marginRight: 50,
             }}
           >
-            Hasil Survey
+            Hasil Survei
           </Text>
         </View>
       </View>
@@ -430,7 +430,7 @@ export const HasilSurvey = () => {
                 fontWeight: 400,
               }}
             >
-              Jawaban Survey
+              Jawaban Survei
             </Text>
           </View>
         </View>
@@ -539,7 +539,7 @@ export const HasilSurvey = () => {
                 fontWeight: 400,
               }}
             >
-              Jawaban Survey
+              Jawaban Survei
             </Text>
           </View>
         </View>
@@ -648,7 +648,7 @@ export const HasilSurvey = () => {
                 fontWeight: 400,
               }}
             >
-              Jawaban Survey
+              Jawaban Survei
             </Text>
           </View>
         </View>
@@ -1880,7 +1880,7 @@ export const HasilSurvey = () => {
             fontWeight: FONTWEIGHT.bold,
           }}
         >
-          List Survey
+          List Survei
         </Text>
 
         <TouchableOpacity

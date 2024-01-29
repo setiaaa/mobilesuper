@@ -99,7 +99,7 @@ export const DetailSurvey = () => {
               marginRight: 50,
             }}
           >
-            Detail Survey
+            Detail Survei
           </Text>
         </View>
       </View>

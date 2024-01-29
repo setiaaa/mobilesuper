@@ -1287,7 +1287,7 @@ function AppNavigator() {
         "Peringatan!",
         "Anda menggunakan versi lama " +
           app_name +
-          ". Apakah anda ingin memperbaharui?",
+          ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
         [
           {
             text: "Perbaharui",
