@@ -139,6 +139,7 @@ $("#submit").click(function () {
     success: function (data, textStatus, xhr) {
       if (data.success) {
         alert("berhasil")
+        window.ReactNativeWebView.postMessage(JSON.stringify({key : "MainDigitalSign"}));
       } else {
         alert("gagal")
       }
@@ -200,6 +201,10 @@ $("#submit").click(function () {
         }}
         style={{ flex: 1 }}
         injectedJavaScript={inject}
+        onMessage={(event) => {
+          const data = JSON.parse(event.nativeEvent.data);
+          navigation.navigate(data.key);
+        }}
       />
     </>
   );

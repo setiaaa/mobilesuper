@@ -9,7 +9,6 @@ const profileSlice = createSlice({
     unker: {},
     organization: [],
     device_uuid: "",
-    selectedAttr: "",
   },
   reducers: {
     setProfile: (state, action) => {

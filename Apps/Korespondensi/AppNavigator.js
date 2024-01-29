@@ -164,6 +164,7 @@ import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
 // import OneSignal from "react-native-onesignal";
 import InternalSatkerList from "./List/InternalSatkerList";
+import { SurveyLayanan } from "../Survey/SurveyLayanan";
 import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 
 const Stack = createNativeStackNavigator();
@@ -715,6 +716,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="ListPegawai"
             component={ListPegawai}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="SurveyLayanan"
+            component={SurveyLayanan}
             options={{
               headerShown: false,
             }}

@@ -88,6 +88,7 @@ function DCounter() {
       console.log(error.response);
     }
   }
+  // console.log(profile.attr);
 
   async function getisCounter() {
     setIsLoading(true);
@@ -125,6 +126,7 @@ function DCounter() {
         ]);
       } else {
         handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
+        console.log(error);
       }
       setIsLoading(false);
     }
@@ -152,7 +154,7 @@ function DCounter() {
   return (
     <View style={{ margin: 12 }}>
       {/* {loadingOverlay} */}
-      {profile?.title?.length != 0 && (
+      {/* {profile?.title?.length != 0 && (
         <Card
           style={{
             borderRadius: 10,
@@ -228,7 +230,7 @@ function DCounter() {
             )}
           </View>
         </Card>
-      )}
+      )} */}
       {isCounter?.length != 0 && (
         <View style={{ height: "85%" }}>
           <FlatList

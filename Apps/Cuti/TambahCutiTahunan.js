@@ -2020,62 +2020,64 @@ export const TambahCutiTahunan = ({ route }) => {
                 </View>
               </View>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+            {tipe === "draft" ? (
               <View
                 style={{
                   flexDirection: "row",
-                  padding: 5,
-                  columnGap: 10,
+                  justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <Ionicons
-                  name="chatbox-outline"
-                  size={device === "tablet" ? 40 : 18}
-                  color={COLORS.primary}
-                />
-                <Text
+                <View
                   style={{
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
+                    flexDirection: "row",
+                    padding: 5,
+                    columnGap: 10,
+                    alignItems: "center",
                   }}
                 >
-                  Histori Komentar
-                </Text>
+                  <Ionicons
+                    name="chatbox-outline"
+                    size={device === "tablet" ? 40 : 18}
+                    color={COLORS.primary}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Histori Komentar
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    justifyContent: "flex-end",
+                    backgroundColor: COLORS.white,
+                    borderRadius: 10,
+                    padding: 15,
+                    paddingHorizontal: 25,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 4 },
+                    shadowColor: "#171717",
+                    //shadow android
+                    elevation: 2,
+                  }}
+                  onPress={() => {
+                    bottomSheetAttachComment();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Lihat Komentar
+                  </Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={{
-                  justifyContent: "flex-end",
-                  backgroundColor: COLORS.white,
-                  borderRadius: 10,
-                  padding: 15,
-                  paddingHorizontal: 25,
-                  //shadow ios
-                  shadowOffset: { width: -2, height: 4 },
-                  shadowColor: "#171717",
-                  //shadow android
-                  elevation: 2,
-                }}
-                onPress={() => {
-                  bottomSheetAttachComment();
-                }}
-              >
-                <Text
-                  style={{
-                    color: COLORS.primary,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Lihat Komentar
-                </Text>
-              </TouchableOpacity>
-            </View>
+            ) : null}
             <BottomSheetModal
               ref={bottomSheetModalRef}
               snapPoints={animatedSnapPoints}

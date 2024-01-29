@@ -8,7 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-// import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { COLORS, FONTSIZE, fontSizeResponsive } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
 import {
@@ -379,6 +379,47 @@ export const CardAppsB = ({ handlePressModal }) => {
           }}
         >
           Pegawai
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("SurveyLayanan")}>
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            {/* <Image
+              style={{
+                width: device === "tablet" ? 50 : 25,
+                height: device === "tablet" ? 55 : 29,
+              }}
+              source={require("../../assets/superApp/pegawai.png")}
+            /> */}
+            <Ionicons name="pencil-outline" size={30} color={COLORS.primary} />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+          }}
+        >
+          Survey Layanan
         </Text>
       </View>
     );

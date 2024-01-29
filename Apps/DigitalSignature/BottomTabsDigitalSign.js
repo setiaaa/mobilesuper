@@ -36,85 +36,85 @@ function MyTabDigitalSign({ props, navigation }) {
             borderTopRightRadius: 16,
           }}
         >
-          {hasRequiredRoles(profile?.roles_access, roleBankom) ? (
-            <TouchableOpacity
-              key={1}
-              onPress={() => {
-                setTabItemIndex(1);
-                navigation.navigate("Bankom", { unread: false });
-                // props.navigation.navigate('Home', { unread: false })
-              }}
-            >
-              {tabItemIndex === 1 ? (
+          {/* {hasRequiredRoles(profile?.roles_access, roleBankom) ? ( */}
+          <TouchableOpacity
+            key={1}
+            onPress={() => {
+              setTabItemIndex(1);
+              navigation.navigate("Bankom", { unread: false });
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 1 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
                 <View
                   style={{
-                    alignItems: "center",
-                    height: device === "tablet" ? 120 : 95,
-                    justifyContent: "center",
-                    width: device === "tablet" ? 95 : 80,
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
                   }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      height: 3,
-                      backgroundColor: COLORS.primary,
-                      position: "absolute",
-                      top: 0,
-                      //shadow ios
-                      shadowOffset: { width: -2, height: 5 },
-                      shadowColor: COLORS.primary,
-                      shadowOpacity: 0.4,
-                      //shadow android
-                      elevation: 2,
-                    }}
-                  />
-                  <Ionicons
-                    name="briefcase-outline"
-                    color={COLORS.primary}
-                    size={device === "tablet" ? 40 : 24}
-                    style={{ position: "absolute", top: 5 }}
-                  />
-                  <Text
-                    style={{
-                      color: COLORS.primary,
-                      position: "absolute",
-                      bottom: device === "tablet" ? 40 : 40,
-                      fontSize: fontSizeResponsive("H3", device),
-                    }}
-                  >
-                    Bankom
-                  </Text>
-                </View>
-              ) : (
-                <View
+                />
+                <Ionicons
+                  name="briefcase-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
                   style={{
-                    alignItems: "center",
-                    height: device === "tablet" ? 120 : 95,
-                    justifyContent: "center",
-                    width: device === "tablet" ? 95 : 80,
+                    color: COLORS.primary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
                   }}
                 >
-                  <Ionicons
-                    name="briefcase-outline"
-                    color={COLORS.tertiary}
-                    size={device === "tablet" ? 40 : 24}
-                    style={{ position: "absolute", top: 5 }}
-                  />
-                  <Text
-                    style={{
-                      color: COLORS.tertiary,
-                      position: "absolute",
-                      bottom: device === "tablet" ? 40 : 40,
-                      fontSize: fontSizeResponsive("H3", device),
-                    }}
-                  >
-                    Bankom
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
-          ) : null}
+                  Bankom
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <Ionicons
+                  name="briefcase-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Bankom
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          {/* ) : null} */}
 
           <TouchableOpacity
             key={2}
