@@ -2162,9 +2162,12 @@ export const postSurvey = createAsyncThunk(
 export const getSurveyReport = createAsyncThunk(
   "Survey/getSurveyReport",
   async (data) => {
-    const respon = await axios.get(`${Survey}survey-report/`, {
-      headers: { Authorization: data },
-    });
+    const respon = await axios.get(
+      `${Survey}survey-report/?limit=${data.page}`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
     return respon?.data?.result;
   }
 );
@@ -2184,6 +2187,16 @@ export const getSurveyDetail = createAsyncThunk(
   async (data) => {
     const respon = await axios.get(`${Survey}survey-detail/${data.id}/`, {
       headers: { Authorization: data.token },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getSurveyExport = createAsyncThunk(
+  "Survey/getSurveyExport",
+  async (data) => {
+    const respon = await axios.get(`${Survey}export-survey-response/`, {
+      headers: { Authorization: data },
     });
     return respon?.data?.results;
   }

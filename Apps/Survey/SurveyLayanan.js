@@ -216,7 +216,6 @@ export const SurveyLayanan = () => {
   const { device } = useSelector((state) => state.apps);
   const { status } = useSelector((state) => state.survey);
   const { profile } = useSelector((state) => state.superApps);
-  console.log(profile);
 
   return (
     <ScrollView>

@@ -13,13 +13,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { CardListSurveyUser } from "../../components/CardListSurveyUser";
 import { getTokenValue } from "../../service/session";
-import { getSurveyCount, getSurveyReport } from "../../service/api";
+import {
+  getSurveyCount,
+  getSurveyExport,
+  getSurveyReport,
+} from "../../service/api";
 import { BarChart, StackedBarChart } from "react-native-chart-kit";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import PieChart from "react-native-pie-chart";
+import * as FileSystem from "expo-file-system";
+const { StorageAccessFramework } = FileSystem;
+import * as Sharing from "expo-sharing";
+import ListEmpty from "../../components/ListEmpty";
+import { Loading } from "../../components/Loading";
 
 export const HasilSurvey = () => {
   const navigation = useNavigation();
@@ -29,10 +38,11 @@ export const HasilSurvey = () => {
   useEffect(() => {
     getTokenValue().then((val) => {
       setToken(val);
-      dispatch(getSurveyReport(val));
+      // dispatch(getSurveyReport({ token: val, page: page }));
       dispatch(getSurveyCount(val));
+      dispatch(getSurveyExport(val));
     });
-  }, []);
+  }, [token]);
 
   const [label, setLabel] = useState([]);
   const [aktualName, setAktualName] = useState([]);
@@ -45,9 +55,11 @@ export const HasilSurvey = () => {
   const [dataPenilainTiga, setDataPenilaianTiga] = useState([]);
   const [dataPenilainEmpat, setDataPenilaianEmpat] = useState([]);
   const [dataPenilainLima, setDataPenilaianLima] = useState([]);
+  const [page, setPage] = useState(5);
 
-  const { report, count } = useSelector((state) => state.survey);
-
+  const { report, count, exportFile, loading } = useSelector(
+    (state) => state.survey
+  );
   const apps = [
     { Korespondensi: 0 },
     { "E-mail": 0 },
@@ -237,8 +249,59 @@ export const HasilSurvey = () => {
   ];
   const widthAndHeight = 200;
 
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
+
+  const downloadFile = async (fileUrl, fileType, fileName) => {
+    //alert(fileName)
+
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + fileName,
+        { headers: { Authorization: token } }
+      );
+      try {
+        // if (Platform.OS === "android") {
+        //   const { uri } = await downloadResumable.downloadAsync();
+        //   saveAndroidFile(uri, fileName, fileType);
+        // } else {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveIosFile(uri);
+        // }
+      } catch (e) {
+        // setIsLoading(false);
+        console.error("download error:", e);
+      }
+    } catch (e) {}
+  };
+
+  const saveIosFile = async (fileUri) => {
+    try {
+      await Sharing.shareAsync(fileUri, {
+        mimeType: "application/vnd.ms-excel",
+        dialogTitle: "Share excel",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (token !== "") {
+      dispatch(getSurveyReport({ token: token, page: page }));
+    }
+  }, [page, token]);
+
+  const loadMore = () => {
+    if (report.length % 5 === 0 && report.length !== 0) {
+      setPage((prev) => prev + 5);
+    }
+  };
+
   return (
     <ScrollView>
+      {loading ? <Loading /> : null}
       <View
         style={{
           flexDirection: "row",
@@ -1802,7 +1865,15 @@ export const HasilSurvey = () => {
         </View>
       </View>
 
-      <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+      <View
+        style={{
+          marginTop: 20,
+          marginHorizontal: 20,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Text
           style={{
             fontSize: fontSizeResponsive("Judul", device),
@@ -1811,6 +1882,24 @@ export const HasilSurvey = () => {
         >
           List Survey
         </Text>
+
+        <TouchableOpacity
+          style={{
+            padding: 5,
+            backgroundColor: COLORS.white,
+            borderRadius: 20,
+            marginRight: "5%",
+          }}
+          onPress={() => {
+            downloadFile(
+              exportFile.file,
+              "application/pdf",
+              "report_response_survey.xls"
+            );
+          }}
+        >
+          <Ionicons name="share-social-outline" size={24} />
+        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -1819,7 +1908,11 @@ export const HasilSurvey = () => {
           <CardListSurveyUser item={item} token={token} />
         )}
         keyExtractor={(item) => item}
-        style={{ marginBottom: 40 }}
+        style={{ marginBottom: 40, maxHeight: 300 }}
+        ListEmptyComponent={() => <ListEmpty />}
+        onEndReached={report.length !== 0 ? loadMore : null}
+        scrollEnabled={true}
+        nestedScrollEnabled
       />
     </ScrollView>
   );

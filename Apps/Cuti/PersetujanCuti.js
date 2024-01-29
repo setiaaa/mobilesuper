@@ -425,6 +425,7 @@ export const PersetujanCuti = () => {
                       item={item}
                       nip={profile.nip}
                       variant={variant}
+                      device={device}
                     />
                   </View>
                 )}

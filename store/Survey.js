@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getSurveyCount,
   getSurveyDetail,
+  getSurveyExport,
   getSurveyReport,
   postSurvey,
 } from "../service/api";
@@ -14,6 +15,7 @@ const SurveySlice = createSlice({
     report: [],
     count: null,
     detail: {},
+    exportFile: {},
   },
   reducers: {
     setStatus: (state, action) => {
@@ -63,6 +65,17 @@ const SurveySlice = createSlice({
         state.loading = true;
       })
       .addCase(getSurveyDetail.rejected, (state, action) => {
+        state.loading = false;
+        console.log("gagal");
+      })
+      .addCase(getSurveyExport.fulfilled, (state, action) => {
+        state.exportFile = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyExport.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyExport.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
       });
