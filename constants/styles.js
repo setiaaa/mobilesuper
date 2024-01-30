@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 
-const colors = Constants.manifest.extra.colors;
-const font = Constants.manifest.extra.font;
+const colors = Constants.expoConfig.extra.colors;
+const font = Constants.expoConfig.extra.font;
 export const GlobalStyles = {
   colors: {
     primary: colors.primary,

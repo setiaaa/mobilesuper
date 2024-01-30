@@ -5,7 +5,7 @@ import {
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import React, { useMemo, useRef } from "react";
-import { TouchableOpacity, FlatList, Dimensions } from "react-native";
+import { TouchableOpacity, FlatList, Dimensions, Platform } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";

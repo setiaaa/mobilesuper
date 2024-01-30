@@ -48,6 +48,7 @@ import { useMemo } from "react";
 import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { setUnker } from "../../../store/profile";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
@@ -218,10 +219,8 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         } else if (pilihanKepada.length == 0 || pilihanKepada == "") {
           status = 0;
         } else if (
-          (items.nota_tindakan1 == undefined ||
-            items.nota_tindakan1.length == 0) &&
-          (items.nota_tindakan_free1 == undefined ||
-            items.nota_tindakan_free1.length == 0)
+          items.nota_tindakan1 == undefined ||
+          items.nota_tindakan1.length == 0
         ) {
           status = 0;
         } else if (
@@ -330,166 +329,127 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   }
   return (
     <>
-      <ScrollView>
-        {loadingOverlay}
-        <View style={styles.screen}>
-          <View style={styles.containerLabel}>
-            <Text style={styles.title}>Disposisi</Text>
-          </View>
-          {dispoMulti.map((item, index) => (
-            <Card key={index} style={styles.containerCard}>
-              {item.btnDel && (
-                <View style={styles.headerCard}>
-                  <IconButton icon="close" onPress={() => delDispo(index)} />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ScrollView>
+          {loadingOverlay}
+          <View style={styles.screen}>
+            <View style={styles.containerLabel}>
+              <Text style={styles.title}>Disposisi</Text>
+            </View>
+            {dispoMulti.map((item, index) => (
+              <Card key={index} style={styles.containerCard}>
+                {item.btnDel && (
+                  <View style={styles.headerCard}>
+                    <IconButton icon="close" onPress={() => delDispo(index)} />
+                  </View>
+                )}
+                <View style={styles.containerTitle}>
+                  <Text style={styles.title}>Disposisi Sebagai</Text>
                 </View>
-              )}
-              <View style={styles.containerTitle}>
-                <Text style={styles.title}>Disposisi Sebagai</Text>
-              </View>
-              <View>
-                <Dropdown
-                  style={[
-                    styles.dropdown,
-                    isFocusAttr && {
-                      borderColor: GlobalStyles.colors.tertiery50,
-                    },
-                  ]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  // inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={profile.title}
-                  // search
-                  maxHeight={300}
-                  labelField="name"
-                  valueField="code"
-                  placeholder={!isFocusAttr ? "Pilih Jabatan" : "..."}
-                  // searchPlaceholder="Search..."
-                  value={senderAttr}
-                  onFocus={() => setIsFocusAttr(true)}
-                  onBlur={() => setIsFocusAttr(false)}
-                  onChange={(item) => {
-                    setSenderAttr(item);
-                    setIsFocusAttr(false);
-                  }}
-                />
-              </View>
-              <View style={styles.containerTitle}>
-                <Text style={styles.title}>Disposisi Kepada</Text>
-                {pilihanKepada != undefined && pilihanKepada.length != 0 && (
-                  <IconButton
-                    icon="plus"
-                    // onPress={() => {
-                    //   navigation.navigate("Addressbook", {
-                    //     title: "Addressbook\nDisposition",
-                    //     multiple: true,
-                    //     indexDispo: index,
-                    //     tipe: "receivers",
-                    //   });
-                    // }}
-                    onPress={() => {
-                      const config = {
-                        title: "Addressbook\nDisposition",
-                        tipeAddress: "korespondensi",
-                        tabs: {
-                          jabatan: true,
-                          pegawai: true,
-                          para: true,
-                        },
-                        multiselect: true,
-                        payload: pilihanKepada,
-                      };
-                      setStateConfig(config);
-                      navigation.navigate("AddressBook", { config: config });
+                <View>
+                  <Dropdown
+                    style={[
+                      styles.dropdown,
+                      isFocusAttr && {
+                        borderColor: GlobalStyles.colors.tertiery50,
+                      },
+                    ]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    // inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={profile.title}
+                    // search
+                    maxHeight={300}
+                    labelField="name"
+                    valueField="code"
+                    placeholder={!isFocusAttr ? "Pilih Jabatan" : "..."}
+                    // searchPlaceholder="Search..."
+                    value={senderAttr}
+                    onFocus={() => setIsFocusAttr(true)}
+                    onBlur={() => setIsFocusAttr(false)}
+                    onChange={(item) => {
+                      setSenderAttr(item);
+                      setIsFocusAttr(false);
                     }}
                   />
-                )}
-              </View>
-              <View>
-                {pilihanKepada != undefined &&
-                  pilihanKepada.map((items, index) => (
-                    <Fragment key={index}>
-                      <Text style={styles.titleLabel}>
-                        {index + 1}.{" "}
-                        {items.fullname ? items.fullname : items.title}
-                      </Text>
-                    </Fragment>
-                  ))}
+                </View>
+                <View style={styles.containerTitle}>
+                  <Text style={styles.title}>Disposisi Kepada</Text>
+                  {pilihanKepada != undefined && pilihanKepada.length != 0 && (
+                    <IconButton
+                      icon="plus"
+                      // onPress={() => {
+                      //   navigation.navigate("Addressbook", {
+                      //     title: "Addressbook\nDisposition",
+                      //     multiple: true,
+                      //     indexDispo: index,
+                      //     tipe: "receivers",
+                      //   });
+                      // }}
+                      onPress={() => {
+                        const config = {
+                          title: "Addressbook\nDisposition",
+                          tipeAddress: "korespondensi",
+                          tabs: {
+                            jabatan: true,
+                            pegawai: true,
+                            para: true,
+                          },
+                          multiselect: true,
+                          payload: pilihanKepada,
+                        };
+                        setStateConfig(config);
+                        navigation.navigate("AddressBook", { config: config });
+                      }}
+                    />
+                  )}
+                </View>
+                <View>
+                  {pilihanKepada != undefined &&
+                    pilihanKepada.map((items, index) => (
+                      <Fragment key={index}>
+                        <Text style={styles.titleLabel}>
+                          {index + 1}.{" "}
+                          {items.fullname ? items.fullname : items.title}
+                        </Text>
+                      </Fragment>
+                    ))}
 
-                {(pilihanKepada == undefined || pilihanKepada.length == 0) && (
-                  <TextInput
-                    mode="outlined"
-                    theme={{ roundness: 6 }}
-                    placeholder="Pilih Kepada"
-                    right={
-                      <TextInput.Icon
-                        size={24}
-                        icon="account-plus"
-                        // onPress={() => {
-                        //   navigation.navigate("Addressbook", {
-                        //     title: "Addressbook\nDisposition",
-                        //     multiple: true,
-                        //     indexDispo: index,
-                        //     tipe: "receivers",
-                        //   });
-                        // }}
-                        onPress={() => {
-                          const config = {
-                            title: "Addressbook\nDisposition",
-                            tipeAddress: "korespondensi",
-                            tabs: {
-                              jabatan: true,
-                              pegawai: true,
-                              para: true,
-                            },
-                            multiselect: true,
-                            payload: pilihanKepada,
-                          };
-                          setStateConfig(config);
-                          navigation.navigate("AddressBook", {
-                            config: config,
-                          });
-                        }}
-                      />
-                    }
-                    editable={false}
-                    style={styles.titleLabel}
-                  />
-                )}
-              </View>
-              <View style={styles.containerTitle}>
-                <Text style={styles.title}>Aksi Disposisi</Text>
-                {selectedTindakan.length != 0 && (
-                  <IconButton
-                    icon="plus"
-                    onPress={() => {
-                      dispatch(switchTindakan(index));
-                      bottomSheetRefNotaTindakan?.current?.present();
-                    }}
-                  />
-                )}
-              </View>
-              <View>
-                <View style={styles.titleLabel}>
-                  {selectedTindakan.length == 0 && (
+                  {(pilihanKepada == undefined ||
+                    pilihanKepada.length == 0) && (
                     <TextInput
                       mode="outlined"
                       theme={{ roundness: 6 }}
-                      placeholder="Pilih Aksi"
+                      placeholder="Pilih Kepada"
                       right={
                         <TextInput.Icon
                           size={24}
-                          icon="menu-down"
+                          icon="account-plus"
+                          // onPress={() => {
+                          //   navigation.navigate("Addressbook", {
+                          //     title: "Addressbook\nDisposition",
+                          //     multiple: true,
+                          //     indexDispo: index,
+                          //     tipe: "receivers",
+                          //   });
+                          // }}
                           onPress={() => {
-                            if (senderAttr.code.length == 0) {
-                              Alert.alert(
-                                "Peringatan!",
-                                "Silakan pilih jabatan pada Disposisi Sebagai"
-                              );
-                            } else {
-                              dispatch(switchTindakan(index));
-                              bottomSheetRefNotaTindakan?.current?.present();
-                            }
+                            const config = {
+                              title: "Addressbook\nDisposition",
+                              tipeAddress: "korespondensi",
+                              tabs: {
+                                jabatan: true,
+                                pegawai: true,
+                                para: true,
+                              },
+                              multiselect: true,
+                              payload: pilihanKepada,
+                            };
+                            setStateConfig(config);
+                            navigation.navigate("AddressBook", {
+                              config: config,
+                            });
                           }}
                         />
                       }
@@ -497,128 +457,169 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                       style={styles.titleLabel}
                     />
                   )}
-                  {selectedTindakan.length != 0 &&
-                    selectedTindakan.map((item, index) => (
-                      <Text key={index}>- {item}</Text>
-                    ))}
                 </View>
-              </View>
-
-              <View style={styles.containerTitle}>
-                <Text style={styles.title}>Catatan Disposisi</Text>
-              </View>
-              <TextInput
-                value={item.nota_tindakan_free1}
-                mode="outlined"
-                multiline={true}
-                theme={{ roundness: 6 }}
-                placeholder="Masukkan catatan..."
-                onChangeText={(text) => {
-                  dispatch(
-                    setNotaTindakanFree({
-                      index: index,
-                      nota_tindakan_free1: text,
-                    })
-                  );
-                }}
-                style={[styles.titleLabel, { paddingVertical: 12 }]}
-              />
-
-              {Config.todo && (
-                <>
-                  <View style={styles.containerTitleLeft}>
-                    <Switch
-                      value={item.create_todo1}
-                      onValueChange={() => dispatch(switchTodo(index))}
+                <View style={styles.containerTitle}>
+                  <Text style={styles.title}>Aksi Disposisi</Text>
+                  {selectedTindakan.length != 0 && (
+                    <IconButton
+                      icon="plus"
+                      onPress={() => {
+                        dispatch(switchTindakan(index));
+                        bottomSheetRefNotaTindakan?.current?.present();
+                      }}
                     />
-                    <Text style={[styles.titleTodo, styles.switchLabel]}>
-                      Aktifkan {Config.labelTodo}
-                    </Text>
-                  </View>
-
-                  {item.create_todo1 && (
-                    <>
-                      <View style={styles.containerTanggalPrioritas}>
-                        <View style={{ width: "45%" }}>
-                          <Text style={styles.titleLabelTodo}>Tanggal</Text>
-                          <Button
-                            style={{
-                              height: 55,
-                              borderColor: GlobalStyles.colors.black,
-                              borderRadius: 6,
-                            }}
-                            mode="outlined"
-                            textColor="black"
+                  )}
+                </View>
+                <View>
+                  <View style={styles.titleLabel}>
+                    {selectedTindakan.length == 0 && (
+                      <TextInput
+                        mode="outlined"
+                        theme={{ roundness: 6 }}
+                        placeholder="Pilih Aksi"
+                        right={
+                          <TextInput.Icon
+                            size={24}
+                            icon="menu-down"
                             onPress={() => {
-                              setvisibleDatePicker(!visibleDatePicker);
-                            }}
-                          >
-                            {item.duedate_todo1 != ""
-                              ? moment(new Date(item.duedate_todo1)).format(
-                                  "DD/MM/YYYY"
-                                )
-                              : "Tgl Duedate"}
-                          </Button>
-                          <DateTimePickerModal
-                            isVisible={visibleDatePicker}
-                            mode="date"
-                            display={
-                              Platform.OS == "android" ? "inline" : "spinner"
-                            }
-                            style={{ width: "100%", height: 300 }}
-                            onConfirm={(date) => {
-                              dispatch(
-                                setTodoDuedate({
-                                  index: index,
-                                  duedate_todo1: date.toDateString(),
-                                })
-                              );
-                              setvisibleDatePicker(false);
-                            }}
-                            onCancel={() => {
-                              setvisibleDatePicker(false);
-                            }}
-                            minimumDate={new Date()}
-                          />
-                        </View>
-                        <View style={{ width: "47%" }}>
-                          <Text style={styles.titleLabelTodo}>Prioritas</Text>
-                          <Dropdown
-                            style={[
-                              styles.dropdown,
-                              isFocusPrio && {
-                                borderColor: GlobalStyles.colors.tertiery50,
-                              },
-                            ]}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            // inputSearchStyle={styles.inputSearchStyle}
-                            iconStyle={styles.iconStyle}
-                            data={priority}
-                            // search
-                            maxHeight={300}
-                            labelField="view"
-                            valueField="value"
-                            placeholder={
-                              !isFocusPrio ? "Pilih Prioritas" : "..."
-                            }
-                            // searchPlaceholder="Search..."
-                            value={item.send_priority_todo1}
-                            onFocus={() => setIsFocusPrio(true)}
-                            onBlur={() => setIsFocusPrio(false)}
-                            onChange={(item) => {
-                              dispatch(
-                                setTodoPriority({
-                                  index: index,
-                                  send_priority_todo1: item,
-                                })
-                              );
-                              setIsFocusPrio(false);
+                              if (senderAttr.code.length == 0) {
+                                Alert.alert(
+                                  "Peringatan!",
+                                  "Silakan pilih jabatan pada Disposisi Sebagai"
+                                );
+                              } else {
+                                dispatch(switchTindakan(index));
+                                bottomSheetRefNotaTindakan?.current?.present();
+                              }
                             }}
                           />
+                        }
+                        editable={false}
+                        style={styles.titleLabel}
+                      />
+                    )}
+                    {selectedTindakan.length != 0 &&
+                      selectedTindakan.map((item, index) => (
+                        <Text key={index}>- {item}</Text>
+                      ))}
+                  </View>
+                </View>
+
+                <View style={styles.containerTitle}>
+                  <Text style={styles.title}>Catatan Disposisi</Text>
+                </View>
+                <TextInput
+                  value={item.nota_tindakan_free1}
+                  mode="outlined"
+                  multiline={true}
+                  theme={{ roundness: 6 }}
+                  placeholder="Masukkan catatan..."
+                  onChangeText={(text) => {
+                    dispatch(
+                      setNotaTindakanFree({
+                        index: index,
+                        nota_tindakan_free1: text,
+                      })
+                    );
+                  }}
+                  style={[styles.titleLabel, { paddingVertical: 12 }]}
+                />
+
+                {Config.todo && (
+                  <>
+                    <View style={styles.containerTitleLeft}>
+                      <Switch
+                        value={item.create_todo1}
+                        onValueChange={() => dispatch(switchTodo(index))}
+                      />
+                      <Text style={[styles.titleTodo, styles.switchLabel]}>
+                        Aktifkan {Config.labelTodo}
+                      </Text>
+                    </View>
+
+                    {item.create_todo1 && (
+                      <>
+                        <View style={styles.containerTanggalPrioritas}>
+                          <View style={{ width: "45%" }}>
+                            <Text style={styles.titleLabelTodo}>Tanggal</Text>
+                            <Button
+                              style={{
+                                height: 55,
+                                borderColor: GlobalStyles.colors.black,
+                                borderRadius: 6,
+                              }}
+                              mode="outlined"
+                              textColor="black"
+                              onPress={() => {
+                                setvisibleDatePicker(!visibleDatePicker);
+                              }}
+                            >
+                              {item.duedate_todo1 != ""
+                                ? moment(new Date(item.duedate_todo1)).format(
+                                    "DD/MM/YYYY"
+                                  )
+                                : "Tgl Duedate"}
+                            </Button>
+                            <DateTimePickerModal
+                              isVisible={visibleDatePicker}
+                              mode="date"
+                              display={
+                                Platform.OS == "android" ? "inline" : "spinner"
+                              }
+                              style={{ width: "100%", height: 300 }}
+                              onConfirm={(date) => {
+                                dispatch(
+                                  setTodoDuedate({
+                                    index: index,
+                                    duedate_todo1: date.toDateString(),
+                                  })
+                                );
+                                setvisibleDatePicker(false);
+                              }}
+                              onCancel={() => {
+                                setvisibleDatePicker(false);
+                              }}
+                              minimumDate={new Date()}
+                            />
+                          </View>
+                          <View style={{ width: "47%" }}>
+                            <Text style={styles.titleLabelTodo}>Prioritas</Text>
+                            <Dropdown
+                              style={[
+                                styles.dropdown,
+                                isFocusPrio && {
+                                  borderColor: GlobalStyles.colors.tertiery50,
+                                },
+                              ]}
+                              placeholderStyle={styles.placeholderStyle}
+                              selectedTextStyle={styles.selectedTextStyle}
+                              // inputSearchStyle={styles.inputSearchStyle}
+                              iconStyle={styles.iconStyle}
+                              data={priority}
+                              // search
+                              maxHeight={300}
+                              labelField="view"
+                              valueField="value"
+                              placeholder={
+                                !isFocusPrio ? "Pilih Prioritas" : "..."
+                              }
+                              // searchPlaceholder="Search..."
+                              value={item.send_priority_todo1}
+                              onFocus={() => setIsFocusPrio(true)}
+                              onBlur={() => setIsFocusPrio(false)}
+                              onChange={(item) => {
+                                dispatch(
+                                  setTodoPriority({
+                                    index: index,
+                                    send_priority_todo1: item,
+                                  })
+                                );
+                                setIsFocusPrio(false);
+                              }}
+                            />
+                          </View>
                         </View>
-                      </View>
-                      {/* <View style={styles.containerBetween}>
+                        {/* <View style={styles.containerBetween}>
                       <View>
                         <Checkbox.Item
                           style={{ paddingLeft: -12 }}
@@ -658,110 +659,113 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                         </View>
                       </View>
                     </View> */}
-                    </>
-                  )}
-                </>
-              )}
-            </Card>
-          ))}
-          {btnAdd && (
+                      </>
+                    )}
+                  </>
+                )}
+              </Card>
+            ))}
+            {btnAdd && (
+              <Button
+                onPress={addDispo}
+                mode="contained"
+                style={{
+                  marginBottom: 16,
+                  backgroundColor: GlobalStyles.colors.tertiery,
+                }}
+              >
+                Add Disposition
+              </Button>
+            )}
+            <View style={styles.containerLabel}>
+              <Text style={styles.title}>Informasi Surat</Text>
+            </View>
+            <View style={{ marginBottom: 16 }}>
+              <DetailAgenda
+                style={{
+                  borderRadius: 6,
+                  borderWidth: 1,
+                  borderColor: GlobalStyles.colors.tertiery50,
+                  backgroundColor: GlobalStyles.colors.tertiery20,
+                }}
+                showBody={false}
+                noAgenda={noAgenda ? noAgenda : detail?.agenda_number}
+                data={detail}
+                tipe={tipe ? tipe : route?.params?.tipe}
+                title={title ? title : route?.params?.title}
+              />
+            </View>
             <Button
-              onPress={addDispo}
               mode="contained"
-              style={{
-                marginBottom: 16,
-                backgroundColor: GlobalStyles.colors.tertiery,
-              }}
+              style={{ backgroundColor: GlobalStyles.colors.tertiery }}
+              onPress={postDisposition}
             >
-              Add Disposition
+              Kirim
             </Button>
-          )}
-          <View style={styles.containerLabel}>
-            <Text style={styles.title}>Informasi Surat</Text>
           </View>
-          <View style={{ marginBottom: 16 }}>
-            <DetailAgenda
-              style={{
-                borderRadius: 6,
-                borderWidth: 1,
-                borderColor: GlobalStyles.colors.tertiery50,
-                backgroundColor: GlobalStyles.colors.tertiery20,
-              }}
-              showBody={false}
-              noAgenda={noAgenda ? noAgenda : detail?.agenda_number}
-              data={detail}
-              tipe={tipe ? tipe : route?.params?.tipe}
-              title={title ? title : route?.params?.title}
-            />
-          </View>
-          <Button
-            mode="contained"
-            style={{ backgroundColor: GlobalStyles.colors.tertiery }}
-            onPress={postDisposition}
-          >
-            Kirim
-          </Button>
-        </View>
-      </ScrollView>
+        </ScrollView>
 
-      <BottomSheetModalProvider>
-        <SafeAreaView>
-          <View>
-            <BottomSheetModal
-              name="download"
-              ref={bottomSheetRefNotaTindakan}
-              index={1}
-              snapPoints={snapPoint}
-              keyboardBehavior={
-                Platform?.OS == "android" ? "fillParent" : "interactive"
-              }
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-              backgroundStyle={{
-                backgroundColor: COLORS.primary,
-              }}
-              handleIndicatorStyle={{
-                backgroundColor: COLORS.white,
-              }}
-            >
-              <View style={styles.containerRow}>
-                <Text
-                  style={[
-                    styles.titleLabel,
-                    { color: GlobalStyles.colors.textWhite },
-                  ]}
-                >
-                  Catatan
-                </Text>
-                <TouchableOpacity onPress={confirmRemoveAll}>
-                  <Text style={{ color: GlobalStyles.colors.textWhite }}>
-                    Hapus Semua
+        <BottomSheetModalProvider>
+          <SafeAreaView>
+            <View>
+              <BottomSheetModal
+                name="download"
+                ref={bottomSheetRefNotaTindakan}
+                index={1}
+                snapPoints={snapPoint}
+                keyboardBehavior={
+                  Platform?.OS == "android" ? "fillParent" : "interactive"
+                }
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backgroundStyle={{
+                  backgroundColor: COLORS.primary,
+                }}
+                handleIndicatorStyle={{
+                  backgroundColor: COLORS.white,
+                }}
+              >
+                <View style={styles.containerRow}>
+                  <Text
+                    style={[
+                      styles.titleLabel,
+                      { color: GlobalStyles.colors.textWhite },
+                    ]}
+                  >
+                    Catatan
                   </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.containerTindakanChecked}>
-                <FlatList
-                  data={tindakanList}
-                  renderItem={renderItem}
-                  keyExtractor={(item, index) => index}
-                />
-                <Button
-                  mode="contained"
-                  style={[
-                    {
-                      backgroundColor: COLORS.primary,
-                      marginBottom: 16,
-                    },
-                  ]}
-                  onPress={() => bottomSheetRefNotaTindakan?.current?.dismiss()}
-                >
-                  Simpan
-                </Button>
-              </View>
-            </BottomSheetModal>
-          </View>
-        </SafeAreaView>
-      </BottomSheetModalProvider>
+                  <TouchableOpacity onPress={confirmRemoveAll}>
+                    <Text style={{ color: GlobalStyles.colors.textWhite }}>
+                      Hapus Semua
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.containerTindakanChecked}>
+                  <FlatList
+                    data={tindakanList}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => index}
+                  />
+                  <Button
+                    mode="contained"
+                    style={[
+                      {
+                        backgroundColor: COLORS.primary,
+                        marginBottom: 16,
+                      },
+                    ]}
+                    onPress={() =>
+                      bottomSheetRefNotaTindakan?.current?.dismiss()
+                    }
+                  >
+                    Simpan
+                  </Button>
+                </View>
+              </BottomSheetModal>
+            </View>
+          </SafeAreaView>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </>
   );
 }

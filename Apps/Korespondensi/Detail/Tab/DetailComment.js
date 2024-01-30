@@ -1,7 +1,7 @@
 import moment from "moment";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, ScrollView } from "react-native";
 import TreeView from "react-native-final-tree-view";
-import { ScrollView } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Avatar, Card, IconButton } from "react-native-paper";
 import { GlobalStyles } from "../../../../constants/styles";
 import { nde_api } from "../../../../utils/api.config";
@@ -21,129 +21,134 @@ function DetailComment({ data }) {
   }
 
   return (
-    <ScrollView
-      style={{
-        backgroundColor: GlobalStyles.colors.tertiery20,
-      }}
-      keyboardShouldPersistTaps={"handled"}
-    >
-      <View style={styles.screen}>
-        <View style={styles.containerLabel}>
-          <Text style={styles.titleLabel}>Komentar</Text>
-        </View>
-        {data?.komentar && (
-          <TreeView
-            style={{ backgroundColor: "red" }}
-            childrenKey="submessage"
-            data={data?.komentar} // defined above
-            renderNode={({ node, level, isExpanded, hasChildrenNodes }) => {
-              const marginTree = { marginLeft: 25 * level };
-              return (
-                <View
-                // style={{ flexDirection: "row" }}
-                // style={[
-                //   { flexDirection: "row" },
-                //   level == 0 && !hasChildrenNodes
-                //     ? { marginLeft: -25 }
-                //     : marginTree,
-                // ]}
-                >
-                  {/* <IconButton
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ScrollView
+        style={{
+          backgroundColor: GlobalStyles.colors.tertiery20,
+        }}
+        keyboardShouldPersistTaps={"handled"}
+      >
+        <View style={styles.screen}>
+          <View style={styles.containerLabel}>
+            <Text style={styles.titleLabel}>Komentar</Text>
+          </View>
+          {data?.komentar && (
+            <TreeView
+              style={{ backgroundColor: "red" }}
+              childrenKey="submessage"
+              data={data?.komentar} // defined above
+              renderNode={({ node, level, isExpanded, hasChildrenNodes }) => {
+                const marginTree = { marginLeft: 25 * level };
+                return (
+                  <View
+                  // style={{ flexDirection: "row" }}
+                  // style={[
+                  //   { flexDirection: "row" },
+                  //   level == 0 && !hasChildrenNodes
+                  //     ? { marginLeft: -25 }
+                  //     : marginTree,
+                  // ]}
+                  >
+                    {/* <IconButton
                         icon={getIndicator(isExpanded, hasChildrenNodes)}
                       /> */}
-                  <Card key={node?.id} style={styles.containerCard}>
-                    <View style={styles.headerCard}>
-                      <View
-                        style={[
-                          node?.action == "Approve"
-                            ? {
-                                backgroundColor: GlobalStyles.colors.success50,
-                              }
-                            : node?.action == "Return" ||
-                              node?.action == "Return To Composer"
-                            ? {
-                                backgroundColor: GlobalStyles.colors.warning50,
-                              }
-                            : {
-                                backgroundColor: GlobalStyles.colors.blue,
-                              },
-                          styles.header,
-                          styles.badge,
-                        ]}
-                      >
-                        <Text style={styles.badgeText}>{node?.action}</Text>
-                      </View>
+                    <Card key={node?.id} style={styles.containerCard}>
+                      <View style={styles.headerCard}>
+                        <View
+                          style={[
+                            node?.action == "Approve"
+                              ? {
+                                  backgroundColor:
+                                    GlobalStyles.colors.success50,
+                                }
+                              : node?.action == "Return" ||
+                                node?.action == "Return To Composer"
+                              ? {
+                                  backgroundColor:
+                                    GlobalStyles.colors.warning50,
+                                }
+                              : {
+                                  backgroundColor: GlobalStyles.colors.blue,
+                                },
+                            styles.header,
+                            styles.badge,
+                          ]}
+                        >
+                          <Text style={styles.badgeText}>{node?.action}</Text>
+                        </View>
 
-                      <IconButton
-                        icon={node.is_mobile ? "cellphone" : "monitor"}
-                        size={12}
-                        style={styles.headerIsMobile}
+                        <IconButton
+                          icon={node.is_mobile ? "cellphone" : "monitor"}
+                          size={12}
+                          style={styles.headerIsMobile}
+                        />
+                        <View style={styles.headerDate}>
+                          <Text style={styles.badgeDate}>
+                            {moment(node.created_date).format(
+                              "DD MMM YYYY HH:mm"
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                      <Card.Title
+                        style={styles.containerCardTitle}
+                        title={
+                          <>
+                            <Text style={styles.titleCard} numberOfLines={3}>
+                              {node?.approver_title?.length != 0
+                                ? node.approver_title
+                                : node.creator}
+                            </Text>
+                            <Text>
+                              {node?.approver_title?.length != 0
+                                ? "\n" + node.creator
+                                : ""}
+                            </Text>
+                          </>
+                        }
+                        titleNumberOfLines={5}
+                        left={(props) => (
+                          <View style={{ alignItems: "center", flex: 1 }}>
+                            {errorAvatar && (
+                              <Avatar.Image
+                                {...props}
+                                source={Config.avatar}
+                                theme={{
+                                  colors: {
+                                    primary: GlobalStyles.colors.textWhite,
+                                  },
+                                }}
+                              />
+                            )}
+                            {!errorAvatar && (
+                              <Avatar.Image
+                                {...props}
+                                source={{
+                                  uri: `${
+                                    nde_api.baseurl +
+                                    "crsbe" +
+                                    node?.avatar.slice(4, node?.avatar.length)
+                                  }`,
+                                  method: "GET",
+                                }}
+                                theme={{
+                                  colors: {
+                                    primary: GlobalStyles.colors.textWhite,
+                                  },
+                                }}
+                                onError={() => setErrorAvatar(true)}
+                              />
+                            )}
+                          </View>
+                        )}
                       />
-                      <View style={styles.headerDate}>
-                        <Text style={styles.badgeDate}>
-                          {moment(node.created_date).format(
-                            "DD MMM YYYY HH:mm"
-                          )}
+                      <View style={styles.containerMessage}>
+                        <Text style={styles.textMessage}>
+                          "{node?.message}"
                         </Text>
                       </View>
-                    </View>
-                    <Card.Title
-                      style={styles.containerCardTitle}
-                      title={
-                        <>
-                          <Text style={styles.titleCard} numberOfLines={3}>
-                            {node?.approver_title?.length != 0
-                              ? node.approver_title
-                              : node.creator}
-                          </Text>
-                          <Text>
-                            {node?.approver_title?.length != 0
-                              ? "\n" + node.creator
-                              : ""}
-                          </Text>
-                        </>
-                      }
-                      titleNumberOfLines={5}
-                      left={(props) => (
-                        <View style={{ alignItems: "center", flex: 1 }}>
-                          {errorAvatar && (
-                            <Avatar.Image
-                              {...props}
-                              source={Config.avatar}
-                              theme={{
-                                colors: {
-                                  primary: GlobalStyles.colors.textWhite,
-                                },
-                              }}
-                            />
-                          )}
-                          {!errorAvatar && (
-                            <Avatar.Image
-                              {...props}
-                              source={{
-                                uri: `${
-                                  nde_api.baseurl +
-                                  "crsbe" +
-                                  node?.avatar.slice(4, node?.avatar.length)
-                                }`,
-                                method: "GET",
-                              }}
-                              theme={{
-                                colors: {
-                                  primary: GlobalStyles.colors.textWhite,
-                                },
-                              }}
-                              onError={() => setErrorAvatar(true)}
-                            />
-                          )}
-                        </View>
-                      )}
-                    />
-                    <View style={styles.containerMessage}>
-                      <Text style={styles.textMessage}>"{node?.message}"</Text>
-                    </View>
 
-                    {/* <Button
+                      {/* <Button
                           // mode="flat"
                           style={[
                             styles.buttonReply,
@@ -179,14 +184,15 @@ function DetailComment({ data }) {
                             }
                           />
                         ) : null} */}
-                  </Card>
-                </View>
-              );
-            }}
-          />
-        )}
-      </View>
-    </ScrollView>
+                    </Card>
+                  </View>
+                );
+              }}
+            />
+          )}
+        </View>
+      </ScrollView>
+    </GestureHandlerRootView>
   );
 }
 export default DetailComment;

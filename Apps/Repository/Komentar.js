@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import {
   KeyboardAvoidingView,
+  Platform,
   TextInput,
   TouchableOpacity,
 } from "react-native";

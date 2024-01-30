@@ -12,7 +12,7 @@ import {
 } from "../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/Loading";
 import moment from "moment/min/moment-with-locales";

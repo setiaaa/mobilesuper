@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Modal,
+  Platform,
   ScrollView,
   Text,
   View,

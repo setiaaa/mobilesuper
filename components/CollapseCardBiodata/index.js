@@ -7,7 +7,7 @@ import {
   CollapseBody,
   AccordionList,
 } from "accordion-collapse-react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import {
   COLORS,
   FONTWEIGHT,

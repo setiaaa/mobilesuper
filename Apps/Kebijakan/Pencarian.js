@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { CardKebijakan } from "../../components/CardKebijakan/";
@@ -46,7 +47,9 @@ import { Dropdown } from "../../components/DropDown";
 import { setRefresh } from "../../store/Kebijakan";
 import ListEmpty from "../../components/ListEmpty";
 import { event } from "react-native-reanimated";
-import { TextInput } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 import { RefreshControl } from "react-native";
 
 export const Pencarian = () => {
@@ -129,8 +132,7 @@ export const Pencarian = () => {
         };
         dispatch(getDokGeneral(params));
       }
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setRefreshing(true);
     setTimeout(() => {
@@ -138,154 +140,155 @@ export const Pencarian = () => {
     }, 2000);
   }, [token, search, page]);
 
-
   const { device } = useSelector((state) => state.apps);
 
   return (
     <>
-      {loading ? <Loading /> : null}
-      <BottomSheetModalProvider>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: COLORS.primary,
-            height: 80,
-          }}
-        >
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        {loading ? <Loading /> : null}
+        <BottomSheetModalProvider>
           <View
             style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 20,
-              width: device === "tablet" ? 40 : 28,
-              height: device === "tablet" ? 40 : 28,
+              flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
-            }}
-          >
-            <TouchableOpacity
-              style={{}}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <Ionicons
-                name="chevron-back-outline"
-                size={device === "tablet" ? 40 : 24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
-            <Text
-              style={{
-                fontSize: fontSizeResponsive("H1", device),
-                fontWeight: 600,
-                color: COLORS.white,
-              }}
-            >
-              Pencarian
-            </Text>
-          </View>
-        </View>
-        <View style={{ marginHorizontal: "5%" }}>
-          <View
-            style={{
-              marginTop: 20,
-              // flexDirection: "row",
-              gap: 10,
-              marginBottom: 20,
+              backgroundColor: COLORS.primary,
+              height: 80,
             }}
           >
             <View
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                width: device === "tablet" ? 40 : 28,
+                height: device === "tablet" ? 40 : 28,
                 alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 20,
+              }}
+            >
+              <TouchableOpacity
+                style={{}}
+                onPress={() => navigation.navigate("Home")}
+              >
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H1", device),
+                  fontWeight: 600,
+                  color: COLORS.white,
+                }}
+              >
+                Pencarian
+              </Text>
+            </View>
+          </View>
+          <View style={{ marginHorizontal: "5%" }}>
+            <View
+              style={{
+                marginTop: 20,
+                // flexDirection: "row",
+                gap: 10,
+                marginBottom: 20,
               }}
             >
               <View
                 style={{
-                  width: "85%",
-                  backgroundColor: COLORS.white,
-                  borderRadius: 8,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <View style={styles.input}>
-                  <Ionicons
-                    name="search"
-                    size={fontSizeResponsive("H3", device)}
-                    color={COLORS.primary}
-                  />
-                  <TextInput
-                    placeholder={"Cari..."}
-                    style={{
-                      fontSize: fontSizeResponsive("H2", device),
-                      flex: 1,
-                    }}
-                    maxLength={30}
-                    value={inputValue}
-                    onChangeText={(text) => setInputValue(text)}
-                    onEndEditing={filter}
-                    clearButtonMode="always"
-                  />
-                </View>
-              </View>
-              <View style={{ flexDirection: "row", gap: 10 }}>
-                <TouchableOpacity onPress={!ascending ? asc : desc}>
-                  <View
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 30,
-                      backgroundColor: COLORS.white,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Ionicons name="filter-outline" size={24} />
+                <View
+                  style={{
+                    width: "85%",
+                    backgroundColor: COLORS.white,
+                    borderRadius: 8,
+                  }}
+                >
+                  <View style={styles.input}>
+                    <Ionicons
+                      name="search"
+                      size={fontSizeResponsive("H3", device)}
+                      color={COLORS.primary}
+                    />
+                    <TextInput
+                      placeholder={"Cari..."}
+                      style={{
+                        fontSize: fontSizeResponsive("H2", device),
+                        flex: 1,
+                      }}
+                      maxLength={30}
+                      value={inputValue}
+                      onChangeText={(text) => setInputValue(text)}
+                      onEndEditing={filter}
+                      clearButtonMode="always"
+                    />
                   </View>
-                </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                  <TouchableOpacity onPress={!ascending ? asc : desc}>
+                    <View
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 30,
+                        backgroundColor: COLORS.white,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons name="filter-outline" size={24} />
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <View style={{ height: "75%" }}>
-          <FlatList
-            data={filterData}
-            renderItem={({ item }) => (
-              <CardKebijakan
-                subjek={item.subjek}
-                bentuk={item.bentuk}
-                id_peraturan={item.id_peraturan}
-                item={item}
-                nomor={item.nomor}
-                tahun={item.tahun}
-                device={device}
-              />
-            )}
-            style={{ marginHorizontal: "5%" }}
-            keyExtractor={(item) => item.id_peraturan}
-            ListFooterComponent={() =>
-              loading === true ? (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 24,
-                  }}
-                >
-                  <ActivityIndicator size="small" color={COLORS.primary} />
-                </View>
-              ) : null
-            }
-            onEndReached={general?.length === 0 ? null : loadMore}
-            ListEmptyComponent={<ListEmpty />}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          />
-        </View>
-      </BottomSheetModalProvider>
+          <View style={{ height: "75%" }}>
+            <FlatList
+              data={filterData}
+              renderItem={({ item }) => (
+                <CardKebijakan
+                  subjek={item.subjek}
+                  bentuk={item.bentuk}
+                  id_peraturan={item.id_peraturan}
+                  item={item}
+                  nomor={item.nomor}
+                  tahun={item.tahun}
+                  device={device}
+                />
+              )}
+              style={{ marginHorizontal: "5%" }}
+              keyExtractor={(item) => item.id_peraturan}
+              ListFooterComponent={() =>
+                loading === true ? (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: 24,
+                    }}
+                  >
+                    <ActivityIndicator size="small" color={COLORS.primary} />
+                  </View>
+                ) : null
+              }
+              onEndReached={general?.length === 0 ? null : loadMore}
+              ListEmptyComponent={<ListEmpty />}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+          </View>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </>
   );
 };

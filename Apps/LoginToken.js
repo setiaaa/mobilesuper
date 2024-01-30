@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   Text,

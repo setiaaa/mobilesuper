@@ -7,10 +7,10 @@ import {
   notFound,
 } from "../config/images";
 
-const extra = Constants.manifest.extra;
+const extra = Constants.expoConfig.extra;
 export const Config = {
-  app_name: Constants.manifest.name,
-  app_version: Constants.manifest.version,
+  app_name: Constants.expoConfig.name,
+  app_version: Constants.expoConfig.version,
   base_url: extra.base_url,
   base_url_auth: extra.base_url_auth,
   base_url_cuti: extra.base_url_cuti,
