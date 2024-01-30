@@ -485,6 +485,10 @@ export const Profile = () => {
               Logout
             </Text>
           </TouchableOpacity>
+
+          <Text style={{ marginTop: 20, color: COLORS.grey }}>
+            Version {Config.app_version}
+          </Text>
         </View>
       </ScrollView>
     </>

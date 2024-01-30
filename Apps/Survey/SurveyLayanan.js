@@ -105,6 +105,7 @@ export const SurveyLayanan = () => {
       ...penilaian,
       [realKey]: [actualValue],
     });
+    alert(value);
   };
 
   const [menuKonfirmasi, setMenuKonfirmasi] = useState({
@@ -215,6 +216,7 @@ export const SurveyLayanan = () => {
   const navigation = useNavigation();
   const { device } = useSelector((state) => state.apps);
   const { status } = useSelector((state) => state.survey);
+  const { profile } = useSelector((state) => state.superApps);
 
   return (
     <ScrollView>
@@ -254,7 +256,7 @@ export const SurveyLayanan = () => {
               marginRight: 50,
             }}
           >
-            Survey Layanan
+            Survei Layanan
           </Text>
         </View>
       </View>
@@ -346,6 +348,35 @@ export const SurveyLayanan = () => {
           keyExtractor={(item) => item}
         />
       </View>
+      {profile?.roles_access.includes("USER_REPORT_SURVEY") ? (
+        <TouchableOpacity
+          style={{
+            width: "90%",
+            height: 50,
+            marginBottom: 10,
+            borderRadius: 6,
+            alignItems: "center",
+            marginHorizontal: 20,
+            justifyContent: "center",
+            borderWidth: 1,
+            borderColor: COLORS.primary,
+          }}
+          onPress={() => {
+            navigation.navigate("HasilSurvey");
+          }}
+        >
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: 500,
+              color: COLORS.primary,
+            }}
+          >
+            Hasil survei
+          </Text>
+        </TouchableOpacity>
+      ) : null}
+
       <TouchableOpacity
         style={{
           width: "90%",
@@ -371,6 +402,7 @@ export const SurveyLayanan = () => {
           Reset
         </Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         style={{
           width: "90%",

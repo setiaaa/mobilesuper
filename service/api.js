@@ -57,7 +57,7 @@ const SPPD = BASE_URL + "monperdin/";
 
 const Cuti = Config.base_url_cuti;
 const HelpDesk = Config.base_url_helpdesk;
-const Survey = BASE_URL + "bridge/survey/";
+const Survey = BASE_URL + "bridge/";
 
 //Login
 export const Login = createAsyncThunk(
@@ -2150,12 +2150,55 @@ export const postTicket = createAsyncThunk(
 );
 
 export const postSurvey = createAsyncThunk(
-  "ticket/postSurvey",
+  "Survey/postSurvey",
   async (data) => {
-    const respon = await axios.post(`${Survey}`, data.payload, {
+    const respon = await axios.post(`${Survey}survey/`, data.payload, {
       headers: { Authorization: data.token },
     });
     return respon?.data;
+  }
+);
+
+export const getSurveyReport = createAsyncThunk(
+  "Survey/getSurveyReport",
+  async (data) => {
+    const respon = await axios.get(
+      `${Survey}survey-report/?limit=${data.page}`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data?.result;
+  }
+);
+
+export const getSurveyCount = createAsyncThunk(
+  "Survey/getSurveyCount",
+  async (data) => {
+    const respon = await axios.get(`${Survey}survey-count/`, {
+      headers: { Authorization: data },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getSurveyDetail = createAsyncThunk(
+  "Survey/getSurveyDetail",
+  async (data) => {
+    const respon = await axios.get(`${Survey}survey-detail/${data.id}/`, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getSurveyExport = createAsyncThunk(
+  "Survey/getSurveyExport",
+  async (data) => {
+    const respon = await axios.get(`${Survey}export-survey-response/`, {
+      headers: { Authorization: data },
+    });
+    return respon?.data?.results;
   }
 );
 

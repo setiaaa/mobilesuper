@@ -1,11 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { postSurvey } from "../service/api";
+import {
+  getSurveyCount,
+  getSurveyDetail,
+  getSurveyExport,
+  getSurveyReport,
+  postSurvey,
+} from "../service/api";
 
 const SurveySlice = createSlice({
   name: "Survey",
   initialState: {
     loading: true,
     status: "",
+    report: [],
+    count: null,
+    detail: {},
+    exportFile: {},
   },
   reducers: {
     setStatus: (state, action) => {
@@ -26,6 +36,48 @@ const SurveySlice = createSlice({
         state.status = "error";
         console.log("gagal");
         state.loading = true;
+      })
+      .addCase(getSurveyReport.fulfilled, (state, action) => {
+        state.report = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyReport.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyReport.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getSurveyCount.fulfilled, (state, action) => {
+        state.count = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyCount.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyCount.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getSurveyDetail.fulfilled, (state, action) => {
+        state.detail = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyDetail.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyDetail.rejected, (state, action) => {
+        state.loading = false;
+        console.log("gagal");
+      })
+      .addCase(getSurveyExport.fulfilled, (state, action) => {
+        state.exportFile = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSurveyExport.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getSurveyExport.rejected, (state, action) => {
+        state.loading = false;
+        console.log("gagal");
       });
   },
 });
