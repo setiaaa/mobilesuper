@@ -696,6 +696,21 @@ export const HasilSurvey = () => {
         >
           Portal Collaboration Office dapat diakses setiap hari
         </Text>
+
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {
+            count[
+              "average Portal Collaboration Office dapat diakses setiap hari"
+            ]
+          }
+        </Text>
         {dataPenilainSatu.length !== 0 ? (
           <PieChart
             widthAndHeight={widthAndHeight}
@@ -934,6 +949,21 @@ export const HasilSurvey = () => {
         >
           Informasi pada Portal Collabaration Office tersaji sesuai dengan
           kebutuhan
+        </Text>
+
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {
+            count[
+              "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
+            ]
+          }
         </Text>
         {dataPenilainDua.length !== 0 ? (
           <PieChart
@@ -1651,6 +1681,261 @@ export const HasilSurvey = () => {
           }}
         >
           Portal Collaboration Office mudah digunakan
+        </Text>
+        {dataPenilainLima.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataPenilainLima}
+            sliceColor={sliceColor}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            // backgroundColor: "brown",
+            borderRadius: 16,
+            padding: 20,
+            borderWidth: 1,
+            borderColor: COLORS.grey,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+            }}
+          >
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ marginBottom: 10, alignItems: "flex-start" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 10,
+                    gap: 8,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.infoDanger,
+                      width: 20,
+                      height: 20,
+                      borderRadius: 15,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  ></View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
+                    Sangat Tidak Setuju
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                      fontWeight: 600,
+                    }}
+                  >
+                    {dataPenilainLima[0]}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.warning,
+                      width: 20,
+                      height: 20,
+                      borderRadius: 15,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  ></View>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H2", device),
+                      fontWeight: 600,
+                    }}
+                  >
+                    Tidak Setuju
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
+                    {dataPenilainLima[1]}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  marginBottom: 10,
+                  gap: 8,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.lighter,
+                    width: 20,
+                    height: 20,
+                    borderRadius: 15,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></View>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  Biasa Saja/Netral
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("Judul", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  {dataPenilainLima[2]}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  marginBottom: 10,
+                  gap: 8,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.info,
+                    width: 20,
+                    height: 20,
+                    borderRadius: 15,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></View>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  Setuju
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("Judul", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  {dataPenilainLima[3]}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.success,
+                    width: 20,
+                    height: 20,
+                    borderRadius: 15,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></View>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  Sangat Setuju
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("Judul", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  {dataPenilainLima[4]}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View
+        style={{
+          marginTop: 20,
+          marginHorizontal: 20,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("Judul", device),
+            fontWeight: FONTWEIGHT.bold,
+          }}
+        >
+          Rata-rata Survei
+        </Text>
+      </View>
+
+      {/* rata-rata satu */}
+      <View
+        style={{
+          width: "90%",
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          borderRadius: 16,
+          padding: 20,
+          marginVertical: 10,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata Portal Collaboration Office dapat diakses setiap hari
         </Text>
         {dataPenilainLima.length !== 0 ? (
           <PieChart
