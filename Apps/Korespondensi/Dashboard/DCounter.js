@@ -52,6 +52,11 @@ function DCounter() {
       color: "rgba(180, 179, 179, 0.6)",
       navName: "ConceptNumb",
     },
+    {
+      icon: "inbox-arrow-down",
+      color: "rgba(236, 202, 12, 0.6)",
+      navName: "InternalSatkerList",
+    },
   ];
   useEffect(() => {
     setIsCounter([
@@ -69,6 +74,11 @@ function DCounter() {
       {
         count: 4,
         type: "draft",
+        value: "-",
+      },
+      {
+        count: 5,
+        type: "internal",
         value: "-",
       },
     ]);
@@ -152,7 +162,7 @@ function DCounter() {
   // //const name = profile?.fullname?.split("/")[0];
   // const [labelName, setLabelName] = useState();
   return (
-    <View style={{ margin: 12 }}>
+    <View style={{ flex: 1, padding: 12 }}>
       {/* {loadingOverlay} */}
       {/* {profile?.title?.length != 0 && (
         <Card
@@ -232,7 +242,7 @@ function DCounter() {
         </Card>
       )} */}
       {isCounter?.length != 0 && (
-        <View style={{ height: "85%" }}>
+        <View style={{ height: "90%" }}>
           <FlatList
             keyExtractor={(item) => item.count}
             data={isCounter}

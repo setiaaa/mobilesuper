@@ -79,6 +79,11 @@ function DLetter() {
         type: "draft",
         value: "-",
       },
+      {
+        count: 5,
+        type: "internal",
+        value: "-",
+      },
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
@@ -95,8 +100,8 @@ function DLetter() {
         { count: 1, type: "incoming", value: response.data[1].value },
         {
           count: 2,
-          type: "internalsatker",
-          value: "",
+          type: "internal",
+          value: response.data[4].value,
         },
         {
           count: 3,
