@@ -55,6 +55,9 @@ export const HasilSurvey = () => {
   const [dataPenilainTiga, setDataPenilaianTiga] = useState([]);
   const [dataPenilainEmpat, setDataPenilaianEmpat] = useState([]);
   const [dataPenilainLima, setDataPenilaianLima] = useState([]);
+  const [dataRata, setDataRata] = useState([]);
+  const [labelRata, setLabelRata] = useState([]);
+  const [aktualNameRata, setAktualNameRata] = useState([]);
   const [page, setPage] = useState(5);
 
   const { report, count, exportFile, loading } = useSelector(
@@ -113,6 +116,9 @@ export const HasilSurvey = () => {
     let dataPenilainTiga = [];
     let dataPenilainEmpat = [];
     let dataPenilainLima = [];
+    let dataRata = [];
+    let aktualNameRata = [];
+    let labelRata = [];
 
     if (count !== null) {
       let charA = 65;
@@ -226,6 +232,18 @@ export const HasilSurvey = () => {
         }
       });
 
+      charA = 65;
+
+      for (const key in count) {
+        if (key.startsWith("average")) {
+          dataRata.push(count[key]);
+          aktualNameRata.push(key.replace("average ", ""));
+          labelRata.push(String.fromCharCode(charA));
+          charA++;
+        }
+      }
+      console.log("test");
+
       setLabel(label);
       setAktualName(aktualName);
       setDataSet(dataset);
@@ -237,6 +255,9 @@ export const HasilSurvey = () => {
       setDataPenilaianTiga(dataPenilainTiga);
       setDataPenilaianEmpat(dataPenilainEmpat);
       setDataPenilaianLima(dataPenilainLima);
+      setDataRata(dataRata);
+      setAktualNameRata(aktualNameRata);
+      setLabelRata(labelRata);
     }
   }, [count]);
 
@@ -298,6 +319,8 @@ export const HasilSurvey = () => {
       setPage((prev) => prev + 5);
     }
   };
+
+  console.log(aktualNameRata);
 
   return (
     <ScrollView>
@@ -705,11 +728,11 @@ export const HasilSurvey = () => {
           }}
         >
           Rata-rata{" "}
-          {
-            count[
-              "average Portal Collaboration Office dapat diakses setiap hari"
-            ]
-          }
+          {count === null
+            ? "-"
+            : count[
+                "average Portal Collaboration Office dapat diakses setiap hari"
+              ]}
         </Text>
         {dataPenilainSatu.length !== 0 ? (
           <PieChart
@@ -959,11 +982,11 @@ export const HasilSurvey = () => {
           }}
         >
           Rata-rata{" "}
-          {
-            count[
-              "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
-            ]
-          }
+          {count === null
+            ? "-"
+            : count[
+                "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
+              ]}
         </Text>
         {dataPenilainDua.length !== 0 ? (
           <PieChart
@@ -1204,6 +1227,20 @@ export const HasilSurvey = () => {
           Akses login Portal Collaboration Office memiliki tingkat keamanan yang
           baik
         </Text>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count[
+                "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
+              ]}
+        </Text>
         {dataPenilainTiga.length !== 0 ? (
           <PieChart
             widthAndHeight={widthAndHeight}
@@ -1442,6 +1479,21 @@ export const HasilSurvey = () => {
         >
           Portal Collaboration Office dapat diakses dengan baik pada penjelajah
           (browser) saya
+        </Text>
+
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count[
+                "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
+              ]}
         </Text>
         {dataPenilainEmpat.length !== 0 ? (
           <PieChart
@@ -1682,6 +1734,18 @@ export const HasilSurvey = () => {
         >
           Portal Collaboration Office mudah digunakan
         </Text>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count["average Portal Collaboration Office mudah digunakan"]}
+        </Text>
         {dataPenilainLima.length !== 0 ? (
           <PieChart
             widthAndHeight={widthAndHeight}
@@ -1919,7 +1983,8 @@ export const HasilSurvey = () => {
           backgroundColor: COLORS.white,
           borderRadius: 16,
           padding: 20,
-          marginVertical: 10,
+          marginBottom: 10,
+          marginTop: 10,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
           shadowColor: "#171717",
@@ -1935,219 +2000,90 @@ export const HasilSurvey = () => {
             marginBottom: 10,
           }}
         >
-          Rata-rata Portal Collaboration Office dapat diakses setiap hari
+          Rata-rata
         </Text>
-        {dataPenilainLima.length !== 0 ? (
-          <PieChart
-            widthAndHeight={widthAndHeight}
-            series={dataPenilainLima}
-            sliceColor={sliceColor}
-            coverRadius={0.75}
-            coverFill={"#FFF"}
-            style={{ alignSelf: "center", marginVertical: 20 }}
-          />
-        ) : null}
         <View
           style={{
-            backgroundColor: COLORS.white,
-            // backgroundColor: "brown",
-            borderRadius: 16,
-            padding: 20,
-            borderWidth: 1,
-            borderColor: COLORS.grey,
+            justifyContent: device === "tablet" ? "center" : "flex-start",
+            alignItems: device === "tablet" ? "center" : "flex-start",
           }}
         >
-          <View
-            style={{
-              justifyContent: "center",
+          <BarChart
+            data={{
+              labels: labelRata,
+              datasets: [
+                {
+                  data: dataRata,
+                },
+              ],
             }}
-          >
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ marginBottom: 10, alignItems: "flex-start" }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: 10,
-                    gap: 8,
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.infoDanger,
-                      width: 20,
-                      height: 20,
-                      borderRadius: 15,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  ></View>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H2", device),
-                      fontWeight: 600,
-                    }}
-                  >
-                    Sangat Tidak Setuju
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("Judul", device),
-                      fontWeight: 600,
-                    }}
-                  >
-                    {dataPenilainLima[0]}
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: 8,
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.warning,
-                      width: 20,
-                      height: 20,
-                      borderRadius: 15,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  ></View>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H2", device),
-                      fontWeight: 600,
-                    }}
-                  >
-                    Tidak Setuju
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("Judul", device),
-                    }}
-                  >
-                    {dataPenilainLima[1]}
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  marginBottom: 10,
-                  gap: 8,
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: COLORS.lighter,
-                    width: 20,
-                    height: 20,
-                    borderRadius: 15,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                ></View>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H2", device),
-                    fontWeight: 600,
-                  }}
-                >
-                  Biasa Saja/Netral
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("Judul", device),
-                    fontWeight: 600,
-                  }}
-                >
-                  {dataPenilainLima[2]}
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  marginBottom: 10,
-                  gap: 8,
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: COLORS.info,
-                    width: 20,
-                    height: 20,
-                    borderRadius: 15,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                ></View>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H2", device),
-                    fontWeight: 600,
-                  }}
-                >
-                  Setuju
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("Judul", device),
-                    fontWeight: 600,
-                  }}
-                >
-                  {dataPenilainLima[3]}
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: COLORS.success,
-                    width: 20,
-                    height: 20,
-                    borderRadius: 15,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                ></View>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H2", device),
-                    fontWeight: 600,
-                  }}
-                >
-                  Sangat Setuju
-                </Text>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("Judul", device),
-                    fontWeight: 600,
-                  }}
-                >
-                  {dataPenilainLima[4]}
-                </Text>
-              </View>
-            </View>
+            hide
+            legend
+            width={wp(85)}
+            height={300}
+            chartConfig={{
+              backgroundGradientFrom: COLORS.white,
+              backgroundGradientFromOpacity: 0,
+              backgroundGradientTo: COLORS.white,
+              backgroundGradientToOpacity: 1,
+              color: () => COLORS.lighter,
+              propsForBackgroundLines: {
+                x1: 60,
+              },
+              decimalPlaces: 1,
+              fillShadowGradientFromOffset: 1,
+              fillShadowGradientFrom: COLORS.orange,
+              fillShadowGradientFromOpacity: 1,
+              barPercentage: 1,
+            }}
+            style={{ marginHorizontal: -35, marginTop: 20 }}
+            withInnerLines={false}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            marginHorizontal: 10,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <View
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 6,
+                backgroundColor: COLORS.orange,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                fontWeight: 400,
+              }}
+            >
+              Rata-rata Survei
+            </Text>
           </View>
         </View>
+        <View
+          style={{
+            width: "100%",
+            height: 2,
+            backgroundColor: COLORS.grey,
+            marginVertical: 20,
+          }}
+        />
+        {aktualNameRata.map((item, index) => {
+          return (
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <Text>{labelRata[index]} </Text>
+              <Text>=</Text>
+              <Text style={{ width: 250 }}>{item}</Text>
+            </View>
+          );
+        })}
       </View>
 
       <View

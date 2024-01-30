@@ -115,8 +115,8 @@ export const LoginToken = () => {
               style={{ width: 150, height: 150 }}
             />
           </Pressable>
-
-          {/* {count >= 5 ? (
+          {/* 
+          {count >= 5 ? (
             <View
               style={{
                 borderWidth: 1,
