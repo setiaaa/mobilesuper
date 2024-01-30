@@ -348,34 +348,34 @@ export const SurveyLayanan = () => {
           keyExtractor={(item) => item}
         />
       </View>
-      {/* {profile?.roles_access.includes("USER_REPORT_SURVEY") ? ( */}
-      <TouchableOpacity
-        style={{
-          width: "90%",
-          height: 50,
-          marginBottom: 10,
-          borderRadius: 6,
-          alignItems: "center",
-          marginHorizontal: 20,
-          justifyContent: "center",
-          borderWidth: 1,
-          borderColor: COLORS.primary,
-        }}
-        onPress={() => {
-          navigation.navigate("HasilSurvey");
-        }}
-      >
-        <Text
+      {profile?.roles_access.includes("USER_REPORT_SURVEY") ? (
+        <TouchableOpacity
           style={{
-            fontSize: fontSizeResponsive("H1", device),
-            fontWeight: 500,
-            color: COLORS.primary,
+            width: "90%",
+            height: 50,
+            marginBottom: 10,
+            borderRadius: 6,
+            alignItems: "center",
+            marginHorizontal: 20,
+            justifyContent: "center",
+            borderWidth: 1,
+            borderColor: COLORS.primary,
+          }}
+          onPress={() => {
+            navigation.navigate("HasilSurvey");
           }}
         >
-          Hasil survei
-        </Text>
-      </TouchableOpacity>
-      {/* ) : null} */}
+          <Text
+            style={{
+              fontSize: fontSizeResponsive("H1", device),
+              fontWeight: 500,
+              color: COLORS.primary,
+            }}
+          >
+            Hasil survei
+          </Text>
+        </TouchableOpacity>
+      ) : null}
 
       <TouchableOpacity
         style={{
