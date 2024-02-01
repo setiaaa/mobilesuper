@@ -993,6 +993,11 @@ function AuthenticatedStack(route) {
             options={{ header: toolbarBack }}
           />
           <Stack.Screen
+            name="InternalUnread"
+            component={InternalSatkerList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
             name="IncomingList"
             component={IncomingList}
             options={{ header: toolbarBack }}
