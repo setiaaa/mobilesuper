@@ -87,6 +87,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getProfileMe.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getBanner.fulfilled, (state, action) => {
         state.banner = action.payload;
@@ -97,6 +98,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getBanner.rejected, (state, action) => {
         // state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getGaleri.fulfilled, (state, action) => {
         // state.galeri.lists = action.payload;
@@ -112,6 +114,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getGaleri.rejected, (state, action) => {
         // state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getBerita.fulfilled, (state, action) => {
         let dataPrev = state.berita.lists;
@@ -125,6 +128,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getBerita.rejected, (state, action) => {
         // state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDetailBerita.fulfilled, (state, action) => {
         state.berita.detail = action.payload;
@@ -135,6 +139,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getDetailBerita.rejected, (state, action) => {
         // state.loading = false;
+        throw new Error(action.payload);
       });
   },
 });

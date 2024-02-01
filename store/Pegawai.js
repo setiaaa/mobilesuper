@@ -29,6 +29,7 @@ const PegawaiSlice = createSlice({
       })
       .addCase(getPegawai.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDetailPegawai.fulfilled, (state, action) => {
         state.pegawai.detail = action.payload;
@@ -39,6 +40,7 @@ const PegawaiSlice = createSlice({
       })
       .addCase(getDetailPegawai.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       });
   },
 });

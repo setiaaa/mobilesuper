@@ -35,6 +35,7 @@ const SPPDSlice = createSlice({
       })
       .addCase(getDashboardSPPD.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDocumentListSPPD.fulfilled, (state, action) => {
         state.dokumen.lists = action.payload;
@@ -45,6 +46,7 @@ const SPPDSlice = createSlice({
       })
       .addCase(getDocumentListSPPD.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDocumentDetailSPPD.fulfilled, (state, action) => {
         state.dokumen.detail = action.payload;
@@ -55,6 +57,7 @@ const SPPDSlice = createSlice({
       })
       .addCase(getDocumentDetailSPPD.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDocumentAttachmentSPPD.fulfilled, (state, action) => {
         state.surat = action.payload;
@@ -65,6 +68,7 @@ const SPPDSlice = createSlice({
       })
       .addCase(getDocumentAttachmentSPPD.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDocumentCetakSPPD.fulfilled, (state, action) => {
         state.cetak = action.payload;
@@ -75,6 +79,7 @@ const SPPDSlice = createSlice({
       })
       .addCase(getDocumentCetakSPPD.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDocumentDetailPersonalSPPD.fulfilled, (state, action) => {
         state.detailPersonal = action.payload;
@@ -85,6 +90,7 @@ const SPPDSlice = createSlice({
       })
       .addCase(getDocumentDetailPersonalSPPD.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       });
   },
 });

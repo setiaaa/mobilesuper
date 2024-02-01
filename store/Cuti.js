@@ -62,6 +62,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getCutiPersonal.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getKuotaCuti.fulfilled, (state, action) => {
         state.kuota = action.payload;
@@ -72,6 +73,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getKuotaCuti.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getTanggalLibur.fulfilled, (state, action) => {
         state.libur = action.payload;
@@ -82,6 +84,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getTanggalLibur.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getLiburKhusus.fulfilled, (state, action) => {
         state.liburKhusus = action.payload;
@@ -92,6 +95,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getLiburKhusus.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getArsipCuti.fulfilled, (state, action) => {
         state.arsip.lists = action.payload;
@@ -102,6 +106,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getArsipCuti.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDetailArsipCuti.fulfilled, (state, action) => {
         state.arsip.detail = action.payload;
@@ -112,6 +117,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getDetailArsipCuti.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getFormCuti.fulfilled, (state, action) => {
         state.form = action.payload;
@@ -122,6 +128,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getFormCuti.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getPilihApproval.fulfilled, (state, action) => {
         state.pilih = action.payload;
@@ -135,6 +142,7 @@ const CutiSlice = createSlice({
       })
       .addCase(getDokumenPersetujuan.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(postPengajuanCuti.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -147,6 +155,7 @@ const CutiSlice = createSlice({
       .addCase(postPengajuanCuti.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(postApproval.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -159,6 +168,7 @@ const CutiSlice = createSlice({
       .addCase(postApproval.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(postAttachmentCuti.fulfilled, (state, action) => {
         // let id_attachment = [];
@@ -171,6 +181,7 @@ const CutiSlice = createSlice({
       })
       .addCase(postAttachmentCuti.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(postPembatalanCuti.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -183,6 +194,7 @@ const CutiSlice = createSlice({
       .addCase(postPembatalanCuti.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(postTanggalCuti.fulfilled, (state, action) => {
         state.jumlahCuti = action.payload;
@@ -193,6 +205,7 @@ const CutiSlice = createSlice({
       })
       .addCase(postTanggalCuti.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(postPengajuanCutiDraft.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -205,6 +218,7 @@ const CutiSlice = createSlice({
       .addCase(postPengajuanCutiDraft.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        throw new Error(action.payload);
       });
   },
 });
