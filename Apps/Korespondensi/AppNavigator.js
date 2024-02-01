@@ -7,8 +7,9 @@ import {
   Platform,
   useWindowDimensions,
   Alert,
+  BackHandler,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -167,6 +168,10 @@ import InternalSatkerList from "./List/InternalSatkerList";
 import { SurveyLayanan } from "../Survey/SurveyLayanan";
 import { HasilSurvey } from "../Survey/HasilSurvey";
 import { DetailSurvey } from "../Survey/DetailSurvey";
+import * as Sentry from "@sentry/react-native";
+import { Dialog } from "../../components/Dialog";
+import { DeviceType, getDeviceTypeAsync } from "expo-device";
+import { setDevice } from "../../store/Apps";
 
 const Stack = createNativeStackNavigator();
 
@@ -1184,17 +1189,43 @@ function AuthenticatedStack(route) {
   );
 }
 
+Sentry.init({
+  dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
+  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  // We recommend adjusting this value in production.
+  debug: true,
+  // tracePropagationTargets: [Config.base_url],
+  tracesSampleRate: 1.0,
+});
+
 function AppNavigator() {
   const app_name = Config.app_name;
   const app_version = Config.app_version;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
+  const [modal, setModal] = useState(false);
   const { token } = useSelector((state) => state.login);
   const [route, setRoute] = useState("");
 
   const prefix = Linking.makeUrl("/");
 
   const [linking, setLinking] = useState();
+
+  useEffect(() => {
+    const deviceTypeMap = {
+      [DeviceType.UNKNOWN]: "unknown",
+      [DeviceType.PHONE]: "phone",
+      [DeviceType.TABLET]: "tablet",
+      [DeviceType.TV]: "tv",
+      [DeviceType.DESKTOP]: "desktop",
+    };
+    getDeviceTypeAsync()
+      .then((device) => {
+        dispatch(setDevice(deviceTypeMap[device]));
+        console.log(device);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   useEffect(() => {
     // checkversion
@@ -1258,6 +1289,7 @@ function AppNavigator() {
   }
 
   async function checkVersionAndroid() {
+    setIsLoading(true);
     try {
       const response = await getHTTP(nde_api.getVersionAndroid);
       cekValidVersion(response?.data?.results?.android);
@@ -1268,6 +1300,7 @@ function AppNavigator() {
         handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
       }
     }
+    setIsLoading(false);
   }
   async function checkVersionIos() {
     try {
@@ -1283,36 +1316,50 @@ function AppNavigator() {
   }
   function cekValidVersion(server_version) {
     if (server_version != app_version) {
-      Alert.alert(
-        "Peringatan!",
-        "Anda menggunakan versi lama " +
-          app_name +
-          ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
-        [
-          {
-            text: "Perbaharui",
-            onPress: () => {
-              // getToken();
-              // getProfile();
-              handleUpgradeLink();
-            },
-            style: "cancel",
-          },
-        ],
-        {
-          cancelable: false,
-          onDismiss: () => {
-            // getToken();
-            // getProfile();
-          },
-        }
-      );
+      // Alert.alert(
+      //   "Peringatan!",
+      //   "Anda menggunakan versi lama " +
+      //     app_name +
+      //     ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
+      //   [
+      //     {
+      //       text: "Perbaharui",
+      //       onPress: () => {
+      //         // getToken();
+      //         // getProfile();
+      //         // getTokenValue().then((val) => {
+      //         //   if (val !== "") {
+      //         //     removeTokenValue();
+      //         //     dispatch(setLogout());
+      //         //     dispatch(setProfile({}));
+      //         //     navigation.reset({
+      //         //       index: 0,
+      //         //       routes: [{ name: "LoginToken" }],
+      //         //     });
+      //         //   }
+      //         // });
+      //         handleUpgradeLink();
+      //         // console.log("test");
+      //       },
+      //       style: "cancel",
+      //     },
+      //   ],
+      //   {
+      //     cancelable: false,
+      //     onDismiss: () => {
+      //       // getToken();
+      //       // getProfile();
+      //     },
+      //   }
+      // );
+      setModal(true);
       AsyncStorage.removeItem("token");
       dispatch(setValidVersion(false));
     } else {
       dispatch(setValidVersion(true));
       getToken();
       getProfile();
+      setModal(false);
     }
   }
 
@@ -1325,6 +1372,17 @@ function AppNavigator() {
     <>
       <Host>
         {/* awas lupa */}
+        {modal === true ? (
+          <Dialog
+            title={"Peringatan !"}
+            content={
+              "Anda menggunakan versi lama " +
+              app_name +
+              ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi"
+            }
+            buttonTitle={"Perbaharui"}
+          />
+        ) : null}
         <NavigationContainer linking={!token ? null : linking}>
           {/* {!isLoading && isToken == null && <AuthStack />} */}
           {!isLoading && <AuthenticatedStack route={route} />}
@@ -1335,7 +1393,7 @@ function AppNavigator() {
   );
 }
 
-export default AppNavigator;
+export default Sentry.wrap(AppNavigator);
 
 const styles = StyleSheet.create({
   rootScreen: {

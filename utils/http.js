@@ -59,6 +59,7 @@ export const handlerError = (error, title, msg) => {
   }
   // }
   // showError(error, title, msg);
+  throw new Error(error);
 };
 
 export const handleUpgradeLink = async () => {

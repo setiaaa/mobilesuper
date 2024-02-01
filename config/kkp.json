@@ -67,6 +67,16 @@
           "deploymentTarget": "13.0"
         }
       }
+    ],
+    [
+      "@sentry/react-native",
+      {
+        "url": "https://newsentry.armsolusi.com",
+        "warning": "DO NOT COMMIT YOUR AUTH TOKEN",
+        "authToken": "sntrys_YOUR_TOKEN_HERE",
+        "project": "superappskkp",
+        "organization": "kkp"
+      }
     ]
   ],
   "extra": {

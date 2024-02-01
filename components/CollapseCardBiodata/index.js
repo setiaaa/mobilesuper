@@ -22,7 +22,7 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
   const [collapse, setCollapse] = useState(false);
   return (
     <View>
-      <Collapse>
+      <Collapse isExpanded={collapse}>
         <CollapseHeader>
           <TouchableOpacity onPress={() => setCollapse(!collapse)}>
             <View style={styles.card}>
@@ -80,6 +80,7 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
             </View>
           </TouchableOpacity>
         </CollapseHeader>
+        {}
         <CollapseBody>
           <View style={styles.cardCollapse}>
             <View

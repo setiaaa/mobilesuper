@@ -22,6 +22,7 @@ import { Alert } from "react-native";
 import { setLogout } from "../store/LoginAuth";
 import * as Linking from "expo-linking";
 import { Config } from "../constants/config";
+import { getHTTP, handleUpgradeLink } from "../utils/http";
 
 export const LoginToken = () => {
   const navigation = useNavigation();
@@ -29,7 +30,7 @@ export const LoginToken = () => {
   const [count, setCount] = useState(0);
   const [password, setPassword] = useState("Admin");
   const [onChange, setOnChange] = useState("");
-  const [token, setToken] = useState("");
+  const [version, setVersion] = useState("");
   const [username, setUserName] = useState("");
   const [validasi, setValidasi] = useState({
     nip: false,
@@ -86,6 +87,8 @@ export const LoginToken = () => {
       dispatch(Login({ username, password }));
     }
   };
+
+  console.log(loginAuth);
 
   return (
     <SafeAreaView
