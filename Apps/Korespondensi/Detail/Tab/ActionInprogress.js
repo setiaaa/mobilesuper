@@ -20,7 +20,6 @@ import { handlerError, postHTTP } from "../../../../utils/http";
 import { TouchableOpacity } from "react-native";
 import { COLORS } from "../../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function ActionInprogress({ id, data, page }) {
   const platform = Platform;
@@ -703,9 +702,8 @@ function ActionInprogress({ id, data, page }) {
   }
   return (
     <>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        {loadingOverlay}
-        {/* <View>
+      {loadingOverlay}
+      {/* <View>
         {page == "edit" && (
           <Button
             onPress={() => {
@@ -839,54 +837,35 @@ function ActionInprogress({ id, data, page }) {
           </View>
         )}
       </View> */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginTop: 10,
-            gap: 10,
-          }}
-        >
-          {page == "edit" && data?.state == "rns" && (
-            <>
-              <TouchableOpacity
-                onPress={() => {
-                  showConfirm();
-                }}
-                style={{
-                  backgroundColor: COLORS.info,
-                  width: 35,
-                  height: 35,
-                  borderRadius: 25,
-                  marginTop: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons name="save" size={20} color={COLORS.white} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  showComment("Kirim", page);
-                }}
-                style={{
-                  backgroundColor: COLORS.success,
-                  width: 35,
-                  height: 35,
-                  borderRadius: 25,
-                  marginTop: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons name="send" size={20} color={COLORS.white} />
-              </TouchableOpacity>
-            </>
-          )}
-          {data?.state == "finish" && page != "edit" && (
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 10,
+          gap: 10,
+        }}
+      >
+        {page == "edit" && data?.state == "rns" && (
+          <>
             <TouchableOpacity
               onPress={() => {
-                showComment("Selesaikan", page);
+                showConfirm();
+              }}
+              style={{
+                backgroundColor: COLORS.info,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="save" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Kirim", page);
               }}
               style={{
                 backgroundColor: COLORS.success,
@@ -898,50 +877,63 @@ function ActionInprogress({ id, data, page }) {
                 alignItems: "center",
               }}
             >
-              <Ionicons name="checkmark-sharp" size={20} color={COLORS.white} />
+              <Ionicons name="send" size={20} color={COLORS.white} />
             </TouchableOpacity>
-          )}
-          {data?.state != "rns" &&
-            data?.state != "finish" &&
-            page != "edit" && (
-              <>
-                <TouchableOpacity
-                  onPress={() => {
-                    showComment("Setujui", page);
-                  }}
-                  style={{
-                    backgroundColor: COLORS.success,
-                    width: 35,
-                    height: 35,
-                    borderRadius: 25,
-                    marginTop: 10,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Ionicons
-                    name="send-outline"
-                    size={20}
-                    color={COLORS.white}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    showComment("Revisi", page);
-                  }}
-                  style={{
-                    backgroundColor: GlobalStyles.colors.yellow,
-                    width: 35,
-                    height: 35,
-                    borderRadius: 25,
-                    marginTop: 10,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Ionicons name="arrow-back" size={20} color={COLORS.white} />
-                </TouchableOpacity>
-                {/* <TouchableOpacity
+          </>
+        )}
+        {data?.state == "finish" && page != "edit" && (
+          <TouchableOpacity
+            onPress={() => {
+              showComment("Selesaikan", page);
+            }}
+            style={{
+              backgroundColor: COLORS.success,
+              width: 35,
+              height: 35,
+              borderRadius: 25,
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Ionicons name="checkmark-sharp" size={20} color={COLORS.white} />
+          </TouchableOpacity>
+        )}
+        {data?.state != "rns" && data?.state != "finish" && page != "edit" && (
+          <>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Setujui", page);
+              }}
+              style={{
+                backgroundColor: COLORS.success,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="send-outline" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                showComment("Revisi", page);
+              }}
+              style={{
+                backgroundColor: GlobalStyles.colors.yellow,
+                width: 35,
+                height: 35,
+                borderRadius: 25,
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="arrow-back" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            {/* <TouchableOpacity
               onPress={() => {
                 showComment("Batalkan", page);
               }}
@@ -957,161 +949,158 @@ function ActionInprogress({ id, data, page }) {
             >
               <Ionicons name="close" size={20} color={COLORS.white} />
             </TouchableOpacity> */}
-              </>
-            )}
-        </View>
+          </>
+        )}
+      </View>
 
-        <BottomSheetModalProvider>
-          <SafeAreaView>
-            <View>
-              <BottomSheetModal
-                name={tipe}
-                ref={bottomSheetModalRef}
-                index={1}
-                snapPoints={animatedSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
-                keyboardBehavior={
-                  platform?.OS == "android" ? "fillParent" : "interactive"
-                }
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjustRezise"
-                backdropComponent={(props) => {
-                  return <BottomSheetBackdrop {...props} />;
-                }}
-              >
-                <BottomSheetView onLayout={handleContentLayout}>
-                  <View
-                    style={
-                      page == "edit"
-                        ? [styles.contentContainer, { padding: 16 }]
-                        : [styles.contentContainer, { padding: 16 }]
-                    }
-                  >
-                    <View style={{ flexDirection: "row" }}>
-                      <Text>Komentar - </Text>
-                      <Text
-                        style={{
-                          color:
-                            tipe == "Setujui" || tipe == "Selesaikan"
-                              ? GlobalStyles.colors.approve
-                              : tipe == "Revisi"
-                              ? GlobalStyles.colors.return
-                              : tipe == "Return To Composer"
-                              ? GlobalStyles.colors.returntocomposer
-                              : tipe == "Batalkan"
-                              ? GlobalStyles.colors.reject
-                              : GlobalStyles.colors.blue,
-                        }}
-                      >
-                        {tipe}
-                      </Text>
-                    </View>
-                    <BottomSheetTextInput
-                      defaultValue={comment}
-                      onChangeText={(text) => setComment(text)}
-                      style={styles.input}
-                      multiline={true}
-                      autoFocus
-                    />
-
-                    {tipe == "Setujui" &&
-                      data?.current + 1 == data?.tracker?.approvers?.length && (
-                        <>
-                          <View style={{ flexDirection: "row" }}>
-                            <Text>Passphrase</Text>
-                          </View>
-
-                          <View
-                            style={[styles.input, { flexDirection: "row" }]}
-                          >
-                            <BottomSheetTextInput
-                              defaultValue={passphrase}
-                              onChangeText={(text) => setPassphrase(text)}
-                              style={{ paddingHorizontal: 10, width: "70%" }}
-                              secureTextEntry={showPassphrase}
-                            />
-                            <View
-                              style={{
-                                alignItems: "flex-end",
-                                flex: 1,
-                                marginRight: 10,
-                                justifyContent: "center",
-                              }}
-                            >
-                              {showPassphrase == false ? (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    setShowPassphrase(true);
-                                  }}
-                                >
-                                  <Ionicons
-                                    name="eye-off-sharp"
-                                    size={20}
-                                    color={COLORS.grey}
-                                  />
-                                </TouchableOpacity>
-                              ) : (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    setShowPassphrase(false);
-                                  }}
-                                >
-                                  <Ionicons
-                                    name="eye-sharp"
-                                    size={20}
-                                    color={COLORS.grey}
-                                  />
-                                </TouchableOpacity>
-                              )}
-                            </View>
-                          </View>
-                        </>
-                      )}
-                    <Button
-                      mode="contained"
-                      style={[
-                        {
-                          backgroundColor:
-                            tipe == "Setujui" || tipe == "Selesaikan"
-                              ? GlobalStyles.colors.approve
-                              : tipe == "Revisi"
-                              ? GlobalStyles.colors.return
-                              : tipe == "Return To Composer"
-                              ? GlobalStyles.colors.returntocomposer
-                              : tipe == "Batalkan"
-                              ? GlobalStyles.colors.reject
-                              : GlobalStyles.colors.blue,
-                          marginBottom: 16,
-                        },
-                      ]}
-                      onPress={() => submitComment()}
-                    >
-                      Kirim
-                    </Button>
-                    <Button
-                      mode="contained"
-                      style={[
-                        {
-                          backgroundColor: GlobalStyles.colors.gray500,
-                          marginBottom: 16,
-                        },
-                      ]}
-                      onPress={() => {
-                        bottomSheetModalRef.current?.dismiss();
-                        setComment("");
-                        setPassphrase("");
+      <BottomSheetModalProvider>
+        <SafeAreaView>
+          <View>
+            <BottomSheetModal
+              name={tipe}
+              ref={bottomSheetModalRef}
+              index={1}
+              snapPoints={animatedSnapPoints}
+              handleHeight={animatedHandleHeight}
+              contentHeight={animatedContentHeight}
+              keyboardBehavior={
+                platform?.OS == "android" ? "fillParent" : "interactive"
+              }
+              keyboardBlurBehavior="restore"
+              android_keyboardInputMode="adjustRezise"
+              backdropComponent={(props) => {
+                return <BottomSheetBackdrop {...props} />;
+              }}
+            >
+              <BottomSheetView onLayout={handleContentLayout}>
+                <View
+                  style={
+                    page == "edit"
+                      ? [styles.contentContainer, { padding: 16 }]
+                      : [styles.contentContainer, { padding: 16 }]
+                  }
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text>Komentar - </Text>
+                    <Text
+                      style={{
+                        color:
+                          tipe == "Setujui" || tipe == "Selesaikan"
+                            ? GlobalStyles.colors.approve
+                            : tipe == "Revisi"
+                            ? GlobalStyles.colors.return
+                            : tipe == "Return To Composer"
+                            ? GlobalStyles.colors.returntocomposer
+                            : tipe == "Batalkan"
+                            ? GlobalStyles.colors.reject
+                            : GlobalStyles.colors.blue,
                       }}
                     >
-                      Kembali
-                    </Button>
+                      {tipe}
+                    </Text>
                   </View>
-                </BottomSheetView>
-              </BottomSheetModal>
-            </View>
-          </SafeAreaView>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+                  <BottomSheetTextInput
+                    defaultValue={comment}
+                    onChangeText={(text) => setComment(text)}
+                    style={styles.input}
+                    multiline={true}
+                    autoFocus
+                  />
+
+                  {tipe == "Setujui" &&
+                    data?.current + 1 == data?.tracker?.approvers?.length && (
+                      <>
+                        <View style={{ flexDirection: "row" }}>
+                          <Text>Passphrase</Text>
+                        </View>
+
+                        <View style={[styles.input, { flexDirection: "row" }]}>
+                          <BottomSheetTextInput
+                            defaultValue={passphrase}
+                            onChangeText={(text) => setPassphrase(text)}
+                            style={{ paddingHorizontal: 10, width: "70%" }}
+                            secureTextEntry={showPassphrase}
+                          />
+                          <View
+                            style={{
+                              alignItems: "flex-end",
+                              flex: 1,
+                              marginRight: 10,
+                              justifyContent: "center",
+                            }}
+                          >
+                            {showPassphrase == false ? (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  setShowPassphrase(true);
+                                }}
+                              >
+                                <Ionicons
+                                  name="eye-off-sharp"
+                                  size={20}
+                                  color={COLORS.grey}
+                                />
+                              </TouchableOpacity>
+                            ) : (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  setShowPassphrase(false);
+                                }}
+                              >
+                                <Ionicons
+                                  name="eye-sharp"
+                                  size={20}
+                                  color={COLORS.grey}
+                                />
+                              </TouchableOpacity>
+                            )}
+                          </View>
+                        </View>
+                      </>
+                    )}
+                  <Button
+                    mode="contained"
+                    style={[
+                      {
+                        backgroundColor:
+                          tipe == "Setujui" || tipe == "Selesaikan"
+                            ? GlobalStyles.colors.approve
+                            : tipe == "Revisi"
+                            ? GlobalStyles.colors.return
+                            : tipe == "Return To Composer"
+                            ? GlobalStyles.colors.returntocomposer
+                            : tipe == "Batalkan"
+                            ? GlobalStyles.colors.reject
+                            : GlobalStyles.colors.blue,
+                        marginBottom: 16,
+                      },
+                    ]}
+                    onPress={() => submitComment()}
+                  >
+                    Kirim
+                  </Button>
+                  <Button
+                    mode="contained"
+                    style={[
+                      {
+                        backgroundColor: GlobalStyles.colors.gray500,
+                        marginBottom: 16,
+                      },
+                    ]}
+                    onPress={() => {
+                      bottomSheetModalRef.current?.dismiss();
+                      setComment("");
+                      setPassphrase("");
+                    }}
+                  >
+                    Kembali
+                  </Button>
+                </View>
+              </BottomSheetView>
+            </BottomSheetModal>
+          </View>
+        </SafeAreaView>
+      </BottomSheetModalProvider>
     </>
   );
 }

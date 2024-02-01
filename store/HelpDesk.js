@@ -1,18 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-    getParts,
-  getTicket,
-  postTicket,
-  updateTicket
-} from "../service/api";
+import { getParts, getTicket, postTicket, updateTicket } from "../service/api";
 
 const HelpDeskSlice = createSlice({
   name: "HelpDesk",
   initialState: {
-    tiket:{
-      list:[],
+    tiket: {
+      list: [],
     },
-    parts:[],
+    parts: [],
     status: "",
   },
   reducers: {
@@ -37,6 +32,7 @@ const HelpDeskSlice = createSlice({
       })
       .addCase(getTicket.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getParts.fulfilled, (state, action) => {
         state.parts = action.payload;
@@ -44,14 +40,14 @@ const HelpDeskSlice = createSlice({
       })
       .addCase(postTicket.rejected, (state, action) => {
         state.status = "error";
+        throw new Error(action.payload);
       })
       .addCase(postTicket.fulfilled, (state, action) => {
         state.status = "berhasil";
-      })
+      });
   },
 });
 
-export const { setTiket, setParts, setStatus} =
-  HelpDeskSlice.actions;
+export const { setTiket, setParts, setStatus } = HelpDeskSlice.actions;
 
 export default HelpDeskSlice.reducer;

@@ -122,6 +122,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getLinimasa.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDetailLinimasa.fulfilled, (state, action) => {
         state.linimasa.detail = action.payload;
@@ -132,6 +133,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getDetailLinimasa.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getViewLinimasa.fulfilled, (state, action) => {
         state.linimasa.view = action.payload;
@@ -142,11 +144,14 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getViewLinimasa.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(postComment.fulfilled, (state, action) => {
         state.refresh = true;
       })
-      .addCase(postComment.rejected, (state, action) => {})
+      .addCase(postComment.rejected, (state, action) => {
+        throw new Error(action.payload);
+      })
       .addCase(getListsLike.fulfilled, (state, action) => {
         state.linimasa.listsLike = action.payload;
         state.loading = false;
@@ -156,6 +161,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListsLike.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(patchLike.fulfilled, (state, action) => {
         state.refresh = true;
@@ -172,6 +178,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListPenilaian.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getTotalPenilaian.fulfilled, (state, action) => {
         state.penilaian.total = action.payload;
@@ -182,6 +189,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getTotalPenilaian.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getDetailPenilaian.fulfilled, (state, action) => {
         state.penilaian.detail = action.payload;
@@ -192,6 +200,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getDetailPenilaian.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getNilai.fulfilled, (state, action) => {
         state.nilai = action.payload;
@@ -202,6 +211,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getNilai.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(putTakeDown.fulfilled, (state, action) => {
         state.error = false;
@@ -214,6 +224,7 @@ const PengetahuanSlice = createSlice({
       .addCase(putTakeDown.rejected, (state, action) => {
         state.error = true;
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getMyPostList.fulfilled, (state, action) => {
         state.postinganSaya.lists = action.payload;
@@ -224,6 +235,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getMyPostList.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getMyPostDetail.fulfilled, (state, action) => {
         state.postinganSaya.detail = action.payload;
@@ -234,6 +246,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getMyPostDetail.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getMyPostView.fulfilled, (state, action) => {
         state.postinganSayaJumlah.dilihat = action.payload;
@@ -244,6 +257,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getMyPostView.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getMyPostPoint.fulfilled, (state, action) => {
         state.postinganSayaJumlah.nilai = action.payload;
@@ -254,6 +268,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getMyPostPoint.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getMyPostLike.fulfilled, (state, action) => {
         state.postinganSayaJumlah.disukai = action.payload;
@@ -264,6 +279,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getMyPostLike.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getMyPostCount.fulfilled, (state, action) => {
         state.postinganSayaJumlah.draft = action.payload;
@@ -274,6 +290,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getMyPostCount.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getSummaryTotalPost.fulfilled, (state, action) => {
         state.summary.total_post = action.payload;
@@ -284,6 +301,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryTotalPost.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getSummaryBadUser.fulfilled, (state, action) => {
         state.summary.bad_user = action.payload;
@@ -294,6 +312,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryBadUser.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getSummaryGraph.fulfilled, (state, action) => {
         state.summary.graph = action.payload;
@@ -304,6 +323,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryGraph.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getSummaryAccumulation.fulfilled, (state, action) => {
         state.summary.accumulation = action.payload;
@@ -314,6 +334,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryAccumulation.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getSummaryReview.fulfilled, (state, action) => {
         state.summary.review = action.payload;
@@ -324,6 +345,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getSummaryReview.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getListCategory.fulfilled, (state, action) => {
         state.kategori.lists = action.payload;
@@ -334,6 +356,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListCategory.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getListCompetence.fulfilled, (state, action) => {
         state.kompetensi.lists = action.payload;
@@ -344,6 +367,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListCompetence.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getListUnitKerja.fulfilled, (state, action) => {
         state.unitKerja.lists = action.payload;
@@ -354,6 +378,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListUnitKerja.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getListPegawai.fulfilled, (state, action) => {
         state.pegawai.lists = action.payload;
@@ -365,6 +390,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListPegawai.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
         console.log("error");
       })
       .addCase(getListPostPegawai.fulfilled, (state, action) => {
@@ -376,6 +402,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListPostPegawai.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getListPegawaiExport.fulfilled, (state, action) => {
         state.exportPegawai.lists = action.payload;
@@ -386,6 +413,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListPegawaiExport.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getExportFileQuarter.fulfilled, (state, action) => {
         state.exportLaporan.quarter = action.payload;
@@ -396,6 +424,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getExportFileQuarter.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getExportFileEmployee.fulfilled, (state, action) => {
         state.exportLaporan.employee = action.payload;
@@ -406,6 +435,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getExportFileEmployee.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       });
   },
 });

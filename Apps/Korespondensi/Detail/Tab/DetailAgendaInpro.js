@@ -38,6 +38,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../../../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -193,11 +194,9 @@ function DetailAgendaInpro({
               });
             }
           });
-        } catch (error) {
-        }
+        } catch (error) {}
       },
-      (error) => {
-      }
+      (error) => {}
     );
   };
 
@@ -244,552 +243,563 @@ function DetailAgendaInpro({
     }, 1500);
   };
   return (
-    <ScrollView overScrollMode="never" keyboardShouldPersistTaps="handled">
-      <View style={{ padding: 20, gap: 10 }}>
-        <Text style={{ fontSize: 15, fontWeight: 600 }}>Form Review</Text>
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            padding: 20,
-            borderRadius: 16,
-          }}
-        >
+    <GestureHandlerRootView>
+      <ScrollView overScrollMode="never" keyboardShouldPersistTaps="handled">
+        <View style={{ padding: 20, gap: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: 600 }}>Form Review</Text>
           <View
             style={{
-              flexDirection: "row",
-              borderBottomWidth: 2,
-              borderBottomColor: "#DBDADE",
-              paddingVertical: 10,
+              backgroundColor: COLORS.white,
+              padding: 20,
+              borderRadius: 16,
             }}
           >
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                width: "40%",
-                paddingRight: 20,
-              }}
-            >
-              Nomor Surat
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 400,
-                width: "60%",
-                paddingRight: 20,
-              }}
-            >
-              {data?.ref_number}
-            </Text>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomWidth: 2,
-              borderBottomColor: "#DBDADE",
-              paddingVertical: 10,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                width: "40%",
-                paddingRight: 20,
-              }}
-            >
-              Tanggal Surat
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 400,
-                width: "60%",
-                paddingRight: 20,
-              }}
-            >
-              {data?.letter_date}
-            </Text>
-          </View>
-
-          <View style={{ flexDirection: "row", paddingVertical: 10 }}>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                width: "40%",
-                paddingRight: 20,
-              }}
-            >
-              Penanda Tangan
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 400,
-                width: "60%",
-                paddingRight: 20,
-              }}
-            >
-              {data && data?.senders[0].title
-                ? data?.senders[0].title
-                : data?.senders[0].name}
-            </Text>
-          </View>
-        </View>
-        <Text style={{ fontSize: 15, fontWeight: 600 }}>Perihal</Text>
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            padding: 20,
-            borderRadius: 16,
-          }}
-        >
-          <Text>{data?.subject}</Text>
-        </View>
-        {tipe == "TrackingDetail" && (
-          <>
-            <Text style={{ fontSize: 15, fontWeight: 600 }}>Posisi Surat</Text>
             <View
               style={{
-                backgroundColor: COLORS.white,
-                padding: 20,
-                borderRadius: 16,
+                flexDirection: "row",
+                borderBottomWidth: 2,
+                borderBottomColor: "#DBDADE",
+                paddingVertical: 10,
               }}
             >
-              <Text style={{ fontSize: 13 }}>{data?.position}</Text>
-            </View>
-          </>
-        )}
-        {data?.template?.name != "nota_external" && (
-          <>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontSize: 15, fontWeight: 600 }}>Kepada</Text>
               <Text
-                style={{ fontSize: 15, fontWeight: 600, color: COLORS.danger }}
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
               >
-                *
+                Nomor Surat
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data?.ref_number}
               </Text>
             </View>
+
             <View
               style={{
-                backgroundColor: COLORS.white,
-                padding: 20,
-                borderRadius: 16,
+                flexDirection: "row",
+                borderBottomWidth: 2,
+                borderBottomColor: "#DBDADE",
+                paddingVertical: 10,
               }}
             >
-              {data &&
-                data?.receivers_display?.length == 0 &&
-                data?.kepada_bank?.length == 0 && (
-                  <>
-                    {data &&
-                      data?.receivers?.length == 0 &&
-                      data?.kepada_addressbook?.length == 0 && <Text>-</Text>}
-                    {data &&
-                      data?.receivers?.length == 0 &&
-                      data?.kepada_addressbook?.length != 0 && (
-                        <Text>{data?.kepada_addressbook}</Text>
-                      )}
-                    {data && data?.receivers?.length == 1 && (
-                      <>
-                        {data?.template.name != "nota_external" && !loading ? (
-                          <Text>{data?.receivers[0]}</Text>
-                        ) : (
-                          <></>
-                        )}
-                        {data?.template.name == "nota_external" && (
-                          <RenderHTML
-                            contentWidth={width}
-                            source={{ html: data?.receivers[0] }}
-                          />
-                        )}
-                      </>
-                    )}
-                    {data && data?.receivers?.length > 1 && (
-                      <>
-                        {data?.template.name == "nota_external" && (
-                          <RenderHTML
-                            contentWidth={width}
-                            source={{ html: data?.receivers.join("</br>") }}
-                          />
-                        )}
-                        {data?.template.name != "nota_external" && (
-                          <View
-                            style={[
-                              openKepada
-                                ? {
-                                    borderBottomLeftRadius: 12,
-                                    borderBottomRightRadius: 12,
-                                  }
-                                : {},
-                            ]}
-                          >
-                            {data?.receivers.map((item, index) => (
-                              <Text key={index}>
-                                {index + 1}. {item}
-                              </Text>
-                            ))}
-                          </View>
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
-              {data &&
-                data.receivers_display?.length != 0 &&
-                data.kepada_bank?.length == 0 && (
-                  <>
-                    {data.receivers_display?.length == 0 && <Text>-</Text>}
-                    {data && data.receivers_display?.length == 1 && (
-                      <RenderHTML
-                        contentWidth={width}
-                        source={{ html: data?.receivers_display[0] }}
-                      />
-                    )}
-                    {data &&
-                      data.receivers_display?.length > 1 &&
-                      data.template.name != "nota_external" &&
-                      data.receivers_display.map((item, index) => (
-                        <Text key={index}>
-                          {index + 1}. {item}
-                        </Text>
-                      ))}
-                    {data &&
-                      data.receivers_display?.length > 1 &&
-                      data.template.name == "nota_external" &&
-                      data.receivers_display.map((item, index) => (
-                        <Text key={index}>{item}</Text>
-                      ))}
-                  </>
-                )}
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
+              >
+                Tanggal Surat
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data?.letter_date}
+              </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
+
+            <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  width: "40%",
+                  paddingRight: 20,
+                }}
+              >
+                Penanda Tangan
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  width: "60%",
+                  paddingRight: 20,
+                }}
+              >
+                {data && data?.senders[0].title
+                  ? data?.senders[0].title
+                  : data?.senders[0].name}
+              </Text>
             </View>
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                padding: 20,
-                borderRadius: 16,
-              }}
-            >
-              {data && data.copytos_display?.length == 0 && (
-                <>
-                  {data && data.copytos?.length == 0 && <Text>-</Text>}
-                  {data && data.copytos?.length == 1 && (
-                    <Text>{data.copytos[0]}</Text>
-                  )}
-                  {data && data.copytos?.length > 1 && (
-                    <View
-                      style={[
-                        openTembusan
-                          ? {
-                              borderBottomLeftRadius: 12,
-                              borderBottomRightRadius: 12,
-                            }
-                          : {},
-                      ]}
-                    >
-                      {data.copytos.map((item, index) => (
-                        <Text key={index}>
-                          {index + 1}. {item}
-                        </Text>
-                      ))}
-                    </View>
-                  )}
-                </>
-              )}
-              {data && data.copytos_display?.length != 0 && (
-                <>
-                  {data && data.copytos_display?.length == 0 && <Text>-</Text>}
-                  {data && data.copytos_display?.length == 1 && (
-                    <RenderHTML
-                      contentWidth={width}
-                      source={{ html: data?.copytos_display[0] }}
-                    />
-                  )}
-                  {data && data.copytos_display?.length > 1 && (
-                    <RenderHTML
-                      contentWidth={width}
-                      source={{ html: data?.copytos_display.join("\n") }}
-                    />
-                  )}
-                </>
-              )}
-            </View>
-          </>
-        )}
-        {data?.template?.name == "nota_external" && (
-          <>
-            {data?.tipe_penerima == "int" && (
-              <>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 600,
-                    }}
-                  >
-                    Kepada
-                  </Text>
-                </View>
-                <View
+          </View>
+          <Text style={{ fontSize: 15, fontWeight: 600 }}>Perihal</Text>
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              padding: 20,
+              borderRadius: 16,
+            }}
+          >
+            <Text>{data?.subject}</Text>
+          </View>
+          {tipe == "TrackingDetail" && (
+            <>
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                Posisi Surat
+              </Text>
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 20,
+                  borderRadius: 16,
+                }}
+              >
+                <Text style={{ fontSize: 13 }}>{data?.position}</Text>
+              </View>
+            </>
+          )}
+          {data?.template?.name != "nota_external" && (
+            <>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ fontSize: 15, fontWeight: 600 }}>Kepada</Text>
+                <Text
                   style={{
-                    backgroundColor: COLORS.white,
-                    padding: 20,
-                    borderRadius: 16,
+                    fontSize: 15,
+                    fontWeight: 600,
+                    color: COLORS.danger,
                   }}
                 >
-                  {data &&
-                    data?.receivers_display?.length == 0 &&
-                    data?.kepada_bank?.length == 0 && (
-                      <>
-                        {(data && data?.receivers?.length == 0) ||
-                          (data?.kepada_addressbook?.length == 0 && (
-                            <Text style={{ fontSize: 13 }}>-</Text>
-                          ))}
-                        {data && data?.kepada_addressbook?.length == 1 && (
-                          <Text style={{ fontSize: 13 }}>
-                            {data?.kepada_addressbook[0]}
-                          </Text>
+                  *
+                </Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 20,
+                  borderRadius: 16,
+                }}
+              >
+                {data &&
+                  data?.receivers_display?.length == 0 &&
+                  data?.kepada_bank?.length == 0 && (
+                    <>
+                      {data &&
+                        data?.receivers?.length == 0 &&
+                        data?.kepada_addressbook?.length == 0 && <Text>-</Text>}
+                      {data &&
+                        data?.receivers?.length == 0 &&
+                        data?.kepada_addressbook?.length != 0 && (
+                          <Text>{data?.kepada_addressbook}</Text>
                         )}
-                        {data && data?.kepada_addressbook?.length > 1 && (
-                          <>
-                            {data?.kepada_addressbook?.map((item, index) => (
+                      {data && data?.receivers?.length == 1 && (
+                        <>
+                          {data?.template.name != "nota_external" &&
+                          !loading ? (
+                            <Text>{data?.receivers[0]}</Text>
+                          ) : (
+                            <></>
+                          )}
+                          {data?.template.name == "nota_external" && (
+                            <RenderHTML
+                              contentWidth={width}
+                              source={{ html: data?.receivers[0] }}
+                            />
+                          )}
+                        </>
+                      )}
+                      {data && data?.receivers?.length > 1 && (
+                        <>
+                          {data?.template.name == "nota_external" && (
+                            <RenderHTML
+                              contentWidth={width}
+                              source={{ html: data?.receivers.join("</br>") }}
+                            />
+                          )}
+                          {data?.template.name != "nota_external" && (
+                            <View
+                              style={[
+                                openKepada
+                                  ? {
+                                      borderBottomLeftRadius: 12,
+                                      borderBottomRightRadius: 12,
+                                    }
+                                  : {},
+                              ]}
+                            >
+                              {data?.receivers.map((item, index) => (
+                                <Text key={index}>
+                                  {index + 1}. {item}
+                                </Text>
+                              ))}
+                            </View>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+                {data &&
+                  data.receivers_display?.length != 0 &&
+                  data.kepada_bank?.length == 0 && (
+                    <>
+                      {data.receivers_display?.length == 0 && <Text>-</Text>}
+                      {data && data.receivers_display?.length == 1 && (
+                        <RenderHTML
+                          contentWidth={width}
+                          source={{ html: data?.receivers_display[0] }}
+                        />
+                      )}
+                      {data &&
+                        data.receivers_display?.length > 1 &&
+                        data.template.name != "nota_external" &&
+                        data.receivers_display.map((item, index) => (
+                          <Text key={index}>
+                            {index + 1}. {item}
+                          </Text>
+                        ))}
+                      {data &&
+                        data.receivers_display?.length > 1 &&
+                        data.template.name == "nota_external" &&
+                        data.receivers_display.map((item, index) => (
+                          <Text key={index}>{item}</Text>
+                        ))}
+                    </>
+                  )}
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 20,
+                  borderRadius: 16,
+                }}
+              >
+                {data && data.copytos_display?.length == 0 && (
+                  <>
+                    {data && data.copytos?.length == 0 && <Text>-</Text>}
+                    {data && data.copytos?.length == 1 && (
+                      <Text>{data.copytos[0]}</Text>
+                    )}
+                    {data && data.copytos?.length > 1 && (
+                      <View
+                        style={[
+                          openTembusan
+                            ? {
+                                borderBottomLeftRadius: 12,
+                                borderBottomRightRadius: 12,
+                              }
+                            : {},
+                        ]}
+                      >
+                        {data.copytos.map((item, index) => (
+                          <Text key={index}>
+                            {index + 1}. {item}
+                          </Text>
+                        ))}
+                      </View>
+                    )}
+                  </>
+                )}
+                {data && data.copytos_display?.length != 0 && (
+                  <>
+                    {data && data.copytos_display?.length == 0 && (
+                      <Text>-</Text>
+                    )}
+                    {data && data.copytos_display?.length == 1 && (
+                      <RenderHTML
+                        contentWidth={width}
+                        source={{ html: data?.copytos_display[0] }}
+                      />
+                    )}
+                    {data && data.copytos_display?.length > 1 && (
+                      <RenderHTML
+                        contentWidth={width}
+                        source={{ html: data?.copytos_display.join("\n") }}
+                      />
+                    )}
+                  </>
+                )}
+              </View>
+            </>
+          )}
+          {data?.template?.name == "nota_external" && (
+            <>
+              {data?.tipe_penerima == "int" && (
+                <>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        fontWeight: 600,
+                      }}
+                    >
+                      Kepada
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      padding: 20,
+                      borderRadius: 16,
+                    }}
+                  >
+                    {data &&
+                      data?.receivers_display?.length == 0 &&
+                      data?.kepada_bank?.length == 0 && (
+                        <>
+                          {(data && data?.receivers?.length == 0) ||
+                            (data?.kepada_addressbook?.length == 0 && (
+                              <Text style={{ fontSize: 13 }}>-</Text>
+                            ))}
+                          {data && data?.kepada_addressbook?.length == 1 && (
+                            <Text style={{ fontSize: 13 }}>
+                              {data?.kepada_addressbook[0]}
+                            </Text>
+                          )}
+                          {data && data?.kepada_addressbook?.length > 1 && (
+                            <>
+                              {data?.kepada_addressbook?.map((item, index) => (
+                                <Text key={index} style={{ fontSize: 13 }}>
+                                  {index + 1}. {item}
+                                </Text>
+                              ))}
+                            </>
+                          )}
+                          {data && data?.receivers?.length == 1 && (
+                            <>
+                              {data?.template.name != "nota_external" &&
+                              !loading ? (
+                                <Text style={{ fontSize: 13 }}>
+                                  {data?.receivers[0]}
+                                </Text>
+                              ) : null}
+                            </>
+                          )}
+                          {data && data?.receivers?.length > 1 && (
+                            <>
+                              {data?.template.name != "nota_external" && (
+                                <View>
+                                  {data?.receivers.map((item, index) => (
+                                    <Text key={index} style={{ fontSize: 13 }}>
+                                      {index + 1}. {item}
+                                    </Text>
+                                  ))}
+                                </View>
+                              )}
+                            </>
+                          )}
+                        </>
+                      )}
+                    {data &&
+                      data.receivers_display?.length != 0 &&
+                      data.kepada_bank?.length == 0 && (
+                        <>
+                          {data && data.receivers_display?.length == 1 && (
+                            <RenderHTML
+                              style={{ fontSize: 13 }}
+                              contentWidth={width}
+                              source={{ html: data?.receivers_display[0] }}
+                            />
+                          )}
+                          {data &&
+                            data.receivers_display?.length > 1 &&
+                            data.template.name != "nota_external" &&
+                            data.receivers_display.map((item, index) => (
                               <Text key={index} style={{ fontSize: 13 }}>
                                 {index + 1}. {item}
                               </Text>
                             ))}
-                          </>
-                        )}
-                        {data && data?.receivers?.length == 1 && (
-                          <>
-                            {data?.template.name != "nota_external" &&
-                            !loading ? (
-                              <Text style={{ fontSize: 13 }}>
-                                {data?.receivers[0]}
+                          {data &&
+                            data.receivers_display?.length > 1 &&
+                            data.template.name == "nota_external" &&
+                            data.receivers_display.map((item, index) => (
+                              <Text key={index} style={{ fontSize: 13 }}>
+                                {item}
                               </Text>
-                            ) : null}
-                          </>
-                        )}
-                        {data && data?.receivers?.length > 1 && (
-                          <>
-                            {data?.template.name != "nota_external" && (
-                              <View>
-                                {data?.receivers.map((item, index) => (
-                                  <Text key={index} style={{ fontSize: 13 }}>
-                                    {index + 1}. {item}
-                                  </Text>
-                                ))}
-                              </View>
-                            )}
-                          </>
-                        )}
-                      </>
-                    )}
-                  {data &&
-                    data.receivers_display?.length != 0 &&
-                    data.kepada_bank?.length == 0 && (
-                      <>
-                        {data && data.receivers_display?.length == 1 && (
-                          <RenderHTML
-                            style={{ fontSize: 13 }}
-                            contentWidth={width}
-                            source={{ html: data?.receivers_display[0] }}
-                          />
-                        )}
-                        {data &&
-                          data.receivers_display?.length > 1 &&
-                          data.template.name != "nota_external" &&
-                          data.receivers_display.map((item, index) => (
-                            <Text key={index} style={{ fontSize: 13 }}>
-                              {index + 1}. {item}
-                            </Text>
-                          ))}
-                        {data &&
-                          data.receivers_display?.length > 1 &&
-                          data.template.name == "nota_external" &&
-                          data.receivers_display.map((item, index) => (
-                            <Text key={index} style={{ fontSize: 13 }}>
-                              {item}
-                            </Text>
-                          ))}
-                      </>
-                    )}
-                </View>
-              </>
-            )}
+                            ))}
+                        </>
+                      )}
+                  </View>
+                </>
+              )}
 
-            {data?.tipe_penerima == "eks" && (
-              <>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
+              {data?.tipe_penerima == "eks" && (
+                <>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        fontWeight: 600,
+                      }}
+                    >
+                      Kepada
+                    </Text>
+                  </View>
+                  <View
                     style={{
-                      fontSize: 15,
-                      fontWeight: 600,
+                      backgroundColor: COLORS.white,
+                      padding: 20,
+                      borderRadius: 16,
                     }}
                   >
-                    Kepada
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    backgroundColor: COLORS.white,
-                    padding: 20,
-                    borderRadius: 16,
-                  }}
-                >
-                  {data &&
-                    data?.receivers_display?.length == 0 &&
-                    data?.kepada_bank?.length == 0 && (
-                      <>
-                        {data && data?.receivers?.length == 0 && (
-                          <Text style={{ fontSize: 13 }}>-</Text>
-                        )}
-                        {data && data?.receivers?.length == 1 && (
-                          <>
-                            {data?.template.name == "nota_external" && (
-                              <RenderHTML
-                                style={{ fontSize: 13 }}
-                                contentWidth={width}
-                                source={{
-                                  html: data?.receivers[0],
-                                }}
-                              />
-                            )}
-                          </>
-                        )}
-                        {data && data?.receivers?.length > 1 && (
-                          <>
-                            {data?.template.name == "nota_external" && (
-                              <>
-                                {data?.receivers?.map((item, index) => (
-                                  <Text key={index} style={{ fontSize: 13 }}>
-                                    {index + 1}. {item}
-                                  </Text>
-                                ))}
-                              </>
-                            )}
-                          </>
-                        )}
-                      </>
-                    )}
-                  {data &&
-                    data.receivers_display?.length != 0 &&
-                    data.kepada_bank?.length == 0 && (
-                      <>
-                        {data.receivers_display?.length == 0 && (
-                          <Text style={{ fontSize: 13 }}>-</Text>
-                        )}
-                        {data && data.receivers_display?.length == 1 && (
-                          <RenderHTML
-                            style={{ fontSize: 13 }}
-                            contentWidth={width}
-                            source={{ html: data?.receivers_display[0] }}
-                          />
-                        )}
-                        {data &&
-                          data.receivers_display?.length > 1 &&
-                          data.template.name != "nota_external" &&
-                          data.receivers_display.map((item, index) => (
-                            <Text key={index} style={{ fontSize: 13 }}>
-                              {index + 1}. {item}
-                            </Text>
-                          ))}
-                        {data &&
-                          data.receivers_display?.length > 1 &&
-                          data.template.name == "nota_external" &&
-                          data.receivers_display.map((item, index) => (
-                            <Text key={index} style={{ fontSize: 13 }}>
-                              {item}
-                            </Text>
-                          ))}
-                      </>
-                    )}
-                </View>
-              </>
-            )}
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                padding: 20,
-                borderRadius: 16,
-              }}
-            >
-              {data && data.copytos_display?.length == 0 && (
-                <>
-                  {data && data.copytos?.length == 0 && (
-                    <Text style={{ fontSize: 13 }}>-</Text>
-                  )}
-                  {data && data.copytos?.length == 1 && (
-                    <Text style={{ fontSize: 13 }}>{data.copytos[0]}</Text>
-                  )}
-                  {data && data.copytos?.length > 1 && (
-                    <View>
-                      {data.copytos.map((item, index) => (
-                        <Text key={index} style={{ fontSize: 13 }}>
-                          {index + 1}. {item}
-                        </Text>
-                      ))}
-                    </View>
-                  )}
+                    {data &&
+                      data?.receivers_display?.length == 0 &&
+                      data?.kepada_bank?.length == 0 && (
+                        <>
+                          {data && data?.receivers?.length == 0 && (
+                            <Text style={{ fontSize: 13 }}>-</Text>
+                          )}
+                          {data && data?.receivers?.length == 1 && (
+                            <>
+                              {data?.template.name == "nota_external" && (
+                                <RenderHTML
+                                  style={{ fontSize: 13 }}
+                                  contentWidth={width}
+                                  source={{
+                                    html: data?.receivers[0],
+                                  }}
+                                />
+                              )}
+                            </>
+                          )}
+                          {data && data?.receivers?.length > 1 && (
+                            <>
+                              {data?.template.name == "nota_external" && (
+                                <>
+                                  {data?.receivers?.map((item, index) => (
+                                    <Text key={index} style={{ fontSize: 13 }}>
+                                      {index + 1}. {item}
+                                    </Text>
+                                  ))}
+                                </>
+                              )}
+                            </>
+                          )}
+                        </>
+                      )}
+                    {data &&
+                      data.receivers_display?.length != 0 &&
+                      data.kepada_bank?.length == 0 && (
+                        <>
+                          {data.receivers_display?.length == 0 && (
+                            <Text style={{ fontSize: 13 }}>-</Text>
+                          )}
+                          {data && data.receivers_display?.length == 1 && (
+                            <RenderHTML
+                              style={{ fontSize: 13 }}
+                              contentWidth={width}
+                              source={{ html: data?.receivers_display[0] }}
+                            />
+                          )}
+                          {data &&
+                            data.receivers_display?.length > 1 &&
+                            data.template.name != "nota_external" &&
+                            data.receivers_display.map((item, index) => (
+                              <Text key={index} style={{ fontSize: 13 }}>
+                                {index + 1}. {item}
+                              </Text>
+                            ))}
+                          {data &&
+                            data.receivers_display?.length > 1 &&
+                            data.template.name == "nota_external" &&
+                            data.receivers_display.map((item, index) => (
+                              <Text key={index} style={{ fontSize: 13 }}>
+                                {item}
+                              </Text>
+                            ))}
+                        </>
+                      )}
+                  </View>
                 </>
               )}
-              {data && data.copytos_display?.length != 0 && (
-                <>
-                  {data && data.copytos_display?.length == 0 && (
-                    <Text style={{ fontSize: 13 }}>-</Text>
-                  )}
-                  {data && data.copytos_display?.length == 1 && (
-                    <RenderHTML
-                      style={{ fontSize: 13 }}
-                      contentWidth={width}
-                      source={{ html: data?.copytos_display[0] }}
-                    />
-                  )}
-                  {data && data.copytos_display?.length > 1 && (
-                    <RenderHTML
-                      style={{ fontSize: 13 }}
-                      contentWidth={width}
-                      source={{ html: data?.copytos_display.join("\n") }}
-                    />
-                  )}
-                </>
-              )}
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontSize: 15, fontWeight: 600 }}>
-                Tembusan Eksternal
-              </Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                padding: 20,
-                borderRadius: 16,
-              }}
-            >
-              {data && data.tembusan_external?.length == 0 && (
-                <Text style={{ fontSize: 13 }}>-</Text>
-              )}
-              {data && data.tembusan_external?.length !== 0 && (
-                <Text style={{ fontSize: 13 }}>{data.tembusan_external}</Text>
-              )}
-            </View>
-          </>
-        )}
-        {tipe !== "TrackingDetail" &&
-          data?.state !== "rns" &&
-          data?.state !== "finish" && (
-            <ActionInprogress id={data?.id} data={data} />
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 20,
+                  borderRadius: 16,
+                }}
+              >
+                {data && data.copytos_display?.length == 0 && (
+                  <>
+                    {data && data.copytos?.length == 0 && (
+                      <Text style={{ fontSize: 13 }}>-</Text>
+                    )}
+                    {data && data.copytos?.length == 1 && (
+                      <Text style={{ fontSize: 13 }}>{data.copytos[0]}</Text>
+                    )}
+                    {data && data.copytos?.length > 1 && (
+                      <View>
+                        {data.copytos.map((item, index) => (
+                          <Text key={index} style={{ fontSize: 13 }}>
+                            {index + 1}. {item}
+                          </Text>
+                        ))}
+                      </View>
+                    )}
+                  </>
+                )}
+                {data && data.copytos_display?.length != 0 && (
+                  <>
+                    {data && data.copytos_display?.length == 0 && (
+                      <Text style={{ fontSize: 13 }}>-</Text>
+                    )}
+                    {data && data.copytos_display?.length == 1 && (
+                      <RenderHTML
+                        style={{ fontSize: 13 }}
+                        contentWidth={width}
+                        source={{ html: data?.copytos_display[0] }}
+                      />
+                    )}
+                    {data && data.copytos_display?.length > 1 && (
+                      <RenderHTML
+                        style={{ fontSize: 13 }}
+                        contentWidth={width}
+                        source={{ html: data?.copytos_display.join("\n") }}
+                      />
+                    )}
+                  </>
+                )}
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                  Tembusan Eksternal
+                </Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 20,
+                  borderRadius: 16,
+                }}
+              >
+                {data && data.tembusan_external?.length == 0 && (
+                  <Text style={{ fontSize: 13 }}>-</Text>
+                )}
+                {data && data.tembusan_external?.length !== 0 && (
+                  <Text style={{ fontSize: 13 }}>{data.tembusan_external}</Text>
+                )}
+              </View>
+            </>
           )}
-      </View>
-    </ScrollView>
+          {tipe !== "TrackingDetail" &&
+            data?.state !== "rns" &&
+            data?.state !== "finish" && (
+              <ActionInprogress id={data?.id} data={data} />
+            )}
+        </View>
+      </ScrollView>
+    </GestureHandlerRootView>
   );
 }
 

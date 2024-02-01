@@ -68,6 +68,7 @@ const RepositorySlice = createSlice({
       .addCase(getDocument.rejected, (state, action) => {
         state.loading = false;
         state.load = false;
+        throw new Error(action.payload);
       })
       .addCase(getDetailDocument.fulfilled, (state, action) => {
         state.dokumen.detail = action.payload;
@@ -84,6 +85,7 @@ const RepositorySlice = createSlice({
       .addCase(getDocumentDibagikan.rejected, (state, action) => {
         state.loading = false;
         state.load = false;
+        throw new Error(action.payload);
       })
       .addCase(getDocumentTamplate.fulfilled, (state, action) => {
         state.tamplate.lists = action.payload;
@@ -97,6 +99,7 @@ const RepositorySlice = createSlice({
       .addCase(getDocumentTamplate.rejected, (state, action) => {
         state.loading = false;
         state.load = false;
+        throw new Error(action.payload);
       })
       .addCase(getDivisionFilter.fulfilled, (state, action) => {
         state.filter.unker = action.payload;
@@ -116,6 +119,7 @@ const RepositorySlice = createSlice({
       .addCase(getDownloadLampiran.rejected, (state, action) => {
         state.loading = false;
         state.load = false;
+        throw new Error(action.payload);
       });
   },
 });

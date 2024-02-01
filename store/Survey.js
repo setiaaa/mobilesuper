@@ -36,6 +36,7 @@ const SurveySlice = createSlice({
         state.status = "error";
         console.log("gagal");
         state.loading = true;
+        throw new Error(action.payload);
       })
       .addCase(getSurveyReport.fulfilled, (state, action) => {
         state.report = action.payload;
@@ -46,6 +47,7 @@ const SurveySlice = createSlice({
       })
       .addCase(getSurveyReport.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getSurveyCount.fulfilled, (state, action) => {
         state.count = action.payload;
@@ -56,6 +58,7 @@ const SurveySlice = createSlice({
       })
       .addCase(getSurveyCount.rejected, (state, action) => {
         state.loading = false;
+        throw new Error(action.payload);
       })
       .addCase(getSurveyDetail.fulfilled, (state, action) => {
         state.detail = action.payload;
@@ -67,6 +70,7 @@ const SurveySlice = createSlice({
       .addCase(getSurveyDetail.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
+        throw new Error(action.payload);
       })
       .addCase(getSurveyExport.fulfilled, (state, action) => {
         state.exportFile = action.payload;
@@ -78,6 +82,7 @@ const SurveySlice = createSlice({
       .addCase(getSurveyExport.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
+        throw new Error(action.payload);
       });
   },
 });

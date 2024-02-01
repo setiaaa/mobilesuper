@@ -55,7 +55,7 @@ function DCounter() {
     {
       icon: "inbox-arrow-down",
       color: "rgba(236, 202, 12, 0.6)",
-      navName: "InternalSatkerList",
+      navName: "InternalUnread",
     },
   ];
   useEffect(() => {
@@ -125,12 +125,12 @@ function DCounter() {
           },
           {
             count: 4,
-            type: "tracking",
+            type: "draft",
             value: "-",
           },
           {
             count: 5,
-            type: "agenda_out",
+            type: "internal",
             value: "-",
           },
         ]);

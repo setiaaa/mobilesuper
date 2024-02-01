@@ -395,6 +395,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                             jabatan: true,
                             pegawai: true,
                             para: true,
+                            senderCode: senderAttr.code,
                           },
                           multiselect: true,
                           payload: pilihanKepada,
@@ -445,6 +446,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                               },
                               multiselect: true,
                               payload: pilihanKepada,
+                              senderCode: senderAttr.code,
                             };
                             setStateConfig(config);
                             navigation.navigate("AddressBook", {

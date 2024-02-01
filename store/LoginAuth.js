@@ -28,6 +28,7 @@ const LoginAuthSlice = createSlice({
         state.error = false;
         state.error = action.payload.error;
         state.msg = action.payload.msg;
+        throw new Error(action.payload);
       });
   },
 });

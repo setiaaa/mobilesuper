@@ -114,7 +114,9 @@ export const AddressBookPegawai = ({ route }) => {
     if (token !== "") {
       if (config.tipeAddress === "korespondensi" && search.length == 0) {
         (async () => {
-          let response = await getHTTP(nde_api.employee);
+          let response = await getHTTP(
+            nde_api.employee + "?attr=" + config.senderCode
+          );
           dispatch(setAddressbookEmployee(response.data));
         })();
       } else {
@@ -144,7 +146,9 @@ export const AddressBookPegawai = ({ route }) => {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(
-            nde_api.employeeSearch.replace("{$word}", search)
+            nde_api.employeeSearch.replace("{$word}", search) +
+              "&attr=" +
+              config.senderCode
           );
           data = response.data;
           setFilterData(data);
@@ -159,7 +163,7 @@ export const AddressBookPegawai = ({ route }) => {
       if (config.tipeAddress === "korespondensi") {
         (async () => {
           let response = await getHTTP(
-            nde_api.employeeSearch.replace("{$word}", search)
+            nde_api.employee + "?attr=" + config.senderCode
           );
           data = response.data;
           setFilterData(data);
