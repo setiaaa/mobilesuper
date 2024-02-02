@@ -55,7 +55,11 @@ export const HasilSurvey = () => {
   const [dataPenilainTiga, setDataPenilaianTiga] = useState([]);
   const [dataPenilainEmpat, setDataPenilaianEmpat] = useState([]);
   const [dataPenilainLima, setDataPenilaianLima] = useState([]);
-  const [dataRata, setDataRata] = useState([]);
+  const [dataRataSatu, setDataRataSatu] = useState([]);
+  const [dataRataDua, setDataRataDua] = useState([]);
+  const [dataRataTiga, setDataRataTiga] = useState([]);
+  const [dataRataEmpat, setDataRataEmpat] = useState([]);
+  const [dataRataLima, setDataRataLima] = useState([]);
   const [labelRata, setLabelRata] = useState([]);
   const [aktualNameRata, setAktualNameRata] = useState([]);
   const [page, setPage] = useState(5);
@@ -116,7 +120,11 @@ export const HasilSurvey = () => {
     let dataPenilainTiga = [];
     let dataPenilainEmpat = [];
     let dataPenilainLima = [];
-    let dataRata = [];
+    let dataRataSatu = [];
+    let dataRataDua = [];
+    let dataRataTiga = [];
+    let dataRataEmpat = [];
+    let dataRataLima = [];
     let aktualNameRata = [];
     let labelRata = [];
 
@@ -234,15 +242,54 @@ export const HasilSurvey = () => {
 
       charA = 65;
 
-      for (const key in count) {
-        if (key.startsWith("average")) {
-          dataRata.push(count[key]);
-          aktualNameRata.push(key.replace("average ", ""));
-          labelRata.push(String.fromCharCode(charA));
-          charA++;
-        }
-      }
-      console.log("test");
+      // for (const key in count) {
+      //   if (key.startsWith("average")) {
+      //     dataRata.push(count[key]);
+      //     aktualNameRata.push(key.replace("average ", ""));
+      //     labelRata.push(String.fromCharCode(charA));
+      //     charA++;
+      //   }
+      // }
+      dataRataSatu.push(
+        count[
+          "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
+        ],
+        5 -
+          count[
+            "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
+          ]
+      );
+
+      dataRataDua.push(
+        count[
+          "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
+        ],
+        5 -
+          count[
+            "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
+          ]
+      );
+
+      dataRataTiga.push(
+        count["average Portal Collaboration Office dapat diakses setiap hari"],
+        5 -
+          count["average Portal Collaboration Office dapat diakses setiap hari"]
+      );
+
+      dataRataEmpat.push(
+        count["average Portal Collaboration Office mudah digunakan"],
+        5 - count["average Portal Collaboration Office mudah digunakan"]
+      );
+
+      dataRataLima.push(
+        count[
+          "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
+        ],
+        5 -
+          count[
+            "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
+          ]
+      );
 
       setLabel(label);
       setAktualName(aktualName);
@@ -255,7 +302,11 @@ export const HasilSurvey = () => {
       setDataPenilaianTiga(dataPenilainTiga);
       setDataPenilaianEmpat(dataPenilainEmpat);
       setDataPenilaianLima(dataPenilainLima);
-      setDataRata(dataRata);
+      setDataRataSatu(dataRataSatu);
+      setDataRataDua(dataRataDua);
+      setDataRataTiga(dataRataTiga);
+      setDataRataEmpat(dataRataEmpat);
+      setDataRataLima(dataRataLima);
       setAktualNameRata(aktualNameRata);
       setLabelRata(labelRata);
     }
@@ -268,6 +319,12 @@ export const HasilSurvey = () => {
     COLORS.info,
     COLORS.success,
   ];
+
+  const colorAveragefirst = [COLORS.orange, COLORS.ExtraDivinder];
+  const colorAverageSecond = [COLORS.warning, COLORS.ExtraDivinder];
+  const colorAverageThird = [COLORS.lightBrown, COLORS.ExtraDivinder];
+  const colorAverageFourth = [COLORS.info, COLORS.ExtraDivinder];
+  const colorAverageFifth = [COLORS.success, COLORS.ExtraDivinder];
   const widthAndHeight = 200;
 
   const downloadPath =
@@ -319,8 +376,6 @@ export const HasilSurvey = () => {
       setPage((prev) => prev + 5);
     }
   };
-
-  console.log(aktualNameRata);
 
   return (
     <ScrollView>
@@ -2000,9 +2055,10 @@ export const HasilSurvey = () => {
             marginBottom: 10,
           }}
         >
-          Rata-rata
+          [A] Akses login Portal Collaboration Office memiliki tingkat keamanan
+          yang baik
         </Text>
-        <View
+        {/* <View
           style={{
             justifyContent: device === "tablet" ? "center" : "flex-start",
             alignItems: device === "tablet" ? "center" : "flex-start",
@@ -2039,8 +2095,8 @@ export const HasilSurvey = () => {
             style={{ marginHorizontal: -35, marginTop: 20 }}
             withInnerLines={false}
           />
-        </View>
-        <View
+        </View> */}
+        {/* <View
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -2083,7 +2139,167 @@ export const HasilSurvey = () => {
               <Text style={{ width: 250 }}>{item}</Text>
             </View>
           );
-        })}
+        })} */}
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count[
+                "average Portal Collaboration Office dapat diakses setiap hari"
+              ]}
+        </Text>
+        {dataRataSatu.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataRataSatu}
+            sliceColor={colorAveragefirst}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          [B] Informasi pada Portal Collabaration Office tersaji sesuai dengan
+          kebutuhan
+        </Text>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count[
+                "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
+              ]}
+        </Text>
+        {dataRataDua.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataRataDua}
+            sliceColor={colorAverageSecond}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          [C] Portal Collaboration Office dapat diakses setiap hari
+        </Text>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count[
+                "average Portal Collaboration Office dapat diakses setiap hari"
+              ]}
+        </Text>
+        {dataRataTiga.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataRataTiga}
+            sliceColor={colorAverageThird}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          [D] Portal Collaboration Office mudah digunakan
+        </Text>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count["average Portal Collaboration Office mudah digunakan"]}
+        </Text>
+        {dataRataEmpat.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataRataEmpat}
+            sliceColor={colorAverageFourth}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
+
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          [E] Portal Collaboration Office dapat diakses dengan baik pada
+          penjelajah (browser) saya
+        </Text>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive("H2", device),
+            fontWeight: 600,
+            marginBottom: 10,
+          }}
+        >
+          Rata-rata{" "}
+          {count === null
+            ? "-"
+            : count[
+                "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
+              ]}
+        </Text>
+        {dataRataLima.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataRataLima}
+            sliceColor={colorAverageFifth}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+        ) : null}
       </View>
 
       <View
