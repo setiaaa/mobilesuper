@@ -135,7 +135,6 @@ const EventSlice = createSlice({
       })
       .addCase(getEvent.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getEventToday.fulfilled, (state, action) => {
         state.event.lists = action.payload;
@@ -146,7 +145,6 @@ const EventSlice = createSlice({
       })
       .addCase(getEventToday.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getEventProgress.fulfilled, (state, action) => {
         state.event.listsprogress = action.payload;
@@ -157,7 +155,6 @@ const EventSlice = createSlice({
       })
       .addCase(getEventProgress.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getEventFilter.fulfilled, (state, action) => {
         state.eventFilter.list = action.payload;
@@ -168,7 +165,6 @@ const EventSlice = createSlice({
       })
       .addCase(getEventFilter.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getEventDetail.fulfilled, (state, action) => {
         state.event.detailEvent = action.payload;
@@ -179,7 +175,6 @@ const EventSlice = createSlice({
       })
       .addCase(getEventDetail.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getEventAgenda.fulfilled, (state, action) => {
         state.agenda.lists = action.payload;
@@ -190,7 +185,6 @@ const EventSlice = createSlice({
       })
       .addCase(getEventAgenda.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getEventAgendaDetail.fulfilled, (state, action) => {
         state.agenda.detail = action.payload;
@@ -201,7 +195,6 @@ const EventSlice = createSlice({
       })
       .addCase(getEventAgendaDetail.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getlistApprover.fulfilled, (state, action) => {
         state.approver.lists = action.payload;
@@ -212,7 +205,6 @@ const EventSlice = createSlice({
       })
       .addCase(getlistApprover.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getlistNotulensi.fulfilled, (state, action) => {
         state.notulensi.lists = action.payload;
@@ -223,7 +215,6 @@ const EventSlice = createSlice({
       })
       .addCase(getlistNotulensi.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getDetailNotulensi.fulfilled, (state, action) => {
         state.notulensi.detail = action.payload;
@@ -234,7 +225,6 @@ const EventSlice = createSlice({
       })
       .addCase(getDetailNotulensi.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getlistTodo.fulfilled, (state, action) => {
         state.todo.lists = action.payload;
@@ -246,7 +236,6 @@ const EventSlice = createSlice({
       .addCase(getlistTodo.rejected, (state, action) => {
         state.todo.lists = action.payload;
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getDetailTodo.fulfilled, (state, action) => {
         state.todo.detail = action.payload;
@@ -257,7 +246,6 @@ const EventSlice = createSlice({
       })
       .addCase(getDetailTodo.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getlistAbsen.fulfilled, (state, action) => {
         state.absen.lists = action.payload;
@@ -268,14 +256,12 @@ const EventSlice = createSlice({
       })
       .addCase(getlistAbsen.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(putAbsen.fulfilled, (state, action) => {
         alert("Scan Berhasil");
       })
       .addCase(putAbsen.rejected, (state, action) => {
         alert("Scan Gagal");
-        throw new Error(action.payload);
       })
       .addCase(getlistKalender.fulfilled, (state, action) => {
         let kategori = [];
@@ -306,9 +292,7 @@ const EventSlice = createSlice({
       .addCase(postAttachment.fulfilled, (state, action) => {
         state.attachment = [...state.attachment, action.payload];
       })
-      .addCase(postAttachment.rejected, (state, action) => {
-        throw new Error(action.payload);
-      })
+      .addCase(postAttachment.rejected, (state, action) => {})
       .addCase(postEvent.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;
@@ -320,7 +304,6 @@ const EventSlice = createSlice({
       .addCase(postEvent.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(updateStatus.fulfilled, (state, action) => {
         state.statusEvent = action.payload;
@@ -336,7 +319,6 @@ const EventSlice = createSlice({
       .addCase(updateEvent.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(postSubAgenda.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -349,7 +331,6 @@ const EventSlice = createSlice({
       .addCase(postSubAgenda.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(postNotulensi.fulfilled, (state, action) => {
         state.loading = false;
@@ -366,11 +347,9 @@ const EventSlice = createSlice({
       .addCase(updateSubAgenda.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(readyToApprove.rejected, (state, action) => {
         state.status = "error";
-        throw new Error(action.payload);
       })
       .addCase(readyToApprove.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -387,7 +366,6 @@ const EventSlice = createSlice({
       .addCase(postTodo.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -400,7 +378,6 @@ const EventSlice = createSlice({
       .addCase(updateTodo.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(deleteTodo.fulfilled, (state, action) => {
         state.loading = false;

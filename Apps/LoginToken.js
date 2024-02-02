@@ -75,15 +75,12 @@ export const LoginToken = () => {
       nip: nipField,
       pass: passField,
     });
-    if (username === "" && password === "" && isSelected === false) {
-      Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
-    } else if (username !== "" && password === "" && isSelected === false) {
-      Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
-    } else if (username === "" && password !== "" && isSelected === false) {
+    console.log(username, password, isSelected);
+    if (username === "" || password === "" || isSelected === false) {
       Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
     } else if (username !== "" && password !== "" && isSelected === false) {
       Alert.alert("Peringatan", "Harap Menyetujui Ketentuan");
-    } else if (isSelected === true) {
+    } else if (username !== "" && password !== "" && isSelected === true) {
       dispatch(Login({ username, password }));
     }
   };

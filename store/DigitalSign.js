@@ -120,7 +120,6 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(addDocumentDigiSign.rejected, (state, action) => {
         state.status = "error";
-        throw new Error(action.payload);
       })
       .addCase(addDocumentDigiSign.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -134,7 +133,6 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getSummaryCount.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getSummaryList.fulfilled, (state, action) => {
         state.summary.lists = action.payload;
@@ -145,7 +143,6 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getSummaryList.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(putTandaTangan.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -158,7 +155,6 @@ const DigitalSignSlice = createSlice({
       .addCase(putTandaTangan.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getListRejected.fulfilled, (state, action) => {
         state.loading = false;

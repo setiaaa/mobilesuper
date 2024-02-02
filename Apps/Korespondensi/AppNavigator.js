@@ -168,7 +168,6 @@ import InternalSatkerList from "./List/InternalSatkerList";
 import { SurveyLayanan } from "../Survey/SurveyLayanan";
 import { HasilSurvey } from "../Survey/HasilSurvey";
 import { DetailSurvey } from "../Survey/DetailSurvey";
-import * as Sentry from "@sentry/react-native";
 import { Dialog } from "../../components/Dialog";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { setDevice } from "../../store/Apps";
@@ -1194,14 +1193,18 @@ function AuthenticatedStack(route) {
   );
 }
 
-Sentry.init({
-  dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
-  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-  // We recommend adjusting this value in production.
-  debug: true,
-  // tracePropagationTargets: [Config.base_url],
-  tracesSampleRate: 1.0,
-});
+// const bugsnag = Bugsnag({
+//   apiKey: "b67f9428d1c71d7476470cd97e3692a6",
+// });
+
+// Sentry.init({
+//   dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
+//   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+//   // We recommend adjusting this value in production.
+//   debug: true,
+//   // tracePropagationTargets: [Config.base_url],
+//   tracesSampleRate: 1.0,
+// });
 
 function AppNavigator() {
   const app_name = Config.app_name;
@@ -1398,7 +1401,8 @@ function AppNavigator() {
   );
 }
 
-export default Sentry.wrap(AppNavigator);
+// export default Sentry.wrap(AppNavigator);
+export default AppNavigator;
 
 const styles = StyleSheet.create({
   rootScreen: {

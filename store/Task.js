@@ -220,7 +220,6 @@ const TaskSlice = createSlice({
       .addCase(postCategoryTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(editCategoryTM.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -233,7 +232,6 @@ const TaskSlice = createSlice({
       .addCase(editCategoryTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getDetailProjectTM.fulfilled, (state, action) => {
         const data = action.payload.data;
@@ -272,7 +270,6 @@ const TaskSlice = createSlice({
       .addCase(postTaskTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(editTaskTM.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -285,7 +282,6 @@ const TaskSlice = createSlice({
       .addCase(editTaskTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(updateStatusTaskTM.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -298,7 +294,6 @@ const TaskSlice = createSlice({
       .addCase(updateStatusTaskTM.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getChoiceListTM.fulfilled, (state, action) => {
         state.choice = action.payload;
@@ -309,7 +304,6 @@ const TaskSlice = createSlice({
       })
       .addCase(getChoiceListTM.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getCompleteTM.fulfilled, (state, action) => {
         state.complete.list = action.payload;
@@ -320,7 +314,6 @@ const TaskSlice = createSlice({
       })
       .addCase(getCompleteTM.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -332,7 +325,6 @@ const TaskSlice = createSlice({
       .addCase(deleteTask.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(deleteTaskProject.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -344,7 +336,6 @@ const TaskSlice = createSlice({
       .addCase(deleteTaskProject.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(deleteListTask.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -356,7 +347,6 @@ const TaskSlice = createSlice({
       .addCase(deleteListTask.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
-        throw new Error(action.payload);
       });
   },
 });

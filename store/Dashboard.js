@@ -79,7 +79,6 @@ const DashboardSlice = createSlice({
       })
       .addCase(getKesejahteraan.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getPerencanaan.fulfilled, (state, action) => {
         // state.perencanaan.lists = action.payload;
@@ -99,7 +98,6 @@ const DashboardSlice = createSlice({
       })
       .addCase(getPerencanaan.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       })
       .addCase(getTeknologi.fulfilled, (state, action) => {
         state.teknologi.lists = action.payload;
@@ -110,7 +108,6 @@ const DashboardSlice = createSlice({
       })
       .addCase(getTeknologi.rejected, (state, action) => {
         state.loading = false;
-        throw new Error(action.payload);
       });
   },
 });

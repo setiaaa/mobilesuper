@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "superappskkp",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
   "userInterfaceStyle": "automatic",
@@ -18,7 +18,7 @@
   "ios": {
     "buildNumber": "7.2.3",
     "supportsTablet": true,
-    "bundleIdentifier": "com.kubekkp.portal",
+    "bundleIdentifier": "com.kkp.portal",
     "infoPlist": {
       "NSLocationWhenInUseUsageDescription": "Our app needs access to your location",
       "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library"
@@ -35,7 +35,7 @@
       "foregroundImage": "./assets/superApp/kkp-ikon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "com.kubekkp.portal",
+    "package": "com.kkp.portal",
     "intentFilters": [
       {
         "action": "VIEW",
@@ -66,16 +66,6 @@
         "ios": {
           "deploymentTarget": "13.0"
         }
-      }
-    ],
-    [
-      "@sentry/react-native",
-      {
-        "url": "https://newsentry.armsolusi.com",
-        "warning": "DO NOT COMMIT YOUR AUTH TOKEN",
-        "authToken": "sntrys_YOUR_TOKEN_HERE",
-        "project": "superappskkp",
-        "organization": "kkp"
       }
     ]
   ],

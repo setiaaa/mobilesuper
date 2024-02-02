@@ -898,6 +898,7 @@ export const TopsKeuanganKinerja = () => {
             textTransform: "none",
           },
           tabBarScrollEnabled: true,
+          swipeEnabled: false,
           tabBarItemStyle: { width: "auto" },
         }}
       >
