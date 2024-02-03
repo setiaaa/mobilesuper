@@ -795,6 +795,7 @@ export const TopsDash = () => {
             textTransform: "none",
           },
           tabBarScrollEnabled: true,
+          swipeEnabled: false,
           tabBarItemStyle: { width: "auto" },
         }}
       >
@@ -860,6 +861,7 @@ export const TopsProduksiBudidaya = () => {
             textTransform: "none",
           },
           tabBarScrollEnabled: true,
+          swipeEnabled: false,
           tabBarItemStyle: { width: "auto" },
         }}
       >
