@@ -16,6 +16,7 @@ export const Produksi = () => {
         androidLayerType={"software"}
         mixedContentMode={"always"}
         allowUniversalAccessFromFileURLs={true}
+        scalesPageToFit={false}
       />
       <Text style={{ color: COLORS.primary }}>
         *) Gunakan 2 jari untuk menyesuaikan zoom

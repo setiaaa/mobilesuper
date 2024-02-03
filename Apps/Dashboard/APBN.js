@@ -1,12 +1,23 @@
 import React from "react";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, PADDING } from "../../config/SuperAppps";
 
 export const APBN = () => {
+  const widthTableu = Dimensions.get("window").width;
+  let inject = `
+  $('.tableauViz').css({'width': '${widthTableu}'})
+  $('.tableauPlaceholder').css({'background-color': 'red', 'width': '900px'})
+  `;
   return (
-    <View style={{ height: "100%", width: "100%", padding: PADDING.Page }}>
+    <View
+      style={{
+        height: "100%",
+        width: "100%",
+        padding: PADDING.Page,
+      }}
+    >
       <WebView
         originWhitelist={["*"]}
         source={{
@@ -18,6 +29,8 @@ export const APBN = () => {
         mixedContentMode={"always"}
         allowUniversalAccessFromFileURLs={true}
         setDisplayZoomControls={true}
+        // injectedJavaScript={inject}
+        scalesPageToFit={false}
       />
       <Text style={{ color: COLORS.primary }}>
         *) Gunakan 2 jari untuk menyesuaikan zoom

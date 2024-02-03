@@ -616,6 +616,7 @@ export const RangkumanIKU = () => {
               androidLayerType={"software"}
               mixedContentMode={"always"}
               allowUniversalAccessFromFileURLs={true}
+              scalesPageToFit={false}
             />
           </View>
         ) : (
