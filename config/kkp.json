@@ -18,7 +18,7 @@
   "ios": {
     "buildNumber": "7.2.3",
     "supportsTablet": true,
-    "bundleIdentifier": "com.kkp.portal",
+    "bundleIdentifier": "com.kubekkp.portal",
     "infoPlist": {
       "NSLocationWhenInUseUsageDescription": "Our app needs access to your location",
       "NSPhotoLibraryUsageDescription": "Our app needs access to your photo library"
@@ -35,7 +35,7 @@
       "foregroundImage": "./assets/superApp/kkp-ikon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "com.kkp.portal",
+    "package": "com.kubekkp.portal",
     "intentFilters": [
       {
         "action": "VIEW",
