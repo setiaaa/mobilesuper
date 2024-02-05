@@ -11,11 +11,14 @@ import {
   setProfile,
   setSelectedAttr,
 } from "../../../store/profile";
+import { setProfile as setProfileBridge } from "../../../store/SuperApps";
 import { Button, Card, Menu } from "react-native-paper";
 import { COLORS } from "../../../config/SuperAppps";
 import { Image } from "react-native";
 import { TouchableOpacity, Text } from "react-native";
 import { GlobalStyles } from "../../../constants/styles";
+import { removeTokenValue } from "../../../service/session";
+import { setLogout } from "../../../store/LoginAuth";
 
 function DCounter() {
   const navigation = useNavigation();
@@ -95,7 +98,7 @@ function DCounter() {
       dispatch(setOrganization(response.data));
       setIsLoading(false);
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
     }
   }
   // console.log(profile.attr);
@@ -134,8 +137,16 @@ function DCounter() {
             value: "-",
           },
         ]);
+      } else if (error?.status === 401 || error?.response?.status === 401) {
+        removeTokenValue();
+        dispatch(setLogout());
+        dispatch(setProfileBridge({}));
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "LoginToken" }],
+        });
       } else {
-        handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
+        handlerError(error, "Peringatan!", "Counter tidak berfungsi!");
         console.log(error);
       }
       setIsLoading(false);
