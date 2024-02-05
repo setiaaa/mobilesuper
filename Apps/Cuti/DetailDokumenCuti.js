@@ -618,7 +618,7 @@ export const DetailDokumenCuti = ({ route }) => {
   const approval = route.params;
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
-  const { arsip, status } = useSelector((state) => state.cuti);
+  const { arsip, status, message } = useSelector((state) => state.cuti);
   const arsipDetail = arsip.detail;
 
   const [collapse, setCollapse] = useState({
@@ -1999,6 +1999,7 @@ export const DetailDokumenCuti = ({ route }) => {
           <ModalSubmit
             status={status}
             setStatus={setStatus}
+            message={message}
             navigate={"MainCuti"}
           />
         </ScrollView>

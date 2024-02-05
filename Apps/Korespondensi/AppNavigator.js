@@ -1361,12 +1361,12 @@ function AppNavigator() {
       //   }
       // );
       setModal(true);
-      AsyncStorage.removeItem("token");
-      dispatch(setValidVersion(false));
+      // AsyncStorage.removeItem("token");
+      // dispatch(setValidVersion(false));
     } else {
-      dispatch(setValidVersion(true));
-      getToken();
-      getProfile();
+      // dispatch(setValidVersion(true));
+      // getToken();
+      // getProfile();
       setModal(false);
     }
   }
