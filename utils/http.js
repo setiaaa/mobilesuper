@@ -32,9 +32,9 @@ export const handlerError = (error, title, msg) => {
   // const dispatch = useDispatch();
   // function showError(error, title, msg) {
   if (error?.response?.status == null) {
-    Alert.alert("Warning!", "Please check your connection");
+    Alert.alert("Peringatan!", "Silakan cek koneksi Anda");
   } else if (error?.response?.status == 404) {
-    Alert.alert("Warning!", "Page not found", [
+    Alert.alert("Peringatan!", "Halaman tidak ditemukan", [
       {
         text: "Ok",
         onPress: () => {
@@ -47,19 +47,18 @@ export const handlerError = (error, title, msg) => {
     // dispatch(setFirstLogin(false));
     // dispatch(logout());
   } else {
-    Alert.alert(title, msg, [
-      {
-        text: "Ok",
-        onPress: () => {
-          // navigation.goBack();
-        },
-        style: "cancel",
-      },
-    ]);
+     Alert.alert(title, msg + `\n\nversion ` + Config.app_version, [
+       {
+         text: "Ok",
+         onPress: () => {
+           // navigation.goBack();
+         },
+         style: "cancel",
+       },
+     ]);
   }
   // }
   // showError(error, title, msg);
-  throw new Error(error);
 };
 
 export const handleUpgradeLink = async () => {
