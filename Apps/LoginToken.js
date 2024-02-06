@@ -28,7 +28,7 @@ export const LoginToken = () => {
   const navigation = useNavigation();
   const [isSelected, setSelection] = useState(true);
   const [count, setCount] = useState(0);
-  const [password, setPassword] = useState("Admin");
+  const [password, setPassword] = useState("");
   const [onChange, setOnChange] = useState("");
   const [version, setVersion] = useState("");
   const [username, setUserName] = useState("");
