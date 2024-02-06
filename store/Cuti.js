@@ -39,6 +39,7 @@ const CutiSlice = createSlice({
     status: "",
     attachment: [],
     jumlahCuti: {},
+    message: "",
   },
   reducers: {
     setStatus: (state, action) => {
@@ -149,16 +150,26 @@ const CutiSlice = createSlice({
         state.loading = false;
       })
       .addCase(postApproval.fulfilled, (state, action) => {
-        state.status = "berhasil";
-        state.loading = false;
+        let data = action.payload;
+        if (data.success === true || data.success === True) {
+          state.status = "berhasil";
+          state.loading = false;
+        } else {
+          state.status = "error";
+          state.loading = false;
+          state.message = data.message;
+        }
       })
       .addCase(postApproval.pending, (state, action) => {
         state.status = "";
         state.loading = true;
+        state.message = "";
       })
       .addCase(postApproval.rejected, (state, action) => {
+        let data = action.payload;
         state.status = "error";
         state.loading = false;
+        state.message = data.message;
       })
       .addCase(postAttachmentCuti.fulfilled, (state, action) => {
         // let id_attachment = [];

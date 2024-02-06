@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 
-export const ModalSubmit = ({ status, setStatus, navigate }) => {
+export const ModalSubmit = ({ status, setStatus, navigate, message }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   return (
@@ -96,6 +96,7 @@ export const ModalSubmit = ({ status, setStatus, navigate }) => {
                 }}
               >
                 <Text>Terjadi Kesalahan!</Text>
+                <Text>{message}</Text>
               </View>
               <TouchableOpacity
                 onPress={() => dispatch(setStatus(""))}
