@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   StyleSheet,
@@ -8,7 +8,6 @@ import {
   useWindowDimensions,
   Alert,
   BackHandler,
-  AppState,
 } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -1219,7 +1218,6 @@ function AppNavigator() {
   const prefix = Linking.makeUrl("/");
 
   const [linking, setLinking] = useState();
-  const appState = useRef(AppState.currentState);
 
   useEffect(() => {
     const deviceTypeMap = {
@@ -1238,20 +1236,6 @@ function AppNavigator() {
   }, []);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive||background/) &&
-        nextAppState === "active"
-      ) {
-        // checkversion
-        if (Platform.OS === "android") {
-          checkVersionAndroid();
-        } else if (Platform.OS === "ios") {
-          checkVersionIos();
-        }
-        appState.current = nextAppState;
-      }
-    });
     // checkversion
     if (Platform.OS === "android") {
       checkVersionAndroid();
@@ -1284,9 +1268,6 @@ function AppNavigator() {
       }
       setIsLoading(false);
     });
-    return () => {
-      subscription.remove();
-    };
   }, [route]);
 
   async function getToken() {
