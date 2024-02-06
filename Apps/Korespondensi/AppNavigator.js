@@ -176,15 +176,121 @@ import { setDevice } from "../../store/Apps";
 const Stack = createNativeStackNavigator();
 
 function AuthenticatedStack(route) {
+  const [isLoading, setIsLoading] = useState(true);
   const profile = useSelector((state) => state.profile.profile);
   const deviceNIK = profile?.nik;
   const [deviceName, setDeviceName] = useState(null);
   const [deviceId, setDeviceId] = useState(null);
   const [deviceUUID, set_deviceUUID] = useState(null);
   const [deviceOS, setDeviceOS] = useState(null);
+  const app_name = Config.app_name;
+  const app_version = Config.app_version;
+  const [modal, setModal] = useState(false);
+  const appState = useRef(AppState.currentState);
   let data;
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive||background/) &&
+        nextAppState === "active"
+      ) {
+        // checkversion
+        if (Platform.OS === "android") {
+          checkVersionAndroid();
+        } else if (Platform.OS === "ios") {
+          checkVersionIos();
+        }
+        appState.current = nextAppState;
+        console.log("masuk nih")
+      }
+    });
+    // checkversion
+    if (Platform.OS === "android") {
+      checkVersionAndroid();
+    } else if (Platform.OS === "ios") {
+      checkVersionIos();
+    }
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
+  async function checkVersionAndroid() {
+    setIsLoading(true);
+    try {
+      const response = await getHTTP(nde_api.getVersionAndroid);
+      cekValidVersion(response?.data?.results?.android);
+    } catch (error) {
+      if (error.status == null) {
+        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
+      } else {
+        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
+      }
+    }
+    setIsLoading(false);
+  }
+  async function checkVersionIos() {
+    try {
+      const response = await getHTTP(nde_api.getVersionIos);
+      cekValidVersion(response?.data?.results?.ios);
+    } catch (error) {
+      if (error.status == null) {
+        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
+      } else {
+        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
+      }
+    }
+  }
+  function cekValidVersion(server_version) {
+    if (server_version != app_version) {
+      // Alert.alert(
+      //   "Peringatan!",
+      //   "Anda menggunakan versi lama " +
+      //     app_name +
+      //     ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
+      //   [
+      //     {
+      //       text: "Perbaharui",
+      //       onPress: () => {
+      //         // getToken();
+      //         // getProfile();
+      //         // getTokenValue().then((val) => {
+      //         //   if (val !== "") {
+      //         //     removeTokenValue();
+      //         //     dispatch(setLogout());
+      //         //     dispatch(setProfile({}));
+      //         //     navigation.reset({
+      //         //       index: 0,
+      //         //       routes: [{ name: "LoginToken" }],
+      //         //     });
+      //         //   }
+      //         // });
+      //         handleUpgradeLink();
+      //         // console.log("test");
+      //       },
+      //       style: "cancel",
+      //     },
+      //   ],
+      //   {
+      //     cancelable: false,
+      //     onDismiss: () => {
+      //       // getToken();
+      //       // getProfile();
+      //     },
+      //   }
+      // );
+      setModal(true);
+      // AsyncStorage.removeItem("token");
+      // dispatch(setValidVersion(false));
+    } else {
+      // dispatch(setValidVersion(true));
+      // getToken();
+      // getProfile();
+      setModal(false);
+    }
+  }
   const getDeviceUUIDiOS = async () => {
     set_deviceUUID(await Application.getIosIdForVendorAsync());
     if (deviceUUID != undefined && deviceUUID != null) {
@@ -241,6 +347,12 @@ function AuthenticatedStack(route) {
     checkDevice();
   }, [profile, deviceUUID, deviceId, deviceName, deviceOS]);
 
+
+  const loadingOverlay = (
+    <>
+      <LoadingOverlay visible={isLoading} />
+    </>
+  );
   return (
     <BottomSheetModalProvider>
       <SafeAreaView style={styles.rootScreen}>
@@ -1189,6 +1301,19 @@ function AuthenticatedStack(route) {
             }}
           />
         </Stack.Navigator>
+        
+        {modal === true ? (
+          <Dialog
+            title={"Peringatan !"}
+            content={
+              "Anda menggunakan versi lama " +
+              app_name +
+              ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi"
+            }
+            buttonTitle={"Perbaharui"}
+          />
+        ) : null}
+        {loadingOverlay}
       </SafeAreaView>
     </BottomSheetModalProvider>
   );
@@ -1208,18 +1333,14 @@ function AuthenticatedStack(route) {
 // });
 
 function AppNavigator() {
-  const app_name = Config.app_name;
-  const app_version = Config.app_version;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [modal, setModal] = useState(false);
   const { token } = useSelector((state) => state.login);
   const [route, setRoute] = useState("");
 
   const prefix = Linking.makeUrl("/");
 
   const [linking, setLinking] = useState();
-  const appState = useRef(AppState.currentState);
 
   useEffect(() => {
     const deviceTypeMap = {
@@ -1238,26 +1359,6 @@ function AppNavigator() {
   }, []);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive||background/) &&
-        nextAppState === "active"
-      ) {
-        // checkversion
-        if (Platform.OS === "android") {
-          checkVersionAndroid();
-        } else if (Platform.OS === "ios") {
-          checkVersionIos();
-        }
-        appState.current = nextAppState;
-      }
-    });
-    // checkversion
-    if (Platform.OS === "android") {
-      checkVersionAndroid();
-    } else if (Platform.OS === "ios") {
-      checkVersionIos();
-    }
     getTokenValue().then((val) => {
       if (val === null) {
         setRoute("LoginToken");
@@ -1284,9 +1385,6 @@ function AppNavigator() {
       }
       setIsLoading(false);
     });
-    return () => {
-      subscription.remove();
-    };
   }, [route]);
 
   async function getToken() {
@@ -1315,80 +1413,6 @@ function AppNavigator() {
     setIsLoading(false);
   }
 
-  async function checkVersionAndroid() {
-    setIsLoading(true);
-    try {
-      const response = await getHTTP(nde_api.getVersionAndroid);
-      cekValidVersion(response?.data?.results?.android);
-    } catch (error) {
-      if (error.status == null) {
-        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
-      } else {
-        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
-      }
-    }
-    setIsLoading(false);
-  }
-  async function checkVersionIos() {
-    try {
-      const response = await getHTTP(nde_api.getVersionIos);
-      cekValidVersion(response?.data?.results?.ios);
-    } catch (error) {
-      if (error.status == null) {
-        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
-      } else {
-        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
-      }
-    }
-  }
-  function cekValidVersion(server_version) {
-    if (server_version != app_version) {
-      // Alert.alert(
-      //   "Peringatan!",
-      //   "Anda menggunakan versi lama " +
-      //     app_name +
-      //     ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
-      //   [
-      //     {
-      //       text: "Perbaharui",
-      //       onPress: () => {
-      //         // getToken();
-      //         // getProfile();
-      //         // getTokenValue().then((val) => {
-      //         //   if (val !== "") {
-      //         //     removeTokenValue();
-      //         //     dispatch(setLogout());
-      //         //     dispatch(setProfile({}));
-      //         //     navigation.reset({
-      //         //       index: 0,
-      //         //       routes: [{ name: "LoginToken" }],
-      //         //     });
-      //         //   }
-      //         // });
-      //         handleUpgradeLink();
-      //         // console.log("test");
-      //       },
-      //       style: "cancel",
-      //     },
-      //   ],
-      //   {
-      //     cancelable: false,
-      //     onDismiss: () => {
-      //       // getToken();
-      //       // getProfile();
-      //     },
-      //   }
-      // );
-      setModal(true);
-      // AsyncStorage.removeItem("token");
-      // dispatch(setValidVersion(false));
-    } else {
-      // dispatch(setValidVersion(true));
-      // getToken();
-      // getProfile();
-      setModal(false);
-    }
-  }
 
   const loadingOverlay = (
     <>
@@ -1399,17 +1423,6 @@ function AppNavigator() {
     <>
       <Host>
         {/* awas lupa */}
-        {modal === true ? (
-          <Dialog
-            title={"Peringatan !"}
-            content={
-              "Anda menggunakan versi lama " +
-              app_name +
-              ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi"
-            }
-            buttonTitle={"Perbaharui"}
-          />
-        ) : null}
         <NavigationContainer linking={!token ? null : linking}>
           {/* {!isLoading && isToken == null && <AuthStack />} */}
           {!isLoading && <AuthenticatedStack route={route} />}
