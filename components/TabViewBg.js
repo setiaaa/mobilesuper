@@ -112,7 +112,7 @@ function TabViewBg({
       case "preview":
         return <DetailPreview data={data} preview={preview} />;
       case "log":
-        return <DetailLog data={log} />;
+        return <DetailLog id={id} data={log} tipe={tipe} />;
       case "comment":
         return <DetailComment data={data} />;
       case "edit":

@@ -65,21 +65,21 @@ function DispositionDetail({ route }) {
   if (hideFormDispo) {
     routes = [
       { key: "info", title: "Info", icon: "alert-circle-outline" },
-      { key: "log", title: "Log", icon: "clipboard-text" },
+      { key: "log", title: "Aktivitas Disposisi", icon: "clipboard-text" },
       // { key: "attachment", title: "Attachment", icon: "attachment" },
     ];
   } else {
     if (profile?.title?.length > 0) {
       routes = [
         { key: "info", title: "Info", icon: "alert-circle-outline" },
-        { key: "log", title: "Log", icon: "clipboard-text" },
+        { key: "log", title: "Aktivitas Disposisi", icon: "clipboard-text" },
         // { key: "attachment", title: "Attachment", icon: "attachment" },
         { key: "dispo", title: "Disposisi", icon: "share" },
       ];
     } else {
       routes = [
         { key: "info", title: "Info", icon: "alert-circle-outline" },
-        { key: "log", title: "Log", icon: "clipboard-text" },
+        { key: "log", title: "Aktivitas Disposisi", icon: "clipboard-text" },
         // { key: "attachment", title: "Attachment", icon: "attachment" },
       ];
     }
