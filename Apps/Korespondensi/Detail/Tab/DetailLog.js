@@ -15,37 +15,40 @@ import { nde_api } from "../../../../utils/api.config";
 import { getHTTP } from "../../../../utils/http";
 import RenderHTML from "react-native-render-html";
 
-function DetailLog({ route, data }) {
-  const [id, setId] = useState();
+function DetailLog({ route, data, id, tipe }) {
   const [log, setLog] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { width } = useWindowDimensions();
   useEffect(() => {
-    if (data == undefined) {
-      //getlogapi
-      setId(route?.params?.id);
-      getLogDispo();
-    } else {
-      setLog(data);
-    }
+    getLogDispo();
   }, [data, route]);
 
   const getLogDispo = async () => {
     setIsLoading(true);
     try {
       let response;
-      if (route?.params?.tipe == "agendain") {
-        response = await getHTTP(
-          nde_api.agendainlog.replace("{$id}", route?.params?.id)
-        );
-      } else if (route?.params?.tipe == "agendadispo") {
-        response = await getHTTP(
-          nde_api.agendadispolog.replace("{$id}", route?.params?.id)
-        );
-      } else if (route?.params?.tipe == "agendaout") {
-        response = await getHTTP(
-          nde_api.agendaoutlog.replace("{$id}", route?.params?.id)
-        );
+      if (data == undefined) {
+        if (route?.params?.tipe == "agendain") {
+          response = await getHTTP(
+            nde_api.agendainlog.replace("{$id}", route?.params?.id)
+          );
+        } else if (route?.params?.tipe == "agendadispo") {
+          response = await getHTTP(
+            nde_api.agendadispolog.replace("{$id}", route?.params?.id)
+          );
+        } else if (route?.params?.tipe == "agendaout") {
+          response = await getHTTP(
+            nde_api.agendaoutlog.replace("{$id}", route?.params?.id)
+          );
+        }
+      } else {
+        if (tipe == "in") {
+          response = await getHTTP(nde_api.agendainlog.replace("{$id}", id));
+        } else if (tipe == "disposition") {
+          response = await getHTTP(nde_api.agendadispolog.replace("{$id}", id));
+        } else if (tipe == "out") {
+          response = await getHTTP(nde_api.agendaoutlog.replace("{$id}", id));
+        }
       }
       setLog(response?.data);
       setIsLoading(false);
@@ -64,7 +67,7 @@ function DetailLog({ route, data }) {
       {loadingOverlay}
       <View style={styles.screen}>
         <View style={{ marginBottom: 6 }}>
-          <Text>My Disposisi</Text>
+          <Text>Aktivitas Disposisi</Text>
         </View>
         {log &&
           log.map((item, index) => (
@@ -77,7 +80,7 @@ function DetailLog({ route, data }) {
                       styles.badgeText,
                     ]}
                   >
-                    My Disposisi {index + 1}
+                    Aktivitas Disposisi {index + 1}
                   </Text>
                 </View>
                 <View style={styles.headerDate}>
@@ -129,11 +132,13 @@ function DetailLog({ route, data }) {
                     styles.badgeText,
                   ]}
                 >
-                  My Disposisi
+                  Aktivitas Disposisi
                 </Text>
               </View>
               <View style={styles.headerDate}>
-                <Text style={styles.badgeText}>Tidak ada My Disposisi</Text>
+                <Text style={styles.badgeText}>
+                  Tidak ada Aktivitas Disposisi
+                </Text>
               </View>
             </View>
           </Card>

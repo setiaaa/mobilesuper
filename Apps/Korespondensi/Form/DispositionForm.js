@@ -36,7 +36,6 @@ import {
   switchTodo,
 } from "../../../store/dispoMulti";
 import { Config } from "../../../constants/config";
-import { FlatList } from "react-native";
 import { COLORS } from "../../../config/SuperAppps";
 import {
   BottomSheetModal,
@@ -48,7 +47,7 @@ import { useMemo } from "react";
 import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { setUnker } from "../../../store/profile";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 
 function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
   const navigation = useNavigation();
