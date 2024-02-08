@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, Modal, StyleSheet } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   COLORS,
@@ -30,6 +30,7 @@ import { Config } from "../../constants/config";
 export const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [modalLog, setModalLog] = useState(false);
   const { profile, linimasa, loading } = useSelector(
     (state) => state.superApps
   );
@@ -42,41 +43,55 @@ export const Profile = () => {
         <View
           style={{
             flexDirection: "row",
-            alignItems: "flex-end",
+            alignItems: "center",
             backgroundColor: COLORS.primary,
             height: 80,
-            paddingBottom: 20,
           }}
         >
-          <View
+          {/* <View
             style={{
               backgroundColor: COLORS.white,
               borderRadius: 20,
-              width: 28,
-              height: 28,
+              width: device === "tablet" ? 40 : 28,
+              height: device === "tablet" ? 40 : 28,
               alignItems: "center",
               justifyContent: "center",
               marginLeft: 20,
             }}
           >
-            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-              <Ionicons
-                name="chevron-back-outline"
-                size={24}
-                color={COLORS.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1, alignItems: "center", marginRight: 50 }}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back-outline"
+                  size={device === "tablet" ? 40 : 24}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+          </View> */}
+          <View style={{ flex: 1, alignItems: "center", marginLeft: 40 }}>
             <Text
               style={{
                 fontSize: fontSizeResponsive("H1", device),
-                fontWeight: 600,
+                fontWeight: FONTWEIGHT.bold,
                 color: COLORS.white,
               }}
             >
               Profile Saya
             </Text>
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginRight: 20,
+            }}
+          >
+            {/* <TouchableOpacity onPress={() => setModalLog(true)}>
+              <Ionicons
+                name="information-circle-outline"
+                size={device === "tablet" ? 30 : 30}
+                color={COLORS.white}
+              />
+            </TouchableOpacity> */}
           </View>
         </View>
 
@@ -490,7 +505,179 @@ export const Profile = () => {
             Version {Config.app_version}
           </Text>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalLog}
+          onRequestClose={() => {
+            setModalLog(false);
+          }}
+        >
+          <TouchableOpacity
+            style={[
+              Platform.OS === "ios"
+                ? styles.iOSBackdrop
+                : styles.androidBackdrop,
+              styles.backdrop,
+            ]}
+          />
+          <View
+            style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                width: "90%",
+                borderRadius: 10,
+              }}
+            >
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  padding: 10,
+                  borderBottomWidth: 2,
+                  borderBottomColor: COLORS.grey,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Log Perbaikan Aplikasi Version {Config.app_version}
+                </Text>
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    setModalLog(false);
+                  }}
+                >
+                  <Ionicons
+                    name="close-outline"
+                    size={24}
+                    color={COLORS.lighter}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan survei rata-rata
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Penambahan log perbaikan
+                  </Text>
+                </View>
+                {/* 
+              <Text
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {detail?.title !== "" && detail?.title !== null
+                  ? detail.title
+                  : "-"}
+              </Text> */}
+              </View>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </>
   );
 };
+const styles = StyleSheet.create({
+  Card: {
+    backgroundColor: COLORS.white,
+    width: "90%",
+    marginVertical: 20,
+    marginLeft: 20,
+    borderRadius: 16,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  iOSBackdrop: {
+    backgroundColor: "#000000",
+    opacity: 0.3,
+  },
+  androidBackdrop: {
+    backgroundColor: "#232f34",
+    opacity: 0.32,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});

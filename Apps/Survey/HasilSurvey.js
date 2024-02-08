@@ -29,6 +29,7 @@ const { StorageAccessFramework } = FileSystem;
 import * as Sharing from "expo-sharing";
 import ListEmpty from "../../components/ListEmpty";
 import { Loading } from "../../components/Loading";
+import ProgressCircle from "react-native-progress-circle";
 
 export const HasilSurvey = () => {
   const navigation = useNavigation();
@@ -250,15 +251,7 @@ export const HasilSurvey = () => {
       //     charA++;
       //   }
       // }
-      dataRataSatu.push(
-        count[
-          "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
-        ],
-        5 -
-          count[
-            "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
-          ]
-      );
+      dataRataSatu.push(count["average"], 5 - count["average"]);
 
       dataRataDua.push(
         count[
@@ -320,7 +313,7 @@ export const HasilSurvey = () => {
     COLORS.success,
   ];
 
-  const colorAveragefirst = [COLORS.orange, COLORS.ExtraDivinder];
+  const colorAveragefirst = [COLORS.success, COLORS.ExtraDivinder];
   const colorAverageSecond = [COLORS.warning, COLORS.ExtraDivinder];
   const colorAverageThird = [COLORS.lightBrown, COLORS.ExtraDivinder];
   const colorAverageFourth = [COLORS.info, COLORS.ExtraDivinder];
@@ -2038,8 +2031,8 @@ export const HasilSurvey = () => {
           backgroundColor: COLORS.white,
           borderRadius: 16,
           padding: 20,
-          marginBottom: 10,
-          marginTop: 10,
+          marginVertical: 10,
+          marginBottom: 20,
           //shadow ios
           shadowOffset: { width: -2, height: 4 },
           shadowColor: "#171717",
@@ -2048,7 +2041,7 @@ export const HasilSurvey = () => {
           elevation: 2,
         }}
       >
-        <Text
+        {/* <Text
           style={{
             fontSize: fontSizeResponsive("H2", device),
             fontWeight: 600,
@@ -2057,7 +2050,7 @@ export const HasilSurvey = () => {
         >
           [A] Akses login Portal Collaboration Office memiliki tingkat keamanan
           yang baik
-        </Text>
+        </Text> */}
         {/* <View
           style={{
             justifyContent: device === "tablet" ? "center" : "flex-start",
@@ -2140,32 +2133,37 @@ export const HasilSurvey = () => {
             </View>
           );
         })} */}
-        <Text
-          style={{
-            fontSize: fontSizeResponsive("H2", device),
-            fontWeight: 600,
-            marginBottom: 10,
-          }}
-        >
-          Rata-rata{" "}
-          {count === null
-            ? "-"
-            : count[
-                "average Portal Collaboration Office dapat diakses setiap hari"
-              ]}
+        <Text style={{ alignSelf: "center", marginBottom: 10 }}>
+          Hasil rata-rata survei
         </Text>
         {dataRataSatu.length !== 0 ? (
-          <PieChart
-            widthAndHeight={widthAndHeight}
-            series={dataRataSatu}
-            sliceColor={colorAveragefirst}
-            coverRadius={0.75}
-            coverFill={"#FFF"}
-            style={{ alignSelf: "center", marginVertical: 20 }}
-          />
+          // <PieChart
+          //   widthAndHeight={widthAndHeight}
+          //   series={dataRataSatu}
+          //   sliceColor={colorAveragefirst}
+          //   coverRadius={0.75}
+          //   coverFill={"#FFF"}
+          //   style={{ alignSelf: "center", marginVertical: 20 }}
+          // />
+          <View style={{ alignSelf: "center", marginBottom: 10 }}>
+            <ProgressCircle
+              percent={count["average"] * 20}
+              radius={100}
+              borderWidth={25}
+              color={COLORS.success}
+              shadowColor="#999"
+              bgColor="#fff"
+            >
+              <Text style={{ fontSize: 18 }}>{count["average"]}</Text>
+            </ProgressCircle>
+          </View>
         ) : null}
 
-        <Text
+        <Text style={{ alignSelf: "center" }}>
+          Nilai {count === null ? "-" : count["average"]}
+        </Text>
+
+        {/* <Text
           style={{
             fontSize: fontSizeResponsive("H2", device),
             fontWeight: 600,
@@ -2299,7 +2297,7 @@ export const HasilSurvey = () => {
             coverFill={"#FFF"}
             style={{ alignSelf: "center", marginVertical: 20 }}
           />
-        ) : null}
+        ) : null} */}
       </View>
 
       <View
