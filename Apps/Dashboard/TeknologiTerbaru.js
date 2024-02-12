@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { Text } from "react-native";
 import { Search } from "../../components/Search";
 import { useNavigation } from "@react-navigation/native";

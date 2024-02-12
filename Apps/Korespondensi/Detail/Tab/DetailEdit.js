@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef } from "react";
 import {
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,

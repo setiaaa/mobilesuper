@@ -11,11 +11,14 @@ import {
   setProfile,
   setSelectedAttr,
 } from "../../../store/profile";
+import { setProfile as setProfileBridge } from "../../../store/SuperApps";
 import { Button, Card, Menu } from "react-native-paper";
 import { COLORS } from "../../../config/SuperAppps";
 import { Image } from "react-native";
 import { TouchableOpacity, Text } from "react-native";
 import { GlobalStyles } from "../../../constants/styles";
+import { removeTokenValue } from "../../../service/session";
+import { setLogout } from "../../../store/LoginAuth";
 
 function DCounter() {
   const navigation = useNavigation();
@@ -52,6 +55,11 @@ function DCounter() {
       color: "rgba(180, 179, 179, 0.6)",
       navName: "ConceptNumb",
     },
+    {
+      icon: "inbox-arrow-down",
+      color: "rgba(236, 202, 12, 0.6)",
+      navName: "InternalUnread",
+    },
   ];
   useEffect(() => {
     setIsCounter([
@@ -71,6 +79,11 @@ function DCounter() {
         type: "draft",
         value: "-",
       },
+      {
+        count: 5,
+        type: "internal",
+        value: "-",
+      },
     ]);
     // const response = getHTTP(nde_api.dashboard);
     getisCounter();
@@ -85,7 +98,7 @@ function DCounter() {
       dispatch(setOrganization(response.data));
       setIsLoading(false);
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
     }
   }
   // console.log(profile.attr);
@@ -115,17 +128,25 @@ function DCounter() {
           },
           {
             count: 4,
-            type: "tracking",
+            type: "draft",
             value: "-",
           },
           {
             count: 5,
-            type: "agenda_out",
+            type: "internal",
             value: "-",
           },
         ]);
+      } else if (error?.status === 401 || error?.response?.status === 401) {
+        removeTokenValue();
+        dispatch(setLogout());
+        dispatch(setProfileBridge({}));
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "LoginToken" }],
+        });
       } else {
-        handlerError(error, "Peringatan!", "Couter tidak berfungsi!");
+        handlerError(error, "Peringatan!", "Counter tidak berfungsi!");
         console.log(error);
       }
       setIsLoading(false);
@@ -152,7 +173,7 @@ function DCounter() {
   // //const name = profile?.fullname?.split("/")[0];
   // const [labelName, setLabelName] = useState();
   return (
-    <View style={{ margin: 12 }}>
+    <View style={{ flex: 1, padding: 12 }}>
       {/* {loadingOverlay} */}
       {/* {profile?.title?.length != 0 && (
         <Card
@@ -232,7 +253,7 @@ function DCounter() {
         </Card>
       )} */}
       {isCounter?.length != 0 && (
-        <View style={{ height: "85%" }}>
+        <View style={{ height: "90%" }}>
           <FlatList
             keyExtractor={(item) => item.count}
             data={isCounter}

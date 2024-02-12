@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import {
-  FlatList,
   KeyboardAvoidingView,
   Linking,
   Platform,
@@ -34,7 +33,7 @@ import BottomSheet, {
 import { Modal } from "react-native";
 import { ResizeMode, Video } from "expo-av";
 import PdfReader from "rn-pdf-reader-js-improved";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { GestureHandlerRootView, FlatList } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales";
 import { useWindowDimensions } from "react-native";
@@ -321,7 +320,6 @@ const CardKomen = ({ listData, inputRef, setParentId, device }) => {
       setParentId({ id: listData.id, creator: listData.creator });
     }
   };
-  console.log(listData.created_at);
   return (
     <View
       style={{

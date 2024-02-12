@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, useWindowDimensions } from "react-native";
+import { Platform, Text, View, useWindowDimensions } from "react-native";
 import {
   COLORS,
   FONTSIZE,
@@ -24,7 +24,7 @@ import {
 import { getTokenValue } from "../../service/session";
 import moment from "moment/min/moment-with-locales";
 import RenderHTML from "react-native-render-html";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ResizeMode, Video } from "expo-av";

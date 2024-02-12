@@ -2,6 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
+import Checkbox from "expo-checkbox";
 
 export const CardListSurvey = ({
   data,
@@ -13,14 +14,14 @@ export const CardListSurvey = ({
   onClick = () => {},
 }) => {
   const getCheckedstatus = (val, key) => {
-    const realKey = key.split(". ")[1].replace(":", "");
-    if (data[realKey].includes(val)) return true;
+    const realKey = key.split(". ")[1]?.replace(":", "");
+    if (data[realKey]?.includes(val)) return true;
     else return false;
   };
 
   const getValidation = (val) => {
-    const realKey = val.split(". ")[1].replace(":", "");
-    if (validation.includes(realKey)) {
+    const realKey = val.split(". ")[1]?.replace(":", "");
+    if (validation?.includes(realKey)) {
       return <Text>Mohon Masukan Survey dengan Benar</Text>;
     } else {
       return null;
@@ -37,18 +38,13 @@ export const CardListSurvey = ({
         {pertanyaan}
       </Text>
       {getValidation(pertanyaan)}
-      {pilihan.map((label) => {
-        return (
+      {pilihan.map((label) =>
+        tipe === "one-choice" ? (
           <TouchableOpacity
             style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-            onPress={() =>
-              onClick(pertanyaan, tipe === "one-choice" ? label.value : label)
-            }
+            onPress={() => onClick(pertanyaan, label.value)}
           >
-            {getCheckedstatus(
-              tipe === "one-choice" ? label.value : label,
-              pertanyaan
-            ) ? (
+            {getCheckedstatus(label.value, pertanyaan) ? (
               <Ionicons
                 name="radio-button-on"
                 size={24}
@@ -61,10 +57,26 @@ export const CardListSurvey = ({
                 color={COLORS.primary}
               />
             )}
-            <Text>{tipe === "one-choice" ? label.label : label}</Text>
+            <Text>{label.label}</Text>
           </TouchableOpacity>
-        );
-      })}
+        ) : tipe === "multi-choices" ? (
+          <TouchableOpacity
+            style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+            onPress={() => onClick(pertanyaan, label)}
+          >
+            {getCheckedstatus(label, pertanyaan) ? (
+              <Ionicons name="checkbox" size={24} color={COLORS.primary} />
+            ) : (
+              <Ionicons
+                name="square-outline"
+                size={24}
+                color={COLORS.primary}
+              />
+            )}
+            <Text>{label}</Text>
+          </TouchableOpacity>
+        ) : null
+      )}
     </View>
   );
 };

@@ -100,9 +100,15 @@ function InternalSatkerList({ route }) {
     setIsLoading(true);
     try {
       let response;
-      response = await getHTTP(
-        nde_api.agendaininternal.replace("{$page}", page)
-      );
+      if (unread) {
+        response = await getHTTP(
+          nde_api.agendaininternal.replace("{$page}", page) + "&unread=1"
+        );
+      } else {
+        response = await getHTTP(
+          nde_api.agendaininternal.replace("{$page}", page)
+        );
+      }
       let data = initData(list, response.data);
       setList(data);
       setIsLoading(false);
@@ -153,7 +159,12 @@ function InternalSatkerList({ route }) {
         url = nde_api.agendaininternal;
         url =
           url + "&start_date=" + start + "&end_date=" + end + "&query=" + word;
-        let response = await getHTTP(url.replace("{$page}", page));
+        let response;
+        if (unread) {
+          response = await getHTTP(url.replace("{$page}", page) + "&unread=1");
+        } else {
+          response = await getHTTP(url.replace("{$page}", page));
+        }
         if (response) {
           setIsSearchFilter(true);
           let data = initData(list, response.data);
@@ -237,11 +248,11 @@ function InternalSatkerList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter && unread
-          ? "Internal Satker belum dibaca tidak ditemukan"
+          ? "Internal Satker Belum Dibaca tidak ditemukan"
           : isSearchFilter && !unread
           ? "Internal Satker tidak ditemukan"
           : list?.count == 0 && unread
-          ? "Anda tidak memiliki Internal Satker belum dibaca"
+          ? "Anda tidak memiliki Internal Satker Belum Dibaca"
           : list?.count == 0 && !unread
           ? "Anda tidak memiliki Internal Satker"
           : "Pencarian..."}

@@ -3,15 +3,23 @@ import React, { useEffect, useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
+  Modal,
+  Platform,
   Pressable,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
 } from "react-native";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS, FONTSIZE, FONTWEIGHT } from "../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../config/SuperAppps";
 import Checkbox from "expo-checkbox";
 import { setTokenValue } from "../service/session";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,20 +29,22 @@ import { Alert } from "react-native";
 import { setLogout } from "../store/LoginAuth";
 import * as Linking from "expo-linking";
 import { Config } from "../constants/config";
+import { getHTTP, handleUpgradeLink } from "../utils/http";
 
 export const LoginToken = () => {
   const navigation = useNavigation();
   const [isSelected, setSelection] = useState(true);
   const [count, setCount] = useState(0);
-  const [password, setPassword] = useState("Admin");
+  const [password, setPassword] = useState("");
   const [onChange, setOnChange] = useState("");
-  const [token, setToken] = useState("");
+  const [version, setVersion] = useState("");
   const [username, setUserName] = useState("");
   const [validasi, setValidasi] = useState({
     nip: false,
     pass: false,
   });
   const [show, setShow] = useState(true);
+  const [modalLog, setModalLog] = useState(false);
   const dispatch = useDispatch();
 
   const loginAuth = useSelector((state) => state.login);
@@ -73,18 +83,17 @@ export const LoginToken = () => {
       nip: nipField,
       pass: passField,
     });
-    if (username === "" && password === "" && isSelected === false) {
-      Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
-    } else if (username !== "" && password === "" && isSelected === false) {
-      Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
-    } else if (username === "" && password !== "" && isSelected === false) {
+    console.log(username, password, isSelected);
+    if (username === "" || password === "" || isSelected === false) {
       Alert.alert("Terjadi Kesalahan", "Harap Lengkapi Form");
     } else if (username !== "" && password !== "" && isSelected === false) {
       Alert.alert("Peringatan", "Harap Menyetujui Ketentuan");
-    } else if (isSelected === true) {
+    } else if (username !== "" && password !== "" && isSelected === true) {
       dispatch(Login({ username, password }));
     }
   };
+
+  console.log(loginAuth);
 
   return (
     <SafeAreaView
@@ -114,8 +123,8 @@ export const LoginToken = () => {
               style={{ width: 150, height: 150 }}
             />
           </Pressable>
-
-          {/* {count >= 5 ? (
+          {/* 
+          {count >= 5 ? (
             <View
               style={{
                 borderWidth: 1,
@@ -292,6 +301,22 @@ export const LoginToken = () => {
               Service Desk Collaboration Office
             </Text>
           </TouchableOpacity>
+          {/* 
+          <TouchableOpacity
+            style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+            onPress={() => {
+              setModalLog(true);
+            }}
+          >
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color={"#1868AB"}
+            />
+            <Text style={{ fontWeight: FONTWEIGHT.bold, color: "#1868AB" }}>
+              Log Perubahan Aplikasi
+            </Text>
+          </TouchableOpacity> */}
 
           <View style={{ flexDirection: "row", gap: 50, alignItems: "center" }}>
             <View
@@ -347,7 +372,180 @@ export const LoginToken = () => {
             </Text>
           </View>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalLog}
+          onRequestClose={() => {
+            setModalLog(false);
+          }}
+        >
+          <TouchableOpacity
+            style={[
+              Platform.OS === "ios"
+                ? styles.iOSBackdrop
+                : styles.androidBackdrop,
+              styles.backdrop,
+            ]}
+          />
+          <View
+            style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                width: "90%",
+                borderRadius: 10,
+              }}
+            >
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  padding: 10,
+                  borderBottomWidth: 2,
+                  borderBottomColor: COLORS.grey,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Log Perbaikan Aplikasi Version {Config.app_version}
+                </Text>
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    setModalLog(false);
+                  }}
+                >
+                  <Ionicons
+                    name="close-outline"
+                    size={24}
+                    color={COLORS.lighter}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan survei rata-rata
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Penambahan log perbaikan
+                  </Text>
+                </View>
+                {/* 
+              <Text
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {detail?.title !== "" && detail?.title !== null
+                  ? detail.title
+                  : "-"}
+              </Text> */}
+              </View>
+            </View>
+          </View>
+        </Modal>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  Card: {
+    backgroundColor: COLORS.white,
+    width: "90%",
+    marginVertical: 20,
+    marginLeft: 20,
+    borderRadius: 16,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  iOSBackdrop: {
+    backgroundColor: "#000000",
+    opacity: 0.3,
+  },
+  androidBackdrop: {
+    backgroundColor: "#232f34",
+    opacity: 0.32,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});

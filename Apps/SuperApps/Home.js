@@ -10,6 +10,7 @@ import {
   BackHandler,
   Alert,
   RefreshControl,
+  Platform,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
@@ -43,10 +44,7 @@ import {
   FONTWEIGHT,
   fontSizeResponsive,
 } from "../../config/SuperAppps";
-import {
-  GestureHandlerRootView,
-  PanGestureHandler,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { CardTautan } from "../../components/CardTautan";
 import { Modal } from "react-native";
@@ -73,8 +71,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { DeviceType, getDeviceTypeAsync } from "expo-device";
-import { setDevice } from "../../store/Apps";
 import { Config } from "../../constants/config";
 
 const { width: screenWidth } = Dimensions.get("window");
@@ -140,35 +136,6 @@ export const Home = () => {
       dispatch(getBerita({ token, page }));
     }
   }, [token, berita]);
-
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert(
-        "Peringatan!",
-        "Apakah anda yakin akan keluar dari aplikasi?",
-        [
-          {
-            text: "Tidak",
-            onPress: () => null,
-            style: "cancel",
-          },
-          { text: "YA", onPress: () => BackHandler.exitApp() },
-        ]
-      );
-      return true;
-    };
-
-    const deviceTypeMap = {
-      [DeviceType.UNKNOWN]: "unknown",
-      [DeviceType.PHONE]: "phone",
-      [DeviceType.TABLET]: "tablet",
-      [DeviceType.TV]: "tv",
-      [DeviceType.DESKTOP]: "desktop",
-    };
-    getDeviceTypeAsync().then((device) => {
-      dispatch(setDevice(deviceTypeMap[device]));
-    });
-  }, []);
 
   const {
     berita,

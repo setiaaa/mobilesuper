@@ -14,7 +14,8 @@ function CardDCounter({ data, icon, navigation }) {
         navigation.navigate(icon.navName, {
           unread:
             icon.navName == "DispositionUnread" ||
-            icon.navName == "IncomingUnread"
+            icon.navName == "IncomingUnread" ||
+            icon.navName == "InternalUnread"
               ? true
               : false,
           title:
@@ -28,7 +29,9 @@ function CardDCounter({ data, icon, navigation }) {
               ? "Disposisi Belum Dibaca"
               : data?.type == "incoming"
               ? "Surat Masuk"
-              : data?.type == "internalsatker"
+              : data?.type == "internal" && icon.navName == "InternalUnread"
+              ? "Internal Satker Belum Dibaca"
+              : data?.type == "internal" && icon.navName !== "InternalUnread"
               ? "Internal Satker"
               : data?.type == "disposition"
               ? "Disposisi"
@@ -53,7 +56,9 @@ function CardDCounter({ data, icon, navigation }) {
             ? "Disposisi\nBelum Dibaca"
             : data?.type == "incoming"
             ? "Surat Masuk"
-            : data?.type == "internalsatker"
+            : data?.type == "internal" && icon.navName == "InternalUnread"
+            ? "Internal Satker\nBelum Dibaca"
+            : data?.type == "internal" && icon.navName !== "InternalUnread"
             ? "Internal Satker"
             : data?.type == "disposition"
             ? "Disposisi"

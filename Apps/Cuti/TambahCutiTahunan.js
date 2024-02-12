@@ -8,6 +8,7 @@ import {
   Modal,
   Pressable,
   FlatList,
+  Platform,
 } from "react-native";
 import {
   GestureHandlerRootView,

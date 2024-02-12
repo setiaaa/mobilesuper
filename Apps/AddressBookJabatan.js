@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import { Dropdown } from "../components/DropDown";
 import { COLORS, FONTWEIGHT, fontSizeResponsive } from "../config/SuperAppps";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import TreeView from "react-native-final-tree-view";
 import { Ionicons } from "@expo/vector-icons";
 import {

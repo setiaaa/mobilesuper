@@ -40,7 +40,7 @@ import moment from "moment/min/moment-with-locales";
 // import "moment/locale/id";
 import {} from "react-native-safe-area-context";
 import { Loading } from "../../components/Loading";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput } from "react-native";
 import { RefreshControl } from "react-native";
 
 const CardPenilaian = ({ item, token, device }) => {

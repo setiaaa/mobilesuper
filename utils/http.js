@@ -32,9 +32,9 @@ export const handlerError = (error, title, msg) => {
   // const dispatch = useDispatch();
   // function showError(error, title, msg) {
   if (error?.response?.status == null) {
-    Alert.alert("Warning!", "Please check your connection");
+    Alert.alert("Peringatan!", "Silakan cek koneksi Anda");
   } else if (error?.response?.status == 404) {
-    Alert.alert("Warning!", "Page not found", [
+    Alert.alert("Peringatan!", "Halaman tidak ditemukan", [
       {
         text: "Ok",
         onPress: () => {
@@ -47,15 +47,15 @@ export const handlerError = (error, title, msg) => {
     // dispatch(setFirstLogin(false));
     // dispatch(logout());
   } else {
-    Alert.alert(title, msg, [
-      {
-        text: "Ok",
-        onPress: () => {
-          // navigation.goBack();
-        },
-        style: "cancel",
-      },
-    ]);
+     Alert.alert(title, msg + `\n\nversion ` + Config.app_version, [
+       {
+         text: "Ok",
+         onPress: () => {
+           // navigation.goBack();
+         },
+         style: "cancel",
+       },
+     ]);
   }
   // }
   // showError(error, title, msg);
@@ -65,11 +65,11 @@ export const handleUpgradeLink = async () => {
   // Checking if the link is supported for links with custom URL scheme.
   let url = Config.upgrade_url;
   const supported = await Linking.canOpenURL(url);
-  // if (supported) {
-  //   // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-  //   // by some browser in the mobile
-  //   await Linking.openURL(url);
-  // } else {
-  //   Alert.alert(`Don't know how to open this URL: ${url}`);
-  // }
+  if (supported) {
+    // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+    // by some browser in the mobile
+    await Linking.openURL(url);
+  } else {
+    Alert.alert(`Don't know how to open this URL: ${url}`);
+  }
 };

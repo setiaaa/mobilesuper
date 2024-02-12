@@ -365,6 +365,7 @@ const PengetahuanSlice = createSlice({
       })
       .addCase(getListPegawai.rejected, (state, action) => {
         state.loading = false;
+
         console.log("error");
       })
       .addCase(getListPostPegawai.fulfilled, (state, action) => {

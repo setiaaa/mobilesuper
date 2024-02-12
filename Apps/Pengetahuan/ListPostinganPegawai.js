@@ -14,7 +14,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import { StatusBar } from "expo-status-bar";
 import { Loading } from "../../components/Loading";

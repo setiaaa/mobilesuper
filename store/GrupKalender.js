@@ -130,6 +130,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(postGrup.rejected, (state, action) => {
         state.loading = false;
+
         state.status = "error";
       })
       .addCase(getDetailGrup.fulfilled, (state, action) => {

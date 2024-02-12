@@ -219,10 +219,8 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
         } else if (pilihanKepada.length == 0 || pilihanKepada == "") {
           status = 0;
         } else if (
-          (items.nota_tindakan1 == undefined ||
-            items.nota_tindakan1.length == 0) &&
-          (items.nota_tindakan_free1 == undefined ||
-            items.nota_tindakan_free1.length == 0)
+          items.nota_tindakan1 == undefined ||
+          items.nota_tindakan1.length == 0
         ) {
           status = 0;
         } else if (
@@ -397,6 +395,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                             jabatan: true,
                             pegawai: true,
                             para: true,
+                            senderCode: senderAttr.code,
                           },
                           multiselect: true,
                           payload: pilihanKepada,
@@ -447,6 +446,7 @@ function DispositionForm({ route, id, data, noAgenda, tipe, title }) {
                               },
                               multiselect: true,
                               payload: pilihanKepada,
+                              senderCode: senderAttr.code,
                             };
                             setStateConfig(config);
                             navigation.navigate("AddressBook", {

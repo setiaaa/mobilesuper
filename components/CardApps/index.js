@@ -124,7 +124,7 @@ export const CardApps = ({ handlePressModal }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          Kebijakan
+          Regulasi
         </Text>
       </View>,
       <View
@@ -387,14 +387,13 @@ export const CardApps = ({ handlePressModal }) => {
               },
             ]}
           >
-            {/* <Image
+            <Image
               style={{
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/pegawai-ikon.png")}
-            /> */}
-            <Ionicons name="pencil-outline" size={30} color={COLORS.primary} />
+              source={require("../../assets/superApp/surveylayanan.png")}
+            />
           </View>
         </TouchableOpacity>
         <Text
@@ -405,7 +404,7 @@ export const CardApps = ({ handlePressModal }) => {
             fontSize: fontSizeResponsive("H4", device),
           }}
         >
-          Survey Layanan
+          Survei Layanan
         </Text>
       </View>
     );

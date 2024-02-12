@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { Text } from "react-native";
 import {} from "react-native-safe-area-context";
 import {

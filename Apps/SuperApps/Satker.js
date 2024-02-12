@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native";
 import { CardSatker } from "../../components/CardSatker";

@@ -292,8 +292,7 @@ const EventSlice = createSlice({
       .addCase(postAttachment.fulfilled, (state, action) => {
         state.attachment = [...state.attachment, action.payload];
       })
-      .addCase(postAttachment.rejected, (state, action) => {
-      })
+      .addCase(postAttachment.rejected, (state, action) => {})
       .addCase(postEvent.fulfilled, (state, action) => {
         state.status = "berhasil";
         state.loading = false;

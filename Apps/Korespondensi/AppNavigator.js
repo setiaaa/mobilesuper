@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   StyleSheet,
@@ -7,8 +7,9 @@ import {
   Platform,
   useWindowDimensions,
   Alert,
+  BackHandler,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -165,20 +166,130 @@ import * as Linking from "expo-linking";
 // import OneSignal from "react-native-onesignal";
 import InternalSatkerList from "./List/InternalSatkerList";
 import { SurveyLayanan } from "../Survey/SurveyLayanan";
-import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
+import { HasilSurvey } from "../Survey/HasilSurvey";
+import { DetailSurvey } from "../Survey/DetailSurvey";
+import { Dialog } from "../../components/Dialog";
+import { DeviceType, getDeviceTypeAsync } from "expo-device";
+import { setDevice } from "../../store/Apps";
+import { AppState } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 function AuthenticatedStack(route) {
+  const [isLoading, setIsLoading] = useState(true);
   const profile = useSelector((state) => state.profile.profile);
   const deviceNIK = profile?.nik;
   const [deviceName, setDeviceName] = useState(null);
   const [deviceId, setDeviceId] = useState(null);
   const [deviceUUID, set_deviceUUID] = useState(null);
   const [deviceOS, setDeviceOS] = useState(null);
+  const app_name = Config.app_name;
+  const app_version = Config.app_version;
+  const [modal, setModal] = useState(false);
+  const appState = useRef(AppState.currentState);
   let data;
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive||background/) &&
+        nextAppState === "active"
+      ) {
+        // checkversion
+        if (Platform.OS === "android") {
+          checkVersionAndroid();
+        } else if (Platform.OS === "ios") {
+          checkVersionIos();
+        }
+        appState.current = nextAppState;
+      }
+    });
+    // checkversion
+    if (Platform.OS === "android") {
+      checkVersionAndroid();
+    } else if (Platform.OS === "ios") {
+      checkVersionIos();
+    }
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  async function checkVersionAndroid() {
+    setIsLoading(true);
+    try {
+      const response = await getHTTP(nde_api.getVersionAndroid);
+      cekValidVersion(response?.data?.results?.android);
+    } catch (error) {
+      if (error.status == null) {
+        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
+      } else {
+        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
+      }
+    }
+    setIsLoading(false);
+  }
+  async function checkVersionIos() {
+    try {
+      const response = await getHTTP(nde_api.getVersionIos);
+      cekValidVersion(response?.data?.results?.ios);
+    } catch (error) {
+      if (error.status == null) {
+        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
+      } else {
+        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
+      }
+    }
+  }
+  function cekValidVersion(server_version) {
+    if (server_version != app_version) {
+      // Alert.alert(
+      //   "Peringatan!",
+      //   "Anda menggunakan versi lama " +
+      //     app_name +
+      //     ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
+      //   [
+      //     {
+      //       text: "Perbaharui",
+      //       onPress: () => {
+      //         // getToken();
+      //         // getProfile();
+      //         // getTokenValue().then((val) => {
+      //         //   if (val !== "") {
+      //         //     removeTokenValue();
+      //         //     dispatch(setLogout());
+      //         //     dispatch(setProfile({}));
+      //         //     navigation.reset({
+      //         //       index: 0,
+      //         //       routes: [{ name: "LoginToken" }],
+      //         //     });
+      //         //   }
+      //         // });
+      //         handleUpgradeLink();
+      //         // console.log("test");
+      //       },
+      //       style: "cancel",
+      //     },
+      //   ],
+      //   {
+      //     cancelable: false,
+      //     onDismiss: () => {
+      //       // getToken();
+      //       // getProfile();
+      //     },
+      //   }
+      // );
+      setModal(true);
+      // AsyncStorage.removeItem("token");
+      // dispatch(setValidVersion(false));
+    } else {
+      // dispatch(setValidVersion(true));
+      // getToken();
+      // getProfile();
+      setModal(false);
+    }
+  }
   const getDeviceUUIDiOS = async () => {
     set_deviceUUID(await Application.getIosIdForVendorAsync());
     if (deviceUUID != undefined && deviceUUID != null) {
@@ -241,6 +352,11 @@ function AuthenticatedStack(route) {
     checkDevice();
   }, [profile, deviceUUID, deviceId, deviceName, deviceOS]);
 
+  const loadingOverlay = (
+    <>
+      <LoadingOverlay visible={isLoading} />
+    </>
+  );
   return (
     <BottomSheetModalProvider>
       <SafeAreaView style={styles.rootScreen}>
@@ -728,6 +844,20 @@ function AuthenticatedStack(route) {
             }}
           />
           <Stack.Screen
+            name="HasilSurvey"
+            component={HasilSurvey}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailSurvey"
+            component={DetailSurvey}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="DetailProfile"
             component={DetailProfile}
             options={{
@@ -984,6 +1114,11 @@ function AuthenticatedStack(route) {
             options={{ header: toolbarBack }}
           />
           <Stack.Screen
+            name="InternalUnread"
+            component={InternalSatkerList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
             name="IncomingList"
             component={IncomingList}
             options={{ header: toolbarBack }}
@@ -1170,14 +1305,38 @@ function AuthenticatedStack(route) {
             }}
           />
         </Stack.Navigator>
+
+        {modal === true ? (
+          <Dialog
+            title={"Peringatan !"}
+            content={
+              "Anda menggunakan versi lama " +
+              app_name +
+              ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi"
+            }
+            buttonTitle={"Perbaharui"}
+          />
+        ) : null}
+        {loadingOverlay}
       </SafeAreaView>
     </BottomSheetModalProvider>
   );
 }
 
+// const bugsnag = Bugsnag({
+//   apiKey: "b67f9428d1c71d7476470cd97e3692a6",
+// });
+
+// Sentry.init({
+//   dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
+//   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+//   // We recommend adjusting this value in production.
+//   debug: true,
+//   // tracePropagationTargets: [Config.base_url],
+//   tracesSampleRate: 1.0,
+// });
+
 function AppNavigator() {
-  const app_name = Config.app_name;
-  const app_version = Config.app_version;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useSelector((state) => state.login);
@@ -1188,31 +1347,22 @@ function AppNavigator() {
   const [linking, setLinking] = useState();
 
   useEffect(() => {
-    //checkversion
-    // if (Platform.OS == "android") {
-    //   checkVersionAndroid();
-    // } else if (Platform.OS == "ios") {
-    //   checkVersionIos();
-    // }
+    const deviceTypeMap = {
+      [DeviceType.UNKNOWN]: "unknown",
+      [DeviceType.PHONE]: "phone",
+      [DeviceType.TABLET]: "tablet",
+      [DeviceType.TV]: "tv",
+      [DeviceType.DESKTOP]: "desktop",
+    };
+    getDeviceTypeAsync()
+      .then((device) => {
+        dispatch(setDevice(deviceTypeMap[device]));
+        console.log(device);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
-    //Method for handling notifications received while app in foreground
-    // OneSignal.setNotificationWillShowInForegroundHandler(
-    //   (notificationReceivedEvent) => {
-    //     let notification = notificationReceivedEvent.getNotification();
-    //     const data = notification?.additionalData;
-    //     console.log("data onesignal", data);
-    //     //Silence notification by calling complete() with no argument
-    //     notificationReceivedEvent.complete(notification);
-    //   }
-    // );
-
-    //Method for handling notifications opened
-    // OneSignal.setNotificationOpenedHandler((openedEvent) => {
-    //   const { action, notification } = openedEvent;
-    //   console.log("data notif", notification?.additionalData);
-    //   dispatch(setDataNotif(notification?.additionalData));
-    // });
-
+  useEffect(() => {
     getTokenValue().then((val) => {
       if (val === null) {
         setRoute("LoginToken");
@@ -1267,65 +1417,6 @@ function AppNavigator() {
     setIsLoading(false);
   }
 
-  async function checkVersionAndroid() {
-    try {
-      const response = await getHTTP(nde_api.getVersionAndroid);
-      cekValidVersion(response.data.version);
-    } catch (error) {
-      if (error.status == null) {
-        Alert.alert("Warning!", "Please check your connection");
-      } else {
-        handlerError(error, "Warning!", "Check Version Android not working!");
-      }
-    }
-  }
-  async function checkVersionIos() {
-    try {
-      const response = await getHTTP(nde_api.getVersionIos);
-      cekValidVersion(response.data.version);
-    } catch (error) {
-      if (error.status == null) {
-        Alert.alert("Warning!", "Please check your connection");
-      } else {
-        handlerError(error, "Warning!", "Check Version Ios not working!");
-      }
-    }
-  }
-  function cekValidVersion(server_version) {
-    if (server_version != app_version) {
-      Alert.alert(
-        "Warning!",
-        "You are using an old version of the " +
-          app_name +
-          ". Do you want to upgrade?",
-        [
-          {
-            text: "Upgrade",
-            onPress: () => {
-              getToken();
-              getProfile();
-              // handleUpgradeLink();
-            },
-            style: "cancel",
-          },
-        ],
-        {
-          cancelable: true,
-          onDismiss: () => {
-            getToken();
-            getProfile();
-          },
-        }
-      );
-      AsyncStorage.removeItem("token");
-      dispatch(setValidVersion(false));
-    } else {
-      dispatch(setValidVersion(true));
-      getToken();
-      getProfile();
-    }
-  }
-
   const loadingOverlay = (
     <>
       <LoadingOverlay visible={isLoading} />
@@ -1345,6 +1436,7 @@ function AppNavigator() {
   );
 }
 
+// export default Sentry.wrap(AppNavigator);
 export default AppNavigator;
 
 const styles = StyleSheet.create({

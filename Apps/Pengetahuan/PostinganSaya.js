@@ -31,7 +31,7 @@ import {
   getMyPostList,
   getViewLinimasa,
 } from "../../service/api";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import ListEmpty from "../../components/ListEmpty";
 import { setRefresh } from "../../store/Pengetahuan";
 import { Loading } from "../../components/Loading";
