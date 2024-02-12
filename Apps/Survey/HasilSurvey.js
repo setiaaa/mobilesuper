@@ -56,7 +56,7 @@ export const HasilSurvey = () => {
   const [dataPenilainTiga, setDataPenilaianTiga] = useState([]);
   const [dataPenilainEmpat, setDataPenilaianEmpat] = useState([]);
   const [dataPenilainLima, setDataPenilaianLima] = useState([]);
-  const [dataRataSatu, setDataRataSatu] = useState([]);
+  const [dataRataSatu, setDataRataSatu] = useState();
   const [dataRataDua, setDataRataDua] = useState([]);
   const [dataRataTiga, setDataRataTiga] = useState([]);
   const [dataRataEmpat, setDataRataEmpat] = useState([]);
@@ -251,7 +251,26 @@ export const HasilSurvey = () => {
       //     charA++;
       //   }
       // }
-      dataRataSatu.push(count["average"], 5 - count["average"]);
+      if (count.length !== 0) {
+        dataRataSatu.push(
+          (((count["average Portal Collaboration Office mudah digunakan"] +
+            count[
+              "average Informasi pada Portal Collabaration Office tersaji sesuai dengan kebutuhan"
+            ] +
+            count[
+              "average Akses login Portal Collaboration Office memiliki tingkat keamanan yang baik"
+            ] +
+            count[
+              "average Portal Collaboration Office dapat diakses dengan baik pada penjelajah (browser) saya"
+            ] +
+            count[
+              "average Portal Collaboration Office dapat diakses setiap hari"
+            ]) /
+            5) *
+            100) /
+            5
+        );
+      }
 
       dataRataDua.push(
         count[
@@ -304,6 +323,8 @@ export const HasilSurvey = () => {
       setLabelRata(labelRata);
     }
   }, [count]);
+
+  console.log(dataRataSatu);
 
   const sliceColor = [
     COLORS.infoDanger,
@@ -2009,7 +2030,7 @@ export const HasilSurvey = () => {
 
       <View
         style={{
-          marginTop: 20,
+          marginTop: 10,
           marginHorizontal: 20,
         }}
       >
@@ -2136,32 +2157,34 @@ export const HasilSurvey = () => {
         <Text style={{ alignSelf: "center", marginBottom: 10 }}>
           Hasil rata-rata survei
         </Text>
-        {dataRataSatu.length !== 0 ? (
-          // <PieChart
-          //   widthAndHeight={widthAndHeight}
-          //   series={dataRataSatu}
-          //   sliceColor={colorAveragefirst}
-          //   coverRadius={0.75}
-          //   coverFill={"#FFF"}
-          //   style={{ alignSelf: "center", marginVertical: 20 }}
-          // />
-          <View style={{ alignSelf: "center", marginBottom: 10 }}>
-            <ProgressCircle
-              percent={count["average"] * 20}
-              radius={100}
-              borderWidth={25}
-              color={COLORS.success}
-              shadowColor="#999"
-              bgColor="#fff"
-            >
-              <Text style={{ fontSize: 18 }}>{count["average"]}</Text>
-            </ProgressCircle>
-          </View>
-        ) : null}
+        {/* {dataRataSatu.length !== 0 ? (
+          <PieChart
+            widthAndHeight={widthAndHeight}
+            series={dataRataSatu}
+            sliceColor={colorAveragefirst}
+            coverRadius={0.75}
+            coverFill={"#FFF"}
+            style={{ alignSelf: "center", marginVertical: 20 }}
+          />
+       
+        ) : null} */}
 
-        <Text style={{ alignSelf: "center" }}>
-          Nilai {count === null ? "-" : count["average"]}
-        </Text>
+        <View style={{ alignSelf: "center", marginBottom: 10 }}>
+          <ProgressCircle
+            percent={dataRataSatu}
+            radius={100}
+            borderWidth={25}
+            color={COLORS.success}
+            shadowColor="#999"
+            bgColor="#fff"
+          >
+            <Text style={{ fontSize: 18 }}>{dataRataSatu}%</Text>
+          </ProgressCircle>
+        </View>
+
+        {/* <Text style={{ alignSelf: "center" }}>
+          Nilai {count === null ? "-" : dataRataSatu} %
+        </Text> */}
 
         {/* <Text
           style={{

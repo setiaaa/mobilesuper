@@ -1,51 +1,132 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useRef, useState } from 'react';
-import { COLORS, FONTSIZE, FONTWEIGHT } from '../../config/SuperAppps';
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useRef, useState } from "react";
 import {
-    BottomSheetModal,
-    BottomSheetModalProvider,
-    BottomSheetBackdrop,
-    BottomSheetView,
-    BottomSheetTextInput,
-    useBottomSheetDynamicSnapPoints
-} from '@gorhom/bottom-sheet';
-import { useMemo } from 'react'
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
+  COLORS,
+  FONTSIZE,
+  FONTWEIGHT,
+  fontSizeResponsive,
+} from "../../config/SuperAppps";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+  BottomSheetView,
+  BottomSheetTextInput,
+  useBottomSheetDynamicSnapPoints,
+} from "@gorhom/bottom-sheet";
+import { useMemo } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
 function MyTabBarKal({ props, navigation }) {
-    const [tabItemIndex, setTabItemIndex] = useState(1);
-    const bottomSheetModalAddRef = useRef(null);
+  const [tabItemIndex, setTabItemIndex] = useState(1);
+  const bottomSheetModalAddRef = useRef(null);
 
-    const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], [])
-    const {
-        animatedHandleHeight,
-        animatedSnapPoints,
-        animatedContentHeight,
-        handleContentLayout,
-    } = useBottomSheetDynamicSnapPoints(initialSnapPoints)
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
-    const bottomSheetAdd = () => {
-        bottomSheetModalAddRef.current?.present()
-    }
+  const bottomSheetAdd = () => {
+    bottomSheetModalAddRef.current?.present();
+  };
 
-    return (
-        <BottomSheetModalProvider>
-            <View style={{ flexDirection: 'row', height: 68, backgroundColor: COLORS.white, justifyContent: 'space-around' }}>
-                <View style={{ flexDirection: 'row', marginVertical: 20, gap: 70 }}>
-                    <TouchableOpacity
-                        key={1}
-                        onPress={() => {
-                            setTabItemIndex(1)
-                            navigation.navigate('GrupKalender', { unread: false })
-                            // props.navigation.navigate('Home', { unread: false })
-                        }} style={{ alignItems: 'center' }}>
-                        <Ionicons name='calendar-outline' color={tabItemIndex === 1 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 1 ? COLORS.primary : COLORS.grey }}>Kalender</Text>
-                    </TouchableOpacity>
+  const { device } = useSelector((state) => state.apps);
 
-                    <TouchableOpacity
+  return (
+    <BottomSheetModalProvider>
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: COLORS.white,
+          justifyContent: "space-around",
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+        }}
+      >
+        <TouchableOpacity
+          key={1}
+          onPress={() => {
+            setTabItemIndex(1);
+            navigation.navigate("GrupKalender", { unread: false });
+            // props.navigation.navigate('Home', { unread: false })
+          }}
+        >
+          {tabItemIndex === 1 ? (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 60,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 100,
+              }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  height: 3,
+                  backgroundColor: COLORS.primary,
+                  position: "absolute",
+                  top: 0,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 5 },
+                  shadowColor: COLORS.primary,
+                  shadowOpacity: 0.4,
+                  //shadow android
+                  elevation: 2,
+                }}
+              />
+              <Ionicons
+                name="calendar-outline"
+                color={COLORS.primary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.primary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 10,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Kalender
+              </Text>
+            </View>
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 60,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 100,
+              }}
+            >
+              <Ionicons
+                name="calendar-outline"
+                color={COLORS.tertiary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.tertiary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 10,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Kalender
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity
                         key={3}
                         onPress={() => {
                             setTabItemIndex(3)
@@ -77,8 +158,8 @@ function MyTabBarKal({ props, navigation }) {
                                 <Ionicons name='add-outline' color={COLORS.white} size={24} />
                             </View>
                         </View>
-                    </TouchableOpacity>
-                    <BottomSheetModal
+                    </TouchableOpacity> */}
+        {/* <BottomSheetModal
                         ref={bottomSheetModalAddRef}
                         snapPoints={animatedSnapPoints}
                         handleHeight={animatedHandleHeight}
@@ -114,26 +195,90 @@ function MyTabBarKal({ props, navigation }) {
                                 </TouchableOpacity>
                             </View>
                         </BottomSheetView>
-                    </BottomSheetModal>
+                    </BottomSheetModal> */}
 
-                    <TouchableOpacity
-                        key={2}
-                        onPress={() => {
-                            setTabItemIndex(2)
-                            navigation.navigate('Agenda', { unread: false })
-                            // props.navigation.navigate('Home', { unread: false })
-                        }} style={{ alignItems: 'center' }}>
-                        <Ionicons name='reorder-four-outline' color={tabItemIndex === 2 ? COLORS.primary : COLORS.grey} size={24} />
-                        <Text style={{ color: tabItemIndex === 2 ? COLORS.primary : COLORS.grey }}>Agenda</Text>
-                    </TouchableOpacity>
-                </View>
+        <TouchableOpacity
+          key={2}
+          onPress={() => {
+            setTabItemIndex(2);
+            // navigation.navigate("Agenda", { unread: false });
+            // props.navigation.navigate('Home', { unread: false })
+          }}
+          style={{ alignItems: "center" }}
+        >
+          {tabItemIndex === 2 ? (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 60,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 100,
+              }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  height: 3,
+                  backgroundColor: COLORS.primary,
+                  position: "absolute",
+                  top: 0,
+                  //shadow ios
+                  shadowOffset: { width: -2, height: 5 },
+                  shadowColor: COLORS.primary,
+                  shadowOpacity: 0.4,
+                  //shadow android
+                  elevation: 2,
+                }}
+              />
+              <Ionicons
+                name="mail-outline"
+                color={COLORS.primary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.primary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 10,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Undangan
+              </Text>
             </View>
-        </BottomSheetModalProvider>
-    )
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                height: device === "tablet" ? 120 : 60,
+                justifyContent: "center",
+                width: device === "tablet" ? 95 : 100,
+              }}
+            >
+              <Ionicons
+                name="mail-outline"
+                color={COLORS.tertiary}
+                size={device === "tablet" ? 40 : 24}
+                style={{ position: "absolute", top: 5 }}
+              />
+              <Text
+                style={{
+                  color: COLORS.tertiary,
+                  position: "absolute",
+                  bottom: device === "tablet" ? 40 : 10,
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                Undangan
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
+    </BottomSheetModalProvider>
+  );
 }
 
-
-const styles = StyleSheet.create({
-
-})
-export default MyTabBarKal
+const styles = StyleSheet.create({});
+export default MyTabBarKal;

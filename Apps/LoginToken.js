@@ -293,15 +293,15 @@ export const LoginToken = () => {
             <Text style={{ color: COLORS.white }}>Masuk</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{ flexDirection: "row", alignItems: "center" }}
           >
             <Ionicons name="help-circle-outline" size={24} color={"#1868AB"} />
             <Text style={{ fontWeight: FONTWEIGHT.bold, color: "#1868AB" }}>
               Service Desk Collaboration Office
             </Text>
-          </TouchableOpacity>
-          {/* 
+          </TouchableOpacity> */}
+
           <TouchableOpacity
             style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
             onPress={() => {
@@ -316,7 +316,7 @@ export const LoginToken = () => {
             <Text style={{ fontWeight: FONTWEIGHT.bold, color: "#1868AB" }}>
               Log Perubahan Aplikasi
             </Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
 
           <View style={{ flexDirection: "row", gap: 50, alignItems: "center" }}>
             <View
@@ -460,7 +460,7 @@ export const LoginToken = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    marginVertical: 20,
+                    marginTop: 20,
                     alignItems: "center",
                     marginHorizontal: 40,
                   }}
@@ -480,6 +480,32 @@ export const LoginToken = () => {
                     }}
                   >
                     Penambahan log perbaikan
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                    marginVertical: 20,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan Scroll pada bottomsheet disposisi
                   </Text>
                 </View>
                 {/* 
