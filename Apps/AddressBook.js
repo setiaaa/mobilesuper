@@ -370,6 +370,7 @@ export const AddressBook = ({ route }) => {
                           config={config}
                         />
                       )}
+                      style={{ height: 600 }}
                       keyExtractor={(item) => (item.nip ? item.nip : item.code)}
                     />
                   </View>
