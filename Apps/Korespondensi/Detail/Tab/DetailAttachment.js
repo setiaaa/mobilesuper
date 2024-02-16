@@ -377,7 +377,7 @@ function DetailAttachment({ data, id, tipeRef }) {
                     key={index}
                     onPress={() => {
                       if (item.new_url?.split("/")[3] == "0") {
-                        Alert.alert("Warning!", "Document not found");
+                        Alert.alert("Peringatan!", "Dokumen tidak ditemukan");
                       } else {
                         if (tipeRef == "in") {
                           dispatch(setPrevAgenda({ id: id, tipe: "m" }));

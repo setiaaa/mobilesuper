@@ -120,7 +120,7 @@ function SearchGlobalList() {
     } catch (error) {
       setIsSearchFilter(false);
       bottomSheetModalRef.current?.dismiss();
-      handlerError(error, "Warning!", "Search global not working");
+      handlerError(error, "Peringatan!", "Pencarian tidak berfungsi");
       setIsLoading(false);
     }
   }

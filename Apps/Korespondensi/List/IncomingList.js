@@ -114,7 +114,7 @@ function IncomingList({ route }) {
       if (error?.response?.status == 401 || error?.status == 401) {
         dispatch(logout());
       } else {
-        handlerError(error, "Warning!", "Incoming List not working");
+        handlerError(error, "Peringatan!", "Surat Masuk tidak berfungsi");
       }
       setIsLoading(false);
     }
@@ -174,7 +174,7 @@ function IncomingList({ route }) {
       if (error?.response?.status == 401 || error?.status == 401) {
         dispatch(logout());
       } else {
-        handlerError(error, "Warning!", "Incoming List not working");
+        handlerError(error, "Peringatan!", "Surat Masuk tidak berfungsi");
       }
       setIsSearchFilter(false);
       bottomSheetModalRef.current?.dismiss();

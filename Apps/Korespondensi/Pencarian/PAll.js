@@ -66,12 +66,12 @@ export const PAll = ({ data }) => {
           <Text
             style={{ fontSize: 13, fontWeight: 600, color: COLORS.lighter }}
           >
-            Find your letter
+            Cari surat anda
           </Text>
           <Text
             style={{ fontSize: 13, fontWeight: 400, color: COLORS.lighter }}
           >
-            type keyword in the input text
+            ketikkan kata kunci pada isian di atas
           </Text>
         </View>
       </View>
