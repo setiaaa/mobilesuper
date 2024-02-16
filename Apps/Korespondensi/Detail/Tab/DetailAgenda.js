@@ -359,7 +359,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                   }}
                   onPress={() => {
                     if (item.new_url?.split("/")[3] == "0") {
-                      Alert.alert("Warning!", "Document not found");
+                      Alert.alert("Peringatan!", "Dokumen tidak ditemukan");
                     } else {
                       if (tipe == "in") {
                         dispatch(setPrevAgenda({ id: id, tipe: "m" }));

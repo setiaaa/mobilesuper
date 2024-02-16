@@ -65,7 +65,7 @@ export const PencarianKorespondensi = () => {
       setIsLoading(false);
     } catch (error) {
       setIsSearchFilter(false);
-      handlerError(error, "Warning!", "Search global not working");
+      handlerError(error, "Peringatan!", "Pencarian tidak berfungsi");
       setIsLoading(false);
     }
   }

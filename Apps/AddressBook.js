@@ -3,6 +3,7 @@ import { ScrollView, View } from "react-native";
 import { Text } from "react-native";
 import { COLORS, fontSizeResponsive } from "../config/SuperAppps";
 import {
+  FlatList,
   GestureHandlerRootView,
   TouchableOpacity,
 } from "react-native-gesture-handler";
@@ -21,7 +22,6 @@ import {
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
-import { FlatList } from "react-native";
 import { Portal } from "react-native-portalize";
 import { TopAddressBook } from "../utils/menutab";
 
@@ -53,7 +53,7 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
   };
   return (
     <View style={{ paddingBottom: 10 }} key={item.nip ? item.nip : item.code}>
-      {item.code !== undefined || item.title !== undefined ? (
+      {item.code !== undefined && item.title !== undefined ? (
         <View
           style={{
             flexDirection: "row",
@@ -133,7 +133,7 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
           </TouchableOpacity>
           <View style={{ width: "80%" }}>
             <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
-              {item.nama || item.fullname}-
+              {item.nama || item.fullname}
             </Text>
             <Text
               style={{
@@ -370,6 +370,7 @@ export const AddressBook = ({ route }) => {
                           config={config}
                         />
                       )}
+                      style={{ height: 600 }}
                       keyExtractor={(item) => (item.nip ? item.nip : item.code)}
                     />
                   </View>

@@ -64,7 +64,7 @@ function MyDispositionList() {
       setList(data);
       setIsLoading(false);
     } catch (error) {
-      handlerError(error, "Warning!", "My Disposition List not working");
+      handlerError(error, "Peringatan!", "My Disposisi tidak berfungsi");
       setIsLoading(false);
     }
   }

@@ -85,13 +85,13 @@ export const Profile = () => {
               marginRight: 20,
             }}
           >
-            {/* <TouchableOpacity onPress={() => setModalLog(true)}>
+            <TouchableOpacity onPress={() => setModalLog(true)}>
               <Ionicons
                 name="information-circle-outline"
                 size={device === "tablet" ? 30 : 30}
                 color={COLORS.white}
               />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -593,7 +593,7 @@ export const Profile = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    marginVertical: 20,
+                    marginTop: 20,
                     alignItems: "center",
                     marginHorizontal: 40,
                   }}
@@ -613,6 +613,32 @@ export const Profile = () => {
                     }}
                   >
                     Penambahan log perbaikan
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                    marginVertical: 20,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan Scroll pada bottomsheet disposisi
                   </Text>
                 </View>
                 {/* 
