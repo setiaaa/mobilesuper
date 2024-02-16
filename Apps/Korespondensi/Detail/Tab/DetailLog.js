@@ -53,7 +53,7 @@ function DetailLog({ route, data, id, tipe }) {
       setLog(response?.data);
       setIsLoading(false);
     } catch (error) {
-      Alert.alert("Warning!", "Log Disposition not working!");
+      Alert.alert("Peringatan!", "Aktivitas disposisi tidak berfungsi!");
       setIsLoading(false);
     }
   };
