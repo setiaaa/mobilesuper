@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, Modal, StyleSheet } from "react-native";
+import { View, Text, Image, Modal, StyleSheet, Platform } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   COLORS,

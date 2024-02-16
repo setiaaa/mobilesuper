@@ -678,7 +678,7 @@ export const TambahCutiTahunan = ({ route }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState("");
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["95%"], []);
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -1667,7 +1667,7 @@ export const TambahCutiTahunan = ({ route }) => {
                       }}
                     >
                       <Ionicons
-                        name="md-cloud-upload-outline"
+                        name="cloud-upload-outline"
                         size={30}
                         color={COLORS.white}
                       />

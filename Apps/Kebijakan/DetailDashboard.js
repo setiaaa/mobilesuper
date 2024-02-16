@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
-import PdfReader from "rn-pdf-reader-js-improved";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View, ScrollView, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
-import { shareAsync } from "expo-sharing";
+// import { shareAsync } from "expo-sharing";
+const { StorageAccessFramework } = FileSystem;
+import * as Sharing from "expo-sharing";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import { CollapseCard } from "../../components/CollapseCard";
@@ -15,15 +16,15 @@ import {
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
-import * as Sharing from "expo-sharing";
 import * as IntentLauncher from "expo-intent-launcher";
 import { Alert } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { getTokenValue } from "../../service/session";
 
 export default function DetailDashboard({ route }) {
   const { data } = route.params;
@@ -31,7 +32,8 @@ export default function DetailDashboard({ route }) {
   const navigation = useNavigation();
   const refresh = () => window.location.reload(true);
 
-  let judul = data.subjek.replace(/\s/g, "-");
+  let judul = data.subjek.replace(/[\/\s]/g, "-");
+  console.log(data.subjek);
 
   const downloadFromUrl = () => {
     let remoteUrl = data.link;
@@ -44,6 +46,52 @@ export default function DetailDashboard({ route }) {
         Alert.alert("INFO", JSON.stringify(error));
       }
     });
+  };
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS == "android" ? "" : "");
+
+  const downloadFile = async (fileUrl, fileType, fileName) => {
+    console.log(fileUrl);
+
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + fileName,
+        { headers: { Authorization: token } }
+      );
+      try {
+        // if (Platform.OS === "android") {
+        //   const { uri } = await downloadResumable.downloadAsync();
+        //   saveAndroidFile(uri, fileName, fileType);
+        // } else {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveIosFile(uri);
+        // }
+      } catch (e) {
+        // setIsLoading(false);
+        console.error("download error:", e);
+      }
+    } catch (e) {}
+  };
+
+  const saveIosFile = async (fileUri) => {
+    try {
+      await Sharing.shareAsync(fileUri, {
+        mimeType: "application/pdf",
+        dialogTitle: "Share PDF",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
   };
   const { device } = useSelector((state) => state.apps);
   return (
@@ -163,18 +211,6 @@ export default function DetailDashboard({ route }) {
                 </View>
               </View>
             </View>
-            {/* {
-                    active ? (
-                        <PdfReader style={{ width: '90%', marginLeft: 20, height: 500, marginTop: 30 }}
-                            source={{
-                                uri: item.link
-                            }}
-                            webviewProps={{
-                                startInLoadingState: true,
-                            }}
-                        />
-                    ) : null
-                } */}
           </View>
           <CollapseCard
             teu_badan={data.teu_badan}
@@ -196,7 +232,7 @@ export default function DetailDashboard({ route }) {
               <TouchableOpacity
                 style={styles.buttonUnduh}
                 onPress={() => {
-                  downloadFromUrl();
+                  downloadFile(data.link, "application/pdf", judul + ".pdf");
                 }}
               >
                 <Text

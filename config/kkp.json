@@ -1,7 +1,7 @@
 {
   "scheme": "kkp",
   "name": "SuperApps KKP",
-  "slug": "superappskkp",
+  "slug": "kkpsuperapps",
   "version": "0.1.4",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
@@ -55,23 +55,25 @@
     "favicon": "./assets/favicon.png"
   },
   "plugins": [
+    "@config-plugins/react-native-blob-util",
+    "@config-plugins/react-native-pdf",
     [
       "expo-build-properties",
       {
         "android": {
-          "compileSdkVersion": 33,
-          "targetSdkVersion": 33,
-          "buildToolsVersion": "31.0.0"
+          "compileSdkVersion": 34,
+          "targetSdkVersion": 34,
+          "buildToolsVersion": "34.0.0"
         },
         "ios": {
-          "deploymentTarget": "13.0"
+          "deploymentTarget": "13.4"
         }
       }
     ]
   ],
   "extra": {
     "eas": {
-      "projectId": "403a76ba-0a27-4481-ab1f-f4a608dbfa3d"
+      "projectId": "f4f0fd5a-f2d1-4fd7-be69-ce52cc8f0133"
     },
     "id": "kkp",
     "base_url": "https://portal.kkp.go.id/api/",

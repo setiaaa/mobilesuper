@@ -32,10 +32,8 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import { Modal } from "react-native";
 import { ResizeMode, Video } from "expo-av";
-import PdfReader from "rn-pdf-reader-js-improved";
 import { GestureHandlerRootView, FlatList } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment/min/moment-with-locales";
 import { useWindowDimensions } from "react-native";
 import RenderHTML from "react-native-render-html";
 import {

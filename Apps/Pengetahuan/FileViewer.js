@@ -6,16 +6,17 @@ import {
   View,
 } from "react-native";
 import React, { useEffect } from "react";
-import PdfReader from "rn-pdf-reader-js-improved";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import WebView from "react-native-webview";
+import Pdf from "react-native-pdf";
 
 export const FileViewer = ({ route }) => {
   const navigation = useNavigation();
   const { lampiran, type } = route.params;
+  const pdfResource = { uri: lampiran, chace: true };
   return (
     <>
       <View
@@ -57,14 +58,6 @@ export const FileViewer = ({ route }) => {
         type === "xlsx" ||
         type === "doc" ||
         type === "docx" ? (
-          // <PdfReader
-          //   source={{
-          //     uri: lampiran,
-          //   }}
-          //   webviewProps={{
-          //     startInLoadingState: true,
-          //   }}
-          // />
           <WebView
             source={{
               uri: `https://view.officeapps.live.com/op/embed.aspx?src=${lampiran}`,
@@ -72,14 +65,14 @@ export const FileViewer = ({ route }) => {
             style={{ flex: 1 }}
           />
         ) : type === "pdf" ? (
-          <PdfReader
-            source={{
-              uri: lampiran,
+          <Pdf
+            trustAllCerts={false}
+            source={pdfResource}
+            style={{
+              flex: 1,
+              width: Dimensions.get("window").width,
+              height: Dimensions.get("window").height,
             }}
-            webviewProps={{
-              startInLoadingState: true,
-            }}
-            withScroll={true}
           />
         ) : null}
       </View>

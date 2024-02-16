@@ -4,10 +4,10 @@ import {
   StyleSheet,
   StatusBar,
   ImageBackground,
-  Platform,
   useWindowDimensions,
   Alert,
   BackHandler,
+  Platform,
 } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -217,10 +217,11 @@ function AuthenticatedStack(route) {
   }, []);
 
   async function checkVersionAndroid() {
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
       const response = await getHTTP(nde_api.getVersionAndroid);
       cekValidVersion(response?.data?.results?.android);
+      setIsLoading(false);
     } catch (error) {
       if (error.status == null) {
         Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
@@ -228,12 +229,13 @@ function AuthenticatedStack(route) {
         handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
       }
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   }
   async function checkVersionIos() {
     try {
-      const response = await getHTTP(nde_api.getVersionIos);
-      cekValidVersion(response?.data?.results?.ios);
+      const response = await getHTTP(nde_api.getVersionAndroid);
+      cekValidVersion(response?.data?.results?.android);
+      setIsLoading(false);
     } catch (error) {
       if (error.status == null) {
         Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
@@ -1336,7 +1338,7 @@ function AppNavigator() {
   const { token } = useSelector((state) => state.login);
   const [route, setRoute] = useState("");
 
-  const prefix = Linking.makeUrl("/");
+  const prefix = Linking.createURL("/");
 
   const [linking, setLinking] = useState();
 

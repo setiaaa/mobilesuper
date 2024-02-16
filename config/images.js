@@ -14,6 +14,7 @@ export const avatar = {
 export const notFound = {
   telkom: require("../assets/telkom/images/lottie/not-found.json"),
   pegadaian: require("../assets/telkom/images/lottie/not-found.json"),
+  kkp: "",
 };
 export const backGroundLayoutBottom = {
   telkom: "",

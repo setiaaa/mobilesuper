@@ -6,7 +6,6 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import PdfReader from "rn-pdf-reader-js-improved";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
@@ -22,6 +21,7 @@ import {
   getDocumentCetakSPPD,
 } from "../../service/api";
 import { Loading } from "../../components/Loading";
+import Pdf from "react-native-pdf";
 
 const LihatSuratSPPD = ({ route }) => {
   const { status, data } = route.params;
@@ -121,6 +121,9 @@ const LihatSuratSPPD = ({ route }) => {
     }
   };
 
+  const pdfResourcePrint = { uri: cetak, chace: true };
+  const pdfResourceLetter = { uri: surat, chace: true };
+
   const fileName = data?.replace(/\s/g, "_");
 
   return (
@@ -199,18 +202,24 @@ const LihatSuratSPPD = ({ route }) => {
       </View>
       <View style={{ width: "100%", height: "90%" }}>
         {status === "share" && cetak !== null ? (
-          <PdfReader
-            source={{
-              base64: cetak,
+          <Pdf
+            trustAllCerts={false}
+            source={pdfResourcePrint}
+            style={{
+              flex: 1,
+              width: Dimensions.get("window").width,
+              height: Dimensions.get("window").height,
             }}
-            withScroll={true}
           />
         ) : status === "" && surat !== null ? (
-          <PdfReader
-            source={{
-              base64: surat,
+          <Pdf
+            trustAllCerts={false}
+            source={pdfResourceLetter}
+            style={{
+              flex: 1,
+              width: Dimensions.get("window").width,
+              height: Dimensions.get("window").height,
             }}
-            withScroll={true}
           />
         ) : (
           <Loading />
