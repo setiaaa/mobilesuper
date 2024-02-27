@@ -15,7 +15,7 @@ export const BBMNonSubsidiKusuka = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKusuka/DBBMSubsidiNonKUSUKA.html",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DBBMSubsidiNonKUSUKA.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}
