@@ -1699,6 +1699,33 @@ export const getListInProgress = createAsyncThunk(
     };
   }
 );
+
+export const getListRetry = createAsyncThunk(
+  "digitalsign/getListRetry",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/retry/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+export const getListReady = createAsyncThunk(
+  "digitalsign/getListReady",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/ready/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
 export const getListCompleted = createAsyncThunk(
   "digitalsign/getListCompleted",
   async ({ token, tipe }) => {
@@ -2088,6 +2115,7 @@ export const getDocumentDetailSPPD = createAsyncThunk(
 export const getDocumentDetailPersonalSPPD = createAsyncThunk(
   "sppd/getDocumentDetailPersonalSPPD",
   async (data) => {
+    console.log(data);
     const respon = await axios.get(`${SPPD}document-personal/${data.id}/`, {
       headers: { Authorization: data.token },
     });

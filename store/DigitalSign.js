@@ -12,6 +12,8 @@ import {
   getSummaryList,
   putTandaTangan,
   getListRejected,
+  getListReady,
+  getListRetry,
 } from "../service/api";
 
 const DigitalSignSlice = createSlice({
@@ -70,6 +72,37 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListInProgress.pending, (state, action) => {
         state.loading = true;
+      })
+      .addCase(getListInProgress.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getListReady.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+      })
+      .addCase(getListReady.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListReady.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getListRetry.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+      })
+      .addCase(getListRetry.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListRetry.rejected, (state, action) => {
+        state.loading = false;
       })
       .addCase(getListCompleted.fulfilled, (state, action) => {
         state.loading = false;

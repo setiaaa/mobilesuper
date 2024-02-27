@@ -570,7 +570,7 @@ export const TambahCutiTahunan = ({ route }) => {
       alamat_cuti: alamat,
       nomor_telpon: telepon,
       nip_approval1: atasan.key,
-      nip_approval2: pejabat.key,
+      nip_approval2: pejabat !== "" ? pejabat.key : atasan.key,
       attachment: attachment,
     };
     const data = {
@@ -693,7 +693,6 @@ export const TambahCutiTahunan = ({ route }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
   const { device } = useSelector((state) => state.apps);
-  console.log(tipe);
 
   return (
     <GestureHandlerRootView>

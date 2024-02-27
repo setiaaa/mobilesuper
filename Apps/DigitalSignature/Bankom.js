@@ -32,6 +32,8 @@ import {
   getListComposer,
   getListDraft,
   getListInProgress,
+  getListReady,
+  getListRetry,
   getListSignedDigiSign,
   putTandaTangan,
 } from "../../service/api";
@@ -95,13 +97,14 @@ const ListBankom = ({
           navigation.navigate("DetailSertifikat");
         }}
       >
-        {variant === "inprogress" ? (
+        {variant === "ready" ? (
           <Checkbox
             value={isSelected.includes(item?.id) ? true : false}
             onValueChange={() => {
               if (isSelected.includes(item?.id)) {
                 const ids = [...isSelected];
                 const newIds = ids.filter((id) => id !== item?.id);
+                setSelection(newIds);
               } else {
                 setSelection((prev) => [...prev, item?.id]);
               }
@@ -112,7 +115,7 @@ const ListBankom = ({
         <View
           style={{
             flexDirection: "column",
-            width: variant === "inprogress" ? "90%" : "100%",
+            width: variant === "ready" ? "90%" : "100%",
           }}
         >
           <Text
@@ -310,9 +313,9 @@ export const Bankom = () => {
     SetVariant("composer");
     dispatch(getListComposer({ token: token, tipe: tipe }));
   };
-  const filterHandlerInProgress = () => {
-    SetVariant("inprogress");
-    dispatch(getListInProgress({ token: token, tipe: tipe }));
+  const filterHandlerReady = () => {
+    SetVariant("ready");
+    dispatch(getListReady({ token: token, tipe: tipe }));
   };
   const filterHandlerCompleted = () => {
     SetVariant("completed");
@@ -321,6 +324,14 @@ export const Bankom = () => {
   const filterHandlerDraft = () => {
     SetVariant("draft");
     dispatch(getListDraft({ token: token, tipe: tipe }));
+  };
+  const filterHandlerInprogress = () => {
+    SetVariant("inprogress");
+    dispatch(getListInProgress({ token: token, tipe: tipe }));
+  };
+  const filterHandlerRetry = () => {
+    SetVariant("retry");
+    dispatch(getListRetry({ token: token, tipe: tipe }));
   };
   const filterHandlerSigned = () => {
     SetVariant("signed");
@@ -373,8 +384,8 @@ export const Bankom = () => {
         if (variant === " composer") {
           dispatch(getListComposer({ token: token, tipe: tipe }));
         }
-        if (variant === "inprogress") {
-          dispatch(getListInProgress({ token: token, tipe: tipe }));
+        if (variant === "ready") {
+          dispatch(getListReady({ token: token, tipe: tipe }));
         }
         if (variant === "completed") {
           dispatch(getListCompleted({ token: token, tipe: tipe }));
@@ -384,6 +395,12 @@ export const Bankom = () => {
         }
         if (variant === "signed") {
           dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
+        }
+        if (variant === "inprogress") {
+          dispatch(getListInProgress({ token: token, tipe: tipe }));
+        }
+        if (variant === "retry") {
+          dispatch(getListRetry({ token: token, tipe: tipe }));
         }
       }
     } catch (error) {}
@@ -443,205 +460,283 @@ export const Bankom = () => {
 
   return (
     <GestureHandlerRootView>
-      {loading ? <Loading /> : null}
-      <View style={{ position: "relative" }}>
-        {filterData !== null ? (
-          <>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                backgroundColor: COLORS.primary,
-                height: 80,
-              }}
-            >
+      <BottomSheetModalProvider>
+        {loading ? <Loading /> : null}
+        <View style={{ position: "relative" }}>
+          {filterData !== null ? (
+            <>
               <View
                 style={{
-                  backgroundColor: COLORS.white,
-                  borderRadius: 20,
-                  width: device === "tablet" ? 40 : 28,
-                  height: device === "tablet" ? 40 : 28,
+                  flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "center",
-                  marginLeft: 20,
+                  backgroundColor: COLORS.primary,
+                  height: 80,
                 }}
               >
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Ionicons
-                    name="chevron-back-outline"
-                    size={device === "tablet" ? 40 : 24}
-                    color={COLORS.primary}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View style={{ flex: 1, alignItems: "center" }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H1", device),
-                    fontWeight: FONTWEIGHT.bold,
-                    color: COLORS.white,
-                    marginRight: isSelected.length === 0 ? 50 : null,
-                  }}
-                >
-                  Digital Signature
-                </Text>
-              </View>
-              {isSelected.length !== 0 ? (
                 <View
                   style={{
                     backgroundColor: COLORS.white,
                     borderRadius: 20,
-                    width: 28,
-                    height: 28,
+                    width: device === "tablet" ? 40 : 28,
+                    height: device === "tablet" ? 40 : 28,
                     alignItems: "center",
                     justifyContent: "center",
-                    marginRight: 20,
+                    marginLeft: 20,
                   }}
                 >
-                  <TouchableOpacity
-                    onPress={() => {
-                      bottomSheetAttach();
-                    }}
-                  >
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons
-                      name="checkmark-outline"
-                      size={18}
+                      name="chevron-back-outline"
+                      size={device === "tablet" ? 40 : 24}
                       color={COLORS.primary}
                     />
                   </TouchableOpacity>
                 </View>
-              ) : null}
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <View
-                style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}
-              >
-                <Search
-                  placeholder={"Cari"}
-                  onSearch={filter}
-                  iconColor={COLORS.primary}
-                />
+                <View style={{ flex: 1, alignItems: "center" }}>
+                  <Text
+                    style={{
+                      fontSize: fontSizeResponsive("H1", device),
+                      fontWeight: FONTWEIGHT.bold,
+                      color: COLORS.white,
+                      marginRight: isSelected.length === 0 ? 50 : null,
+                    }}
+                  >
+                    Digital Signature
+                  </Text>
+                </View>
+                {isSelected.length !== 0 ? (
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      borderRadius: 20,
+                      width: 28,
+                      height: 28,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: 20,
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        bottomSheetAttach();
+                      }}
+                    >
+                      <Ionicons
+                        name="checkmark-outline"
+                        size={18}
+                        color={COLORS.primary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
-            </View>
-            {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ backgroundColor: "yellow", }}> */}
-            {handlePenerimaSertifikat() === false ? (
-              <View
-                style={{
-                  paddingVertical: 10,
-                  flexDirection: "row",
-                  marginHorizontal: "5%",
-                  gap: 16,
-                }}
-              >
-                <TouchableOpacity
+              <View style={{ flexDirection: "row" }}>
+                <View
                   style={{
-                    width: device === "tablet" ? "19%" : null,
-                    paddingHorizontal: 6,
-                    paddingVertical: 6,
-                    borderWidth: 1,
-                    backgroundColor:
-                      variant === "composer" ? COLORS.primary : COLORS.input,
-                    borderRadius: 30,
-                    borderColor:
-                      variant === "composer" ? null : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
+                    width: "90%",
+                    marginHorizontal: "5%",
+                    marginTop: 20,
                   }}
-                  onPress={() => filterHandlerComposer()}
                 >
-                  <Text
-                    style={{
-                      color:
-                        variant === "composer"
-                          ? COLORS.white
-                          : COLORS.foundation,
-                      fontSize: fontSizeResponsive("H4", device),
-                    }}
-                  >
-                    List Saya
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                  <Search
+                    placeholder={"Cari"}
+                    onSearch={filter}
+                    iconColor={COLORS.primary}
+                  />
+                </View>
+              </View>
+              {/* <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              > */}
+              {handlePenerimaSertifikat() === false ? (
+                <View
                   style={{
-                    width: device === "tablet" ? "19%" : null,
-                    paddingHorizontal: 6,
-                    paddingVertical: 6,
-                    borderWidth: 1,
-                    backgroundColor:
-                      variant === "draft" ? COLORS.primary : COLORS.input,
-                    borderRadius: 30,
-                    borderColor:
-                      variant === "draft" ? null : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
+                    paddingVertical: 10,
+                    flexDirection: "row",
+                    marginHorizontal: "5%",
+                    gap: 7,
                   }}
-                  onPress={() => filterHandlerDraft()}
                 >
-                  <Text
+                  <TouchableOpacity
                     style={{
-                      color:
-                        variant === "draft" ? COLORS.white : COLORS.foundation,
-                      fontSize: fontSizeResponsive("H4", device),
+                      width: device === "tablet" ? "19%" : null,
+                      paddingHorizontal: 6,
+                      paddingVertical: 6,
+                      borderWidth: 1,
+                      backgroundColor:
+                        variant === "composer" ? COLORS.primary : COLORS.input,
+                      borderRadius: 30,
+                      borderColor:
+                        variant === "composer" ? null : COLORS.ExtraDivinder,
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
+                    onPress={() => filterHandlerComposer()}
                   >
-                    Draft
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    width: device === "tablet" ? "19%" : null,
-                    paddingHorizontal: 6,
-                    paddingVertical: 6,
-                    borderWidth: 1,
-                    backgroundColor:
-                      variant === "inprogress" ? COLORS.primary : COLORS.input,
-                    borderRadius: 30,
-                    borderColor:
-                      variant === "inprogress" ? null : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onPress={() => filterHandlerInProgress()}
-                >
-                  <Text
+                    <Text
+                      style={{
+                        color:
+                          variant === "composer"
+                            ? COLORS.white
+                            : COLORS.foundation,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      List Saya
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
                     style={{
-                      color:
-                        variant === "inprogress"
-                          ? COLORS.white
-                          : COLORS.foundation,
-                      fontSize: fontSizeResponsive("H4", device),
+                      width: device === "tablet" ? "19%" : null,
+                      paddingHorizontal: 6,
+                      paddingVertical: 6,
+                      borderWidth: 1,
+                      backgroundColor:
+                        variant === "draft" ? COLORS.primary : COLORS.input,
+                      borderRadius: 30,
+                      borderColor:
+                        variant === "draft" ? null : COLORS.ExtraDivinder,
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
+                    onPress={() => filterHandlerDraft()}
                   >
-                    Need Sign
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    width: device === "tablet" ? "19%" : null,
-                    paddingHorizontal: 6,
-                    paddingVertical: 6,
-                    borderWidth: 1,
-                    backgroundColor:
-                      variant === "signed" ? COLORS.primary : COLORS.input,
-                    borderRadius: 30,
-                    borderColor:
-                      variant === "signed" ? null : COLORS.ExtraDivinder,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onPress={() => filterHandlerSigned()}
-                >
-                  <Text
+                    <Text
+                      style={{
+                        color:
+                          variant === "draft"
+                            ? COLORS.white
+                            : COLORS.foundation,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Draft
+                    </Text>
+                  </TouchableOpacity>
+                  {profile?.nip === "197908162002121003" ? (
+                    <>
+                      <TouchableOpacity
+                        style={{
+                          width: device === "tablet" ? "19%" : null,
+                          paddingHorizontal: 6,
+                          paddingVertical: 6,
+                          borderWidth: 1,
+                          backgroundColor:
+                            variant === "ready" ? COLORS.primary : COLORS.input,
+                          borderRadius: 30,
+                          borderColor:
+                            variant === "ready" ? null : COLORS.ExtraDivinder,
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onPress={() => filterHandlerReady()}
+                      >
+                        <Text
+                          style={{
+                            color:
+                              variant === "ready"
+                                ? COLORS.white
+                                : COLORS.foundation,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Need Sign
+                        </Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={{
+                          width: device === "tablet" ? "19%" : null,
+                          paddingHorizontal: 6,
+                          paddingVertical: 6,
+                          borderWidth: 1,
+                          backgroundColor:
+                            variant === "retry" ? COLORS.primary : COLORS.input,
+                          borderRadius: 30,
+                          borderColor:
+                            variant === "retry" ? null : COLORS.ExtraDivinder,
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onPress={() => filterHandlerRetry()}
+                      >
+                        <Text
+                          style={{
+                            color:
+                              variant === "retry"
+                                ? COLORS.white
+                                : COLORS.foundation,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          Retry
+                        </Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={{
+                          width: device === "tablet" ? "19%" : null,
+                          paddingHorizontal: 6,
+                          paddingVertical: 6,
+                          borderWidth: 1,
+                          backgroundColor:
+                            variant === "inprogress"
+                              ? COLORS.primary
+                              : COLORS.input,
+                          borderRadius: 30,
+                          borderColor:
+                            variant === "inprogress"
+                              ? null
+                              : COLORS.ExtraDivinder,
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onPress={() => filterHandlerInprogress()}
+                      >
+                        <Text
+                          style={{
+                            color:
+                              variant === "inprogress"
+                                ? COLORS.white
+                                : COLORS.foundation,
+                            fontSize: fontSizeResponsive("H4", device),
+                          }}
+                        >
+                          In Progress
+                        </Text>
+                      </TouchableOpacity>
+                    </>
+                  ) : null}
+                  <TouchableOpacity
                     style={{
-                      color:
-                        variant === "signed" ? COLORS.white : COLORS.foundation,
-                      fontSize: fontSizeResponsive("H4", device),
+                      width: device === "tablet" ? "19%" : null,
+                      paddingHorizontal: 6,
+                      paddingVertical: 6,
+                      borderWidth: 1,
+                      backgroundColor:
+                        variant === "signed" ? COLORS.primary : COLORS.input,
+                      borderRadius: 30,
+                      borderColor:
+                        variant === "signed" ? null : COLORS.ExtraDivinder,
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
+                    onPress={() => filterHandlerSigned()}
                   >
-                    Signed
-                  </Text>
-                </TouchableOpacity>
-                {/* <TouchableOpacity
+                    <Text
+                      style={{
+                        color:
+                          variant === "signed"
+                            ? COLORS.white
+                            : COLORS.foundation,
+                        fontSize: fontSizeResponsive("H4", device),
+                      }}
+                    >
+                      Signed
+                    </Text>
+                  </TouchableOpacity>
+                  {/* <TouchableOpacity
                 style={{
                   width: device === "tablet" ? "19%" : null,
                   paddingHorizontal: 6,
@@ -673,32 +768,34 @@ export const Bankom = () => {
                   Selesai
                 </Text>
               </TouchableOpacity> */}
-              </View>
-            ) : null}
-
-            {/* </ScrollView> */}
-            <FlatList
-              data={filterData}
-              keyExtractor={(item) => item?.id}
-              renderItem={({ item }) => (
-                <View key={item?.id}>
-                  <ListBankom
-                    item={item}
-                    token={token}
-                    variant={variant}
-                    isSelected={isSelected}
-                    setSelection={setSelection}
-                    device={device}
-                  />
                 </View>
-              )}
-              ListEmptyComponent={() => <ListEmpty />}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-              style={{ height: "70%" }}
-            />
-            {/* <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
+              ) : null}
+              {/* </ScrollView> */}
+              <FlatList
+                data={filterData}
+                keyExtractor={(item) => item?.id}
+                renderItem={({ item }) => (
+                  <View key={item?.id}>
+                    <ListBankom
+                      item={item}
+                      token={token}
+                      variant={variant}
+                      isSelected={isSelected}
+                      setSelection={setSelection}
+                      device={device}
+                    />
+                  </View>
+                )}
+                ListEmptyComponent={() => <ListEmpty />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
+                style={{ height: "70%" }}
+              />
+              {/* <TouchableOpacity onPress={() => { navigation.navigate('TambahSertifikat')}}
                             style={{ position: 'absolute', bottom: 40, right: 30, zIndex: 99 }}
                         >
                             <View style={{ backgroundColor: COLORS.primary, borderRadius: 50, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
@@ -706,86 +803,86 @@ export const Bankom = () => {
                             </View>
                         </TouchableOpacity> */}
 
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              snapPoints={animatedSnapPoints}
-              handleHeight={animatedHandleHeight}
-              contentHeight={animatedContentHeight}
-              index={0}
-              style={{ borderRadius: 50 }}
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-              backdropComponent={({ style }) => (
-                <View
-                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                />
-              )}
-            >
-              <BottomSheetView onLayout={handleContentLayout}>
-                <KeyboardAvoidingView
-                  behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                  <View style={{ flex: 1 }}>
-                    <View
-                      style={{
-                        alignItems: "center",
-                        flexDirection: "row",
-                        marginHorizontal: 20,
-                        marginTop: 20,
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => bottomSheetAttachClose()}
-                      >
-                        <Ionicons name="chevron-back-outline" size={24} />
-                      </TouchableOpacity>
-                      <TouchableOpacity
+              <BottomSheetModal
+                ref={bottomSheetModalRef}
+                snapPoints={animatedSnapPoints}
+                handleHeight={animatedHandleHeight}
+                contentHeight={animatedContentHeight}
+                index={0}
+                style={{ borderRadius: 50 }}
+                keyboardBlurBehavior="restore"
+                android_keyboardInputMode="adjust"
+                backdropComponent={({ style }) => (
+                  <View
+                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                  />
+                )}
+              >
+                <BottomSheetView onLayout={handleContentLayout}>
+                  <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                  >
+                    <View style={{ flex: 1 }}>
+                      <View
                         style={{
+                          alignItems: "center",
+                          flexDirection: "row",
+                          marginHorizontal: 20,
+                          marginTop: 20,
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => bottomSheetAttachClose()}
+                        >
+                          <Ionicons name="chevron-back-outline" size={24} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flex: 1,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: fontSizeResponsive("H1", device),
+                              fontWeight: 500,
+                            }}
+                          >
+                            Tanda Tangan Sertifikat
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+
+                      <View
+                        style={{
+                          marginBottom: 10,
                           justifyContent: "center",
                           alignItems: "center",
                           flex: 1,
+                          marginTop: 20,
                         }}
                       >
-                        <Text
+                        <BottomSheetTextInput
+                          editable
+                          multiline
+                          numberOfLines={4}
+                          maxLength={40}
+                          placeholder="Masukan Passphrase"
                           style={{
-                            fontSize: fontSizeResponsive("H1", device),
-                            fontWeight: 500,
+                            borderWidth: 1,
+                            width: "90%",
+                            height: 40,
+                            paddingHorizontal: 10,
+                            paddingTop: 10,
+                            borderRadius: 6,
+                            borderColor: "#D0D5DD",
                           }}
-                        >
-                          Tanda Tangan Sertifikat
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
+                          onChangeText={setParaphrase}
+                        />
+                      </View>
 
-                    <View
-                      style={{
-                        marginBottom: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flex: 1,
-                        marginTop: 20,
-                      }}
-                    >
-                      <BottomSheetTextInput
-                        editable
-                        multiline
-                        numberOfLines={4}
-                        maxLength={40}
-                        placeholder="Masukan Passphrase"
-                        style={{
-                          borderWidth: 1,
-                          width: "90%",
-                          height: 40,
-                          paddingHorizontal: 10,
-                          paddingTop: 10,
-                          borderRadius: 6,
-                          borderColor: "#D0D5DD",
-                        }}
-                        onChangeText={setParaphrase}
-                      />
-                    </View>
-
-                    {/* <View
+                      {/* <View
                   style={{
                     marginBottom: 10,
                     justifyContent: "center",
@@ -812,52 +909,53 @@ export const Bankom = () => {
                   />
                 </View> */}
 
-                    <TouchableOpacity
-                      style={{
-                        width: "90%",
-                        backgroundColor: COLORS.danger,
-                        height: 50,
-                        borderRadius: 6,
-                        alignItems: "center",
-                        marginHorizontal: 20,
-                        justifyContent: "center",
-                        marginTop: 10,
-                      }}
-                      onPress={() => {
-                        bottomSheetAttachClose();
-                        {
-                          setTimeout(() => {
-                            handleSubmit();
-                          }, 2000);
-                        }
-                        setSelection([]);
-                        SetVariant("signed");
-                        setParaphrase("");
-                      }}
-                    >
-                      <Text
+                      <TouchableOpacity
                         style={{
-                          color: COLORS.white,
-                          fontSize: fontSizeResponsive("H1", device),
-                          fontWeight: 500,
+                          width: "90%",
+                          backgroundColor: COLORS.danger,
+                          height: 50,
+                          borderRadius: 6,
+                          alignItems: "center",
+                          marginHorizontal: 20,
+                          justifyContent: "center",
+                          marginTop: 10,
+                        }}
+                        onPress={() => {
+                          bottomSheetAttachClose();
+                          {
+                            setTimeout(() => {
+                              handleSubmit();
+                            }, 2000);
+                          }
+                          setSelection([]);
+                          SetVariant("signed");
+                          setParaphrase("");
                         }}
                       >
-                        Tanda Tangan
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </KeyboardAvoidingView>
-              </BottomSheetView>
-            </BottomSheetModal>
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontSize: fontSizeResponsive("H1", device),
+                            fontWeight: 500,
+                          }}
+                        >
+                          Tanda Tangan
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </KeyboardAvoidingView>
+                </BottomSheetView>
+              </BottomSheetModal>
 
-            <ModalSubmit
-              status={status}
-              setStatus={setStatus}
-              navigate={"MainDigitalSign"}
-            />
-          </>
-        ) : null}
-      </View>
+              <ModalSubmit
+                status={status}
+                setStatus={setStatus}
+                navigate={"MainDigitalSign"}
+              />
+            </>
+          ) : null}
+        </View>
+      </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 };

@@ -96,6 +96,11 @@ import MyTabBarDetailKorespondensi from "../Apps/Task Management/DetailKorespond
 import { DetailKorespondensiTM } from "../Apps/Task Management/DetailKorespondensiTM/DetailKorespondensiTM";
 import { Dimensions, Platform, View, useWindowDimensions } from "react-native";
 import { AddressbookPara } from "../Apps/AddressbookPara";
+import { Kusuka } from "../Apps/Dashboard/Kusuka";
+import { P3KENonKusuka } from "../Apps/Dashboard/P3KENonKusuka";
+import { BBMSubsidiKusuka } from "../Apps/Dashboard/BBMSubsidiKusuka";
+import { BBMNonSubsidiKusuka } from "../Apps/Dashboard/BBMNonSubsidiKusuka";
+import { P3KEKusuka } from "../Apps/Dashboard/P3KEKusuka";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -930,6 +935,65 @@ export const TopsKeuanganKinerja = () => {
   );
 };
 
+export const TopsBantuanPemerintah = () => {
+  const { device } = useSelector((state) => state.apps);
+
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName="Kusuka"
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
+          tabBarScrollEnabled: true,
+          swipeEnabled: false,
+          tabBarItemStyle: { width: "auto" },
+        }}
+      >
+        <Top.Screen
+          name="Kusuka"
+          component={Kusuka}
+          options={{
+            title: "Kusuka",
+          }}
+        />
+        <Top.Screen
+          name="P3KEKusuka"
+          component={P3KEKusuka}
+          options={{
+            title: "P3KE KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="P3KENonKusuka"
+          component={P3KENonKusuka}
+          options={{
+            title: "P3KE NON KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="BBMSubsidiKusuka"
+          component={BBMSubsidiKusuka}
+          options={{
+            title: "BBM SUBSIDI KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="BBMNonSubsidiKusuka"
+          component={BBMNonSubsidiKusuka}
+          options={{
+            title: "BBM NON SUBSIDI KUSUKA",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
 export const TopAddressBook = ({ config, device }) => {
   return (
     <Host>

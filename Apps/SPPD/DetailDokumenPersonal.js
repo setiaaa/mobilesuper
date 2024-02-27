@@ -125,7 +125,7 @@ export const DetailDokumenPersonal = () => {
                 {/* {moment(dokumen.detail?.end_date, "DD-MM-YYYY")
                   .locale("id")
                   .format(DATETIME.LONG_DATE)} */}
-                {detailPersonal.purpose}
+                {detailPersonal.event}
               </Text>
             </View>
 
@@ -155,7 +155,7 @@ export const DetailDokumenPersonal = () => {
                   paddingRight: 20,
                 }}
               >
-                {detailPersonal.reason}
+                {detailPersonal.purpose}
               </Text>
             </View>
 
