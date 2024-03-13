@@ -229,7 +229,7 @@ export const GrupKalender = () => {
                 <Text
                   style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
                 >
-                  Agenda Bersama
+                  Kalender
                 </Text>
               </View>
             </View>

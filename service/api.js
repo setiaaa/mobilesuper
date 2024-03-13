@@ -493,6 +493,17 @@ export const getlistKalender = createAsyncThunk(
   }
 );
 
+//KalenderPersonal
+export const getlistKalenderPersonal = createAsyncThunk(
+  "calendar/getlistKalenderPersonal",
+  async (token) => {
+    const respon = await axios.get(`${kalender}calendar/event/korespondensi/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
 //komentar
 export const postKomenTodo = createAsyncThunk(
   "calendar/postKomenTodo",

@@ -173,6 +173,7 @@ import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { setDevice } from "../../store/Apps";
 import { AppState } from "react-native";
 import { BantuanPemerintah } from "../Dashboard/BantuanPemerintah";
+import { KalenderPersonal } from "../KalenderPersonal/KalenderPersonal";
 
 const Stack = createNativeStackNavigator();
 
@@ -397,6 +398,14 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="MainDetailRepo"
             component={MainDetailRepo}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="KalenderPersonal"
+            component={KalenderPersonal}
             options={{
               headerShown: false,
               gestureEnabled: false,

@@ -959,7 +959,7 @@ export const TopsBantuanPemerintah = () => {
           name="Kusuka"
           component={Kusuka}
           options={{
-            title: "Kusuka",
+            title: "KUSUKA",
           }}
         />
         <Top.Screen
