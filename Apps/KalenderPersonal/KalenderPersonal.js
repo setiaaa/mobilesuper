@@ -7,7 +7,10 @@ import { Calendar, modeToNum } from "react-native-big-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTokenValue } from "../../service/session";
-import { getlistKalenderPersonal } from "../../service/api";
+import {
+  getDetailKalenderPersonal,
+  getlistKalenderPersonal,
+} from "../../service/api";
 import dayjs from "dayjs";
 
 export const KalenderPersonal = () => {
@@ -56,12 +59,13 @@ export const KalenderPersonal = () => {
         const startDate = dayjs(child.start_date).format("YYYY-MM-DD");
         const endDate = dayjs(child.end_date).format("YYYY-MM-DD");
         let obj = {
-          title: child.name || child.title,
+          title: child.name,
           start: dayjs(startDate).set("hour", 10).set("minute", 0).toDate(),
           end: dayjs(endDate).set("hour", 10).set("minute", 0).toDate(),
           color: {
-            backgroundColor: stringToColor(child.pic.title.name),
+            backgroundColor: stringToColor(child.kategori),
           },
+          id: child.id,
         };
         newArr.push(obj);
       });
@@ -89,7 +93,12 @@ export const KalenderPersonal = () => {
     setDate(today);
   };
 
-  console.log(events);
+  const getDetail = (id) => {
+    const params = { token, id };
+    // const data = event.listsprogress.find(item => item.id === id)
+    dispatch(getDetailKalenderPersonal(params));
+  };
+
   return (
     <ScrollView>
       <View
@@ -199,8 +208,10 @@ export const KalenderPersonal = () => {
           eventCellStyle={(x) => x.color}
           locale="id"
           activeDate={date}
-          onPressEvent={() => {
-            console.log("cek");
+          onPressEvent={(item) => {
+            // console.log("cek", item);
+            getDetail(item.id);
+            navigation.navigate("DetailKalenderPersonal");
           }}
         />
       </View>

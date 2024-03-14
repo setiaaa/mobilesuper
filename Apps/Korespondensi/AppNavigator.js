@@ -174,6 +174,7 @@ import { setDevice } from "../../store/Apps";
 import { AppState } from "react-native";
 import { BantuanPemerintah } from "../Dashboard/BantuanPemerintah";
 import { KalenderPersonal } from "../KalenderPersonal/KalenderPersonal";
+import { DetailKalenderPersonal } from "../KalenderPersonal/DetailKalenderPersonal";
 
 const Stack = createNativeStackNavigator();
 
@@ -408,7 +409,14 @@ function AuthenticatedStack({ route }) {
             component={KalenderPersonal}
             options={{
               headerShown: false,
-              gestureEnabled: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailKalenderPersonal"
+            component={DetailKalenderPersonal}
+            options={{
+              headerShown: false,
             }}
           />
           <Stack.Screen

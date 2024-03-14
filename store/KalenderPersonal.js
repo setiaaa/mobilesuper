@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getlistKalenderPersonal } from "../service/api";
+import {
+  getDetailKalenderPersonal,
+  getlistKalenderPersonal,
+} from "../service/api";
 
 const KalenderPersonalSlice = createSlice({
   name: "KalenderPersonal",
@@ -22,6 +25,16 @@ const KalenderPersonalSlice = createSlice({
         state.loading = true;
       })
       .addCase(getlistKalenderPersonal.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getDetailKalenderPersonal.fulfilled, (state, action) => {
+        state.personal.detail = action.payload;
+        state.loading = false;
+      })
+      .addCase(getDetailKalenderPersonal.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDetailKalenderPersonal.rejected, (state, action) => {
         state.loading = false;
       });
   },
