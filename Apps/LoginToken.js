@@ -35,6 +35,7 @@ export const LoginToken = () => {
   const navigation = useNavigation();
   const [isSelected, setSelection] = useState(true);
   const [count, setCount] = useState(0);
+  const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [onChange, setOnChange] = useState("");
   const [version, setVersion] = useState("");
@@ -123,8 +124,8 @@ export const LoginToken = () => {
               style={{ width: 150, height: 150 }}
             />
           </Pressable>
-          {/* 
-          {count >= 5 ? (
+
+          {/* {count >= 5 ? (
             <View
               style={{
                 borderWidth: 1,
@@ -506,6 +507,57 @@ export const LoginToken = () => {
                     }}
                   >
                     Perbaikan Scroll pada bottomsheet disposisi
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Penambahan menu pada dashboard
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                    marginVertical: 20,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan filter pada pengembangan kompetensi
                   </Text>
                 </View>
                 {/* 

@@ -193,7 +193,7 @@ function MyTabBar({ props, navigation }) {
                   width: device === "tablet" ? 50 : 24,
                   height: device === "tablet" ? 50 : 18,
                 }}
-                source={require("../../assets/superApp/ikon-kepagawaian.png")}
+                source={require("../../assets/superApp/ikon-perencanaan.png")}
               />
             </View>
           </TouchableOpacity>

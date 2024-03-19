@@ -1,8 +1,8 @@
 {
   "scheme": "kkp",
   "name": "SuperApps KKP",
-  "slug": "kkpsuperapps",
-  "version": "0.1.6",
+  "slug": "SuperAppsKKP",
+  "version": "0.1.7",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
   "userInterfaceStyle": "automatic",
@@ -73,7 +73,7 @@
   ],
   "extra": {
     "eas": {
-      "projectId": "f4f0fd5a-f2d1-4fd7-be69-ce52cc8f0133"
+      "projectId": "a16ddb1c-a4a4-4cc1-a3c4-e78f53295f67"
     },
     "id": "kkp",
     "base_url": "https://portal.kkp.go.id/api/",

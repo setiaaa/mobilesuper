@@ -101,6 +101,7 @@ import { P3KENonKusuka } from "../Apps/Dashboard/P3KENonKusuka";
 import { BBMSubsidiKusuka } from "../Apps/Dashboard/BBMSubsidiKusuka";
 import { BBMNonSubsidiKusuka } from "../Apps/Dashboard/BBMNonSubsidiKusuka";
 import { P3KEKusuka } from "../Apps/Dashboard/P3KEKusuka";
+import { Deviasi } from "../Apps/Dashboard/Deviasi";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -988,6 +989,13 @@ export const TopsBantuanPemerintah = () => {
           component={BBMNonSubsidiKusuka}
           options={{
             title: "BBM NON SUBSIDI KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="DeviasiKusuka"
+          component={Deviasi}
+          options={{
+            title: "DEVIASI KUSUKA",
           }}
         />
       </Top.Navigator>

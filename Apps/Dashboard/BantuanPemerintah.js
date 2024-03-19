@@ -55,7 +55,7 @@ export const BantuanPemerintah = () => {
               fontWeight: 600,
             }}
           >
-            Bantaun Pemerintah
+            Bantuan Pemerintah
           </Text>
         </View>
       </View>

@@ -17,11 +17,12 @@
     },
     "preview": {
       "android": {
-        "buildType": "app-bundle",
+        "buildType": "apk",
         "image": "latest"
       },
       "ios": {
-        "simulator": true
+        "simulator": true,
+        "enterpriseProvisioning": "adhoc"
       },
       "distribution": "internal"
     },
@@ -40,9 +41,9 @@
   "submit": {
     "production": {
       "ios": {
-      "appleId": "aziz@armsolusi.com",
-      "ascAppId": "6478191000",
-      "appleTeamId": "H7BL72G773"
+        "appleId": "aziz@armsolusi.com",
+        "ascAppId": "6478191000",
+        "appleTeamId": "H7BL72G773"
       }
     }
   }
