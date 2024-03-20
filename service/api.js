@@ -506,13 +506,15 @@ export const getlistKalenderPersonal = createAsyncThunk(
 
 export const getDetailKalenderPersonal = createAsyncThunk(
   "calendar/getDetailKalenderPersonal",
-  async ({ token, id }) => {
+  async (data) => {
+    console.log(data);
     const respon = await axios.get(
-      `${kalender}calendar/event/${id}/retrieve/korespondensi/`,
+      `${kalender}calendar/event/${data.id}/retrieve/korespondensi/`,
       {
-        headers: { Authorization: token },
+        headers: { Authorization: data.token },
       }
     );
+    console.log(await respon);
     return respon?.data.result;
   }
 );

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -52,6 +58,25 @@ export const KalenderPersonal = () => {
     return color;
   };
 
+  const colorsTag = {
+    tugas: {
+      color: "#fb8072",
+      background: "#ffebc7",
+    },
+    cuti: {
+      color: "#0d6efd",
+      background: "#c2dbfe",
+    },
+    undangan: {
+      color: "#198771",
+      background: "#c5e1d4",
+    },
+    perintah: {
+      color: "#6c759c",
+      background: "#dadcde",
+    },
+  };
+
   useEffect(() => {
     let newArr = [];
     if (personal.lists?.length > 0) {
@@ -63,9 +88,11 @@ export const KalenderPersonal = () => {
           start: dayjs(startDate).set("hour", 10).set("minute", 0).toDate(),
           end: dayjs(endDate).set("hour", 10).set("minute", 0).toDate(),
           color: {
-            backgroundColor: stringToColor(child.kategori),
+            backgroundColor: colorsTag[child.kategori].background,
+            textColor: colorsTag[child.kategori].color,
           },
           id: child.id,
+          kategori: child.kategori,
         };
         newArr.push(obj);
       });
@@ -205,16 +232,60 @@ export const KalenderPersonal = () => {
           height={500}
           mode="month"
           date={date}
-          eventCellStyle={(x) => x.color}
+          // eventCellStyle={(x) => x.color}
+          renderEvent={(data) => {
+            return (
+              <View
+                style={[
+                  styles.eventbox,
+                  { backgroundColor: data.color.backgroundColor },
+                ]}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  <Text
+                    noWrap
+                    // component={'i'}
+                    style={{
+                      margin: "0 !important",
+                      fontWeight: 500,
+                      color: data.color.textColor,
+                    }}
+                  >
+                    {data.title}
+                  </Text>
+                </View>
+              </View>
+            );
+          }}
           locale="id"
           activeDate={date}
           onPressEvent={(item) => {
-            // console.log("cek", item);
+            console.log("cek", item);
             getDetail(item.id);
-            navigation.navigate("DetailKalenderPersonal");
+            if (item.kategori !== "cuti") {
+              navigation.navigate("DetailKalenderPersonal");
+            }
           }}
         />
       </View>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  eventbox: {
+    width: "100%",
+    height: 25,
+    padding: 5,
+    color: "#fff",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+});

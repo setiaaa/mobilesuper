@@ -27,6 +27,8 @@ export const DetailKalenderPersonal = () => {
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = personal.detail;
 
+  console.log(detail);
+
   return (
     <ScrollView>
       <View
@@ -308,33 +310,147 @@ export const DetailKalenderPersonal = () => {
             )}
           </View>
 
-          {/* <View
-            style={{
-              marginHorizontal: 20,
-              marginTop: 10,
-              flexDirection: "row",
-            }}
-          >
-            <View style={{ width: "50%" }}>
-              <Text
-                style={{
-                  fontSize: FONTSIZE.H2,
-                  fontWeight: FONTWEIGHT.bold,
-                }}
-              >
-                Member
-              </Text>
+          <View>
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+              }}
+            >
+              <View style={{ width: "30%" }}>
+                <Text
+                  style={{
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Kepada
+                </Text>
+              </View>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : (
+                <View style={{ justifyContent: "center", width: 150 }}>
+                  {detail.kepada.length === 0 ? (
+                    <Text>-</Text>
+                  ) : (
+                    detail.kepada?.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{
+                            flexDirection: "row",
+                            gap: 10,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text>{index + 1}. </Text>
+                          {/* <Image
+                          source={{ uri: item.avatar_url }}
+                          style={{
+                            marginLeft: -8,
+                            borderWidth: 2,
+                            borderRadius: 50,
+                            borderColor: COLORS.white,
+                            width: 30,
+                            height: 30,
+                          }}
+                        /> */}
+                          <Text>{item.title.name}</Text>
+                        </View>
+                      );
+                    })
+                  )}
+                </View>
+              )}
             </View>
-            {loading ? (
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 4 }}
-                width={100}
-                height={20}
-              />
-            ) : (
-              detail.members.map(item )
-            )}
-          </View> */}
+            <View
+              style={{
+                height: 1,
+                width: "90%",
+                backgroundColor: COLORS.lighter,
+                opacity: 0.3,
+                marginTop: 10,
+                marginHorizontal: 20,
+              }}
+            />
+          </View>
+
+          <View>
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+              }}
+            >
+              <View style={{ width: "30%" }}>
+                <Text
+                  style={{
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Tembusan
+                </Text>
+              </View>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : (
+                <View style={{ justifyContent: "center", width: 150 }}>
+                  {detail.tembusan?.length === 0 ? (
+                    <Text>-</Text>
+                  ) : (
+                    detail.tembusan?.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{
+                            flexDirection: "row",
+                            gap: 10,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text>{index + 1}. </Text>
+                          {/* <Image
+                          source={{ uri: item.avatar_url }}
+                          style={{
+                            marginLeft: -8,
+                            borderWidth: 2,
+                            borderRadius: 50,
+                            borderColor: COLORS.white,
+                            width: 30,
+                            height: 30,
+                          }}
+                        /> */}
+                          <Text>{item.title.name}</Text>
+                        </View>
+                      );
+                    })
+                  )}
+                </View>
+              )}
+            </View>
+            <View
+              style={{
+                height: 1,
+                width: "90%",
+                backgroundColor: COLORS.lighter,
+                opacity: 0.3,
+                marginTop: 10,
+                marginHorizontal: 20,
+              }}
+            />
+          </View>
 
           <View>
             <View
@@ -402,55 +518,6 @@ export const DetailKalenderPersonal = () => {
               }}
             />
           </View>
-
-          {/* <BottomSheetModal
-            ref={bottomSheetModalRef}
-            snapPoints={animatedSnapPoints}
-            handleHeight={animatedHandleHeight}
-            contentHeight={animatedContentHeight}
-            index={0}
-            style={{ borderRadius: 50 }}
-            keyboardBlurBehavior="restore"
-            android_keyboardInputMode="adjust"
-            backdropComponent={({ style }) => (
-              <View
-                style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-              />
-            )}
-          >
-            <BottomSheetView onLayout={handleContentLayout}>
-              <View style={{ marginTop: 20, marginBottom: 40 }}>
-                <View
-                  style={{
-                    marginBottom: 20,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: FONTSIZE.H2,
-                      fontWeight: FONTWEIGHT.bold,
-                      color: COLORS.lighter,
-                    }}
-                  >
-                    Anggota
-                  </Text>
-                </View>
-                <View>
-                  <FlatList
-                          data={detailGrup.members}
-                          renderItem={({ item }) => (
-                            <View key={item.nip}>
-                              <CardItemMember item={item} />
-                            </View>
-                          )}
-                          keyExtractor={(item) => item.id}
-                        />
-                </View>
-              </View>
-            </BottomSheetView>
-          </BottomSheetModal> */}
         </View>
       </View>
     </ScrollView>
