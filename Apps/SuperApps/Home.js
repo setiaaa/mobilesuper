@@ -63,7 +63,7 @@ import {
   getGaleri,
   getBerita,
 } from "../../service/api";
-import { bannerKegiatan } from "../../components/BannerKegiatan";
+import { bannerKegiatan as BannerKegiatan } from "../../components/BannerKegiatan";
 import { BeritaHome } from "../../components/BeritaHome";
 import { GaleriHome } from "../../components/GaleriHome";
 import { Loading } from "../../components/Loading";
@@ -339,7 +339,9 @@ export const Home = () => {
               sliderHeight={screenWidth}
               itemWidth={screenWidth - 60}
               data={banner}
-              renderItem={bannerKegiatan}
+              renderItem={({ item }, parallaxProps) => (
+                <BannerKegiatan parallaxProps={parallaxProps} item={item} />
+              )}
               hasParallaxImages={true}
             />
           </View>

@@ -175,6 +175,10 @@ import { AppState } from "react-native";
 import { BantuanPemerintah } from "../Dashboard/BantuanPemerintah";
 import { KalenderPersonal } from "../KalenderPersonal/KalenderPersonal";
 import { DetailKalenderPersonal } from "../KalenderPersonal/DetailKalenderPersonal";
+import { FirstRenderIos } from "../FirstRenderIos";
+import { LoginIos } from "../LoginIos";
+import { RegisterIos } from "../RegisterIos";
+import { PortalIos } from "../PortalIos";
 
 const Stack = createNativeStackNavigator();
 
@@ -370,7 +374,39 @@ function AuthenticatedStack({ route }) {
             component={LoginToken}
             options={{
               headerShown: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="FirstRenderIos"
+            component={FirstRenderIos}
+            options={{
+              headerShown: false,
               gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="LoginIos"
+            component={LoginIos}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="RegisterIOs"
+            component={RegisterIos}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="PortalIos"
+            component={PortalIos}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false,
             }}
           />
           <Stack.Screen
@@ -1387,7 +1423,7 @@ function AppNavigator() {
   useEffect(() => {
     getTokenValue().then((val) => {
       if (val === null) {
-        setRoute("LoginToken");
+        setRoute(Platform.OS === "android" ? "LoginToken" : "FirstRenderIos");
         setLinking({
           prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
