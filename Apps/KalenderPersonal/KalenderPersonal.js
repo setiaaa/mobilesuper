@@ -126,6 +126,15 @@ export const KalenderPersonal = () => {
     dispatch(getDetailKalenderPersonal(params));
   };
 
+  const darkTheme = {
+    palette: {
+      primary: {
+        main: "#6185d0",
+        contrastText: "#000",
+      },
+    },
+  };
+
   return (
     <ScrollView>
       <View
@@ -232,46 +241,49 @@ export const KalenderPersonal = () => {
           height={500}
           mode="month"
           date={date}
-          // eventCellStyle={(x) => x.color}
-          renderEvent={(data) => {
-            return (
-              <View
-                style={[
-                  styles.eventbox,
-                  { backgroundColor: data.color.backgroundColor },
-                ]}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  <Text
-                    noWrap
-                    // component={'i'}
-                    style={{
-                      margin: "0 !important",
-                      fontWeight: 500,
-                      color: data.color.textColor,
-                    }}
-                  >
-                    {data.title}
-                  </Text>
-                </View>
-              </View>
-            );
-          }}
+          eventCellStyle={(event) => ({
+            backgroundColor: event.color.backgroundColor,
+            color: event.color.textColor,
+          })}
+          // renderEvent={(data) => {
+          //   return (
+          //     <View
+          //       style={[
+          //         styles.eventbox,
+          //         { backgroundColor: data.color.backgroundColor },
+          //       ]}
+          //     >
+          //       <View
+          //         style={{
+          //           width: "100%",
+          //           overflow: "hidden",
+          //           textOverflow: "ellipsis",
+          //         }}
+          //       >
+          //         <Text
+          //           noWrap
+          //           // component={'i'}
+          //           style={{
+          //             margin: "0 !important",
+          //             fontWeight: 500,
+          //             color: data.color.textColor,
+          //           }}
+          //         >
+          //           {data.title}
+          //         </Text>
+          //       </View>
+          //     </View>
+          //   );
+          // }}
           locale="id"
           activeDate={date}
           onPressEvent={(item) => {
-            console.log("cek", item);
             getDetail(item.id);
             if (item.kategori !== "cuti") {
               navigation.navigate("DetailKalenderPersonal");
             }
           }}
+          theme={darkTheme}
         />
       </View>
     </ScrollView>

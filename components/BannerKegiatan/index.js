@@ -9,7 +9,6 @@ import { Text } from "react-native";
 const { width: screenWidth } = Dimensions.get("window");
 
 export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
-  console.log(parallaxProps);
   return (
     <View style={styles.items}>
       <ParallaxImage

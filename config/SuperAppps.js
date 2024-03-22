@@ -79,3 +79,16 @@ export const fixedDateString = (tanggal) => {
 export const DateFormat = ({ date, fromDate, toDate }) => {
   return moment(fixedDateString(date), fromDate).locale("id").format(toDate);
 };
+
+export const extraKeyKorespondensi = {
+  sifat: "Sifat",
+  catatan: "Catatan",
+  nomor_surat: "Nomor Surat",
+  "kode derajat": "Kode Derajat",
+  penanda_tangan: "Penanda Tangan",
+  kepada_internal: "Kepada Internal",
+  "tanggal dikirim": "Tanggal Dikirim",
+  kepada_eksternal: "Kepada Eksternal",
+  tembusan_internal: "Tembusan Internal",
+  tembusan_eksternal: "Tembusan Eksternal",
+};

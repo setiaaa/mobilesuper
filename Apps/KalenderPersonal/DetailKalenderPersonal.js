@@ -14,6 +14,7 @@ import {
   DateFormat,
   FONTSIZE,
   FONTWEIGHT,
+  extraKeyKorespondensi,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,8 +27,6 @@ export const DetailKalenderPersonal = () => {
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = personal.detail;
-
-  console.log(detail);
 
   return (
     <ScrollView>
@@ -310,7 +309,7 @@ export const DetailKalenderPersonal = () => {
             )}
           </View>
 
-          <View>
+          {/* <View>
             <View
               style={{
                 marginHorizontal: 20,
@@ -350,17 +349,6 @@ export const DetailKalenderPersonal = () => {
                           }}
                         >
                           <Text>{index + 1}. </Text>
-                          {/* <Image
-                          source={{ uri: item.avatar_url }}
-                          style={{
-                            marginLeft: -8,
-                            borderWidth: 2,
-                            borderRadius: 50,
-                            borderColor: COLORS.white,
-                            width: 30,
-                            height: 30,
-                          }}
-                        /> */}
                           <Text>{item.title.name}</Text>
                         </View>
                       );
@@ -379,9 +367,9 @@ export const DetailKalenderPersonal = () => {
                 marginHorizontal: 20,
               }}
             />
-          </View>
+          </View> */}
 
-          <View>
+          {/* <View>
             <View
               style={{
                 marginHorizontal: 20,
@@ -421,17 +409,7 @@ export const DetailKalenderPersonal = () => {
                           }}
                         >
                           <Text>{index + 1}. </Text>
-                          {/* <Image
-                          source={{ uri: item.avatar_url }}
-                          style={{
-                            marginLeft: -8,
-                            borderWidth: 2,
-                            borderRadius: 50,
-                            borderColor: COLORS.white,
-                            width: 30,
-                            height: 30,
-                          }}
-                        /> */}
+
                           <Text>{item.title.name}</Text>
                         </View>
                       );
@@ -450,7 +428,7 @@ export const DetailKalenderPersonal = () => {
                 marginHorizontal: 20,
               }}
             />
-          </View>
+          </View> */}
 
           <View>
             <View
@@ -460,7 +438,7 @@ export const DetailKalenderPersonal = () => {
                 flexDirection: "row",
               }}
             >
-              <View style={{ width: "30%" }}>
+              <View style={{ width: "50%" }}>
                 <Text
                   style={{
                     fontSize: FONTSIZE.H2,
@@ -500,7 +478,7 @@ export const DetailKalenderPersonal = () => {
                             height: 30,
                           }}
                         />
-                        <Text>{item.nama}</Text>
+                        <Text style={{ width: 100 }}>{item.nama}</Text>
                       </View>
                     );
                   })}
@@ -518,6 +496,99 @@ export const DetailKalenderPersonal = () => {
               }}
             />
           </View>
+
+          <View
+            style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 10 }}
+          >
+            <Text
+              style={{
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: FONTSIZE.Judul,
+              }}
+            >
+              Informasi Detail
+            </Text>
+          </View>
+
+          {detail?.extra_attributes &&
+            Object.keys(detail?.extra_attributes).map((data) => {
+              const value = detail.extra_attributes[data];
+
+              if (
+                data === "members_list" ||
+                data === "list_kepada" ||
+                data === "list_tembusan"
+              )
+                return null;
+
+              if (
+                data === "kepada_internal" ||
+                data === "kepada_eksternal" ||
+                data === "tembusan_internal" ||
+                data === "tembusan_eksternal"
+              ) {
+                return (
+                  <View>
+                    <View
+                      style={{
+                        marginHorizontal: 20,
+                        marginTop: 20,
+                        flexDirection: "row",
+                      }}
+                    >
+                      <View style={{ width: "50%" }}>
+                        <Text
+                          style={{
+                            fontSize: FONTSIZE.H2,
+                            fontWeight: FONTWEIGHT.bold,
+                          }}
+                        >
+                          {extraKeyKorespondensi[data]}
+                        </Text>
+                      </View>
+                      {loading ? (
+                        <ShimmerPlaceHolder
+                          style={{ borderRadius: 4 }}
+                          width={100}
+                          height={20}
+                        />
+                      ) : value.length !== 0 ? (
+                        value.map((item, index) => (
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              width: "50%",
+                            }}
+                          >
+                            <Text>{item}</Text>
+                          </View>
+                        ))
+                      ) : (
+                        <Text
+                          style={{
+                            justifyContent: "center",
+                            width: "50%",
+                          }}
+                        >
+                          -
+                        </Text>
+                      )}
+                    </View>
+                    <View
+                      style={{
+                        height: 1,
+                        width: "90%",
+                        backgroundColor: COLORS.lighter,
+                        opacity: 0.3,
+                        marginTop: 10,
+                        marginHorizontal: 20,
+                        marginBottom: 20,
+                      }}
+                    />
+                  </View>
+                );
+              }
+            })}
         </View>
       </View>
     </ScrollView>
@@ -550,7 +621,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   container: {
-    marginTop: 20,
+    marginVertical: 20,
     flex: 1,
   },
 });
