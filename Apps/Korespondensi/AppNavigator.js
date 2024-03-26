@@ -1423,7 +1423,7 @@ function AppNavigator() {
   useEffect(() => {
     getTokenValue().then((val) => {
       if (val === null) {
-        setRoute(Platform.OS === "android" ? "LoginToken" : "FirstRenderIos");
+        setRoute("LoginToken");
         setLinking({
           prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
@@ -1500,6 +1500,7 @@ export default AppNavigator;
 const styles = StyleSheet.create({
   rootScreen: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   container: {
     position: "absolute",

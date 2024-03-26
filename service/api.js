@@ -507,14 +507,12 @@ export const getlistKalenderPersonal = createAsyncThunk(
 export const getDetailKalenderPersonal = createAsyncThunk(
   "calendar/getDetailKalenderPersonal",
   async (data) => {
-    console.log(data);
     const respon = await axios.get(
       `${kalender}calendar/event/${data.id}/retrieve/korespondensi/`,
       {
         headers: { Authorization: data.token },
       }
     );
-    console.log(await respon);
     return respon?.data.result;
   }
 );

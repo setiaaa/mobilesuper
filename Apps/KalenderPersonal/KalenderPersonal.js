@@ -174,12 +174,11 @@ export const KalenderPersonal = () => {
       <View
         style={{
           width: "90%",
-          height: "90%",
           marginHorizontal: "5%",
-          marginVertical: "5%",
           backgroundColor: COLORS.white,
           padding: 10,
           borderRadius: 8,
+          marginVertical: 20,
         }}
       >
         <View
@@ -238,7 +237,7 @@ export const KalenderPersonal = () => {
         </View>
         <Calendar
           events={events}
-          height={500}
+          height={700}
           mode="month"
           date={date}
           eventCellStyle={(event) => ({
@@ -284,6 +283,7 @@ export const KalenderPersonal = () => {
             }
           }}
           theme={darkTheme}
+          // onPressMoreLabel={(event) => console.log(event)}
         />
       </View>
     </ScrollView>

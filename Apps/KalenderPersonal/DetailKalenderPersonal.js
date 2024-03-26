@@ -28,6 +28,8 @@ export const DetailKalenderPersonal = () => {
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = personal.detail;
 
+  console.log(detail);
+
   return (
     <ScrollView>
       <View
@@ -94,37 +96,108 @@ export const DetailKalenderPersonal = () => {
             </View>
           )}
 
-          <View
-            style={{
-              marginHorizontal: 20,
-              marginTop: 10,
-              flexDirection: "row",
-              gap: 10,
-            }}
-          >
-            <Text
+          <View style={{ padding: 5 }}>
+            <View
               style={{
-                fontSize: FONTSIZE.H2,
-                fontWeight: FONTWEIGHT.bold,
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
               }}
             >
-              Dibuat pada :
-            </Text>
-            {loading ? (
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 4 }}
-                width={100}
-                height={20}
-              />
-            ) : (
-              <Text>
-                {DateFormat({
-                  date: detail?.created_at,
-                  fromDate: DATETIME.LONG_DATETIME,
-                  toDate: DATETIME.LONG_DATETIME,
-                })}
-              </Text>
-            )}
+              <View style={{ width: "50%" }}>
+                <Text
+                  style={{
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Tanggal Pelaksanaan
+                </Text>
+              </View>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : (
+                <View style={{ width: 150 }}>
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    {moment(detail.start_date, "YYYY-MM-DD HH:mm:ss")
+                      .locale("id")
+                      .format(DATETIME.LONG_DATE)}{" "}
+                    -{" "}
+                    {moment(detail.end_date, "YYYY-MM-DD HH:mm:ss")
+                      .locale("id")
+                      .format(DATETIME.LONG_DATE)}
+                  </Text>
+                </View>
+              )}
+            </View>
+            <View
+              style={{
+                height: 1,
+                width: "90%",
+                backgroundColor: COLORS.lighter,
+                marginTop: 10,
+                marginHorizontal: 20,
+                opacity: 0.3,
+              }}
+            />
+          </View>
+
+          <View>
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+              }}
+            >
+              <View style={{ width: "50%" }}>
+                <Text
+                  style={{
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Pukul Pelaksanaan
+                </Text>
+              </View>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : (
+                <Text
+                  style={{
+                    justifyContent: "center",
+                    width: "60%",
+                  }}
+                >
+                  {detail.extra_attributes?.start_time}{" "}
+                  {detail.extra_attributes?.timezone} -{" "}
+                  {detail.extra_attributes?.end_time}{" "}
+                  {detail.extra_attributes?.timezone}
+                </Text>
+              )}
+            </View>
+            <View
+              style={{
+                height: 1,
+                width: "90%",
+                backgroundColor: COLORS.lighter,
+                opacity: 0.2,
+                marginTop: 10,
+                marginHorizontal: 20,
+              }}
+            />
           </View>
 
           <View>
@@ -158,18 +231,20 @@ export const DetailKalenderPersonal = () => {
                     width: "50%",
                   }}
                 >
-                  <Text>{detail?.location}</Text>
+                  <Text>
+                    {detail?.location === "" ? "-" : detail?.location}
+                  </Text>
                 </View>
               )}
             </View>
             <View
               style={{
-                height: 1,
+                height: 2,
                 width: "90%",
-                backgroundColor: COLORS.lighter,
-                opacity: 0.3,
                 marginTop: 10,
                 marginHorizontal: 20,
+                backgroundColor: COLORS.lighter,
+                opacity: 0.2,
               }}
             />
           </View>
@@ -180,6 +255,145 @@ export const DetailKalenderPersonal = () => {
                 marginHorizontal: 20,
                 marginTop: 20,
                 flexDirection: "row",
+              }}
+            >
+              <View style={{ width: "50%" }}>
+                <Text
+                  style={{
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Kepada
+                </Text>
+              </View>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : (
+                <View style={{ justifyContent: "center", width: 150 }}>
+                  {detail.extra_attributes?.kepada.length !== 0 ? (
+                    detail.extra_attributes?.kepada.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{
+                            flexDirection: "row",
+                            gap: 10,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text>{index + 1}. </Text>
+                          <Image
+                            source={{ uri: item.avatar_url }}
+                            style={{
+                              marginLeft: -8,
+                              borderWidth: 2,
+                              borderRadius: 50,
+                              borderColor: COLORS.white,
+                              width: 30,
+                              height: 30,
+                            }}
+                          />
+                          <Text style={{ width: 100 }}>{item.nama}</Text>
+                        </View>
+                      );
+                    })
+                  ) : (
+                    <Text>-</Text>
+                  )}
+                </View>
+              )}
+            </View>
+            <View
+              style={{
+                height: 1,
+                width: "90%",
+                backgroundColor: COLORS.lighter,
+                marginTop: 10,
+                marginHorizontal: 20,
+                opacity: 0.3,
+              }}
+            />
+          </View>
+
+          <View>
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+              }}
+            >
+              <View style={{ width: "50%" }}>
+                <Text
+                  style={{
+                    fontSize: FONTSIZE.H2,
+                    fontWeight: FONTWEIGHT.bold,
+                  }}
+                >
+                  Member
+                </Text>
+              </View>
+              {loading ? (
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              ) : (
+                <View style={{ justifyContent: "center", width: 150 }}>
+                  {detail.members?.map((item, index) => {
+                    return (
+                      <View
+                        key={index}
+                        style={{
+                          flexDirection: "row",
+                          gap: 10,
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text>{index + 1}. </Text>
+                        <Image
+                          source={{ uri: item.avatar_url }}
+                          style={{
+                            marginLeft: -8,
+                            borderWidth: 2,
+                            borderRadius: 50,
+                            borderColor: COLORS.white,
+                            width: 30,
+                            height: 30,
+                          }}
+                        />
+                        <Text style={{ width: 100 }}>{item.nama}</Text>
+                      </View>
+                    );
+                  })}
+                </View>
+              )}
+            </View>
+            <View
+              style={{
+                height: 1,
+                width: "90%",
+                backgroundColor: COLORS.lighter,
+                marginTop: 10,
+                marginHorizontal: 20,
+                opacity: 0.3,
+              }}
+            />
+          </View>
+
+          <View>
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+                marginBottom: 20,
               }}
             >
               <View style={{ width: "50%" }}>
@@ -209,104 +423,6 @@ export const DetailKalenderPersonal = () => {
                 </View>
               )}
             </View>
-            <View
-              style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: COLORS.lighter,
-                opacity: 0.3,
-                marginTop: 10,
-                marginHorizontal: 20,
-              }}
-            />
-          </View>
-
-          <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Kategori Surat
-                </Text>
-              </View>
-              {loading ? (
-                <ShimmerPlaceHolder
-                  style={{ borderRadius: 4 }}
-                  width={100}
-                  height={20}
-                />
-              ) : (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    width: "50%",
-                  }}
-                >
-                  <Text>{detail?.kategori}</Text>
-                </View>
-              )}
-            </View>
-            <View
-              style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: COLORS.lighter,
-                opacity: 0.3,
-                marginTop: 10,
-                marginHorizontal: 20,
-              }}
-            />
-          </View>
-
-          <View
-            style={{
-              marginHorizontal: 20,
-              marginTop: 10,
-              flexDirection: "row",
-            }}
-          >
-            <View style={{ width: "50%" }}>
-              <Text
-                style={{
-                  fontSize: FONTSIZE.H2,
-                  fontWeight: FONTWEIGHT.bold,
-                }}
-              >
-                Waktu Pelaksanaan
-              </Text>
-            </View>
-            {loading ? (
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 4 }}
-                width={100}
-                height={20}
-              />
-            ) : (
-              <Text
-                style={{
-                  justifyContent: "center",
-                  width: "50%",
-                }}
-              >
-                {moment(detail.start_date, "YYYY-MM-DD HH:mm:ss")
-                  .locale("id")
-                  .format(DATETIME.LONG_DATE)}{" "}
-                -{" "}
-                {moment(detail.end_date, "YYYY-MM-DD HH:mm:ss")
-                  .locale("id")
-                  .format(DATETIME.LONG_DATE)}
-              </Text>
-            )}
           </View>
 
           {/* <View>
@@ -430,74 +546,7 @@ export const DetailKalenderPersonal = () => {
             />
           </View> */}
 
-          <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Member
-                </Text>
-              </View>
-              {loading ? (
-                <ShimmerPlaceHolder
-                  style={{ borderRadius: 4 }}
-                  width={100}
-                  height={20}
-                />
-              ) : (
-                <View style={{ justifyContent: "center", width: 150 }}>
-                  {detail.members?.map((item, index) => {
-                    return (
-                      <View
-                        key={index}
-                        style={{
-                          flexDirection: "row",
-                          gap: 10,
-                          alignItems: "center",
-                        }}
-                      >
-                        <Text>{index + 1}. </Text>
-                        <Image
-                          source={{ uri: item.avatar_url }}
-                          style={{
-                            marginLeft: -8,
-                            borderWidth: 2,
-                            borderRadius: 50,
-                            borderColor: COLORS.white,
-                            width: 30,
-                            height: 30,
-                          }}
-                        />
-                        <Text style={{ width: 100 }}>{item.nama}</Text>
-                      </View>
-                    );
-                  })}
-                </View>
-              )}
-            </View>
-            <View
-              style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: COLORS.lighter,
-                opacity: 0.3,
-                marginTop: 10,
-                marginHorizontal: 20,
-              }}
-            />
-          </View>
-
-          <View
+          {/* <View
             style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 10 }}
           >
             <Text
@@ -588,7 +637,7 @@ export const DetailKalenderPersonal = () => {
                   </View>
                 );
               }
-            })}
+            })} */}
         </View>
       </View>
     </ScrollView>
