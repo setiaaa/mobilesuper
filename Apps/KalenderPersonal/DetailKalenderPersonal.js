@@ -67,216 +67,287 @@ export const DetailKalenderPersonal = () => {
       </View>
 
       <View style={styles.container}>
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            width: "90%",
-            borderRadius: 8,
-            marginLeft: 20,
-          }}
-        >
-          {loading ? (
-            <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-              <ShimmerPlaceHolder
-                style={{ borderRadius: 4 }}
-                width={100}
-                height={20}
-              />
-            </View>
-          ) : (
-            <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-              <Text
-                style={{
-                  fontWeight: FONTWEIGHT.bold,
-                  fontSize: FONTSIZE.Judul,
-                }}
-              >
-                {detail.name}
-              </Text>
-            </View>
-          )}
-
-          <View style={{ padding: 5 }}>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Tanggal Pelaksanaan
-                </Text>
-              </View>
-              {loading ? (
+        {detail.kategori === "undangan" ? (
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              width: "90%",
+              borderRadius: 8,
+              marginLeft: 20,
+            }}
+          >
+            {loading ? (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
                 <ShimmerPlaceHolder
                   style={{ borderRadius: 4 }}
                   width={100}
                   height={20}
                 />
-              ) : (
-                <View style={{ width: 150 }}>
+              </View>
+            ) : (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: FONTSIZE.Judul,
+                  }}
+                >
+                  {detail.name}
+                </Text>
+              </View>
+            )}
+
+            <View style={{ padding: 5 }}>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Tanggal Pelaksanaan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ width: 150 }}>
+                    <Text
+                      style={{
+                        justifyContent: "center",
+                      }}
+                    >
+                      {moment(detail.start_date, "YYYY-MM-DD HH:mm:ss")
+                        .locale("id")
+                        .format(DATETIME.LONG_DATE)}{" "}
+                      -{" "}
+                      {moment(detail.end_date, "YYYY-MM-DD HH:mm:ss")
+                        .locale("id")
+                        .format(DATETIME.LONG_DATE)}
+                    </Text>
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Pukul Pelaksanaan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
                   <Text
                     style={{
                       justifyContent: "center",
+                      width: "60%",
                     }}
                   >
-                    {moment(detail.start_date, "YYYY-MM-DD HH:mm:ss")
-                      .locale("id")
-                      .format(DATETIME.LONG_DATE)}{" "}
-                    -{" "}
-                    {moment(detail.end_date, "YYYY-MM-DD HH:mm:ss")
-                      .locale("id")
-                      .format(DATETIME.LONG_DATE)}
+                    {detail.extra_attributes?.start_time}{" "}
+                    {detail.extra_attributes?.timezone} -{" "}
+                    {detail.extra_attributes?.end_time}{" "}
+                    {detail.extra_attributes?.timezone}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.2,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Lokasi
                   </Text>
                 </View>
-              )}
-            </View>
-            <View
-              style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: COLORS.lighter,
-                marginTop: 10,
-                marginHorizontal: 20,
-                opacity: 0.3,
-              }}
-            />
-          </View>
-
-          <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Pukul Pelaksanaan
-                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    <Text>
+                      {detail?.location === "" ? "-" : detail?.location}
+                    </Text>
+                  </View>
+                )}
               </View>
-              {loading ? (
-                <ShimmerPlaceHolder
-                  style={{ borderRadius: 4 }}
-                  width={100}
-                  height={20}
-                />
-              ) : (
-                <Text
-                  style={{
-                    justifyContent: "center",
-                    width: "60%",
-                  }}
-                >
-                  {detail.extra_attributes?.start_time}{" "}
-                  {detail.extra_attributes?.timezone} -{" "}
-                  {detail.extra_attributes?.end_time}{" "}
-                  {detail.extra_attributes?.timezone}
-                </Text>
-              )}
+              <View
+                style={{
+                  height: 2,
+                  width: "90%",
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.2,
+                }}
+              />
             </View>
-            <View
-              style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: COLORS.lighter,
-                opacity: 0.2,
-                marginTop: 10,
-                marginHorizontal: 20,
-              }}
-            />
-          </View>
 
-          <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Lokasi
-                </Text>
-              </View>
-              {loading ? (
-                <ShimmerPlaceHolder
-                  style={{ borderRadius: 4 }}
-                  width={100}
-                  height={20}
-                />
-              ) : (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    width: "50%",
-                  }}
-                >
-                  <Text>
-                    {detail?.location === "" ? "-" : detail?.location}
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Kepada
                   </Text>
                 </View>
-              )}
-            </View>
-            <View
-              style={{
-                height: 2,
-                width: "90%",
-                marginTop: 10,
-                marginHorizontal: 20,
-                backgroundColor: COLORS.lighter,
-                opacity: 0.2,
-              }}
-            />
-          </View>
-
-          <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Kepada
-                </Text>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 180 }}>
+                    {detail?.extra_attributes?.kepada?.length !== 0 ? (
+                      detail?.extra_attributes?.kepada?.map((item, index) => {
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: "row",
+                              gap: 10,
+                              alignItems: "center",
+                            }}
+                          >
+                            <Text>{index + 1}. </Text>
+                            {/* <Image
+                              source={{ uri: item.avatar_url }}
+                              style={{
+                                marginLeft: -8,
+                                borderWidth: 2,
+                                borderRadius: 50,
+                                borderColor: COLORS.white,
+                                width: 30,
+                                height: 30,
+                              }}
+                            /> */}
+                            <Text style={{ width: 100 }}>{item}</Text>
+                          </View>
+                        );
+                      })
+                    ) : (
+                      <Text>-</Text>
+                    )}
+                  </View>
+                )}
               </View>
-              {loading ? (
-                <ShimmerPlaceHolder
-                  style={{ borderRadius: 4 }}
-                  width={100}
-                  height={20}
-                />
-              ) : (
-                <View style={{ justifyContent: "center", width: 150 }}>
-                  {detail.extra_attributes?.kepada.length !== 0 ? (
-                    detail.extra_attributes?.kepada.map((item, index) => {
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Member
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 150 }}>
+                    {detail?.members?.map((item, index) => {
                       return (
                         <View
                           key={index}
@@ -301,131 +372,61 @@ export const DetailKalenderPersonal = () => {
                           <Text style={{ width: 100 }}>{item.nama}</Text>
                         </View>
                       );
-                    })
-                  ) : (
-                    <Text>-</Text>
-                  )}
-                </View>
-              )}
-            </View>
-            <View
-              style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: COLORS.lighter,
-                marginTop: 10,
-                marginHorizontal: 20,
-                opacity: 0.3,
-              }}
-            />
-          </View>
-
-          <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Member
-                </Text>
+                    })}
+                  </View>
+                )}
               </View>
-              {loading ? (
-                <ShimmerPlaceHolder
-                  style={{ borderRadius: 4 }}
-                  width={100}
-                  height={20}
-                />
-              ) : (
-                <View style={{ justifyContent: "center", width: 150 }}>
-                  {detail.members?.map((item, index) => {
-                    return (
-                      <View
-                        key={index}
-                        style={{
-                          flexDirection: "row",
-                          gap: 10,
-                          alignItems: "center",
-                        }}
-                      >
-                        <Text>{index + 1}. </Text>
-                        <Image
-                          source={{ uri: item.avatar_url }}
-                          style={{
-                            marginLeft: -8,
-                            borderWidth: 2,
-                            borderRadius: 50,
-                            borderColor: COLORS.white,
-                            width: 30,
-                            height: 30,
-                          }}
-                        />
-                        <Text style={{ width: 100 }}>{item.nama}</Text>
-                      </View>
-                    );
-                  })}
-                </View>
-              )}
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
             </View>
-            <View
-              style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: COLORS.lighter,
-                marginTop: 10,
-                marginHorizontal: 20,
-                opacity: 0.3,
-              }}
-            />
-          </View>
 
-          <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-                marginBottom: 20,
-              }}
-            >
-              <View style={{ width: "50%" }}>
-                <Text
-                  style={{
-                    fontSize: FONTSIZE.H2,
-                    fontWeight: FONTWEIGHT.bold,
-                  }}
-                >
-                  Nomor Surat
-                </Text>
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                  marginBottom: 20,
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Nomor Surat
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    <Text>{detail?.letter_number}</Text>
+                  </View>
+                )}
               </View>
-              {loading ? (
-                <ShimmerPlaceHolder
-                  style={{ borderRadius: 4 }}
-                  width={100}
-                  height={20}
-                />
-              ) : (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    width: "50%",
-                  }}
-                >
-                  <Text>{detail?.letter_number}</Text>
-                </View>
-              )}
             </View>
-          </View>
 
-          {/* <View>
+            {/* <View>
             <View
               style={{
                 marginHorizontal: 20,
@@ -485,7 +486,7 @@ export const DetailKalenderPersonal = () => {
             />
           </View> */}
 
-          {/* <View>
+            {/* <View>
             <View
               style={{
                 marginHorizontal: 20,
@@ -546,7 +547,7 @@ export const DetailKalenderPersonal = () => {
             />
           </View> */}
 
-          {/* <View
+            {/* <View
             style={{ marginTop: 20, marginHorizontal: 20, marginBottom: 10 }}
           >
             <Text
@@ -638,7 +639,942 @@ export const DetailKalenderPersonal = () => {
                 );
               }
             })} */}
-        </View>
+          </View>
+        ) : detail.kategori === "cuti" ? (
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              width: "90%",
+              borderRadius: 8,
+              marginLeft: 20,
+            }}
+          >
+            {loading ? (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              </View>
+            ) : (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: FONTSIZE.Judul,
+                  }}
+                >
+                  {detail.name}
+                </Text>
+              </View>
+            )}
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Waktu Pelaksanaan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "60%",
+                    }}
+                  >
+                    {moment(detail.start_date, "YYYY-MM-DD HH:mm:ss")
+                      .locale("id")
+                      .format(DATETIME.LONG_DATE)}{" "}
+                    -{" "}
+                    {moment(detail.end_date, "YYYY-MM-DD HH:mm:ss")
+                      .locale("id")
+                      .format(DATETIME.LONG_DATE)}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.5,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Tempat
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "60%",
+                    }}
+                  >
+                    {detail.location}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.1,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Pengaju
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    {detail?.creator?.nama}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.2,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Alasan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    {detail?.extra_attributes?.alasan
+                      ? detail?.extra_attributes?.alasan
+                      : "-"}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.2,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Kota
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    {detail?.extra_attributes?.kota
+                      ? detail?.extra_attributes?.kota
+                      : "-"}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.2,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+          </View>
+        ) : detail.kategori === "tugas" ? (
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              width: "90%",
+              borderRadius: 8,
+              marginLeft: 20,
+            }}
+          >
+            {loading ? (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              </View>
+            ) : (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: FONTSIZE.Judul,
+                  }}
+                >
+                  {detail.name}
+                </Text>
+              </View>
+            )}
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Lokasi
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    {detail?.extra_attributes?.kota_awal}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.3,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Kepada
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 200 }}>
+                    {detail?.extra_attributes?.kepada?.length !== 0 ? (
+                      detail?.extra_attributes?.kepada?.map((item, index) => {
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: 10,
+                              marginTop: 5,
+                            }}
+                          >
+                            <Text>{index + 1}. </Text>
+                            <Text style={{ width: 120 }}>{item}</Text>
+                          </View>
+                        );
+                      })
+                    ) : (
+                      <Text>-</Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Member
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 150 }}>
+                    {detail?.members?.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{
+                            flexDirection: "row",
+                            gap: 10,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text>{index + 1}. </Text>
+                          <Image
+                            source={{ uri: item.avatar_url }}
+                            style={{
+                              marginLeft: -8,
+                              borderWidth: 2,
+                              borderRadius: 50,
+                              borderColor: COLORS.white,
+                              width: 30,
+                              height: 30,
+                            }}
+                          />
+                          <Text style={{ width: 100 }}>{item.nama}</Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                  marginBottom: 20,
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Tujuan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 200 }}>
+                    {detail?.extra_attributes?.tujuan?.length !== 0 ? (
+                      detail?.extra_attributes?.tujuan?.map((item, index) => {
+                        return (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 5,
+                            }}
+                          >
+                            <Text style={{ fontSize: 20 }}>-</Text>
+                            <View>
+                              <View
+                                key={index}
+                                style={{
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  gap: 10,
+                                  marginTop: 5,
+                                }}
+                              >
+                                <Text style={{ width: 160 }}>
+                                  {moment(item?.tangal_mulai).format(
+                                    "DD/MM/YYYY"
+                                  )}{" "}
+                                  -{" "}
+                                  {moment(item?.tanggal_selesai).format(
+                                    "DD/MM/YYYY"
+                                  )}
+                                </Text>
+                              </View>
+                              <Text style={{ width: 160, marginVertical: 5 }}>
+                                Lokasi {index + 1} Perjalanan Dinas
+                              </Text>
+                              <Text>{item.kota}</Text>
+                            </View>
+                          </View>
+                        );
+                      })
+                    ) : (
+                      <Text>-</Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.3,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    No Surat
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    {detail?.extra_attributes?.nomor_surat}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 1.5,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+          </View>
+        ) : detail.kategori === "perintah" ? (
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              width: "90%",
+              borderRadius: 8,
+              marginLeft: 20,
+            }}
+          >
+            {loading ? (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                <ShimmerPlaceHolder
+                  style={{ borderRadius: 4 }}
+                  width={100}
+                  height={20}
+                />
+              </View>
+            ) : (
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+                <Text
+                  style={{
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: FONTSIZE.Judul,
+                  }}
+                >
+                  {detail.name}
+                </Text>
+              </View>
+            )}
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Lokasi
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    {detail?.extra_attributes?.kota_awal}
+                  </Text>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.1,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Kepada
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 200 }}>
+                    {detail?.extra_attributes?.kepada?.length !== 0 ? (
+                      detail?.extra_attributes?.kepada?.map((item, index) => {
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: 10,
+                              marginTop: 5,
+                            }}
+                          >
+                            <Text>{index + 1}. </Text>
+                            <Text style={{ width: 120 }}>{item}</Text>
+                          </View>
+                        );
+                      })
+                    ) : (
+                      <Text>-</Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Member
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 150 }}>
+                    {detail?.members?.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{
+                            flexDirection: "row",
+                            gap: 10,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Text>{index + 1}. </Text>
+                          <Image
+                            source={{ uri: item.avatar_url }}
+                            style={{
+                              marginLeft: -8,
+                              borderWidth: 2,
+                              borderRadius: 50,
+                              borderColor: COLORS.white,
+                              width: 30,
+                              height: 30,
+                            }}
+                          />
+                          <Text style={{ width: 100 }}>{item.nama}</Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  opacity: 0.3,
+                }}
+              />
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginTop: 20,
+                  flexDirection: "row",
+                  marginBottom: 20,
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Tujuan
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <View style={{ justifyContent: "center", width: 200 }}>
+                    {detail?.extra_attributes?.tujuan?.length !== 0 ? (
+                      detail?.extra_attributes?.tujuan?.map((item, index) => {
+                        return (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 5,
+                            }}
+                          >
+                            <Text style={{ fontSize: 20 }}>-</Text>
+                            <View>
+                              <View
+                                key={index}
+                                style={{
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  gap: 10,
+                                  marginTop: 5,
+                                }}
+                              >
+                                <Text style={{ width: 160 }}>
+                                  {moment(item?.tangal_mulai).format(
+                                    "DD/MM/YYYY"
+                                  )}{" "}
+                                  -{" "}
+                                  {moment(item?.tanggal_selesai).format(
+                                    "DD/MM/YYYY"
+                                  )}
+                                </Text>
+                              </View>
+                              <Text style={{ width: 160, marginVertical: 5 }}>
+                                Lokasi {index + 1} Perjalanan Dinas
+                              </Text>
+                              <Text>{item.kota}</Text>
+                            </View>
+                          </View>
+                        );
+                      })
+                    ) : (
+                      <Text>-</Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  height: 1,
+                  width: "90%",
+                  backgroundColor: COLORS.lighter,
+                  opacity: 0.5,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                }}
+              />
+            </View>
+            <View>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  marginVertical: 20,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ width: "50%" }}>
+                  <Text
+                    style={{
+                      fontSize: FONTSIZE.H2,
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    No Surat
+                  </Text>
+                </View>
+                {loading ? (
+                  <ShimmerPlaceHolder
+                    style={{ borderRadius: 4 }}
+                    width={100}
+                    height={20}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      width: "50%",
+                    }}
+                  >
+                    {detail?.extra_attributes?.nomor_surat}
+                  </Text>
+                )}
+              </View>
+            </View>
+          </View>
+        ) : null}
       </View>
     </ScrollView>
   );
