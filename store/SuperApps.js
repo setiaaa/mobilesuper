@@ -6,6 +6,8 @@ import {
   getBerita,
   getDetailBerita,
 } from "../service/api";
+import { removeTokenValue } from "../service/session";
+import { useNavigation } from "@react-navigation/native";
 
 const SuperAppsSlice = createSlice({
   name: "SuperApps",
@@ -30,6 +32,7 @@ const SuperAppsSlice = createSlice({
     },
     banner: [],
     loading: false,
+    handleError: false,
   },
   reducers: {
     setProfile: (state, action) => {
@@ -87,6 +90,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getProfileMe.rejected, (state, action) => {
         state.loading = false;
+        state.handleError = true;
       })
       .addCase(getBanner.fulfilled, (state, action) => {
         state.banner = action.payload;

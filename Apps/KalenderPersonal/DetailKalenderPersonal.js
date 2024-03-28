@@ -185,7 +185,9 @@ export const DetailKalenderPersonal = () => {
                     {detail.extra_attributes?.start_time}{" "}
                     {detail.extra_attributes?.timezone} -{" "}
                     {detail.extra_attributes?.end_time}{" "}
-                    {detail.extra_attributes?.timezone}
+                    {detail.extra_attributes?.end_time === "Selesai"
+                      ? ""
+                      : detail.extra_attributes?.timezone}
                   </Text>
                 )}
               </View>

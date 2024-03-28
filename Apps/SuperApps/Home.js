@@ -56,7 +56,7 @@ import { Button } from "react-native";
 import { useCallback } from "react";
 import { Portal } from "react-native-portalize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getTokenValue } from "../../service/session";
+import { getTokenValue, removeTokenValue } from "../../service/session";
 import {
   getBanner,
   getProfileMe,
@@ -72,6 +72,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
+import { setLogout } from "../../store/LoginAuth";
+import { setProfile } from "../../store/SuperApps";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -146,6 +148,7 @@ export const Home = () => {
     visimisi,
     banner,
     loading,
+    handleError,
   } = useSelector((state) => state.superApps);
 
   const bottomSheetModalRef = useRef(null);
@@ -179,6 +182,25 @@ export const Home = () => {
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
+
+  useEffect(() => {
+    if (handleError) {
+      Alert.alert("Peringatan!", "Terjadi kesalahan harap login kembali?", [
+        {
+          text: "YA",
+          onPress: () => {
+            removeTokenValue();
+            dispatch(setLogout());
+            dispatch(setProfile({}));
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "LoginToken" }],
+            });
+          },
+        },
+      ]);
+    }
+  }, [handleError]);
 
   const { device } = useSelector((state) => state.apps);
 
