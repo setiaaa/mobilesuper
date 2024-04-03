@@ -436,83 +436,7 @@ export const LoginToken = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    marginTop: 20,
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Perbaikan survei rata-rata
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginTop: 20,
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Penambahan log perbaikan
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginHorizontal: 40,
                     marginVertical: 20,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Perbaikan Scroll pada bottomsheet disposisi
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
                     alignItems: "center",
                     marginHorizontal: 40,
                   }}
@@ -531,33 +455,7 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Penambahan menu pada dashboard
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                    marginVertical: 20,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Perbaikan filter pada pengembangan kompetensi
+                    Penambahan kalender personal
                   </Text>
                 </View>
                 {/* 

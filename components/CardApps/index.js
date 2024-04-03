@@ -28,6 +28,11 @@ export const CardApps = ({ handlePressModal }) => {
   const roleKalender = ["CALENDAR.USER"];
   const rolePreShare = ["PRESHARE.USER"];
   const roleTaskManagement = ["TASK.USER"];
+  const roleLaporan = ["LAPORAN_BSRE"];
+
+  const isRoleLaporan = profile.roles_access?.some((item) =>
+    roleLaporan.includes(item)
+  );
 
   const isRoleKalender = profile.roles_access?.some((item) =>
     roleKalender.includes(item)
@@ -171,47 +176,47 @@ export const CardApps = ({ handlePressModal }) => {
           Pengetahuan
         </Text>
       </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MainDigitalSign")}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 50 : 28,
-                height: device === "tablet" ? 50 : 35,
-              }}
-              source={require("../../assets/superApp/digitalsign.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-          }}
-        >
-          Digital Sign
-        </Text>
-      </View>,
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     display: "flex",
+      //   }}
+      // >
+      //   <TouchableOpacity
+      //     onPress={() => navigation.navigate("MainDigitalSign")}
+      //   >
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 50 : 28,
+      //           height: device === "tablet" ? 50 : 35,
+      //         }}
+      //         source={require("../../assets/superApp/digitalsign.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //     }}
+      //   >
+      //     Digital Sign
+      //   </Text>
+      // </View>,
       <View
         style={{
           justifyContent: "center",
@@ -496,6 +501,97 @@ export const CardApps = ({ handlePressModal }) => {
             }}
           >
             Kalender
+          </Text>
+        </View>
+      );
+    }
+    if (isRoleLaporan) {
+      tmpMenu.splice(
+        3,
+        0,
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate("MainDigitalSign")}
+          >
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 35,
+                }}
+                source={require("../../assets/superApp/digitalsign.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Digital Sign
+          </Text>
+        </View>
+      );
+    } else {
+      tmpMenu.splice(
+        3,
+        0,
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("DokumenLain")}>
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 50 : 28,
+                  height: device === "tablet" ? 50 : 35,
+                }}
+                source={require("../../assets/superApp/digitalsign.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Digital Sign
           </Text>
         </View>
       );

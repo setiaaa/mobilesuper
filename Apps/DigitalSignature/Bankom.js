@@ -178,12 +178,7 @@ const ListBankom = ({
             >
               Tanggal
             </Text>
-            <Text>
-              :{" "}
-              {moment(item?.extra_attributes?.tanggalSertif).format(
-                DATETIME.LONG_DATE
-              )}
-            </Text>
+            <Text>: {item?.extra_attributes?.tanggalSertif}</Text>
             {/* {item?.receivers[0]?.display_title !== undefined ? (
               <Text
                 style={{
@@ -501,7 +496,7 @@ export const Bankom = () => {
                       marginRight: isSelected.length === 0 ? 50 : null,
                     }}
                   >
-                    Digital Signature
+                    Sertifikat
                   </Text>
                 </View>
                 {isSelected.length !== 0 ? (

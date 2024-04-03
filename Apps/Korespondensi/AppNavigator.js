@@ -179,6 +179,8 @@ import { FirstRenderIos } from "../FirstRenderIos";
 import { LoginIos } from "../LoginIos";
 import { RegisterIos } from "../RegisterIos";
 import { PortalIos } from "../PortalIos";
+import { DokumenLain } from "../DigitalSignature/DokumenLain";
+import { Bankom } from "../DigitalSignature/Bankom";
 
 const Stack = createNativeStackNavigator();
 
@@ -785,6 +787,20 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="MainDetailKorespondensiTM"
             component={MainDetailKorespondensiTM}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Bankom"
+            component={Bankom}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DokumenLain"
+            component={DokumenLain}
             options={{
               headerShown: false,
             }}

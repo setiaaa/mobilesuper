@@ -322,9 +322,7 @@ export const DetailSertifikat = (route) => {
                       <Text
                         style={{ fontSize: fontSizeResponsive("H4", device) }}
                       >
-                        {moment(item.extra_attributes?.tanggalSertif)
-                          .locale("id")
-                          .format("DD MMMM yyyy")}
+                        {item.extra_attributes?.tanggalSertif}
                       </Text>
                     )}
                   </View>
@@ -369,14 +367,9 @@ export const DetailSertifikat = (route) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    keterangan
+                    Keterangan
                   </Text>
-                  <Text
-                    style={{
-                      fontSize: fontSizeResponsive("H4", device),
-                      width: 150,
-                    }}
-                  >
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
                   </Text>
                   <View style={{ width: "45%" }}>

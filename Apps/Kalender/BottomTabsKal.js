@@ -201,6 +201,7 @@ function MyTabBarKal({ props, navigation }) {
           key={2}
           onPress={() => {
             setTabItemIndex(2);
+            navigation.navigate("KalenderPersonal", { unread: false });
             // navigation.navigate("Agenda", { unread: false });
             // props.navigation.navigate('Home', { unread: false })
           }}
@@ -231,7 +232,7 @@ function MyTabBarKal({ props, navigation }) {
                 }}
               />
               <Ionicons
-                name="mail-outline"
+                name="calendar-clear"
                 color={COLORS.primary}
                 size={device === "tablet" ? 40 : 24}
                 style={{ position: "absolute", top: 5 }}
@@ -244,7 +245,7 @@ function MyTabBarKal({ props, navigation }) {
                   fontSize: fontSizeResponsive("H3", device),
                 }}
               >
-                Undangan
+                Kalender Personal
               </Text>
             </View>
           ) : (
@@ -257,7 +258,7 @@ function MyTabBarKal({ props, navigation }) {
               }}
             >
               <Ionicons
-                name="mail-outline"
+                name="calendar-clear"
                 color={COLORS.tertiary}
                 size={device === "tablet" ? 40 : 24}
                 style={{ position: "absolute", top: 5 }}
@@ -270,7 +271,7 @@ function MyTabBarKal({ props, navigation }) {
                   fontSize: fontSizeResponsive("H3", device),
                 }}
               >
-                Undangan
+                Kalender Personal
               </Text>
             </View>
           )}

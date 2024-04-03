@@ -37,12 +37,11 @@ function MyTabDigitalSign({ props, navigation }) {
           }}
         >
           {/* {hasRequiredRoles(profile?.roles_access, roleBankom) ? ( */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             key={1}
             onPress={() => {
               setTabItemIndex(1);
               navigation.navigate("Bankom", { unread: false });
-              // props.navigation.navigate('Home', { unread: false })
             }}
           >
             {tabItemIndex === 1 ? (
@@ -113,24 +112,24 @@ function MyTabDigitalSign({ props, navigation }) {
                 </Text>
               </View>
             )}
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* ) : null} */}
 
           <TouchableOpacity
-            key={2}
+            key={1}
             onPress={() => {
-              setTabItemIndex(2);
+              setTabItemIndex(1);
               navigation.navigate("DokumenLain", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
-            {tabItemIndex === 2 ? (
+            {tabItemIndex === 1 ? (
               <View
                 style={{
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <View
@@ -160,12 +159,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom:
-                      device === "tablet"
-                        ? 40
-                        : Platform.OS === "ios"
-                        ? 24
-                        : 40,
+                    bottom: 40,
                   }}
                 >
                   Dokumen Lain
@@ -177,7 +171,7 @@ function MyTabDigitalSign({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <Ionicons
@@ -192,12 +186,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom:
-                      device === "tablet"
-                        ? 40
-                        : Platform.OS === "ios"
-                        ? 24
-                        : 40,
+                    bottom: 40,
                   }}
                 >
                   Dokumen Lain

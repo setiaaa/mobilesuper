@@ -102,6 +102,7 @@ import { BBMSubsidiKusuka } from "../Apps/Dashboard/BBMSubsidiKusuka";
 import { BBMNonSubsidiKusuka } from "../Apps/Dashboard/BBMNonSubsidiKusuka";
 import { P3KEKusuka } from "../Apps/Dashboard/P3KEKusuka";
 import { Deviasi } from "../Apps/Dashboard/Deviasi";
+import { KalenderPersonal } from "../Apps/KalenderPersonal/KalenderPersonal";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -296,8 +297,8 @@ export const BottomTabsKalender = () => {
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="Agenda"
-          component={Agenda}
+          name="KalenderPersonal"
+          component={KalenderPersonal}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
