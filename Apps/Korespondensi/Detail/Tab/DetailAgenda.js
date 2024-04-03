@@ -19,11 +19,12 @@ import { setClipboard, setFAB } from "../../../../store/snackbar";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 
 import { LinearGradient } from "expo-linear-gradient";
-import { COLORS } from "../../../../config/SuperAppps";
+import { COLORS, DATETIME } from "../../../../config/SuperAppps";
 import { Image } from "react-native";
 import { setPrevAgenda } from "../../../../store/referensi";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import moment from "moment";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -830,6 +831,356 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 <Text style={{ fontSize: 13 }}>{data.internal_satker}</Text>
               )}
             </View>
+            {data.jenis_surat == "Surat Undangan" && (
+              <>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                    Informasi Tambahan
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    padding: 20,
+                    borderRadius: 16,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Tanggal Kegiatan
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {moment(data?.start_date)
+                        .locale("id")
+                        .format(DATETIME.LONG_DATE)}{" "}
+                      -{" "}
+                      {moment(data?.end_date)
+                        .locale("id")
+                        .format(DATETIME.LONG_DATE)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Waktu Kegiatan
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {data?.start_time} - {data?.end_time} {data?.timezone}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomWidth: 2,
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Lokasi Kegiatan
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {data?.location == "" ? "-" : data?.location}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomColor: "#DBDADE",
+                      paddingVertical: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Catatan
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {data?.notes == "" ? "-" : data?.notes}
+                    </Text>
+                  </View>
+                </View>
+              </>
+            )}
+            {(data.jenis_surat == "Surat Perintah" ||
+              data.jenis_surat == "Surat Tugas") && (
+              <>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                    Informasi Tambahan
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    padding: 20,
+                    borderRadius: 16,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      paddingVertical: 5,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Kota Awal
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {data?.from_city == "" ? "-" : data?.from_city}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      paddingVertical: 5,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        width: "40%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      Catatan
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        width: "60%",
+                        paddingRight: 20,
+                      }}
+                    >
+                      {data?.notes == "" ? "-" : data?.notes}
+                    </Text>
+                  </View>
+                  {data?.kegiatan?.map((item, index) => (
+                    <View
+                      key={index}
+                      style={{
+                        paddingTop: 10,
+                      }}
+                    >
+                      <View
+                        style={{ flexDirection: "row", paddingVertical: 5 }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            color: "#8f8b99",
+                            fontWeight: 600,
+                          }}
+                        >
+                          Kegiatan {index + 1}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          paddingVertical: 5,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Tanggal Kegiatan
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          {moment(item?.start_date)
+                            .locale("id")
+                            .format(DATETIME.LONG_DATE)}{" "}
+                          -{" "}
+                          {moment(item?.end_date)
+                            .locale("id")
+                            .format(DATETIME.LONG_DATE)}
+                        </Text>
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          paddingVertical: 5,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Kota Kegiatan
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          {item?.city == "" ? "-" : item?.city}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          paddingVertical: 5,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Transportasi
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          {item?.transportation == ""
+                            ? "-"
+                            : item?.transportation}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          paddingVertical: 5,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            width: "40%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          Lokasi Kegiatan
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 400,
+                            width: "60%",
+                            paddingRight: 20,
+                          }}
+                        >
+                          {item?.location == "" ? "-" : item?.location}
+                        </Text>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              </>
+            )}
           </>
         )}
       </View>
