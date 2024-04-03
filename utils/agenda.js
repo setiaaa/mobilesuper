@@ -12,6 +12,7 @@ export function initAgenda(data) {
   data.kepada_bank = "";
   data.keterangan = "";
   data.jenis_surat = "";
+  data.is_editable = "";
   data.from_city = "";
   data.notes = "";
   data.kegiatan = [];
@@ -28,20 +29,29 @@ export function initAgenda(data) {
         data.jenis_surat = e.value;
       }
     }
+    if (e.key == "isEditable") {
+      if (e.value != "") {
+        data.is_editable = e.value;
+      }
+    }
   });
   data.attributes.forEach((e, i) => {
     //Parsing receiver dari migrasi
     if (e.key == "receivers_display") {
       if (e.value != "") {
         var temp = e.value.split("\n");
-        temp.forEach((j) => {
-          if (j.trim() != "") {
-            var temp2 = data.receivers_display.indexOf(j.trim());
-            if (temp2 == -1) {
-              data.receivers_display.push(j.trim());
+        if (temp[0] == "<ol>") {
+          data.receivers_display = e.value;
+        } else {
+          temp.forEach((j) => {
+            if (j.trim() != "") {
+              var temp2 = data.receivers_display.indexOf(j.trim());
+              if (temp2 == -1) {
+                data.receivers_display.push(j.trim());
+              }
             }
-          }
-        });
+          });
+        }
       }
     }
 
@@ -132,7 +142,7 @@ export function initAgenda(data) {
           data.notes = e.value;
         }
       }
-      //init nota_external kepada_addressbook kepada_addressbook_ids
+      //init event kegiatan
       if (e.key == "event_1") {
         if (e.value != "") {
           var temp = formatString(e.value);
@@ -262,6 +272,7 @@ export function initLetter(data) {
   data.tembusan_external = "";
   data.internal_satker = "";
   data.jenis_surat = "";
+  data.id_editable = "";
   data.tipe_penerima = "";
   data.office_city = "";
   data.salam = "";
@@ -282,20 +293,29 @@ export function initLetter(data) {
         data.jenis_surat = e.value;
       }
     }
+    if (e.key == "isEditable") {
+      if (e.value != "") {
+        data.is_editable = e.value;
+      }
+    }
   });
   data.attributes.forEach((e, i) => {
     //Parsing receiver dari migrasi
     if (e.key == "receivers_display") {
       if (e.value != "") {
         var temp = e.value.split("\n");
-        temp.forEach((j) => {
-          if (j.trim() != "") {
-            var temp2 = data.receivers_display.indexOf(j.trim());
-            if (temp2 == -1) {
-              data.receivers_display.push(j.trim());
+        if (temp[0] == "<ol>") {
+          data.receivers_display = e.value;
+        } else {
+          temp.forEach((j) => {
+            if (j.trim() != "") {
+              var temp2 = data.receivers_display.indexOf(j.trim());
+              if (temp2 == -1) {
+                data.receivers_display.push(j.trim());
+              }
             }
-          }
-        });
+          });
+        }
       }
     }
 
@@ -386,7 +406,7 @@ export function initLetter(data) {
           data.notes = e.value;
         }
       }
-      //init nota_external kepada_addressbook kepada_addressbook_ids
+      //init event kegiatan
       if (e.key == "event_1") {
         if (e.value != "") {
           var temp = formatString(e.value);
@@ -537,7 +557,10 @@ export const initDownload = (item) => {
   if (item.tipe == "sign") {
     // setIsLoading(true);
     fileUrl = item.link;
-    fileType = "application/pdf";
+    fileType =
+      item.description == "editor-generated"
+        ? "application/pdf"
+        : item.description;
     if (item.tipe == "attach") {
       fileName = item.filename;
     } else {

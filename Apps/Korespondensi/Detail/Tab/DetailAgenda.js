@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import RenderHTML from "react-native-render-html";
-import { Button } from "react-native-paper";
+import { Button, IconButton } from "react-native-paper";
 import { GlobalStyles } from "../../../../constants/styles";
 import { useDispatch } from "react-redux";
 import { setDataNotif } from "../../../../store/pushnotif";
@@ -25,6 +25,7 @@ import { setPrevAgenda } from "../../../../store/referensi";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
+import { getExtensionIcon, initDownload } from "../../../../utils/agenda";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -70,9 +71,8 @@ function DetailAgenda({ id, data, style, tipe, title }) {
               <Text style={{ fontSize: 15, fontWeight: 600 }}>
                 Informasi Surat
               </Text>
-              {data?.attachments?.map((item, index) => (
+              {data?.attachments?.length == 1 && (
                 <View
-                  key={index}
                   style={{
                     flexDirection: "column",
                     justifyContent: "center",
@@ -101,9 +101,11 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                     }}
                   >
                     <Text style={[styles.textContent, { textAlign: "center" }]}>
-                      {item?.name}
+                      {data?.attachments[0]?.name}
                     </Text>
-                    <Text style={styles.subtextContent}>{item?.size}</Text>
+                    <Text style={styles.subtextContent}>
+                      {data?.attachments[0]?.size}
+                    </Text>
                   </View>
                   <View style={{ width: "100%" }}>
                     <Button
@@ -117,7 +119,7 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                       ]}
                       onPress={() => {
                         navigation.navigate("ViewAttachment", {
-                          selected: item,
+                          selected: data?.attachments[0],
                           title: "Lihat Surat",
                           tipe: tipe,
                         });
@@ -133,7 +135,82 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                     >
                       Lihat Surat
                     </Button>
-                    {/* <Button
+                  </View>
+                </View>
+              )}
+              {data?.attachments?.length > 1 &&
+                data?.attachments?.map((item, index) => (
+                  <Fragment key={index}>
+                    {item?.description == "editor-generated" && (
+                      <View
+                        style={{
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: COLORS.white,
+                            borderRadius: 16,
+                            padding: 20,
+                            width: 90,
+                            elevation: 1,
+                          }}
+                        >
+                          <Image
+                            source={require("../../../../assets/superApp/pdf.png")}
+                            style={{ width: 50, height: 50 }}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "column",
+                            alignItems: "center",
+                            marginBottom: 20,
+                          }}
+                        >
+                          <Text
+                            style={[
+                              styles.textContent,
+                              { textAlign: "center" },
+                            ]}
+                          >
+                            {item?.name}
+                          </Text>
+                          <Text style={styles.subtextContent}>
+                            {item?.size}
+                          </Text>
+                        </View>
+                        <View style={{ width: "100%" }}>
+                          <Button
+                            mode="contained"
+                            style={[
+                              {
+                                width: "100%",
+                                backgroundColor: GlobalStyles.colors.primary,
+                                marginBottom: 16,
+                              },
+                            ]}
+                            onPress={() => {
+                              navigation.navigate("ViewAttachment", {
+                                selected: item,
+                                title: "Lihat Surat",
+                                tipe: tipe,
+                              });
+                              dispatch(setFAB(false));
+                            }}
+                            icon={() => (
+                              <Ionicons
+                                name="eye-outline"
+                                size={20}
+                                color={COLORS.white}
+                              />
+                            )}
+                          >
+                            Lihat Surat
+                          </Button>
+                          {/* <Button
                       onPress={() => initDownload(item)}
                       mode="contained"
                       style={[
@@ -153,9 +230,11 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                     >
                       Unduh Surat
                     </Button> */}
-                  </View>
-                </View>
-              ))}
+                        </View>
+                      </View>
+                    )}
+                  </Fragment>
+                ))}
             </>
           )}
         <Text style={{ fontSize: 15, fontWeight: 600 }}>Perihal</Text>
@@ -424,94 +503,44 @@ function DetailAgenda({ id, data, style, tipe, title }) {
                 borderRadius: 16,
               }}
             >
-              {data &&
-                data?.receivers_display?.length == 0 &&
-                data?.kepada_bank?.length == 0 && (
-                  <>
-                    {data &&
-                      data?.receivers?.length == 0 &&
-                      data?.kepada_addressbook?.length == 0 && (
-                        <Text style={{ fontSize: 13 }}>-</Text>
-                      )}
-                    {data &&
-                      data?.receivers?.length == 0 &&
-                      data?.kepada_addressbook?.length != 0 && (
-                        <Text style={{ fontSize: 13 }}>
-                          {data?.kepada_addressbook}
-                        </Text>
-                      )}
-                    {data && data?.receivers?.length == 1 && (
-                      <>
-                        {data?.template.name != "nota_external" && !loading ? (
-                          <Text style={{ fontSize: 13 }}>
-                            {data?.receivers[0]}
-                          </Text>
-                        ) : (
-                          <></>
-                        )}
-                        {data?.template.name == "nota_external" && (
-                          <RenderHTML
-                            style={{ fontSize: 13 }}
-                            contentWidth={width}
-                            source={{ html: data?.receivers[0] }}
-                          />
-                        )}
-                      </>
-                    )}
-                    {data && data?.receivers?.length > 1 && (
-                      <>
-                        {data?.template.name == "nota_external" && (
-                          <RenderHTML
-                            style={{ fontSize: 13 }}
-                            contentWidth={width}
-                            source={{ html: data?.receivers.join("</br>") }}
-                          />
-                        )}
-                        {data?.template.name != "nota_external" && (
-                          <View>
-                            {data?.receivers.map((item, index) => (
-                              <Text key={index} style={{ fontSize: 13 }}>
-                                {index + 1}. {item}
-                              </Text>
-                            ))}
-                          </View>
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
-              {data &&
-                data.receivers_display?.length != 0 &&
-                data.kepada_bank?.length == 0 && (
-                  <>
-                    {data.receivers_display?.length == 0 && (
-                      <Text style={{ fontSize: 13 }}>-</Text>
-                    )}
-                    {data && data.receivers_display?.length == 1 && (
-                      <RenderHTML
-                        style={{ fontSize: 13 }}
-                        contentWidth={width}
-                        source={{ html: data?.receivers_display[0] }}
-                      />
-                    )}
-                    {data &&
-                      data.receivers_display?.length > 1 &&
-                      data.template.name != "nota_external" &&
-                      data.receivers_display.map((item, index) => (
-                        <Text key={index} style={{ fontSize: 13 }}>
+              {data && (
+                <>
+                  {data && data?.receivers?.length == 0 && <Text>-</Text>}
+                  {data && data?.receivers?.length == 1 && (
+                    <Text>{data?.receivers[0]}</Text>
+                  )}
+                  {data && data?.receivers?.length > 1 && (
+                    <View>
+                      {data?.receivers.map((item, index) => (
+                        <Text key={index}>
                           {index + 1}. {item}
                         </Text>
                       ))}
-                    {data &&
-                      data.receivers_display?.length > 1 &&
-                      data.template.name == "nota_external" &&
-                      data.receivers_display.map((item, index) => (
-                        <Text key={index} style={{ fontSize: 13 }}>
-                          {item}
-                        </Text>
-                      ))}
-                  </>
-                )}
+                    </View>
+                  )}
+                </>
+              )}
+              {data?.receivers_display?.length != 0 && (
+                <>
+                  <View style={{ flexDirection: "row", paddingTop: 10 }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                      Tampilan Kepada
+                    </Text>
+                  </View>
+                  {data && data?.receivers_display?.length == 1 && (
+                    <Text>{data?.receivers_display[0]}</Text>
+                  )}
+
+                  {data && data?.receivers_display?.length > 1 && (
+                    <View>
+                      <RenderHTML
+                        contentWidth={width}
+                        source={{ html: data?.receivers_display }}
+                      />
+                    </View>
+                  )}
+                </>
+              )}
             </View>
 
             <View style={{ flexDirection: "row" }}>
@@ -1183,6 +1212,169 @@ function DetailAgenda({ id, data, style, tipe, title }) {
             )}
           </>
         )}
+        {data?.attachments?.length > 1 && data?.is_editable == "1" && (
+          <>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                Daftar Lampiran Sudah Diupload
+              </Text>
+            </View>
+            {/* <View
+              style={[styles.containerRow, { justifyContent: "space-between" }]}
+            >
+              <Text style={styles.titleLabel}>Attachments</Text>
+              {data?.attachments?.length != 0 && Platform.OS == "android" && (
+              <TouchableOpacity onPress={downloadAll}>
+                <Text style={styles.linkText}>Download All</Text>
+              </TouchableOpacity>
+            )}
+            </View> */}
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                padding: 20,
+                borderRadius: 16,
+              }}
+            >
+              {data?.attachments?.length <= 1 && <Text>-</Text>}
+              {data?.attachments?.length > 1 &&
+                data?.attachments?.map((item, index) => (
+                  // <View style={styles.containerContent}>
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.containerContent}
+                    onPress={() => {
+                      initDownload(item);
+                    }}
+                  >
+                    <IconButton
+                      icon={getExtensionIcon(item)}
+                      size={18}
+                      style={styles.iconContent}
+                    />
+                    <View style={{ width: "85%" }}>
+                      <Text style={styles.textContent}>{item?.name}</Text>
+                      <Text style={styles.subtextContent}>{item?.size}</Text>
+                    </View>
+                  </TouchableOpacity>
+                  // </View>
+                  // <>
+                  //   {item.description != "editor-generated" && (
+                  //     <View
+                  //       key={index}
+                  //       style={{
+                  //         flexDirection: "column",
+                  //         justifyContent: "center",
+                  //         alignItems: "center",
+                  //       }}
+                  //     >
+                  //       <View
+                  //         style={{
+                  //           backgroundColor: COLORS.white,
+                  //           borderRadius: 16,
+                  //           padding: 20,
+                  //           width: 90,
+                  //           elevation: 1,
+                  //         }}
+                  //       >
+                  //         {item?.description?.includes("pdf") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/pdf.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("word") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/word.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("presentation") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/ppt.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("compress") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/rar.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("png") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/png.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //       </View>
+                  //       <View
+                  //         style={{
+                  //           flexDirection: "column",
+                  //           alignItems: "center",
+                  //           marginBottom: 20,
+                  //         }}
+                  //       >
+                  //         <Text
+                  //           style={[styles.textContent, { textAlign: "center" }]}
+                  //         >
+                  //           {item?.name}
+                  //         </Text>
+                  //         <Text style={styles.subtextContent}>{item?.size}</Text>
+                  //       </View>
+                  //       <Button
+                  //         mode="contained"
+                  //         style={[
+                  //           {
+                  //             width: "100%",
+                  //             backgroundColor: GlobalStyles.colors.primary,
+                  //             marginBottom: 16,
+                  //           },
+                  //         ]}
+                  //         onPress={() => {
+                  //           initDownload(item);
+                  //           // navigation.navigate("ViewAttachment", {
+                  //           //   selected: item,
+                  //           //   title: "Lihat Surat",
+                  //           // });
+                  //         }}
+                  //         icon={() => (
+                  //           <Ionicons
+                  //             name="share-social"
+                  //             size={20}
+                  //             color={COLORS.white}
+                  //           />
+                  //         )}
+                  //       >
+                  //         Share
+                  //       </Button>
+                  //       {/* <Button
+                  //   onPress={() => initDownload(item)}
+                  //   mode="contained"
+                  //   style={[
+                  //     {
+                  //       width: "100%",
+                  //       backgroundColor: GlobalStyles.colors.blue,
+                  //       marginBottom: 16,
+                  //     },
+                  //   ]}
+                  //   icon={() => (
+                  //     <Ionicons
+                  //       name="download-outline"
+                  //       size={20}
+                  //       color={COLORS.white}
+                  //     />
+                  //   )}
+                  // >
+                  //   Unduh Surat
+                  // </Button> */}
+                  //     </View>
+                  //   )}
+                  // </>
+                ))}
+            </View>
+          </>
+        )}
       </View>
     </ScrollView>
     // <ScrollView
@@ -1802,7 +1994,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.colors.error500,
   },
   textContent: {
-    fontSize: GlobalStyles.font.md,
+    fontSize: 14,
     color: GlobalStyles.colors.blue,
     fontWeight: "bold",
     paddingRight: 8,
@@ -1813,5 +2005,9 @@ const styles = StyleSheet.create({
     color: GlobalStyles.colors.tertiery50,
     fontWeight: "bold",
     paddingRight: 8,
+  },
+  containerContent: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
