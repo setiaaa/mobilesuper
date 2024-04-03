@@ -51,11 +51,7 @@ export const FONTWEIGHT = {
   normal: "400",
 };
 
-export const AVATAR = {
-  U1: require("../assets/superApp/img.png"),
-  U2: require("../assets/superApp/AvatarDetail.png"),
-  U3: require("../assets/superApp/avtar-281.png"),
-};
+export const AVATAR = {};
 
 export const DATETIME = {
   SHORT_DATETIME: "DD-MM-YYYY HH:mm",

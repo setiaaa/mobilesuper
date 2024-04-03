@@ -71,14 +71,14 @@ export const PortalIos = () => {
           </Text>
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Image
+          {/* <Image
             source={require("../assets/superApp/Avatar.png")}
             style={{
               width: device === "tablet" ? 100 : 50,
               height: device === "tablet" ? 100 : 50,
               borderRadius: 8,
             }}
-          />
+          /> */}
           <Text style={{ marginVertical: 10, color: COLORS.white }}>
             AZIS FAISAL
           </Text>
