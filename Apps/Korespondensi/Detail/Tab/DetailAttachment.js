@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { Button, Dialog, IconButton, ProgressBar } from "react-native-paper";
 import { GlobalStyles } from "../../../../constants/styles";
-import { getExtensionIcon } from "../../../../utils/agenda";
+import { getExtensionIcon, initDownload } from "../../../../utils/agenda";
 
 import * as FileSystem from "expo-file-system";
 import { headerToken } from "../../../../utils/http";
@@ -166,91 +166,91 @@ function DetailAttachment({ data, id, tipeRef }) {
       }
     } catch (err) {}
   };
-  const initDownload = (item) => {
-    let fileUrl, fileType, fileName;
-    if (item.tipe == "sign") {
-      bottomSheetRefAttach?.current?.dismiss();
-      // setIsLoading(true);
-      fileUrl = item.link;
-      fileType = "application/pdf";
-      if (item.tipe == "attach") {
-        fileName = item.filename;
-      } else {
-        fileName = item.description;
-      }
-    } else {
-      bottomSheetRefAttach?.current?.dismiss();
-      // setIsLoading(true);
-      fileUrl = item.file;
-      fileType = item.description;
-      fileName = item.filename;
-      fileName = item.filename.split("/")[3];
-    }
-    downloadFile(fileUrl, fileType, fileName);
-  };
-  const downloadFile = async (fileUrl, fileType, fileName) => {
-    if (Platform.OS == "android") {
-      const dir = ensureDirAsync(downloadPath);
-    }
-    //alert(fileName)
-    const downloadResumable = FileSystem.createDownloadResumable(
-      nde_api.baseurl + fileUrl,
-      downloadPath + fileName,
-      { headers: header },
-      downloadCallback
-    );
-    try {
-      const { uri } = await downloadResumable.downloadAsync();
-      if (Platform.OS == "android") saveAndroidFile(uri, fileName, fileType);
-      else saveIosFile(uri);
-    } catch (e) {
-      setIsLoading(false);
-      console.error("download error:", e);
-    }
-  };
-  const saveAndroidFile = async (fileUri, fileName, fileType) => {
-    try {
-      const fileString = await FileSystem.readAsStringAsync(fileUri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
+  // const initDownload = (item) => {
+  //   let fileUrl, fileType, fileName;
+  //   if (item.tipe == "sign") {
+  //     bottomSheetRefAttach?.current?.dismiss();
+  //     // setIsLoading(true);
+  //     fileUrl = item.link;
+  //     fileType = "application/pdf";
+  //     if (item.tipe == "attach") {
+  //       fileName = item.filename;
+  //     } else {
+  //       fileName = item.description;
+  //     }
+  //   } else {
+  //     bottomSheetRefAttach?.current?.dismiss();
+  //     // setIsLoading(true);
+  //     fileUrl = item.file;
+  //     fileType = item.description;
+  //     fileName = item.filename;
+  //     fileName = item.filename.split("/")[3];
+  //   }
+  //   downloadFile(fileUrl, fileType, fileName);
+  // };
+  // const downloadFile = async (fileUrl, fileType, fileName) => {
+  //   if (Platform.OS == "android") {
+  //     const dir = ensureDirAsync(downloadPath);
+  //   }
+  //   //alert(fileName)
+  //   const downloadResumable = FileSystem.createDownloadResumable(
+  //     nde_api.baseurl + fileUrl,
+  //     downloadPath + fileName,
+  //     { headers: header },
+  //     downloadCallback
+  //   );
+  //   try {
+  //     const { uri } = await downloadResumable.downloadAsync();
+  //     if (Platform.OS == "android") saveAndroidFile(uri, fileName, fileType);
+  //     else saveIosFile(uri);
+  //   } catch (e) {
+  //     setIsLoading(false);
+  //     console.error("download error:", e);
+  //   }
+  // };
+  // const saveAndroidFile = async (fileUri, fileName, fileType) => {
+  //   try {
+  //     const fileString = await FileSystem.readAsStringAsync(fileUri, {
+  //       encoding: FileSystem.EncodingType.Base64,
+  //     });
 
-      const permissions =
-        await StorageAccessFramework.requestDirectoryPermissionsAsync();
-      if (!permissions.granted) {
-        return;
-      }
+  //     const permissions =
+  //       await StorageAccessFramework.requestDirectoryPermissionsAsync();
+  //     if (!permissions.granted) {
+  //       return;
+  //     }
 
-      try {
-        await StorageAccessFramework.createFileAsync(
-          permissions.directoryUri,
-          fileName,
-          fileType
-        )
-          .then(async (uri) => {
-            await FileSystem.writeAsStringAsync(uri, fileString, {
-              encoding: FileSystem.EncodingType.Base64,
-            });
-            bottomSheetRefAttach.current?.dismiss();
-            Alert.alert("Success!", "Download Successfully.");
-          })
-          .catch((e) => {
-            Alert.alert(
-              "Failed!",
-              "Download Unsuccessful. Please choose another folder to download file."
-            );
-          });
-      } catch (e) {
-        throw new Error(e);
-      }
-    } catch (err) {}
-  };
+  //     try {
+  //       await StorageAccessFramework.createFileAsync(
+  //         permissions.directoryUri,
+  //         fileName,
+  //         fileType
+  //       )
+  //         .then(async (uri) => {
+  //           await FileSystem.writeAsStringAsync(uri, fileString, {
+  //             encoding: FileSystem.EncodingType.Base64,
+  //           });
+  //           bottomSheetRefAttach.current?.dismiss();
+  //           Alert.alert("Success!", "Download Successfully.");
+  //         })
+  //         .catch((e) => {
+  //           Alert.alert(
+  //             "Failed!",
+  //             "Download Unsuccessful. Please choose another folder to download file."
+  //           );
+  //         });
+  //     } catch (e) {
+  //       throw new Error(e);
+  //     }
+  //   } catch (err) {}
+  // };
 
-  const saveIosFile = async (fileUri) => {
-    try {
-      const UTI = "public.item";
-      const shareResult = await Sharing.shareAsync(fileUri, { UTI });
-    } catch (error) {}
-  };
+  // const saveIosFile = async (fileUri) => {
+  //   try {
+  //     const UTI = "public.item";
+  //     const shareResult = await Sharing.shareAsync(fileUri, { UTI });
+  //   } catch (error) {}
+  // };
   const loadingOverlay = (
     <>
       <LoadingOverlay visible={isLoading} />
@@ -261,110 +261,171 @@ function DetailAttachment({ data, id, tipeRef }) {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ScrollView keyboardShouldPersistTaps="handled" style={styles.screen}>
           {loadingOverlay}
-          <View style={[styles.container, { marginBottom: 12 }]}>
-            <View
+          {data?.attachments?.length > 1 && data?.is_editable == "1" && (
+            <View style={[styles.container, { marginBottom: 12 }]}>
+              <Text style={styles.titleLabel}>
+                Daftar Lampiran Sudah Diupload
+              </Text>
+              {/* <View
               style={[styles.containerRow, { justifyContent: "space-between" }]}
             >
-              {/* <Text style={styles.titleLabel}>Attachments</Text> */}
-              {/* {data?.attachments?.length != 0 && Platform.OS == "android" && (
+              <Text style={styles.titleLabel}>Attachments</Text>
+              {data?.attachments?.length != 0 && Platform.OS == "android" && (
               <TouchableOpacity onPress={downloadAll}>
                 <Text style={styles.linkText}>Download All</Text>
               </TouchableOpacity>
-            )} */}
-            </View>
-            {data?.attachments?.length == 0 && <Text>-</Text>}
-            {data?.attachments?.length != 0 &&
-              data?.attachments?.map((item, index) => (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: COLORS.white,
-                      borderRadius: 16,
-                      padding: 20,
-                      width: 90,
-                      elevation: 1,
-                    }}
-                  >
-                    <Image
-                      source={require("../../../../assets/superApp/pdf.png")}
-                      style={{ width: 50, height: 50 }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "column",
-                      alignItems: "center",
-                      marginBottom: 20,
-                    }}
-                  >
-                    <Text style={[styles.textContent, { textAlign: "center" }]}>
-                      {item?.name}
-                    </Text>
-                    <Text style={styles.subtextContent}>{item?.size}</Text>
-                  </View>
-                  <Button
-                    mode="contained"
-                    style={[
-                      {
-                        width: "100%",
-                        backgroundColor: GlobalStyles.colors.primary,
-                        marginBottom: 16,
-                      },
-                    ]}
-                    onPress={() => {
-                      navigation.navigate("ViewAttachment", {
-                        selected: item,
-                        title: "Lihat Surat",
-                      });
-                    }}
-                    icon={() => (
-                      <Ionicons
-                        name="eye-outline"
-                        size={20}
-                        color={COLORS.white}
-                      />
+            )}
+            </View> */}
+              {data?.attachments?.length <= 1 && <Text>-</Text>}
+              {data?.attachments?.length > 1 &&
+                data?.attachments?.map((item, index) => (
+                  <>
+                    {item.description != "editor-generated" && (
+                      <TouchableOpacity
+                        key={index}
+                        style={styles.containerContent}
+                        onPress={() => {
+                          initDownload(item);
+                        }}
+                      >
+                        <IconButton
+                          icon={getExtensionIcon(item)}
+                          size={18}
+                          style={styles.iconContent}
+                        />
+                        <View style={{ width: "85%" }}>
+                          <Text style={styles.textContent}>{item?.name}</Text>
+                          <Text style={styles.subtextContent}>
+                            {item?.size}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
                     )}
-                  >
-                    Lihat Surat
-                  </Button>
-                  {/* <Button
-                  onPress={() => initDownload(item)}
-                  mode="contained"
-                  style={[
-                    {
-                      width: "100%",
-                      backgroundColor: GlobalStyles.colors.blue,
-                      marginBottom: 16,
-                    },
-                  ]}
-                  icon={() => (
-                    <Ionicons
-                      name="download-outline"
-                      size={20}
-                      color={COLORS.white}
-                    />
-                  )}
-                >
-                  Unduh Surat
-                </Button> */}
-                </View>
-              ))}
-          </View>
-          {downloadProgress != 1 && (
+                  </>
+                  // <>
+                  //   {item.description != "editor-generated" && (
+                  //     <View
+                  //       key={index}
+                  //       style={{
+                  //         flexDirection: "column",
+                  //         justifyContent: "center",
+                  //         alignItems: "center",
+                  //       }}
+                  //     >
+                  //       <View
+                  //         style={{
+                  //           backgroundColor: COLORS.white,
+                  //           borderRadius: 16,
+                  //           padding: 20,
+                  //           width: 90,
+                  //           elevation: 1,
+                  //         }}
+                  //       >
+                  //         {item?.description?.includes("pdf") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/pdf.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("word") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/word.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("presentation") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/ppt.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("compress") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/rar.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //         {item?.description?.includes("png") && (
+                  //           <Image
+                  //             source={require("../../../../assets/superApp/png.png")}
+                  //             style={{ width: 50, height: 50 }}
+                  //           />
+                  //         )}
+                  //       </View>
+                  //       <View
+                  //         style={{
+                  //           flexDirection: "column",
+                  //           alignItems: "center",
+                  //           marginBottom: 20,
+                  //         }}
+                  //       >
+                  //         <Text
+                  //           style={[styles.textContent, { textAlign: "center" }]}
+                  //         >
+                  //           {item?.name}
+                  //         </Text>
+                  //         <Text style={styles.subtextContent}>{item?.size}</Text>
+                  //       </View>
+                  //       <Button
+                  //         mode="contained"
+                  //         style={[
+                  //           {
+                  //             width: "100%",
+                  //             backgroundColor: GlobalStyles.colors.primary,
+                  //             marginBottom: 16,
+                  //           },
+                  //         ]}
+                  //         onPress={() => {
+                  //           initDownload(item);
+                  //           // navigation.navigate("ViewAttachment", {
+                  //           //   selected: item,
+                  //           //   title: "Lihat Surat",
+                  //           // });
+                  //         }}
+                  //         icon={() => (
+                  //           <Ionicons
+                  //             name="share-social"
+                  //             size={20}
+                  //             color={COLORS.white}
+                  //           />
+                  //         )}
+                  //       >
+                  //         Share
+                  //       </Button>
+                  //       {/* <Button
+                  //   onPress={() => initDownload(item)}
+                  //   mode="contained"
+                  //   style={[
+                  //     {
+                  //       width: "100%",
+                  //       backgroundColor: GlobalStyles.colors.blue,
+                  //       marginBottom: 16,
+                  //     },
+                  //   ]}
+                  //   icon={() => (
+                  //     <Ionicons
+                  //       name="download-outline"
+                  //       size={20}
+                  //       color={COLORS.white}
+                  //     />
+                  //   )}
+                  // >
+                  //   Unduh Surat
+                  // </Button> */}
+                  //     </View>
+                  //   )}
+                  // </>
+                ))}
+            </View>
+          )}
+          {/* {downloadProgress != 1 && (
             <Dialog visible={downloadProgress != 1 && downloadProgress != 0}>
               <Dialog.Content>
                 <ProgressBar progress={downloadProgress} />
                 <Text>{downloadProgress.toFixed(2) * 100} %</Text>
               </Dialog.Content>
             </Dialog>
-          )}
+          )} */}
           <View style={[styles.container, { marginBottom: 12 }]}>
             {data?.references && (
               <Text style={styles.titleLabel}>Referensi</Text>
