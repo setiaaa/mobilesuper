@@ -105,12 +105,14 @@ export const KalenderPersonal = () => {
           newArr.push(obj);
         } else {
           const startDate = dayjs(
-            child.extra_attributes.tujuan[0].tangal_mulai
+            child?.extra_attributes?.tujuan[0]?.tangal_mulai
+              ? child?.extra_attributes?.tujuan[0]?.tangal_mulai
+              : null
           ).format("YYYY-MM-DD");
           const endDate = dayjs(
-            child.extra_attributes.tujuan[
-              child.extra_attributes.tujuan.length - 1
-            ].tanggal_selesai
+            child?.extra_attributes?.tujuan[
+              child?.extra_attributes?.tujuan?.length - 1
+            ]?.tanggal_selesai
           ).format("YYYY-MM-DD");
           let obj = {
             title: child.name,
