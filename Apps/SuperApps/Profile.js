@@ -587,7 +587,7 @@ export const Profile = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Penambahan kalender personal
+                    Perbaikan kalender personal
                   </Text>
                 </View>
                 {/* 

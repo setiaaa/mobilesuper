@@ -116,7 +116,7 @@ export const LoginToken = () => {
         >
           <Pressable
             onPress={() => {
-              setCount((prev) => prev + 1);
+              // setCount((prev) => prev + 1);
             }}
           >
             <Image
@@ -124,62 +124,6 @@ export const LoginToken = () => {
               style={{ width: 150, height: 150 }}
             />
           </Pressable>
-
-          {/* {count >= 5 ? (
-            <View
-              style={{
-                borderWidth: 1,
-                marginTop: 20,
-                padding: 20,
-                borderRadius: 8,
-                borderColor: COLORS.ExtraDivinder,
-                width: "80%",
-              }}
-            >
-              <View>
-                {password === onChange ? (
-                  <View style={{ marginTop: 10 }}>
-                    <Text>INPUT TOKEN</Text>
-                    <View>
-                      <TextInput
-                        style={{
-                          borderWidth: 1,
-                          borderRadius: 5,
-                          height: 35,
-                          marginTop: 5,
-                          borderColor: COLORS.ExtraDivinder,
-                          padding: 10,
-                        }}
-                        onChangeText={(e) => {
-                          setToken(e);
-                        }}
-                      />
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (token !== "") {
-                          setTokenValue(token);
-                          navigation.navigate("Main");
-                        }
-                      }}
-                      style={{
-                        backgroundColor: COLORS.primary,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: 20,
-                        borderRadius: 8,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={{ color: COLORS.white }}>Masuk</Text>
-                    </TouchableOpacity>
-                  </View>
-                ) : (
-                  <></>
-                )}
-              </View>
-            </View>
-          ) : null} */}
 
           <View style={{ flexDirection: "row", gap: 5, marginTop: 20 }}>
             <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>
@@ -455,7 +399,7 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Penambahan kalender personal
+                    Perbaikan kalender personal
                   </Text>
                 </View>
                 {/* 

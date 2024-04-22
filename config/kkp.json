@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 731,
+    "versionCode": 732,
     "permissions": [
       "WRITE_EXTERNAL_STORAGE",
       "READ_EXTERNAL_STORAGE",
@@ -35,7 +35,7 @@
       "foregroundImage": "./assets/superApp/kkp-ikon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "go.id.portalkpp",
+    "package": "go.id.portalkkp",
     "intentFilters": [
       {
         "action": "VIEW",

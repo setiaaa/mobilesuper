@@ -685,7 +685,7 @@ export const DetailLinimasa = ({ route }) => {
   };
 
   const listsView = linimasa.view;
-  const listsLike = linimasa.like_list;
+  const listsLike = linimasa.listsLike;
   const source = {
     html: detail.content,
   };
