@@ -2254,6 +2254,19 @@ export const getSurveyExport = createAsyncThunk(
   }
 );
 
+export const getAksiPerubahan = createAsyncThunk(
+  "AksiPerubahan/getAksiPerubahan",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${BASE_URL}bridge/transform/?page=${page}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data?.results;
+  }
+);
+
 // export const updateTicket = createAsyncThunk(
 //   "ticket/updateTicket",
 //   async (id) => {

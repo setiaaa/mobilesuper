@@ -794,7 +794,7 @@ export const DetailSertifikat = (route) => {
                     fontSize: fontSizeResponsive("H2", device),
                   }}
                 >
-                  Lihat Sertifikat
+                  Lihat Dokumen
                 </Text>
               </TouchableOpacity>
             )}

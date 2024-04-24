@@ -27,6 +27,7 @@ import HelpDesk from "./HelpDesk";
 import Apps from "./Apps";
 import Survey from "./Survey";
 import KalenderPersonal from "./KalenderPersonal";
+import AksiPerubahan from "./AksiPerubahan";
 
 export const store = configureStore({
   reducer: {
@@ -57,5 +58,6 @@ export const store = configureStore({
     apps: Apps,
     survey: Survey,
     kalenderPersonal: KalenderPersonal,
+    aksiperubahan: AksiPerubahan,
   },
 });

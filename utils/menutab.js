@@ -989,7 +989,7 @@ export const TopsBantuanPemerintah = () => {
           name="BBMNonSubsidiKusuka"
           component={BBMNonSubsidiKusuka}
           options={{
-            title: "BBM NON SUBSIDI KUSUKA",
+            title: "BBM SUBSIDI NON KUSUKA",
           }}
         />
         <Top.Screen

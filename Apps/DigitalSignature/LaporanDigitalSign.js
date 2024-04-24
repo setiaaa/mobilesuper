@@ -41,7 +41,11 @@ const CardLaporanList = ({ item, token, device }) => {
             fontWeight: 400,
           }}
         >
-          {moment(item.tanggalSertif).locale("id").format(DATETIME.LONG_DATE)}
+          {typeof item.tanggalSertif === "string"
+            ? item.tanggalSertif
+            : moment(item.tanggalSertif)
+                .locale("id")
+                .format(DATETIME.LONG_DATE)}
         </Text>
         <Text
           style={{

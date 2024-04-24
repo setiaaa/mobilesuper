@@ -181,6 +181,8 @@ import { RegisterIos } from "../RegisterIos";
 import { PortalIos } from "../PortalIos";
 import { DokumenLain } from "../DigitalSignature/DokumenLain";
 import { Bankom } from "../DigitalSignature/Bankom";
+import { AksiPerubahan } from "../AksiPerubahan/AksiPerubahan";
+import { AksiPerubahanView } from "../AksiPerubahan/AksiPerubahanView";
 
 const Stack = createNativeStackNavigator();
 
@@ -1374,6 +1376,20 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="LihatSuratSPPD"
             component={LihatSuratSPPD}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AksiPerubahan"
+            component={AksiPerubahan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AksiPerubahanView"
+            component={AksiPerubahanView}
             options={{
               headerShown: false,
             }}
