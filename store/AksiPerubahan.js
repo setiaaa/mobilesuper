@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAksiPerubahan } from "../service/api";
+import { getAksiPerubahan, getFilterAksiPerubahan } from "../service/api";
 
 const AksiPerubahan = createSlice({
   name: "AksiPerubahan",
   initialState: {
     lists: [],
     loading: false,
+    filter: [],
   },
   reducers: {},
   extraReducers(builder) {
@@ -18,6 +19,16 @@ const AksiPerubahan = createSlice({
         state.loading = true;
       })
       .addCase(getAksiPerubahan.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getFilterAksiPerubahan.fulfilled, (state, action) => {
+        state.filter = action.payload;
+        state.loading = false;
+      })
+      .addCase(getFilterAksiPerubahan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getFilterAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
       });
   },
