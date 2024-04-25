@@ -14,7 +14,7 @@ import {
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons as Icon } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getTokenValue } from "../../service/session";
 import { getAksiPerubahan, getFilterAksiPerubahan } from "../../service/api";
@@ -33,14 +33,41 @@ import {
 import { Portal } from "react-native-portalize";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Dropdown } from "../../components/DropDown";
+import SectionedMultiSelect from "react-native-sectioned-multi-select";
+import { StyleSheet } from "react-native";
 
 export const AksiPerubahan = () => {
+  const dataKategori = [
+    {
+      id: 1,
+      name: "LATIHAN DASAR",
+    },
+    {
+      id: 2,
+      name: "PELATIHAN KEPEMIMPINAN PENGAWAS",
+    },
+    {
+      id: 3,
+      name: "PELATIHAN KEPEMIMPINAN ADMINISTRATOR",
+    },
+    {
+      id: 4,
+      name: "PELATIHAN KEPEMIMPINAN NASIONAL TINGKAT I",
+    },
+    {
+      id: 5,
+      name: "PELATIHAN KEPEMIMPINAN NASIONAL TINGKAT II",
+    },
+  ];
   const navigation = useNavigation();
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
   const [inputValue, setInputValue] = useState("");
   const [search, setSearch] = useState("");
-  const [filterTahun, setFilterTahun] = useState("");
+  const [filterTahun, setFilterTahun] = useState([]);
+  const [filterKategori, setFilterKategori] = useState([]);
+  const [listAngkatan, setListAngkatan] = useState([]);
+  const [filterAngkatan, setFilterAngkatan] = useState([]);
   const dispatch = useDispatch();
   const scrollRef = useRef(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -88,7 +115,7 @@ export const AksiPerubahan = () => {
 
   const bottomSheetModalFilterRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT", "80%"], []);
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT", "90%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -124,8 +151,8 @@ export const AksiPerubahan = () => {
       if (!tahunMap[item.year]) {
         // Jika belum ada, maka tambahkan entri baru
         tahunMap[item.year] = {
-          key: item.id,
-          value: item.year,
+          id: item.id,
+          name: item.year,
         };
       }
     });
@@ -135,7 +162,27 @@ export const AksiPerubahan = () => {
     return hasil;
   };
 
-  console.log(filterTahun);
+  useEffect(() => {
+    let arr = [];
+    filterKategori.map((item) => {
+      filter.map((value) => {
+        if (value.name.includes(item)) {
+          let result = value.name.split("ANGKATAN ");
+          let angkatan = result[result.length - 1];
+
+          let check = arr.some((x) => x.id === angkatan);
+
+          if (!check) {
+            arr.push({
+              id: angkatan,
+              name: angkatan,
+            });
+          }
+        }
+      });
+    });
+    setListAngkatan(arr);
+  }, [filterKategori]);
 
   return (
     <GestureHandlerRootView>
@@ -333,19 +380,27 @@ export const AksiPerubahan = () => {
                 >
                   Tahun
                 </Text>
-                <Dropdown
-                  // search={true}
-                  data={tahun()}
-                  placeHolder={"Pilih Tahun"}
-                  backgroundColor={COLORS.white}
-                  selected={filterTahun}
-                  setSelected={setFilterTahun}
-                  borderWidth={1}
-                  borderWidthValue={1}
-                  borderwidthDrop={1}
-                  borderColor={COLORS.ExtraDivinder}
-                  borderColorValue={COLORS.ExtraDivinder}
-                  borderColorDrop={COLORS.ExtraDivinder}
+                <SectionedMultiSelect
+                  items={tahun()}
+                  IconRenderer={Icon}
+                  uniqueKey="name"
+                  onSelectedItemsChange={setFilterTahun}
+                  selectedItems={filterTahun}
+                  modalWithSafeAreaView={true}
+                  confirmText="Simpan"
+                  searchPlaceholderText="Cari"
+                  selectText="Pilih Tahun"
+                  showChips
+                  styles={{
+                    backdrop: styles.multiSelectBackdrop,
+                    selectToggle: styles.multiSelectChipContainer,
+                    chipContainer: styles.multiSelectChipText,
+                    chipText: styles.multiSelectChipText,
+                    button: styles.button,
+                    confirmText: styles.confirmText,
+                    itemText: styles.confirmText,
+                    selectToggleText: styles.selectToggleText,
+                  }}
                 />
               </View>
 
@@ -358,52 +413,65 @@ export const AksiPerubahan = () => {
                     fontSize: fontSizeResponsive("H4", device),
                   }}
                 >
-                  Satuan Kerja
+                  Jenis Kategori
                 </Text>
-                {/* {filterUnker && filterUnker.key ? (
-                          <Dropdown
-                            data={satker()}
-                            search={true}
-                            placeHolder={"Pilih Satuan Kerja"}
-                            backgroundColor={COLORS.white}
-                            selected={filterSatker}
-                            setSelected={setFilterSatker}
-                            borderWidth={1}
-                            borderWidthValue={1}
-                            borderwidthDrop={1}
-                            borderColor={COLORS.ExtraDivinder}
-                            borderColorValue={COLORS.ExtraDivinder}
-                            borderColorDrop={COLORS.ExtraDivinder}
-                            heightValue={300}
-                          />
-                        ) : (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              marginHorizontal: 10,
-                              marginBottom: 10,
-                              gap: 5,
-                            }}
-                          >
-                            <Text
-                              style={{
-                                color: COLORS.infoDanger,
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              *
-                            </Text>
-                            <Text
-                              style={{
-                                color: COLORS.lighter,
-                                fontSize: fontSizeResponsive("H4", device),
-                              }}
-                            >
-                              Daftar satuan kerja akan muncul setelah memilih
-                              unit kerja
-                            </Text>
-                          </View>
-                        )} */}
+                <SectionedMultiSelect
+                  items={dataKategori}
+                  IconRenderer={Icon}
+                  uniqueKey="name"
+                  onSelectedItemsChange={setFilterKategori}
+                  selectedItems={filterKategori}
+                  modalWithSafeAreaView={true}
+                  confirmText="Simpan"
+                  searchPlaceholderText="Cari"
+                  selectText="Pilih Kategori"
+                  showChips
+                  styles={{
+                    backdrop: styles.multiSelectBackdrop,
+                    selectToggle: styles.multiSelectChipContainer,
+                    chipContainer: styles.multiSelectChipText,
+                    chipText: styles.multiSelectChipText,
+                    button: styles.button,
+                    confirmText: styles.confirmText,
+                    itemText: styles.confirmText,
+                    selectToggleText: styles.selectToggleText,
+                  }}
+                />
+              </View>
+
+              <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                <Text
+                  style={{
+                    marginHorizontal: 10,
+                    marginBottom: 10,
+                    fontWeight: FONTWEIGHT.bold,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Angkatan
+                </Text>
+                <SectionedMultiSelect
+                  items={listAngkatan}
+                  IconRenderer={Icon}
+                  uniqueKey="name"
+                  onSelectedItemsChange={setFilterAngkatan}
+                  selectedItems={filterAngkatan}
+                  modalWithSafeAreaView={true}
+                  confirmText="Simpan"
+                  searchPlaceholderText="Cari"
+                  selectText="Pilih Angkatan"
+                  showChips
+                  styles={{
+                    backdrop: styles.multiSelectBackdrop,
+                    selectToggle: styles.multiSelectChipContainer,
+                    chipContainer: styles.multiSelectChipText,
+                    chipText: styles.multiSelectChipText,
+                    button: styles.button,
+                    confirmText: styles.confirmText,
+                    itemText: styles.confirmText,
+                    selectToggleText: styles.selectToggleText,
+                  }}
+                />
               </View>
             </View>
           </BottomSheetView>
@@ -413,3 +481,34 @@ export const AksiPerubahan = () => {
     </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  multiSelectChipContainer: {
+    borderWidth: 1,
+    backgroundColor: "#ddd",
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 5,
+  },
+  multiSelectChipText: {
+    color: "#222",
+    fontSize: 12,
+    backgroundColor: "#ddd",
+    marginHorizontal: 10,
+  },
+  container: {
+    height: "10%",
+  },
+  button: {
+    backgroundColor: COLORS.primary,
+  },
+  confirmText: {
+    fontSize: 15,
+  },
+  selectToggleText: {
+    fontSize: 12,
+  },
+  chipsWrapper: {
+    backgroundColor: "red",
+  },
+});
