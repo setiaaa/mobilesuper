@@ -2256,13 +2256,21 @@ export const getSurveyExport = createAsyncThunk(
 
 export const getAksiPerubahan = createAsyncThunk(
   "AksiPerubahan/getAksiPerubahan",
-  async ({ token, page, search }) => {
-    const respon = await axios.get(
-      `${BASE_URL}bridge/transform/?query=${search}&page=${page}`,
-      {
-        headers: { Authorization: token },
-      }
-    );
+  async ({ token, page, search, angkatan, tahun, new_title }) => {
+    const url =
+      new_title.length !== 0
+        ? `${BASE_URL}bridge/transform/?query=${search}&page=${page}&batch=[${angkatan}]&year=[${tahun}]&new_title=${JSON.stringify(
+            new_title
+          )}`
+        : `${BASE_URL}bridge/transform/?query=${search}&page=${page}`;
+    // console.log(
+    //   `${BASE_URL}bridge/transform/?query=${search}&page=${page}&batch=[${angkatan}]&year=[${tahun}]&new_title=${JSON.stringify(
+    //     new_title
+    //   )}`
+    // );
+    const respon = await axios.get(url, {
+      headers: { Authorization: token },
+    });
     return respon?.data?.results;
   }
 );

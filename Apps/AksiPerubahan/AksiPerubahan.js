@@ -68,6 +68,7 @@ export const AksiPerubahan = () => {
   const [filterKategori, setFilterKategori] = useState([]);
   const [listAngkatan, setListAngkatan] = useState([]);
   const [filterAngkatan, setFilterAngkatan] = useState([]);
+  const [idAngkatan, setIdAngkatan] = useState([]);
   const dispatch = useDispatch();
   const scrollRef = useRef(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -84,9 +85,18 @@ export const AksiPerubahan = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(getAksiPerubahan({ token: token, page: page, search: search }));
+      dispatch(
+        getAksiPerubahan({
+          token: token,
+          page: page,
+          search: search,
+          angkatan: filterAngkatan,
+          tahun: filterTahun,
+          new_title: idAngkatan,
+        })
+      );
     }
-  }, [token, page, search]);
+  }, [token, page, search, idAngkatan]);
 
   const loadMore = () => {
     if (lists.length !== 0) {
@@ -115,7 +125,7 @@ export const AksiPerubahan = () => {
 
   const bottomSheetModalFilterRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT", "90%"], []);
+  const initialSnapPoints = useMemo(() => ["90%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -131,17 +141,6 @@ export const AksiPerubahan = () => {
     if (bottomSheetModalFilterRef.current)
       bottomSheetModalFilterRef.current?.close();
   };
-
-  // const tahun = () => {
-  //   let tahun = [];
-  //   filter.map((item) => {
-  //     tahun.push({
-  //       key: item.id,
-  //       value: item.year,
-  //     });
-  //   });
-  //   return tahun;
-  // };
 
   const tahun = () => {
     let tahunMap = {};
@@ -169,12 +168,11 @@ export const AksiPerubahan = () => {
         if (value.name.includes(item)) {
           let result = value.name.split("ANGKATAN ");
           let angkatan = result[result.length - 1];
-
-          let check = arr.some((x) => x.id === angkatan);
+          let check = arr.some((x) => x.name === angkatan);
 
           if (!check) {
             arr.push({
-              id: angkatan,
+              id: value.batch,
               name: angkatan,
             });
           }
@@ -183,6 +181,32 @@ export const AksiPerubahan = () => {
     });
     setListAngkatan(arr);
   }, [filterKategori]);
+
+  const handleSubmitFilter = () => {
+    let arrId = [];
+    filterTahun.map((itemTahun, indexTahun) => {
+      filterKategori.map((itemKategori, indexKategori) => {
+        filterAngkatan.map((itemAngkatan, indexAngakatan) => {
+          // console.log("filterKategori", itemKategori);
+          // console.log("filterTahun", itemTahun);
+          // console.log("filterAngkatan", itemAngkatan);
+          // filter.filter((x) => {
+          //   if (x.name === itemKategori)
+          // });
+          filter.map((itemFilter) => {
+            if (
+              itemFilter.name.includes(itemKategori) &&
+              itemFilter.year === itemTahun &&
+              itemFilter.batch === itemAngkatan
+            ) {
+              arrId.push(itemFilter.id);
+            }
+          });
+        });
+      });
+    });
+    setIdAngkatan(arrId);
+  };
 
   return (
     <GestureHandlerRootView>
@@ -403,76 +427,98 @@ export const AksiPerubahan = () => {
                   }}
                 />
               </View>
+              {filterTahun.length > 0 ? (
+                <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Jenis Kategori
+                  </Text>
+                  <SectionedMultiSelect
+                    items={dataKategori}
+                    IconRenderer={Icon}
+                    uniqueKey="name"
+                    onSelectedItemsChange={setFilterKategori}
+                    selectedItems={filterKategori}
+                    modalWithSafeAreaView={true}
+                    confirmText="Simpan"
+                    searchPlaceholderText="Cari"
+                    selectText="Pilih Kategori"
+                    showChips
+                    styles={{
+                      backdrop: styles.multiSelectBackdrop,
+                      selectToggle: styles.multiSelectChipContainer,
+                      chipContainer: styles.multiSelectChipText,
+                      chipText: styles.multiSelectChipText,
+                      button: styles.button,
+                      confirmText: styles.confirmText,
+                      itemText: styles.confirmText,
+                      selectToggleText: styles.selectToggleText,
+                    }}
+                  />
+                </View>
+              ) : null}
 
-              <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                <Text
+              {filterKategori.length > 0 ? (
+                <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      marginHorizontal: 10,
+                      marginBottom: 10,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Angkatan
+                  </Text>
+                  <SectionedMultiSelect
+                    items={listAngkatan}
+                    IconRenderer={Icon}
+                    uniqueKey="id"
+                    onSelectedItemsChange={setFilterAngkatan}
+                    selectedItems={filterAngkatan}
+                    modalWithSafeAreaView={true}
+                    confirmText="Simpan"
+                    searchPlaceholderText="Cari"
+                    selectText="Pilih Angkatan"
+                    showChips
+                    styles={{
+                      backdrop: styles.multiSelectBackdrop,
+                      selectToggle: styles.multiSelectChipContainer,
+                      chipContainer: styles.multiSelectChipText,
+                      chipText: styles.multiSelectChipText,
+                      button: styles.button,
+                      confirmText: styles.confirmText,
+                      itemText: styles.confirmText,
+                      selectToggleText: styles.selectToggleText,
+                    }}
+                  />
+                </View>
+              ) : null}
+
+              {filterAngkatan.length > 0 ? (
+                <TouchableOpacity
                   style={{
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
+                    padding: 20,
+                    backgroundColor: COLORS.primary,
+                    marginTop: 10,
+                    marginHorizontal: 20,
+                    alignItems: "center",
+                    borderRadius: 8,
+                  }}
+                  onPress={() => {
+                    handleSubmitFilter();
+                    bottomSheetAttachFilterClose();
                   }}
                 >
-                  Jenis Kategori
-                </Text>
-                <SectionedMultiSelect
-                  items={dataKategori}
-                  IconRenderer={Icon}
-                  uniqueKey="name"
-                  onSelectedItemsChange={setFilterKategori}
-                  selectedItems={filterKategori}
-                  modalWithSafeAreaView={true}
-                  confirmText="Simpan"
-                  searchPlaceholderText="Cari"
-                  selectText="Pilih Kategori"
-                  showChips
-                  styles={{
-                    backdrop: styles.multiSelectBackdrop,
-                    selectToggle: styles.multiSelectChipContainer,
-                    chipContainer: styles.multiSelectChipText,
-                    chipText: styles.multiSelectChipText,
-                    button: styles.button,
-                    confirmText: styles.confirmText,
-                    itemText: styles.confirmText,
-                    selectToggleText: styles.selectToggleText,
-                  }}
-                />
-              </View>
-
-              <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                <Text
-                  style={{
-                    marginHorizontal: 10,
-                    marginBottom: 10,
-                    fontWeight: FONTWEIGHT.bold,
-                    fontSize: fontSizeResponsive("H4", device),
-                  }}
-                >
-                  Angkatan
-                </Text>
-                <SectionedMultiSelect
-                  items={listAngkatan}
-                  IconRenderer={Icon}
-                  uniqueKey="name"
-                  onSelectedItemsChange={setFilterAngkatan}
-                  selectedItems={filterAngkatan}
-                  modalWithSafeAreaView={true}
-                  confirmText="Simpan"
-                  searchPlaceholderText="Cari"
-                  selectText="Pilih Angkatan"
-                  showChips
-                  styles={{
-                    backdrop: styles.multiSelectBackdrop,
-                    selectToggle: styles.multiSelectChipContainer,
-                    chipContainer: styles.multiSelectChipText,
-                    chipText: styles.multiSelectChipText,
-                    button: styles.button,
-                    confirmText: styles.confirmText,
-                    itemText: styles.confirmText,
-                    selectToggleText: styles.selectToggleText,
-                  }}
-                />
-              </View>
+                  <Text style={{ color: COLORS.white }}>Tampilkan</Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
           </BottomSheetView>
         </BottomSheetModal>
