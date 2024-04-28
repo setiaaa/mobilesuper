@@ -28,6 +28,8 @@ export const DetailKalenderPersonal = () => {
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = personal.detail;
 
+  console.log(detail);
+
   return (
     <ScrollView>
       <View

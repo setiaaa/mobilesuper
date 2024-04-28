@@ -2263,13 +2263,18 @@ export const getAksiPerubahan = createAsyncThunk(
             new_title
           )}`
         : `${BASE_URL}bridge/transform/?query=${search}&page=${page}`;
-    // console.log(
-    //   `${BASE_URL}bridge/transform/?query=${search}&page=${page}&batch=[${angkatan}]&year=[${tahun}]&new_title=${JSON.stringify(
-    //     new_title
-    //   )}`
-    // );
     const respon = await axios.get(url, {
       headers: { Authorization: token },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getDetailAksiPerubahan = createAsyncThunk(
+  "AksiPerubahan/getDetailAksiPerubahan",
+  async (data) => {
+    const respon = await axios.get(`${BASE_URL}bridge/transform/${data.id}`, {
+      headers: { Authorization: data.token },
     });
     return respon?.data?.results;
   }

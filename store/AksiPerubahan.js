@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAksiPerubahan, getFilterAksiPerubahan } from "../service/api";
+import {
+  getAksiPerubahan,
+  getDetailAksiPerubahan,
+  getFilterAksiPerubahan,
+} from "../service/api";
 
 const AksiPerubahan = createSlice({
   name: "AksiPerubahan",
@@ -7,6 +11,7 @@ const AksiPerubahan = createSlice({
     lists: [],
     loading: false,
     filter: [],
+    detail: {},
   },
   reducers: {},
   extraReducers(builder) {
@@ -29,6 +34,16 @@ const AksiPerubahan = createSlice({
         state.loading = true;
       })
       .addCase(getFilterAksiPerubahan.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getDetailAksiPerubahan.fulfilled, (state, action) => {
+        state.detail = action.payload;
+        state.loading = false;
+      })
+      .addCase(getDetailAksiPerubahan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDetailAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
       });
   },

@@ -6,9 +6,16 @@ import {
   fontSizeResponsive,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
+import { getDetailAksiPerubahan } from "../../service/api";
+import { useDispatch } from "react-redux";
 
-export const CardAksiPerubahan = ({ item, device }) => {
+export const CardAksiPerubahan = ({ item, device, token, setModalDetail }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const getDetail = (id) => {
+    const params = { token, id };
+    dispatch(getDetailAksiPerubahan(params));
+  };
   return (
     <TouchableOpacity
       style={{
@@ -18,9 +25,8 @@ export const CardAksiPerubahan = ({ item, device }) => {
         borderRadius: 10,
       }}
       onPress={() => {
-        if (item.url !== null) {
-          navigation.navigate("AksiPerubahanView", item.url);
-        }
+        getDetail(item.id);
+        setModalDetail(true);
       }}
     >
       <View>
@@ -122,6 +128,23 @@ export const CardAksiPerubahan = ({ item, device }) => {
             {item.implementation === true ? "Ya" : "Tidak"}
           </Text>
         </View>
+        {item.url !== null ? (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AksiPerubahanView", item.url);
+            }}
+            style={{ marginTop: 10 }}
+          >
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("Judul", device),
+                color: COLORS.info,
+              }}
+            >
+              Lihat Dokumen
+            </Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     </TouchableOpacity>
   );

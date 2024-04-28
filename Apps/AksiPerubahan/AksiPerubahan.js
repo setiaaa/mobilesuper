@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
+  Image,
+  Modal,
+  Platform,
   RefreshControl,
   Text,
   TextInput,
@@ -69,11 +72,12 @@ export const AksiPerubahan = () => {
   const [listAngkatan, setListAngkatan] = useState([]);
   const [filterAngkatan, setFilterAngkatan] = useState([]);
   const [idAngkatan, setIdAngkatan] = useState([]);
+  const [modalDetail, setModalDetail] = useState(false);
   const dispatch = useDispatch();
   const scrollRef = useRef(null);
   const [refreshing, setRefreshing] = useState(false);
   const { device } = useSelector((state) => state.apps);
-  const { lists, loading, filter } = useSelector(
+  const { lists, loading, filter, detail } = useSelector(
     (state) => state.aksiperubahan
   );
 
@@ -331,7 +335,12 @@ export const AksiPerubahan = () => {
             data={lists}
             keyExtractor={(item) => item?.id}
             renderItem={({ item }) => (
-              <CardAksiPerubahan item={item} device={device} />
+              <CardAksiPerubahan
+                item={item}
+                device={device}
+                token={token}
+                setModalDetail={setModalDetail}
+              />
             )}
             onEndReached={loadMore}
             ref={scrollRef}
@@ -519,10 +528,199 @@ export const AksiPerubahan = () => {
                   <Text style={{ color: COLORS.white }}>Tampilkan</Text>
                 </TouchableOpacity>
               ) : null}
+
+              <TouchableOpacity
+                style={{
+                  padding: 20,
+                  backgroundColor: COLORS.infoDanger,
+                  marginTop: 10,
+                  marginHorizontal: 20,
+                  alignItems: "center",
+                  borderRadius: 8,
+                }}
+                onPress={() => {
+                  setFilterTahun([]);
+                  setFilterKategori([]);
+                  setListAngkatan([]);
+                  setFilterAngkatan([]);
+                  setIdAngkatan([]);
+                }}
+              >
+                <Text style={{ color: COLORS.white }}>Hapus</Text>
+              </TouchableOpacity>
             </View>
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalDetail}
+        onRequestClose={() => {
+          setModalDetail(false);
+        }}
+      >
+        <TouchableOpacity
+          style={[
+            Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop,
+            styles.backdrop,
+          ]}
+        />
+        <View
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+        >
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              width: "90%",
+              borderRadius: 10,
+            }}
+          >
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginTop: 20,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                padding: 10,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.bold,
+                }}
+              >
+                Detail Aksi Perubahan
+              </Text>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  setModalDetail(false);
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={24}
+                  color={COLORS.lighter}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginVertical: 20,
+                  marginHorizontal: 40,
+                }}
+              >
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  Jenis Kategori
+                </Text>
+                <Text style={{ marginTop: 5 }}>{detail.title}</Text>
+
+                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
+                  Nama
+                </Text>
+                <Text style={{ marginTop: 5 }}>{detail.display_name}</Text>
+
+                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
+                  NIP
+                </Text>
+                <Text style={{ marginTop: 5 }}>{detail.coach_nip}</Text>
+
+                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
+                  Unit Kerja
+                </Text>
+                <Text style={{ marginTop: 5 }}>{detail.unker}</Text>
+
+                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
+                  Satuan Kerja
+                </Text>
+                <Text style={{ marginTop: 5 }}>{detail.satker}</Text>
+
+                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
+                  Coach
+                </Text>
+                <Text style={{ marginTop: 5 }}>{detail.coach}</Text>
+
+                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
+                  implementasi
+                </Text>
+                <View
+                  style={{
+                    backgroundColor:
+                      detail.implementation === true
+                        ? COLORS.successLight
+                        : COLORS.infoDangerLight,
+                    padding: 4,
+                    width: 100,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 8,
+                    marginTop: 5,
+                  }}
+                >
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      color:
+                        detail.implementation === true
+                          ? COLORS.success
+                          : COLORS.infoDanger,
+                    }}
+                  >
+                    {detail.implementation === true ? "Ya" : "Tidak"}
+                  </Text>
+                </View>
+
+                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
+                  File
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: 20,
+                    marginVertical: 10,
+                    flexWrap: "wrap",
+                    gap: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 97,
+                      height: 97,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderWidth: 1,
+                      borderRadius: 8,
+                      borderColor: COLORS.ExtraDivinder,
+                    }}
+                  >
+                    <Image source={require("../../assets/superApp/pdf.png")} />
+                  </View>
+                </View>
+                <Text style={{ marginTop: 5 }}>{detail.file_name}</Text>
+              </View>
+              {/* 
+              <Text
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {detail?.title !== "" && detail?.title !== null
+                  ? detail.title
+                  : "-"}
+              </Text> */}
+            </View>
+          </View>
+        </View>
+      </Modal>
       {/* </Portal> */}
     </GestureHandlerRootView>
   );
@@ -556,5 +754,20 @@ const styles = StyleSheet.create({
   },
   chipsWrapper: {
     backgroundColor: "red",
+  },
+  iOSBackdrop: {
+    backgroundColor: "#000000",
+    opacity: 0.3,
+  },
+  androidBackdrop: {
+    backgroundColor: "#232f34",
+    opacity: 0.32,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
