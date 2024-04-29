@@ -103,6 +103,7 @@ import { BBMNonSubsidiKusuka } from "../Apps/Dashboard/BBMNonSubsidiKusuka";
 import { P3KEKusuka } from "../Apps/Dashboard/P3KEKusuka";
 import { Deviasi } from "../Apps/Dashboard/Deviasi";
 import { KalenderPersonal } from "../Apps/KalenderPersonal/KalenderPersonal";
+import { Verifikasi } from "../Apps/DigitalSignature/Verifikasi";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -371,6 +372,11 @@ export const BottomTabsDigitalSign = () => {
           <Tab.Screen
             name="LaporanDigitalSign"
             component={LaporanDigitalSign}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Verifikasi"
+            component={Verifikasi}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>

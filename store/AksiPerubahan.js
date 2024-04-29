@@ -3,6 +3,7 @@ import {
   getAksiPerubahan,
   getDetailAksiPerubahan,
   getFilterAksiPerubahan,
+  getLaporanAksiPerubahan,
 } from "../service/api";
 
 const AksiPerubahan = createSlice({
@@ -12,6 +13,7 @@ const AksiPerubahan = createSlice({
     loading: false,
     filter: [],
     detail: {},
+    laporan: [],
   },
   reducers: {},
   extraReducers(builder) {
@@ -44,6 +46,16 @@ const AksiPerubahan = createSlice({
         state.loading = true;
       })
       .addCase(getDetailAksiPerubahan.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getLaporanAksiPerubahan.fulfilled, (state, action) => {
+        state.laporan = action.payload;
+        state.loading = false;
+      })
+      .addCase(getLaporanAksiPerubahan.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getLaporanAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
       });
   },

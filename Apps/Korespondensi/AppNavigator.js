@@ -1394,6 +1394,13 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="LaporanDigitalSign"
+            component={LaporanDigitalSign}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
 
         {modal === true ? (

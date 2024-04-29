@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -21,14 +22,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment/moment";
+import { openURL } from "expo-linking";
 
 export const DetailKalenderPersonal = () => {
   const { personal, loading } = useSelector((state) => state.kalenderPersonal);
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = personal.detail;
-
-  console.log(detail);
 
   return (
     <ScrollView>
@@ -51,7 +51,10 @@ export const DetailKalenderPersonal = () => {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            style={{}}
+            onPress={() => navigation.navigate("Home")}
+          >
             <Ionicons
               name="chevron-back-outline"
               size={24}
@@ -416,14 +419,21 @@ export const DetailKalenderPersonal = () => {
                     height={20}
                   />
                 ) : (
-                  <View
+                  <Pressable
                     style={{
                       justifyContent: "center",
                       width: "50%",
                     }}
+                    onPress={() => {
+                      if (detail?.extra_attributes?.view_url !== undefined) {
+                        openURL(detail?.extra_attributes?.view_url);
+                      }
+                    }}
                   >
-                    <Text>{detail?.letter_number}</Text>
-                  </View>
+                    <Text style={{ color: COLORS.info }}>
+                      {detail?.letter_number}
+                    </Text>
+                  </Pressable>
                 )}
               </View>
             </View>
@@ -1230,14 +1240,23 @@ export const DetailKalenderPersonal = () => {
                     height={20}
                   />
                 ) : (
-                  <Text
-                    style={{
-                      justifyContent: "center",
-                      width: "50%",
+                  <Pressable
+                    onPress={() => {
+                      if (detail?.extra_attributes?.view_url !== undefined) {
+                        openURL(detail?.extra_attributes?.view_url);
+                      }
                     }}
                   >
-                    {detail?.extra_attributes?.nomor_surat}
-                  </Text>
+                    <Text
+                      style={{
+                        justifyContent: "center",
+                        width: "80%",
+                        color: COLORS.info,
+                      }}
+                    >
+                      {detail?.extra_attributes?.nomor_surat}
+                    </Text>
+                  </Pressable>
                 )}
               </View>
               <View
@@ -1245,7 +1264,7 @@ export const DetailKalenderPersonal = () => {
                   height: 1,
                   width: "90%",
                   backgroundColor: COLORS.lighter,
-                  opacity: 1.5,
+                  opacity: 0.4,
                   marginTop: 10,
                   marginHorizontal: 20,
                 }}
@@ -1564,14 +1583,23 @@ export const DetailKalenderPersonal = () => {
                     height={20}
                   />
                 ) : (
-                  <Text
-                    style={{
-                      justifyContent: "center",
-                      width: "50%",
+                  <Pressable
+                    onPress={() => {
+                      if (detail?.extra_attributes?.view_url !== undefined) {
+                        openURL(detail?.extra_attributes?.view_url);
+                      }
                     }}
                   >
-                    {detail?.extra_attributes?.nomor_surat}
-                  </Text>
+                    <Text
+                      style={{
+                        justifyContent: "center",
+                        width: "50%",
+                        color: COLORS.info,
+                      }}
+                    >
+                      {detail?.extra_attributes?.nomor_surat}
+                    </Text>
+                  </Pressable>
                 )}
               </View>
             </View>

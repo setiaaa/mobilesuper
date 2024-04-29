@@ -17,7 +17,11 @@ import {
 } from "react-native-responsive-screen";
 import * as Device from "expo-device";
 
-export const CardApps = ({ handlePressModal }) => {
+export const CardApps = ({
+  handlePressModal,
+  setModalBankom,
+  closeBottomSheet,
+}) => {
   const navigation = useNavigation();
   const [listMenu, setListMenu] = useState([]);
 
@@ -132,50 +136,50 @@ export const CardApps = ({ handlePressModal }) => {
           Regulasi
         </Text>
       </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MainPengetahuan")}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 40 : 24,
-                height: device === "tablet" ? 55 : 34,
-              }}
-              source={require("../../assets/superApp/pengetahuan.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            width: wp(15),
-            textAlign: device === "tablet" ? "center" : null,
-          }}
-          numberOfLines={1}
-        >
-          Pengetahuan
-        </Text>
-      </View>,
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     display: "flex",
+      //   }}
+      // >
+      //   <TouchableOpacity
+      //     onPress={() => navigation.navigate("MainPengetahuan")}
+      //   >
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 40 : 24,
+      //           height: device === "tablet" ? 55 : 34,
+      //         }}
+      //         source={require("../../assets/superApp/pengetahuan.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //       width: wp(15),
+      //       textAlign: device === "tablet" ? "center" : null,
+      //     }}
+      //     numberOfLines={1}
+      //   >
+      //     Pengetahuan
+      //   </Text>
+      // </View>,
       // <View
       //   style={{
       //     justifyContent: "center",
@@ -263,6 +267,52 @@ export const CardApps = ({ handlePressModal }) => {
           display: "flex",
         }}
       >
+        <TouchableOpacity
+          onPress={() => {
+            // closeBottomSheet();
+            setModalBankom(true);
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 50 : 30,
+                height: device === "tablet" ? 40 : 24,
+              }}
+              source={require("../../assets/superApp/Bankomicon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            width: wp(15),
+          }}
+          numberOfLines={1}
+        >
+          Pengembangan Kompetensi
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
         <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
           <View
             style={[
@@ -316,7 +366,7 @@ export const CardApps = ({ handlePressModal }) => {
           >
             <Image
               style={{
-                width: device === "tablet" ? 50 : 28,
+                width: device === "tablet" ? 50 : 30,
                 height: device === "tablet" ? 50 : 28,
               }}
               source={require("../../assets/superApp/taskmanagement.png")}

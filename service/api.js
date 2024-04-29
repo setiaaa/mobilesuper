@@ -2290,6 +2290,19 @@ export const getFilterAksiPerubahan = createAsyncThunk(
   }
 );
 
+export const getLaporanAksiPerubahan = createAsyncThunk(
+  "AksiPerubahan/getLaporanAksiPerubahan",
+  async (token) => {
+    const respon = await axios.get(
+      `${BASE_URL}bridge/transform/dashboard/title/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data?.results;
+  }
+);
+
 // export const updateTicket = createAsyncThunk(
 //   "ticket/updateTicket",
 //   async (id) => {

@@ -19,7 +19,11 @@ import { Dimensions } from "react-native";
 
 const numColumns = 3;
 
-export const CardAppsB = ({ handlePressModal }) => {
+export const CardAppsB = ({
+  handlePressModal,
+  setModalBankom,
+  closeBottomSheet,
+}) => {
   const navigation = useNavigation();
   const [listMenu, setListMenu] = useState([]);
 
@@ -135,50 +139,50 @@ export const CardAppsB = ({ handlePressModal }) => {
           Regulasi
         </Text>
       </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MainPengetahuan")}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 40 : 23,
-                height: device === "tablet" ? 55 : 34,
-              }}
-              source={require("../../assets/superApp/pengetahuan.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            width: device === "tablet" ? 200 : null,
-            textAlign: "center",
-          }}
-        >
-          Pengetahuan
-        </Text>
-      </View>,
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     width: 100,
+      //     height: 100,
+      //   }}
+      // >
+      //   <TouchableOpacity
+      //     onPress={() => navigation.navigate("MainPengetahuan")}
+      //   >
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 40 : 23,
+      //           height: device === "tablet" ? 55 : 34,
+      //         }}
+      //         source={require("../../assets/superApp/pengetahuan.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //       width: device === "tablet" ? 200 : null,
+      //       textAlign: "center",
+      //     }}
+      //   >
+      //     Pengetahuan
+      //   </Text>
+      // </View>,
       // <View
       //   style={{
       //     justifyContent: "center",
@@ -272,6 +276,54 @@ export const CardAppsB = ({ handlePressModal }) => {
           height: 100,
         }}
       >
+        <TouchableOpacity
+          onPress={() => {
+            closeBottomSheet();
+            setModalBankom(true);
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/Bankomicon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 100,
+          }}
+          numberOfLines={1}
+        >
+          Pengembangan Kompetensi
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
         <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
           <View
             style={[
@@ -346,90 +398,49 @@ export const CardAppsB = ({ handlePressModal }) => {
           Task Management
         </Text>
       </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("Bankom")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/sertifikat.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 300,
-          }}
-        >
-          Sertifikat
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("AksiPerubahan")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/info.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 300,
-          }}
-        >
-          Infomasi
-        </Text>
-      </View>,
+
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     width: 100,
+      //     height: 100,
+      //   }}
+      // >
+      //   <TouchableOpacity onPress={() => navigation.navigate("AksiPerubahan")}>
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 60 : 35,
+      //           height: device === "tablet" ? 60 : 32,
+      //         }}
+      //         source={require("../../assets/superApp/info.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //       textAlign: "center",
+      //       width: 300,
+      //     }}
+      //   >
+      //     Infomasi
+      //   </Text>
+      // </View>,
       // <View
       //   style={{
       //     justifyContent: "center",

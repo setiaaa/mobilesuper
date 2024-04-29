@@ -11,6 +11,7 @@ import {
   Alert,
   RefreshControl,
   Platform,
+  FlatList,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
@@ -74,8 +75,10 @@ import {
 import { Config } from "../../constants/config";
 import { setLogout } from "../../store/LoginAuth";
 import { setProfile } from "../../store/SuperApps";
+import { openURL } from "expo-linking";
 
 const { width: screenWidth } = Dimensions.get("window");
+const numColumns = 3;
 
 export const Home = () => {
   const carouselRef = useRef(null);
@@ -94,6 +97,8 @@ export const Home = () => {
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(false);
+  const [modalBankom, setModalBankom] = useState(false);
+  const [menuBankom, setMenuBankom] = useState([]);
 
   const dispatch = useDispatch();
   const route = useRoute();
@@ -202,6 +207,297 @@ export const Home = () => {
     }
   }, [handleError]);
 
+  const roleLaporan = ["LAPORAN_BSRE"];
+
+  const isRoleLaporan = profile.roles_access?.some((item) =>
+    roleLaporan.includes(item)
+  );
+
+  useEffect(() => {
+    let tmpMenu = [];
+    tmpMenu.push(
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            navigation.navigate("MainPengetahuan");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 40 : 23,
+                height: device === "tablet" ? 55 : 34,
+              }}
+              source={require("../../assets/superApp/pengetahuan.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            width: device === "tablet" ? 200 : null,
+            textAlign: "center",
+          }}
+        >
+          Pengetahuan
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            navigation.navigate("AksiPerubahan");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/aksiperubahanicon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Aksi Perubahan
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            navigation.navigate("Bankom");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/sertifikat.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Sertifikat
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            openURL(
+              "https://elearning.kkp.go.id/auth/oauth2/login.php?id=1&wantsurl=https%3A%2F%2Felearning.kkp.go.id%2F&sesskey=Jhop9vc9S5"
+            );
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/e-learningicon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          E-Learning
+        </Text>
+      </View>
+    );
+    if (isRoleLaporan) {
+      tmpMenu.splice(
+        3,
+        0,
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setModalBankom(false);
+              navigation.navigate("LaporanDigitalSign");
+            }}
+          >
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 60 : 35,
+                  height: device === "tablet" ? 60 : 32,
+                }}
+                source={require("../../assets/superApp/Laporanicon.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              textAlign: "center",
+              width: 300,
+            }}
+          >
+            Laporan
+          </Text>
+        </View>
+      );
+    } else {
+      null;
+    }
+
+    setMenuBankom(tmpMenu);
+  }, []);
+
+  const numRows = Math.ceil(menuBankom.length / 3);
+
+  const renderRow = ({ item }) => {
+    if (item.empty === true) {
+      return <View style={[styles.items, styles.itemInvisible]} />;
+    }
+    return (
+      <View style={[styles.items, { height: device === "tablet" ? 200 : 100 }]}>
+        <Text style={styles.itemText}>{item}</Text>
+      </View>
+    );
+  };
+
+  const rows = Array.from({ length: numRows }, (_, rowIndex) =>
+    menuBankom.slice(rowIndex * 3, rowIndex * 3 + 3)
+  );
+
+  const formatData = (data, numColumns) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+      numberOfElementsLastRow++;
+    }
+
+    return data;
+  };
+
   const { device } = useSelector((state) => state.apps);
 
   return (
@@ -297,7 +593,11 @@ export const Home = () => {
           </View>
 
           <View style={{ alignItems: "center" }}>
-            <CardApps handlePressModal={handlePressModal} />
+            <CardApps
+              handlePressModal={handlePressModal}
+              setModalBankom={setModalBankom}
+              closeBottomSheet={closeBottomSheet}
+            />
             <Portal>
               <BottomSheetModal
                 ref={bottomSheetModalRef}
@@ -346,13 +646,91 @@ export const Home = () => {
                       </TouchableOpacity>
                     </View>
                     <View style={{ marginVertical: 20 }}>
-                      <CardAppsB />
+                      <CardAppsB
+                        setModalBankom={setModalBankom}
+                        closeBottomSheet={closeBottomSheet}
+                      />
                     </View>
                   </View>
                 </View>
               </BottomSheetModal>
             </Portal>
           </View>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalBankom}
+            onRequestClose={() => {
+              setModalBankom(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Pengembangan Kompetensi
+                  </Text>
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => {
+                      setModalBankom(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <FlatList
+                  data={formatData(menuBankom, numColumns)}
+                  renderItem={renderRow}
+                  keyExtractor={(row, index) => `row_${index}`}
+                  columnWrapperStyle={{
+                    marginHorizontal: "5%",
+                    gap: 5,
+                  }}
+                  numColumns={numColumns}
+                />
+              </View>
+            </View>
+          </Modal>
 
           <View style={[styles.containerr, { marginTop: 20 }]}>
             <Carousel
@@ -1125,5 +1503,27 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderTopRightRadius: 12,
     borderBottomLeftRadius: 12,
+  },
+  items: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    margin: 1, // approximate a square
+  },
+  itemInvisible: {
+    backgroundColor: "transparent",
+  },
+  itemText: {
+    color: "#fff",
+  },
+  cardApps: {
+    width: wp(15),
+    height: hp(7),
+    borderRadius: 8,
+  },
+  cardAppsTablet: {
+    width: wp(15),
+    height: hp(10),
+    borderRadius: 8,
   },
 });
