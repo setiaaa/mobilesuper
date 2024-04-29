@@ -94,6 +94,11 @@ export const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleVisiMisi, setModalVisibleVisiMisi] = useState(false);
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
+  const [modalPresensi, setModalPresensi] = useState(false);
+  const [checkIn, setCheckIn] = useState(false);
+  const [checkOut, setCheckOut] = useState(false);
+  const [waktuPresensi, setWaktuPrensi] = useState("");
+  const [waktuPulang, setWaktuPulang] = useState("");
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(false);
@@ -500,6 +505,19 @@ export const Home = () => {
 
   const { device } = useSelector((state) => state.apps);
 
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -732,7 +750,243 @@ export const Home = () => {
             </View>
           </Modal>
 
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalPresensi}
+            onRequestClose={() => {
+              setModalPresensi(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    padding: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
+                    Hi, {profile.nama}
+                  </Text>
+
+                  <Text style={{ marginVertical: 20 }}>
+                    Kamu telah melakukan{" "}
+                    <Text style={{ fontWeight: "bold" }}>Chek-In</Text> pukul{" "}
+                    <Text style={{ fontWeight: "bold" }}>{waktuPresensi}</Text>
+                  </Text>
+
+                  <Text>
+                    Apakah kamu akan melanjutkan{" "}
+                    <Text style={{ fontWeight: "bold" }}>Chek-Out</Text> pukul{" "}
+                    <Text style={{ fontWeight: "bold" }}>{`${hours}:${
+                      minutes < 10 ? "0" : ""
+                    }${minutes}`}</Text>{" "}
+                    ?
+                  </Text>
+
+                  <View
+                    style={{
+                      marginTop: 20,
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        padding: 10,
+                        borderWidth: 1,
+                        borderColor: COLORS.primary,
+                        borderRadius: 8,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "30%",
+                      }}
+                      onPress={() => {
+                        setCheckIn(true);
+                        setModalPresensi(false);
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.primary,
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Tidak
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={{
+                        padding: 10,
+                        backgroundColor: COLORS.primary,
+                        borderRadius: 8,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "30%",
+                      }}
+                      onPress={() => {
+                        setWaktuPulang(
+                          `${hours}:${minutes < 10 ? "0" : ""}${minutes}`
+                        );
+                        setCheckOut(true);
+                        setModalPresensi(false);
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontWeight: FONTWEIGHT.bold,
+                        }}
+                      >
+                        Ya
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
           <View style={[styles.containerr, { marginTop: 20 }]}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  padding: 20,
+                  borderRadius: 10,
+                  width: "90%",
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: FONTWEIGHT.bold,
+                        fontSize: fontSizeResponsive("Judul", device),
+                      }}
+                    >
+                      Selamat Datang
+                    </Text>
+                    {checkIn === false ? (
+                      <>
+                        <Text
+                          style={{
+                            marginVertical: 5,
+                            width: 200,
+                            color: COLORS.grey,
+                          }}
+                        >
+                          Klik tombol check-in untuk presensi
+                        </Text>
+                        <TouchableOpacity
+                          style={{
+                            padding: 10,
+                            borderRadius: 8,
+                            backgroundColor: COLORS.primary,
+                            alignItems: "center",
+                          }}
+                          onPress={() => {
+                            setWaktuPrensi(
+                              `${hours}:${minutes < 10 ? "0" : ""}${minutes}`
+                            );
+                            setModalPresensi(true);
+                          }}
+                        >
+                          <Text style={{ color: COLORS.white }}>Chek-In</Text>
+                        </TouchableOpacity>
+                      </>
+                    ) : checkOut === true ? (
+                      <>
+                        <Text
+                          style={{
+                            marginVertical: 5,
+                            width: 200,
+                            color: COLORS.grey,
+                          }}
+                        >
+                          Sudah Check-Out pukul {waktuPulang} WIB
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <Text
+                          style={{
+                            marginVertical: 5,
+                            width: 200,
+                            color: COLORS.grey,
+                          }}
+                        >
+                          Sudah Check-In pukul {waktuPresensi} WIB
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setModalPresensi(true);
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: COLORS.primary,
+                              fontWeight: FONTWEIGHT.bold,
+                            }}
+                          >
+                            Lihat info presensi
+                          </Text>
+                        </TouchableOpacity>
+                      </>
+                    )}
+                  </View>
+
+                  <Image
+                    source={require("../../assets/superApp/presensi.jpg")}
+                    style={{
+                      width: 100,
+                      height: 100,
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}
