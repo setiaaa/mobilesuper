@@ -111,7 +111,8 @@
     "react-native-youtube-iframe": "^2.3.0",
     "react-navigation-collapsible": "^6.3.0",
     "react-redux": "^8.0.2",
-    "rn-pdf-reader-js-improved": "^1.0.0"
+    "rn-pdf-reader-js-improved": "^1.0.0",
+    "expo-location": "~16.5.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

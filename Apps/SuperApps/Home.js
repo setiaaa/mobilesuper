@@ -76,6 +76,7 @@ import { Config } from "../../constants/config";
 import { setLogout } from "../../store/LoginAuth";
 import { setProfile } from "../../store/SuperApps";
 import { openURL } from "expo-linking";
+// import * as Location from "expo-location";
 
 const { width: screenWidth } = Dimensions.get("window");
 const numColumns = 3;
@@ -517,6 +518,31 @@ export const Home = () => {
 
   const hours = time.getHours();
   const minutes = time.getMinutes();
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       setErrorMsg("Permission to access location was denied");
+  //       return;
+  //     }
+
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setLocation(location);
+  //   })();
+  // }, []);
+
+  // let text = "Waiting..";
+  // if (errorMsg) {
+  //   text = errorMsg;
+  // } else if (location) {
+  //   text = JSON.stringify(location);
+  // }
+
+  // console.log(text);
 
   return (
     <GestureHandlerRootView>
