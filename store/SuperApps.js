@@ -5,6 +5,8 @@ import {
   getGaleri,
   getBerita,
   getDetailBerita,
+  getLastLogAttendence,
+  postAttendence,
 } from "../service/api";
 import { removeTokenValue } from "../service/session";
 import { useNavigation } from "@react-navigation/native";
@@ -33,6 +35,9 @@ const SuperAppsSlice = createSlice({
     banner: [],
     loading: false,
     handleError: false,
+    lastLog: {},
+    status: "",
+    post: false,
   },
   reducers: {
     setProfile: (state, action) => {
@@ -70,6 +75,15 @@ const SuperAppsSlice = createSlice({
     },
     setBanner: (state, action) => {
       state.banner = action.payload;
+    },
+    setHandleError: (state, action) => {
+      state.handleError = action.payload;
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    },
+    setPost: (state, action) => {
+      state.post = action.payload;
     },
   },
   extraReducers(builder) {
@@ -139,6 +153,28 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getDetailBerita.rejected, (state, action) => {
         // state.loading = false;
+      })
+      .addCase(getLastLogAttendence.fulfilled, (state, action) => {
+        state.lastLog = action.payload;
+
+        // state.loading = false;
+      })
+      .addCase(getLastLogAttendence.pending, (state, action) => {
+        // state.loading = true;
+      })
+      .addCase(getLastLogAttendence.rejected, (state, action) => {
+        // state.loading = false;
+      })
+      .addCase(postAttendence.fulfilled, (state, action) => {
+        state.post = true;
+        state.status = "berhasil";
+      })
+      .addCase(postAttendence.pending, (state, action) => {
+        state.status = "";
+      })
+      .addCase(postAttendence.rejected, (state, action) => {
+        state.status = "error";
+        state.post = false;
       });
   },
 });
@@ -155,6 +191,9 @@ export const {
   setUltah,
   setVisiMisi,
   setBanner,
+  setHandleError,
+  setStatus,
+  setPost,
 } = SuperAppsSlice.actions;
 
 export default SuperAppsSlice.reducer;

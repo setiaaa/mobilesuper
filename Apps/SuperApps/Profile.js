@@ -590,6 +590,84 @@ export const Profile = () => {
                     Perbaikan kalender personal
                   </Text>
                 </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perubahan menu
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan histori komentar cuti
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan auth token
+                  </Text>
+                </View>
+
                 {/* 
               <Text
                 style={{

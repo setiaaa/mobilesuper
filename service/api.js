@@ -59,6 +59,8 @@ const Cuti = Config.base_url_cuti;
 const HelpDesk = Config.base_url_helpdesk;
 const Survey = BASE_URL + "bridge/";
 
+const Attendence = BASE_URL + "attendence/";
+
 //Login
 export const Login = createAsyncThunk(
   "auth/Login",
@@ -2300,6 +2302,26 @@ export const getLaporanAksiPerubahan = createAsyncThunk(
       }
     );
     return respon?.data?.results;
+  }
+);
+
+export const getLastLogAttendence = createAsyncThunk(
+  "attendence/getLastLogAttendence",
+  async (token) => {
+    const respon = await axios.get(`${Attendence}lastlog/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const postAttendence = createAsyncThunk(
+  "attendence/postAttendence",
+  async (data) => {
+    const respon = await axios.post(`${Attendence}log/`, data.payload, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data.results;
   }
 );
 
