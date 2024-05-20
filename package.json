@@ -24,6 +24,8 @@
     "@react-navigation/native-stack": "^6.8.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@rneui/themed": "^4.0.0-rc.7",
+    "@sentry/cli": "^2.31.2",
+    "@sentry/react-native": "~5.20.0",
     "@shopify/react-native-skia": "^1.2.3",
     "@tinymce/tinymce-react": "^4.2.0",
     "accordion-collapse-react-native": "^1.1.1",

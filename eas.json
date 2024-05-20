@@ -16,8 +16,13 @@
       "distribution": "internal"
     },
     "preview": {
+      "env": {
+        "SENTRY_AUTH_TOKEN": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "SENTRY_ORG": "sentry",
+        "SENTRY_PROJECT": "kkp-mobile-prod"
+      },
       "android": {
-        "buildType": "app-bundle",
+        "buildType": "apk",
         "image": "latest"
       },
       "ios": {

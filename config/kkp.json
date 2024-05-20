@@ -78,7 +78,16 @@
       {
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
       }
-  ]
+  ],
+   [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://newsentry.armsolusi.com/",
+          "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+          "project": "kkp-mobile-prod",
+          "organization": "sentry"
+        }
+      ]
   ],
   "extra": {
     "eas": {

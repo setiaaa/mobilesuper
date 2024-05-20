@@ -186,6 +186,7 @@ import { AksiPerubahanView } from "../AksiPerubahan/AksiPerubahanView";
 import { MainSertifikat } from "../DigitalSignature/MainSertifikat";
 import { SertifikatLms } from "../DigitalSignature/SertifikatLms";
 import { DetailSertifikatEksternal } from "../DigitalSignature/DetailSertifikatEksternal";
+import * as Sentry from "@sentry/react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -1494,6 +1495,15 @@ function AppNavigator() {
 
   const [linking, setLinking] = useState();
 
+  Sentry.init({
+    dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+  });
+
   useEffect(() => {
     const deviceTypeMap = {
       [DeviceType.UNKNOWN]: "unknown",
@@ -1584,8 +1594,8 @@ function AppNavigator() {
   );
 }
 
-// export default Sentry.wrap(AppNavigator);
-export default AppNavigator;
+export default Sentry.wrap(AppNavigator);
+// export default AppNavigator;
 
 const styles = StyleSheet.create({
   rootScreen: {

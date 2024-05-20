@@ -10,6 +10,7 @@ import {
 } from "../service/api";
 import { removeTokenValue } from "../service/session";
 import { useNavigation } from "@react-navigation/native";
+import * as Sentry from "@sentry/react";
 
 const SuperAppsSlice = createSlice({
   name: "SuperApps",
