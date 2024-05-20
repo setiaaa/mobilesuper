@@ -20,3 +20,6 @@ export const backGroundLayoutBottom = {
   telkom: "",
   pegadaian: require("../assets/pegadaian/images/background/layout-bottom.png"),
 };
+export const maps = {
+  kkp: require("../assets/superApp/images/maps.json"),
+};

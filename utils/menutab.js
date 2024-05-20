@@ -104,6 +104,9 @@ import { P3KEKusuka } from "../Apps/Dashboard/P3KEKusuka";
 import { Deviasi } from "../Apps/Dashboard/Deviasi";
 import { KalenderPersonal } from "../Apps/KalenderPersonal/KalenderPersonal";
 import { Verifikasi } from "../Apps/DigitalSignature/Verifikasi";
+import { MyTabSertifikat } from "../Apps/DigitalSignature/BottomTabsSertifikat";
+import { SertifikatLms } from "../Apps/DigitalSignature/SertifikatLms";
+import { SertifikatEksternal } from "../Apps/DigitalSignature/SertifikatEksternal";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -360,23 +363,42 @@ export const BottomTabsDigitalSign = () => {
           initialRouteName="Bankom"
         >
           <Tab.Screen
-            name="Bankom"
-            component={Bankom}
-            options={{ headerShown: false }}
-          />
-          <Tab.Screen
             name="DokumenLain"
             component={DokumenLain}
             options={{ headerShown: false }}
           />
           <Tab.Screen
-            name="LaporanDigitalSign"
-            component={LaporanDigitalSign}
+            name="Verifikasi"
+            component={Verifikasi}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </View>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsSertifikat = () => {
+  return (
+    <BottomSheetModalProvider>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabSertifikat {...props} />}
+          initialRouteName="Bankom"
+        >
+          <Tab.Screen
+            name="Bankom"
+            component={Bankom}
             options={{ headerShown: false }}
           />
           <Tab.Screen
-            name="Verifikasi"
-            component={Verifikasi}
+            name="SertifikatLms"
+            component={SertifikatLms}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="SertifikatEksternal"
+            component={SertifikatEksternal}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>

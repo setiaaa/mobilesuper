@@ -183,6 +183,9 @@ import { DokumenLain } from "../DigitalSignature/DokumenLain";
 import { Bankom } from "../DigitalSignature/Bankom";
 import { AksiPerubahan } from "../AksiPerubahan/AksiPerubahan";
 import { AksiPerubahanView } from "../AksiPerubahan/AksiPerubahanView";
+import { MainSertifikat } from "../DigitalSignature/MainSertifikat";
+import { SertifikatLms } from "../DigitalSignature/SertifikatLms";
+import { DetailSertifikatEksternal } from "../DigitalSignature/DetailSertifikatEksternal";
 
 const Stack = createNativeStackNavigator();
 
@@ -202,108 +205,142 @@ function AuthenticatedStack({ route }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive||background/) &&
-        nextAppState === "active"
-      ) {
-        // checkversion
-        if (Platform.OS === "android") {
-          checkVersionAndroid();
-        } else if (Platform.OS === "ios") {
-          checkVersionIos();
-        }
-        appState.current = nextAppState;
-      }
-    });
-    // checkversion
-    if (Platform.OS === "android") {
-      checkVersionAndroid();
-    } else if (Platform.OS === "ios") {
-      checkVersionIos();
-    }
-    return () => {
-      subscription.remove();
-    };
+    isEmulator();
+    deviceRoot();
+    // const subscription = AppState.addEventListener("change", (nextAppState) => {
+    //   if (
+    //     appState.current.match(/inactive||background/) &&
+    //     nextAppState === "active"
+    //   ) {
+    //     // checkversion
+    //     if (Platform.OS === "android") {
+    //       checkVersionAndroid();
+    //     } else if (Platform.OS === "ios") {
+    //       checkVersionIos();
+    //     }
+    //     appState.current = nextAppState;
+    //   }
+    // });
+    // // checkversion
+    // if (Platform.OS === "android") {
+    //   checkVersionAndroid();
+    // } else if (Platform.OS === "ios") {
+    //   checkVersionIos();
+    // }
+    // return () => {
+    //   subscription.remove();
+    // };
   }, []);
 
-  async function checkVersionAndroid() {
-    // setIsLoading(true);
-    try {
-      const response = await getHTTP(nde_api.getVersionAndroid);
-      cekValidVersion(response?.data?.results?.android);
-      // setIsLoading(false);
-      console.log(response.data?.results?.android);
-    } catch (error) {
-      if (error.status == null) {
-        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
-      } else {
-        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
-      }
-    }
-    // setIsLoading(false);
-  }
-  async function checkVersionIos() {
-    try {
-      const response = await getHTTP(nde_api.getVersionAndroid);
-      cekValidVersion(response?.data?.results?.android);
-      // setIsLoading(false);
-    } catch (error) {
-      if (error.status == null) {
-        Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
-      } else {
-        handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
-      }
-    }
-  }
-  function cekValidVersion(server_version) {
-    if (server_version != app_version) {
-      // Alert.alert(
-      //   "Peringatan!",
-      //   "Anda menggunakan versi lama " +
-      //     app_name +
-      //     ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
-      //   [
-      //     {
-      //       text: "Perbaharui",
-      //       onPress: () => {
-      //         // getToken();
-      //         // getProfile();
-      //         // getTokenValue().then((val) => {
-      //         //   if (val !== "") {
-      //         //     removeTokenValue();
-      //         //     dispatch(setLogout());
-      //         //     dispatch(setProfile({}));
-      //         //     navigation.reset({
-      //         //       index: 0,
-      //         //       routes: [{ name: "LoginToken" }],
-      //         //     });
-      //         //   }
-      //         // });
-      //         handleUpgradeLink();
-      //         // console.log("test");
-      //       },
-      //       style: "cancel",
-      //     },
-      //   ],
-      //   {
-      //     cancelable: false,
-      //     onDismiss: () => {
-      //       // getToken();
-      //       // getProfile();
-      //     },
-      //   }
-      // );
-      setModal(true);
-      // AsyncStorage.removeItem("token");
-      // dispatch(setValidVersion(false));
+  const isEmulator = () => {
+    if (Device.isDevice === true) {
+      console.log("device asli");
     } else {
-      // dispatch(setValidVersion(true));
-      // getToken();
-      // getProfile();
-      setModal(false);
+      Alert.alert(
+        "Peringatan!",
+        "Anda menggunakan emulator, Harap menggunakan device asli",
+        [
+          {
+            text: "Tutup",
+            onPress: () => {
+              BackHandler.exitApp();
+            },
+            style: "cancel",
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
     }
-  }
+  };
+
+  const deviceRoot = async () => {
+    const isRooted = await Device.isRootedExperimentalAsync();
+    if (isRooted) {
+      console.log("Perangkat telah di-root.");
+    } else {
+      console.log("Perangkat belum di-root.");
+    }
+  };
+
+  // async function checkVersionAndroid() {
+  //   // setIsLoading(true);
+  //   try {
+  //     const response = await getHTTP(nde_api.getVersionAndroid);
+  //     cekValidVersion(response?.data?.results?.android);
+  //     // setIsLoading(false);
+  //     console.log(response.data?.results?.android);
+  //   } catch (error) {
+  //     if (error.status == null) {
+  //       Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
+  //     } else {
+  //       handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
+  //     }
+  //   }
+  //   // setIsLoading(false);
+  // }
+  // async function checkVersionIos() {
+  //   try {
+  //     const response = await getHTTP(nde_api.getVersionAndroid);
+  //     cekValidVersion(response?.data?.results?.android);
+  //     // setIsLoading(false);
+  //   } catch (error) {
+  //     if (error.status == null) {
+  //       Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
+  //     } else {
+  //       handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
+  //     }
+  //   }
+  // }
+  // function cekValidVersion(server_version) {
+  //   if (server_version != app_version) {
+  //     // Alert.alert(
+  //     //   "Peringatan!",
+  //     //   "Anda menggunakan versi lama " +
+  //     //     app_name +
+  //     //     ". Segera lakukan pembaharuan untuk dapat mengakses aplikasi",
+  //     //   [
+  //     //     {
+  //     //       text: "Perbaharui",
+  //     //       onPress: () => {
+  //     //         // getToken();
+  //     //         // getProfile();
+  //     //         // getTokenValue().then((val) => {
+  //     //         //   if (val !== "") {
+  //     //         //     removeTokenValue();
+  //     //         //     dispatch(setLogout());
+  //     //         //     dispatch(setProfile({}));
+  //     //         //     navigation.reset({
+  //     //         //       index: 0,
+  //     //         //       routes: [{ name: "LoginToken" }],
+  //     //         //     });
+  //     //         //   }
+  //     //         // });
+  //     //         handleUpgradeLink();
+  //     //         // console.log("test");
+  //     //       },
+  //     //       style: "cancel",
+  //     //     },
+  //     //   ],
+  //     //   {
+  //     //     cancelable: false,
+  //     //     onDismiss: () => {
+  //     //       // getToken();
+  //     //       // getProfile();
+  //     //     },
+  //     //   }
+  //     // );
+  //     setModal(true);
+  //     // AsyncStorage.removeItem("token");
+  //     // dispatch(setValidVersion(false));
+  //   } else {
+  //     // dispatch(setValidVersion(true));
+  //     // getToken();
+  //     // getProfile();
+  //     setModal(false);
+  //   }
+  // }
   const getDeviceUUIDiOS = async () => {
     set_deviceUUID(await Application.getIosIdForVendorAsync());
     if (deviceUUID != undefined && deviceUUID != null) {
@@ -793,20 +830,20 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Bankom"
             component={Bankom}
             options={{
               headerShown: false,
             }}
-          />
-          <Stack.Screen
+          /> */}
+          {/* <Stack.Screen
             name="DokumenLain"
             component={DokumenLain}
             options={{
               headerShown: false,
             }}
-          />
+          /> */}
           <Stack.Screen
             name="DetailDokumenLain"
             component={DetailDokumenLain}
@@ -936,6 +973,13 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="MainDigitalSign"
             component={MainDigitalSign}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainSertifikat"
+            component={MainSertifikat}
             options={{
               headerShown: false,
             }}
@@ -1397,6 +1441,13 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="LaporanDigitalSign"
             component={LaporanDigitalSign}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailSertifikatEksternal"
+            component={DetailSertifikatEksternal}
             options={{
               headerShown: false,
             }}

@@ -14,6 +14,8 @@ import {
   getListRejected,
   getListReady,
   getListRetry,
+  getListSertifikatEksternal,
+  getDetailSertifikatEksternal,
 } from "../service/api";
 
 const DigitalSignSlice = createSlice({
@@ -34,6 +36,10 @@ const DigitalSignSlice = createSlice({
       lists: [],
     },
     loading: false,
+    eksternal: {
+      lists: [],
+      detail: {},
+    },
   },
   reducers: {
     setDigitalSignLists: (state, action) => {
@@ -195,6 +201,26 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListRejected.pending, (state, action) => {
         state.loading = true;
+      })
+      .addCase(getListSertifikatEksternal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.eksternal.lists = action.payload;
+      })
+      .addCase(getListSertifikatEksternal.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListSertifikatEksternal.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getDetailSertifikatEksternal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.eksternal.detail = action.payload;
+      })
+      .addCase(getDetailSertifikatEksternal.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDetailSertifikatEksternal.rejected, (state, action) => {
+        state.loading = false;
       });
   },
 });

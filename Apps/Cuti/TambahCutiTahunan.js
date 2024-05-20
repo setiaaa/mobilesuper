@@ -33,6 +33,7 @@ import { Search } from "../../components/Search";
 import {
   getFormCuti,
   getPilihApproval,
+  getPilihApprovalPejabat,
   postAttachmentCuti,
   postPengajuanCuti,
   postPengajuanCutiDraft,
@@ -408,9 +409,8 @@ export const TambahCutiTahunan = ({ route }) => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status, attachment, jumlahCuti, arsip } = useSelector(
-    (state) => state.cuti
-  );
+  const { form, pilih, status, attachment, jumlahCuti, arsip, pilihPejabat } =
+    useSelector((state) => state.cuti);
   const arsipDetail = arsip.detail;
 
   useEffect(() => {
@@ -483,7 +483,8 @@ export const TambahCutiTahunan = ({ route }) => {
 
   useEffect(() => {
     if (profile.nip !== "") {
-      dispatch(getPilihApproval({ nip: profile.nip }));
+      dispatch(getPilihApproval({ nip: profile.nip, type: "1" }));
+      dispatch(getPilihApprovalPejabat({ nip: profile.nip, type: "2" }));
     }
   }, [profile.nip, atasan]);
 
@@ -539,7 +540,18 @@ export const TambahCutiTahunan = ({ route }) => {
     let nama = [];
     pilih.data?.map((item) => {
       nama.push({
-        key: item.nip,
+        key: item.id,
+        value: item.nama_lengkap,
+      });
+    });
+    return nama;
+  };
+
+  const pickJabatan = () => {
+    let nama = [];
+    pilihPejabat.data?.map((item) => {
+      nama.push({
+        key: item.id,
         value: item.nama_lengkap,
       });
     });
@@ -2006,7 +2018,7 @@ export const TambahCutiTahunan = ({ route }) => {
                   </View>
 
                   <Dropdown
-                    data={pickAtasan()}
+                    data={pickJabatan()}
                     setSelected={setPejabat}
                     selected={pejabat}
                     borderWidth={1}

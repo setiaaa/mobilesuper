@@ -5,6 +5,7 @@ import {
   logoHeader,
   avatar,
   notFound,
+  maps,
 } from "../config/images";
 
 const extra = Constants.expoConfig.extra;
@@ -21,6 +22,7 @@ export const Config = {
   logoHeader: logoHeader[extra.id],
   avatar: avatar[extra.id],
   notFound: notFound[extra.id],
+  maps: maps[extra.id],
   statusbarAuth: extra.statusBarAuth,
   statusbarAuthenticated: extra.statusBarAuthtenticated,
   editInpro: extra.editInpro,

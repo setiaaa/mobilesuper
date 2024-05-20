@@ -10,6 +10,7 @@ import {
   getLiburKhusus,
   getPegawai,
   getPilihApproval,
+  getPilihApprovalPejabat,
   getTanggalLibur,
   postApproval,
   postAttachmentCuti,
@@ -33,6 +34,7 @@ const CutiSlice = createSlice({
     },
     form: {},
     pilih: [],
+    pilihPejabat: [],
     persetujuan: {
       lists: [],
     },
@@ -127,6 +129,9 @@ const CutiSlice = createSlice({
       .addCase(getPilihApproval.fulfilled, (state, action) => {
         state.pilih = action.payload;
       })
+      .addCase(getPilihApprovalPejabat.fulfilled, (state, action) => {
+        state.pilihPejabat = action.payload;
+      })
       .addCase(getDokumenPersetujuan.fulfilled, (state, action) => {
         state.persetujuan.lists = action.payload;
         state.loading = false;
@@ -138,8 +143,14 @@ const CutiSlice = createSlice({
         state.loading = false;
       })
       .addCase(postPengajuanCuti.fulfilled, (state, action) => {
-        state.status = "berhasil";
-        state.loading = false;
+        if (action.payload.success === false) {
+          state.status = "error";
+          console.log(action.payload);
+        } else {
+          state.status = "berhasil";
+          state.loading = false;
+          console.log(action.payload);
+        }
       })
       .addCase(postPengajuanCuti.pending, (state, action) => {
         state.status = "";
@@ -151,7 +162,8 @@ const CutiSlice = createSlice({
       })
       .addCase(postApproval.fulfilled, (state, action) => {
         let data = action.payload;
-        if (data.success === true || data.success === True) {
+        console.log(action.payload);
+        if (data.success === true) {
           state.status = "berhasil";
           state.loading = false;
         } else {
@@ -164,12 +176,14 @@ const CutiSlice = createSlice({
         state.status = "";
         state.loading = true;
         state.message = "";
+        console.log("pending");
       })
       .addCase(postApproval.rejected, (state, action) => {
         let data = action.payload;
         state.status = "error";
         state.loading = false;
         state.message = data.message;
+        console.log("gagal");
       })
       .addCase(postAttachmentCuti.fulfilled, (state, action) => {
         // let id_attachment = [];

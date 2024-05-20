@@ -36,6 +36,7 @@ import {
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
 import { ResizeMode, Video } from "expo-av";
+import { Loading } from "../../components/Loading";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
@@ -618,7 +619,9 @@ export const DetailDokumenCuti = ({ route }) => {
   const approval = route.params;
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
-  const { arsip, status, message } = useSelector((state) => state.cuti);
+  const { arsip, status, message, loading } = useSelector(
+    (state) => state.cuti
+  );
   const arsipDetail = arsip.detail;
 
   const [collapse, setCollapse] = useState({
@@ -699,6 +702,7 @@ export const DetailDokumenCuti = ({ route }) => {
   const { device } = useSelector((state) => state.apps);
   return (
     <GestureHandlerRootView>
+      {loading ? <Loading /> : null}
       <View style={{ position: "relative" }}>
         <ScrollView style={{ marginBottom: 20 }}>
           <View

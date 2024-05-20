@@ -496,7 +496,7 @@ export const Bankom = () => {
                       marginRight: isSelected.length === 0 ? 50 : null,
                     }}
                   >
-                    Sertifikat
+                    Sertifikat TTDE
                   </Text>
                 </View>
                 {isSelected.length !== 0 ? (
@@ -581,7 +581,7 @@ export const Bankom = () => {
                       List Saya
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={{
                       width: device === "tablet" ? "19%" : null,
                       paddingHorizontal: 6,
@@ -608,7 +608,7 @@ export const Bankom = () => {
                     >
                       Draft
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   {profile?.nip === "197908162002121003" ? (
                     <>
                       <TouchableOpacity

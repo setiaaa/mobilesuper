@@ -114,16 +114,10 @@ export const LoginToken = () => {
             height: "100%",
           }}
         >
-          <Pressable
-            onPress={() => {
-              // setCount((prev) => prev + 1);
-            }}
-          >
-            <Image
-              source={require("../assets/logokkp.png")}
-              style={{ width: 150, height: 150 }}
-            />
-          </Pressable>
+          <Image
+            source={require("../assets/logokkp.png")}
+            style={{ width: 150, height: 150 }}
+          />
 
           <View style={{ flexDirection: "row", gap: 5, marginTop: 20 }}>
             <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>

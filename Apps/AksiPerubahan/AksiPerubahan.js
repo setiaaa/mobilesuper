@@ -38,6 +38,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Dropdown } from "../../components/DropDown";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 import { StyleSheet } from "react-native";
+import { Rating } from "react-native-ratings";
 
 export const AksiPerubahan = () => {
   const dataKategori = [
@@ -128,8 +129,9 @@ export const AksiPerubahan = () => {
   };
 
   const bottomSheetModalFilterRef = useRef(null);
+  const bottomSheetModalDetailRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["90%"], []);
+  const initialSnapPoints = useMemo(() => ["90%", "100%"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -141,9 +143,18 @@ export const AksiPerubahan = () => {
     bottomSheetModalFilterRef.current?.present();
   };
 
+  const bottomSheetAttachDetail = (item) => {
+    bottomSheetModalDetailRef.current?.present();
+  };
+
   const bottomSheetAttachFilterClose = () => {
     if (bottomSheetModalFilterRef.current)
       bottomSheetModalFilterRef.current?.close();
+  };
+
+  const bottomSheetAttachDetailClose = () => {
+    if (bottomSheetModalDetailRef.current)
+      bottomSheetModalDetailRef.current?.close();
   };
 
   const tahun = () => {
@@ -211,6 +222,8 @@ export const AksiPerubahan = () => {
     });
     setIdAngkatan(arrId);
   };
+
+  console.log(detail.rating);
 
   return (
     <GestureHandlerRootView>
@@ -339,7 +352,7 @@ export const AksiPerubahan = () => {
                 item={item}
                 device={device}
                 token={token}
-                setModalDetail={setModalDetail}
+                bottomSheetAttachDetail={bottomSheetAttachDetail}
               />
             )}
             onEndReached={loadMore}
@@ -353,8 +366,209 @@ export const AksiPerubahan = () => {
         </View>
       </View>
 
-      {/* <Portal> */}
       <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={bottomSheetModalDetailRef}
+          snapPoints={animatedSnapPoints}
+          handleHeight={animatedHandleHeight}
+          contentHeight={animatedContentHeight}
+          index={0}
+          style={{ borderRadius: 50 }}
+          keyboardBlurBehavior="restore"
+          android_keyboardInputMode="adjust"
+          backdropComponent={({ style }) => (
+            <View style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]} />
+          )}
+        >
+          <BottomSheetView onLayout={handleContentLayout}>
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Detail Aksi Perubahan
+                  </Text>
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => {
+                      bottomSheetAttachDetailClose();
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View>
+                  <View
+                    style={{
+                      marginVertical: 20,
+                      marginHorizontal: 40,
+                    }}
+                  >
+                    <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                      Jenis Kategori
+                    </Text>
+                    <Text style={{ marginTop: 5 }}>{detail.title}</Text>
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      Nama
+                    </Text>
+                    <Text style={{ marginTop: 5 }}>{detail.display_name}</Text>
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      NIP
+                    </Text>
+                    <Text style={{ marginTop: 5 }}>{detail.coach_nip}</Text>
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      Unit Kerja
+                    </Text>
+                    <Text style={{ marginTop: 5 }}>{detail.unker}</Text>
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      Satuan Kerja
+                    </Text>
+                    <Text style={{ marginTop: 5 }}>{detail.satker}</Text>
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      Coach
+                    </Text>
+                    <Text style={{ marginTop: 5 }}>{detail.coach}</Text>
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      implementasi
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor:
+                          detail.implementation === true
+                            ? COLORS.successLight
+                            : COLORS.infoDangerLight,
+                        padding: 4,
+                        width: 100,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 8,
+                        marginTop: 5,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          color:
+                            detail.implementation === true
+                              ? COLORS.success
+                              : COLORS.infoDanger,
+                        }}
+                      >
+                        {detail.implementation === true ? "Ya" : "Tidak"}
+                      </Text>
+                    </View>
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      Rating
+                    </Text>
+                    <Rating
+                      fractions={2}
+                      startingValue={detail.rating}
+                      readonly
+                      imageSize={20}
+                      style={{ marginTop: 5, alignItems: "flex-start" }}
+                    />
+
+                    <Text
+                      style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}
+                    >
+                      File
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginHorizontal: 20,
+                        marginVertical: 10,
+                        flexWrap: "wrap",
+                        gap: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: 97,
+                          height: 97,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderWidth: 1,
+                          borderRadius: 8,
+                          borderColor: COLORS.ExtraDivinder,
+                        }}
+                      >
+                        <Image
+                          source={require("../../assets/superApp/pdf.png")}
+                        />
+                      </View>
+                    </View>
+                    <Text style={{ marginTop: 5 }}>{detail.file_name}</Text>
+                  </View>
+                  {/* 
+              <Text
+                style={{
+                  width: "70%",
+                  marginHorizontal: 60,
+                  marginTop: 10,
+                  fontSize: fontSizeResponsive("H4", device),
+                }}
+              >
+                {detail?.title !== "" && detail?.title !== null
+                  ? detail.title
+                  : "-"}
+              </Text> */}
+                </View>
+              </View>
+            </View>
+          </BottomSheetView>
+        </BottomSheetModal>
+
         <BottomSheetModal
           ref={bottomSheetModalFilterRef}
           snapPoints={animatedSnapPoints}
@@ -552,176 +766,6 @@ export const AksiPerubahan = () => {
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalDetail}
-        onRequestClose={() => {
-          setModalDetail(false);
-        }}
-      >
-        <TouchableOpacity
-          style={[
-            Platform.OS === "ios" ? styles.iOSBackdrop : styles.androidBackdrop,
-            styles.backdrop,
-          ]}
-        />
-        <View
-          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
-        >
-          <View
-            style={{
-              backgroundColor: COLORS.white,
-              width: "90%",
-              borderRadius: 10,
-            }}
-          >
-            <View
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                padding: 10,
-                borderBottomWidth: 2,
-                borderBottomColor: COLORS.grey,
-              }}
-            >
-              <Text
-                style={{
-                  fontWeight: FONTWEIGHT.bold,
-                }}
-              >
-                Detail Aksi Perubahan
-              </Text>
-              <TouchableOpacity
-                style={{}}
-                onPress={() => {
-                  setModalDetail(false);
-                }}
-              >
-                <Ionicons
-                  name="close-outline"
-                  size={24}
-                  color={COLORS.lighter}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <View>
-              <View
-                style={{
-                  marginVertical: 20,
-                  marginHorizontal: 40,
-                }}
-              >
-                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                  Jenis Kategori
-                </Text>
-                <Text style={{ marginTop: 5 }}>{detail.title}</Text>
-
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
-                  Nama
-                </Text>
-                <Text style={{ marginTop: 5 }}>{detail.display_name}</Text>
-
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
-                  NIP
-                </Text>
-                <Text style={{ marginTop: 5 }}>{detail.coach_nip}</Text>
-
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
-                  Unit Kerja
-                </Text>
-                <Text style={{ marginTop: 5 }}>{detail.unker}</Text>
-
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
-                  Satuan Kerja
-                </Text>
-                <Text style={{ marginTop: 5 }}>{detail.satker}</Text>
-
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
-                  Coach
-                </Text>
-                <Text style={{ marginTop: 5 }}>{detail.coach}</Text>
-
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
-                  implementasi
-                </Text>
-                <View
-                  style={{
-                    backgroundColor:
-                      detail.implementation === true
-                        ? COLORS.successLight
-                        : COLORS.infoDangerLight,
-                    padding: 4,
-                    width: 100,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 8,
-                    marginTop: 5,
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginTop: 5,
-                      color:
-                        detail.implementation === true
-                          ? COLORS.success
-                          : COLORS.infoDanger,
-                    }}
-                  >
-                    {detail.implementation === true ? "Ya" : "Tidak"}
-                  </Text>
-                </View>
-
-                <Text style={{ fontWeight: FONTWEIGHT.bold, marginTop: 10 }}>
-                  File
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginHorizontal: 20,
-                    marginVertical: 10,
-                    flexWrap: "wrap",
-                    gap: 10,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 97,
-                      height: 97,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderWidth: 1,
-                      borderRadius: 8,
-                      borderColor: COLORS.ExtraDivinder,
-                    }}
-                  >
-                    <Image source={require("../../assets/superApp/pdf.png")} />
-                  </View>
-                </View>
-                <Text style={{ marginTop: 5 }}>{detail.file_name}</Text>
-              </View>
-              {/* 
-              <Text
-                style={{
-                  width: "70%",
-                  marginHorizontal: 60,
-                  marginTop: 10,
-                  fontSize: fontSizeResponsive("H4", device),
-                }}
-              >
-                {detail?.title !== "" && detail?.title !== null
-                  ? detail.title
-                  : "-"}
-              </Text> */}
-            </View>
-          </View>
-        </View>
-      </Modal>
-      {/* </Portal> */}
     </GestureHandlerRootView>
   );
 };

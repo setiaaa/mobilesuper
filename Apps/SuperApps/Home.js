@@ -12,6 +12,7 @@ import {
   RefreshControl,
   Platform,
   FlatList,
+  AppState,
 } from "react-native";
 import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
@@ -37,7 +38,11 @@ import {
 } from "@gorhom/bottom-sheet";
 import { useMemo } from "react";
 import { CardAppsB } from "../../components/CardAppsB";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import {
   AVATAR,
   COLORS,
@@ -86,13 +91,18 @@ import {
 } from "../../store/SuperApps";
 import { openURL } from "expo-linking";
 import * as Location from "expo-location";
-import moment from "moment";
-import { TextInput } from "react-native";
+import moment, { duration } from "moment";
 import { ModalSubmit } from "../../components/ModalSubmit";
-import axios from "axios";
+import { MotiView } from "@motify/components";
+import { Easing } from "react-native-reanimated";
+import LottieView from "lottie-react-native";
+import CryptoJS from "react-native-crypto-js";
 
 const { width: screenWidth } = Dimensions.get("window");
 const numColumns = 3;
+
+const _color = "#6E01EF";
+const _size = 100;
 
 export const Home = () => {
   const carouselRef = useRef(null);
@@ -108,16 +118,13 @@ export const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
   const [modalPresensi, setModalPresensi] = useState(false);
-  const [dataTime, setDataTime] = useState([]);
-  const [displayTime, setDisplayTime] = useState();
-  const [checkOut, setCheckOut] = useState(false);
-  const [waktuPresensi, setWaktuPrensi] = useState("");
-  const [waktuPulang, setWaktuPulang] = useState("");
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(false);
   const [modalBankom, setModalBankom] = useState(false);
   const [menuBankom, setMenuBankom] = useState([]);
+  const animation = useRef(null);
+  const [radius, setRadius] = useState(false);
 
   const dispatch = useDispatch();
   const route = useRoute();
@@ -252,11 +259,10 @@ export const Home = () => {
 
   const roleLaporan = ["LAPORAN_BSRE"];
 
-  const isRoleLaporan = profile.roles_access?.some((item) =>
-    roleLaporan.includes(item)
-  );
-
   useEffect(() => {
+    const isRoleLaporan = profile?.roles_access?.some((item) =>
+      roleLaporan.includes(item)
+    );
     let tmpMenu = [];
     tmpMenu.push(
       <View
@@ -364,7 +370,7 @@ export const Home = () => {
         <TouchableOpacity
           onPress={() => {
             setModalBankom(false);
-            navigation.navigate("Bankom");
+            navigation.navigate("MainSertifikat");
           }}
         >
           <View
@@ -503,11 +509,12 @@ export const Home = () => {
         </View>
       );
     } else {
+      console.log("masuk role else", isRoleLaporan);
       null;
     }
 
     setMenuBankom(tmpMenu);
-  }, []);
+  }, [profile]);
 
   const numRows = Math.ceil(menuBankom.length / 3);
 
@@ -547,22 +554,38 @@ export const Home = () => {
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [checkApps, setCheckApps] = useState();
+  const [permissionStatus, setPermissionStatus] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
+    const intervalId = setInterval(() => {
+      Location.requestForegroundPermissionsAsync().then((status) => {
+        if (status.status !== "granted") {
+          setErrorMsg("Izin akses lokasi tidak diberikan");
+          setLocation(null);
+          setPermissionStatus(false);
+          return;
+        } else {
+          setPermissionStatus(true);
+        }
+      });
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
+      Location.getCurrentPositionAsync({}).then((location) => {
+        // console.log(location);
+        setLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+        });
+      });
+    }, 10000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleCheckin = () => {
-    let longlat = [location?.coords?.longitude, location?.coords?.latitude];
+    let longlat = [location?.longitude, location?.latitude];
     const payload = {
       location: {
         type: "Point",
@@ -576,11 +599,16 @@ export const Home = () => {
       token: token,
       payload: payload,
     };
+    let ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify(payload),
+      "qwertyuiopasdfgh"
+    );
+    console.log(ciphertext.toString());
     dispatch(postAttendence(data));
   };
 
   const handleCheckOut = () => {
-    let longlat = [location?.coords?.longitude, location?.coords?.latitude];
+    let longlat = [location?.longitude, location?.latitude];
     const payload = {
       location: {
         type: "Point",
@@ -596,8 +624,6 @@ export const Home = () => {
     };
     dispatch(postAttendence(data));
   };
-
-  // console.log(handleError);
 
   // const saveData = async (type, date) => {
   //   try {
@@ -698,6 +724,7 @@ export const Home = () => {
                     fontWeight: FONTWEIGHT.bolder,
                     marginBottom: 10,
                     fontSize: fontSizeResponsive("H2", device),
+                    height: profile.nip === "100062" ? 15 : null,
                   }}
                 >
                   {profile.nama}
@@ -848,7 +875,6 @@ export const Home = () => {
                     Pengembangan Kompetensi
                   </Text>
                   <TouchableOpacity
-                    style={{}}
                     onPress={() => {
                       setModalBankom(false);
                     }}
@@ -1081,6 +1107,14 @@ export const Home = () => {
           </Modal>
 
           <View style={[styles.containerr, { marginTop: 20 }]}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            ></View>
+
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}
@@ -1873,5 +1907,22 @@ const styles = StyleSheet.create({
     width: wp(15),
     height: hp(10),
     borderRadius: 8,
+  },
+  map: {
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width,
+    width: 310,
+    height: 310,
+    marginBottom: 20,
+  },
+  dot: {
+    width: _size,
+    height: _size,
+    borderRadius: _size,
+    backgroundColor: _color,
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

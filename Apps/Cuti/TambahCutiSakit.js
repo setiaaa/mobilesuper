@@ -32,6 +32,7 @@ import { Dropdown } from "../../components/DropDown";
 import { Search } from "../../components/Search";
 import {
   getPilihApproval,
+  getPilihApprovalPejabat,
   postAttachmentCuti,
   postPembatalanCuti,
   postPengajuanCuti,
@@ -655,7 +656,7 @@ export const TambahCutiSakit = () => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status, attachment, arsip } = useSelector(
+  const { form, pilih, status, attachment, arsip, pilihPejabat } = useSelector(
     (state) => state.cuti
   );
 
@@ -731,7 +732,8 @@ export const TambahCutiSakit = () => {
 
   useEffect(() => {
     if (profile.nip !== "") {
-      dispatch(getPilihApproval({ nip: profile.nip }));
+      dispatch(getPilihApproval({ nip: profile.nip, type: "1" }));
+      dispatch(getPilihApprovalPejabat({ nip: profile.nip, type: "2" }));
     }
   }, [profile.nip, atasan]);
 
@@ -743,7 +745,18 @@ export const TambahCutiSakit = () => {
     let nama = [];
     pilih.data?.map((item) => {
       nama.push({
-        key: item.nip,
+        key: item.id,
+        value: item.nama_lengkap,
+      });
+    });
+    return nama;
+  };
+
+  const pickJabatan = () => {
+    let nama = [];
+    pilihPejabat.data?.map((item) => {
+      nama.push({
+        key: item.id,
         value: item.nama_lengkap,
       });
     });
@@ -2238,7 +2251,7 @@ export const TambahCutiSakit = () => {
                   </View>
 
                   <Dropdown
-                    data={pickAtasan()}
+                    data={pickJabatan()}
                     setSelected={setPejabat}
                     selected={pejabat}
                     borderWidth={1}

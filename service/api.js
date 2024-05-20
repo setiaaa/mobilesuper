@@ -1878,10 +1878,36 @@ export const putInProgressDigiSign = createAsyncThunk(
 export const getCourseDigiSign = createAsyncThunk(
   "digitalsign/getCourseDigiSign",
   async (token) => {
-    const respon = await axios.get(`${digitalSign}course/?limit=10`, {
+    const respon = await axios.get(`${digitalSign}course/?limit=1000`, {
       headers: { Authorization: token },
     });
     return respon?.data.results;
+  }
+);
+
+export const getListSertifikatEksternal = createAsyncThunk(
+  "digitalsign/getListSertifikatEksternal",
+  async ({ token, page }) => {
+    console.log(token, page);
+    const respon = await axios.get(
+      `${digitalSign}external-certificate/?page=${page}&limit=10`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getDetailSertifikatEksternal = createAsyncThunk(
+  "digitalsign/getDetailSertifikatEksternal",
+  async ({ token, id }) => {
+    console.log(token, id);
+    const respon = await axios.get(
+      `${digitalSign}external-certificate/${id}/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.result;
   }
 );
 
@@ -2007,9 +2033,23 @@ export const getFormCuti = createAsyncThunk(
 
 export const getPilihApproval = createAsyncThunk(
   "cuti/getPilihApproval",
-  async ({ nip, kunci }) => {
+  async ({ nip, type }) => {
     const respon = await axios.get(
-      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=`,
+      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=&type=${type}`,
+      {
+        // headers: { Authorization: token },
+      }
+    );
+    return respon?.data;
+  }
+);
+
+export const getPilihApprovalPejabat = createAsyncThunk(
+  "cuti/getPilihApprovalPejabat",
+  async ({ nip, type }) => {
+    console.log(nip, type);
+    const respon = await axios.get(
+      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=&type=${type}`,
       {
         // headers: { Authorization: token },
       }
@@ -2294,9 +2334,10 @@ export const getFilterAksiPerubahan = createAsyncThunk(
 
 export const getLaporanAksiPerubahan = createAsyncThunk(
   "AksiPerubahan/getLaporanAksiPerubahan",
-  async (token) => {
+  async ({ token, unker, satker }) => {
+    console.log(unker, satker);
     const respon = await axios.get(
-      `${BASE_URL}bridge/transform/dashboard/title/`,
+      `${BASE_URL}bridge/transform/dashboard/title/?unker=${unker}&satker=${satker}`,
       {
         headers: { Authorization: token },
       }

@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getAksiPerubahan,
   getDetailAksiPerubahan,
+  getDivisionFilter,
   getFilterAksiPerubahan,
   getLaporanAksiPerubahan,
+  getSubDivisionFilter,
 } from "../service/api";
 
 const AksiPerubahan = createSlice({
@@ -14,6 +16,10 @@ const AksiPerubahan = createSlice({
     filter: [],
     detail: {},
     laporan: [],
+    filterSatkerUnker: {
+      unker: [],
+      satker: [],
+    },
   },
   reducers: {},
   extraReducers(builder) {
@@ -57,6 +63,12 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getLaporanAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
+      })
+      .addCase(getDivisionFilter.fulfilled, (state, action) => {
+        state.filterSatkerUnker.unker = action.payload;
+      })
+      .addCase(getSubDivisionFilter.fulfilled, (state, action) => {
+        state.filterSatkerUnker.satker = action.payload;
       });
   },
 });

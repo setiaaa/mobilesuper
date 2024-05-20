@@ -123,6 +123,8 @@ export const DetailSertifikat = (route) => {
 
   const { device } = useSelector((state) => state.apps);
 
+  console.log(item);
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -236,6 +238,38 @@ export const DetailSertifikat = (route) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
+                    Operator
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
+                      >
+                        {item?.composer?.nama}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Penerima Sertifikat
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
@@ -336,7 +370,36 @@ export const DetailSertifikat = (route) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Judul Course
+                    Jenis Sertifikat
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {item.extra_attributes?.tipe}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Judul Pelatihan
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
@@ -354,6 +417,37 @@ export const DetailSertifikat = (route) => {
                         {item.extra_attributes?.course?.name !== undefined
                           ? item.extra_attributes?.course?.name
                           : item.extra_attributes?.nama_course}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Tempat Pelatihan
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {item.extra_attributes?.tempat === undefined
+                          ? "-"
+                          : item.extra_attributes?.tempat}
                       </Text>
                     )}
                   </View>
