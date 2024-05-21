@@ -122,6 +122,7 @@ export const Home = () => {
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(false);
   const [modalBankom, setModalBankom] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
   const [menuBankom, setMenuBankom] = useState([]);
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
@@ -453,6 +454,53 @@ export const Home = () => {
           }}
         >
           E-Learning
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            setModalInfo(true);
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/info.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Info
         </Text>
       </View>
     );
@@ -825,6 +873,83 @@ export const Home = () => {
               </View>
             )}
           </View>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalInfo}
+            onRequestClose={() => {
+              setModalInfo(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Informasi
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalInfo(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 20,
+                  }}
+                >
+                  <Text style={{ textAlign: "justify" }}>
+                    Menu ini merupakan implementasi dari Aksi Perubahan New
+                    Integrated Learning and Office System (NILAM) pada Portal
+                    Collaboration Office.
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
 
           <Modal
             animationType="fade"

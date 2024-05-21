@@ -203,6 +203,7 @@ export const LaporanDigitalSign = () => {
 
   const [listYear, setListYear] = useState();
   const [listBatch, setListBatch] = useState();
+  const [dataTingkatan, setDataTingkatan] = useState([]);
   const [dataGraphAksiPerubahan, setDataGraphAksiPerubahan] = useState(null);
   const [tonggleYear, setToggleYear] = useState(false);
   const [tonggleAngkatan, setToggleAngkatan] = useState(false);
@@ -212,52 +213,41 @@ export const LaporanDigitalSign = () => {
   const [filter, setFilter] = useState({
     "LATIHAN DASAR ": {
       angkatan: {
-        key: "1",
-        value: "1",
+        key: "",
+        value: "",
       },
       tahun: {
-        key: "2024",
-        value: "2024",
+        key: "",
+        value: "",
       },
     },
     "PELATIHAN KEPEMIMPINAN PENGAWAS ": {
       tahun: {
-        key: "2023",
-        value: "2023",
+        key: "",
+        value: "",
       },
     },
     "PELATIHAN KEPEMIMPINAN ADMINISTRATOR ": {
       tahun: {
-        key: "2023",
-        value: "2023",
+        key: "",
+        value: "",
       },
     },
-    "PELATIHAN KEPEMIMPINAN NASIONAL": {
+    "PELATIHAN KEPEMIMPINAN NASIONAL ": {
       tingkat: {
-        key: "1",
-        value: "Tingkat 1",
+        key: "",
+        value: "",
       },
       tahun: {
-        key: "2023",
-        value: "2023",
+        key: "",
+        value: "",
       },
       angkatan: {
-        key: "1",
-        value: "1",
+        key: "",
+        value: "",
       },
     },
   });
-
-  const dataTingakatan = [
-    {
-      key: "1",
-      value: "Tingkat 1",
-    },
-    {
-      key: "2",
-      value: "Tingkat 2",
-    },
-  ];
 
   const handleSelectedFilter = (jenis, key, value) => {
     if (key === "tahun") {
@@ -299,8 +289,8 @@ export const LaporanDigitalSign = () => {
     }
     setFilter({
       ...filter,
-      ["PELATIHAN KEPEMIMPINAN NASIONAL"]: {
-        ...filter["PELATIHAN KEPEMIMPINAN NASIONAL"],
+      ["PELATIHAN KEPEMIMPINAN NASIONAL "]: {
+        ...filter["PELATIHAN KEPEMIMPINAN NASIONAL "],
         tahun: dataTahun[0],
       },
     });
@@ -314,11 +304,11 @@ export const LaporanDigitalSign = () => {
         "LATIHAN DASAR ": [],
         "PELATIHAN KEPEMIMPINAN PENGAWAS ": [],
         "PELATIHAN KEPEMIMPINAN ADMINISTRATOR ": [],
-        "PELATIHAN KEPEMIMPINAN NASIONAL TINGKAT 1 ": [],
-        "PELATIHAN KEPEMIMPINAN NASIONAL TINGKAT 2 ": [],
+        "PELATIHAN KEPEMIMPINAN NASIONAL ": [],
       };
       let year = {};
       let batch = {};
+      let tmpt = [];
 
       tmpAksiPerubahan.map((item, index) => {
         let listBatch = item.list_batch;
@@ -329,34 +319,93 @@ export const LaporanDigitalSign = () => {
 
         Object.keys(listBatch).forEach((itemTahun) => {
           year[name].push({
-            key: itemTahun,
-            value: itemTahun,
+            key: itemTahun.toString(),
+            value: itemTahun.toString(),
           });
           batch[name][itemTahun] = [];
           listBatch[itemTahun].map((val) => {
             batch[name][itemTahun].push({
-              key: val,
-              value: val,
+              key: val.toString(),
+              value: val.toString(),
             });
           });
         });
 
+        if (name.includes("PELATIHAN KEPEMIMPINAN NASIONAL")) {
+          let tingkat = name.split("PELATIHAN KEPEMIMPINAN NASIONAL ")[1];
+          tmpt.push({
+            key: tingkat,
+            value: tingkat,
+          });
+        }
+
+        if (filter["PELATIHAN KEPEMIMPINAN NASIONAL "].tingkat?.key === "") {
+          setFilter({
+            ...filter,
+            ["PELATIHAN KEPEMIMPINAN NASIONAL "]: {
+              ...filter["PELATIHAN KEPEMIMPINAN NASIONAL "],
+              tingkat: tmpt[0],
+            },
+            ["LATIHAN DASAR "]: {
+              ...filter["LATIHAN DASAR "],
+              tahun: {
+                key:
+                  year["LATIHAN DASAR "] === undefined
+                    ? "-"
+                    : year["LATIHAN DASAR "][0].key,
+                value:
+                  year["LATIHAN DASAR "] === undefined
+                    ? "-"
+                    : year["LATIHAN DASAR "][0].value,
+              },
+            },
+            ["PELATIHAN KEPEMIMPINAN PENGAWAS "]: {
+              ...filter["PELATIHAN KEPEMIMPINAN PENGAWAS "],
+              tahun: {
+                key:
+                  year["PELATIHAN KEPEMIMPINAN PENGAWAS "] === undefined
+                    ? "-"
+                    : year["PELATIHAN KEPEMIMPINAN PENGAWAS "][0].key,
+                value:
+                  year["PELATIHAN KEPEMIMPINAN PENGAWAS "] === undefined
+                    ? "-"
+                    : year["PELATIHAN KEPEMIMPINAN PENGAWAS "][0].value,
+              },
+            },
+            ["PELATIHAN KEPEMIMPINAN ADMINISTRATOR "]: {
+              ...filter["PELATIHAN KEPEMIMPINAN ADMINISTRATOR "],
+              tahun: {
+                key:
+                  year["PELATIHAN KEPEMIMPINAN ADMINISTRATOR "] === undefined
+                    ? "-"
+                    : year["PELATIHAN KEPEMIMPINAN ADMINISTRATOR "][0].key,
+                value:
+                  year["PELATIHAN KEPEMIMPINAN ADMINISTRATOR "] === undefined
+                    ? "-"
+                    : year["PELATIHAN KEPEMIMPINAN ADMINISTRATOR "][0].value,
+              },
+            },
+          });
+        }
+
         item.data.map((val) => {
-          // console.log("value", name);
           if (name.includes("LATIHAN DASAR ")) {
             if (
-              val.year.toString() === filter[name].tahun.key.toString() &&
-              val.batch.toString() === filter[name].angkatan.key.toString()
+              val?.year?.toString() === filter[name]?.tahun?.key?.toString() &&
+              val?.batch?.toString() === filter[name]?.angkatan?.key?.toString()
             ) {
-              tmpc[name].push(val.member, val.implement);
+              tmpc[name].push(val.member, val.implement, val.total_action);
             }
           }
 
           if (name.includes("PELATIHAN KEPEMIMPINAN PENGAWAS ")) {
-            if (val.year.toString() === filter[name].tahun.key.toString()) {
+            if (
+              val?.year?.toString() === filter[name]?.tahun?.key?.toString()
+            ) {
               tmpc[name].push({
                 Peserta: val.member,
                 Implementasi: val.implement,
+                Aksi: val.total_action,
                 name: `Angkatan ${val.batch}`,
                 batch: val.batch,
               });
@@ -364,75 +413,38 @@ export const LaporanDigitalSign = () => {
             }
           }
 
-          if (name.includes("PELATIHAN KEPEMIMPINAN NASIONAL TINGKAT 1 ")) {
+          if (
+            name.includes(
+              "PELATIHAN KEPEMIMPINAN NASIONAL " +
+                filter["PELATIHAN KEPEMIMPINAN NASIONAL "].tingkat?.key
+            )
+          ) {
             if (
               val.year.toString() ===
                 filter[
-                  "PELATIHAN KEPEMIMPINAN NASIONAL"
-                ].tahun.key.toString() &&
+                  "PELATIHAN KEPEMIMPINAN NASIONAL "
+                ].tahun?.key?.toString() &&
               val.batch.toString() ===
                 filter[
-                  "PELATIHAN KEPEMIMPINAN NASIONAL"
-                ].angkatan.key.toString()
+                  "PELATIHAN KEPEMIMPINAN NASIONAL "
+                ].angkatan?.key?.toString()
             ) {
-              tmpc[name].push(
-                {
-                  actualKey: name,
-                  name: "Peserta",
-                  Peserta: val.member,
-                  batch: val.batch,
-                  year: val.year,
-                  color: "#FF8F28",
-                },
-                {
-                  actualKey: name,
-                  name: "Implementasi",
-                  Implementasi: val.implement,
-                  batch: val.batch,
-                  year: val.year,
-                  color: "#B745FF",
-                }
-              );
-            }
-          }
-
-          if (name.includes("PELATIHAN KEPEMIMPINAN NASIONAL TINGKAT 2 ")) {
-            if (
-              val.year.toString() ===
-                filter[
-                  "PELATIHAN KEPEMIMPINAN NASIONAL"
-                ].tahun.key.toString() &&
-              val.batch.toString() ===
-                filter[
-                  "PELATIHAN KEPEMIMPINAN NASIONAL"
-                ].angkatan.key.toString()
-            ) {
-              tmpc[name].push(
-                {
-                  actualKey: name,
-                  name: "Peserta",
-                  Peserta: val.member,
-                  batch: val.batch,
-                  year: val.year,
-                  color: "#FF8F28",
-                },
-                {
-                  actualKey: name,
-                  name: "Implementasi",
-                  Implementasi: val.implement,
-                  batch: val.batch,
-                  year: val.year,
-                  color: "#B745FF",
-                }
+              tmpc["PELATIHAN KEPEMIMPINAN NASIONAL "].push(
+                val.member,
+                val.implement,
+                val.total_action
               );
             }
           }
 
           if (name.includes("PELATIHAN KEPEMIMPINAN ADMINISTRATOR ")) {
-            if (val.year.toString() === filter[name].tahun?.key?.toString()) {
+            if (
+              val?.year?.toString() === filter[name]?.tahun?.key?.toString()
+            ) {
               tmpc[name].push({
                 Peserta: val.member,
                 Implementasi: val.implement,
+                Aksi: val.total_action,
                 name: `Angkatan ${val.batch}`,
                 batch: val.batch,
               });
@@ -443,6 +455,7 @@ export const LaporanDigitalSign = () => {
       });
       setListYear(year);
       setListBatch(batch);
+      setDataTingkatan(tmpt);
       // console.log("---------", tmpc);
       // console.log(batch);
       // console.log("year", year);
@@ -452,17 +465,16 @@ export const LaporanDigitalSign = () => {
     }
   }, [laporan, filter, filterSatker, filterUnker]);
 
-  console.log(dataGraphAksiPerubahan);
-
   const { device } = useSelector((state) => state.apps);
 
   const font = useFont(inter, 8);
 
   const widthAndHeight = 250;
-  const sliceColor = ["#ff8f28", "#b745ff"];
+  const sliceColorELearning = ["#ff8f28", "#b745ff"];
+  const sliceColor = ["#ff8f28", "#b745ff", "#38B2AC"];
 
   const numberWithCommas = (x) => {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    return x?.toString()?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
   };
 
   const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
@@ -531,10 +543,7 @@ export const LaporanDigitalSign = () => {
                 marginLeft: 20,
               }}
             >
-              <TouchableOpacity
-                style={{}}
-                onPress={() => navigation.navigate("Home")}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                 <Ionicons
                   name="chevron-back-outline"
                   size={device === "tablet" ? 40 : 24}
@@ -563,6 +572,21 @@ export const LaporanDigitalSign = () => {
                 paddingHorizontal: "5%",
               }}
             >
+              <View
+                style={[
+                  styles.card,
+                  { marginBottom: 10, alignItems: "center" },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  Sertifikat Internal
+                </Text>
+              </View>
               <View>
                 <View style={{ ...styles.card, alignItems: "center" }}>
                   <View style={{ flexDirection: "row" }}>
@@ -608,7 +632,7 @@ export const LaporanDigitalSign = () => {
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    marginTop: 20,
+                    marginTop: 10,
                     width: "100%",
                   }}
                 >
@@ -696,6 +720,63 @@ export const LaporanDigitalSign = () => {
                   </View>
                 </View>
               </View>
+
+              <View
+                style={[styles.card, { marginTop: 10, alignItems: "center" }]}
+              >
+                <Text
+                  style={{
+                    fontSize: fontSizeResponsive("H2", device),
+                    fontWeight: 600,
+                  }}
+                >
+                  Sertifikat Eksternal
+                </Text>
+              </View>
+
+              <View
+                style={{ ...styles.card, alignItems: "center", marginTop: 10 }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      ...styles.circle,
+                      backgroundColor: COLORS.successLight,
+                    }}
+                  >
+                    <Ionicons
+                      name="clipboard-outline"
+                      size={24}
+                      color={COLORS.success}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      marginLeft: 15,
+                      gap: 5,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H1", device),
+                        fontWeight: 700,
+                      }}
+                    >
+                      {numberWithCommas(summary?.count.total_external)}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: fontSizeResponsive("H3", device),
+                        fontWeight: 400,
+                      }}
+                    >
+                      Total Pelatihan
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
               <View style={{ ...styles.card, marginTop: 20 }}>
                 <Text
                   style={{
@@ -1475,7 +1556,7 @@ export const LaporanDigitalSign = () => {
                     fontWeight: 600,
                   }}
                 >
-                  Jumlah Peserta E-Learning Enrolled
+                  Jumlah Peserta E-Learning
                 </Text>
 
                 <View
@@ -1485,64 +1566,69 @@ export const LaporanDigitalSign = () => {
                     marginTop: 20,
                   }}
                 >
-                  <ProgressCircle
-                    percent={summary?.count?.lms_enrolled}
-                    radius={100}
-                    borderWidth={15}
-                    color={"#ff8f28"}
-                    shadowColor="#999"
-                    bgColor="#fff"
-                  >
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("Judul", device) }}
-                    >
-                      {summary?.count?.lms_enrolled === undefined
-                        ? null
-                        : numberWithCommas(summary?.count?.lms_enrolled)}{" "}
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                        Peserta
-                      </Text>
-                    </Text>
-                  </ProgressCircle>
-                </View>
-              </View>
+                  <PieChart
+                    widthAndHeight={widthAndHeight}
+                    series={[
+                      summary?.count?.lms_enrolled,
+                      summary?.count?.lms_completed,
+                    ]}
+                    sliceColor={sliceColorELearning}
+                    coverRadius={0.75}
+                    coverFill={"#FFF"}
+                    style={{ alignSelf: "center", marginVertical: 20 }}
+                  />
 
-              <View style={{ ...styles.card, marginTop: 20 }}>
-                <Text
-                  style={{
-                    fontSize: fontSizeResponsive("H2", device),
-                    fontWeight: 600,
-                  }}
-                >
-                  Jumlah Peserta E-Learning Completed
-                </Text>
-
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 20,
-                  }}
-                >
-                  <ProgressCircle
-                    percent={summary?.count?.lms_completed}
-                    radius={100}
-                    borderWidth={15}
-                    color={"#b745ff"}
-                    shadowColor="#999"
-                    bgColor="#fff"
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      gap: 20,
+                    }}
                   >
-                    <Text
-                      style={{ fontSize: fontSizeResponsive("Judul", device) }}
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        gap: 10,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
-                      {summary?.count?.lms_completed === undefined
-                        ? null
-                        : numberWithCommas(summary?.count?.lms_completed)}{" "}
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                        Peserta
+                      <View
+                        style={{
+                          backgroundColor: "#ff8f28",
+                          height: 30,
+                          width: 30,
+                          borderRadius: 50,
+                        }}
+                      />
+                      <Text>
+                        Enrolled{" "}
+                        {numberWithCommas(summary?.count?.lms_enrolled)}
                       </Text>
-                    </Text>
-                  </ProgressCircle>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        gap: 10,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: "#b745ff",
+                          height: 30,
+                          width: 30,
+                          borderRadius: 50,
+                        }}
+                      />
+                      <Text>
+                        Completed{" "}
+                        {numberWithCommas(summary?.count?.lms_completed)}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
               </View>
 
@@ -1589,7 +1675,8 @@ export const LaporanDigitalSign = () => {
                 <View style={{ marginVertical: 10 }}>
                   <Dropdown
                     data={
-                      listYear === undefined
+                      listYear === undefined ||
+                      listYear["PELATIHAN KEPEMIMPINAN PENGAWAS "] === undefined
                         ? []
                         : listYear["PELATIHAN KEPEMIMPINAN PENGAWAS "]
                     }
@@ -1620,6 +1707,7 @@ export const LaporanDigitalSign = () => {
                               name: "",
                               Implementasi: 0,
                               Peserta: 0,
+                              Aksi: 0,
                             },
                           ]
                         : dataGraphAksiPerubahan[
@@ -1627,7 +1715,7 @@ export const LaporanDigitalSign = () => {
                           ]
                     }
                     xKey="name"
-                    yKeys={["Implementasi", "Peserta"]}
+                    yKeys={["Implementasi", "Peserta", "Aksi"]}
                     domainPadding={{
                       left: 50,
                       right: 50,
@@ -1658,6 +1746,7 @@ export const LaporanDigitalSign = () => {
                           points={points.Implementasi}
                           color="#b745ff"
                         />
+                        <BarGroup.Bar points={points.Aksi} color="#38B2AC" />
                       </BarGroup>
                     )}
                   </CartesianChart>
@@ -1711,6 +1800,7 @@ export const LaporanDigitalSign = () => {
                               name: "",
                               Implementasi: 0,
                               Peserta: 0,
+                              Aksi: 0,
                             },
                           ]
                         : dataGraphAksiPerubahan[
@@ -1718,7 +1808,7 @@ export const LaporanDigitalSign = () => {
                           ]
                     }
                     xKey="name"
-                    yKeys={["Implementasi", "Peserta"]}
+                    yKeys={["Implementasi", "Peserta", "Aksi"]}
                     domainPadding={{
                       left: 50,
                       right: 50,
@@ -1754,6 +1844,7 @@ export const LaporanDigitalSign = () => {
                           points={points.Implementasi}
                           color="#b745ff"
                         />
+                        <BarGroup.Bar points={points.Aksi} color="#38B2AC" />
                       </BarGroup>
                     )}
                   </CartesianChart>
@@ -1772,10 +1863,10 @@ export const LaporanDigitalSign = () => {
 
                 <View style={{ marginVertical: 10 }}>
                   <Dropdown
-                    data={dataTingakatan}
+                    data={dataTingkatan}
                     setSelected={(item) => {
                       handleSelectedFilter(
-                        "PELATIHAN KEPEMIMPINAN NASIONAL",
+                        "PELATIHAN KEPEMIMPINAN NASIONAL ",
                         "tingkat",
                         item
                       );
@@ -1783,7 +1874,7 @@ export const LaporanDigitalSign = () => {
                       filterPelatihanByTingkatan(item.value.toLowerCase());
                     }}
                     selected={
-                      filter["PELATIHAN KEPEMIMPINAN NASIONAL"]?.tingkat
+                      filter["PELATIHAN KEPEMIMPINAN NASIONAL "]?.tingkat
                     }
                     borderWidth={1}
                     borderwidthDrop={1}
@@ -1798,14 +1889,13 @@ export const LaporanDigitalSign = () => {
                     <Dropdown
                       data={
                         listYear === undefined ||
-                        listYear["PELATIHAN KEPEMIMPINAN NASIONAL"] ===
-                          undefined
+                        listYear[keyPelatihanNasional] === undefined
                           ? []
                           : listYear[keyPelatihanNasional]
                       }
                       setSelected={(item) => {
                         handleSelectedFilter(
-                          "PELATIHAN KEPEMIMPINAN NASIONAL",
+                          "PELATIHAN KEPEMIMPINAN NASIONAL ",
                           "tahun",
                           item
                         );
@@ -1828,13 +1918,13 @@ export const LaporanDigitalSign = () => {
                       listBatch === undefined
                         ? []
                         : listBatch[keyPelatihanNasional][
-                            filter["PELATIHAN KEPEMIMPINAN NASIONAL"]?.tahun
+                            filter["PELATIHAN KEPEMIMPINAN NASIONAL "]?.tahun
                               ?.key
                           ]
                     }
                     setSelected={(item) => {
                       handleSelectedFilter(
-                        "PELATIHAN KEPEMIMPINAN NASIONAL",
+                        "PELATIHAN KEPEMIMPINAN NASIONAL ",
                         "angkatan",
                         item
                       );
@@ -1849,7 +1939,7 @@ export const LaporanDigitalSign = () => {
                   />
                 ) : null}
 
-                <View style={{ height: 350, marginTop: 10 }}>
+                {/* <View style={{ height: 350, marginTop: 10 }}>
                   <CartesianChart
                     data={
                       dataGraphAksiPerubahan[keyPelatihanNasional] ===
@@ -1900,6 +1990,137 @@ export const LaporanDigitalSign = () => {
                       </BarGroup>
                     )}
                   </CartesianChart>
+                </View> */}
+                <PieChart
+                  widthAndHeight={widthAndHeight}
+                  series={
+                    dataGraphAksiPerubahan[
+                      "PELATIHAN KEPEMIMPINAN NASIONAL "
+                    ] === undefined ||
+                    dataGraphAksiPerubahan["PELATIHAN KEPEMIMPINAN NASIONAL "]
+                      ?.length === 0
+                      ? [1, 1, 1]
+                      : dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ]
+                  }
+                  sliceColor={sliceColor}
+                  coverRadius={0.75}
+                  coverFill={"#FFF"}
+                  style={{ alignSelf: "center", marginVertical: 20 }}
+                />
+
+                <View
+                  style={{
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    gap: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#ff8f28",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>
+                      Peserta{" "}
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ] === undefined ||
+                        dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ]?.length === 0
+                          ? 0
+                          : numberWithCommas(
+                              dataGraphAksiPerubahan[
+                                "PELATIHAN KEPEMIMPINAN NASIONAL "
+                              ][0]
+                            )}
+                      </Text>
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#b745ff",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>
+                      Implementasi{" "}
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ] === undefined ||
+                        dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ]?.length === 0
+                          ? 0
+                          : numberWithCommas(
+                              dataGraphAksiPerubahan[
+                                "PELATIHAN KEPEMIMPINAN NASIONAL "
+                              ][1]
+                            )}
+                      </Text>
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#38B2AC",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>
+                      Aksi{" "}
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ] === undefined ||
+                        dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ]?.length === 0
+                          ? 0
+                          : numberWithCommas(
+                              dataGraphAksiPerubahan[
+                                "PELATIHAN KEPEMIMPINAN NASIONAL "
+                              ][2]
+                            )}
+                      </Text>
+                    </Text>
+                  </View>
                 </View>
               </View>
 
@@ -1967,7 +2188,7 @@ export const LaporanDigitalSign = () => {
                   series={
                     dataGraphAksiPerubahan === undefined ||
                     dataGraphAksiPerubahan["LATIHAN DASAR "].length === 0
-                      ? [1, 1]
+                      ? [1, 1, 1]
                       : dataGraphAksiPerubahan["LATIHAN DASAR "]
                   }
                   sliceColor={sliceColor}
@@ -1978,9 +2199,9 @@ export const LaporanDigitalSign = () => {
 
                 <View
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    gap: 20,
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    gap: 10,
                   }}
                 >
                   <View
@@ -1999,7 +2220,15 @@ export const LaporanDigitalSign = () => {
                         borderRadius: 50,
                       }}
                     />
-                    <Text>Peserta</Text>
+                    <Text>
+                      Peserta{" "}
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {dataGraphAksiPerubahan === undefined ||
+                        dataGraphAksiPerubahan["LATIHAN DASAR "].length === 0
+                          ? 0
+                          : dataGraphAksiPerubahan["LATIHAN DASAR "][0]}
+                      </Text>
+                    </Text>
                   </View>
 
                   <View
@@ -2018,7 +2247,42 @@ export const LaporanDigitalSign = () => {
                         borderRadius: 50,
                       }}
                     />
-                    <Text>Implementasi</Text>
+                    <Text>
+                      Implementasi{" "}
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {dataGraphAksiPerubahan === undefined ||
+                        dataGraphAksiPerubahan["LATIHAN DASAR "].length === 0
+                          ? 0
+                          : dataGraphAksiPerubahan["LATIHAN DASAR "][1]}
+                      </Text>
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#38B2AC",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>
+                      Aksi{" "}
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {dataGraphAksiPerubahan === undefined ||
+                        dataGraphAksiPerubahan["LATIHAN DASAR "].length === 0
+                          ? 0
+                          : dataGraphAksiPerubahan["LATIHAN DASAR "][2]}
+                      </Text>
+                    </Text>
                   </View>
                 </View>
               </View>

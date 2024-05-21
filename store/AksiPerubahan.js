@@ -63,6 +63,7 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getLaporanAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
+        console.log("gagal");
       })
       .addCase(getDivisionFilter.fulfilled, (state, action) => {
         state.filterSatkerUnker.unker = action.payload;

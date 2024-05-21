@@ -2335,13 +2335,14 @@ export const getFilterAksiPerubahan = createAsyncThunk(
 export const getLaporanAksiPerubahan = createAsyncThunk(
   "AksiPerubahan/getLaporanAksiPerubahan",
   async ({ token, unker, satker }) => {
-    console.log(unker, satker);
-    const respon = await axios.get(
-      `${BASE_URL}bridge/transform/dashboard/title/?unker=${unker}&satker=${satker}`,
-      {
-        headers: { Authorization: token },
-      }
-    );
+    let url =
+      satker === undefined && unker === undefined
+        ? `${BASE_URL}bridge/transform/dashboard/title/`
+        : `${BASE_URL}bridge/transform/dashboard/title/?unker=${unker}&satker=${satker}`;
+    console.log(url);
+    const respon = await axios.get(url, {
+      headers: { Authorization: token },
+    });
     return respon?.data?.results;
   }
 );
