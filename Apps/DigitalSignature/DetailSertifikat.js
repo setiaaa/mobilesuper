@@ -430,6 +430,37 @@ export const DetailSertifikat = (route) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
+                    Penyelenggara
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {item.extra_attributes?.penyelenggara !== undefined
+                          ? item.extra_attributes?.penyelenggara
+                          : "-"}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Tempat Pelatihan
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>

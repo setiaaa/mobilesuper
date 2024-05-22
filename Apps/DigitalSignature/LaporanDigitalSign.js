@@ -763,7 +763,9 @@ export const LaporanDigitalSign = () => {
                         fontWeight: 700,
                       }}
                     >
-                      {numberWithCommas(summary?.count.total_external)}
+                      {numberWithCommas(
+                        summary?.count.total_pelatihan_external
+                      )}
                     </Text>
                     <Text
                       style={{
@@ -1715,7 +1717,7 @@ export const LaporanDigitalSign = () => {
                           ]
                     }
                     xKey="name"
-                    yKeys={["Implementasi", "Peserta", "Aksi"]}
+                    yKeys={["Implementasi", "Aksi", "Peserta"]}
                     domainPadding={{
                       left: 50,
                       right: 50,
@@ -1750,6 +1752,71 @@ export const LaporanDigitalSign = () => {
                       </BarGroup>
                     )}
                   </CartesianChart>
+                </View>
+                <View
+                  style={{
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    gap: 10,
+                    marginTop: 20,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#ff8f28",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>Peserta</Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#38B2AC",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>Aksi</Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#b745ff",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>Implementasi</Text>
+                  </View>
                 </View>
               </View>
 
@@ -1808,7 +1875,7 @@ export const LaporanDigitalSign = () => {
                           ]
                     }
                     xKey="name"
-                    yKeys={["Implementasi", "Peserta", "Aksi"]}
+                    yKeys={["Implementasi", "Aksi", "Peserta"]}
                     domainPadding={{
                       left: 50,
                       right: 50,
@@ -1848,6 +1915,71 @@ export const LaporanDigitalSign = () => {
                       </BarGroup>
                     )}
                   </CartesianChart>
+                </View>
+                <View
+                  style={{
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    gap: 10,
+                    marginTop: 20,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#ff8f28",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>Peserta</Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#38B2AC",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>Aksi</Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#b745ff",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>Implementasi</Text>
+                  </View>
                 </View>
               </View>
 
@@ -1938,59 +2070,6 @@ export const LaporanDigitalSign = () => {
                     borderColorValue={COLORS.ExtraDivinder}
                   />
                 ) : null}
-
-                {/* <View style={{ height: 350, marginTop: 10 }}>
-                  <CartesianChart
-                    data={
-                      dataGraphAksiPerubahan[keyPelatihanNasional] ===
-                        undefined ||
-                      dataGraphAksiPerubahan[keyPelatihanNasional]?.length === 0
-                        ? [
-                            {
-                              name: "",
-                              Implementasi: 0,
-                              Peserta: 0,
-                            },
-                          ]
-                        : dataGraphAksiPerubahan[keyPelatihanNasional]
-                    }
-                    xKey="name"
-                    yKeys={["Implementasi", "Peserta"]}
-                    domainPadding={{
-                      left: 50,
-                      right: 50,
-                      top: 10,
-                    }}
-                    // domain={{ y: [0, 5] }}
-                    axisOptions={{
-                      font: font,
-                      formatXLabel: (value) => {
-                        return value === undefined ? "" : value?.toString();
-                      },
-                      formatYLabel: (value) => {
-                        return value === undefined ? "" : value?.toString();
-                      },
-                    }}
-                  >
-                    {({ points, chartBounds, canvasSize }) => (
-                      <BarGroup
-                        chartBounds={chartBounds}
-                        betweenGroupPadding={0.3}
-                        withinGroupPadding={0.1}
-                        roundedCorners={{
-                          topLeft: 5,
-                          topRight: 5,
-                        }}
-                      >
-                        <BarGroup.Bar points={points.Peserta} color="#ff8f28" />
-                        <BarGroup.Bar
-                          points={points.Implementasi}
-                          color="#b745ff"
-                        />
-                      </BarGroup>
-                    )}
-                  </CartesianChart>
-                </View> */}
                 <PieChart
                   widthAndHeight={widthAndHeight}
                   series={
@@ -2062,41 +2141,6 @@ export const LaporanDigitalSign = () => {
                   >
                     <View
                       style={{
-                        backgroundColor: "#b745ff",
-                        height: 30,
-                        width: 30,
-                        borderRadius: 50,
-                      }}
-                    />
-                    <Text>
-                      Implementasi{" "}
-                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                        {dataGraphAksiPerubahan[
-                          "PELATIHAN KEPEMIMPINAN NASIONAL "
-                        ] === undefined ||
-                        dataGraphAksiPerubahan[
-                          "PELATIHAN KEPEMIMPINAN NASIONAL "
-                        ]?.length === 0
-                          ? 0
-                          : numberWithCommas(
-                              dataGraphAksiPerubahan[
-                                "PELATIHAN KEPEMIMPINAN NASIONAL "
-                              ][1]
-                            )}
-                      </Text>
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 10,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
                         backgroundColor: "#38B2AC",
                         height: 30,
                         width: 30,
@@ -2117,6 +2161,41 @@ export const LaporanDigitalSign = () => {
                               dataGraphAksiPerubahan[
                                 "PELATIHAN KEPEMIMPINAN NASIONAL "
                               ][2]
+                            )}
+                      </Text>
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#b745ff",
+                        height: 30,
+                        width: 30,
+                        borderRadius: 50,
+                      }}
+                    />
+                    <Text>
+                      Implementasi{" "}
+                      <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                        {dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ] === undefined ||
+                        dataGraphAksiPerubahan[
+                          "PELATIHAN KEPEMIMPINAN NASIONAL "
+                        ]?.length === 0
+                          ? 0
+                          : numberWithCommas(
+                              dataGraphAksiPerubahan[
+                                "PELATIHAN KEPEMIMPINAN NASIONAL "
+                              ][1]
                             )}
                       </Text>
                     </Text>
@@ -2241,19 +2320,19 @@ export const LaporanDigitalSign = () => {
                   >
                     <View
                       style={{
-                        backgroundColor: "#b745ff",
+                        backgroundColor: "#38B2AC",
                         height: 30,
                         width: 30,
                         borderRadius: 50,
                       }}
                     />
                     <Text>
-                      Implementasi{" "}
+                      Aksi{" "}
                       <Text style={{ fontWeight: FONTWEIGHT.bold }}>
                         {dataGraphAksiPerubahan === undefined ||
                         dataGraphAksiPerubahan["LATIHAN DASAR "].length === 0
                           ? 0
-                          : dataGraphAksiPerubahan["LATIHAN DASAR "][1]}
+                          : dataGraphAksiPerubahan["LATIHAN DASAR "][2]}
                       </Text>
                     </Text>
                   </View>
@@ -2268,19 +2347,19 @@ export const LaporanDigitalSign = () => {
                   >
                     <View
                       style={{
-                        backgroundColor: "#38B2AC",
+                        backgroundColor: "#b745ff",
                         height: 30,
                         width: 30,
                         borderRadius: 50,
                       }}
                     />
                     <Text>
-                      Aksi{" "}
+                      Implementasi{" "}
                       <Text style={{ fontWeight: FONTWEIGHT.bold }}>
                         {dataGraphAksiPerubahan === undefined ||
                         dataGraphAksiPerubahan["LATIHAN DASAR "].length === 0
                           ? 0
-                          : dataGraphAksiPerubahan["LATIHAN DASAR "][2]}
+                          : dataGraphAksiPerubahan["LATIHAN DASAR "][1]}
                       </Text>
                     </Text>
                   </View>
