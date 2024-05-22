@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Login } from "../service/api";
 import { setTokenValue } from "../service/session";
+import * as Sentry from "@sentry/react";
 
 const LoginAuthSlice = createSlice({
   name: "Login",
@@ -28,6 +29,7 @@ const LoginAuthSlice = createSlice({
         state.error = false;
         state.error = action.payload.error;
         state.msg = action.payload.msg;
+        Sentry.captureException(action.payload);
       });
   },
 });

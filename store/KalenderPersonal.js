@@ -3,6 +3,7 @@ import {
   getDetailKalenderPersonal,
   getlistKalenderPersonal,
 } from "../service/api";
+import * as Sentry from "@sentry/react";
 
 const KalenderPersonalSlice = createSlice({
   name: "KalenderPersonal",
@@ -26,6 +27,7 @@ const KalenderPersonalSlice = createSlice({
       })
       .addCase(getlistKalenderPersonal.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDetailKalenderPersonal.fulfilled, (state, action) => {
         state.personal.detail = action.payload;
@@ -36,6 +38,7 @@ const KalenderPersonalSlice = createSlice({
       })
       .addCase(getDetailKalenderPersonal.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

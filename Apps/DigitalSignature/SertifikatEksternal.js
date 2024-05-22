@@ -112,7 +112,7 @@ export const SertifikatEksternal = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        style={{ height: "70%" }}
+        style={{ height: "90%" }}
       />
     </View>
   );

@@ -106,6 +106,7 @@ const SuperAppsSlice = createSlice({
       .addCase(getProfileMe.rejected, (state, action) => {
         state.loading = false;
         state.handleError = true;
+        Sentry.captureException(action.payload);
       })
       .addCase(getBanner.fulfilled, (state, action) => {
         state.banner = action.payload;
@@ -116,6 +117,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getBanner.rejected, (state, action) => {
         // state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getGaleri.fulfilled, (state, action) => {
         // state.galeri.lists = action.payload;
@@ -131,6 +133,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getGaleri.rejected, (state, action) => {
         // state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getBerita.fulfilled, (state, action) => {
         let dataPrev = state.berita.lists;
@@ -144,6 +147,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getBerita.rejected, (state, action) => {
         // state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDetailBerita.fulfilled, (state, action) => {
         state.berita.detail = action.payload;
@@ -154,6 +158,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getDetailBerita.rejected, (state, action) => {
         // state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getLastLogAttendence.fulfilled, (state, action) => {
         state.lastLog = action.payload;
@@ -165,6 +170,7 @@ const SuperAppsSlice = createSlice({
       })
       .addCase(getLastLogAttendence.rejected, (state, action) => {
         // state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(postAttendence.fulfilled, (state, action) => {
         state.post = true;
@@ -176,6 +182,7 @@ const SuperAppsSlice = createSlice({
       .addCase(postAttendence.rejected, (state, action) => {
         state.status = "error";
         state.post = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

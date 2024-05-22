@@ -283,6 +283,14 @@ export const Profile = () => {
             >
               IP ASN
             </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+                marginTop: 5,
+              }}
+            >
+              Sumber Data SIASN
+            </Text>
 
             <View style={{ paddingBottom: 20 }}>
               <View

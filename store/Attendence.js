@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getLastLogAttendence } from "../service/api";
+import * as Sentry from "@sentry/react";
 
 const AttendenceSlice = createSlice({
   name: "Attendence",
@@ -19,6 +20,7 @@ const AttendenceSlice = createSlice({
       })
       .addCase(getLastLogAttendence.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

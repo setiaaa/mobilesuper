@@ -7,6 +7,7 @@ import {
   getLaporanAksiPerubahan,
   getSubDivisionFilter,
 } from "../service/api";
+import * as Sentry from "@sentry/react";
 
 const AksiPerubahan = createSlice({
   name: "AksiPerubahan",
@@ -33,6 +34,7 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getFilterAksiPerubahan.fulfilled, (state, action) => {
         state.filter = action.payload;
@@ -43,6 +45,7 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getFilterAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDetailAksiPerubahan.fulfilled, (state, action) => {
         state.detail = action.payload;
@@ -53,6 +56,7 @@ const AksiPerubahan = createSlice({
       })
       .addCase(getDetailAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getLaporanAksiPerubahan.fulfilled, (state, action) => {
         state.laporan = action.payload;
@@ -64,6 +68,7 @@ const AksiPerubahan = createSlice({
       .addCase(getLaporanAksiPerubahan.rejected, (state, action) => {
         state.loading = false;
         console.log("gagal");
+        Sentry.captureException(action.payload);
       })
       .addCase(getDivisionFilter.fulfilled, (state, action) => {
         state.filterSatkerUnker.unker = action.payload;
