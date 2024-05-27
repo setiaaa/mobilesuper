@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   RefreshControl,
@@ -26,6 +26,8 @@ export const SertifikatEksternal = () => {
   const [token, setToken] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const { device } = useSelector((state) => state.apps);
+  const scrollRef = useRef(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -34,13 +36,13 @@ export const SertifikatEksternal = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getListSertifikatEksternal({ token: token, page: "1" }));
+    dispatch(getListSertifikatEksternal({ token: token, page: page }));
   }, [token]);
 
   const onRefresh = React.useCallback(() => {
     try {
       if (token !== "") {
-        dispatch(getListSertifikatEksternal({ token: token, page: "1" }));
+        dispatch(getListSertifikatEksternal({ token: token, page: page }));
       }
     } catch (error) {}
 
@@ -48,7 +50,18 @@ export const SertifikatEksternal = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [token]);
+  }, [token, page]);
+
+  const loadMore = () => {
+    if (eksternal?.lists?.length !== 0) {
+      if (eksternal?.lists?.length % 5 === 0) {
+        setPage(page + 1);
+        if (scrollRef) {
+          scrollRef.current.scrollToIndex({ animated: false, index: 0 });
+        }
+      }
+    }
+  };
 
   const { eksternal, loading } = useSelector((state) => state.digitalsign);
 
@@ -108,6 +121,8 @@ export const SertifikatEksternal = () => {
             />
           </View>
         )}
+        onEndReached={loadMore}
+        ref={scrollRef}
         ListEmptyComponent={() => <ListEmpty />}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

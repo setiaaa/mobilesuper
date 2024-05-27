@@ -26,6 +26,7 @@
   },
   "android": {
     "versionCode": 735,
+    "enableHermes": true,
     "permissions": [
       "WRITE_EXTERNAL_STORAGE",
       "READ_EXTERNAL_STORAGE",

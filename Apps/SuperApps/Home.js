@@ -90,7 +90,7 @@ import {
   setStatus,
 } from "../../store/SuperApps";
 import { openURL } from "expo-linking";
-import * as Location from "expo-location";
+// import * as Location from "expo-location";
 import moment, { duration } from "moment";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { MotiView } from "@motify/components";
@@ -605,32 +605,32 @@ export const Home = () => {
   const [checkApps, setCheckApps] = useState();
   const [permissionStatus, setPermissionStatus] = useState(false);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      Location.requestForegroundPermissionsAsync().then((status) => {
-        if (status.status !== "granted") {
-          setErrorMsg("Izin akses lokasi tidak diberikan");
-          setLocation(null);
-          setPermissionStatus(false);
-          return;
-        } else {
-          setPermissionStatus(true);
-        }
-      });
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     Location.requestForegroundPermissionsAsync().then((status) => {
+  //       if (status.status !== "granted") {
+  //         setErrorMsg("Izin akses lokasi tidak diberikan");
+  //         setLocation(null);
+  //         setPermissionStatus(false);
+  //         return;
+  //       } else {
+  //         setPermissionStatus(true);
+  //       }
+  //     });
 
-      Location.getCurrentPositionAsync({}).then((location) => {
-        // console.log(location);
-        setLocation({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        });
-      });
-    }, 10000);
+  //     Location.getCurrentPositionAsync({}).then((location) => {
+  //       // console.log(location);
+  //       setLocation({
+  //         latitude: location.coords.latitude,
+  //         longitude: location.coords.longitude,
+  //         latitudeDelta: 0.1,
+  //         longitudeDelta: 0.1,
+  //       });
+  //     });
+  //   }, 10000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   const handleCheckin = () => {
     let longlat = [location?.longitude, location?.latitude];
