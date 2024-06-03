@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getDetailPegawai, getPegawai } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const PegawaiSlice = createSlice({
   name: "Pegawai",

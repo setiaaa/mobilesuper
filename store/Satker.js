@@ -8,7 +8,7 @@ import {
   getSatkerNews,
   getUltah,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const SatkerSlice = createSlice({
   name: "Satker",

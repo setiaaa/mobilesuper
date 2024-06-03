@@ -6,7 +6,7 @@ import {
   getSurveyReport,
   postSurvey,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const SurveySlice = createSlice({
   name: "Survey",

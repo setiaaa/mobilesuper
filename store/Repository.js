@@ -9,7 +9,7 @@ import {
   getSubDivisionFilter,
   postRating,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const RepositorySlice = createSlice({
   name: "Repository",

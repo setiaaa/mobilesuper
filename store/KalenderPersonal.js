@@ -3,7 +3,7 @@ import {
   getDetailKalenderPersonal,
   getlistKalenderPersonal,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const KalenderPersonalSlice = createSlice({
   name: "KalenderPersonal",

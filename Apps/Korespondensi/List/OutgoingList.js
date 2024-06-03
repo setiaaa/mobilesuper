@@ -137,9 +137,9 @@ export const OutgoingList = ({ navigation }) => {
               style={{ flexDirection: "row", gap: 15 }}
               onPress={() => navigation.navigate("MainOutgoingDetail")}
             >
-              <Image
+              {/* <Image
                 source={require("../../../assets/superApp/AvatarKepBiroSDMA.png")}
-              />
+              /> */}
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: 250, gap: 5 }}>
                   <View
@@ -173,10 +173,10 @@ export const OutgoingList = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={{ flexDirection: "row", gap: 15 }}>
-              <Image
+              {/* <Image
                 source={require("../../../assets/superApp/AvatarA.png")}
                 style={{ width: 30, height: 30, borderRadius: 15 }}
-              />
+              /> */}
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: 250, gap: 5 }}>
                   <Text style={{ fontSize: 13, fontWeight: 400 }}>
@@ -201,10 +201,10 @@ export const OutgoingList = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={{ flexDirection: "row", gap: 15 }}>
-              <Image
+              {/* <Image
                 source={require("../../../assets/superApp/AvatarA.png")}
                 style={{ width: 30, height: 30, borderRadius: 15 }}
-              />
+              /> */}
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: 250, gap: 5 }}>
                   <Text style={{ fontSize: 13, fontWeight: 400 }}>
@@ -254,9 +254,9 @@ export const OutgoingList = ({ navigation }) => {
 
           <View style={{ padding: 20, gap: 20 }}>
             <TouchableOpacity style={{ flexDirection: "row", gap: 15 }}>
-              <Image
+              {/* <Image
                 source={require("../../../assets/superApp/AvatarKepBiroSDMA.png")}
-              />
+              /> */}
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: 250, gap: 5 }}>
                   <View
@@ -290,10 +290,10 @@ export const OutgoingList = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={{ flexDirection: "row", gap: 15 }}>
-              <Image
+              {/* <Image
                 source={require("../../../assets/superApp/AvatarA.png")}
                 style={{ width: 30, height: 30, borderRadius: 15 }}
-              />
+              /> */}
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: 250, gap: 5 }}>
                   <Text style={{ fontSize: 13, fontWeight: 400 }}>
@@ -318,10 +318,10 @@ export const OutgoingList = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={{ flexDirection: "row", gap: 15 }}>
-              <Image
+              {/* <Image
                 source={require("../../../assets/superApp/AvatarA.png")}
                 style={{ width: 30, height: 30, borderRadius: 15 }}
-              />
+              /> */}
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: 250, gap: 5 }}>
                   <Text style={{ fontSize: 13, fontWeight: 400 }}>

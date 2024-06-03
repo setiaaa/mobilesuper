@@ -9,7 +9,7 @@ import {
   getDocumentDetailSPPD,
   getDocumentListSPPD,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const SPPDSlice = createSlice({
   name: "SPPD",

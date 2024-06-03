@@ -10,24 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTeknologiList } from "../../store/Dashboard";
 import { useNavigation } from "@react-navigation/native";
 
-const teknologi = [
-  {
-    image: require("../../assets/superApp/teknologi.png"),
-    imagedetail: require("../../assets/superApp/teknologi2.png"),
-    deskripsi: "Larangan Pengeluaran Ikan Arwana dan Ikan Botia",
-  },
-  {
-    image: require("../../assets/superApp/teknologi.png"),
-    deskripsi:
-      "Pengelolaan Kesehatan Ikan dan Lingkungan Tambak Budidaya Udang Intensif",
-  },
-  {
-    image: require("../../assets/superApp/teknologi.png"),
-    imagedetail: require("../../assets/superApp/teknologi2.png"),
-    deskripsi: "Penyakit Undang",
-  },
-];
-
 export const Keuangan = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();

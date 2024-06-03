@@ -31,14 +31,14 @@ export const Profile = () => {
         }}
       >
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Image
+          {/* <Image
             source={require("../../assets/superApp/Card-Background-Blue.png")}
             style={{
               width: "100%",
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,
             }}
-          />
+          /> */}
           <View style={{ alignItems: "center", gap: 10, position: "absolute" }}>
             {errorAvatarProfile && (
               <Image

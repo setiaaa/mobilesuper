@@ -14,7 +14,7 @@ import {
   putEditAgendaGrup,
   putEditGrup,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const GrupKalenderSlice = createSlice({
   name: "GrupKalender",

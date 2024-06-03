@@ -33,7 +33,7 @@ import {
   postComment,
   putTakeDown,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const PengetahuanSlice = createSlice({
   name: "Pengetahuan",

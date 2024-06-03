@@ -41,7 +41,22 @@
       "developmentClient": true
     },
     "production": {
-      "autoIncrement": true
+      "env": {
+        "SENTRY_AUTH_TOKEN": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "SENTRY_ORG": "sentry",
+        "SENTRY_PROJECT": "kkp-mobile-prod",
+        "EXPO_OPTIMIZE": "true"
+      },
+      "android": {
+        "buildType": "apk",
+        "image": "latest",
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "ios": {
+        "simulator": false,
+        "enterpriseProvisioning": "adhoc"
+      },
+      "distribution": "store"
     }
   },
   "submit": {

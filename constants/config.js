@@ -1,12 +1,5 @@
 import Constants from "expo-constants";
-import {
-  backGroundLayoutBottom,
-  backgroundLogin,
-  logoHeader,
-  avatar,
-  notFound,
-  maps,
-} from "../config/images";
+import { maps, notFound } from "../config/images";
 
 const extra = Constants.expoConfig.extra;
 export const Config = {
@@ -17,10 +10,6 @@ export const Config = {
   base_url_cuti: extra.base_url_cuti,
   base_url_helpdesk: extra.base_url_helpdesk,
   upgrade_url: extra.upgrade_url,
-  backgroundLogin: backgroundLogin[extra.id],
-  backgroundLayoutBottom: backGroundLayoutBottom[extra.id],
-  logoHeader: logoHeader[extra.id],
-  avatar: avatar[extra.id],
   notFound: notFound[extra.id],
   maps: maps[extra.id],
   statusbarAuth: extra.statusBarAuth,

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getParts, getTicket, postTicket, updateTicket } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const HelpDeskSlice = createSlice({
   name: "HelpDesk",

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getKesejahteraan, getPerencanaan, getTeknologi } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const DashboardSlice = createSlice({
   name: "Dashboard",

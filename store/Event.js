@@ -31,7 +31,7 @@ import {
   updateSubAgenda,
   updateTodo,
 } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const EventSlice = createSlice({
   name: "Task",

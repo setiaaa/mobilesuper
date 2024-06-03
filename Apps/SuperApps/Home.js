@@ -14,7 +14,6 @@ import {
   FlatList,
   AppState,
 } from "react-native";
-import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
 // import { Carousel } from '../../components/Carousel/Carousel'
 import { Search } from "../../components/Search";

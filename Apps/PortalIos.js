@@ -13,7 +13,7 @@ import {
   bannerKegiatan as BannerKegiatan,
   bannerKegiatan,
 } from "../components/BannerKegiatan";
-import Banner1 from "./../assets/superApp/banner1.jpeg";
+import Banner1 from "../assets/superApp/Card-Background-Red.png";
 
 export const PortalIos = () => {
   const { device } = useSelector((state) => state.apps);

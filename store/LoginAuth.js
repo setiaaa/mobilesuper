@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Login } from "../service/api";
 import { setTokenValue } from "../service/session";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const LoginAuthSlice = createSlice({
   name: "Login",

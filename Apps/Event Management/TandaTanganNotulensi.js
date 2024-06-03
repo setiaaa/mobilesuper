@@ -122,7 +122,7 @@ export const TandaTanganNotulensi = ({ route }) => {
       <WebView
         ref={webViewRef}
         source={{
-          uri: "https://portal.kkp.go.id/assets/pdfViewerNotulensi/index.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/pdfViewerNotulensi/index.html",
         }}
         style={{ flex: 1 }}
         injectedJavaScript={myInjectedJs}

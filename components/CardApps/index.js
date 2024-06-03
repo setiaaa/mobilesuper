@@ -408,7 +408,7 @@ export const CardApps = ({
                 width: device === "tablet" ? 50 : 28,
                 height: device === "tablet" ? 50 : 28,
               }}
-              source={require("../../assets/superApp/pegawai-ikon.png")}
+              source={require("../../assets/superApp/pegawai.png")}
             />
           </View>
         </TouchableOpacity>
@@ -538,7 +538,7 @@ export const CardApps = ({
                   width: device === "tablet" ? 50 : 28,
                   height: device === "tablet" ? 50 : 28,
                 }}
-                source={require("../../assets/superApp/kalender-ikon.png")}
+                source={require("../../assets/superApp/kalender.png")}
               />
             </View>
           </TouchableOpacity>
@@ -684,7 +684,7 @@ export const CardApps = ({
                   width: device === "tablet" ? 50 : 28,
                   height: device === "tablet" ? 50 : 28,
                 }}
-                source={require("../../assets/superApp/agenda-ikon.png")}
+                source={require("../../assets/superApp/event.png")}
               />
             </View>
           </TouchableOpacity>

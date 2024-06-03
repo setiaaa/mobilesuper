@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getLastLogAttendence } from "../service/api";
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-native";
 
 const AttendenceSlice = createSlice({
   name: "Attendence",

@@ -59,7 +59,6 @@ import * as Application from "expo-application";
 import Main from "../SuperApps/Main";
 import DetailDashboard from "../../Apps/Kebijakan/DetailDashboard";
 import PdfViewer from "../../Apps/Kebijakan/PdfViewer";
-import { DrawerNavigation } from "../Kebijakan/Drawer";
 import MyTabBar from "../SuperApps/BottomTabs";
 import { Onboarding } from "../Onboarding";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
@@ -89,7 +88,6 @@ import { DetailTeknologi } from "../Dashboard/DetailTeknologi";
 import { DetailLinimasa } from "../Pengetahuan/DetailLinimasa";
 import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
 import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
-import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
 import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
 import { DetailDokumenLain } from "../DigitalSignature/DetailDokumenLain";
 import { LaporanDigitalSign } from "../DigitalSignature/LaporanDigitalSign";
@@ -514,14 +512,6 @@ function AuthenticatedStack({ route }) {
               gestureEnabled: false,
             }}
           />
-          {/* <Stack.Screen
-            name="Kebijakan"
-            component={DrawerNavigation}
-            options={{
-              headerShown: false,
-              gestureEnabled: false
-            }}
-          /> */}
           <Stack.Screen
             name="ListBerita"
             component={ListBerita}
@@ -916,13 +906,6 @@ function AuthenticatedStack({ route }) {
             }}
           />
           <Stack.Screen
-            name="DetailPostinganSaya"
-            component={DetailPostinganSaya}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
             name="ListPostinganPegawai"
             component={ListPostinganPegawai}
             options={{
@@ -1169,21 +1152,6 @@ function AuthenticatedStack({ route }) {
               title: "Detail Surat Keluar",
             }}
           />
-          {/* <Stack.Screen
-                name="Main"
-                component={Main}
-                options={{
-                  headerShown: false,
-                }}
-              /> */}
-          {/* <Stack.Screen
-                name="Kebijakan"
-                component={DrawerNavigation}
-                options={{
-                  headerShown: false,
-                  gestureEnabled: false
-                }}
-              /> */}
           <Stack.Screen
             name="DetailDashboard"
             component={DetailDashboard}
@@ -1525,7 +1493,7 @@ function AppNavigator() {
       if (val === null) {
         setRoute("LoginToken");
         setLinking({
-          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
           config: {
             initialRouteName: "LoginToken",
             screens: {
@@ -1536,7 +1504,7 @@ function AppNavigator() {
       } else {
         setRoute("Main");
         setLinking({
-          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
           config: {
             initialRouteName: "Main",
             screens: {

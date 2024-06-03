@@ -93,10 +93,10 @@ export const KomentarOutgoingDetail = () => {
 
               <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: "row", gap: 10 }}>
-                  <Image
+                  {/* <Image
                     source={require("../../../../assets/superApp/AvatarN.png")}
                     style={{ width: 26, height: 26 }}
-                  />
+                  /> */}
                   <View style={{ gap: 10 }}>
                     <View style={{ gap: 5 }}>
                       <Text
@@ -210,10 +210,10 @@ export const KomentarOutgoingDetail = () => {
 
               <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: "row", gap: 10 }}>
-                  <Image
+                  {/* <Image
                     source={require("../../../../assets/superApp/AvatarN.png")}
                     style={{ width: 26, height: 26 }}
-                  />
+                  /> */}
                   <View style={{ gap: 10 }}>
                     <View style={{ gap: 5 }}>
                       <Text
@@ -327,10 +327,10 @@ export const KomentarOutgoingDetail = () => {
 
               <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: "row", gap: 10 }}>
-                  <Image
+                  {/* <Image
                     source={require("../../../../assets/superApp/AvatarN.png")}
                     style={{ width: 26, height: 26 }}
-                  />
+                  /> */}
                   <View style={{ gap: 10 }}>
                     <View style={{ gap: 5 }}>
                       <Text
@@ -444,10 +444,10 @@ export const KomentarOutgoingDetail = () => {
 
               <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: "row", gap: 10 }}>
-                  <Image
+                  {/* <Image
                     source={require("../../../../assets/superApp/AvatarN.png")}
                     style={{ width: 26, height: 26 }}
-                  />
+                  /> */}
                   <View style={{ gap: 10 }}>
                     <View style={{ gap: 5 }}>
                       <Text
@@ -561,10 +561,10 @@ export const KomentarOutgoingDetail = () => {
 
               <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: "row", gap: 10 }}>
-                  <Image
+                  {/* <Image
                     source={require("../../../../assets/superApp/AvatarN.png")}
                     style={{ width: 26, height: 26 }}
-                  />
+                  /> */}
                   <View style={{ gap: 10 }}>
                     <View style={{ gap: 5 }}>
                       <Text

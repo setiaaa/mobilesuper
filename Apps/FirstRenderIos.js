@@ -14,10 +14,10 @@ export const FirstRenderIos = () => {
   const navigation = useNavigation();
   return (
     <View>
-      <ImageBackground
+      {/* <ImageBackground
         source={require("../assets/superApp/iosRender.png")}
         style={{ width: "100%", height: "100%" }}
-      />
+      /> */}
       <View
         style={{
           zIndex: 1,
