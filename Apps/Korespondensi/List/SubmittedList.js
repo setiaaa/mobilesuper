@@ -43,6 +43,7 @@ import { logout } from "../../../store/auth";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as Sentry from "@sentry/react-native";
 
 function SubmittedList({ route }) {
   const [list, setList] = useState([]);
@@ -107,6 +108,7 @@ function SubmittedList({ route }) {
     } catch (error) {
       setIsLoading(false);
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(
@@ -169,6 +171,7 @@ function SubmittedList({ route }) {
       setIsLoading(false);
       bottomSheetModalRef.current?.dismiss();
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(

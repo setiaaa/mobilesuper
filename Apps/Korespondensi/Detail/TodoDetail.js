@@ -27,6 +27,7 @@ import { getHTTP, postHTTP } from "../../../utils/http";
 import TreeView from "react-native-final-tree-view";
 import { logout } from "../../../store/auth";
 import { Config } from "../../../constants/config";
+import * as Sentry from "@sentry/react-native";
 
 function TodoDetail({ route }) {
   const [errorAvatarSender, setErrorAvatarSender] = useState(false);
@@ -68,8 +69,10 @@ function TodoDetail({ route }) {
       }
     } catch (error) {
       if (error.response.status === 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout);
       } else {
+        Sentry.captureEvent(error?.response);
         Alert.alert("Warning!", Config.labelTodo + " Detail not working!");
       }
     }

@@ -81,7 +81,7 @@ export const CardListSertifikatEksternal = ({ device, item, token }) => {
         <Text
           style={{
             fontSize: fontSizeResponsive("H3", device),
-            width: 200,
+            width: 180,
             textAlign: "justify",
             fontWeight: FONTWEIGHT.normal,
           }}

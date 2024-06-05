@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Config } from "../constants/config";
 import { logout, setFirstLogin } from "../store/auth";
 import { nde_api } from "./api.config";
+import * as Sentry from "@sentry/react-native";
 
 export async function headerToken() {
   let token;
@@ -33,7 +34,9 @@ export const handlerError = (error, title, msg) => {
   // function showError(error, title, msg) {
   if (error?.response?.status == null) {
     Alert.alert("Peringatan!", "Silakan cek koneksi Anda");
+    Sentry.captureException(error?.response);
   } else if (error?.response?.status == 404) {
+    Sentry.captureException(error?.response);
     Alert.alert("Peringatan!", "Halaman tidak ditemukan", [
       {
         text: "Ok",
@@ -47,15 +50,16 @@ export const handlerError = (error, title, msg) => {
     // dispatch(setFirstLogin(false));
     // dispatch(logout());
   } else {
-     Alert.alert(title, msg + `\n\nversion ` + Config.app_version, [
-       {
-         text: "Ok",
-         onPress: () => {
-           // navigation.goBack();
-         },
-         style: "cancel",
-       },
-     ]);
+    Sentry.captureException(error?.response);
+    Alert.alert(title, msg + `\n\nversion ` + Config.app_version, [
+      {
+        text: "Ok",
+        onPress: () => {
+          // navigation.goBack();
+        },
+        style: "cancel",
+      },
+    ]);
   }
   // }
   // showError(error, title, msg);
