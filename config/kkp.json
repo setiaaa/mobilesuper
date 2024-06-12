@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "kkpsuperapps",
-  "version": "0.1.9",
+  "version": "0.1.2",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
   "userInterfaceStyle": "automatic",
@@ -27,6 +27,10 @@
   "android": {
     "versionCode": 735,
     "enableHermes": true,
+    "notification": {
+        "icon": "./assets/ic_stat_onesignal_default.png",
+        "color": "#323247"  
+      },
     "permissions": [
       "WRITE_EXTERNAL_STORAGE",
       "READ_EXTERNAL_STORAGE",
@@ -97,9 +101,18 @@
           "project": "kkp-mobile-prod",
           "organization": "sentry"
         }
-      ]
+    ],
+    [
+      "onesignal-expo-plugin",
+      {
+        "mode": "development",
+        "smallIcons": ["./assets/ic_stat_onesignal_default.png"],
+        "smallIconAccentColor": "#323247"
+      }
+    ]
   ],
   "extra": {
+    "oneSignalAppId": "c05c3988-abc5-41f4-88df-efb0dea20805",
     "eas": {
       "projectId": "f4f0fd5a-f2d1-4fd7-be69-ce52cc8f0133"
     },

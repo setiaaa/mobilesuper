@@ -11,6 +11,7 @@ export const Config = {
   base_url_helpdesk: extra.base_url_helpdesk,
   upgrade_url: extra.upgrade_url,
   notFound: notFound[extra.id],
+  oneSignalAppId: extra.oneSignalAppId,
   maps: maps[extra.id],
   statusbarAuth: extra.statusBarAuth,
   statusbarAuthenticated: extra.statusBarAuthtenticated,

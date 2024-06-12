@@ -15,6 +15,9 @@ import { Platform } from "react-native";
 import { useEffect } from "react";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { setDevice } from "./store/Apps";
+import { LogLevel, OneSignal } from "react-native-onesignal";
+import Constants from "expo-constants";
+import { setDataNotif } from "./store/pushnotif";
 // import OneSignal from "react-native-onesignal";
 // import Constants from "expo-constants";
 
@@ -24,7 +27,15 @@ import { setDevice } from "./store/Apps";
 // // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
 // OneSignal.promptForPushNotificationsWithUserResponse();
 
+OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
+
+// Also need enable notifications to complete OneSignal setup
+OneSignal.Notifications.requestPermission(true);
+
 export default function App() {
+  // const dispatch = useDispatch();
+
   const theme = {
     ...DefaultTheme,
     roundness: 2,

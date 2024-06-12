@@ -57,8 +57,7 @@ function DispositionDetail({ route }) {
       let response = await getHTTP(
         nde_api.agendadisporead.replace("{$id}", id)
       );
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   let routes;

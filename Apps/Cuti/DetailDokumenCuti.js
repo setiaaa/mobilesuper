@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useState } from "react";
 import { Platform, TextInput, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -37,6 +37,7 @@ import {
 import { Config } from "../../constants/config";
 import { ResizeMode, Video } from "expo-av";
 import { Loading } from "../../components/Loading";
+import { removePushNotif } from "../../service/session";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
@@ -698,6 +699,11 @@ export const DetailDokumenCuti = ({ route }) => {
     };
     dispatch(postApproval(data));
   };
+
+  useEffect(() => {
+    console.log("masuk effect");
+    removePushNotif();
+  }, [arsipDetail, loading]);
 
   const { device } = useSelector((state) => state.apps);
   return (

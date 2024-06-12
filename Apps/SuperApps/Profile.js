@@ -16,7 +16,7 @@ import { Collapse } from "accordion-collapse-react-native";
 import { CollapseCardBiodata } from "../../components/CollapseCardBiodata";
 import { ScrollView } from "react-native";
 import { CollapseCardLinimasa } from "../../components/CollapseCardLinimasa";
-import { removeTokenValue } from "../../service/session";
+import { removePushNotif, removeTokenValue } from "../../service/session";
 import { setLogout } from "../../store/LoginAuth";
 import { Loading } from "../../components/Loading";
 import { Alert } from "react-native";
@@ -26,6 +26,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
+import { OneSignal } from "react-native-onesignal";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -486,9 +487,11 @@ export const Profile = () => {
                   {
                     text: "YA",
                     onPress: () => {
+                      removePushNotif();
                       removeTokenValue();
                       dispatch(setLogout());
                       dispatch(setProfile({}));
+                      OneSignal.User.addTag("user_type", "");
                       navigation.reset({
                         index: 0,
                         routes: [{ name: "LoginToken" }],

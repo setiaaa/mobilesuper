@@ -7,6 +7,7 @@ const pushnotifSlice = createSlice({
   },
   reducers: {
     setDataNotif: (state, action) => {
+      console.log("store", action.payload);
       state.dataNotif = action.payload;
     },
   },

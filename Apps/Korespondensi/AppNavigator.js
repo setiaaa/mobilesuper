@@ -54,7 +54,6 @@ import ScanLogDetail from "./Detail/ScanLogDetail";
 import DigisignSearchEmail from "./Detail/DigisignSearchEmail";
 import { androidId } from "expo-application";
 import * as Device from "expo-device";
-import { setDataNotif } from "../../store/pushnotif";
 import * as Application from "expo-application";
 import Main from "../SuperApps/Main";
 import DetailDashboard from "../../Apps/Kebijakan/DetailDashboard";
@@ -143,7 +142,7 @@ import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
 import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
-import { getTokenValue } from "../../service/session";
+import { getTokenValue, setPushNotif } from "../../service/session";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 import { PencarianKorespondensi } from "./Pencarian/PencarianKorespondensi";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
@@ -185,6 +184,14 @@ import { MainSertifikat } from "../DigitalSignature/MainSertifikat";
 import { SertifikatLms } from "../DigitalSignature/SertifikatLms";
 import { DetailSertifikatEksternal } from "../DigitalSignature/DetailSertifikatEksternal";
 import * as Sentry from "@sentry/react-native";
+import {
+  LogLevel,
+  OneSignal,
+  NotificationWillDisplayEvent,
+} from "react-native-onesignal";
+import Constants from "expo-constants";
+import { setDataNotif } from "../../store/pushnotif";
+import { COLORS } from "../../config/SuperAppps";
 
 const Stack = createNativeStackNavigator();
 
@@ -1440,19 +1447,6 @@ function AuthenticatedStack({ route }) {
   );
 }
 
-// const bugsnag = Bugsnag({
-//   apiKey: "b67f9428d1c71d7476470cd97e3692a6",
-// });
-
-// Sentry.init({
-//   dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
-//   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-//   // We recommend adjusting this value in production.
-//   debug: true,
-//   // tracePropagationTargets: [Config.base_url],
-//   tracesSampleRate: 1.0,
-// });
-
 function AppNavigator() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -1470,6 +1464,33 @@ function AppNavigator() {
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
+  });
+
+  // //Method for handling notifications received while app in foreground
+  // OneSignal.setNotificationWillShowInForegroundHandler(
+  //   (notificationReceivedEvent) => {
+  //     let notification = notificationReceivedEvent.getNotification();
+  //     const data = notification?.additionalData;
+  //     //Silence notification by calling complete() with no argument
+  //     notificationReceivedEvent.complete(notification);
+  //   }
+  // );
+
+  // //Method for handling notifications opened
+  // OneSignal.setNotificationOpenedHandler((openedEvent) => {
+  //   // const { action, notification } = openedEvent;
+  //   // dispatch(setDataNotif(notification?.additionalData));
+  // })
+
+  OneSignal.Notifications.addEventListener("foregroundWillDisplay", (event) => {
+    event.getNotification().display();
+    event.notification.display();
+  });
+
+  OneSignal.Notifications.addEventListener("click", (event) => {
+    setPushNotif(event?.notification?.additionalData);
+    console.log("navigator", event.notification);
+    // dispatch(setDataNotif(notification?.additionalData));
   });
 
   useEffect(() => {

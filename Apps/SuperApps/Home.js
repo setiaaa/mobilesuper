@@ -63,7 +63,12 @@ import { Button } from "react-native";
 import { useCallback } from "react";
 import { Portal } from "react-native-portalize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getTokenValue, removeTokenValue } from "../../service/session";
+import {
+  getPushNotif,
+  getTokenValue,
+  removePushNotif,
+  removeTokenValue,
+} from "../../service/session";
 import {
   getBanner,
   getProfileMe,
@@ -71,6 +76,7 @@ import {
   getBerita,
   getLastLogAttendence,
   postAttendence,
+  getDetailArsipCuti,
 } from "../../service/api";
 import { bannerKegiatan as BannerKegiatan } from "../../components/BannerKegiatan";
 import { BeritaHome } from "../../components/BeritaHome";
@@ -96,7 +102,7 @@ import { MotiView } from "@motify/components";
 import { Easing } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
 import CryptoJS from "react-native-crypto-js";
-
+import { OneSignal } from "react-native-onesignal";
 const { width: screenWidth } = Dimensions.get("window");
 const numColumns = 3;
 
@@ -122,6 +128,7 @@ export const Home = () => {
   const [refresh, setRefresh] = useState(false);
   const [modalBankom, setModalBankom] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
+  const [dataNotif, setDataNotif] = useState();
   const [menuBankom, setMenuBankom] = useState([]);
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
@@ -155,7 +162,7 @@ export const Home = () => {
       dispatch(getBerita({ token, page }));
       dispatch(getLastLogAttendence(token));
     }
-  }, [token, profile, banner, galeri, berita]);
+  }, [token, profile, banner, galeri, berita, dataNotif]);
 
   const {
     berita,
@@ -171,6 +178,41 @@ export const Home = () => {
     status,
     post,
   } = useSelector((state) => state.superApps);
+
+  useEffect(() => {
+    OneSignal.User.addTag("user_type", profile?.nip?.toString());
+  }, [profile?.nip]);
+
+  useEffect(() => {
+    getPushNotif().then((val) => {
+      if (val?.path === "cuti" && profile.nip !== undefined) {
+        const params = { nip: profile.nip, id: val.id };
+        console.log("params", params);
+        dispatch(getDetailArsipCuti(params));
+        navigation.navigate(val?.action);
+      } else if (val?.path === "korespondensi" && profile.nip !== undefined) {
+        console.log("ip val", val);
+        if (val.id != undefined) {
+          if (val.action == "IncomingDetail") {
+            navigation.navigate("IncomingDetail", {
+              id: val.id,
+              title: "Detail Surat Masuk",
+            });
+          } else if (val.action == "DispositionDetail") {
+            navigation.navigate("DispositionDetail", {
+              id: val.id,
+              title: "Detail Disposisi",
+            });
+          } else if (val.action == "NeedFollowUpDetail") {
+            navigation.navigate("NeedFollowUpDetail", {
+              id: val.id,
+              title: "Detail Surat Perlu Diproses",
+            });
+          }
+        }
+      }
+    });
+  }, [token, profile.nip]);
 
   useEffect(() => {
     if (post) {

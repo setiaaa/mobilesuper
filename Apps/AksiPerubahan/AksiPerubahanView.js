@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Dimensions, Text, View } from "react-native";
 import {
   COLORS,
   FONTWEIGHT,
@@ -66,7 +66,7 @@ export const AksiPerubahanView = ({ route }) => {
         style={{
           height: "100%",
           width: "100%",
-          padding: 5,
+          padding: 10,
         }}
       >
         <WebView
@@ -74,7 +74,11 @@ export const AksiPerubahanView = ({ route }) => {
           source={{
             uri: item,
           }}
-          style={{ flex: 1 }}
+          style={{
+            flex: 1,
+            height: 100,
+            width: 399,
+          }}
           allowFileAccess={true}
           androidLayerType={"software"}
           mixedContentMode={"always"}

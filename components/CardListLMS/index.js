@@ -27,7 +27,7 @@ export const CardListLMS = ({ item }) => {
       </View>
 
       <View>
-        <Text style={{ fontWeight: FONTWEIGHT.bold }}>NAMA PELATIHAN</Text>
+        <Text style={{ fontWeight: FONTWEIGHT.bold }}>TANGGAL MULAI</Text>
         <Text style={{ marginTop: 5 }}>
           {moment(item?.timecreated, "YYYY-MM-DD HH:mm:ss").format(
             DATETIME.LONG_DATE
