@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { Platform, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import {
   COLORS,
@@ -11,16 +11,67 @@ import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import { useState } from "react";
+import { getTokenValue } from "../../service/session";
+const { StorageAccessFramework } = FileSystem;
 
 export const DetailSertifikatEksternal = () => {
   const { eksternal, loading } = useSelector((state) => state.digitalsign);
   const { device } = useSelector((state) => state.apps);
+  const [fileUrl, setFileUrl] = useState();
+  const [token, setToken] = useState();
   const navigation = useNavigation();
   const ShimmerPlaceHolder = createShimmerPlaceHolder(LinearGradient);
   const detail = eksternal.detail;
   const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
   };
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  const downloadPath =
+    FileSystem.documentDirectory + (Platform.OS === "android" ? "" : "");
+
+  const downloadFile = async (fileUrl) => {
+    const namafile = fileUrl.split("/");
+    try {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        fileUrl,
+        downloadPath + namafile[namafile.length - 1],
+        { headers: { Authorization: token } }
+      );
+      try {
+        const { uri } = await downloadResumable.downloadAsync();
+        saveFile(uri);
+      } catch (e) {
+        console.error("download error:", e);
+      }
+    } catch (e) {}
+  };
+
+  const saveFile = async (fileUri) => {
+    console.log(fileUri);
+    try {
+      await Sharing.shareAsync(fileUri, {
+        dialogTitle: "Share Rar",
+      });
+    } catch (error) {
+      console.error("Error sharing file:", error);
+    }
+  };
+
+  useEffect(() => {
+    detail?.attachments?.map((item) => {
+      setFileUrl(item);
+    });
+  }, [detail]);
+
   return (
     <View>
       <View
@@ -234,6 +285,23 @@ export const DetailSertifikatEksternal = () => {
               )}
             </View>
           </View>
+
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              borderRadius: 10,
+              marginTop: 20,
+              alignItems: "center",
+            }}
+            onPress={() => {
+              downloadFile(fileUrl.file);
+            }}
+          >
+            <Text style={{ color: COLORS.white }}>
+              Bagikan Dokumen Sertifikat
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
