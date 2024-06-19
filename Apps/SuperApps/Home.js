@@ -189,7 +189,7 @@ export const Home = () => {
         const params = { nip: profile.nip, id: val.id };
         console.log("params", params);
         dispatch(getDetailArsipCuti(params));
-        navigation.navigate(val?.action);
+        navigation.navigate(val?.action, { approval: val?.approval });
       } else if (val?.path === "korespondensi" && profile.nip !== undefined) {
         console.log("ip val", val);
         if (val.id != undefined) {

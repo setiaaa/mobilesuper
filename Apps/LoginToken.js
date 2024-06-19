@@ -94,7 +94,7 @@ export const LoginToken = () => {
     }
   };
 
-  console.log(loginAuth);
+  // console.log(loginAuth);
 
   return (
     <SafeAreaView

@@ -2,7 +2,7 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "kkpsuperapps",
-  "version": "0.1.2",
+  "version": "0.1.9",
   "orientation": "portrait",
   "icon": "./assets/superApp/kkp-ikon.png",
   "userInterfaceStyle": "automatic",
@@ -112,7 +112,7 @@
     ]
   ],
   "extra": {
-    "oneSignalAppId": "c05c3988-abc5-41f4-88df-efb0dea20805",
+    "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
       "projectId": "f4f0fd5a-f2d1-4fd7-be69-ce52cc8f0133"
     },

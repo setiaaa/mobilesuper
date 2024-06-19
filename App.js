@@ -28,7 +28,7 @@ import { setDataNotif } from "./store/pushnotif";
 // OneSignal.promptForPushNotificationsWithUserResponse();
 
 OneSignal.Debug.setLogLevel(LogLevel.Verbose);
-OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
+OneSignal.initialize("cf6dc0fa-3c36-4f98-a9a3-c760a0efa027");
 
 // Also need enable notifications to complete OneSignal setup
 OneSignal.Notifications.requestPermission(true);

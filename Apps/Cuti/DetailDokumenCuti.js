@@ -625,6 +625,8 @@ export const DetailDokumenCuti = ({ route }) => {
   );
   const arsipDetail = arsip.detail;
 
+  console.log(arsipDetail);
+
   const [collapse, setCollapse] = useState({
     nip: "",
     toggle: false,
