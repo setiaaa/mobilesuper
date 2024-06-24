@@ -35,6 +35,7 @@ export const LoginToken = () => {
   const navigation = useNavigation();
   const [isSelected, setSelection] = useState(true);
   const [count, setCount] = useState(0);
+  const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [onChange, setOnChange] = useState("");
   const [version, setVersion] = useState("");
@@ -93,7 +94,7 @@ export const LoginToken = () => {
     }
   };
 
-  console.log(loginAuth);
+  // console.log(loginAuth);
 
   return (
     <SafeAreaView
@@ -113,72 +114,10 @@ export const LoginToken = () => {
             height: "100%",
           }}
         >
-          <Pressable
-            onPress={() => {
-              setCount((prev) => prev + 1);
-            }}
-          >
-            <Image
-              source={require("../assets/logokkp.png")}
-              style={{ width: 150, height: 150 }}
-            />
-          </Pressable>
-          {/* 
-          {count >= 5 ? (
-            <View
-              style={{
-                borderWidth: 1,
-                marginTop: 20,
-                padding: 20,
-                borderRadius: 8,
-                borderColor: COLORS.ExtraDivinder,
-                width: "80%",
-              }}
-            >
-              <View>
-                {password === onChange ? (
-                  <View style={{ marginTop: 10 }}>
-                    <Text>INPUT TOKEN</Text>
-                    <View>
-                      <TextInput
-                        style={{
-                          borderWidth: 1,
-                          borderRadius: 5,
-                          height: 35,
-                          marginTop: 5,
-                          borderColor: COLORS.ExtraDivinder,
-                          padding: 10,
-                        }}
-                        onChangeText={(e) => {
-                          setToken(e);
-                        }}
-                      />
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (token !== "") {
-                          setTokenValue(token);
-                          navigation.navigate("Main");
-                        }
-                      }}
-                      style={{
-                        backgroundColor: COLORS.primary,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: 20,
-                        borderRadius: 8,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={{ color: COLORS.white }}>Masuk</Text>
-                    </TouchableOpacity>
-                  </View>
-                ) : (
-                  <></>
-                )}
-              </View>
-            </View>
-          ) : null} */}
+          <Image
+            source={require("../assets/logokkp.png")}
+            style={{ width: 150, height: 150 }}
+          />
 
           <View style={{ flexDirection: "row", gap: 5, marginTop: 20 }}>
             <Text style={{ fontSize: FONTSIZE.Judul, fontWeight: 500 }}>
@@ -435,7 +374,7 @@ export const LoginToken = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    marginTop: 20,
+                    marginVertical: 20,
                     alignItems: "center",
                     marginHorizontal: 40,
                   }}
@@ -454,32 +393,7 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Perbaikan survei rata-rata
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginTop: 20,
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Penambahan log perbaikan
+                    Perbaikan kalender personal
                   </Text>
                 </View>
 
@@ -488,7 +402,6 @@ export const LoginToken = () => {
                     flexDirection: "row",
                     alignItems: "center",
                     marginHorizontal: 40,
-                    marginVertical: 20,
                   }}
                 >
                   <View
@@ -505,9 +418,88 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Perbaikan Scroll pada bottomsheet disposisi
+                    Perubahan menu
                   </Text>
                 </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan histori komentar cuti
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan auth token
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Penambahan menu bankom
+                  </Text>
+                </View>
+
                 {/* 
               <Text
                 style={{

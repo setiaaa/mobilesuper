@@ -59,6 +59,10 @@ const Cuti = Config.base_url_cuti;
 const HelpDesk = Config.base_url_helpdesk;
 const Survey = BASE_URL + "bridge/";
 
+const Attendence = BASE_URL + "attendence/";
+// faq
+const Faq = BASE_URL + "bridge/admintools/";
+
 //Login
 export const Login = createAsyncThunk(
   "auth/Login",
@@ -490,6 +494,30 @@ export const getlistKalender = createAsyncThunk(
       headers: { Authorization: token },
     });
     return respon?.data.results;
+  }
+);
+
+//KalenderPersonal
+export const getlistKalenderPersonal = createAsyncThunk(
+  "calendar/getlistKalenderPersonal",
+  async (token) => {
+    const respon = await axios.get(`${kalender}calendar/event/korespondensi/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.result;
+  }
+);
+
+export const getDetailKalenderPersonal = createAsyncThunk(
+  "calendar/getDetailKalenderPersonal",
+  async (data) => {
+    const respon = await axios.get(
+      `${kalender}calendar/event/${data.id}/retrieve/korespondensi/`,
+      {
+        headers: { Authorization: data.token },
+      }
+    );
+    return respon?.data.result;
   }
 );
 
@@ -1699,6 +1727,33 @@ export const getListInProgress = createAsyncThunk(
     };
   }
 );
+
+export const getListRetry = createAsyncThunk(
+  "digitalsign/getListRetry",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/retry/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
+export const getListReady = createAsyncThunk(
+  "digitalsign/getListReady",
+  async ({ token, tipe }) => {
+    const respon = await axios.get(
+      `${digitalSign}document/ready/?tipe_dokumen=${tipe}`,
+      { headers: { Authorization: token } }
+    );
+    return {
+      data: respon?.data.results,
+      tipe: tipe,
+    };
+  }
+);
 export const getListCompleted = createAsyncThunk(
   "digitalsign/getListCompleted",
   async ({ token, tipe }) => {
@@ -1825,10 +1880,35 @@ export const putInProgressDigiSign = createAsyncThunk(
 export const getCourseDigiSign = createAsyncThunk(
   "digitalsign/getCourseDigiSign",
   async (token) => {
-    const respon = await axios.get(`${digitalSign}course/?limit=10`, {
+    const respon = await axios.get(`${digitalSign}course/?limit=1000`, {
       headers: { Authorization: token },
     });
     return respon?.data.results;
+  }
+);
+
+export const getListSertifikatEksternal = createAsyncThunk(
+  "digitalsign/getListSertifikatEksternal",
+  async ({ token, page }) => {
+    const respon = await axios.get(
+      `${digitalSign}external-certificate/?page=${page}&limit=10`,
+      { headers: { Authorization: token } }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getDetailSertifikatEksternal = createAsyncThunk(
+  "digitalsign/getDetailSertifikatEksternal",
+  async ({ token, id }) => {
+    console.log(token, id);
+    const respon = await axios.get(
+      `${digitalSign}external-certificate/${id}/`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.result;
   }
 );
 
@@ -1954,9 +2034,23 @@ export const getFormCuti = createAsyncThunk(
 
 export const getPilihApproval = createAsyncThunk(
   "cuti/getPilihApproval",
-  async ({ nip, kunci }) => {
+  async ({ nip, type }) => {
     const respon = await axios.get(
-      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=`,
+      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=&type=${type}`,
+      {
+        // headers: { Authorization: token },
+      }
+    );
+    return respon?.data;
+  }
+);
+
+export const getPilihApprovalPejabat = createAsyncThunk(
+  "cuti/getPilihApprovalPejabat",
+  async ({ nip, type }) => {
+    console.log(nip, type);
+    const respon = await axios.get(
+      `${Cuti}pilih-approval?nip=${nip}&kata_kunci=&type=${type}`,
       {
         // headers: { Authorization: token },
       }
@@ -2088,6 +2182,7 @@ export const getDocumentDetailSPPD = createAsyncThunk(
 export const getDocumentDetailPersonalSPPD = createAsyncThunk(
   "sppd/getDocumentDetailPersonalSPPD",
   async (data) => {
+    console.log(data);
     const respon = await axios.get(`${SPPD}document-personal/${data.id}/`, {
       headers: { Authorization: data.token },
     });
@@ -2199,6 +2294,95 @@ export const getSurveyExport = createAsyncThunk(
       headers: { Authorization: data },
     });
     return respon?.data?.results;
+  }
+);
+
+export const getAksiPerubahan = createAsyncThunk(
+  "AksiPerubahan/getAksiPerubahan",
+  async ({ token, page, search, angkatan, tahun, new_title }) => {
+    const url =
+      new_title.length !== 0
+        ? `${BASE_URL}bridge/transform/?query=${search}&page=${page}&batch=[${angkatan}]&year=[${tahun}]&new_title=${JSON.stringify(
+            new_title
+          )}`
+        : `${BASE_URL}bridge/transform/?query=${search}&page=${page}`;
+    const respon = await axios.get(url, {
+      headers: { Authorization: token },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getDetailAksiPerubahan = createAsyncThunk(
+  "AksiPerubahan/getDetailAksiPerubahan",
+  async (data) => {
+    const respon = await axios.get(`${BASE_URL}bridge/transform/${data.id}`, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getFilterAksiPerubahan = createAsyncThunk(
+  "AksiPerubahan/getFilterAksiPerubahan",
+  async (token) => {
+    const respon = await axios.get(`${BASE_URL}bridge/transform/title/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getLaporanAksiPerubahan = createAsyncThunk(
+  "AksiPerubahan/getLaporanAksiPerubahan",
+  async ({ token, unker, satker }) => {
+    let url =
+      satker === undefined && unker === undefined
+        ? `${BASE_URL}bridge/transform/dashboard/title/`
+        : `${BASE_URL}bridge/transform/dashboard/title/?unker=${unker}&satker=${satker}`;
+    console.log(url);
+    const respon = await axios.get(url, {
+      headers: { Authorization: token },
+    });
+    return respon?.data?.results;
+  }
+);
+
+export const getLastLogAttendence = createAsyncThunk(
+  "attendence/getLastLogAttendence",
+  async (token) => {
+    const respon = await axios.get(`${Attendence}lastlog/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const postAttendence = createAsyncThunk(
+  "attendence/postAttendence",
+  async (data) => {
+    const respon = await axios.post(`${Attendence}log/`, data.payload, {
+      headers: { Authorization: data.token },
+    });
+    return respon?.data.results;
+  }
+);
+
+//Faq
+export const getFaq = createAsyncThunk(
+  "faq/getFaq",
+  async ({ token, search }) => {
+    if (search === "") {
+      const respon = await axios.get(`${Faq}/faq/`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    } else {
+      const respon = await axios.get(`${Faq}/faq/?title=${search}`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    }
   }
 );
 

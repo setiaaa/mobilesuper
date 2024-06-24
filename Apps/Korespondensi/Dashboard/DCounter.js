@@ -19,6 +19,7 @@ import { TouchableOpacity, Text } from "react-native";
 import { GlobalStyles } from "../../../constants/styles";
 import { removeTokenValue } from "../../../service/session";
 import { setLogout } from "../../../store/LoginAuth";
+import * as Sentry from "@sentry/react-native";
 
 function DCounter() {
   const navigation = useNavigation();
@@ -138,6 +139,7 @@ function DCounter() {
           },
         ]);
       } else if (error?.status === 401 || error?.response?.status === 401) {
+        Sentry.captureEvent(error?.response);
         removeTokenValue();
         dispatch(setLogout());
         dispatch(setProfileBridge({}));

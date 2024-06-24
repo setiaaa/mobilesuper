@@ -35,7 +35,6 @@ import {} from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import PdfReader from "rn-pdf-reader-js-improved";
 import { postTodo } from "../../service/api";
 import { setStatus } from "../../store/Event";
 import { getTokenValue } from "../../service/session";
@@ -525,16 +524,6 @@ export const TambahTodo = () => {
                   </KeyboardAvoidingView>
                 </View>
               </View>
-              {/* <View style={{ width: '90%', height: '50%', marginHorizontal: 20 }}>
-                                <PdfReader
-                                    source={{
-                                        uri: notu[0].pdf,
-                                    }}
-                                    webviewProps={{
-                                        startInLoadingState: true,
-                                    }}
-                                />
-                            </View> */}
             </Pressable>
           </ScrollView>
           <TouchableOpacity onPress={() => HandleSubmit()}>

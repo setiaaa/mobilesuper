@@ -21,6 +21,7 @@ import { initData } from "../../../utils/list";
 import { logout } from "../../../store/auth";
 import { TouchableOpacity } from "react-native";
 import { COLORS } from "../../../config/SuperAppps";
+import * as Sentry from "@sentry/react-native";
 
 function DelegationList() {
   const [list, setList] = useState([]);
@@ -57,6 +58,7 @@ function DelegationList() {
     } catch (error) {
       setIsSearchFilter(false);
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(error, "Peringatan!", "Delegasi tidak berfungsi");

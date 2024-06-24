@@ -19,7 +19,11 @@ import { Dimensions } from "react-native";
 
 const numColumns = 3;
 
-export const CardAppsB = ({ handlePressModal }) => {
+export const CardAppsB = ({
+  handlePressModal,
+  setModalBankom,
+  closeBottomSheet,
+}) => {
   const navigation = useNavigation();
   const [listMenu, setListMenu] = useState([]);
 
@@ -29,6 +33,11 @@ export const CardAppsB = ({ handlePressModal }) => {
   const rolePreShare = ["PRESHARE.USER"];
   // const roleTaskManagement = ["TASK.USER"];
   const roleEvent = ["EVENT.USER"];
+  const roleLaporan = ["LAPORAN_BSRE"];
+
+  const isRoleLaporan = profile.roles_access?.some((item) =>
+    roleLaporan.includes(item)
+  );
 
   const isRoleKalender = profile.roles_access?.some((item) =>
     roleKalender.includes(item)
@@ -130,95 +139,95 @@ export const CardAppsB = ({ handlePressModal }) => {
           Regulasi
         </Text>
       </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MainPengetahuan")}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 40 : 23,
-                height: device === "tablet" ? 55 : 34,
-              }}
-              source={require("../../assets/superApp/pengetahuan.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            width: device === "tablet" ? 200 : null,
-            textAlign: "center",
-          }}
-        >
-          Pengetahuan
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MainDigitalSign")}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
-            <Image
-              style={{
-                width: device === "tablet" ? 50 : 27,
-                height: device === "tablet" ? 50 : 35,
-              }}
-              source={require("../../assets/superApp/digitalsign.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            width: device === "tablet" ? 200 : null,
-            textAlign: device === "tablet" ? "center" : null,
-          }}
-        >
-          Digital Sign
-        </Text>
-      </View>,
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     width: 100,
+      //     height: 100,
+      //   }}
+      // >
+      //   <TouchableOpacity
+      //     onPress={() => navigation.navigate("MainPengetahuan")}
+      //   >
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 40 : 23,
+      //           height: device === "tablet" ? 55 : 34,
+      //         }}
+      //         source={require("../../assets/superApp/pengetahuan.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //       width: device === "tablet" ? 200 : null,
+      //       textAlign: "center",
+      //     }}
+      //   >
+      //     Pengetahuan
+      //   </Text>
+      // </View>,
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     width: 100,
+      //     height: 100,
+      //   }}
+      // >
+      //   <TouchableOpacity
+      //     onPress={() => navigation.navigate("MainDigitalSign")}
+      //   >
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 50 : 27,
+      //           height: device === "tablet" ? 50 : 35,
+      //         }}
+      //         source={require("../../assets/superApp/digitalsign.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //       width: device === "tablet" ? 200 : null,
+      //       textAlign: device === "tablet" ? "center" : null,
+      //     }}
+      //   >
+      //     Digital Sign
+      //   </Text>
+      // </View>,
       <View
         style={{
           justifyContent: "center",
@@ -257,6 +266,54 @@ export const CardAppsB = ({ handlePressModal }) => {
           }}
         >
           Cuti
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            closeBottomSheet();
+            setModalBankom(true);
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/Bankomicon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 100,
+          }}
+          numberOfLines={1}
+        >
+          Pengembangan Kompetensi
         </Text>
       </View>,
       <View
@@ -341,6 +398,93 @@ export const CardAppsB = ({ handlePressModal }) => {
           Task Management
         </Text>
       </View>,
+
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     width: 100,
+      //     height: 100,
+      //   }}
+      // >
+      //   <TouchableOpacity onPress={() => navigation.navigate("AksiPerubahan")}>
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 60 : 35,
+      //           height: device === "tablet" ? 60 : 32,
+      //         }}
+      //         source={require("../../assets/superApp/info.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //       textAlign: "center",
+      //       width: 300,
+      //     }}
+      //   >
+      //     Infomasi
+      //   </Text>
+      // </View>,
+      // <View
+      //   style={{
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //     width: 100,
+      //     height: 100,
+      //   }}
+      // >
+      //   <TouchableOpacity
+      //     onPress={() => navigation.navigate("KalenderPersonal")}
+      //   >
+      //     <View
+      //       style={[
+      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+      //         {
+      //           backgroundColor: COLORS.secondary,
+      //           justifyContent: "center",
+      //           alignItems: "center",
+      //           display: "flex",
+      //         },
+      //       ]}
+      //     >
+      //       <Image
+      //         style={{
+      //           width: device === "tablet" ? 60 : 35,
+      //           height: device === "tablet" ? 60 : 32,
+      //         }}
+      //         source={require("../../assets/superApp/kalender.png")}
+      //       />
+      //     </View>
+      //   </TouchableOpacity>
+      //   <Text
+      //     style={{
+      //       marginTop: 10,
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //       fontSize: fontSizeResponsive("H4", device),
+      //       textAlign: "center",
+      //       width: 300,
+      //     }}
+      //   >
+      //     Kalender Personal
+      //   </Text>
+      // </View>,
       <View
         style={{
           justifyContent: "center",
@@ -482,7 +626,7 @@ export const CardAppsB = ({ handlePressModal }) => {
             height: 100,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("GrupKalender")}>
+          <TouchableOpacity onPress={() => navigation.navigate("MainKalender")}>
             <View
               style={[
                 device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
@@ -512,6 +656,147 @@ export const CardAppsB = ({ handlePressModal }) => {
             }}
           >
             Kalender
+          </Text>
+        </View>
+      );
+    } else {
+      tmpMenu.splice(
+        7,
+        0,
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate("KalenderPersonal")}
+          >
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 60 : 35,
+                  height: device === "tablet" ? 60 : 35,
+                }}
+                source={require("../../assets/superApp/kalender.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Kalender Personal
+          </Text>
+        </View>
+      );
+    }
+
+    if (isRoleLaporan) {
+      tmpMenu.splice(
+        3,
+        0,
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate("MainDigitalSign")}
+          >
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 60 : 35,
+                  height: device === "tablet" ? 60 : 35,
+                }}
+                source={require("../../assets/superApp/digitalsign.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Digital Sign
+          </Text>
+        </View>
+      );
+    } else {
+      tmpMenu.splice(
+        3,
+        0,
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("DokumenLain")}>
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 50 : 27,
+                  height: device === "tablet" ? 50 : 35,
+                }}
+                source={require("../../assets/superApp/digitalsign.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+            }}
+          >
+            Digital Sign
           </Text>
         </View>
       );

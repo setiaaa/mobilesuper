@@ -40,6 +40,7 @@ function NeedFollowUpDetail({ route }) {
   const [detail, setDetail] = useState();
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  console.log(id);
 
   const getLettersDetail = async () => {
     setisLoading(true);

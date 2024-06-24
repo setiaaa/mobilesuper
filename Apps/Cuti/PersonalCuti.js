@@ -31,6 +31,7 @@ import { CardArsipCuti } from "../../components/CardArsipCuti";
 import { RefreshControl } from "react-native";
 import { CardFormPengajuanCuti } from "../../components/CardFormPengajuanCuti";
 import { Config } from "../../constants/config";
+import { removePushNotif } from "../../service/session";
 
 export const PersonalCuti = () => {
   const dispatch = useDispatch();

@@ -161,10 +161,10 @@ export const DetailAgenda = () => {
   const [document, setDocument] = useState(null);
   const [type, setType] = useState(null);
 
-  const pickDocument = async () => {
+  const pickDocument = async (text) => {
     let result = await DocumentPicker.getDocumentAsync({});
     // const file = convertFileToObject(result)
-    let tipe = result.uri.split("/");
+    let tipe = result.assets[0].uri.split("/");
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
@@ -1324,11 +1324,13 @@ export const DetailAgenda = () => {
                         alignItems: "center",
                         gap: 5,
                       }}
-                      onPress={pickDocument}
+                      onPress={() => {
+                        pickDocument("aku");
+                      }}
                     >
                       <View style={{ marginBottom: 10 }}>
                         <Ionicons
-                          name="md-cloud-upload-outline"
+                          name="cloud-upload-outline"
                           size={30}
                           color={"#66656C"}
                         />

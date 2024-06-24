@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getDetailPegawai, getPegawai } from "../service/api";
+import * as Sentry from "@sentry/react-native";
 
 const PegawaiSlice = createSlice({
   name: "Pegawai",
@@ -29,6 +30,7 @@ const PegawaiSlice = createSlice({
       })
       .addCase(getPegawai.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDetailPegawai.fulfilled, (state, action) => {
         state.pegawai.detail = action.payload;
@@ -39,6 +41,7 @@ const PegawaiSlice = createSlice({
       })
       .addCase(getDetailPegawai.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

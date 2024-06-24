@@ -34,44 +34,6 @@ import {} from "react-native-safe-area-context";
 import { Dropdown } from "../../components/DropDown";
 import * as DocumentPicker from "expo-document-picker";
 
-const items = [
-  {
-    id: "1",
-    nama: "Rizky Novriansyah",
-    avatar: AVATAR.U2,
-  },
-  {
-    id: "2",
-    nama: "Azis Faisal",
-    avatar: AVATAR.U2,
-  },
-  {
-    id: "3",
-    nama: "Faisal Azis",
-    avatar: AVATAR.U2,
-  },
-  {
-    id: "4",
-    nama: "Sulthan",
-    avatar: AVATAR.U2,
-  },
-  {
-    id: "5",
-    nama: "Noor",
-    avatar: AVATAR.U2,
-  },
-  {
-    id: "6",
-    nama: "Rizky Novriansyah",
-    avatar: AVATAR.U2,
-  },
-  {
-    id: "7",
-    nama: "Rizky Novriansyah",
-    avatar: AVATAR.U2,
-  },
-];
-
 const kategories = [
   { key: "q", value: "satu" },
   { key: "e", value: "dua" },

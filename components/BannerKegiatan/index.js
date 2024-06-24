@@ -8,11 +8,11 @@ import { Text } from "react-native";
 
 const { width: screenWidth } = Dimensions.get("window");
 
-export const bannerKegiatan = ({ item }, parallaxProps) => {
+export const bannerKegiatan = ({ item, type = "", parallaxProps }) => {
   return (
     <View style={styles.items}>
       <ParallaxImage
-        source={{ uri: item?.image }}
+        source={type === "portal" ? item.image : { uri: item.image }}
         containerStyle={styles.imageContainer}
         style={styles.images}
         parallaxFactor={0.4}

@@ -71,22 +71,6 @@ export const KegiatanBaru = () => {
           </View>
 
           <View style={{ marginTop: 15, gap: 30, marginBottom: 30 }}>
-            {/* <View style={{ alignItems: "center", gap: 20 }}>
-              <Image
-                source={require("../../assets/superApp/LiburTanggal.png")}
-                style={{}}
-              />
-              <Text
-                style={{
-                  fontWeight: FONTWEIGHT.bold,
-                  fontSize: 30,
-                  color: COLORS.lighter,
-                }}
-              >
-                2023
-              </Text>
-            </View> */}
-
             <FlatList
               data={dashboard.events}
               renderItem={({ item }) => (

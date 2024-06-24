@@ -59,7 +59,7 @@ export const PdfPerisai = ({ route }) => {
             "halaman": __CURRENT_PAGE
         }
           $.ajax({
-            url: 'https://portal.kkp.go.id/api/digitalsign/document/approve/',
+            url: 'https://portal.kubekkp.coofis.com/api/digitalsign/document/approve/',
             type: 'PUT',
             contentType: 'application/json; charset=utf-8',
             headers: {
@@ -197,7 +197,7 @@ $("#submit").click(function () {
       <WebView
         ref={webViewRef}
         source={{
-          uri: "https://portal.kkp.go.id/assets/pdfViewer/newPdfViewer.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/pdfViewer/newPdfViewer.html",
         }}
         style={{ flex: 1 }}
         injectedJavaScript={inject}

@@ -14,6 +14,7 @@ import { Config } from "../../../constants/config";
 import { initData } from "../../../utils/list";
 import { logout } from "../../../store/auth";
 import { COLORS } from "../../../config/SuperAppps";
+import * as Sentry from "@sentry/react-native";
 
 function SecretaryList() {
   const [list, setList] = useState([]);
@@ -50,6 +51,7 @@ function SecretaryList() {
     } catch (error) {
       setIsSearchFilter(false);
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(error, "Peringatan!", "Sekretaris tidak berfungsi");

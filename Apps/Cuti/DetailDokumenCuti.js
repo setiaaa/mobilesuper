@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useState } from "react";
 import { Platform, TextInput, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -36,6 +36,8 @@ import {
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
 import { ResizeMode, Video } from "expo-av";
+import { Loading } from "../../components/Loading";
+import { removePushNotif } from "../../service/session";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
@@ -618,8 +620,12 @@ export const DetailDokumenCuti = ({ route }) => {
   const approval = route.params;
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.superApps);
-  const { arsip, status, message } = useSelector((state) => state.cuti);
+  const { arsip, status, message, loading } = useSelector(
+    (state) => state.cuti
+  );
   const arsipDetail = arsip.detail;
+
+  console.log(arsipDetail);
 
   const [collapse, setCollapse] = useState({
     nip: "",
@@ -659,7 +665,7 @@ export const DetailDokumenCuti = ({ route }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState("");
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["95%"], []);
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -696,9 +702,15 @@ export const DetailDokumenCuti = ({ route }) => {
     dispatch(postApproval(data));
   };
 
+  useEffect(() => {
+    console.log("masuk effect");
+    removePushNotif();
+  }, [arsipDetail, loading]);
+
   const { device } = useSelector((state) => state.apps);
   return (
     <GestureHandlerRootView>
+      {loading ? <Loading /> : null}
       <View style={{ position: "relative" }}>
         <ScrollView style={{ marginBottom: 20 }}>
           <View
@@ -1629,133 +1641,7 @@ export const DetailDokumenCuti = ({ route }) => {
               </TouchableOpacity>
             </View>
           </View>
-          <BottomSheetModalProvider>
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              snapPoints={animatedSnapPoints}
-              handleHeight={animatedHandleHeight}
-              contentHeight={animatedContentHeight}
-              index={0}
-              style={{ borderRadius: 50 }}
-              keyboardBlurBehavior="restore"
-              android_keyboardInputMode="adjust"
-              backdropComponent={({ style }) => (
-                <View
-                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                />
-              )}
-            >
-              <BottomSheetView onLayout={handleContentLayout} style={{}}>
-                {/* <KeyboardAvoidingView
-                                behavior={Platform.OS === "ios" ? "height" : "height"}
-                            > */}
-                <View
-                  style={{
-                    marginHorizontal: 20,
-                    marginTop: 20,
-                    marginBottom: 5,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    padding: 10,
-                    borderBottomWidth: 2,
-                    borderBottomColor: COLORS.grey,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      fontSize: fontSizeResponsive("H4", device),
-                    }}
-                  >
-                    Histori Komentar
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      bottomSheetAttachCommentClose();
-                    }}
-                  >
-                    <Ionicons
-                      name="close-outline"
-                      size={device === "tablet" ? 40 : 24}
-                      color={COLORS.lighter}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <FlatList
-                  data={arsipDetail?.komentar_dokumen}
-                  renderItem={({ item }) => (
-                    <CardKomen
-                      listData={item}
-                      inputRef={inputRef}
-                      setParentId={setParentId}
-                      bottomSheetAttachCommentClose={
-                        bottomSheetAttachCommentClose
-                      }
-                      device={device}
-                    />
-                  )}
-                  style={{ height: 500 }}
-                />
 
-                {/* <View style={{ justifyContent: "flex-end" }}>
-                                <View
-                                    style={{
-                                        height: 1,
-                                        width: "90%",
-                                        backgroundColor: COLORS.lighter,
-                                        opacity: 0.3,
-                                        marginTop: 10,
-                                        marginHorizontal: 20,
-                                    }}
-                                />
-                                <View
-                                    style={{
-                                        borderWidth: 1,
-                                        width: "90%",
-                                        marginLeft: 17,
-                                        borderRadius: 16,
-                                        borderColor: COLORS.ExtraDivinder,
-                                        flexDirection: "row",
-                                        backgroundColor: COLORS.ExtraDivinder,
-                                        marginTop: 10,
-                                        marginBottom: 40,
-                                    }}
-                                >
-                                    <BottomSheetTextInput
-                                        numberOfLines={1}
-                                        maxLength={40}
-                                        placeholder="Ketik Komentar Disini"
-                                        ref={inputRef}
-                                        style={{ padding: 10 }}
-                                        onChangeText={setKomen}
-                                        value={komen}
-                                    />
-                                    <View
-                                        style={{
-                                            alignItems: "flex-end",
-                                            flex: 1,
-                                            marginRight: 10,
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                handleComment();
-                                            }}
-                                        >
-                                            <Ionicons
-                                                name="send-sharp"
-                                                size={20}
-                                                color={COLORS.primary}
-                                            />
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View> */}
-                {/* </KeyboardAvoidingView> */}
-              </BottomSheetView>
-            </BottomSheetModal>
-          </BottomSheetModalProvider>
           {/* <View style={{ padding: 20, gap: 10 }}>
             <View style={{}}>
               <View style={{ alignItems: "center", gap: 10 }}>
@@ -2002,6 +1888,134 @@ export const DetailDokumenCuti = ({ route }) => {
             message={message}
             navigate={"MainCuti"}
           />
+
+          <BottomSheetModalProvider>
+            <BottomSheetModal
+              ref={bottomSheetModalRef}
+              snapPoints={animatedSnapPoints}
+              handleHeight={animatedHandleHeight}
+              contentHeight={animatedContentHeight}
+              index={0}
+              style={{ borderRadius: 50 }}
+              keyboardBlurBehavior="restore"
+              android_keyboardInputMode="adjust"
+              backdropComponent={({ style }) => (
+                <View
+                  style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
+                />
+              )}
+            >
+              <BottomSheetView onLayout={handleContentLayout} style={{}}>
+                {/* <KeyboardAvoidingView
+                                behavior={Platform.OS === "ios" ? "height" : "height"}
+                            > */}
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    marginBottom: 5,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Histori Komentar
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      bottomSheetAttachCommentClose();
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={device === "tablet" ? 40 : 24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <FlatList
+                  data={arsipDetail?.komentar_dokumen}
+                  renderItem={({ item }) => (
+                    <CardKomen
+                      listData={item}
+                      inputRef={inputRef}
+                      setParentId={setParentId}
+                      bottomSheetAttachCommentClose={
+                        bottomSheetAttachCommentClose
+                      }
+                      device={device}
+                    />
+                  )}
+                  style={{ height: 500 }}
+                />
+
+                {/* <View style={{ justifyContent: "flex-end" }}>
+                                <View
+                                    style={{
+                                        height: 1,
+                                        width: "90%",
+                                        backgroundColor: COLORS.lighter,
+                                        opacity: 0.3,
+                                        marginTop: 10,
+                                        marginHorizontal: 20,
+                                    }}
+                                />
+                                <View
+                                    style={{
+                                        borderWidth: 1,
+                                        width: "90%",
+                                        marginLeft: 17,
+                                        borderRadius: 16,
+                                        borderColor: COLORS.ExtraDivinder,
+                                        flexDirection: "row",
+                                        backgroundColor: COLORS.ExtraDivinder,
+                                        marginTop: 10,
+                                        marginBottom: 40,
+                                    }}
+                                >
+                                    <BottomSheetTextInput
+                                        numberOfLines={1}
+                                        maxLength={40}
+                                        placeholder="Ketik Komentar Disini"
+                                        ref={inputRef}
+                                        style={{ padding: 10 }}
+                                        onChangeText={setKomen}
+                                        value={komen}
+                                    />
+                                    <View
+                                        style={{
+                                            alignItems: "flex-end",
+                                            flex: 1,
+                                            marginRight: 10,
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                handleComment();
+                                            }}
+                                        >
+                                            <Ionicons
+                                                name="send-sharp"
+                                                size={20}
+                                                color={COLORS.primary}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View> */}
+                {/* </KeyboardAvoidingView> */}
+              </BottomSheetView>
+            </BottomSheetModal>
+          </BottomSheetModalProvider>
         </ScrollView>
       </View>
     </GestureHandlerRootView>

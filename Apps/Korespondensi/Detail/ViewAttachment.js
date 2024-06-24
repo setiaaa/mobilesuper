@@ -4,6 +4,7 @@ import { headerToken } from "../../../utils/http";
 // import { WebView } from "react-native-webview";
 import PDFReader from "rn-pdf-reader-js-improved";
 import { nde_api } from "../../../utils/api.config";
+import Pdf from "react-native-pdf";
 
 function ViewAttachment({ route }) {
   //   const [isLoading, setisLoading] = useState(true);
@@ -18,16 +19,24 @@ function ViewAttachment({ route }) {
     let response = await headerToken();
     setHeader(response);
   }
-  console.log(
-    nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length)
-  );
+  const urlPdf =
+    nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length);
+  console.log(urlPdf);
   console.log(header);
+  const pdfResource = {
+    uri: nde_api.baseurl + "crsbe/" + data?.file.slice(5, data?.file.length),
+    header: header,
+    chace: true,
+  };
+
+  console.log(data?.file.slice(5, data?.file.length));
   return (
     <>
       {header && (
         <>
-          <View style={{ width: "100%", height: "100%" }}>
-            <PDFReader
+          <View style={{ flex: 1 }}>
+            <Pdf
+              trustAllCerts={false}
               source={{
                 uri:
                   nde_api.baseurl +
@@ -35,8 +44,11 @@ function ViewAttachment({ route }) {
                     data?.file.slice(5, data?.file.length) || undefined,
                 headers: header,
               }}
-              onError={(error) => console.log(error)}
-              withScroll={true}
+              style={{
+                flex: 1,
+                width: Dimensions.get("window").width,
+                height: Dimensions.get("window").height,
+              }}
             />
           </View>
         </>

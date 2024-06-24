@@ -12,7 +12,12 @@ import {
   getSummaryList,
   putTandaTangan,
   getListRejected,
+  getListReady,
+  getListRetry,
+  getListSertifikatEksternal,
+  getDetailSertifikatEksternal,
 } from "../service/api";
+import * as Sentry from "@sentry/react-native";
 
 const DigitalSignSlice = createSlice({
   name: "DigitalSign",
@@ -32,6 +37,10 @@ const DigitalSignSlice = createSlice({
       lists: [],
     },
     loading: false,
+    eksternal: {
+      lists: [],
+      detail: {},
+    },
   },
   reducers: {
     setDigitalSignLists: (state, action) => {
@@ -70,6 +79,40 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListInProgress.pending, (state, action) => {
         state.loading = true;
+      })
+      .addCase(getListInProgress.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.payload);
+      })
+      .addCase(getListReady.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+      })
+      .addCase(getListReady.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListReady.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.payload);
+      })
+      .addCase(getListRetry.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.tipe === "bankom") {
+          state.digitalsign.lists = action.payload.data;
+        } else {
+          state.dokumenlain.lists = action.payload.data;
+        }
+      })
+      .addCase(getListRetry.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListRetry.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getListCompleted.fulfilled, (state, action) => {
         state.loading = false;
@@ -120,6 +163,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(addDocumentDigiSign.rejected, (state, action) => {
         state.status = "error";
+        Sentry.captureException(action.payload);
       })
       .addCase(addDocumentDigiSign.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -133,6 +177,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getSummaryCount.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getSummaryList.fulfilled, (state, action) => {
         state.summary.lists = action.payload;
@@ -143,6 +188,7 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getSummaryList.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(putTandaTangan.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -155,6 +201,7 @@ const DigitalSignSlice = createSlice({
       .addCase(putTandaTangan.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getListRejected.fulfilled, (state, action) => {
         state.loading = false;
@@ -162,6 +209,28 @@ const DigitalSignSlice = createSlice({
       })
       .addCase(getListRejected.pending, (state, action) => {
         state.loading = true;
+      })
+      .addCase(getListSertifikatEksternal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.eksternal.lists = action.payload;
+      })
+      .addCase(getListSertifikatEksternal.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListSertifikatEksternal.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.payload);
+      })
+      .addCase(getDetailSertifikatEksternal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.eksternal.detail = action.payload;
+      })
+      .addCase(getDetailSertifikatEksternal.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getDetailSertifikatEksternal.rejected, (state, action) => {
+        state.loading = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

@@ -71,9 +71,9 @@ export const HDFormLaporan = () => {
   const [type, setType] = useState([]);
 
   const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({type: "image/*"});
+    let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     // const file = convertFileToObject(result)
-    let tipe = result.uri.split("/");
+    let tipe = result.assets[0].uri.split("/");
     tipe = tipe[tipe.length - 1];
     tipe = tipe.split(".");
     tipe = tipe[tipe.length - 1];
@@ -229,7 +229,6 @@ export const HDFormLaporan = () => {
                   borderColor={COLORS.ExtraDivinder}
                   borderColorDrop={COLORS.ExtraDivinder}
                   borderColorValue={COLORS.ExtraDivinder}
-                  heightValue={150}
                   search={true}
                 />
               </View>
@@ -283,7 +282,7 @@ export const HDFormLaporan = () => {
                 >
                   <View style={{ marginBottom: 10 }}>
                     <Ionicons
-                      name="md-cloud-upload-outline"
+                      name="cloud-download-outline"
                       size={device === "tablet" ? 40 : 30}
                       color={"#66656C"}
                     />
@@ -299,39 +298,39 @@ export const HDFormLaporan = () => {
                 </View>
               </Pressable>
               {document < 1 ? null : (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginHorizontal: 20,
-                        marginVertical: 10,
-                        flexWrap: "wrap",
-                        gap: 10,
-                      }}
-                    >
-                      {document?.map((doc, i) => (
-                        <>
-                          {type[i] === "png" || "jpg" || "jpeg" ? (
-                            <View
-                              style={{
-                                width: 97,
-                                height: 97,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderWidth: 1,
-                                borderRadius: 8,
-                                borderColor: COLORS.ExtraDivinder,
-                              }}
-                            >
-                              {/* <Image
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: 20,
+                    marginVertical: 10,
+                    flexWrap: "wrap",
+                    gap: 10,
+                  }}
+                >
+                  {document?.map((doc, i) => (
+                    <>
+                      {type[i] === "png" || "jpg" || "jpeg" ? (
+                        <View
+                          style={{
+                            width: 97,
+                            height: 97,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderWidth: 1,
+                            borderRadius: 8,
+                            borderColor: COLORS.ExtraDivinder,
+                          }}
+                        >
+                          {/* <Image
                                 source={{uri: doc.uri}}
                               /> */}
-                              <Ionicons size={24} name="image-outline"></Ionicons>
-                            </View>
-                          ) : null}
-                        </>
-                      ))}
-                    </View>
-                  )}
+                          <Ionicons size={24} name="image-outline"></Ionicons>
+                        </View>
+                      ) : null}
+                    </>
+                  ))}
+                </View>
+              )}
             </View>
           </View>
 

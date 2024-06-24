@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import LottieView from "lottie-react-native";
 import { SvgXml } from "react-native-svg";
 import { GlobalStyles } from "../../../constants/styles";
-import bgSearch from "../../../assets/telkom/images/background/bg-search.svg";
+import bgSearch from "../../../assets/superApp/images/bg-search.svg";
 import { Config } from "../../../constants/config";
 import { FlatList } from "react-native";
 import CardListSearch from "../../../components/UI/CardListSearch";

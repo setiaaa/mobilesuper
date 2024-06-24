@@ -12,19 +12,46 @@ export function initAgenda(data) {
   data.kepada_bank = "";
   data.keterangan = "";
   data.jenis_surat = "";
+  data.is_editable = "";
+  data.from_city = "";
+  data.notes = "";
+  data.kegiatan = [];
+  data.start_date = "";
+  data.end_date = "";
+  data.start_time = "";
+  data.end_time = "";
+  data.location = "";
+  data.timezone = "";
+  data.attributes.forEach((e, i) => {
+    //jenis_surat
+    if (e.key == "jenisSurat") {
+      if (e.value != "") {
+        data.jenis_surat = e.value;
+      }
+    }
+    if (e.key == "isEditable") {
+      if (e.value != "") {
+        data.is_editable = e.value;
+      }
+    }
+  });
   data.attributes.forEach((e, i) => {
     //Parsing receiver dari migrasi
     if (e.key == "receivers_display") {
       if (e.value != "") {
         var temp = e.value.split("\n");
-        temp.forEach((j) => {
-          if (j.trim() != "") {
-            var temp2 = data.receivers_display.indexOf(j.trim());
-            if (temp2 == -1) {
-              data.receivers_display.push(j.trim());
+        if (temp[0] == "<ol>") {
+          data.receivers_display = e.value;
+        } else {
+          temp.forEach((j) => {
+            if (j.trim() != "") {
+              var temp2 = data.receivers_display.indexOf(j.trim());
+              if (temp2 == -1) {
+                data.receivers_display.push(j.trim());
+              }
             }
-          }
-        });
+          });
+        }
       }
     }
 
@@ -55,10 +82,84 @@ export function initAgenda(data) {
         data.internal_satker = e.value;
       }
     }
-    //jenis_surat
-    if (e.key == "jenisSurat") {
-      if (e.value != "") {
-        data.jenis_surat = e.value;
+    if (data.jenis_surat == "Surat Undangan") {
+      //start_date
+      if (e.key == "start_date") {
+        if (e.value != "") {
+          data.start_date = e.value;
+        }
+      }
+      //end_date
+      if (e.key == "end_date") {
+        if (e.value != "") {
+          data.end_date = e.value;
+        }
+      }
+      //start_time
+      if (e.key == "start_time") {
+        if (e.value != "") {
+          data.start_time = e.value;
+        }
+      }
+      //end_time
+      if (e.key == "end_time") {
+        if (e.value != "") {
+          data.end_time = e.value;
+        }
+      }
+      //location
+      if (e.key == "location") {
+        if (e.value != "") {
+          data.location = e.value;
+        }
+      }
+      //notes
+      if (e.key == "notes") {
+        if (e.value != "") {
+          data.notes = e.value;
+        }
+      }
+      //timezone
+      if (e.key == "timezone") {
+        if (e.value != "") {
+          data.timezone = e.value;
+        }
+      }
+    }
+    if (
+      data.jenis_surat == "Surat Tugas" ||
+      data.jenis_surat == "Surat Perintah"
+    ) {
+      //from_city
+      if (e.key == "from_city") {
+        if (e.value != "") {
+          data.from_city = e.value;
+        }
+      }
+      //notes
+      if (e.key == "notes") {
+        if (e.value != "") {
+          data.notes = e.value;
+        }
+      }
+      //init event kegiatan
+      if (e.key == "event_1") {
+        if (e.value != "") {
+          var temp = formatString(e.value);
+          data.kegiatan = [temp];
+        }
+      }
+      if (e.key == "event_2") {
+        if (e.value != "") {
+          var temp = formatString(e.value);
+          data.kegiatan.push(temp);
+        }
+      }
+      if (e.key == "event_3") {
+        if (e.value != "") {
+          var temp = formatString(e.value);
+          data.kegiatan.push(temp);
+        }
       }
     }
     //additional_approver
@@ -137,6 +238,13 @@ export function initAgenda(data) {
   });
 }
 
+function formatString(data) {
+  let tmp = data.replaceAll(/"|{|}|"/g, "").replaceAll(/'/g, '"');
+  tmp = "{ " + tmp + " }";
+  tmp = JSON.parse(tmp);
+  return tmp;
+}
+
 export function initLetter(data) {
   //sort approver by sequence
   if (data.tracker.type != "" && data.tracker.approvers.length != 0) {
@@ -164,23 +272,50 @@ export function initLetter(data) {
   data.tembusan_external = "";
   data.internal_satker = "";
   data.jenis_surat = "";
+  data.id_editable = "";
   data.tipe_penerima = "";
   data.office_city = "";
   data.salam = "";
   data.kepada_bank = "";
+  data.from_city = "";
+  data.notes = "";
+  data.kegiatan = [];
+  data.start_date = "";
+  data.end_date = "";
+  data.start_time = "";
+  data.end_time = "";
+  data.location = "";
+  data.timezone = "";
+  data.attributes.forEach((e, i) => {
+    //jenis_surat
+    if (e.key == "jenisSurat") {
+      if (e.value != "") {
+        data.jenis_surat = e.value;
+      }
+    }
+    if (e.key == "isEditable") {
+      if (e.value != "") {
+        data.is_editable = e.value;
+      }
+    }
+  });
   data.attributes.forEach((e, i) => {
     //Parsing receiver dari migrasi
     if (e.key == "receivers_display") {
       if (e.value != "") {
         var temp = e.value.split("\n");
-        temp.forEach((j) => {
-          if (j.trim() != "") {
-            var temp2 = data.receivers_display.indexOf(j.trim());
-            if (temp2 == -1) {
-              data.receivers_display.push(j.trim());
+        if (temp[0] == "<ol>") {
+          data.receivers_display = e.value;
+        } else {
+          temp.forEach((j) => {
+            if (j.trim() != "") {
+              var temp2 = data.receivers_display.indexOf(j.trim());
+              if (temp2 == -1) {
+                data.receivers_display.push(j.trim());
+              }
             }
-          }
-        });
+          });
+        }
       }
     }
 
@@ -211,10 +346,84 @@ export function initLetter(data) {
         data.internal_satker = e.value;
       }
     }
-    //jenis_surat
-    if (e.key == "jenisSurat") {
-      if (e.value != "") {
-        data.jenis_surat = e.value;
+    if (data.jenis_surat == "Surat Undangan") {
+      //start_date
+      if (e.key == "start_date") {
+        if (e.value != "") {
+          data.start_date = e.value;
+        }
+      }
+      //end_date
+      if (e.key == "end_date") {
+        if (e.value != "") {
+          data.end_date = e.value;
+        }
+      }
+      //start_time
+      if (e.key == "start_time") {
+        if (e.value != "") {
+          data.start_time = e.value;
+        }
+      }
+      //end_time
+      if (e.key == "end_time") {
+        if (e.value != "") {
+          data.end_time = e.value;
+        }
+      }
+      //location
+      if (e.key == "location") {
+        if (e.value != "") {
+          data.location = e.value;
+        }
+      }
+      //notes
+      if (e.key == "notes") {
+        if (e.value != "") {
+          data.notes = e.value;
+        }
+      }
+      //timezone
+      if (e.key == "timezone") {
+        if (e.value != "") {
+          data.timezone = e.value;
+        }
+      }
+    }
+    if (
+      data.jenis_surat == "Surat Tugas" ||
+      data.jenis_surat == "Surat Perintah"
+    ) {
+      //from_city
+      if (e.key == "from_city") {
+        if (e.value != "") {
+          data.from_city = e.value;
+        }
+      }
+      //notes
+      if (e.key == "notes") {
+        if (e.value != "") {
+          data.notes = e.value;
+        }
+      }
+      //init event kegiatan
+      if (e.key == "event_1") {
+        if (e.value != "") {
+          var temp = formatString(e.value);
+          data.kegiatan = [temp];
+        }
+      }
+      if (e.key == "event_2") {
+        if (e.value != "") {
+          var temp = formatString(e.value);
+          data.kegiatan.push(temp);
+        }
+      }
+      if (e.key == "event_3") {
+        if (e.value != "") {
+          var temp = formatString(e.value);
+          data.kegiatan.push(temp);
+        }
       }
     }
     //tipe_penerima
@@ -348,7 +557,10 @@ export const initDownload = (item) => {
   if (item.tipe == "sign") {
     // setIsLoading(true);
     fileUrl = item.link;
-    fileType = "application/pdf";
+    fileType =
+      item.description == "editor-generated"
+        ? "application/pdf"
+        : item.description;
     if (item.tipe == "attach") {
       fileName = item.filename;
     } else {

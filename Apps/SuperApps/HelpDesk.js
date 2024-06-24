@@ -229,7 +229,9 @@ export const HelpDesk = () => {
                 borderBottomLeftRadius: 8,
               }}
             >
-              <TouchableOpacity onPress={() => setCollapse({ toggle: true })}>
+              <TouchableOpacity
+                onPress={() => setCollapse({ toggle: !collapse.toggle })}
+              >
                 <View
                   style={{
                     flexDirection: "row",
@@ -266,99 +268,95 @@ export const HelpDesk = () => {
               </TouchableOpacity>
               {collapse.toggle === true ? (
                 <View>
-                  <TouchableOpacity
-                    onPress={() => setCollapse({ toggle: false })}
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
                   >
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      Jenis Kelamin
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 5,
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      {profile.jenis_kelamin}
-                    </Text>
+                    Jenis Kelamin
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.jenis_kelamin}
+                  </Text>
 
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      Golongan
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 5,
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      {profile.golongan}
-                    </Text>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Golongan
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.golongan}
+                  </Text>
 
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      Jabatan
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 5,
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      {profile.nama_jabatan}
-                    </Text>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Jabatan
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.nama_jabatan}
+                  </Text>
 
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      Unit Kerja
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 5,
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      {profile.unit_kerja}
-                    </Text>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Unit Kerja
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.unit_kerja}
+                  </Text>
 
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      Satuan Kerja
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 5,
-                        fontWeight: FONTWEIGHT.bold,
-                        fontSize: fontSizeResponsive("H3", device),
-                      }}
-                    >
-                      {profile.satuan_kerja_nama}
-                    </Text>
-                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    Satuan Kerja
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H3", device),
+                    }}
+                  >
+                    {profile.satuan_kerja_nama}
+                  </Text>
                 </View>
               ) : null}
             </View>

@@ -14,7 +14,7 @@ import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
-import bgSearch from '../../../assets/telkom/images/background/bg-search.svg'
+import bgSearch from "../../../assets/superApp/images/bg-search.svg";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -142,10 +142,10 @@ function SearchGlobalList() {
         {isLoading
           ? "Loading..."
           : isSearchFilter
-            ? "Letter not found"
-            : list?.count == 0
-              ? "You don't have Letter"
-              : "Loading..."}
+          ? "Letter not found"
+          : list?.count == 0
+          ? "You don't have Letter"
+          : "Loading..."}
       </Text>
     </View>
   );
@@ -356,7 +356,7 @@ function SearchGlobalList() {
         />
       </View>
       <BottomSheetModalProvider>
-        < >
+        <>
           <View>
             <BottomSheetModal
               name="filter"
@@ -474,7 +474,7 @@ function SearchGlobalList() {
               </View>
             </BottomSheetModal>
           </View>
-        </ >
+        </>
       </BottomSheetModalProvider>
     </>
   );

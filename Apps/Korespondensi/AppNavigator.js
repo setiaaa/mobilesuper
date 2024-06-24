@@ -4,10 +4,10 @@ import {
   StyleSheet,
   StatusBar,
   ImageBackground,
-  Platform,
   useWindowDimensions,
   Alert,
   BackHandler,
+  Platform,
 } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,12 +54,10 @@ import ScanLogDetail from "./Detail/ScanLogDetail";
 import DigisignSearchEmail from "./Detail/DigisignSearchEmail";
 import { androidId } from "expo-application";
 import * as Device from "expo-device";
-import { setDataNotif } from "../../store/pushnotif";
 import * as Application from "expo-application";
 import Main from "../SuperApps/Main";
 import DetailDashboard from "../../Apps/Kebijakan/DetailDashboard";
 import PdfViewer from "../../Apps/Kebijakan/PdfViewer";
-import { DrawerNavigation } from "../Kebijakan/Drawer";
 import MyTabBar from "../SuperApps/BottomTabs";
 import { Onboarding } from "../Onboarding";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
@@ -89,7 +87,6 @@ import { DetailTeknologi } from "../Dashboard/DetailTeknologi";
 import { DetailLinimasa } from "../Pengetahuan/DetailLinimasa";
 import { JumlahPostingan } from "../Pengetahuan/JumlahPostingan";
 import { PostinganBaru } from "../Pengetahuan/PostinganBaru";
-import { DetailPostinganSaya } from "../Pengetahuan/DetailPostinganSaya";
 import { ListPostinganPegawai } from "../Pengetahuan/ListPostinganPegawai";
 import { DetailDokumenLain } from "../DigitalSignature/DetailDokumenLain";
 import { LaporanDigitalSign } from "../DigitalSignature/LaporanDigitalSign";
@@ -134,6 +131,7 @@ import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
 import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
 import MainSPPD from "../SPPD/MainSPPD";
 import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
+import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 import MainOutgoingDetail from "./Detail/Outgoing/MainOutgoingDetail";
 import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
 import MainCuti from "../Cuti/MainCuti";
@@ -145,7 +143,7 @@ import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
 import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
-import { getTokenValue } from "../../service/session";
+import { getTokenValue, setPushNotif } from "../../service/session";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 import { PencarianKorespondensi } from "./Pencarian/PencarianKorespondensi";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
@@ -172,11 +170,35 @@ import { Dialog } from "../../components/Dialog";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { setDevice } from "../../store/Apps";
 import { AppState } from "react-native";
+import { BantuanPemerintah } from "../Dashboard/BantuanPemerintah";
+import { KalenderPersonal } from "../KalenderPersonal/KalenderPersonal";
+import { DetailKalenderPersonal } from "../KalenderPersonal/DetailKalenderPersonal";
+import { FirstRenderIos } from "../FirstRenderIos";
+import { LoginIos } from "../LoginIos";
+import { RegisterIos } from "../RegisterIos";
+import { PortalIos } from "../PortalIos";
+import { DokumenLain } from "../DigitalSignature/DokumenLain";
+import { Bankom } from "../DigitalSignature/Bankom";
+import { AksiPerubahan } from "../AksiPerubahan/AksiPerubahan";
+import { AksiPerubahanView } from "../AksiPerubahan/AksiPerubahanView";
+import { MainSertifikat } from "../DigitalSignature/MainSertifikat";
+import { SertifikatLms } from "../DigitalSignature/SertifikatLms";
+import { DetailSertifikatEksternal } from "../DigitalSignature/DetailSertifikatEksternal";
+import * as Sentry from "@sentry/react-native";
+import {
+  LogLevel,
+  OneSignal,
+  NotificationWillDisplayEvent,
+} from "react-native-onesignal";
+import Constants from "expo-constants";
+import { setDataNotif } from "../../store/pushnotif";
+import { COLORS } from "../../config/SuperAppps";
+import { ListFaq } from "../Faq/ListFaq";
 
 const Stack = createNativeStackNavigator();
 
-function AuthenticatedStack(route) {
-  const [isLoading, setIsLoading] = useState(true);
+function AuthenticatedStack({ route }) {
+  const [isLoading, setIsLoading] = useState(false);
   const profile = useSelector((state) => state.profile.profile);
   const deviceNIK = profile?.nik;
   const [deviceName, setDeviceName] = useState(null);
@@ -191,6 +213,8 @@ function AuthenticatedStack(route) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // isEmulator();
+    deviceRoot();
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive||background/) &&
@@ -216,11 +240,45 @@ function AuthenticatedStack(route) {
     };
   }, []);
 
+  const isEmulator = () => {
+    if (Device.isDevice === true) {
+      console.log("device asli");
+    } else {
+      Alert.alert(
+        "Peringatan!",
+        "Anda menggunakan emulator, Harap menggunakan device asli",
+        [
+          {
+            text: "Tutup",
+            onPress: () => {
+              BackHandler.exitApp();
+            },
+            style: "cancel",
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
+    }
+  };
+
+  const deviceRoot = async () => {
+    const isRooted = await Device.isRootedExperimentalAsync();
+    if (isRooted) {
+      console.log("Perangkat telah di-root.");
+    } else {
+      console.log("Perangkat belum di-root.");
+    }
+  };
+
   async function checkVersionAndroid() {
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
       const response = await getHTTP(nde_api.getVersionAndroid);
       cekValidVersion(response?.data?.results?.android);
+      // setIsLoading(false);
+      console.log(response.data?.results?.android);
     } catch (error) {
       if (error.status == null) {
         Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
@@ -228,12 +286,13 @@ function AuthenticatedStack(route) {
         handlerError(error, "Peringatan!", "Cek versi tidak berfungsi!");
       }
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   }
   async function checkVersionIos() {
     try {
-      const response = await getHTTP(nde_api.getVersionIos);
-      cekValidVersion(response?.data?.results?.ios);
+      const response = await getHTTP(nde_api.getVersionAndroid);
+      cekValidVersion(response?.data?.results?.android);
+      // setIsLoading(false);
     } catch (error) {
       if (error.status == null) {
         Alert.alert("Peringatan!", "Mohon periksa koneksi internet anda");
@@ -364,13 +423,45 @@ function AuthenticatedStack(route) {
           barStyle={Config.statusbarAuthenticated}
           backgroundColor={GlobalStyles.colors.secondary}
         />
-        <Stack.Navigator initialRouteName={route.route}>
+        <Stack.Navigator initialRouteName={route}>
           <Stack.Screen
             name="LoginToken"
             component={LoginToken}
             options={{
               headerShown: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="FirstRenderIos"
+            component={FirstRenderIos}
+            options={{
+              headerShown: false,
               gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="LoginIos"
+            component={LoginIos}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="RegisterIOs"
+            component={RegisterIos}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="PortalIos"
+            component={PortalIos}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false,
             }}
           />
           <Stack.Screen
@@ -406,6 +497,21 @@ function AuthenticatedStack(route) {
             }}
           />
           <Stack.Screen
+            name="KalenderPersonal"
+            component={KalenderPersonal}
+            options={{
+              headerShown: false,
+              // gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailKalenderPersonal"
+            component={DetailKalenderPersonal}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="MainKalender"
             component={MainKalender}
             options={{
@@ -421,14 +527,6 @@ function AuthenticatedStack(route) {
               gestureEnabled: false,
             }}
           />
-          {/* <Stack.Screen
-            name="Kebijakan"
-            component={DrawerNavigation}
-            options={{
-              headerShown: false,
-              gestureEnabled: false
-            }}
-          /> */}
           <Stack.Screen
             name="ListBerita"
             component={ListBerita}
@@ -738,6 +836,20 @@ function AuthenticatedStack(route) {
               headerShown: false,
             }}
           />
+          {/* <Stack.Screen
+            name="Bankom"
+            component={Bankom}
+            options={{
+              headerShown: false,
+            }}
+          /> */}
+          {/* <Stack.Screen
+            name="DokumenLain"
+            component={DokumenLain}
+            options={{
+              headerShown: false,
+            }}
+          /> */}
           <Stack.Screen
             name="DetailDokumenLain"
             component={DetailDokumenLain}
@@ -809,13 +921,6 @@ function AuthenticatedStack(route) {
             }}
           />
           <Stack.Screen
-            name="DetailPostinganSaya"
-            component={DetailPostinganSaya}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
             name="ListPostinganPegawai"
             component={ListPostinganPegawai}
             options={{
@@ -867,6 +972,13 @@ function AuthenticatedStack(route) {
           <Stack.Screen
             name="MainDigitalSign"
             component={MainDigitalSign}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MainSertifikat"
+            component={MainSertifikat}
             options={{
               headerShown: false,
             }}
@@ -1033,6 +1145,13 @@ function AuthenticatedStack(route) {
             }}
           />
           <Stack.Screen
+            name="BantuanPemerintah"
+            component={BantuanPemerintah}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="MainOutgoingDetail"
             component={MainOutgoingDetail}
             options={{
@@ -1048,21 +1167,6 @@ function AuthenticatedStack(route) {
               title: "Detail Surat Keluar",
             }}
           />
-          {/* <Stack.Screen
-                name="Main"
-                component={Main}
-                options={{
-                  headerShown: false,
-                }}
-              /> */}
-          {/* <Stack.Screen
-                name="Kebijakan"
-                component={DrawerNavigation}
-                options={{
-                  headerShown: false,
-                  gestureEnabled: false
-                }}
-              /> */}
           <Stack.Screen
             name="DetailDashboard"
             component={DetailDashboard}
@@ -1304,6 +1408,41 @@ function AuthenticatedStack(route) {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="AksiPerubahan"
+            component={AksiPerubahan}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AksiPerubahanView"
+            component={AksiPerubahanView}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="LaporanDigitalSign"
+            component={LaporanDigitalSign}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="DetailSertifikatEksternal"
+            component={DetailSertifikatEksternal}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListFaq"
+            component={ListFaq}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
 
         {modal === true ? (
@@ -1323,28 +1462,51 @@ function AuthenticatedStack(route) {
   );
 }
 
-// const bugsnag = Bugsnag({
-//   apiKey: "b67f9428d1c71d7476470cd97e3692a6",
-// });
-
-// Sentry.init({
-//   dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
-//   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-//   // We recommend adjusting this value in production.
-//   debug: true,
-//   // tracePropagationTargets: [Config.base_url],
-//   tracesSampleRate: 1.0,
-// });
-
 function AppNavigator() {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useSelector((state) => state.login);
   const [route, setRoute] = useState("");
 
-  const prefix = Linking.makeUrl("/");
+  const prefix = Linking.createURL("/");
 
   const [linking, setLinking] = useState();
+
+  Sentry.init({
+    dsn: "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+  });
+
+  // //Method for handling notifications received while app in foreground
+  // OneSignal.setNotificationWillShowInForegroundHandler(
+  //   (notificationReceivedEvent) => {
+  //     let notification = notificationReceivedEvent.getNotification();
+  //     const data = notification?.additionalData;
+  //     //Silence notification by calling complete() with no argument
+  //     notificationReceivedEvent.complete(notification);
+  //   }
+  // );
+
+  // //Method for handling notifications opened
+  // OneSignal.setNotificationOpenedHandler((openedEvent) => {
+  //   // const { action, notification } = openedEvent;
+  //   // dispatch(setDataNotif(notification?.additionalData));
+  // })
+
+  OneSignal.Notifications.addEventListener("foregroundWillDisplay", (event) => {
+    event.getNotification().display();
+    event.notification.display();
+  });
+
+  OneSignal.Notifications.addEventListener("click", (event) => {
+    setPushNotif(event?.notification?.additionalData);
+    console.log("navigator", event.notification);
+    // dispatch(setDataNotif(notification?.additionalData));
+  });
 
   useEffect(() => {
     const deviceTypeMap = {
@@ -1367,7 +1529,7 @@ function AppNavigator() {
       if (val === null) {
         setRoute("LoginToken");
         setLinking({
-          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
           config: {
             initialRouteName: "LoginToken",
             screens: {
@@ -1378,7 +1540,7 @@ function AppNavigator() {
       } else {
         setRoute("Main");
         setLinking({
-          prefixes: [prefix, "https://portal.kkp.go.id/"],
+          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
           config: {
             initialRouteName: "Main",
             screens: {
@@ -1428,7 +1590,7 @@ function AppNavigator() {
         {/* awas lupa */}
         <NavigationContainer linking={!token ? null : linking}>
           {/* {!isLoading && isToken == null && <AuthStack />} */}
-          {!isLoading && <AuthenticatedStack route={route} />}
+          {!isLoading && route !== "" && <AuthenticatedStack route={route} />}
         </NavigationContainer>
         {loadingOverlay}
       </Host>
@@ -1436,12 +1598,13 @@ function AppNavigator() {
   );
 }
 
-// export default Sentry.wrap(AppNavigator);
-export default AppNavigator;
+export default Sentry.wrap(AppNavigator);
+// export default AppNavigator;
 
 const styles = StyleSheet.create({
   rootScreen: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   container: {
     position: "absolute",

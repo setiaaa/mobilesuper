@@ -123,6 +123,8 @@ export const DetailSertifikat = (route) => {
 
   const { device } = useSelector((state) => state.apps);
 
+  console.log(item);
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
@@ -236,6 +238,38 @@ export const DetailSertifikat = (route) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
+                    Operator
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          fontSize: fontSizeResponsive("H4", device),
+                          color: COLORS.lighter,
+                        }}
+                      >
+                        {item?.composer?.nama}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
                     Penerima Sertifikat
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
@@ -322,9 +356,7 @@ export const DetailSertifikat = (route) => {
                       <Text
                         style={{ fontSize: fontSizeResponsive("H4", device) }}
                       >
-                        {moment(item.extra_attributes?.tanggalSertif)
-                          .locale("id")
-                          .format("DD MMMM yyyy")}
+                        {item.extra_attributes?.tanggalSertif}
                       </Text>
                     )}
                   </View>
@@ -338,7 +370,36 @@ export const DetailSertifikat = (route) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    Judul Course
+                    Jenis Sertifikat
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {item.extra_attributes?.tipe}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Judul Pelatihan
                   </Text>
                   <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
@@ -369,14 +430,71 @@ export const DetailSertifikat = (route) => {
                       fontSize: fontSizeResponsive("H4", device),
                     }}
                   >
-                    keterangan
+                    Penyelenggara
                   </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {item.extra_attributes?.penyelenggara !== undefined
+                          ? item.extra_attributes?.penyelenggara
+                          : "-"}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
                   <Text
                     style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
                       fontSize: fontSizeResponsive("H4", device),
-                      width: 150,
                     }}
                   >
+                    Tempat Pelatihan
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+                    :
+                  </Text>
+                  <View style={{ width: "45%" }}>
+                    {loading ? (
+                      <ShimmerPlaceHolder
+                        style={{ borderRadius: 4, width: "100%" }}
+                        height={20}
+                      />
+                    ) : (
+                      <Text
+                        style={{ fontSize: fontSizeResponsive("H4", device) }}
+                      >
+                        {item.extra_attributes?.tempat === undefined
+                          ? "-"
+                          : item.extra_attributes?.tempat}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", gap: 10, marginTop: 20 }}>
+                  <Text
+                    style={{
+                      width: "45%",
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("H4", device),
+                    }}
+                  >
+                    Keterangan
+                  </Text>
+                  <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
                     :
                   </Text>
                   <View style={{ width: "45%" }}>
@@ -801,7 +919,7 @@ export const DetailSertifikat = (route) => {
                     fontSize: fontSizeResponsive("H2", device),
                   }}
                 >
-                  Lihat Sertifikat
+                  Lihat Dokumen
                 </Text>
               </TouchableOpacity>
             )}

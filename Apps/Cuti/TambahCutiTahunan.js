@@ -33,6 +33,7 @@ import { Search } from "../../components/Search";
 import {
   getFormCuti,
   getPilihApproval,
+  getPilihApprovalPejabat,
   postAttachmentCuti,
   postPengajuanCuti,
   postPengajuanCutiDraft,
@@ -408,9 +409,8 @@ export const TambahCutiTahunan = ({ route }) => {
     toggle: false,
   });
   const { profile } = useSelector((state) => state.superApps);
-  const { form, pilih, status, attachment, jumlahCuti, arsip } = useSelector(
-    (state) => state.cuti
-  );
+  const { form, pilih, status, attachment, jumlahCuti, arsip, pilihPejabat } =
+    useSelector((state) => state.cuti);
   const arsipDetail = arsip.detail;
 
   useEffect(() => {
@@ -483,7 +483,8 @@ export const TambahCutiTahunan = ({ route }) => {
 
   useEffect(() => {
     if (profile.nip !== "") {
-      dispatch(getPilihApproval({ nip: profile.nip }));
+      dispatch(getPilihApproval({ nip: profile.nip, type: "1" }));
+      dispatch(getPilihApprovalPejabat({ nip: profile.nip, type: "2" }));
     }
   }, [profile.nip, atasan]);
 
@@ -539,7 +540,18 @@ export const TambahCutiTahunan = ({ route }) => {
     let nama = [];
     pilih.data?.map((item) => {
       nama.push({
-        key: item.nip,
+        key: item.id,
+        value: item.nama_lengkap,
+      });
+    });
+    return nama;
+  };
+
+  const pickJabatan = () => {
+    let nama = [];
+    pilihPejabat.data?.map((item) => {
+      nama.push({
+        key: item.id,
         value: item.nama_lengkap,
       });
     });
@@ -570,7 +582,7 @@ export const TambahCutiTahunan = ({ route }) => {
       alamat_cuti: alamat,
       nomor_telpon: telepon,
       nip_approval1: atasan.key,
-      nip_approval2: pejabat.key,
+      nip_approval2: pejabat !== "" ? pejabat.key : atasan.key,
       attachment: attachment,
     };
     const data = {
@@ -678,7 +690,7 @@ export const TambahCutiTahunan = ({ route }) => {
   const inputRef = useRef(null);
   const [parentId, setParentId] = useState("");
   const bottomSheetModalRef = useRef(null);
-  const initialSnapPoints = useMemo(() => ["95%"], []);
+  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
@@ -693,7 +705,6 @@ export const TambahCutiTahunan = ({ route }) => {
     if (bottomSheetModalRef.current) bottomSheetModalRef.current?.close();
   };
   const { device } = useSelector((state) => state.apps);
-  console.log(tipe);
 
   return (
     <GestureHandlerRootView>
@@ -1667,7 +1678,7 @@ export const TambahCutiTahunan = ({ route }) => {
                       }}
                     >
                       <Ionicons
-                        name="md-cloud-upload-outline"
+                        name="cloud-upload-outline"
                         size={30}
                         color={COLORS.white}
                       />
@@ -2007,7 +2018,7 @@ export const TambahCutiTahunan = ({ route }) => {
                   </View>
 
                   <Dropdown
-                    data={pickAtasan()}
+                    data={pickJabatan()}
                     setSelected={setPejabat}
                     selected={pejabat}
                     borderWidth={1}

@@ -43,6 +43,7 @@ import { logout } from "../../../store/auth";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as Sentry from "@sentry/react-native";
 
 function IncomingList({ route }) {
   const [list, setList] = useState([]);
@@ -112,6 +113,7 @@ function IncomingList({ route }) {
       setIsLoading(false);
     } catch (error) {
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(error, "Peringatan!", "Surat Masuk tidak berfungsi");
@@ -172,6 +174,7 @@ function IncomingList({ route }) {
       setIsLoading(false);
     } catch (error) {
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(error, "Peringatan!", "Surat Masuk tidak berfungsi");

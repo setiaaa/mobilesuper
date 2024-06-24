@@ -1,6 +1,14 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Platform,
+  FlatList,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   COLORS,
@@ -21,11 +29,16 @@ const dataRoleDashboardKeuangan = ["D_KK"];
 const dataRoleDashboardkepegawaian = ["D_KP"];
 const dataRoleDashboardbudidaya = ["D_BD"];
 const dataRoleDashboardpenangkapan = ["D_PK"];
+const dataRoleDashboardBantuanPemerintah = ["D_KP"];
+
+const numColumns = 3;
 
 function MyTabBar({ props, navigation }) {
   const [tabItemIndex, setTabItemIndex] = useState(1);
 
   const [visibleModal, setVisibleModal] = useState(false);
+
+  const [listMenu, setListMenu] = useState([]);
 
   const { profile } = useSelector((state) => state.superApps);
 
@@ -44,6 +57,302 @@ function MyTabBar({ props, navigation }) {
   const isRolePenangkapan = profile.roles_access?.some((item) =>
     dataRoleDashboardpenangkapan.includes(item)
   );
+  const isRoleBantuanPemerintah = profile.roles_access?.some((item) =>
+    dataRoleDashboardBantuanPemerintah.includes(item)
+  );
+
+  useEffect(() => {
+    let menuDash = [];
+    if (isRoleKeuangan) {
+      menuDash.push(
+        <View
+          style={{
+            alignItems: "center",
+            height: 150,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Keuangan");
+              setVisibleModal(false);
+            }}
+          >
+            <View
+              style={[
+                styles.cardApps,
+                {
+                  backgroundColor: COLORS.primary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 50 : 24,
+                  height: device === "tablet" ? 40 : 18,
+                }}
+                source={require("../../assets/superApp/ikon-keuangan.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              width: device === "tablet" ? 200 : 100,
+              textAlign: "center",
+            }}
+          >
+            Keuangan dan Kinerja
+          </Text>
+        </View>
+      );
+    }
+
+    if (isRoleKepegawaian) {
+      menuDash.push(
+        <View
+          style={{
+            alignItems: "center",
+            height: 150,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Kepegawaian");
+              setVisibleModal(false);
+            }}
+          >
+            <View
+              style={[
+                styles.cardApps,
+                {
+                  backgroundColor: COLORS.primary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 50 : 24,
+                  height: device === "tablet" ? 50 : 18,
+                }}
+                source={require("../../assets/superApp/ikon-kepagawaian.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              width: device === "tablet" ? 200 : 100,
+              textAlign: "center",
+            }}
+          >
+            Kepegawaian
+          </Text>
+        </View>
+      );
+    }
+
+    if (isRoleBantuanPemerintah) {
+      menuDash.push(
+        <View
+          style={{
+            alignItems: "center",
+            height: 150,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("BantuanPemerintah");
+              setVisibleModal(false);
+            }}
+          >
+            <View
+              style={[
+                styles.cardApps,
+                {
+                  backgroundColor: COLORS.primary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 50 : 24,
+                  height: device === "tablet" ? 50 : 18,
+                }}
+                source={require("../../assets/superApp/ikon-perencanaan.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              width: device === "tablet" ? 200 : 100,
+              textAlign: "center",
+            }}
+          >
+            Bantuan Pemerintah
+          </Text>
+        </View>
+      );
+    }
+    if (isRoleBudidaya) {
+      menuDash.push(
+        <View
+          style={{
+            alignItems: "center",
+            height: 150,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("ProduksiBudidaya");
+              setVisibleModal(false);
+            }}
+          >
+            <View
+              style={[
+                styles.cardApps,
+                {
+                  backgroundColor: COLORS.primary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 50 : 24,
+                  height: device === "tablet" ? 50 : 18,
+                }}
+                source={require("../../assets/superApp/ikon-budidaya.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              width: device === "tablet" ? 200 : 100,
+              textAlign: "center",
+            }}
+          >
+            Produksi Budidaya
+          </Text>
+        </View>
+      );
+    }
+    if (isRolePenangkapan) {
+      menuDash.push(
+        <View
+          style={{
+            alignItems: "center",
+            height: 150,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: 100,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Penangkapan");
+                setVisibleModal(false);
+              }}
+            >
+              <View
+                style={[
+                  styles.cardApps,
+                  {
+                    backgroundColor: COLORS.primary,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                  },
+                ]}
+              >
+                <Image
+                  style={{
+                    width: device === "tablet" ? 50 : 24,
+                    height: device === "tablet" ? 50 : 18,
+                  }}
+                  source={require("../../assets/superApp/ikon-penangkapan.png")}
+                />
+              </View>
+            </TouchableOpacity>
+            <Text
+              style={{
+                marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: fontSizeResponsive("H4", device),
+                width: device === "tablet" ? 200 : 100,
+                textAlign: "center",
+              }}
+            >
+              Produksi Penangkapan
+            </Text>
+          </View>
+        </View>
+      );
+    }
+
+    setListMenu(menuDash);
+  }, [profile]);
+
+  const numRows = Math.ceil(listMenu.length / 3);
+
+  const renderRow = ({ item }) => {
+    if (item.empty === true) {
+      return <View style={[styles.item, styles.itemInvisible]} />;
+    }
+    return (
+      <View style={[styles.item, { height: device === "tablet" ? 200 : 100 }]}>
+        <Text style={styles.itemText}>{item}</Text>
+      </View>
+    );
+  };
+
+  const rows = Array.from({ length: numRows }, (_, rowIndex) =>
+    listMenu.slice(rowIndex * 3, rowIndex * 3 + 3)
+  );
+
+  const formatData = (data, numColumns) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+      numberOfElementsLastRow++;
+    }
+
+    return data;
+  };
 
   const { device } = useSelector((state) => state.apps);
   return (
@@ -523,220 +832,15 @@ function MyTabBar({ props, navigation }) {
                 </TouchableOpacity>
               </View>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  marginTop: 10,
+              <FlatList
+                data={formatData(listMenu, numColumns)}
+                renderItem={renderRow}
+                keyExtractor={(row, index) => `row_${index}`}
+                columnWrapperStyle={{
+                  gap: 5,
                 }}
-              >
-                {isRoleKeuangan ? (
-                  <View
-                    style={{
-                      alignItems: "center",
-                      width: 150,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate("Keuangan");
-                        setVisibleModal(false);
-                      }}
-                    >
-                      <View
-                        style={[
-                          styles.cardApps,
-                          {
-                            backgroundColor: COLORS.primary,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                          },
-                        ]}
-                      >
-                        <Image
-                          style={{
-                            width: device === "tablet" ? 50 : 24,
-                            height: device === "tablet" ? 40 : 18,
-                          }}
-                          source={require("../../assets/superApp/ikon-keuangan.png")}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: fontSizeResponsive("H4", device),
-                        width: device === "tablet" ? 200 : 100,
-                        textAlign: "center",
-                      }}
-                    >
-                      Keuangan dan Kinerja
-                    </Text>
-                  </View>
-                ) : null}
-
-                {isRoleKepegawaian ? (
-                  <View
-                    style={{
-                      alignItems: "center",
-                      width: 150,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate("Kepegawaian");
-                        setVisibleModal(false);
-                      }}
-                    >
-                      <View
-                        style={[
-                          styles.cardApps,
-                          {
-                            backgroundColor: COLORS.primary,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                          },
-                        ]}
-                      >
-                        <Image
-                          style={{
-                            width: device === "tablet" ? 50 : 24,
-                            height: device === "tablet" ? 50 : 18,
-                          }}
-                          source={require("../../assets/superApp/ikon-kepagawaian.png")}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: fontSizeResponsive("H4", device),
-                        width: device === "tablet" ? 200 : 100,
-                        textAlign: "center",
-                      }}
-                    >
-                      Kepegawaian
-                    </Text>
-                  </View>
-                ) : null}
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  marginTop: 10,
-                }}
-              >
-                {isRoleBudidaya ? (
-                  <View
-                    style={{
-                      alignItems: "center",
-                      width: 150,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate("ProduksiBudidaya");
-                        setVisibleModal(false);
-                      }}
-                    >
-                      <View
-                        style={[
-                          styles.cardApps,
-                          {
-                            backgroundColor: COLORS.primary,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                          },
-                        ]}
-                      >
-                        <Image
-                          style={{
-                            width: device === "tablet" ? 50 : 24,
-                            height: device === "tablet" ? 50 : 18,
-                          }}
-                          source={require("../../assets/superApp/ikon-budidaya.png")}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: fontSizeResponsive("H4", device),
-                        width: device === "tablet" ? 200 : 100,
-                        textAlign: "center",
-                      }}
-                    >
-                      Produksi Budidaya
-                    </Text>
-                  </View>
-                ) : null}
-                {isRolePenangkapan ? (
-                  <View
-                    style={{
-                      alignItems: "center",
-                      width: 150,
-                    }}
-                  >
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: 100,
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate("Penangkapan");
-                          setVisibleModal(false);
-                        }}
-                      >
-                        <View
-                          style={[
-                            styles.cardApps,
-                            {
-                              backgroundColor: COLORS.primary,
-                              justifyContent: "center",
-                              alignItems: "center",
-                              display: "flex",
-                            },
-                          ]}
-                        >
-                          <Image
-                            style={{
-                              width: device === "tablet" ? 50 : 24,
-                              height: device === "tablet" ? 50 : 18,
-                            }}
-                            source={require("../../assets/superApp/ikon-penangkapan.png")}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                      <Text
-                        style={{
-                          marginTop: 10,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontSize: fontSizeResponsive("H4", device),
-                          width: device === "tablet" ? 200 : 100,
-                          textAlign: "center",
-                        }}
-                      >
-                        Produksi Penangkapan
-                      </Text>
-                    </View>
-                  </View>
-                ) : null}
-              </View>
+                numColumns={numColumns}
+              />
             </View>
           </View>
           {/* <TouchableOpacity
@@ -799,6 +903,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     //shadow android
     elevation: 5,
+  },
+  item: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    margin: 1, // approximate a square
+    marginTop: 10,
+  },
+  itemInvisible: {
+    backgroundColor: "transparent",
+  },
+  itemText: {
+    color: "#fff",
   },
 });
 export default MyTabBar;

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getKesejahteraan, getPerencanaan, getTeknologi } from "../service/api";
+import * as Sentry from "@sentry/react-native";
 
 const DashboardSlice = createSlice({
   name: "Dashboard",
@@ -79,6 +80,7 @@ const DashboardSlice = createSlice({
       })
       .addCase(getKesejahteraan.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getPerencanaan.fulfilled, (state, action) => {
         // state.perencanaan.lists = action.payload;
@@ -98,6 +100,7 @@ const DashboardSlice = createSlice({
       })
       .addCase(getPerencanaan.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getTeknologi.fulfilled, (state, action) => {
         state.teknologi.lists = action.payload;
@@ -108,6 +111,7 @@ const DashboardSlice = createSlice({
       })
       .addCase(getTeknologi.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

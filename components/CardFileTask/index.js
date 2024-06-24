@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList, Platform, Text } from "react-native";
 import { View } from "react-native";
 import { COLORS, FONTSIZE } from "../../config/SuperAppps";
 import { Image } from "react-native";

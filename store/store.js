@@ -26,6 +26,9 @@ import SPPD from "./SPPD";
 import HelpDesk from "./HelpDesk";
 import Apps from "./Apps";
 import Survey from "./Survey";
+import KalenderPersonal from "./KalenderPersonal";
+import AksiPerubahan from "./AksiPerubahan";
+import FaqReducer from "./Faq";
 
 export const store = configureStore({
   reducer: {
@@ -55,5 +58,8 @@ export const store = configureStore({
     helpDesk: HelpDesk,
     apps: Apps,
     survey: Survey,
+    kalenderPersonal: KalenderPersonal,
+    aksiperubahan: AksiPerubahan,
+    Faq: FaqReducer,
   },
 });

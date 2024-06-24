@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   Modal,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Search } from "../../components/Search";

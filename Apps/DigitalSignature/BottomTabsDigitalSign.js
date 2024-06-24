@@ -37,12 +37,11 @@ function MyTabDigitalSign({ props, navigation }) {
           }}
         >
           {/* {hasRequiredRoles(profile?.roles_access, roleBankom) ? ( */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             key={1}
             onPress={() => {
               setTabItemIndex(1);
               navigation.navigate("Bankom", { unread: false });
-              // props.navigation.navigate('Home', { unread: false })
             }}
           >
             {tabItemIndex === 1 ? (
@@ -113,24 +112,24 @@ function MyTabDigitalSign({ props, navigation }) {
                 </Text>
               </View>
             )}
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* ) : null} */}
 
           <TouchableOpacity
-            key={2}
+            key={1}
             onPress={() => {
-              setTabItemIndex(2);
+              setTabItemIndex(1);
               navigation.navigate("DokumenLain", { unread: false });
               // props.navigation.navigate('Home', { unread: false })
             }}
           >
-            {tabItemIndex === 2 ? (
+            {tabItemIndex === 1 ? (
               <View
                 style={{
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <View
@@ -160,12 +159,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom:
-                      device === "tablet"
-                        ? 40
-                        : Platform.OS === "ios"
-                        ? 24
-                        : 40,
+                    bottom: 40,
                   }}
                 >
                   Dokumen Lain
@@ -177,7 +171,7 @@ function MyTabDigitalSign({ props, navigation }) {
                   alignItems: "center",
                   height: device === "tablet" ? 120 : 95,
                   justifyContent: "center",
-                  width: device === "tablet" ? 150 : 80,
+                  width: device === "tablet" ? 150 : 95,
                 }}
               >
                 <Ionicons
@@ -192,12 +186,7 @@ function MyTabDigitalSign({ props, navigation }) {
                     textAlign: "center",
                     position: "absolute",
                     fontSize: fontSizeResponsive("H3", device),
-                    bottom:
-                      device === "tablet"
-                        ? 40
-                        : Platform.OS === "ios"
-                        ? 24
-                        : 40,
+                    bottom: 40,
                   }}
                 >
                   Dokumen Lain
@@ -206,7 +195,7 @@ function MyTabDigitalSign({ props, navigation }) {
             )}
           </TouchableOpacity>
 
-          {hasRequiredRoles(profile?.roles_access, roleLaporan) ? (
+          {/* {hasRequiredRoles(profile?.roles_access, roleLaporan) ? (
             <TouchableOpacity
               key={3}
               onPress={() => {
@@ -284,7 +273,87 @@ function MyTabDigitalSign({ props, navigation }) {
                 </View>
               )}
             </TouchableOpacity>
-          ) : null}
+          ) : null} */}
+
+          {/* {hasRequiredRoles(profile?.roles_access, roleLaporan) ? ( */}
+          <TouchableOpacity
+            key={3}
+            onPress={() => {
+              setTabItemIndex(3);
+              navigation.navigate("Verifikasi");
+              // props.navigation.navigate('Home', { unread: false })
+            }}
+          >
+            {tabItemIndex === 3 ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 3,
+                    backgroundColor: COLORS.primary,
+                    position: "absolute",
+                    top: 0,
+                    //shadow ios
+                    shadowOffset: { width: -2, height: 5 },
+                    shadowColor: COLORS.primary,
+                    shadowOpacity: 0.4,
+                    //shadow android
+                    elevation: 2,
+                  }}
+                />
+                <Ionicons
+                  name="pencil-outline"
+                  color={COLORS.primary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Verifikasi
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: "center",
+                  height: device === "tablet" ? 120 : 95,
+                  justifyContent: "center",
+                  width: device === "tablet" ? 95 : 80,
+                }}
+              >
+                <Ionicons
+                  name="pencil-outline"
+                  color={COLORS.tertiary}
+                  size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
+                />
+                <Text
+                  style={{
+                    color: COLORS.tertiary,
+                    position: "absolute",
+                    bottom: device === "tablet" ? 40 : 40,
+                    fontSize: fontSizeResponsive("H3", device),
+                  }}
+                >
+                  Verifikasi
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          {/* ) : null} */}
         </View>
       </BottomSheetModalProvider>
     </>

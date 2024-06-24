@@ -14,6 +14,7 @@ import {
   putEditAgendaGrup,
   putEditGrup,
 } from "../service/api";
+import * as Sentry from "@sentry/react-native";
 
 const GrupKalenderSlice = createSlice({
   name: "GrupKalender",
@@ -70,6 +71,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(getListGrup.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getListAcara.fulfilled, (state, action) => {
         state.acara.lists = action.payload;
@@ -80,6 +82,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(getListAcara.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDetailAcara.fulfilled, (state, action) => {
         state.acara.detail = action.payload;
@@ -90,6 +93,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(getDetailAcara.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getListAgendaAcara.fulfilled, (state, action) => {
         state.acara.lists = action.payload;
@@ -100,6 +104,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(getListAgendaAcara.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getDetailAgendaAcara.fulfilled, (state, action) => {
         state.acara.detail = action.payload;
@@ -110,6 +115,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(getDetailAgendaAcara.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(getListSubAgenda.fulfilled, (state, action) => {
         state.agendaAcara.listsSub = action.payload;
@@ -120,6 +126,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(getListSubAgenda.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(postGrup.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -130,7 +137,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(postGrup.rejected, (state, action) => {
         state.loading = false;
-
+        Sentry.captureException(action.payload);
         state.status = "error";
       })
       .addCase(getDetailGrup.fulfilled, (state, action) => {
@@ -142,6 +149,7 @@ const GrupKalenderSlice = createSlice({
       })
       .addCase(getDetailGrup.rejected, (state, action) => {
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(postAgendaAcara.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -153,6 +161,7 @@ const GrupKalenderSlice = createSlice({
       .addCase(postAgendaAcara.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(putEditGrup.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -165,6 +174,7 @@ const GrupKalenderSlice = createSlice({
       .addCase(putEditGrup.rejected, (state, action) => {
         state.loading = false;
         state.status = "error";
+        Sentry.captureException(action.payload);
       })
       .addCase(putEditAgendaGrup.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -176,6 +186,7 @@ const GrupKalenderSlice = createSlice({
       .addCase(putEditAgendaGrup.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(deleteAgendaGrup.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -187,6 +198,7 @@ const GrupKalenderSlice = createSlice({
       .addCase(deleteAgendaGrup.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        Sentry.captureException(action.payload);
       })
       .addCase(deleteGrup.fulfilled, (state, action) => {
         state.status = "berhasil";
@@ -198,6 +210,7 @@ const GrupKalenderSlice = createSlice({
       .addCase(deleteGrup.rejected, (state, action) => {
         state.status = "error";
         state.loading = false;
+        Sentry.captureException(action.payload);
       });
   },
 });

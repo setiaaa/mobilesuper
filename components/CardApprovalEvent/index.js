@@ -2,6 +2,7 @@ import { Text, View } from "react-native";
 import { COLORS, fontSizeResponsive } from "../../config/SuperAppps";
 
 export const CardApprovalEvent = ({ item, id, device }) => {
+  console.log(item);
   return (
     <View
       key={id}

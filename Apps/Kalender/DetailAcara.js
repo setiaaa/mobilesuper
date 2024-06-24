@@ -163,7 +163,7 @@ export const DetailAcara = ({ route }) => {
                 <Text
                   style={{ fontSize: 15, fontWeight: 600, color: COLORS.white }}
                 >
-                  Detail Agenda
+                  Detail Kalender
                 </Text>
               </View>
             </View>

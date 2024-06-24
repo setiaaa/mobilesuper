@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { Text, FlatList } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";

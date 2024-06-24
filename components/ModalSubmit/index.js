@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "react-native";
+import { Modal, Platform } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { TouchableOpacity } from "react-native";
 import { View } from "react-native";

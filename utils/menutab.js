@@ -96,6 +96,17 @@ import MyTabBarDetailKorespondensi from "../Apps/Task Management/DetailKorespond
 import { DetailKorespondensiTM } from "../Apps/Task Management/DetailKorespondensiTM/DetailKorespondensiTM";
 import { Dimensions, Platform, View, useWindowDimensions } from "react-native";
 import { AddressbookPara } from "../Apps/AddressbookPara";
+import { Kusuka } from "../Apps/Dashboard/Kusuka";
+import { P3KENonKusuka } from "../Apps/Dashboard/P3KENonKusuka";
+import { BBMSubsidiKusuka } from "../Apps/Dashboard/BBMSubsidiKusuka";
+import { BBMNonSubsidiKusuka } from "../Apps/Dashboard/BBMNonSubsidiKusuka";
+import { P3KEKusuka } from "../Apps/Dashboard/P3KEKusuka";
+import { Deviasi } from "../Apps/Dashboard/Deviasi";
+import { KalenderPersonal } from "../Apps/KalenderPersonal/KalenderPersonal";
+import { Verifikasi } from "../Apps/DigitalSignature/Verifikasi";
+import { MyTabSertifikat } from "../Apps/DigitalSignature/BottomTabsSertifikat";
+import { SertifikatLms } from "../Apps/DigitalSignature/SertifikatLms";
+import { SertifikatEksternal } from "../Apps/DigitalSignature/SertifikatEksternal";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -290,8 +301,8 @@ export const BottomTabsKalender = () => {
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="Agenda"
-          component={Agenda}
+          name="KalenderPersonal"
+          component={KalenderPersonal}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
@@ -352,18 +363,42 @@ export const BottomTabsDigitalSign = () => {
           initialRouteName="Bankom"
         >
           <Tab.Screen
-            name="Bankom"
-            component={Bankom}
-            options={{ headerShown: false }}
-          />
-          <Tab.Screen
             name="DokumenLain"
             component={DokumenLain}
             options={{ headerShown: false }}
           />
           <Tab.Screen
-            name="LaporanDigitalSign"
-            component={LaporanDigitalSign}
+            name="Verifikasi"
+            component={Verifikasi}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </View>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsSertifikat = () => {
+  return (
+    <BottomSheetModalProvider>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabSertifikat {...props} />}
+          initialRouteName="Bankom"
+        >
+          <Tab.Screen
+            name="Bankom"
+            component={Bankom}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="SertifikatLms"
+            component={SertifikatLms}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="SertifikatEksternal"
+            component={SertifikatEksternal}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>
@@ -930,6 +965,72 @@ export const TopsKeuanganKinerja = () => {
   );
 };
 
+export const TopsBantuanPemerintah = () => {
+  const { device } = useSelector((state) => state.apps);
+
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName="Kusuka"
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H2", device),
+            textTransform: "none",
+          },
+          tabBarScrollEnabled: true,
+          swipeEnabled: false,
+          tabBarItemStyle: { width: "auto" },
+        }}
+      >
+        <Top.Screen
+          name="Kusuka"
+          component={Kusuka}
+          options={{
+            title: "KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="P3KEKusuka"
+          component={P3KEKusuka}
+          options={{
+            title: "P3KE KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="P3KENonKusuka"
+          component={P3KENonKusuka}
+          options={{
+            title: "P3KE NON KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="BBMSubsidiKusuka"
+          component={BBMSubsidiKusuka}
+          options={{
+            title: "BBM SUBSIDI KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="BBMNonSubsidiKusuka"
+          component={BBMNonSubsidiKusuka}
+          options={{
+            title: "BBM SUBSIDI NON KUSUKA",
+          }}
+        />
+        <Top.Screen
+          name="DeviasiKusuka"
+          component={Deviasi}
+          options={{
+            title: "DEVIASI KUSUKA",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
+  );
+};
 export const TopAddressBook = ({ config, device }) => {
   return (
     <Host>

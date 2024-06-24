@@ -16,12 +16,19 @@
       "distribution": "internal"
     },
     "preview": {
+      "env": {
+        "SENTRY_AUTH_TOKEN": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "SENTRY_ORG": "sentry",
+        "SENTRY_PROJECT": "kkp-mobile-prod",
+        "EXPO_OPTIMIZE": "true"
+      },
       "android": {
         "buildType": "apk",
         "image": "latest"
       },
       "ios": {
-        "simulator": true
+        "simulator": true,
+        "enterpriseProvisioning": "adhoc"
       },
       "distribution": "internal"
     },
@@ -33,9 +40,32 @@
     "preview3": {
       "developmentClient": true
     },
-    "production": {}
+    "production": {
+      "env": {
+        "SENTRY_AUTH_TOKEN": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "SENTRY_ORG": "sentry",
+        "SENTRY_PROJECT": "kkp-mobile-prod",
+        "EXPO_OPTIMIZE": "true"
+      },
+      "android": {
+        "buildType": "apk",
+        "image": "latest",
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "ios": {
+        "simulator": false,
+        "enterpriseProvisioning": "adhoc"
+      },
+      "distribution": "store"
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "aziz@armsolusi.com",
+        "ascAppId": "6478191000",
+        "appleTeamId": "H7BL72G773"
+      }
+    }
   }
 }

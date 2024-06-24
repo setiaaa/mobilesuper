@@ -43,6 +43,7 @@ import { logout } from "../../../store/auth";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as Sentry from "@sentry/react-native";
 
 function InternalSatkerList({ route }) {
   const [list, setList] = useState([]);
@@ -114,6 +115,7 @@ function InternalSatkerList({ route }) {
       setIsLoading(false);
     } catch (error) {
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(error, "Peringatan!", "Internal Satker tidak berfungsi");
@@ -175,6 +177,7 @@ function InternalSatkerList({ route }) {
       setIsLoading(false);
     } catch (error) {
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(

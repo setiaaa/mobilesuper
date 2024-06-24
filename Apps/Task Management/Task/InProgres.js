@@ -47,6 +47,8 @@ export const InProgres = () => {
     }
     return arr;
   };
+
+  const { device } = useSelector((state) => state.apps);
   return (
     <>
       {variant === "list" ? (
@@ -66,6 +68,7 @@ export const InProgres = () => {
                     duedate={moment(item.due_date)
                       .locale("id")
                       .format(DATETIME.LONG_DATE)}
+                    device={device}
                   />
                 )}
                 ListEmptyComponent={() => <ListEmpty />}

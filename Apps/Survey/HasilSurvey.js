@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, Text } from "react-native";
+import { FlatList, Platform, ScrollView, Text } from "react-native";
 import {
   COLORS,
   FONTWEIGHT,
@@ -390,6 +390,9 @@ export const HasilSurvey = () => {
       setPage((prev) => prev + 5);
     }
   };
+
+  const rata =
+    dataRataSatu !== undefined ? parseFloat(dataRataSatu).toFixed(2) : "";
 
   return (
     <ScrollView>
@@ -2178,7 +2181,7 @@ export const HasilSurvey = () => {
             shadowColor="#999"
             bgColor="#fff"
           >
-            <Text style={{ fontSize: 18 }}>{dataRataSatu}%</Text>
+            <Text style={{ fontSize: 18 }}>{rata}%</Text>
           </ProgressCircle>
         </View>
 

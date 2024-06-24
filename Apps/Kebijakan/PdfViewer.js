@@ -4,20 +4,22 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dim,
 } from "react-native";
 import React, { useEffect } from "react";
-import PdfReader from "rn-pdf-reader-js-improved";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
+import Pdf from "react-native-pdf";
 
 const PdfViewer = ({ route }) => {
   const { data } = route.params;
   const navigation = useNavigation();
   useEffect(() => {}, []);
   const { device } = useSelector((state) => state.apps);
+  const pdfResource = { uri: data.link, chace: true };
   return (
     <>
       <View
@@ -52,15 +54,15 @@ const PdfViewer = ({ route }) => {
                     <Text style={{ fontSize: FONTSIZE.H1, fontWeight: FONTWEIGHT.bold, color: COLORS.white }}>Detail</Text>
                 </View> */}
       </View>
-      <View style={{ width: "100%", height: "90%" }}>
-        <PdfReader
-          source={{
-            uri: data.link,
+      <View style={{ flex: 1 }}>
+        <Pdf
+          trustAllCerts={false}
+          source={pdfResource}
+          style={{
+            flex: 1,
+            width: Dimensions.get("window").width,
+            height: Dimensions.get("window").height,
           }}
-          webviewProps={{
-            startInLoadingState: true,
-          }}
-          withScroll={true}
         />
       </View>
     </>

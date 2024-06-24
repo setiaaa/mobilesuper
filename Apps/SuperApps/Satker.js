@@ -662,45 +662,53 @@ export const Satker = () => {
                         todayTextColor: COLORS.primary,
                     }}
                 /> */}
-        <View
-          style={[
-            styles.cardListSatker,
-            {
-              flex: 1,
-              justifyContent: "center",
-              paddingVertical: 20,
-              marginHorizontal: device === "tablet" ? 30 : 30,
-            },
-          ]}
-        >
-          <Text
-            style={{
-              marginLeft: 20,
-              fontWeight: FONTWEIGHT.bold,
-              fontSize: fontSizeResponsive("Judul", device),
-              marginTop: 20,
-            }}
-          >
-            Linimasa Pengetahuan
-          </Text>
-          <View style={{ marginTop: 10 }}>
-            <FlatList
-              scrollEnabled={false}
-              data={linimasa}
-              renderItem={({ item, index }) => (
-                <CardLiniMasaSatker
-                  item={item}
-                  index={index}
-                  token={token}
-                  device={device}
-                />
-              )}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
-        </View>
 
-        <View style={{ marginBottom: 40 }}>
+        {profile?.nip === "100062" ? null : (
+          <View
+            style={[
+              styles.cardListSatker,
+              {
+                flex: 1,
+                justifyContent: "center",
+                paddingVertical: 20,
+                marginHorizontal: device === "tablet" ? 30 : 30,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                marginLeft: 20,
+                fontWeight: FONTWEIGHT.bold,
+                fontSize: fontSizeResponsive("Judul", device),
+                marginTop: 20,
+              }}
+            >
+              Linimasa Pengetahuan
+            </Text>
+            <View style={{ marginTop: 10 }}>
+              <FlatList
+                scrollEnabled={false}
+                data={linimasa}
+                renderItem={({ item, index }) => (
+                  <CardLiniMasaSatker
+                    item={item}
+                    index={index}
+                    token={token}
+                    device={device}
+                  />
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
+          </View>
+        )}
+
+        <View
+          style={{
+            marginBottom: 40,
+            marginTop: profile?.nip === "100062" ? 10 : 0,
+          }}
+        >
           <CardUltah ultah={ultah} device={device} />
         </View>
       </ScrollView>

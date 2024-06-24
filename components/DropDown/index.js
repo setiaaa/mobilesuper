@@ -87,7 +87,7 @@ export const Dropdown = ({
             backgroundColor: backgroundColor,
             width: "100%",
             minHeight: 43,
-            paddingBottom:12,
+            paddingBottom: 12,
             borderRadius: 8,
             borderColor: borderColor,
             borderWidth: borderWidth,

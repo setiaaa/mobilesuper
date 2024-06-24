@@ -11,6 +11,7 @@ import { useCallback } from "react";
 import { logout } from "../../../store/auth";
 import { COLORS } from "../../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
+import * as Sentry from "@sentry/react-native";
 
 function DDelegation({ add }) {
   const navigation = useNavigation();
@@ -34,6 +35,7 @@ function DDelegation({ add }) {
       setMyDelegation(response.data);
     } catch (error) {
       if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
         dispatch(logout());
       } else {
         handlerError(error, "Peringatan!", "List delegasi tidak berfungsi");

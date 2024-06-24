@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, Modal, StyleSheet } from "react-native";
+import { View, Text, Image, Modal, StyleSheet, Platform } from "react-native";
 import {} from "react-native-safe-area-context";
 import {
   COLORS,
@@ -16,7 +16,7 @@ import { Collapse } from "accordion-collapse-react-native";
 import { CollapseCardBiodata } from "../../components/CollapseCardBiodata";
 import { ScrollView } from "react-native";
 import { CollapseCardLinimasa } from "../../components/CollapseCardLinimasa";
-import { removeTokenValue } from "../../service/session";
+import { removePushNotif, removeTokenValue } from "../../service/session";
 import { setLogout } from "../../store/LoginAuth";
 import { Loading } from "../../components/Loading";
 import { Alert } from "react-native";
@@ -26,6 +26,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
+import { OneSignal } from "react-native-onesignal";
 
 export const Profile = () => {
   const navigation = useNavigation();
@@ -283,6 +284,14 @@ export const Profile = () => {
             >
               IP ASN
             </Text>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H4", device),
+                marginTop: 5,
+              }}
+            >
+              Sumber Data SIASN
+            </Text>
 
             <View style={{ paddingBottom: 20 }}>
               <View
@@ -451,6 +460,45 @@ export const Profile = () => {
         <View
           style={{
             marginVertical: 20,
+            width: "100%",
+            paddingHorizontal: "5%",
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.white,
+              borderRadius: 8,
+              padding: 16,
+              //shadow ios
+              shadowOffset: { width: -2, height: 4 },
+              shadowColor: "#171717",
+              shadowOpacity: 0.2,
+              //shadow android
+              elevation: 2,
+            }}
+            onPress={() => {
+              navigation.navigate("ListFaq");
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
+              <Ionicons name="chatbubbles-outline" size={24} />
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: "600",
+                }}
+              >
+                FAQ
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View
+          style={{
+            marginVertical: 20,
             justifyContent: "center",
             alignItems: "center",
             paddingHorizontal: "5%",
@@ -478,9 +526,11 @@ export const Profile = () => {
                   {
                     text: "YA",
                     onPress: () => {
+                      removePushNotif();
                       removeTokenValue();
                       dispatch(setLogout());
                       dispatch(setProfile({}));
+                      OneSignal.User.addTag("user_type", "");
                       navigation.reset({
                         index: 0,
                         routes: [{ name: "LoginToken" }],
@@ -568,7 +618,7 @@ export const Profile = () => {
                 <View
                   style={{
                     flexDirection: "row",
-                    marginTop: 20,
+                    marginVertical: 20,
                     alignItems: "center",
                     marginHorizontal: 40,
                   }}
@@ -587,32 +637,7 @@ export const Profile = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Perbaikan survei rata-rata
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginTop: 20,
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Penambahan log perbaikan
+                    Perbaikan kalender personal
                   </Text>
                 </View>
 
@@ -621,7 +646,6 @@ export const Profile = () => {
                     flexDirection: "row",
                     alignItems: "center",
                     marginHorizontal: 40,
-                    marginVertical: 20,
                   }}
                 >
                   <View
@@ -638,9 +662,87 @@ export const Profile = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Perbaikan Scroll pada bottomsheet disposisi
+                    Perubahan menu
                   </Text>
                 </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginVertical: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan histori komentar cuti
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Perbaikan auth token
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 20,
+                    alignItems: "center",
+                    marginHorizontal: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Penambahan menu bankom
+                  </Text>
+                </View>
+
                 {/* 
               <Text
                 style={{

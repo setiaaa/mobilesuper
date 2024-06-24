@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import { Modal, TouchableOpacity } from "react-native";
 import {
   COLORS,

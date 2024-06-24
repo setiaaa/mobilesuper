@@ -11,8 +11,9 @@ import {
   Alert,
   RefreshControl,
   Platform,
+  FlatList,
+  AppState,
 } from "react-native";
-import { CardProfile } from "../../components/CardProfile";
 import { CardMenu } from "../../components/CardMenu";
 // import { Carousel } from '../../components/Carousel/Carousel'
 import { Search } from "../../components/Search";
@@ -36,10 +37,16 @@ import {
 } from "@gorhom/bottom-sheet";
 import { useMemo } from "react";
 import { CardAppsB } from "../../components/CardAppsB";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import {
   AVATAR,
   COLORS,
+  DATETIME,
+  DateFormat,
   FONTSIZE,
   FONTWEIGHT,
   fontSizeResponsive,
@@ -56,14 +63,22 @@ import { Button } from "react-native";
 import { useCallback } from "react";
 import { Portal } from "react-native-portalize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getTokenValue } from "../../service/session";
+import {
+  getPushNotif,
+  getTokenValue,
+  removePushNotif,
+  removeTokenValue,
+} from "../../service/session";
 import {
   getBanner,
   getProfileMe,
   getGaleri,
   getBerita,
+  getLastLogAttendence,
+  postAttendence,
+  getDetailArsipCuti,
 } from "../../service/api";
-import { bannerKegiatan } from "../../components/BannerKegiatan";
+import { bannerKegiatan as BannerKegiatan } from "../../components/BannerKegiatan";
 import { BeritaHome } from "../../components/BeritaHome";
 import { GaleriHome } from "../../components/GaleriHome";
 import { Loading } from "../../components/Loading";
@@ -72,8 +87,27 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Config } from "../../constants/config";
-
+import { setLogout } from "../../store/LoginAuth";
+import {
+  setHandleError,
+  setPost,
+  setProfile,
+  setStatus,
+} from "../../store/SuperApps";
+import { openURL } from "expo-linking";
+// import * as Location from "expo-location";
+import moment, { duration } from "moment";
+import { ModalSubmit } from "../../components/ModalSubmit";
+import { MotiView } from "@motify/components";
+import { Easing } from "react-native-reanimated";
+import LottieView from "lottie-react-native";
+import CryptoJS from "react-native-crypto-js";
+import { OneSignal } from "react-native-onesignal";
 const { width: screenWidth } = Dimensions.get("window");
+const numColumns = 3;
+
+const _color = "#6E01EF";
+const _size = 100;
 
 export const Home = () => {
   const carouselRef = useRef(null);
@@ -87,11 +121,17 @@ export const Home = () => {
   const [slide4, setSlide4] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalVisibleVisiMisi, setModalVisibleVisiMisi] = useState(false);
   const [modalVisibleVideo, setModalVisibleVideo] = useState(false);
+  const [modalPresensi, setModalPresensi] = useState(false);
   const [token, setToken] = useState("");
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(false);
+  const [modalBankom, setModalBankom] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
+  const [dataNotif, setDataNotif] = useState();
+  const [menuBankom, setMenuBankom] = useState([]);
+  const animation = useRef(null);
+  const [radius, setRadius] = useState(false);
 
   const dispatch = useDispatch();
   const route = useRoute();
@@ -102,6 +142,7 @@ export const Home = () => {
     dispatch(getBanner(token));
     dispatch(getGaleri({ token, page }));
     dispatch(getBerita({ token, page }));
+    dispatch(getLastLogAttendence(token));
     setTimeout(() => {
       setRefresh(false);
     }, 2000);
@@ -116,26 +157,12 @@ export const Home = () => {
   useEffect(() => {
     if (token !== "") {
       dispatch(getProfileMe(token));
-    }
-  }, [token, profile]);
-
-  useEffect(() => {
-    if (token !== "") {
       dispatch(getBanner(token));
-    }
-  }, [token, banner]);
-
-  useEffect(() => {
-    if (token !== "") {
       dispatch(getGaleri({ token, page }));
-    }
-  }, [token, galeri]);
-
-  useEffect(() => {
-    if (token !== "") {
       dispatch(getBerita({ token, page }));
+      dispatch(getLastLogAttendence(token));
     }
-  }, [token, berita]);
+  }, [token, profile, banner, galeri, berita, dataNotif]);
 
   const {
     berita,
@@ -146,7 +173,79 @@ export const Home = () => {
     visimisi,
     banner,
     loading,
+    handleError,
+    lastLog,
+    status,
+    post,
   } = useSelector((state) => state.superApps);
+
+  useEffect(() => {
+    OneSignal.User.addTag("user_type", profile?.nip?.toString());
+  }, [profile?.nip]);
+
+  useEffect(() => {
+    getPushNotif().then((val) => {
+      if (val?.path === "cuti" && profile.nip !== undefined) {
+        const params = { nip: profile.nip, id: val.id };
+        console.log("params", params);
+        dispatch(getDetailArsipCuti(params));
+        navigation.navigate(val?.action, { approval: val?.approval });
+      } else if (val?.path === "korespondensi" && profile.nip !== undefined) {
+        console.log("ip val", val);
+        if (val.id != undefined) {
+          if (val.action == "IncomingDetail") {
+            navigation.navigate("IncomingDetail", {
+              id: val.id,
+              title: "Detail Surat Masuk",
+            });
+          } else if (val.action == "DispositionDetail") {
+            navigation.navigate("DispositionDetail", {
+              id: val.id,
+              title: "Detail Disposisi",
+            });
+          } else if (val.action == "NeedFollowUpDetail") {
+            navigation.navigate("NeedFollowUpDetail", {
+              id: val.id,
+              title: "Detail Surat Perlu Diproses",
+            });
+          }
+        }
+      }
+    });
+  }, [token, profile.nip]);
+
+  useEffect(() => {
+    if (post) {
+      dispatch(getLastLogAttendence(token));
+      setTimeout(() => {
+        dispatch(setPost(false));
+      }, 1500);
+    }
+  }, [post]);
+
+  // useEffect(() => {
+  //   if (post === true) {
+  //     axios
+  //       .get(`https://apigw.kubekkp.coofis.com/attendence/lastlog/`, {
+  //         headers: { Authorization: token },
+  //       })
+  //       .then((respon) => {
+  //         console.log(respon?.data);
+  //         if (respon?.data?.results?.next_action !== undefined) {
+  //           console.log("masuk1");
+  //           if (respon?.data?.results?.next_action === "O") {
+  //             console.log("masuk2");
+  //             saveData("checkIn", respon?.data.results?.created_date);
+  //           } else if (respon?.data.results?.next_action === false) {
+  //             console.log("masuk3");
+  //             saveData("checkOut", respon?.data.results?.created_date);
+  //           }
+  //         }
+  //         dispatch(setPost(false));
+  //         retrieveData();
+  //       });
+  //   }
+  // }, [post]);
 
   const bottomSheetModalRef = useRef(null);
 
@@ -180,7 +279,476 @@ export const Home = () => {
     setPlaying((prev) => !prev);
   }, []);
 
+  useEffect(() => {
+    if (handleError) {
+      Alert.alert("Peringatan!", "Terjadi kesalahan harap login kembali?", [
+        {
+          text: "YA",
+          onPress: () => {
+            removeTokenValue();
+            dispatch(setLogout());
+            dispatch(setProfile({}));
+            dispatch(setHandleError(false));
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "LoginToken" }],
+            });
+          },
+        },
+      ]);
+    }
+  }, [handleError]);
+
+  const roleLaporan = ["LAPORAN_BSRE"];
+
+  useEffect(() => {
+    const isRoleLaporan = profile?.roles_access?.some((item) =>
+      roleLaporan.includes(item)
+    );
+    let tmpMenu = [];
+    tmpMenu.push(
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            navigation.navigate("MainPengetahuan");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 40 : 23,
+                height: device === "tablet" ? 55 : 34,
+              }}
+              source={require("../../assets/superApp/pengetahuan.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            width: device === "tablet" ? 200 : null,
+            textAlign: "center",
+          }}
+        >
+          Pengetahuan
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            navigation.navigate("AksiPerubahan");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/aksiperubahanicon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Aksi Perubahan
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            navigation.navigate("MainSertifikat");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/sertifikat.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Sertifikat
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            openURL(
+              "https://elearning.kkp.go.id/auth/oauth2/login.php?id=1&wantsurl=https%3A%2F%2Felearning.kkp.go.id%2F&sesskey=Jhop9vc9S5"
+            );
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/e-learningicon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          E-Learning
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalBankom(false);
+            setModalInfo(true);
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 35,
+                height: device === "tablet" ? 60 : 32,
+              }}
+              source={require("../../assets/superApp/info.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Info
+        </Text>
+      </View>
+    );
+    if (isRoleLaporan) {
+      tmpMenu.splice(
+        3,
+        0,
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 100,
+            height: 100,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setModalBankom(false);
+              navigation.navigate("LaporanDigitalSign");
+            }}
+          >
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: device === "tablet" ? 60 : 35,
+                  height: device === "tablet" ? 60 : 32,
+                }}
+                source={require("../../assets/superApp/Laporanicon.png")}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              textAlign: "center",
+              width: 300,
+            }}
+          >
+            Laporan
+          </Text>
+        </View>
+      );
+    } else {
+      console.log("masuk role else", isRoleLaporan);
+      null;
+    }
+
+    setMenuBankom(tmpMenu);
+  }, [profile]);
+
+  const numRows = Math.ceil(menuBankom.length / 3);
+
+  const renderRow = ({ item }) => {
+    if (item.empty === true) {
+      return <View style={[styles.items, styles.itemInvisible]} />;
+    }
+    return (
+      <View style={[styles.items, { height: device === "tablet" ? 200 : 100 }]}>
+        <Text style={styles.itemText}>{item}</Text>
+      </View>
+    );
+  };
+
+  const rows = Array.from({ length: numRows }, (_, rowIndex) =>
+    menuBankom.slice(rowIndex * 3, rowIndex * 3 + 3)
+  );
+
+  const formatData = (data, numColumns) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+      numberOfElementsLastRow++;
+    }
+
+    return data;
+  };
+
   const { device } = useSelector((state) => state.apps);
+
+  const [time, setTime] = useState(new Date());
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [checkApps, setCheckApps] = useState();
+  const [permissionStatus, setPermissionStatus] = useState(false);
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     Location.requestForegroundPermissionsAsync().then((status) => {
+  //       if (status.status !== "granted") {
+  //         setErrorMsg("Izin akses lokasi tidak diberikan");
+  //         setLocation(null);
+  //         setPermissionStatus(false);
+  //         return;
+  //       } else {
+  //         setPermissionStatus(true);
+  //       }
+  //     });
+
+  //     Location.getCurrentPositionAsync({}).then((location) => {
+  //       // console.log(location);
+  //       setLocation({
+  //         latitude: location.coords.latitude,
+  //         longitude: location.coords.longitude,
+  //         latitudeDelta: 0.1,
+  //         longitudeDelta: 0.1,
+  //       });
+  //     });
+  //   }, 10000);
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
+  const handleCheckin = () => {
+    let longlat = [location?.longitude, location?.latitude];
+    const payload = {
+      location: {
+        type: "Point",
+        coordinates: longlat,
+      },
+      type: "I",
+      description: "Check-In",
+    };
+
+    const data = {
+      token: token,
+      payload: payload,
+    };
+    let ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify(payload),
+      "qwertyuiopasdfgh"
+    );
+    console.log(ciphertext.toString());
+    dispatch(postAttendence(data));
+  };
+
+  const handleCheckOut = () => {
+    let longlat = [location?.longitude, location?.latitude];
+    const payload = {
+      location: {
+        type: "Point",
+        coordinates: longlat,
+      },
+      type: "O",
+      description: "Check-Out",
+    };
+
+    const data = {
+      token: token,
+      payload: payload,
+    };
+    dispatch(postAttendence(data));
+  };
+
+  // const saveData = async (type, date) => {
+  //   try {
+  //     const jsonValue = await AsyncStorage.getItem(token);
+  //     let datas;
+  //     if (jsonValue !== null) {
+  //       datas = { ...JSON.parse(jsonValue), [type]: date };
+  //     } else {
+  //       datas = {
+  //         [type]: date,
+  //       };
+  //     }
+  //     // Simpan data ke local storage dengan kunci 'myData'
+  //     await AsyncStorage.setItem(token, JSON.stringify(datas));
+  //     // Set data ke state untuk merefresh tampilan
+  //     console.log("Data berhasil disimpan.");
+  //   } catch (error) {
+  //     // Tangani error jika terjadi
+  //     console.log(error);
+  //   }
+  // };
+
+  // const retrieveData = async () => {
+  //   try {
+  //     // Ambil data dari local storage dengan kunci 'myArrayData'
+  //     const jsonValue = await AsyncStorage.getItem(token);
+  //     if (jsonValue !== null) {
+  //       // Jika data ditemukan, konversi dari string ke array dan set data ke state
+  //       const resultObject = JSON.parse(jsonValue);
+  //       setDisplayTime(resultObject);
+  //     }
+  //   } catch (error) {
+  //     // Tangani error jika terjadi
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <GestureHandlerRootView>
@@ -245,6 +813,7 @@ export const Home = () => {
                     fontWeight: FONTWEIGHT.bolder,
                     marginBottom: 10,
                     fontSize: fontSizeResponsive("H2", device),
+                    height: profile.nip === "100062" ? 15 : null,
                   }}
                 >
                   {profile.nama}
@@ -274,72 +843,453 @@ export const Home = () => {
             </View>
           </View>
 
-          <View style={{ alignItems: "center" }}>
-            <CardApps handlePressModal={handlePressModal} />
-            <Portal>
-              <BottomSheetModal
-                ref={bottomSheetModalRef}
-                snapPoints={animatedSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
-                index={0}
-                style={{ borderRadius: 50 }}
-                keyboardBlurBehavior="restore"
-                android_keyboardInputMode="adjust"
-                backdropComponent={({ style }) => (
-                  <View
-                    style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
-                  />
-                )}
-              >
-                <View onLayout={handleContentLayout}>
-                  <View style={{ marginVertical: 20 }}>
-                    <View
-                      style={{
-                        marginHorizontal: 20,
-                        marginTop: 10,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        padding: 14,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontWeight: FONTWEIGHT.bold,
-                          fontSize: fontSizeResponsive("H1", device),
-                        }}
-                      >
-                        Aplikasi
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          closeBottomSheet();
-                        }}
-                      >
-                        <Ionicons
-                          name="close-outline"
-                          size={device === "tablet" ? 40 : 24}
-                          color={COLORS.lighter}
-                        />
-                      </TouchableOpacity>
+          <View style={{ marginTop: profile.nip === "100062" ? 40 : 0 }}>
+            {profile.nip === "100062" ? null : (
+              <View style={{ alignItems: "center" }}>
+                <CardApps
+                  handlePressModal={handlePressModal}
+                  setModalBankom={setModalBankom}
+                  closeBottomSheet={closeBottomSheet}
+                />
+                <Portal>
+                  <BottomSheetModal
+                    ref={bottomSheetModalRef}
+                    snapPoints={animatedSnapPoints}
+                    handleHeight={animatedHandleHeight}
+                    contentHeight={animatedContentHeight}
+                    index={0}
+                    style={{ borderRadius: 50 }}
+                    keyboardBlurBehavior="restore"
+                    android_keyboardInputMode="adjust"
+                    backdropComponent={({ style }) => (
+                      <View
+                        style={[
+                          style,
+                          { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+                        ]}
+                      />
+                    )}
+                  >
+                    <View onLayout={handleContentLayout}>
+                      <View style={{ marginVertical: 20 }}>
+                        <View
+                          style={{
+                            marginHorizontal: 20,
+                            marginTop: 10,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            padding: 14,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontWeight: FONTWEIGHT.bold,
+                              fontSize: fontSizeResponsive("H1", device),
+                            }}
+                          >
+                            Aplikasi
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => {
+                              closeBottomSheet();
+                            }}
+                          >
+                            <Ionicons
+                              name="close-outline"
+                              size={device === "tablet" ? 40 : 24}
+                              color={COLORS.lighter}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                        <View style={{ marginVertical: 20 }}>
+                          <CardAppsB
+                            setModalBankom={setModalBankom}
+                            closeBottomSheet={closeBottomSheet}
+                          />
+                        </View>
+                      </View>
                     </View>
-                    <View style={{ marginVertical: 20 }}>
-                      <CardAppsB />
-                    </View>
-                  </View>
-                </View>
-              </BottomSheetModal>
-            </Portal>
+                  </BottomSheetModal>
+                </Portal>
+              </View>
+            )}
           </View>
 
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalInfo}
+            onRequestClose={() => {
+              setModalInfo(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Informasi
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalInfo(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 20,
+                  }}
+                >
+                  <Text style={{ textAlign: "justify" }}>
+                    Menu ini merupakan implementasi dari Aksi Perubahan New
+                    Integrated Learning and Office System (NILAM) pada Portal
+                    Collaboration Office.
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalBankom}
+            onRequestClose={() => {
+              setModalBankom(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Pengembangan Kompetensi
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalBankom(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <FlatList
+                  data={formatData(menuBankom, numColumns)}
+                  renderItem={renderRow}
+                  keyExtractor={(row, index) => `row_${index}`}
+                  columnWrapperStyle={{
+                    marginHorizontal: "5%",
+                    gap: 5,
+                  }}
+                  numColumns={numColumns}
+                />
+              </View>
+            </View>
+          </Modal>
+
+          <ModalSubmit
+            status={status}
+            setStatus={setStatus}
+            message={"Silahkan Coba Kembali"}
+            navigate={"Home"}
+          />
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalPresensi}
+            onRequestClose={() => {
+              setModalPresensi(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    padding: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                      fontSize: fontSizeResponsive("Judul", device),
+                    }}
+                  >
+                    Hi, {profile.nama}
+                  </Text>
+
+                  {lastLog?.next_action === "I" ? (
+                    <Text style={{ marginVertical: 20 }}>
+                      Apakah kamu akan melakukan{" "}
+                      <Text style={{ fontWeight: "bold" }}>Chek-In</Text> ?
+                    </Text>
+                  ) : lastLog?.next_action === "O" ? (
+                    <Text style={{ marginVertical: 20 }}>
+                      Apakah kamu akan melanjutkan{" "}
+                      <Text style={{ fontWeight: "bold" }}>Chek-Out</Text> ?
+                    </Text>
+                  ) : (
+                    <>
+                      <Text style={{ marginVertical: 20 }}>
+                        Kamu telah melakukan{" "}
+                        <Text style={{ fontWeight: "bold" }}>Chek-In</Text>{" "}
+                        pukul{" "}
+                        <Text style={{ fontWeight: "bold" }}>
+                          {moment(lastLog?.in?.created_date).format(
+                            "DD MMMM YYYY HH:mm:ss"
+                          )}
+                        </Text>
+                      </Text>
+                      <Text>
+                        Kamu telah melakukan{" "}
+                        <Text style={{ fontWeight: "bold" }}>Chek-Out</Text>{" "}
+                        pukul{" "}
+                        <Text style={{ fontWeight: "bold" }}>
+                          {moment(lastLog?.out?.created_date).format(
+                            "DD MMMM YYYY HH:mm:ss"
+                          )}
+                        </Text>
+                      </Text>
+
+                      <Text style={{ marginTop: 20 }}>
+                        Durasi{" "}
+                        <Text style={{ fontWeight: "bold" }}>
+                          {lastLog?.total_duration}
+                        </Text>
+                      </Text>
+                    </>
+                  )}
+
+                  {lastLog?.next_action !== false ? (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        gap: 10,
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          padding: 10,
+                          borderWidth: 1,
+                          borderColor:
+                            lastLog?.next_action === "I"
+                              ? COLORS.success
+                              : lastLog?.next_action === "O"
+                              ? "#B745FF"
+                              : null,
+                          borderRadius: 8,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "30%",
+                        }}
+                        onPress={() => {
+                          setModalPresensi(false);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color:
+                              lastLog?.next_action === "I"
+                                ? COLORS.success
+                                : lastLog?.next_action === "O"
+                                ? "#B745FF"
+                                : null,
+                            fontWeight: FONTWEIGHT.bold,
+                          }}
+                        >
+                          Tidak
+                        </Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={{
+                          padding: 10,
+                          backgroundColor:
+                            lastLog?.next_action === "I"
+                              ? COLORS.success
+                              : lastLog?.next_action === "O"
+                              ? "#B745FF"
+                              : null,
+                          borderRadius: 8,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "30%",
+                        }}
+                        onPress={() => {
+                          if (lastLog.next_action === "I") {
+                            handleCheckin();
+                          } else {
+                            handleCheckOut();
+                          }
+                          // setCheckOut(true);
+                          setModalPresensi(false);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontWeight: FONTWEIGHT.bold,
+                          }}
+                        >
+                          Ya
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        gap: 10,
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          padding: 10,
+                          backgroundColor: COLORS.primary,
+                          borderRadius: 8,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "30%",
+                          marginTop: 20,
+                        }}
+                        onPress={() => {
+                          setModalPresensi(false);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: COLORS.white,
+                            fontWeight: FONTWEIGHT.bold,
+                          }}
+                        >
+                          Tutup
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </View>
+          </Modal>
+
           <View style={[styles.containerr, { marginTop: 20 }]}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            ></View>
+
             <Carousel
               ref={carouselRef}
               sliderWidth={screenWidth}
               sliderHeight={screenWidth}
               itemWidth={screenWidth - 60}
               data={banner}
-              renderItem={bannerKegiatan}
+              renderItem={({ item }, parallaxProps) => (
+                <BannerKegiatan parallaxProps={parallaxProps} item={item} />
+              )}
               hasParallaxImages={true}
             />
           </View>
@@ -1101,5 +2051,44 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderTopRightRadius: 12,
     borderBottomLeftRadius: 12,
+  },
+  items: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    margin: 1, // approximate a square
+  },
+  itemInvisible: {
+    backgroundColor: "transparent",
+  },
+  itemText: {
+    color: "#fff",
+  },
+  cardApps: {
+    width: wp(15),
+    height: hp(7),
+    borderRadius: 8,
+  },
+  cardAppsTablet: {
+    width: wp(15),
+    height: hp(10),
+    borderRadius: 8,
+  },
+  map: {
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width,
+    width: 310,
+    height: 310,
+    marginBottom: 20,
+  },
+  dot: {
+    width: _size,
+    height: _size,
+    borderRadius: _size,
+    backgroundColor: _color,
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

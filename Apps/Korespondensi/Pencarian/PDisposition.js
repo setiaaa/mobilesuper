@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import LottieView from "lottie-react-native";
 import { SvgXml } from "react-native-svg";
 import { GlobalStyles } from "../../../constants/styles";
-import bgSearch from "../../../assets/telkom/images/background/bg-search.svg";
+import bgSearch from "../../../assets/superApp/images/bg-search.svg";
 import { Config } from "../../../constants/config";
 import { FlatList } from "react-native";
 import CardListSearch from "../../../components/UI/CardListSearch";
@@ -21,7 +21,7 @@ import CardListSearch from "../../../components/UI/CardListSearch";
 export const PDisposition = ({ data }) => {
   const navigation = useNavigation();
   const animation = useRef(null);
-  let count=0;
+  let count = 0;
   const renderItem = ({ item }) => (
     <>
       <View style={{ marginBottom: 16 }}>

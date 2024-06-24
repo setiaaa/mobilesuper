@@ -627,7 +627,7 @@ export const DetailDokumenLain = ({ route }) => {
                     fontSize: fontSizeResponsive("H2", device),
                   }}
                 >
-                  Lihat Sertifikat
+                  Lihat Dokumen
                 </Text>
               </TouchableOpacity>
             )}

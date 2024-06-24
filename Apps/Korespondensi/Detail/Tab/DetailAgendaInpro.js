@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -8,6 +8,7 @@ import {
   Platform,
   Linking,
   Alert,
+  Image,
 } from "react-native";
 import ActionInprogress from "./ActionInprogress";
 import RenderHTML, {
@@ -18,7 +19,7 @@ import { getHTTP } from "../../../../utils/http";
 import { nde_api } from "../../../../utils/api.config";
 import moment from "moment";
 import { Config } from "../../../../constants/config";
-import { IconButton, List } from "react-native-paper";
+import { Button, IconButton, List } from "react-native-paper";
 import { GlobalStyles } from "../../../../constants/styles";
 import { WebView } from "react-native-webview";
 import ActionDigisign from "./ActionDigisign";
@@ -30,15 +31,16 @@ const { StorageAccessFramework } = FileSystem;
 import { shareAsync } from "expo-sharing";
 import { setDataNotif } from "../../../../store/pushnotif";
 import * as Clipboard from "expo-clipboard";
-import { setClipboard } from "../../../../store/snackbar";
+import { setClipboard, setFAB } from "../../../../store/snackbar";
 
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 
 import { LinearGradient } from "expo-linear-gradient";
-import { COLORS } from "../../../../config/SuperAppps";
+import { COLORS, DATETIME } from "../../../../config/SuperAppps";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -62,6 +64,7 @@ function DetailAgendaInpro({
 
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
+  const navigation = useNavigation();
 
   useEffect(() => {
     setTimeout(() => {
@@ -369,15 +372,6 @@ function DetailAgendaInpro({
             <>
               <View style={{ flexDirection: "row" }}>
                 <Text style={{ fontSize: 15, fontWeight: 600 }}>Kepada</Text>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 600,
-                    color: COLORS.danger,
-                  }}
-                >
-                  *
-                </Text>
               </View>
               <View
                 style={{
@@ -386,91 +380,53 @@ function DetailAgendaInpro({
                   borderRadius: 16,
                 }}
               >
-                {data &&
-                  data?.receivers_display?.length == 0 &&
-                  data?.kepada_bank?.length == 0 && (
-                    <>
-                      {data &&
-                        data?.receivers?.length == 0 &&
-                        data?.kepada_addressbook?.length == 0 && <Text>-</Text>}
-                      {data &&
-                        data?.receivers?.length == 0 &&
-                        data?.kepada_addressbook?.length != 0 && (
-                          <Text>{data?.kepada_addressbook}</Text>
-                        )}
-                      {data && data?.receivers?.length == 1 && (
-                        <>
-                          {data?.template.name != "nota_external" &&
-                          !loading ? (
-                            <Text>{data?.receivers[0]}</Text>
-                          ) : (
-                            <></>
-                          )}
-                          {data?.template.name == "nota_external" && (
-                            <RenderHTML
-                              contentWidth={width}
-                              source={{ html: data?.receivers[0] }}
-                            />
-                          )}
-                        </>
-                      )}
-                      {data && data?.receivers?.length > 1 && (
-                        <>
-                          {data?.template.name == "nota_external" && (
-                            <RenderHTML
-                              contentWidth={width}
-                              source={{ html: data?.receivers.join("</br>") }}
-                            />
-                          )}
-                          {data?.template.name != "nota_external" && (
-                            <View
-                              style={[
-                                openKepada
-                                  ? {
-                                      borderBottomLeftRadius: 12,
-                                      borderBottomRightRadius: 12,
-                                    }
-                                  : {},
-                              ]}
-                            >
-                              {data?.receivers.map((item, index) => (
-                                <Text key={index}>
-                                  {index + 1}. {item}
-                                </Text>
-                              ))}
-                            </View>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                {data &&
-                  data.receivers_display?.length != 0 &&
-                  data.kepada_bank?.length == 0 && (
-                    <>
-                      {data.receivers_display?.length == 0 && <Text>-</Text>}
-                      {data && data.receivers_display?.length == 1 && (
-                        <RenderHTML
-                          contentWidth={width}
-                          source={{ html: data?.receivers_display[0] }}
-                        />
-                      )}
-                      {data &&
-                        data.receivers_display?.length > 1 &&
-                        data.template.name != "nota_external" &&
-                        data.receivers_display.map((item, index) => (
+                {data && (
+                  <>
+                    {data && data?.receivers?.length == 0 && <Text>-</Text>}
+                    {data && data?.receivers?.length == 1 && (
+                      <Text>{data?.receivers[0]}</Text>
+                    )}
+                    {data && data?.receivers?.length > 1 && (
+                      <View
+                        style={[
+                          openKepada
+                            ? {
+                                borderBottomLeftRadius: 12,
+                                borderBottomRightRadius: 12,
+                              }
+                            : {},
+                        ]}
+                      >
+                        {data?.receivers.map((item, index) => (
                           <Text key={index}>
                             {index + 1}. {item}
                           </Text>
                         ))}
-                      {data &&
-                        data.receivers_display?.length > 1 &&
-                        data.template.name == "nota_external" &&
-                        data.receivers_display.map((item, index) => (
-                          <Text key={index}>{item}</Text>
-                        ))}
-                    </>
-                  )}
+                      </View>
+                    )}
+                  </>
+                )}
+                {data?.receivers_display?.length != 0 && (
+                  <>
+                    <View style={{ flexDirection: "row", paddingTop: 10 }}>
+                      <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                        Tampilan Kepada
+                      </Text>
+                    </View>
+                    {data && data?.receivers_display?.length == 1 && (
+                      <Text>{data?.receivers_display[0]}</Text>
+                    )}
+
+                    {data && data?.receivers_display?.length > 1 && (
+                      <View>
+                        <RenderHTML
+                          contentWidth={width}
+                          source={{ html: data?.receivers_display }}
+                        />
+                      </View>
+                    )}
+                  </>
+                )}
               </View>
               <View style={{ flexDirection: "row" }}>
                 <Text style={{ fontSize: 15, fontWeight: 600 }}>Tembusan</Text>
@@ -790,8 +746,499 @@ function DetailAgendaInpro({
                   <Text style={{ fontSize: 13 }}>{data.tembusan_external}</Text>
                 )}
               </View>
+
+              {data.jenis_surat == "Surat Undangan" && (
+                <>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                      Informasi Tambahan
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      padding: 20,
+                      borderRadius: 16,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        borderBottomWidth: 2,
+                        borderBottomColor: "#DBDADE",
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          width: "40%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        Tanggal Kegiatan
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 400,
+                          width: "60%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        {moment(data?.start_date)
+                          .locale("id")
+                          .format(DATETIME.LONG_DATE)}{" "}
+                        -{" "}
+                        {moment(data?.end_date)
+                          .locale("id")
+                          .format(DATETIME.LONG_DATE)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        borderBottomWidth: 2,
+                        borderBottomColor: "#DBDADE",
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          width: "40%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        Waktu Kegiatan
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 400,
+                          width: "60%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        {data?.start_time} - {data?.end_time} {data?.timezone}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        borderBottomWidth: 2,
+                        borderBottomColor: "#DBDADE",
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          width: "40%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        Lokasi Kegiatan
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 400,
+                          width: "60%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        {data?.location == "" ? "-" : data?.location}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        borderBottomColor: "#DBDADE",
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          width: "40%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        Catatan
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 400,
+                          width: "60%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        {data?.notes == "" ? "-" : data?.notes}
+                      </Text>
+                    </View>
+                  </View>
+                </>
+              )}
+              {(data.jenis_surat == "Surat Perintah" ||
+                data.jenis_surat == "Surat Tugas") && (
+                <>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 15, fontWeight: 600 }}>
+                      Informasi Tambahan
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: COLORS.white,
+                      padding: 20,
+                      borderRadius: 16,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        paddingVertical: 5,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          width: "40%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        Kota Awal
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 400,
+                          width: "60%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        {data?.from_city == "" ? "-" : data?.from_city}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        paddingVertical: 5,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          width: "40%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        Catatan
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 400,
+                          width: "60%",
+                          paddingRight: 20,
+                        }}
+                      >
+                        {data?.notes == "" ? "-" : data?.notes}
+                      </Text>
+                    </View>
+                    {data?.kegiatan?.map((item, index) => (
+                      <View
+                        key={index}
+                        style={{
+                          paddingTop: 10,
+                        }}
+                      >
+                        <View
+                          style={{ flexDirection: "row", paddingVertical: 5 }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              color: "#8f8b99",
+                              fontWeight: 600,
+                            }}
+                          >
+                            Kegiatan {index + 1}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            paddingVertical: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 600,
+                              width: "40%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            Tanggal Kegiatan
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 400,
+                              width: "60%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            {moment(item?.start_date)
+                              .locale("id")
+                              .format(DATETIME.LONG_DATE)}{" "}
+                            -{" "}
+                            {moment(item?.end_date)
+                              .locale("id")
+                              .format(DATETIME.LONG_DATE)}
+                          </Text>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            paddingVertical: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 600,
+                              width: "40%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            Kota Kegiatan
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 400,
+                              width: "60%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            {item?.city == "" ? "-" : item?.city}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            paddingVertical: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 600,
+                              width: "40%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            Transportasi
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 400,
+                              width: "60%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            {item?.transportation == ""
+                              ? "-"
+                              : item?.transportation}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            paddingVertical: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 600,
+                              width: "40%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            Lokasi Kegiatan
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 400,
+                              width: "60%",
+                              paddingRight: 20,
+                            }}
+                          >
+                            {item?.location == "" ? "-" : item?.location}
+                          </Text>
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                </>
+              )}
             </>
           )}
+
+          {data?.attachments?.length == 1 && (
+            <View
+              style={{
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  borderRadius: 16,
+                  padding: 20,
+                  width: 90,
+                  elevation: 1,
+                }}
+              >
+                <Image
+                  source={require("../../../../assets/superApp/pdf.png")}
+                  style={{ width: 50, height: 50 }}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginBottom: 20,
+                }}
+              >
+                <Text style={[styles.textContent, { textAlign: "center" }]}>
+                  {data?.attachments[0]?.name}
+                </Text>
+                <Text style={styles.subtextContent}>
+                  {data?.attachments[0]?.size}
+                </Text>
+              </View>
+              <View style={{ width: "100%" }}>
+                <Button
+                  mode="contained"
+                  style={[
+                    {
+                      width: "100%",
+                      backgroundColor: GlobalStyles.colors.primary,
+                      marginBottom: 16,
+                    },
+                  ]}
+                  onPress={() => {
+                    navigation.navigate("ViewAttachment", {
+                      selected: data?.attachments[0],
+                      title: "Lihat Surat",
+                      tipe: tipe,
+                    });
+                    dispatch(setFAB(false));
+                  }}
+                  icon={() => (
+                    <Ionicons
+                      name="eye-outline"
+                      size={20}
+                      color={COLORS.white}
+                    />
+                  )}
+                >
+                  Lihat Surat
+                </Button>
+              </View>
+            </View>
+          )}
+          {data?.attachments?.length > 1 &&
+            data?.attachments?.map((item, index) => (
+              <Fragment key={index}>
+                {item?.description == "editor-generated" && (
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: COLORS.white,
+                        borderRadius: 16,
+                        padding: 20,
+                        width: 90,
+                        elevation: 1,
+                      }}
+                    >
+                      <Image
+                        source={require("../../../../assets/superApp/pdf.png")}
+                        style={{ width: 50, height: 50 }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginBottom: 20,
+                      }}
+                    >
+                      <Text
+                        style={[styles.textContent, { textAlign: "center" }]}
+                      >
+                        {item?.name}
+                      </Text>
+                      <Text style={styles.subtextContent}>{item?.size}</Text>
+                    </View>
+                    <View style={{ width: "100%" }}>
+                      <Button
+                        mode="contained"
+                        style={[
+                          {
+                            width: "100%",
+                            backgroundColor: GlobalStyles.colors.primary,
+                            marginBottom: 16,
+                          },
+                        ]}
+                        onPress={() => {
+                          navigation.navigate("ViewAttachment", {
+                            selected: item,
+                            title: "Lihat Surat",
+                            tipe: tipe,
+                          });
+                          dispatch(setFAB(false));
+                        }}
+                        icon={() => (
+                          <Ionicons
+                            name="eye-outline"
+                            size={20}
+                            color={COLORS.white}
+                          />
+                        )}
+                      >
+                        Lihat Surat
+                      </Button>
+                    </View>
+                  </View>
+                )}
+              </Fragment>
+            ))}
           {tipe !== "TrackingDetail" &&
             data?.state !== "rns" &&
             data?.state !== "finish" && (
@@ -843,5 +1290,12 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: GlobalStyles.colors.error500,
+  },
+  textContent: {
+    fontSize: GlobalStyles.font.md,
+    color: GlobalStyles.colors.blue,
+    fontWeight: "bold",
+    paddingRight: 8,
+    flexWrap: "wrap",
   },
 });

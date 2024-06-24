@@ -141,8 +141,8 @@ function Login() {
       Alert.alert(
         "Warning!",
         "You are using an old version of the " +
-        app_name +
-        ". Do you want to upgrade?",
+          app_name +
+          ". Do you want to upgrade?",
         [
           {
             text: "Upgrade",
@@ -155,7 +155,7 @@ function Login() {
         ],
         {
           cancelable: true,
-          onDismiss: () => { },
+          onDismiss: () => {},
         }
       );
     } else if (username.length == 0 || password.length == 0) {
@@ -201,8 +201,8 @@ function Login() {
         Alert.alert(
           "Warning!",
           "You are using an old version of the " +
-          app_name +
-          ". Do you want to upgrade?",
+            app_name +
+            ". Do you want to upgrade?",
           [
             {
               text: "Upgrade",
@@ -214,7 +214,7 @@ function Login() {
           ],
           {
             cancelable: true,
-            onDismiss: () => { },
+            onDismiss: () => {},
           }
         );
       } else {
@@ -324,7 +324,6 @@ function Login() {
     });
     // Log the user in on success
     if (biometricAuth.success) validasi();
-
   };
 
   async function handlerConfirmPassword() {
@@ -335,8 +334,8 @@ function Login() {
       Alert.alert(
         "Warning!",
         "You are using an old version of the " +
-        app_name +
-        ". Do you want to upgrade?",
+          app_name +
+          ". Do you want to upgrade?",
         [
           {
             text: "Upgrade",
@@ -348,7 +347,7 @@ function Login() {
         ],
         {
           cancelable: true,
-          onDismiss: () => { },
+          onDismiss: () => {},
         }
       );
     } else if (username.length == 0 || password.length == 0) {
@@ -499,14 +498,16 @@ function Login() {
           behavior="position"
           keyboardVerticalOffset={-150}
         >
-
-          <View style={[styles.login, { height: '100%' }]}>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 100 }}>
-              {/* <Image
-                source={require('../assets/superApp/logokkp.png')}
-                style={styles.backgroundImage}
-              /> */}
-            </View>
+          <View style={[styles.login, { height: "100%" }]}>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingBottom: 100,
+              }}
+            ></View>
             <View style={{}}>
               {loadingOverlay}
               {!Config.loginSSO && firstLogin && formLogin}
@@ -514,7 +515,6 @@ function Login() {
               {Config.loginSSO && loginSSO}
             </View>
           </View>
-
         </KeyboardAvoidingView>
 
         <BottomSheetModalProvider>
@@ -601,7 +601,7 @@ const styles = StyleSheet.create({
     top: -25,
     width: "100%",
     height: 380,
-    backgroundColor: 'red',
+    backgroundColor: "red",
   },
   login: {
     flexDirection: "column",
@@ -609,7 +609,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: 200,
-    height: 200
+    height: 200,
   },
   contentContainer: {
     flex: 1,
