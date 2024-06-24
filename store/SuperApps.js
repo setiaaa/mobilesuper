@@ -39,6 +39,8 @@ const SuperAppsSlice = createSlice({
     lastLog: {},
     status: "",
     post: false,
+    typeMenu: null,
+    iosNotif: false,
   },
   reducers: {
     setProfile: (state, action) => {
@@ -85,6 +87,12 @@ const SuperAppsSlice = createSlice({
     },
     setPost: (state, action) => {
       state.post = action.payload;
+    },
+    setTypeMenu: (state, action) => {
+      state.typeMenu = action.payload;
+    },
+    setNotifIos: (state, action) => {
+      state.iosNotif = action.payload;
     },
   },
   extraReducers(builder) {
@@ -202,6 +210,8 @@ export const {
   setHandleError,
   setStatus,
   setPost,
+  setTypeMenu,
+  setNotifIos,
 } = SuperAppsSlice.actions;
 
 export default SuperAppsSlice.reducer;

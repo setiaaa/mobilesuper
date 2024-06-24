@@ -66,6 +66,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   getPushNotif,
   getTokenValue,
+  removeMenuLite,
   removePushNotif,
   removeTokenValue,
 } from "../../service/session";
@@ -132,6 +133,7 @@ export const Home = () => {
   const [menuBankom, setMenuBankom] = useState([]);
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
+  const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
   const route = useRoute();
@@ -177,6 +179,7 @@ export const Home = () => {
     lastLog,
     status,
     post,
+    iosNotif,
   } = useSelector((state) => state.superApps);
 
   useEffect(() => {
@@ -212,7 +215,7 @@ export const Home = () => {
         }
       }
     });
-  }, [token, profile.nip]);
+  }, [token, profile.nip, iosNotif]);
 
   useEffect(() => {
     if (post) {
@@ -249,7 +252,7 @@ export const Home = () => {
 
   const bottomSheetModalRef = useRef(null);
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const initialSnapPoints = useMemo(() => ["85%", "CONTENT_HEIGHT"], []);
   const {
     animatedHandleHeight,
     animatedSnapPoints,
