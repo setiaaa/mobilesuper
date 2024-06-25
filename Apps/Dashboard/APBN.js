@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions, Platform, View } from "react-native";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, PADDING } from "../../config/SuperAppps";
@@ -21,7 +21,10 @@ export const APBN = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+          uri:
+            Platform.OS === "android"
+              ? "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DRealDanRenKeu.html"
+              : '"https://dashboard.coofis.com/t/kkp/views/DashboardRencanaRealisasiKKP2023/DashboardKeuangan?:origin=card_share_link&:embed=n"',
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

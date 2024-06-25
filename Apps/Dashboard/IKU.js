@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, PADDING } from "../../config/SuperAppps";
@@ -10,7 +10,10 @@ export const IKU = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DPerencanaan/IKU.html",
+          uri:
+            Platform.OS === "android"
+              ? "https://portal.kkp.go.id/assets/dashboardExt/DPerencanaan/IKU.html"
+              : "https://dashboard.coofis.com/t/kkp/views/DashboardNPSS/DashboardNPSS?:origin=card_share_link&:embed=n",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

@@ -608,7 +608,10 @@ export const RangkumanIKU = () => {
             <WebView
               // originWhitelist={["*"]}
               source={{
-                uri: "https://portal.kkp.go.id/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+                uri:
+                  Platform.OS === "android"
+                    ? "https://portal.kkp.go.id/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html"
+                    : "https://dashboard.coofis.com/t/kkp/views/MP/DashboardMP?:origin=card_share_link&:embed=n",
                 headers: { Authorization: `${token}` },
               }}
               style={{ flex: 1, borderRadius: 8 }}

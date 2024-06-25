@@ -3,7 +3,7 @@ import { Platform, Text, View } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, PADDING } from "../../config/SuperAppps";
 
-export const Pelatihan = () => {
+export const ROPEGIPASN = () => {
   return (
     <View style={{ height: "90%", width: "100%", padding: PADDING.Page }}>
       <WebView
@@ -11,8 +11,8 @@ export const Pelatihan = () => {
         source={{
           uri:
             Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DPelatihan.html"
-              : "https://dashboard.coofis.com/t/kkp/views/DashboardPelatihanKKP/DashboardPelatihan?:origin=card_share_link&:embed=n",
+              ? "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DRopegIPASN.html"
+              : "https://dashboard.coofis.com/t/kkp/views/IPASNPegawai/IPASN?:origin=card_share_link&:embed=n",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import { COLORS, PADDING } from "../../config/SuperAppps";
 import WebView from "react-native-webview";
 
@@ -15,7 +15,10 @@ export const P3KEKusuka = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DP3KE.html",
+          uri:
+            Platform.OS === "android"
+              ? "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DP3KE.html"
+              : "https://dashboard.coofis.com/t/kkp/views/P3KE/P3KE?:origin=card_share_link&:embed=n",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

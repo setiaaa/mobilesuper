@@ -2,9 +2,9 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "kkpsuperapps",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "orientation": "portrait",
-  "icon": "./assets/superApp/kkp-ikon.png",
+  "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {
     "image": "./assets/superApp/splashkkp.png",
@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 735,
+    "versionCode": 736,
     "enableHermes": true,
     "notification": {
         "icon": "./assets/ic_stat_onesignal_default.png",
@@ -40,10 +40,10 @@
       "ACCESS_COARSE_LOCATION"
     ],
     "adaptiveIcon": {
-      "foregroundImage": "./assets/superApp/kkp-ikon.png",
+      "foregroundImage": "./assets/superApp/kkp-icon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "go.id.portalkkp",
+    "package": "go.id.kkp.portal",
     "intentFilters": [
       {
         "action": "VIEW",

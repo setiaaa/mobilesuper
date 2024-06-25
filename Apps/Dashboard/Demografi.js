@@ -9,7 +9,7 @@ export const Demografi = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DKepegawaian.html",
+          uri: "https://dashboard.coofis.com/t/kkp/views/DashboardPegawaiKKP/Pegawai?:origin=card_share_link&:embed=n",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

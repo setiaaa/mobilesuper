@@ -393,7 +393,7 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Perbaikan kalender personal
+                    Penambahan Menu Lite
                   </Text>
                 </View>
 
@@ -418,7 +418,7 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Perubahan menu
+                    Penambahan FAQ
                   </Text>
                 </View>
 
@@ -444,59 +444,7 @@ export const LoginToken = () => {
                       marginLeft: 10,
                     }}
                   >
-                    Perbaikan histori komentar cuti
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginBottom: 20,
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Perbaikan auth token
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginBottom: 20,
-                    alignItems: "center",
-                    marginHorizontal: 40,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.primary,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontWeight: FONTWEIGHT.bold,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Penambahan menu bankom
+                    Penambahan Notifikasi
                   </Text>
                 </View>
 

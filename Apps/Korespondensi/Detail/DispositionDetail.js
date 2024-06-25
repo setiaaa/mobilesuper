@@ -8,7 +8,9 @@ import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { initAgenda } from "../../../utils/agenda";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotifIos } from "../../../store/SuperApps";
+import { removePushNotif } from "../../../service/session";
 
 function DispositionDetail({ route }) {
   let id = route.params.id;
@@ -19,6 +21,7 @@ function DispositionDetail({ route }) {
   const [detail, setDetail] = useState();
   const [preview, setPreview] = useState();
   const [log, setLog] = useState();
+  const dispatch = useDispatch();
   const getAgendaDispoDetail = async () => {
     setisLoading(true);
     try {
@@ -90,6 +93,8 @@ function DispositionDetail({ route }) {
   );
   useEffect(() => {
     getAgendaDispoDetail();
+    removePushNotif();
+    dispatch(setNotifIos(false));
   }, [id]);
 
   return (
