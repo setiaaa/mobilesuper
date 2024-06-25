@@ -28,6 +28,7 @@ import { CollapseCardLinimasa } from "../../components/CollapseCardLinimasa";
 import {
   getMenuLite,
   getMenuType,
+  removeMenuLite,
   removePushNotif,
   removeTokenValue,
   setMenuLite,
@@ -233,6 +234,14 @@ export const Profile = () => {
         titleStyle: {
           width: null,
         },
+        // subMenu: [
+        //   {
+        //     title: "Main",
+        //   },
+        //   {
+        //     title: "Laporan",
+        //   },
+        // ],
       },
       {
         title: "Pegawai",
@@ -294,7 +303,34 @@ export const Profile = () => {
     if (isRoleKalender) {
       tmpMenu.splice(7, 0, {
         title: "Kalender",
-        navigation: "GrupKalender",
+        navigation: "MainKalender",
+        image: require("../../assets/superApp/kalender.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+        // subMenu: [
+        //   {
+        //     title: "Grup Kalender",
+        //   },
+        //   {
+        //     title: "Kalender Personal",
+        //   },
+        // ],
+      });
+    } else {
+      tmpMenu.splice(7, 0, {
+        title: "Kalender",
+        navigation: "KalenderPersonal",
         image: require("../../assets/superApp/kalender.png"),
         imagestyle: {
           width: {
@@ -329,14 +365,14 @@ export const Profile = () => {
         titleStyle: {
           width: null,
         },
-        subMenu: [
-          {
-            subTitle: "Dokumen Lain",
-          },
-          {
-            subTitle: "Verifikasi",
-          },
-        ],
+        // subMenu: [
+        //   {
+        //     title: "Dokumen Lain",
+        //   },
+        //   {
+        //     title: "Verifikasi",
+        //   },
+        // ],
       });
     } else {
       tmpMenu.splice(3, 0, {
@@ -356,14 +392,14 @@ export const Profile = () => {
         titleStyle: {
           width: null,
         },
-        subMenu: [
-          {
-            subTitle: "Dokumen Lain",
-          },
-          {
-            subTitle: "Verifikasi",
-          },
-        ],
+        // subMenu: [
+        //   {
+        //     title: "Dokumen Lain",
+        //   },
+        //   {
+        //     title: "Verifikasi",
+        //   },
+        // ],
       });
     }
     if (isRoleEvent) {
@@ -403,17 +439,64 @@ export const Profile = () => {
     });
   }, [profile]);
 
-  const handleChangeChecked = (item) => {
-    const index = appsIsChecked.map((e) => e.title).indexOf(item.title);
-    const isChecked = index > -1;
-    const arr = [...appsIsChecked];
-    if (isChecked) {
-      arr.splice(index, 1);
+  const handleChangeChecked = (checked, item, parent) => {
+    if (parent === undefined) {
+      if (checked) {
+        setAppsIsChecked((prev) => [...prev, item]);
+      } else {
+        const index = appsIsChecked.map((e) => e.title).indexOf(item.title);
+        let arr = [...appsIsChecked];
+        arr.splice(index, 1);
+        setAppsIsChecked(arr);
+      }
     } else {
-      arr.push(item);
+      if (checked) {
+        const index = appsIsChecked.map((e) => e.title).indexOf(parent.title);
+        let arr = [...appsIsChecked];
+
+        //jika parent ada
+        if (index > -1) {
+          arr[index].subMenu.push(item);
+        } else {
+          arr.push({
+            ...parent,
+            subMenu: [item],
+          });
+        }
+        setAppsIsChecked(arr);
+      } else {
+        const index = appsIsChecked.map((e) => e.title).indexOf(parent.title);
+        let arr = [...appsIsChecked];
+        const indexSubMenu = arr[index].subMenu
+          .map((e) => e.title)
+          .indexOf(item.title);
+
+        arr[index].subMenu.splice(indexSubMenu, 1);
+
+        if (arr[index].subMenu.length === 0) {
+          arr.splice(index, 1);
+        }
+        setAppsIsChecked(arr);
+      }
     }
-    setAppsIsChecked(arr);
-    console.log(arr);
+  };
+
+  const checkedMenu = (title) => {
+    let checked = false;
+
+    const loopData = (arr) => {
+      for (let i = arr.length - 1; i >= 0; i--) {
+        if (arr[i].title === title) {
+          checked = true;
+        } else if (arr[i].subMenu) {
+          loopData(arr[i].subMenu);
+        }
+      }
+    };
+
+    const tempArr = [...appsIsChecked];
+    loopData(tempArr);
+    return checked;
   };
 
   const handleSaveMenuLite = () => {
@@ -939,11 +1022,13 @@ export const Profile = () => {
                 <View>
                   <FlatList
                     data={listMenu}
-                    renderItem={({ item }) => (
+                    renderItem={({ item, index }) => (
                       <CardListAplikasi
                         item={item}
+                        index={index}
                         appsIsChecked={appsIsChecked}
                         handleChangeChecked={handleChangeChecked}
+                        checked={checkedMenu}
                       />
                     )}
                     keyExtractor={(item) => item.title}
@@ -959,7 +1044,6 @@ export const Profile = () => {
                       justifyContent: "center",
                       alignItems: "center",
                       marginTop: 20,
-                      marginBottom: 100,
                     }}
                     onPress={() => {
                       handleSaveMenuLite();

@@ -172,6 +172,14 @@ export const CardApps = ({
         titleStyle: {
           width: null,
         },
+        // subMenu: [
+        //   {
+        //     title: "Main",
+        //   },
+        //   {
+        //     title: "Laporan",
+        //   },
+        // ],
       },
       {
         title: "Pegawai",
@@ -233,7 +241,34 @@ export const CardApps = ({
     if (isRoleKalender) {
       tmpMenu.splice(7, 0, {
         title: "Kalender",
-        navigation: "GrupKalender",
+        navigation: "MainKalender",
+        image: require("../../assets/superApp/kalender.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 28,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+        // subMenu: [
+        //   {
+        //     title: "Grup Kalender",
+        //   },
+        //   {
+        //     title: "Kalender Personal",
+        //   },
+        // ],
+      });
+    } else {
+      tmpMenu.splice(7, 0, {
+        title: "Kalender",
+        navigation: "KalenderPersonal",
         image: require("../../assets/superApp/kalender.png"),
         imagestyle: {
           width: {
@@ -268,11 +303,19 @@ export const CardApps = ({
         titleStyle: {
           width: null,
         },
+        // subMenu: [
+        //   {
+        //     title: "Dokumen Lain",
+        //   },
+        //   {
+        //     title: "Verifikasi",
+        //   },
+        // ],
       });
     } else {
       tmpMenu.splice(3, 0, {
         title: "Digital Sign",
-        navigation: "MainDigitalSign",
+        navigation: "DokumenLain",
         image: require("../../assets/superApp/digitalsign.png"),
         imagestyle: {
           width: {
@@ -287,6 +330,14 @@ export const CardApps = ({
         titleStyle: {
           width: null,
         },
+        // subMenu: [
+        //   {
+        //     title: "Dokumen Lain",
+        //   },
+        //   {
+        //     title: "Verifikasi",
+        //   },
+        // ],
       });
     }
     if (isRoleEvent) {
@@ -369,7 +420,6 @@ export const CardApps = ({
             {listMenu &&
               listMenu.length > 0 &&
               listMenu.map((item, index) => {
-                console.log(item.navigation);
                 if (index <= 3) {
                   return (
                     <View
