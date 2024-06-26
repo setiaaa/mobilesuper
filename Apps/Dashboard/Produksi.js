@@ -9,7 +9,7 @@ export const Produksi = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DProduksiBudidaya/DProduksiBudidaya.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

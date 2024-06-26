@@ -1534,7 +1534,7 @@ function AppNavigator() {
       if (val === null) {
         setRoute("LoginToken");
         setLinking({
-          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
             initialRouteName: "LoginToken",
             screens: {
@@ -1545,7 +1545,7 @@ function AppNavigator() {
       } else {
         setRoute("Main");
         setLinking({
-          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
             initialRouteName: "Main",
             screens: {

@@ -15,7 +15,7 @@ export const Kusuka = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DKusuka.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKusuka/DKusuka.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

@@ -21,15 +21,13 @@ export const APBN = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}
         androidLayerType={"software"}
         mixedContentMode={"always"}
         allowUniversalAccessFromFileURLs={true}
-        setDisplayZoomControls={true}
-        // injectedJavaScript={inject}
         scalesPageToFit={false}
       />
       <Text style={{ color: COLORS.primary }}>

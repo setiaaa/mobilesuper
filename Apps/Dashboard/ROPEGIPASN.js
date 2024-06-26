@@ -9,7 +9,7 @@ export const ROPEGIPASN = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DRopegIPASN.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DRopegIPASN.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}
