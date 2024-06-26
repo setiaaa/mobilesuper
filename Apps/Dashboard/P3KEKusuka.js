@@ -15,10 +15,7 @@ export const P3KEKusuka = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri:
-            Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DP3KE.html"
-              : "https://dashboard.coofis.com/t/kkp/views/P3KE/P3KE?:origin=card_share_link&:embed=n",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DP3KE.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

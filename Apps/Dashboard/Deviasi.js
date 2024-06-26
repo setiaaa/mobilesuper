@@ -15,10 +15,7 @@ export const Deviasi = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri:
-            Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DDeviasiKusuka.html"
-              : "https://dashboard.coofis.com/t/kkp/views/DeviasiKusuka/DeviasiKusuka?:origin=card_share_link&:embed=n",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DDeviasiKusuka.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

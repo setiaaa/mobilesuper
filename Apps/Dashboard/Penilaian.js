@@ -10,10 +10,7 @@ export const Penilaian = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri:
-            Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DPenilaian.html"
-              : "https://dashboard.coofis.com/t/kkp/views/DashboardPenilaian/DashboardIPASN?:origin=card_share_link&:embed=n",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DPenilaian.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

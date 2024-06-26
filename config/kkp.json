@@ -28,15 +28,15 @@
     "versionCode": 736,
     "enableHermes": true,
     "notification": {
-        "icon": "./assets/ic_stat_onesignal_default.png",
-        "color": "#323247"  
-      },
+      "icon": "./assets/ic_stat_onesignal_default.png",
+      "color": "#323247"
+    },
     "permissions": [
       "WRITE_EXTERNAL_STORAGE",
       "READ_EXTERNAL_STORAGE",
       "CAMERA",
       "INTERNET",
-      "ACCESS_FINE_LOCATION", 
+      "ACCESS_FINE_LOCATION",
       "ACCESS_COARSE_LOCATION"
     ],
     "adaptiveIcon": {
@@ -79,7 +79,7 @@
           "shrinkResources": true,
           "splits": {
             "abi": true
-             },
+          },
           "jsEngine": "hermes"
         },
         "ios": {
@@ -90,17 +90,17 @@
     [
       "expo-location",
       {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
       }
-  ],
-   [
-        "@sentry/react-native/expo",
-        {
-          "url": "https://newsentry.armsolusi.com/",
-          "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
-          "project": "kkp-mobile-prod",
-          "organization": "sentry"
-        }
+    ],
+    [
+      "@sentry/react-native/expo",
+      {
+        "url": "https://newsentry.armsolusi.com/",
+        "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "project": "kkp-mobile-prod",
+        "organization": "sentry"
+      }
     ],
     [
       "onesignal-expo-plugin",

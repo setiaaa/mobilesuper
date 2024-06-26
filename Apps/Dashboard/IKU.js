@@ -10,10 +10,7 @@ export const IKU = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri:
-            Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DPerencanaan/IKU.html"
-              : "https://dashboard.coofis.com/t/kkp/views/DashboardNPSS/DashboardNPSS?:origin=card_share_link&:embed=n",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DPerencanaan/IKU.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

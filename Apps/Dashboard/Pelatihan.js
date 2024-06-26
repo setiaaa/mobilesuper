@@ -9,10 +9,7 @@ export const Pelatihan = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri:
-            Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DPelatihan.html"
-              : "https://dashboard.coofis.com/t/kkp/views/DashboardPelatihanKKP/DashboardPelatihan?:origin=card_share_link&:embed=n",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DPelatihan.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

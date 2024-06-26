@@ -429,7 +429,7 @@ export const Profile = () => {
   const [appsIsChecked, setAppsIsChecked] = useState([]);
 
   useEffect(() => {
-    getMenuLite().then((val) => {
+    getMenuLite(profile.nip).then((val) => {
       try {
         const parsedVal = JSON.parse(val);
         setAppsIsChecked(parsedVal === null ? [] : parsedVal);
@@ -500,7 +500,7 @@ export const Profile = () => {
   };
 
   const handleSaveMenuLite = () => {
-    setMenuLite(JSON.stringify(appsIsChecked));
+    setMenuLite(JSON.stringify(appsIsChecked), profile.nip);
   };
 
   return (
@@ -941,6 +941,12 @@ export const Profile = () => {
               borderRadius: 8,
               width: "100%",
               justifyContent: "space-between",
+              //shadow ios
+              shadowOffset: { width: -2, height: 4 },
+              shadowColor: "#171717",
+              shadowOpacity: 0.2,
+              //shadow android
+              elevation: 2,
             }}
           >
             <View>
@@ -1064,6 +1070,45 @@ export const Profile = () => {
             </View>
           </BottomSheetModal>
         </Portal>
+
+        <View
+          style={{
+            marginVertical: 20,
+            width: "100%",
+            paddingHorizontal: "5%",
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.white,
+              borderRadius: 8,
+              padding: 16,
+              //shadow ios
+              shadowOffset: { width: -2, height: 4 },
+              shadowColor: "#171717",
+              shadowOpacity: 0.2,
+              //shadow android
+              elevation: 2,
+            }}
+            onPress={() => {
+              navigation.navigate("ListFaq");
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
+              <Ionicons name="chatbubbles-outline" size={24} />
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H4", device),
+                  fontWeight: "600",
+                }}
+              >
+                FAQ
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
         <View
           style={{

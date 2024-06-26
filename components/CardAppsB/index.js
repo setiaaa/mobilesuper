@@ -72,9 +72,10 @@ export const CardAppsB = ({
           }
         });
       } else {
-        getMenuLite().then((val) => {
+        getMenuLite(profile.nip).then((val) => {
           try {
             const parsedVal = JSON.parse(val);
+            console.log(parsedVal);
             setListMenu(parsedVal);
           } catch (e) {
             console.error("JSON Parse error:", e);

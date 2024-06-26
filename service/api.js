@@ -60,6 +60,8 @@ const HelpDesk = Config.base_url_helpdesk;
 const Survey = BASE_URL + "bridge/";
 
 const Attendence = BASE_URL + "attendence/";
+// faq
+const Faq = BASE_URL + "bridge/admintools/";
 
 //Login
 export const Login = createAsyncThunk(
@@ -2363,6 +2365,24 @@ export const postAttendence = createAsyncThunk(
       headers: { Authorization: data.token },
     });
     return respon?.data.results;
+  }
+);
+
+//Faq
+export const getFaq = createAsyncThunk(
+  "faq/getFaq",
+  async ({ token, search }) => {
+    if (search === "") {
+      const respon = await axios.get(`${Faq}/faq/`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    } else {
+      const respon = await axios.get(`${Faq}/faq/?title=${search}`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    }
   }
 );
 

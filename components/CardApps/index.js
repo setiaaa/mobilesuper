@@ -387,7 +387,7 @@ export const CardApps = ({
           }
         });
       } else {
-        getMenuLite().then((val) => {
+        getMenuLite(profile.nip).then((val) => {
           try {
             const parsedVal = JSON.parse(val);
             if (parsedVal !== null) {
@@ -401,7 +401,7 @@ export const CardApps = ({
         });
       }
     }
-  }, [typeMenu, isFocused]);
+  }, [typeMenu, isFocused, profile.nip]);
 
   return (
     <>
@@ -463,8 +463,9 @@ export const CardApps = ({
                                   ? item.imagestyle.height.tablet
                                   : item.imagestyle.height.hp,
                             }}
-                            source={item.image}
+                            source={item?.image}
                           />
+                          {/* <Text>{typeof item.image}</Text> */}
                         </View>
                       </TouchableOpacity>
                       <Text

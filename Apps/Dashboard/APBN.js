@@ -21,10 +21,7 @@ export const APBN = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri:
-            Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DRealDanRenKeu.html"
-              : '"https://dashboard.coofis.com/t/kkp/views/DashboardRencanaRealisasiKKP2023/DashboardKeuangan?:origin=card_share_link&:embed=n"',
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

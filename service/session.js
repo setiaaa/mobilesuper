@@ -77,22 +77,22 @@ export const removeMenu = async (value) => {
   } catch (e) {}
 };
 
-export const getMenuLite = async () => {
+export const getMenuLite = async (nip) => {
   try {
-    const menuLite = await AsyncStorage.getItem("menulite");
+    const menuLite = await AsyncStorage.getItem(`menulite-${nip}`);
     return menuLite;
   } catch (error) {}
 };
 
-export const setMenuLite = async (value) => {
+export const setMenuLite = async (value, nip) => {
   try {
-    await AsyncStorage.setItem("menulite", value);
+    await AsyncStorage.setItem(`menulite-${nip}`, value);
   } catch (e) {}
 };
 
-export const removeMenuLite = async (value) => {
+export const removeMenuLite = async (value, nip) => {
   try {
-    await AsyncStorage.removeItem("menulite");
+    await AsyncStorage.removeItem(`menulite-${nip}`, value);
   } catch (e) {}
 };
 

@@ -15,10 +15,7 @@ export const BBMSubsidiKusuka = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri:
-            Platform.OS === "android"
-              ? "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DBBMSubsidi.html"
-              : "https://dashboard.coofis.com/t/kkp/views/BBMSubsidi/BBMSubsidi?:origin=card_share_link&:embed=n",
+          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKusuka/DBBMSubsidi.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

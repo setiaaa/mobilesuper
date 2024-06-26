@@ -131,6 +131,7 @@ import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
 import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
 import MainSPPD from "../SPPD/MainSPPD";
 import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
+import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 import MainOutgoingDetail from "./Detail/Outgoing/MainOutgoingDetail";
 import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
 import MainCuti from "../Cuti/MainCuti";
@@ -168,7 +169,7 @@ import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
-import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
+// import OneSignal from "react-native-onesignal";
 import InternalSatkerList from "./List/InternalSatkerList";
 import { SurveyLayanan } from "../Survey/SurveyLayanan";
 import { HasilSurvey } from "../Survey/HasilSurvey";
@@ -205,6 +206,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { setNotifIos, setTypeMenu } from "../../store/SuperApps";
+import { ListFaq } from "../Faq/ListFaq";
 
 const Stack = createNativeStackNavigator();
 
@@ -358,7 +360,13 @@ function AuthenticatedStack({ route }) {
     }
   };
 
-  const getDeviceId = async () => {};
+  const getDeviceId = async () => {
+    // const deviceState = await OneSignal.getDeviceState();
+    // if (deviceState != undefined && deviceState != null) {
+    //   setDeviceId(deviceState?.userId);
+    // }
+  };
+
   async function checkDevice() {
     try {
       if (
@@ -1428,6 +1436,13 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="DetailSertifikatEksternal"
             component={DetailSertifikatEksternal}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListFaq"
+            component={ListFaq}
             options={{
               headerShown: false,
             }}
