@@ -397,7 +397,7 @@ export const LoginToken = () => {
                   </Text>
                 </View>
 
-                <View
+                {/* <View
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -420,7 +420,7 @@ export const LoginToken = () => {
                   >
                     Penambahan FAQ
                   </Text>
-                </View>
+                </View> */}
 
                 <View
                   style={{

@@ -1074,45 +1074,6 @@ export const Profile = () => {
         <View
           style={{
             marginVertical: 20,
-            width: "100%",
-            paddingHorizontal: "5%",
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLORS.white,
-              borderRadius: 8,
-              padding: 16,
-              //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
-            }}
-            onPress={() => {
-              navigation.navigate("ListFaq");
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
-              <Ionicons name="chatbubbles-outline" size={24} />
-              <Text
-                style={{
-                  fontSize: fontSizeResponsive("H4", device),
-                  fontWeight: "600",
-                }}
-              >
-                FAQ
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            marginVertical: 20,
             justifyContent: "center",
             alignItems: "center",
             paddingHorizontal: "5%",
@@ -1256,7 +1217,7 @@ export const Profile = () => {
                   </Text>
                 </View>
 
-                <View
+                {/* <View
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -1279,7 +1240,7 @@ export const Profile = () => {
                   >
                     Penambahan FAQ
                   </Text>
-                </View>
+                </View> */}
 
                 <View
                   style={{
