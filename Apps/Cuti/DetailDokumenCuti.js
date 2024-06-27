@@ -38,6 +38,7 @@ import { Config } from "../../constants/config";
 import { ResizeMode, Video } from "expo-av";
 import { Loading } from "../../components/Loading";
 import { removePushNotif } from "../../service/session";
+import { setNotifIos } from "../../store/SuperApps";
 
 const CardLampiran = ({ lampiran, onClick, type, id, name, size, device }) => {
   const navigation = useNavigation();
@@ -705,6 +706,7 @@ export const DetailDokumenCuti = ({ route }) => {
   useEffect(() => {
     console.log("masuk effect");
     removePushNotif();
+    dispatch(setNotifIos(false));
   }, [arsipDetail, loading]);
 
   const { device } = useSelector((state) => state.apps);

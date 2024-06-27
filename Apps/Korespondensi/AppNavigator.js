@@ -143,7 +143,15 @@ import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
 import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
-import { getTokenValue, setPushNotif } from "../../service/session";
+import {
+  getMenuType,
+  getTokenValue,
+  removeMenu,
+  removeMenuLite,
+  removeMenuType,
+  setMenuType,
+  setPushNotif,
+} from "../../service/session";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 import { PencarianKorespondensi } from "./Pencarian/PencarianKorespondensi";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
@@ -193,6 +201,11 @@ import {
 import Constants from "expo-constants";
 import { setDataNotif } from "../../store/pushnotif";
 import { COLORS } from "../../config/SuperAppps";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { setNotifIos, setTypeMenu } from "../../store/SuperApps";
 import { ListFaq } from "../Faq/ListFaq";
 
 const Stack = createNativeStackNavigator();
@@ -214,6 +227,19 @@ function AuthenticatedStack({ route }) {
 
   useEffect(() => {
     // isEmulator();
+    getMenuType().then((val) => {
+      try {
+        const parsedVal = JSON.parse(val);
+        if (parsedVal === null) {
+          setMenuType(JSON.stringify(false));
+          dispatch(setTypeMenu(false));
+        } else {
+          dispatch(setTypeMenu(parsedVal));
+        }
+      } catch (e) {
+        console.error("JSON Parse error:", e);
+      }
+    });
     deviceRoot();
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
@@ -1504,6 +1530,7 @@ function AppNavigator() {
 
   OneSignal.Notifications.addEventListener("click", (event) => {
     setPushNotif(event?.notification?.additionalData);
+    dispatch(setNotifIos(true));
     console.log("navigator", event.notification);
     // dispatch(setDataNotif(notification?.additionalData));
   });
