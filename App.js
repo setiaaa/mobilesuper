@@ -18,8 +18,6 @@ import { setDevice } from "./store/Apps";
 import { LogLevel, OneSignal } from "react-native-onesignal";
 import Constants from "expo-constants";
 import { setDataNotif } from "./store/pushnotif";
-// import OneSignal from "react-native-onesignal";
-// import Constants from "expo-constants";
 
 // OneSignal.setAppId(Constants.manifest.extra.oneSignalAppId);
 

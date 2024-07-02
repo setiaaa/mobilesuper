@@ -131,6 +131,7 @@ import { ListBeritaSatker } from "../SuperApps/ListBeritaSatker";
 import { DetailBeritaSatker } from "../SuperApps/DetailBeritaSatker";
 import MainSPPD from "../SPPD/MainSPPD";
 import { DetailDokumenSPPD } from "../SPPD/DetailDokumenSPPD";
+import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
 import MainOutgoingDetail from "./Detail/Outgoing/MainOutgoingDetail";
 import { DetailSuratDiunggah } from "./Detail/Outgoing/DetailSuratDiunggah";
 import MainCuti from "../Cuti/MainCuti";
@@ -142,7 +143,15 @@ import { TambahCutiDiluarTanggungan } from "../Cuti/TambahCutiDiluarTanggungan";
 import { TambahCutiTahunan } from "../Cuti/TambahCutiTahunan";
 import { TambahCutiAlasanPenting } from "../Cuti/TambahCutiAlasanPenting";
 import { DetailDokumenCuti } from "../Cuti/DetailDokumenCuti";
-import { getTokenValue, setPushNotif } from "../../service/session";
+import {
+  getMenuType,
+  getTokenValue,
+  removeMenu,
+  removeMenuLite,
+  removeMenuType,
+  setMenuType,
+  setPushNotif,
+} from "../../service/session";
 import { ListArsipCuti } from "../Cuti/ListArsipCuti";
 import { PencarianKorespondensi } from "./Pencarian/PencarianKorespondensi";
 import { KegiatanBaru } from "../SPPD/KegiatanBaru";
@@ -160,7 +169,7 @@ import { HDFormLaporan } from "../SuperApps/HDFormLaporan";
 import { FileViewerRepo } from "../Repository/FileViewerRepo";
 import { TandaTanganNotulensi } from "../Event Management/TandaTanganNotulensi";
 import * as Linking from "expo-linking";
-import { DetailDokumenPersonal } from "../SPPD/DetailDokumenPersonal";
+// import OneSignal from "react-native-onesignal";
 import InternalSatkerList from "./List/InternalSatkerList";
 import { SurveyLayanan } from "../Survey/SurveyLayanan";
 import { HasilSurvey } from "../Survey/HasilSurvey";
@@ -192,6 +201,12 @@ import {
 import Constants from "expo-constants";
 import { setDataNotif } from "../../store/pushnotif";
 import { COLORS } from "../../config/SuperAppps";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { setNotifIos, setTypeMenu } from "../../store/SuperApps";
+import { ListFaq } from "../Faq/ListFaq";
 
 const Stack = createNativeStackNavigator();
 
@@ -212,30 +227,21 @@ function AuthenticatedStack({ route }) {
 
   useEffect(() => {
     // isEmulator();
-    deviceRoot();
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive||background/) &&
-        nextAppState === "active"
-      ) {
-        // checkversion
-        if (Platform.OS === "android") {
-          checkVersionAndroid();
-        } else if (Platform.OS === "ios") {
-          checkVersionIos();
+    getMenuType().then((val) => {
+      try {
+        const parsedVal = JSON.parse(val);
+        if (parsedVal === null) {
+          setMenuType(JSON.stringify(false));
+          dispatch(setTypeMenu(false));
+        } else {
+          dispatch(setTypeMenu(parsedVal));
         }
-        appState.current = nextAppState;
+      } catch (e) {
+        console.error("JSON Parse error:", e);
       }
     });
-    // checkversion
-    if (Platform.OS === "android") {
-      checkVersionAndroid();
-    } else if (Platform.OS === "ios") {
-      checkVersionIos();
-    }
-    return () => {
-      subscription.remove();
-    };
+    deviceRoot();
+    //cek version di sini
   }, []);
 
   const isEmulator = () => {
@@ -354,7 +360,13 @@ function AuthenticatedStack({ route }) {
     }
   };
 
-  const getDeviceId = async () => {};
+  const getDeviceId = async () => {
+    // const deviceState = await OneSignal.getDeviceState();
+    // if (deviceState != undefined && deviceState != null) {
+    //   setDeviceId(deviceState?.userId);
+    // }
+  };
+
   async function checkDevice() {
     try {
       if (
@@ -1428,6 +1440,13 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="ListFaq"
+            component={ListFaq}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
 
         {modal === true ? (
@@ -1489,6 +1508,7 @@ function AppNavigator() {
 
   OneSignal.Notifications.addEventListener("click", (event) => {
     setPushNotif(event?.notification?.additionalData);
+    dispatch(setNotifIos(true));
     console.log("navigator", event.notification);
     // dispatch(setDataNotif(notification?.additionalData));
   });
@@ -1514,7 +1534,7 @@ function AppNavigator() {
       if (val === null) {
         setRoute("LoginToken");
         setLinking({
-          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
             initialRouteName: "LoginToken",
             screens: {
@@ -1525,7 +1545,7 @@ function AppNavigator() {
       } else {
         setRoute("Main");
         setLinking({
-          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
             initialRouteName: "Main",
             screens: {

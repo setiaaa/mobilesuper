@@ -2,9 +2,9 @@
   "scheme": "kkp",
   "name": "SuperApps KKP",
   "slug": "kkpsuperapps",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "orientation": "portrait",
-  "icon": "./assets/superApp/kkp-ikon.png",
+  "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {
     "image": "./assets/superApp/splashkkp.png",
@@ -25,25 +25,25 @@
     }
   },
   "android": {
-    "versionCode": 735,
+    "versionCode": 737,
     "enableHermes": true,
     "notification": {
-        "icon": "./assets/ic_stat_onesignal_default.png",
-        "color": "#323247"  
-      },
+      "icon": "./assets/ic_stat_onesignal_default.png",
+      "color": "#323247"
+    },
     "permissions": [
       "WRITE_EXTERNAL_STORAGE",
       "READ_EXTERNAL_STORAGE",
       "CAMERA",
       "INTERNET",
-      "ACCESS_FINE_LOCATION", 
+      "ACCESS_FINE_LOCATION",
       "ACCESS_COARSE_LOCATION"
     ],
     "adaptiveIcon": {
-      "foregroundImage": "./assets/superApp/kkp-ikon.png",
+      "foregroundImage": "./assets/superApp/kkp-icon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "go.id.portalkkp",
+    "package": "go.id.kkp.portal",
     "intentFilters": [
       {
         "action": "VIEW",
@@ -79,7 +79,7 @@
           "shrinkResources": true,
           "splits": {
             "abi": true
-             },
+          },
           "jsEngine": "hermes"
         },
         "ios": {
@@ -90,17 +90,17 @@
     [
       "expo-location",
       {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
       }
-  ],
-   [
-        "@sentry/react-native/expo",
-        {
-          "url": "https://newsentry.armsolusi.com/",
-          "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
-          "project": "kkp-mobile-prod",
-          "organization": "sentry"
-        }
+    ],
+    [
+      "@sentry/react-native/expo",
+      {
+        "url": "https://newsentry.armsolusi.com/",
+        "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
+        "project": "kkp-mobile-prod",
+        "organization": "sentry"
+      }
     ],
     [
       "onesignal-expo-plugin",
@@ -112,6 +112,7 @@
     ]
   ],
   "extra": {
+    "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
       "projectId": "f4f0fd5a-f2d1-4fd7-be69-ce52cc8f0133"
@@ -120,7 +121,7 @@
     "base_url": "https://portal.kkp.go.id/api/",
     "base_url_auth": "https://portal.kkp.go.id/service/auth/mobile/login/",
     "base_url_cuti": "https://portal.kkp.go.id/service/cuti/api/",
-    "base_url_helpdesk": "https://portal.kkp.go.id/service/helpdesk/api/",
+    "base_url_helpdesk": "https://portal.kkp.go.id/service/helpdesk/",
     "upgrade_url": "https://portal.kkp.go.id/kkp",
     "loginSSO": false,
     "termOfUse": true,

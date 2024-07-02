@@ -11,7 +11,9 @@ import { getHTTP, handlerError } from "../../../utils/http";
 import { ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import DetailAgenda from "./Tab/DetailAgenda";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotifIos } from "../../../store/SuperApps";
+import { removePushNotif } from "../../../service/session";
 
 function IncomingDetail({ route }) {
   let id = route?.params?.id;
@@ -22,6 +24,7 @@ function IncomingDetail({ route }) {
   const [isLoading, setIsLoading] = useState(true);
   const [detail, setDetail] = useState();
   const [preview, setPreview] = useState();
+  const dispatch = useDispatch();
 
   const getAgendaInDetail = async () => {
     setIsLoading(true);
@@ -67,6 +70,8 @@ function IncomingDetail({ route }) {
 
   useEffect(() => {
     getAgendaInDetail();
+    removePushNotif();
+    dispatch(setNotifIos(false));
   }, [id]);
 
   const loadingOverlay = (

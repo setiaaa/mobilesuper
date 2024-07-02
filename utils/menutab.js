@@ -107,6 +107,7 @@ import { Verifikasi } from "../Apps/DigitalSignature/Verifikasi";
 import { MyTabSertifikat } from "../Apps/DigitalSignature/BottomTabsSertifikat";
 import { SertifikatLms } from "../Apps/DigitalSignature/SertifikatLms";
 import { SertifikatEksternal } from "../Apps/DigitalSignature/SertifikatEksternal";
+import { ROPEGIPASN } from "../Apps/Dashboard/ROPEGIPASN";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -874,6 +875,13 @@ export const TopsDash = () => {
           component={Perencanaan}
           options={{
             title: "Perencanaan",
+          }}
+        />
+        <Top.Screen
+          name="ROPEGIPASN"
+          component={ROPEGIPASN}
+          options={{
+            title: "ROPEG IP ASN",
           }}
         />
       </Top.Navigator>

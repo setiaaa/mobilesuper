@@ -130,11 +130,14 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="attach-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H4", device),
+                    position: "absolute",
+                    bottom:24,
                   }}
                 >
                   lampiran
@@ -153,11 +156,14 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="attach-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
+                    position: "absolute",
+                    bottom:24,
                   }}
                 >
                   Lampiran
@@ -202,11 +208,14 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="chatbox-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H4", device),
+                    position: "absolute",
+                    bottom:24,
                   }}
                 >
                   Komentar
@@ -225,11 +234,14 @@ function MyTabBarDetailRepo({ props, navigation }) {
                   name="chatbox-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 5 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H4", device),
+                    position: "absolute",
+                    bottom:24,
                   }}
                 >
                   Komentar

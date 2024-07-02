@@ -57,11 +57,14 @@ function MyTabDetailAgenda({ props, navigation }) {
                   name="information-circle-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Detail
@@ -80,11 +83,14 @@ function MyTabDetailAgenda({ props, navigation }) {
                   name="information-circle-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Detail
@@ -129,11 +135,14 @@ function MyTabDetailAgenda({ props, navigation }) {
                   name="reorder-four-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Todo
@@ -152,11 +161,14 @@ function MyTabDetailAgenda({ props, navigation }) {
                   name="reorder-four-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Todo
@@ -201,11 +213,14 @@ function MyTabDetailAgenda({ props, navigation }) {
                   name="people-outline"
                   color={COLORS.primary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.primary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Absen
@@ -224,11 +239,14 @@ function MyTabDetailAgenda({ props, navigation }) {
                   name="people-outline"
                   color={COLORS.tertiary}
                   size={device === "tablet" ? 40 : 24}
+                  style={{ position: "absolute", top: 10 }}
                 />
                 <Text
                   style={{
                     color: COLORS.tertiary,
                     fontSize: fontSizeResponsive("H3", device),
+                    position:"absolute",
+                    bottom: device === "tablet" ? 40 : 40,
                   }}
                 >
                   Absen

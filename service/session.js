@@ -57,3 +57,60 @@ export const removePushNotif = async (value) => {
     await AsyncStorage.removeItem("notif");
   } catch (e) {}
 };
+
+export const getMenu = async () => {
+  try {
+    const menu = await AsyncStorage.getItem("menu");
+    return menu;
+  } catch (error) {}
+};
+
+export const setMenu = async (value) => {
+  try {
+    await AsyncStorage.setItem("menu", value);
+  } catch (e) {}
+};
+
+export const removeMenu = async (value) => {
+  try {
+    await AsyncStorage.removeItem("menu");
+  } catch (e) {}
+};
+
+export const getMenuLite = async (nip) => {
+  try {
+    const menuLite = await AsyncStorage.getItem(`menulite-${nip}`);
+    return menuLite;
+  } catch (error) {}
+};
+
+export const setMenuLite = async (value, nip) => {
+  try {
+    await AsyncStorage.setItem(`menulite-${nip}`, value);
+  } catch (e) {}
+};
+
+export const removeMenuLite = async (value, nip) => {
+  try {
+    await AsyncStorage.removeItem(`menulite-${nip}`, value);
+  } catch (e) {}
+};
+
+export const getMenuType = async () => {
+  try {
+    const menuType = await AsyncStorage.getItem("menutype");
+    return menuType;
+  } catch (error) {}
+};
+
+export const setMenuType = async (value) => {
+  try {
+    await AsyncStorage.setItem("menutype", value);
+  } catch (e) {}
+};
+
+export const removeMenuType = async (value) => {
+  try {
+    await AsyncStorage.removeItem("menutype");
+  } catch (e) {}
+};

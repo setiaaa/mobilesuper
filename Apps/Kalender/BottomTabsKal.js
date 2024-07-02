@@ -213,7 +213,7 @@ function MyTabBarKal({ props, navigation }) {
                 alignItems: "center",
                 height: device === "tablet" ? 120 : 60,
                 justifyContent: "center",
-                width: device === "tablet" ? 95 : 100,
+                width: device === "tablet" ? 95 : 120,
               }}
             >
               <View
@@ -254,7 +254,7 @@ function MyTabBarKal({ props, navigation }) {
                 alignItems: "center",
                 height: device === "tablet" ? 120 : 60,
                 justifyContent: "center",
-                width: device === "tablet" ? 95 : 100,
+                width: device === "tablet" ? 95 : 120,
               }}
             >
               <Ionicons

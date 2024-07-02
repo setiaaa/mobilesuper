@@ -7,15 +7,22 @@ import {
   Image,
   FlatList,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTSIZE, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  imageApps,
+} from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Dimensions } from "react-native";
+import { getMenu, getMenuLite } from "../../service/session";
+import { Loading } from "../Loading";
 
 const numColumns = 3;
 
@@ -26,8 +33,8 @@ export const CardAppsB = ({
 }) => {
   const navigation = useNavigation();
   const [listMenu, setListMenu] = useState([]);
-
-  const { profile } = useSelector((state) => state.superApps);
+  const isFocused = useIsFocused();
+  const { profile, typeMenu } = useSelector((state) => state.superApps);
 
   const roleKalender = ["CALENDAR.USER"];
   const rolePreShare = ["PRESHARE.USER"];
@@ -55,818 +62,33 @@ export const CardAppsB = ({
   const { device } = useSelector((state) => state.apps);
 
   useEffect(() => {
-    let tmpMenu = [];
-    tmpMenu.push(
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("MainKoresp")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 50 : 24,
-                height: device === "tablet" ? 50 : 28,
-              }}
-              source={require("../../assets/superApp/korespondensi.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: device === "tablet" ? "center" : null,
-            width: device === "tablet" ? 200 : null,
-          }}
-        >
-          Korespondensi
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("MainKeb")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 50 : 30,
-                height: device === "tablet" ? 50 : 33,
-              }}
-              source={require("../../assets/superApp/kebijakan.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-          }}
-        >
-          Regulasi
-        </Text>
-      </View>,
-      // <View
-      //   style={{
-      //     justifyContent: "center",
-      //     alignItems: "center",
-      //     width: 100,
-      //     height: 100,
-      //   }}
-      // >
-      //   <TouchableOpacity
-      //     onPress={() => navigation.navigate("MainPengetahuan")}
-      //   >
-      //     <View
-      //       style={[
-      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-      //         {
-      //           backgroundColor: COLORS.secondary,
-      //           justifyContent: "center",
-      //           alignItems: "center",
-      //           display: "flex",
-      //         },
-      //       ]}
-      //     >
-      //       <Image
-      //         style={{
-      //           width: device === "tablet" ? 40 : 23,
-      //           height: device === "tablet" ? 55 : 34,
-      //         }}
-      //         source={require("../../assets/superApp/pengetahuan.png")}
-      //       />
-      //     </View>
-      //   </TouchableOpacity>
-      //   <Text
-      //     style={{
-      //       marginTop: 10,
-      //       justifyContent: "center",
-      //       alignItems: "center",
-      //       fontSize: fontSizeResponsive("H4", device),
-      //       width: device === "tablet" ? 200 : null,
-      //       textAlign: "center",
-      //     }}
-      //   >
-      //     Pengetahuan
-      //   </Text>
-      // </View>,
-      // <View
-      //   style={{
-      //     justifyContent: "center",
-      //     alignItems: "center",
-      //     width: 100,
-      //     height: 100,
-      //   }}
-      // >
-      //   <TouchableOpacity
-      //     onPress={() => navigation.navigate("MainDigitalSign")}
-      //   >
-      //     <View
-      //       style={[
-      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-      //         {
-      //           backgroundColor: COLORS.secondary,
-      //           justifyContent: "center",
-      //           alignItems: "center",
-      //           display: "flex",
-      //         },
-      //       ]}
-      //     >
-      //       {/* <Ionicons name='school-outline' size={24} color={COLORS.primary} /> */}
-      //       <Image
-      //         style={{
-      //           width: device === "tablet" ? 50 : 27,
-      //           height: device === "tablet" ? 50 : 35,
-      //         }}
-      //         source={require("../../assets/superApp/digitalsign.png")}
-      //       />
-      //     </View>
-      //   </TouchableOpacity>
-      //   <Text
-      //     style={{
-      //       marginTop: 10,
-      //       justifyContent: "center",
-      //       alignItems: "center",
-      //       fontSize: fontSizeResponsive("H4", device),
-      //       width: device === "tablet" ? 200 : null,
-      //       textAlign: device === "tablet" ? "center" : null,
-      //     }}
-      //   >
-      //     Digital Sign
-      //   </Text>
-      // </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("MainCuti")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 40,
-                height: device === "tablet" ? 50 : 28,
-              }}
-              source={require("../../assets/superApp/cuti.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-          }}
-        >
-          Cuti
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            closeBottomSheet();
-            setModalBankom(true);
-          }}
-        >
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/Bankomicon.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 100,
-          }}
-          numberOfLines={1}
-        >
-          Pengembangan Kompetensi
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("MainSPPD")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 28,
-                height: device === "tablet" ? 60 : 28,
-              }}
-              source={require("../../assets/superApp/sppd.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            textAlign: "center",
-            fontSize: fontSizeResponsive("H4", device),
-          }}
-        >
-          SPPD
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("MyTask")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 60 : 35,
-                height: device === "tablet" ? 60 : 32,
-              }}
-              source={require("../../assets/superApp/taskmanagement.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-            textAlign: "center",
-            width: 300,
-          }}
-        >
-          Task Management
-        </Text>
-      </View>,
-
-      // <View
-      //   style={{
-      //     justifyContent: "center",
-      //     alignItems: "center",
-      //     width: 100,
-      //     height: 100,
-      //   }}
-      // >
-      //   <TouchableOpacity onPress={() => navigation.navigate("AksiPerubahan")}>
-      //     <View
-      //       style={[
-      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-      //         {
-      //           backgroundColor: COLORS.secondary,
-      //           justifyContent: "center",
-      //           alignItems: "center",
-      //           display: "flex",
-      //         },
-      //       ]}
-      //     >
-      //       <Image
-      //         style={{
-      //           width: device === "tablet" ? 60 : 35,
-      //           height: device === "tablet" ? 60 : 32,
-      //         }}
-      //         source={require("../../assets/superApp/info.png")}
-      //       />
-      //     </View>
-      //   </TouchableOpacity>
-      //   <Text
-      //     style={{
-      //       marginTop: 10,
-      //       justifyContent: "center",
-      //       alignItems: "center",
-      //       fontSize: fontSizeResponsive("H4", device),
-      //       textAlign: "center",
-      //       width: 300,
-      //     }}
-      //   >
-      //     Infomasi
-      //   </Text>
-      // </View>,
-      // <View
-      //   style={{
-      //     justifyContent: "center",
-      //     alignItems: "center",
-      //     width: 100,
-      //     height: 100,
-      //   }}
-      // >
-      //   <TouchableOpacity
-      //     onPress={() => navigation.navigate("KalenderPersonal")}
-      //   >
-      //     <View
-      //       style={[
-      //         device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-      //         {
-      //           backgroundColor: COLORS.secondary,
-      //           justifyContent: "center",
-      //           alignItems: "center",
-      //           display: "flex",
-      //         },
-      //       ]}
-      //     >
-      //       <Image
-      //         style={{
-      //           width: device === "tablet" ? 60 : 35,
-      //           height: device === "tablet" ? 60 : 32,
-      //         }}
-      //         source={require("../../assets/superApp/kalender.png")}
-      //       />
-      //     </View>
-      //   </TouchableOpacity>
-      //   <Text
-      //     style={{
-      //       marginTop: 10,
-      //       justifyContent: "center",
-      //       alignItems: "center",
-      //       fontSize: fontSizeResponsive("H4", device),
-      //       textAlign: "center",
-      //       width: 300,
-      //     }}
-      //   >
-      //     Kalender Personal
-      //   </Text>
-      // </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("ListPegawai")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 50 : 25,
-                height: device === "tablet" ? 55 : 29,
-              }}
-              source={require("../../assets/superApp/pegawai.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-          }}
-        >
-          Pegawai
-        </Text>
-      </View>,
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: 100,
-          height: 100,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate("SurveyLayanan")}>
-          <View
-            style={[
-              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-              {
-                backgroundColor: COLORS.secondary,
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                width: device === "tablet" ? 50 : 38,
-                height: device === "tablet" ? 55 : 38,
-              }}
-              source={require("../../assets/superApp/surveylayanan.png")}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text
-          style={{
-            marginTop: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: fontSizeResponsive("H4", device),
-          }}
-        >
-          Survei Layanan
-        </Text>
-      </View>
-    );
-    if (isRolePreShare) {
-      tmpMenu.splice(
-        2,
-        0,
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 100,
-            height: 100,
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("MainRepo")}>
-            <View
-              style={[
-                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-                {
-                  backgroundColor: COLORS.secondary,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 50 : 28,
-                  height: device === "tablet" ? 40 : 24,
-                }}
-                source={require("../../assets/superApp/repositori.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-              textAlign: "center",
-              width: device === "tablet" ? 400 : 200,
-            }}
-          >
-            Preparing dan Sharing
-          </Text>
-        </View>
-      );
+    if (typeMenu !== null) {
+      if (typeMenu === false) {
+        getMenu().then((val) => {
+          try {
+            const parsedVal = JSON.parse(val);
+            if (parsedVal === null) {
+              setListMenu(JSON.stringify(tmpMenu));
+            } else {
+              setListMenu(parsedVal);
+            }
+          } catch (e) {
+            console.error("JSON Parse error:", e);
+          }
+        });
+      } else {
+        getMenuLite(profile.nip).then((val) => {
+          try {
+            const parsedVal = JSON.parse(val);
+            console.log(parsedVal);
+            setListMenu(parsedVal);
+          } catch (e) {
+            console.error("JSON Parse error:", e);
+          }
+        });
+      }
     }
-    if (isRoleKalender) {
-      tmpMenu.splice(
-        7,
-        0,
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 100,
-            height: 100,
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("MainKalender")}>
-            <View
-              style={[
-                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-                {
-                  backgroundColor: COLORS.secondary,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 60 : 35,
-                  height: device === "tablet" ? 60 : 35,
-                }}
-                source={require("../../assets/superApp/kalender.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-            }}
-          >
-            Kalender
-          </Text>
-        </View>
-      );
-    } else {
-      tmpMenu.splice(
-        7,
-        0,
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 100,
-            height: 100,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.navigate("KalenderPersonal")}
-          >
-            <View
-              style={[
-                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-                {
-                  backgroundColor: COLORS.secondary,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 60 : 35,
-                  height: device === "tablet" ? 60 : 35,
-                }}
-                source={require("../../assets/superApp/kalender.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-            }}
-          >
-            Kalender Personal
-          </Text>
-        </View>
-      );
-    }
-
-    if (isRoleLaporan) {
-      tmpMenu.splice(
-        3,
-        0,
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 100,
-            height: 100,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.navigate("MainDigitalSign")}
-          >
-            <View
-              style={[
-                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-                {
-                  backgroundColor: COLORS.secondary,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 60 : 35,
-                  height: device === "tablet" ? 60 : 35,
-                }}
-                source={require("../../assets/superApp/digitalsign.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-            }}
-          >
-            Digital Sign
-          </Text>
-        </View>
-      );
-    } else {
-      tmpMenu.splice(
-        3,
-        0,
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 100,
-            height: 100,
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("DokumenLain")}>
-            <View
-              style={[
-                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-                {
-                  backgroundColor: COLORS.secondary,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 50 : 27,
-                  height: device === "tablet" ? 50 : 35,
-                }}
-                source={require("../../assets/superApp/digitalsign.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-            }}
-          >
-            Digital Sign
-          </Text>
-        </View>
-      );
-    }
-    // if (isRoleTaskManagement) {
-    //   tmpMenu.push(
-    //     <View style={{ justifyContent: 'center', alignItems: 'center', width: 100 }}>
-    //       <TouchableOpacity onPress={() => navigation.navigate('MyTask')}>
-    //         <View style={[styles.cardApps, { backgroundColor: COLORS.secondary, justifyContent: 'center', alignItems: 'center', display: 'flex' }]}>
-    //           <Image style={{ width: 28, height: 28 }} source={require('../../assets/superApp/task-ikon.png')} />
-    //         </View>
-    //       </TouchableOpacity>
-    //       <Text style={{ marginTop: 10, justifyContent: 'center', alignItems: 'center', fontSize: FONTSIZE.H4 }}>Task Management</Text>
-    //     </View>
-    //   )
-    // }
-    if (isRoleEvent) {
-      tmpMenu.splice(
-        8,
-        0,
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 100,
-            height: 100,
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("HalamanUtama")}>
-            <View
-              style={[
-                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
-                {
-                  backgroundColor: COLORS.secondary,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                },
-              ]}
-            >
-              <Image
-                style={{
-                  width: device === "tablet" ? 40 : 20,
-                  height: device === "tablet" ? 60 : 35,
-                }}
-                source={require("../../assets/superApp/event.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: fontSizeResponsive("H4", device),
-              width: device === "tablet" ? 200 : null,
-              textAlign: "center",
-            }}
-          >
-            Agenda Rapat
-          </Text>
-        </View>
-      );
-    }
-    // tmpMenu.push(
-
-    // );
-
-    setListMenu(tmpMenu);
-  }, []);
+  }, [typeMenu, isFocused]);
 
   const numRows = Math.ceil(listMenu.length / 3);
 
@@ -876,7 +98,61 @@ export const CardAppsB = ({
     }
     return (
       <View style={[styles.item, { height: device === "tablet" ? 200 : 100 }]}>
-        <Text style={styles.itemText}>{item}</Text>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              if (item.navigation === "bankom") {
+                setModalBankom(true);
+              } else {
+                navigation.navigate(item.navigation);
+              }
+            }}
+          >
+            <View
+              style={[
+                device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+                {
+                  backgroundColor: COLORS.secondary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width:
+                    device === "tablet"
+                      ? item.imagestyle.width.tablet
+                      : item.imagestyle.width.hp,
+                  height:
+                    device === "tablet"
+                      ? item.imagestyle.height.tablet
+                      : item.imagestyle.height.hp,
+                }}
+                source={imageApps(item.title)}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: fontSizeResponsive("H4", device),
+              width: item.titleStyle.width,
+            }}
+            numberOfLines={1}
+          >
+            {item.title}
+          </Text>
+        </View>
       </View>
     );
   };
@@ -899,7 +175,7 @@ export const CardAppsB = ({
 
     return data;
   };
-
+  console.log(listMenu);
   return (
     <View>
       <FlatList

@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions, Platform, View } from "react-native";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, PADDING } from "../../config/SuperAppps";
@@ -21,15 +21,13 @@ export const APBN = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/DRealDanRenKeu.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}
         androidLayerType={"software"}
         mixedContentMode={"always"}
         allowUniversalAccessFromFileURLs={true}
-        setDisplayZoomControls={true}
-        // injectedJavaScript={inject}
         scalesPageToFit={false}
       />
       <Text style={{ color: COLORS.primary }}>
