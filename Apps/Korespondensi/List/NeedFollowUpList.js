@@ -10,8 +10,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
-  Image,
-  Modal,
+  Dimensions,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -43,6 +42,7 @@ import { logout } from "../../../store/auth";
 import { useDispatch } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
+import { Dropdown } from "react-native-element-dropdown";
 
 function NeedFollowUpList({ route }) {
   const [list, setList] = useState([]);
@@ -54,6 +54,10 @@ function NeedFollowUpList({ route }) {
   const [isSearchFilter, setIsSearchFilter] = useState(false);
   const [isSearchQuery, setIsSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [divisionList, setDivisionList] = useState();
+  const [selectedDivisi, setSelectedDivisi] = useState({});
+  const [isFocus, setIsFocus] = useState();
+  const { width: screenWidth } = Dimensions.get("window");
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const unread = route.params.unread;
@@ -81,11 +85,34 @@ function NeedFollowUpList({ route }) {
       refresh();
     }, [])
   );
-
+  useEffect(() => {
+    if (divisionList == undefined) {
+      getDivisionList();
+    }
+  }, []);
   useEffect(() => {
     filter(1);
-  }, [startDate, endDate, isSearchQuery, isSearchFilter]);
+  }, [startDate, endDate, isSearchQuery, isSearchFilter, selectedDivisi]);
 
+  async function getDivisionList() {
+    try {
+      let response = await getHTTP(nde_api.divisionList);
+      setDivisionList(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
+        dispatch(logout());
+      } else {
+        handlerError(
+          error,
+          "Peringatan!",
+          "Daftar Divisi pada penyaringan tidak berfungsi"
+        );
+      }
+    }
+  }
   async function getNeedFollowUp(page) {
     setIsLoading(true);
     try {
@@ -113,16 +140,25 @@ function NeedFollowUpList({ route }) {
   const filter = async (page) => {
     setIsLoading(true);
     try {
-      if (startDate == null && endDate == null && searchQuery.length == 0) {
+      if (
+        startDate == null &&
+        endDate == null &&
+        searchQuery.length == 0 &&
+        selectedDivisi.id == undefined
+      ) {
         getNeedFollowUp(1);
       } else if (
         !isSearchFilter &&
-        (startDate != null || endDate != null || searchQuery.length != 0)
+        (startDate != null ||
+          endDate != null ||
+          searchQuery.length != 0 ||
+          selectedDivisi.id != undefined)
       ) {
       } else {
         let start;
         let end;
         let word;
+        let division = "";
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
@@ -143,9 +179,22 @@ function NeedFollowUpList({ route }) {
         } else {
           word = isSearchQuery;
         }
+        if (selectedDivisi.id == undefined) {
+          division = "";
+        } else {
+          division = selectedDivisi.id;
+        }
         let url = nde_api.needfollowup;
         url =
-          url + "&start_date=" + start + "&end_date=" + end + "&search=" + word;
+          url +
+          "&start_date=" +
+          start +
+          "&end_date=" +
+          end +
+          "&search=" +
+          word +
+          "&division=" +
+          division;
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
@@ -252,6 +301,7 @@ function NeedFollowUpList({ route }) {
     setStartDate();
     setEndDate();
     setSearchQuery("");
+    setSelectedDivisi({});
     setIsSearchFilter(false);
     if (!isSearchFilter) {
       getNeedFollowUp(1);
@@ -346,18 +396,23 @@ function NeedFollowUpList({ route }) {
                   },
                 ]}
               >
-                {isSearchQuery.length != 0 && startDate == null
+                {isSearchQuery.length != 0 &&
+                startDate == null &&
+                selectedDivisi.id == undefined
                   ? "Cari: "
                   : "Saring : "}
               </Text>
-              <View style={styles.filter}>
+              <View style={[styles.filter, { width: screenWidth - 70 }]}>
                 {startDate && (
                   <Chip
                     style={styles.badge}
                     onClose={() => {
                       setStartDate(null);
                       setEndDate(null);
-                      if (searchQuery.length == 0) {
+                      if (
+                        searchQuery.length == 0 &&
+                        selectedDivisi.id == undefined
+                      ) {
                         setIsSearchFilter(false);
                         setIsLoading(true);
                       }
@@ -375,7 +430,11 @@ function NeedFollowUpList({ route }) {
                     onClose={() => {
                       setSearchQuery("");
                       setIsSearchQuery("");
-                      if (startDate == null && endDate == null) {
+                      if (
+                        startDate == null &&
+                        endDate == null &&
+                        selectedDivisi.id == undefined
+                      ) {
                         setIsSearchFilter(false);
                         setIsLoading(true);
                       }
@@ -384,6 +443,27 @@ function NeedFollowUpList({ route }) {
                     closeIcon="close"
                   >
                     {isSearchQuery}
+                  </Chip>
+                )}
+                {selectedDivisi.id != undefined && (
+                  <Chip
+                    style={styles.badge}
+                    onClose={() => {
+                      setSelectedDivisi({});
+                      if (
+                        startDate == null &&
+                        endDate == null &&
+                        searchQuery == ""
+                      ) {
+                        setIsSearchFilter(false);
+                        setIsLoading(true);
+                      }
+                      setList([]);
+                    }}
+                    closeIcon="close"
+                    ellipsizeMode="tail"
+                  >
+                    {selectedDivisi.name}
                   </Chip>
                 )}
               </View>
@@ -615,6 +695,47 @@ function NeedFollowUpList({ route }) {
                       onChangeText={setSearchQuery}
                     />
                   </View>
+                  <View
+                    style={{
+                      marginBottom: 10,
+                      flex: 1,
+                      marginTop: 10,
+                      gap: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: COLORS.lighter,
+                      }}
+                    >
+                      Divisi
+                    </Text>
+
+                    <Dropdown
+                      style={[
+                        styles.dropdown,
+                        isFocus && { borderColor: "blue" },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      iconStyle={styles.iconStyle}
+                      itemTextStyle={{ fontSize: 13 }}
+                      data={divisionList}
+                      maxHeight={300}
+                      labelField="name"
+                      valueField="id"
+                      placeholder={!isFocus ? "Pilih Divisi" : "..."}
+                      value={selectedDivisi}
+                      onFocus={() => setIsFocus(true)}
+                      onBlur={() => setIsFocus(false)}
+                      onChange={(item) => {
+                        setSelectedDivisi(item);
+                        setIsFocus(false);
+                      }}
+                    />
+                  </View>
                   <View style={{ flexDirection: "column" }}>
                     <TouchableOpacity
                       style={{
@@ -749,5 +870,25 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 16,
+  },
+  filter: { alignItems: "flex-start" },
+  badge: { marginBottom: 5 },
+  dropdown: {
+    borderWidth: 1,
+    minHeight: 40,
+    width: "100%",
+    padding: 5,
+    borderRadius: 6,
+    borderColor: "#D0D5DD",
+  },
+  placeholderStyle: {
+    fontSize: 13,
+  },
+  selectedTextStyle: {
+    fontSize: 13,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
   },
 });

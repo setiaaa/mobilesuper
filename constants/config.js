@@ -122,6 +122,7 @@ export const Config = {
     titlebydivisionid: extra.api.titlebydivisionid,
     parabydivisionid: extra.api.parabydivisionid,
     titleSearch: extra.api.titleSearch,
+    divisionList: extra.api.divisionList,
     personallist: extra.api.personallist,
     personaladd: extra.api.personaladd,
     personaldel: extra.api.personaldel,

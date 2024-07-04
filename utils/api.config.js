@@ -133,6 +133,7 @@ export const nde_api = {
   titlebydivisionid: Config.base_url + Config.api.titlebydivisionid,
   parabydivisionid: Config.base_url + Config.api.parabydivisionid,
   titleSearch: Config.base_url + Config.api.titleSearch,
+  divisionList: Config.base_url + Config.api.divisionList,
 
   personallist: Config.base_url + Config.api.personallist,
   personaladd: Config.base_url + Config.api.personaladd,
