@@ -96,7 +96,6 @@ import {
   setStatus,
 } from "../../store/SuperApps";
 import { openURL } from "expo-linking";
-// import * as Location from "expo-location";
 import moment, { duration } from "moment";
 import { ModalSubmit } from "../../components/ModalSubmit";
 import { MotiView } from "@motify/components";

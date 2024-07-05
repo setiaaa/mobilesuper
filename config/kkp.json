@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 737,
+    "versionCode": 739,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -85,12 +85,6 @@
         "ios": {
           "deploymentTarget": "13.4"
         }
-      }
-    ],
-    [
-      "expo-location",
-      {
-        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
       }
     ],
     [
