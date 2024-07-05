@@ -47,6 +47,7 @@ export const CardListPerizinanMenteri = ({
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDigisign(params));
   };
+  console.log(item);
   const BASE_URL = Config.base_url + "bridge";
   return (
     <View
@@ -109,7 +110,7 @@ export const CardListPerizinanMenteri = ({
               width: "100%",
             }}
           >
-            {item?.subject}
+            Perihal : {item?.subject}
           </Text>
           <View
             style={{
@@ -121,6 +122,87 @@ export const CardListPerizinanMenteri = ({
           />
           <View style={{ gap: 5, width: "100%" }}>
             <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  width: 120,
+                  textAlign: "auto",
+                  paddingRight: 12,
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "40%",
+                }}
+              >
+                ID Dokumen
+              </Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  textAlign: "auto",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                :{" "}
+                {item?.extra_attributes.id_permohonan !== undefined
+                  ? item?.extra_attributes.id_permohonan
+                  : "-"}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  width: 120,
+                  textAlign: "auto",
+                  paddingRight: 12,
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "40%",
+                }}
+              >
+                Nomor Surat
+              </Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  textAlign: "auto",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                :{" "}
+                {item?.extra_attributes.noDokumen !== undefined
+                  ? item?.extra_attributes.noDokumen
+                  : "-"}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: fontSizeResponsive("H3", device),
+                  width: 120,
+                  textAlign: "auto",
+                  paddingRight: 12,
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "40%",
+                }}
+              >
+                Jenis Permohonan
+              </Text>
+              <Text
+                style={{
+                  fontWeight: FONTWEIGHT.normal,
+                  width: "55%",
+                  textAlign: "auto",
+                  fontSize: fontSizeResponsive("H3", device),
+                }}
+              >
+                :{" "}
+                {item?.extra_attributes.jenis !== undefined
+                  ? item?.extra_attributes.jenis
+                  : "-"}
+              </Text>
+            </View>
+            {/* <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
                   fontSize: fontSizeResponsive("H3", device),
@@ -163,8 +245,8 @@ export const CardListPerizinanMenteri = ({
                     : "-"}
                 </Text>
               )}
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            </View> */}
+            {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text
                 style={{
                   fontSize: fontSizeResponsive("H3", device),
@@ -186,7 +268,7 @@ export const CardListPerizinanMenteri = ({
                   style={{ width: 20, height: 20, borderRadius: 50 }}
                 />
               ))}
-            </View>
+            </View> */}
           </View>
         </View>
       </TouchableOpacity>
