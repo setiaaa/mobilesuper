@@ -294,9 +294,9 @@ function NeedSignList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter
-          ? "Surat Perlu Tandatangan tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : list?.count == 0
-          ? "Anda tidak memilki Surat Perlu Tandatangan"
+          ? "Tidak ada dokumen"
           : "Pencarian..."}
       </Text>
     </View>

@@ -241,13 +241,13 @@ function SubmittedList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter && unread
-          ? "Surat Terkirim belum dibaca tidak titemukan"
+          ? "Dokumen tidak ditemukan"
           : isSearchFilter && !unread
-          ? "Surat Terkirim tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : list?.count == 0 && unread
-          ? "Anda tidak memiliki Surat Terkirim belum dibaca"
+          ? "Tidak ada dokumen"
           : list?.count == 0 && !unread
-          ? "Anda tidak memilki Surat Terkirim"
+          ? "Tidak ada dokumen"
           : "Pencarian..."}
       </Text>
     </View>
