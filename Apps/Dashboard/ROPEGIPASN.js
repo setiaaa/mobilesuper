@@ -1,29 +1,21 @@
 import React from "react";
 import { Platform, Text, View } from "react-native";
-import { COLORS, PADDING } from "../../config/SuperAppps";
 import WebView from "react-native-webview";
+import { COLORS, PADDING } from "../../config/SuperAppps";
 
-export const Kusuka = () => {
+export const ROPEGIPASN = () => {
   return (
-    <View
-      style={{
-        height: "100%",
-        width: "100%",
-        padding: PADDING.Page,
-      }}
-    >
+    <View style={{ height: "90%", width: "100%", padding: PADDING.Page }}>
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKusuka/DKusuka.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DRopegIPASN.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}
         androidLayerType={"software"}
         mixedContentMode={"always"}
         allowUniversalAccessFromFileURLs={true}
-        setDisplayZoomControls={true}
-        // injectedJavaScript={inject}
         scalesPageToFit={false}
       />
       <Text style={{ color: COLORS.primary }}>

@@ -2373,7 +2373,7 @@ export const getFaq = createAsyncThunk(
   "faq/getFaq",
   async ({ token, search }) => {
     if (search === "") {
-      const respon = await axios.get(`${Faq}/faq/`, {
+      const respon = await axios.get(`${Faq}/faq/?limit=500`, {
         headers: { Authorization: token },
       });
       return respon?.data.results;
@@ -2386,6 +2386,51 @@ export const getFaq = createAsyncThunk(
   }
 );
 
+export const getFaqCategory = createAsyncThunk(
+  "faq/getFaqCategory",
+  async ({ token }) => {
+    const respon = await axios.get(`${Faq}/faq/category/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getFaqByCategory = createAsyncThunk(
+  "faq/getFaqByCategory",
+  async ({ token, idCategory }) => {
+    const respon = await axios.get(
+      `${Faq}/faq/?limit=500&category_id=${idCategory}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return { respon: respon?.data.results, id: idCategory };
+  }
+);
+
+export const getFaqGroup = createAsyncThunk(
+  "faq/getFaqGroup",
+  async ({ token }) => {
+    const respon = await axios.get(`${Faq}/faq/group/?limit=100`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getFaqByGroup = createAsyncThunk(
+  "faq/getFaqByGroup",
+  async ({ token, idGroup }) => {
+    const respon = await axios.get(
+      `${Faq}/faq/?limit=100&group_id=${idGroup}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
 // export const updateTicket = createAsyncThunk(
 //   "ticket/updateTicket",
 //   async (id) => {

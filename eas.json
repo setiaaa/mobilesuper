@@ -23,7 +23,7 @@
         "EXPO_OPTIMIZE": "true"
       },
       "android": {
-        "buildType": "apk",
+        "buildType": "app-bundle",
         "image": "latest"
       },
       "ios": {
@@ -48,13 +48,12 @@
         "EXPO_OPTIMIZE": "true"
       },
       "android": {
-        "buildType": "apk",
+        "buildType": "app-bundle",
         "image": "latest",
         "gradleCommand": ":app:assembleRelease"
       },
       "ios": {
-        "simulator": false,
-        "enterpriseProvisioning": "adhoc"
+        "simulator": false
       },
       "distribution": "store"
     }

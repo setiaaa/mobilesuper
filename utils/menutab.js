@@ -107,6 +107,11 @@ import { Verifikasi } from "../Apps/DigitalSignature/Verifikasi";
 import { MyTabSertifikat } from "../Apps/DigitalSignature/BottomTabsSertifikat";
 import { SertifikatLms } from "../Apps/DigitalSignature/SertifikatLms";
 import { SertifikatEksternal } from "../Apps/DigitalSignature/SertifikatEksternal";
+import { ROPEGIPASN } from "../Apps/Dashboard/ROPEGIPASN";
+// Faq
+import { DashboardDanReport } from "../Apps/Faq/DashboardDanReport";
+import { Regulasi } from "../Apps/Faq/Regulasi";
+import { AplikasiPortalKKP } from "../Apps/Faq/AplikasiPortalKKP";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -876,6 +881,13 @@ export const TopsDash = () => {
             title: "Perencanaan",
           }}
         />
+        <Top.Screen
+          name="ROPEGIPASN"
+          component={ROPEGIPASN}
+          options={{
+            title: "ROPEG IP ASN",
+          }}
+        />
       </Top.Navigator>
     </BottomSheetModalProvider>
   );
@@ -1115,5 +1127,49 @@ export const TopAddressBook = ({ config, device }) => {
         </Top.Navigator>
       </BottomSheetModalProvider>
     </Host>
+  );
+};
+
+// FAQ
+export const TopsFaq = () => {
+  const { device } = useSelector((state) => state.apps);
+  return (
+    <BottomSheetModalProvider>
+      <Top.Navigator
+        initialRouteName={"DashboardDanReport"}
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
+          tabBarLabelStyle: {
+            fontSize: fontSizeResponsive("H6", device),
+            textTransform: "none",
+            fontWeight: FONTWEIGHT.bold,
+          },
+        }}
+      >
+        <Top.Screen
+          name="DashboardDanReport"
+          component={DashboardDanReport}
+          options={{
+            title: "Dashboard Dan Report",
+          }}
+        />
+        <Top.Screen
+          name="Regulasi"
+          component={Regulasi}
+          options={{
+            title: "Regulasi",
+          }}
+        />
+        <Top.Screen
+          name="AplikasiPortalKKP"
+          component={AplikasiPortalKKP}
+          options={{
+            title: "Aplikasi Portal KKP",
+          }}
+        />
+      </Top.Navigator>
+    </BottomSheetModalProvider>
   );
 };

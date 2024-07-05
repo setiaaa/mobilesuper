@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, PADDING } from "../../config/SuperAppps";
 
@@ -9,7 +9,7 @@ export const Pelatihan = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DKepegawaian/DPelatihan.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DKepegawaian/DPelatihan.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}

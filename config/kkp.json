@@ -1,10 +1,10 @@
 {
   "scheme": "kkp",
   "name": "SuperApps KKP",
-  "slug": "superappskkp",
-  "version": "0.1.2",
+  "slug": "superapps-kkp",
+  "version": "0.2.0",
   "orientation": "portrait",
-  "icon": "./assets/superApp/kkp-ikon.png",
+  "icon": "./assets/superApp/kkp-icon.png",
   "userInterfaceStyle": "automatic",
   "splash": {
     "image": "./assets/superApp/splashkkp.png",
@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 735,
+    "versionCode": 737,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -40,10 +40,10 @@
       "ACCESS_COARSE_LOCATION"
     ],
     "adaptiveIcon": {
-      "foregroundImage": "./assets/superApp/kkp-ikon.png",
+      "foregroundImage": "./assets/superApp/kkp-icon.png",
       "backgroundColor": "#FFFFFF"
     },
-    "package": "go.id.portalkkp",
+    "package": "go.id.kkp.portal",
     "intentFilters": [
       {
         "action": "VIEW",
@@ -112,6 +112,7 @@
     ]
   ],
   "extra": {
+    "sentry_dsn": "https://594a72227e404b37ab17400a4c6fd7a3@newsentry.armsolusi.com/57",
     "oneSignalAppId": "cf6dc0fa-3c36-4f98-a9a3-c760a0efa027",
     "eas": {
       "projectId": "a501cd5f-dc07-4d90-b59d-1c2097fe6aa2"
@@ -120,7 +121,7 @@
     "base_url": "https://apigw.kubekkp.coofis.com/",
     "base_url_auth": "https://auth.kubekkp.coofis.com/mobile/login/",
     "base_url_cuti": "https://cuti.kubekkp.coofis.com/api/",
-    "base_url_helpdesk": "https://helpdesk.kubekkp.coofis.com/api//",
+    "base_url_helpdesk": "https://helpdesk.kubekkp.coofis.com/api/",
     "upgrade_url": "https://portal.kkp.go.id/kkp",
     "loginSSO": false,
     "termOfUse": true,

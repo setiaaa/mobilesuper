@@ -451,7 +451,7 @@ export const Profile = () => {
   const [appsIsChecked, setAppsIsChecked] = useState([]);
 
   useEffect(() => {
-    getMenuLite().then((val) => {
+    getMenuLite(profile.nip).then((val) => {
       try {
         const parsedVal = JSON.parse(val);
         setAppsIsChecked(parsedVal === null ? [] : parsedVal);
@@ -522,7 +522,7 @@ export const Profile = () => {
   };
 
   const handleSaveMenuLite = () => {
-    setMenuLite(JSON.stringify(appsIsChecked));
+    setMenuLite(JSON.stringify(appsIsChecked), profile.nip);
   };
 
   return (

@@ -241,29 +241,7 @@ function AuthenticatedStack({ route }) {
       }
     });
     deviceRoot();
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive||background/) &&
-        nextAppState === "active"
-      ) {
-        // checkversion
-        if (Platform.OS === "android") {
-          checkVersionAndroid();
-        } else if (Platform.OS === "ios") {
-          checkVersionIos();
-        }
-        appState.current = nextAppState;
-      }
-    });
-    // checkversion
-    if (Platform.OS === "android") {
-      checkVersionAndroid();
-    } else if (Platform.OS === "ios") {
-      checkVersionIos();
-    }
-    return () => {
-      subscription.remove();
-    };
+    //cek version di sini
   }, []);
 
   const isEmulator = () => {
@@ -1556,7 +1534,7 @@ function AppNavigator() {
       if (val === null) {
         setRoute("LoginToken");
         setLinking({
-          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
             initialRouteName: "LoginToken",
             screens: {
@@ -1567,7 +1545,7 @@ function AppNavigator() {
       } else {
         setRoute("Main");
         setLinking({
-          prefixes: [prefix, "https://portal.kubekkp.coofis.com/"],
+          prefixes: [prefix, "https://portal.kkp.go.id/"],
           config: {
             initialRouteName: "Main",
             screens: {

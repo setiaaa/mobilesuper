@@ -9,7 +9,12 @@ import {
 } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTSIZE, fontSizeResponsive } from "../../config/SuperAppps";
+import {
+  COLORS,
+  FONTSIZE,
+  fontSizeResponsive,
+  imageApps,
+} from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
 import {
   widthPercentageToDP as wp,
@@ -72,9 +77,10 @@ export const CardAppsB = ({
           }
         });
       } else {
-        getMenuLite().then((val) => {
+        getMenuLite(profile.nip).then((val) => {
           try {
             const parsedVal = JSON.parse(val);
+            console.log(parsedVal);
             setListMenu(parsedVal);
           } catch (e) {
             console.error("JSON Parse error:", e);
@@ -130,7 +136,7 @@ export const CardAppsB = ({
                       ? item.imagestyle.height.tablet
                       : item.imagestyle.height.hp,
                 }}
-                source={item.image}
+                source={imageApps(item.title)}
               />
             </View>
           </TouchableOpacity>

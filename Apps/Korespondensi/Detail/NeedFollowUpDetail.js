@@ -33,6 +33,8 @@ import { initLetter } from "../../../utils/agenda";
 import { nde_api } from "../../../utils/api.config";
 import { getHTTP, handlerError } from "../../../utils/http";
 import { useNavigation } from "@react-navigation/core";
+import { setNotifIos } from "../../../store/SuperApps";
+import { removePushNotif } from "../../../service/session";
 
 function NeedFollowUpDetail({ route }) {
   let id = route.params.id;
@@ -197,6 +199,8 @@ function NeedFollowUpDetail({ route }) {
   );
   useEffect(() => {
     getLettersDetail();
+    removePushNotif();
+    dispatch(setNotifIos(false));
   }, [id]);
   return (
     <>

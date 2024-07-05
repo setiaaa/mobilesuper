@@ -608,7 +608,7 @@ export const RangkumanIKU = () => {
             <WebView
               // originWhitelist={["*"]}
               source={{
-                uri: "https://portal.kkp.go.id/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
+                uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DRangkumanIKU/DRangkumanIKU.html",
                 headers: { Authorization: `${token}` },
               }}
               style={{ flex: 1, borderRadius: 8 }}
@@ -617,6 +617,7 @@ export const RangkumanIKU = () => {
               mixedContentMode={"always"}
               allowUniversalAccessFromFileURLs={true}
               scalesPageToFit={false}
+              thirdPartyCookiesEnabled={true}
             />
           </View>
         ) : (

@@ -52,6 +52,34 @@ export const fontSizeResponsive = (type, device) => {
   return data[type];
 };
 
+export const imageApps = (type) => {
+  if (type === "Korespondensi") {
+    return require("../assets/superApp/korespondensi.png");
+  } else if (type === "Regulasi") {
+    return require("../assets/superApp/kebijakan.png");
+  } else if (type === "Cuti") {
+    return require("../assets/superApp/cuti.png");
+  } else if (type === "Pengembangan Kompetensi") {
+    return require("../assets/superApp/Bankomicon.png");
+  } else if (type === "SPPD") {
+    return require("../assets/superApp/sppd.png");
+  } else if (type === "Task") {
+    return require("../assets/superApp/taskmanagement.png");
+  } else if (type === "Pegawai") {
+    return require("../assets/superApp/pegawai.png");
+  } else if (type === "Survei Layanan") {
+    return require("../assets/superApp/surveylayanan.png");
+  } else if (type === "Preparing dan Sharing") {
+    return require("../assets/superApp/repositori.png");
+  } else if (type === "Kalender") {
+    return require("../assets/superApp/kalender.png");
+  } else if (type === "Digital Sign") {
+    return require("../assets/superApp/digitalsign.png");
+  } else if (type === "Agenda Rapat") {
+    return require("../assets/superApp/event.png");
+  }
+};
+
 export const FONTWEIGHT = {
   bolder: "800",
   bold: "700",

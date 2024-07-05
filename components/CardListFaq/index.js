@@ -5,6 +5,7 @@ import {
   COLORS,
   FONTWEIGHT,
   fontSizeResponsive,
+  spacing,
 } from "../../config/SuperAppps";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native";
@@ -13,6 +14,7 @@ import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createShimmerPlaceHolder } from "expo-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { Divider } from "react-native-paper";
 
 export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
   const dispatch = useDispatch();
@@ -26,11 +28,9 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
         flexDirection: "column",
         display: "flex",
         backgroundColor: COLORS.white,
-        width: "90%",
-        padding: 20,
-        marginTop: 10,
+        padding: spacing.default,
+        marginTop: spacing.medium,
         borderRadius: 8,
-        marginHorizontal: 15,
         alignSelf: "center",
       }}
     >
@@ -51,10 +51,10 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
             />
           ) : (
             <Text
-              style={{
-                fontWeight: FONTWEIGHT.bold,
-                fontSize: fontSizeResponsive("H3", device),
-              }}
+              style={[
+                { fontWeight: FONTWEIGHT.bold },
+                fontSizeResponsive("textL", device),
+              ]}
             >
               {item.title}
             </Text>
@@ -83,14 +83,12 @@ export const CardListFaq = ({ item, collapse, setCollapse, token, device }) => {
                 height={20}
               />
             ) : (
-              <Text
-                style={{
-                  marginTop: 5,
-                  fontSize: fontSizeResponsive("H3", device),
-                }}
-              >
-                {item.description}
-              </Text>
+              <>
+                <Divider style={{ marginVertical: spacing.medium }} />
+                <Text style={fontSizeResponsive("textM", device)}>
+                  {item.description}
+                </Text>
+              </>
             )}
           </TouchableOpacity>
         </View>

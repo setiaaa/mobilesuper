@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { Text } from "react-native";
 import WebView from "react-native-webview";
 import { COLORS, PADDING } from "../../config/SuperAppps";
@@ -10,7 +10,7 @@ export const PNBP = () => {
       <WebView
         originWhitelist={["*"]}
         source={{
-          uri: "https://portal.kkp.go.id/assets/dashboardExt/DTunggal/PNBP.html",
+          uri: "https://portal.kubekkp.coofis.com/assets/dashboardExt/DTunggal/PNBP.html",
         }}
         style={{ flex: 1 }}
         allowFileAccess={true}
