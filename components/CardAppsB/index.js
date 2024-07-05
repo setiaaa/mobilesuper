@@ -29,6 +29,7 @@ const numColumns = 3;
 export const CardAppsB = ({
   handlePressModal,
   setModalBankom,
+  setModalKepegawaian,
   closeBottomSheet,
 }) => {
   const navigation = useNavigation();
@@ -80,7 +81,6 @@ export const CardAppsB = ({
         getMenuLite(profile.nip).then((val) => {
           try {
             const parsedVal = JSON.parse(val);
-            console.log(parsedVal);
             setListMenu(parsedVal);
           } catch (e) {
             console.error("JSON Parse error:", e);
@@ -109,6 +109,8 @@ export const CardAppsB = ({
             onPress={() => {
               if (item.navigation === "bankom") {
                 setModalBankom(true);
+              } else if (item.navigation === "KepegawaianApps") {
+                setModalKepegawaian(true);
               } else {
                 navigation.navigate(item.navigation);
               }
@@ -175,7 +177,6 @@ export const CardAppsB = ({
 
     return data;
   };
-  console.log(listMenu);
   return (
     <View>
       <FlatList

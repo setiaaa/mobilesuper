@@ -25,7 +25,7 @@
     }
   },
   "android": {
-    "versionCode": 737,
+    "versionCode": 738,
     "enableHermes": true,
     "notification": {
       "icon": "./assets/ic_stat_onesignal_default.png",
@@ -88,18 +88,18 @@
       }
     ],
     [
-      "expo-location",
-      {
-        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-      }
-    ],
-    [
       "@sentry/react-native/expo",
       {
         "url": "https://newsentry.armsolusi.com/",
         "note": "a29e24a0762d4f90963114106a9b128289743c9272284efa895368d2f8cd9772",
         "project": "kkp-mobile-prod",
         "organization": "sentry"
+      }
+    ],
+    [
+      "expo-barcode-scanner",
+      {
+        "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
       }
     ],
     [

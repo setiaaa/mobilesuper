@@ -32,6 +32,7 @@ import { setTypeMenu } from "../../store/SuperApps";
 export const CardApps = ({
   handlePressModal,
   setModalBankom,
+  setModalKepegawaian,
   closeBottomSheet,
 }) => {
   const navigation = useNavigation();
@@ -45,6 +46,7 @@ export const CardApps = ({
   const rolePreShare = ["PRESHARE.USER"];
   const roleTaskManagement = ["TASK.USER"];
   const roleLaporan = ["LAPORAN_BSRE"];
+  const rolePerizinanMenteri = "88888";
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -62,6 +64,10 @@ export const CardApps = ({
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
+
+  const isRoleMenteri = profile.nip === rolePerizinanMenteri;
+
+  console.log(isRoleMenteri);
 
   const isTablet = Device.DeviceType.TABLET;
 
@@ -158,6 +164,24 @@ export const CardApps = ({
         },
         titleStyle: {
           width: null,
+        },
+      },
+      {
+        title: "Kepegawaian",
+        navigation: "KepegawaianApps",
+        image: require("../../assets/superApp/pegawai.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
         },
       },
       {
@@ -365,6 +389,26 @@ export const CardApps = ({
         },
       });
     }
+    if (isRoleMenteri) {
+      tmpMenu.splice(8, 0, {
+        title: "Perizinan Menteri",
+        navigation: "PerizinanMenteri",
+        image: require("../../assets/superApp/Bankomicon.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
+        },
+      });
+    }
     setMenu(JSON.stringify(tmpMenu));
     getMenuType().then((val) => {
       try {
@@ -438,7 +482,8 @@ export const CardApps = ({
                         onPress={() => {
                           if (item.navigation === "bankom") {
                             setModalBankom(true);
-                            console.log("masuk");
+                          } else if (item.navigation === "KepegawaianApps") {
+                            setModalKepegawaian(true);
                           } else {
                             navigation.navigate(item.navigation);
                           }
@@ -517,7 +562,8 @@ export const CardApps = ({
                         onPress={() => {
                           if (item.navigation === "bankom") {
                             setModalBankom(true);
-                            console.log("masuk");
+                          } else if (item.navigation === "KepegawaianApps") {
+                            setModalKepegawaian(true);
                           } else {
                             navigation.navigate(item.navigation);
                           }

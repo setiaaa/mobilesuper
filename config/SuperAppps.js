@@ -70,6 +70,10 @@ export const imageApps = (type) => {
     return require("../assets/superApp/digitalsign.png");
   } else if (type === "Agenda Rapat") {
     return require("../assets/superApp/event.png");
+  } else if (type === "Kepegawaian") {
+    return require("../assets/superApp/Kepegawaian.png");
+  } else if (type === "Perizinan Menteri") {
+    return require("../assets/superApp/PerizinanMentri.png");
   }
 };
 

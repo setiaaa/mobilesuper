@@ -345,7 +345,7 @@ export const DokumenLain = () => {
             paddingVertical: 10,
             flexDirection: "row",
             justifyContent: "space-between",
-            marginHorizontal: "5%",
+            marginHorizontal: "10%",
           }}
         >
           <TouchableOpacity
@@ -373,7 +373,7 @@ export const DokumenLain = () => {
               List Saya
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               width: device === "tablet" ? "19%" : null,
 
@@ -397,7 +397,7 @@ export const DokumenLain = () => {
             >
               Draft
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             style={{
               width: device === "tablet" ? "19%" : null,

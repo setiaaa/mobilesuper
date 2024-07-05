@@ -108,6 +108,9 @@ import { MyTabSertifikat } from "../Apps/DigitalSignature/BottomTabsSertifikat";
 import { SertifikatLms } from "../Apps/DigitalSignature/SertifikatLms";
 import { SertifikatEksternal } from "../Apps/DigitalSignature/SertifikatEksternal";
 import { ROPEGIPASN } from "../Apps/Dashboard/ROPEGIPASN";
+import MyTabPegawiIPASN from "../Apps/Kepegawaian/BottomTabsPegawaiIPASN";
+import { PegawaiIPASN } from "../Apps/Kepegawaian/PegawaiIPASN";
+import { DataPribadi } from "../Apps/Kepegawaian/DataPribadi";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -576,6 +579,30 @@ export const BottomTabsCuti = () => {
           <Tab.Screen
             name="DokumenCuti"
             component={DokumenCuti}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </View>
+    </BottomSheetModalProvider>
+  );
+};
+
+export const BottomTabsPegawaiIPASN = () => {
+  return (
+    <BottomSheetModalProvider>
+      <View style={{ height: Platform.OS === "ios" ? "100%" : height }}>
+        <Tab.Navigator
+          tabBar={(props) => <MyTabPegawiIPASN {...props} />}
+          initialRouteName="PegawaiIPASN"
+        >
+          <Tab.Screen
+            name="PegawaiIPASN"
+            component={PegawaiIPASN}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="DataPribadi"
+            component={DataPribadi}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>
