@@ -103,7 +103,7 @@ export const PerizinanMenteri = () => {
           dispatch(getListInProgress({ token: token, tipe: tipe }));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     setRefreshing(true);
     setTimeout(() => {
@@ -139,6 +139,31 @@ export const PerizinanMenteri = () => {
       payload: payload,
     };
     dispatch(tandaTanganMentri(data));
+  };
+
+  const checkAll = () => {
+    // Check If isSelected already exists (length !== 0)
+    if (isSelected.length === dokumenlain.lists.length) {
+      setSelection([])
+    }
+    // If isSelected still empty or all data hasn't checked
+    else {
+      let tmp = []
+      dokumenlain.lists.map(item => {
+        tmp.push(item?.id)
+      })
+      setSelection(tmp)
+    }
+  }
+
+  const filterHandlerInProgress = () => {
+    SetVariant("inprogress");
+    dispatch(getListInProgress({ token: token, tipe: tipe }));
+  };
+
+  const filterHandlerSigned = () => {
+    SetVariant("signed");
+    dispatch(getListSignedDigiSign({ token: token, tipe: tipe }));
   };
 
   console.log(isSelected);
@@ -215,11 +240,81 @@ export const PerizinanMenteri = () => {
             ) : null}
           </View>
 
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", gap: 10 }}>
             <View
               style={{ width: "90%", marginHorizontal: "5%", marginTop: 20 }}
             >
               <Search placeholder={"Cari"} onSearch={filter} />
+            </View>
+          </View>
+
+          <View style={{ flexDirection: "row", justifyContent: 'space-between', backgroundColor: 'white', marginHorizontal: '5%', width: '90%', padding: 16, marginTop: 10 }}>
+            {variant === 'inprogress' &&
+              <View style={{ flexDirection: 'row', gap: 10 }}>
+                {/* Checkbox All */}
+                <Checkbox
+                  value={dokumenlain.lists.length === isSelected.length}
+                  onValueChange={() => checkAll()}
+                  color={isSelected === true ? COLORS.lighter : null}
+                />
+                <Text>Pilih Semua</Text>
+              </View>
+            }
+
+            <View style={{ flexDirection: 'row', gap: 10 }}>
+              <TouchableOpacity
+                style={{
+                  width: device === "tablet" ? "19%" : null,
+
+                  paddingHorizontal: 6,
+                  paddingVertical: 6,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "inprogress" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor:
+                    variant === "inprogress" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={() => filterHandlerInProgress()}
+              >
+                <Text
+                  style={{
+                    color:
+                      variant === "inprogress" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Need Sign
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: device === "tablet" ? "19%" : null,
+
+                  paddingHorizontal: 6,
+                  paddingVertical: 6,
+                  borderWidth: 1,
+                  backgroundColor:
+                    variant === "signed" ? COLORS.primary : COLORS.input,
+                  borderRadius: 30,
+                  borderColor: variant === "signed" ? null : COLORS.ExtraDivinder,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={() => filterHandlerSigned()}
+              >
+                <Text
+                  style={{
+                    color:
+                      variant === "signed" ? COLORS.white : COLORS.foundation,
+                    fontSize: fontSizeResponsive("H4", device),
+                  }}
+                >
+                  Signed
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
           {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
