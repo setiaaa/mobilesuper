@@ -47,8 +47,11 @@ import { Dropdown } from "react-native-element-dropdown";
 import Checkbox from "expo-checkbox";
 import {
   removeAllSelectedList,
-  setSelectedList,
+  setSelectedAll,
+  initListAll,
+  initList,
 } from "../../../store/listBulk";
+import { useReducedMotion } from "react-native-reanimated";
 
 function NeedSignList({ route }) {
   const [list, setList] = useState([]);
@@ -63,9 +66,12 @@ function NeedSignList({ route }) {
   const [divisionList, setDivisionList] = useState([
     { id: "", name: "SEMUA UNIT KERJA" },
   ]);
-  const [selectedDivisi, setSelectedDivisi] = useState({});
+  const [selectedDivisi, setSelectedDivisi] = useState({
+    id: "",
+    name: "SEMUA UNIT KERJA",
+  });
   const { profile } = useSelector((state) => state.profile);
-  const [selectedAll, setSelectedAll] = useState(false);
+  const { selectedAll, listAll } = useSelector((state) => state.listbulk);
   const selectedId = useSelector((state) => state.listbulk.list);
   const [isFocus, setIsFocus] = useState();
   const { width: screenWidth } = Dimensions.get("window");
@@ -81,6 +87,7 @@ function NeedSignList({ route }) {
     animatedContentHeight,
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+  const reducedMotion = useReducedMotion();
 
   const bottomSheetAttach = () => {
     bottomSheetModalRef.current?.present();
@@ -135,6 +142,7 @@ function NeedSignList({ route }) {
       );
       let data = initData(list, response.data);
       setList(data);
+      selectedAllList(data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -215,6 +223,7 @@ function NeedSignList({ route }) {
           setIsSearchFilter(true);
           let data = initData(list, response.data);
           setList(data);
+          selectedAllList(data);
           bottomSheetModalRef.current?.dismiss();
         }
       }
@@ -315,7 +324,7 @@ function NeedSignList({ route }) {
     setIsLoading(true);
     setStartDate();
     setEndDate();
-    setSelectedAll(false);
+    dispatch(setSelectedAll(false));
     setSearchQuery("");
     setSelectedDivisi({});
     setIsSearchFilter(false);
@@ -338,7 +347,12 @@ function NeedSignList({ route }) {
           onPress={() => {
             setSearchQuery("");
             setIsSearchQuery("");
-            setIsSearchFilter(false);
+            dispatch(setSelectedAll(false));
+            if (selectedDivisi.id == undefined) {
+              setIsSearchFilter(false);
+            } else {
+              setIsSearchFilter(true);
+            }
             if (startDate == null && endDate == null) {
               setList([]);
             }
@@ -377,10 +391,20 @@ function NeedSignList({ route }) {
       <LoadingOverlay visible={isLoading} />
     </>
   );
-  function setDataSelected() {
-    list.results.map((x) =>
-      x.children.map((y) => dispatch(setSelectedList(y)))
-    );
+  function selectedAllList(data) {
+    const temp = [];
+    if (data?.count == 0) {
+      dispatch(initListAll([]));
+    } else {
+      data?.results?.map((x) =>
+        x?.children?.map((y) => {
+          if (!y.progress) {
+            temp.push(y.id);
+          }
+        })
+      );
+      dispatch(initListAll(temp));
+    }
   }
   async function bulkApprove() {
     try {
@@ -446,7 +470,9 @@ function NeedSignList({ route }) {
                 onChange={(item) => {
                   setSelectedDivisi(item);
                   setIsFocus(false);
+                  setIsSearchQuery(searchQuery);
                   setList([]);
+                  dispatch(setSelectedAll(false));
                   setIsSearchFilter(true);
                 }}
               />
@@ -466,15 +492,18 @@ function NeedSignList({ route }) {
                   <Checkbox
                     value={selectedAll}
                     onValueChange={(item) => {
-                      setSelectedAll(item);
+                      dispatch(setSelectedAll(item));
                       if (item) {
-                        setDataSelected();
+                        dispatch(initList(listAll));
                       } else {
                         dispatch(removeAllSelectedList());
                       }
                     }}
-                    color={selectedAll === true ? COLORS.lighter : null}
+                    color={
+                      selectedAll === true ? GlobalStyles.colors.blue : null
+                    }
                     style={{ marginRight: 10 }}
+                    disabled={list.count == 0 || listAll.length == 0}
                   />
                   <Text>Pilih Semua</Text>
                 </View>
@@ -592,6 +621,7 @@ function NeedSignList({ route }) {
                   style={[style, { backgroundColor: "rgba(0, 0, 0, 0.5)" }]}
                 />
               )}
+              animateOnMount={!reducedMotion}
             >
               <BottomSheetView onLayout={handleContentLayout}>
                 <View style={{ flex: 1, padding: 25 }}>
