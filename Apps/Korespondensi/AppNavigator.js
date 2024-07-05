@@ -214,6 +214,7 @@ import { Nominatif } from "../Kepegawaian/Nominatif";
 import { NominatifList } from "../Kepegawaian/NominatifList";
 import { PerizinanMenteri } from "../DigitalSignature/PerizinanMenteri";
 import { DetailPerizinanMenteri } from "../DigitalSignature/DetailPerizinanMenteri";
+import NeedSignList from "./List/NeedSignList";
 
 const Stack = createNativeStackNavigator();
 
@@ -1251,6 +1252,11 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="NeedFollowUpList"
             component={NeedFollowUpList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="NeedSignList"
+            component={NeedSignList}
             options={{ header: toolbarBack }}
           />
           <Stack.Screen

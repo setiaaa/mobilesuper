@@ -1,4 +1,4 @@
-import { Avatar, Card, Divider, IconButton } from "react-native-paper";
+import { Checkbox, Divider, IconButton } from "react-native-paper";
 import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { nde_api } from "../../utils/api.config";
@@ -9,11 +9,18 @@ import { Config } from "../../constants/config";
 import { TouchableOpacity } from "react-native";
 import { Image } from "react-native";
 import { COLORS, FONTSIZE } from "../../config/SuperAppps";
+// import Checkbox from "expo-checkbox";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedList } from "../../store/listBulk";
 
 function CardList({ data, tipe, onPress }) {
   const navigation = useNavigation();
   const [title, setTitle] = useState();
   const [errorAvatar, setErrorAvatar] = useState(false);
+  const { profile } = useSelector((state) => state.profile);
+  const selected = useSelector((state) => state.listbulk.list);
+  const dispatch = useDispatch();
+
   let header = {};
   useEffect(() => {
     if (tipe == "agendain") {
@@ -56,6 +63,8 @@ function CardList({ data, tipe, onPress }) {
             ? styles.cardUnread
             : data.disposisi
             ? styles.cardReadDispo
+            : data.progress == true
+            ? styles.cardDisabled
             : styles.cardRead,
           data.is_pejabat == false && tipe !== "agendaininternal"
             ? styles.cardSecre
@@ -64,8 +73,8 @@ function CardList({ data, tipe, onPress }) {
           { padding: 15 },
         ]}
       >
-        <TouchableOpacity style={{ flexDirection: "row" }} onPress={onPress}>
-          <View style={{ width: "15%" }}>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "15%", alignItems: "center" }}>
             {errorAvatar && (
               <Image
                 source={Config.avatar}
@@ -99,7 +108,6 @@ function CardList({ data, tipe, onPress }) {
                 onError={() => setErrorAvatar(true)}
               />
             )}
-
             {(data?.priority == "Sangat Segera" ||
               data?.prio == "Sangat Segera" ||
               data?.priority == "Segera" ||
@@ -111,174 +119,202 @@ function CardList({ data, tipe, onPress }) {
                 style={styles.button}
               />
             )}
-          </View>
-          <View style={{ flexDirection: "row", width: "85%" }}>
-            <View style={{ width: "70%", gap: 5 }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 5,
+            {tipe == "needfollowup" && profile.is_pass == "true" && (
+              <Checkbox.Item
+                mode="android"
+                status={
+                  selected?.findIndex((item) => item == data.id) != -1
+                    ? "checked"
+                    : "unchecked"
+                }
+                color={GlobalStyles.colors.tertiery}
+                onPress={() => {
+                  if (!data?.progress) {
+                    dispatch(setSelectedList(data));
+                  }
                 }}
-              >
-                {data?.unread && (
-                  <View
-                    style={{
-                      width: 7,
-                      height: 7,
-                      borderRadius: 4,
-                      backgroundColor: COLORS.warning,
-                    }}
-                  />
+                position="leading"
+                disabled={data?.onprogress}
+                // labelStyle={styles.labelCheckbox}
+              />
+            )}
+          </View>
+
+          <TouchableOpacity onPress={onPress} disabled={data?.progress}>
+            <View style={{ flexDirection: "row", width: "93%" }}>
+              <View style={{ width: "70%", gap: 5 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
+                >
+                  {data?.unread && (
+                    <View
+                      style={{
+                        width: 7,
+                        height: 7,
+                        borderRadius: 4,
+                        backgroundColor: COLORS.warning,
+                      }}
+                    />
+                  )}
+                  <Text style={{ fontSize: 14 }}>
+                    {data.sender.title && (
+                      <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
+                        {data.sender.title}
+                      </Text>
+                    )}
+                    {data.sender.title == null && (
+                      <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
+                        {data.sender}
+                      </Text>
+                    )}
+                  </Text>
+                </View>
+                {(tipe == "agendain" || tipe == "needfollowup") && (
+                  <Text style={{ fontSize: 12, color: COLORS.infoDanger }}>
+                    Unit Kerja: {data?.unker}
+                  </Text>
                 )}
-                <Text style={{ fontSize: 14 }}>
-                  {data.sender.title && (
-                    <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
-                      {data.sender.title}
-                    </Text>
-                  )}
-                  {data.sender.title == null && (
-                    <Text style={data?.unread ? { fontWeight: "bold" } : {}}>
-                      {data.sender}
-                    </Text>
-                  )}
+                <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                  {data?.subject}
                 </Text>
               </View>
-              {(tipe == "agendain" || tipe == "needfollowup") && (
-                <Text style={{ fontSize: 12, color: COLORS.infoDanger }}>
-                  Unit Kerja: {data?.unker}
+              <View
+                style={{
+                  alignItems: "flex-end",
+                  width: "30%",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                  {data.date.substr(0, 6)}
                 </Text>
-              )}
-              <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                {data?.subject}
-              </Text>
-            </View>
-            <View
-              style={{
-                alignItems: "flex-end",
-                width: "30%",
-                justifyContent: "flex-start",
-              }}
-            >
-              <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                {data.date.substr(0, 6)}
-              </Text>
-              <Text style={{ fontSize: 13, fontWeight: 400 }}>
-                {data.time.substr(0, 5)}
-              </Text>
-              {data.disposisi && tipe != "agendamydispo" && (
-                <View style={styles.containerButton}>
-                  <IconButton
-                    icon="email-send-outline"
-                    size={GlobalStyles.font.xxl}
-                    iconColor={GlobalStyles.colors.blue}
-                    style={styles.button}
-                    onPress={() => {
-                      navigation.navigate("DetailLog", {
-                        id: data.id,
-                        tipe: tipe,
-                        title: title,
-                      });
-                    }}
-                  />
-                </View>
-              )}
-              {data.tracking && tipe == "agendamydispo" && (
-                <View style={styles.containerButton}>
-                  <IconButton
-                    icon="forum-outline"
-                    size={GlobalStyles.font.xxl}
-                    iconColor={GlobalStyles.colors.blue}
-                    style={styles.button}
-                    onPress={() => {
-                      navigation.navigate("TrackingLogDetail", {
-                        id: data.id,
-                        tipe: tipe,
-                        title: title,
-                        trackinglog: data.tracking,
-                      });
-                    }}
-                  />
-                </View>
-              )}
+                <Text style={{ fontSize: 13, fontWeight: 400 }}>
+                  {data.time.substr(0, 5)}
+                </Text>
+                {data.disposisi && tipe != "agendamydispo" && (
+                  <View style={styles.containerButton}>
+                    <IconButton
+                      icon="email-send-outline"
+                      size={GlobalStyles.font.xxl}
+                      iconColor={GlobalStyles.colors.blue}
+                      style={styles.button}
+                      onPress={() => {
+                        navigation.navigate("DetailLog", {
+                          id: data.id,
+                          tipe: tipe,
+                          title: title,
+                        });
+                      }}
+                    />
+                  </View>
+                )}
+                {data.tracking && tipe == "agendamydispo" && (
+                  <View style={styles.containerButton}>
+                    <IconButton
+                      icon="forum-outline"
+                      size={GlobalStyles.font.xxl}
+                      iconColor={GlobalStyles.colors.blue}
+                      style={styles.button}
+                      onPress={() => {
+                        navigation.navigate("TrackingLogDetail", {
+                          id: data.id,
+                          tipe: tipe,
+                          title: title,
+                          trackinglog: data.tracking,
+                        });
+                      }}
+                    />
+                  </View>
+                )}
 
-              {(data.type == "incoming" ||
-                data.type == "disposition" ||
-                data.type == "submitted" ||
-                data.type == "outgoing") && (
-                <View
-                  style={[
-                    data.type == "disposition"
-                      ? {
-                          backgroundColor: GlobalStyles.colors.yellow,
-                        }
-                      : data.type == "incoming"
-                      ? {
-                          backgroundColor: GlobalStyles.colors.tertiery,
-                        }
-                      : data.type == "submitted"
-                      ? {
-                          backgroundColor: GlobalStyles.colors.red,
-                        }
-                      : data.type == "outgoing"
-                      ? {
-                          backgroundColor: GlobalStyles.colors.yellow,
-                        }
-                      : {},
-                    styles.badgeTipeLetter,
-                  ]}
-                >
-                  <Text
-                    style={{
-                      color: GlobalStyles.colors.textWhite,
-                      fontSize: 13,
-                    }}
+                {(data.type == "incoming" ||
+                  data.type == "disposition" ||
+                  data.type == "submitted" ||
+                  data.type == "outgoing") && (
+                  <View
+                    style={[
+                      data.type == "disposition"
+                        ? {
+                            backgroundColor: GlobalStyles.colors.yellow,
+                          }
+                        : data.type == "incoming"
+                        ? {
+                            backgroundColor: GlobalStyles.colors.tertiery,
+                          }
+                        : data.type == "submitted"
+                        ? {
+                            backgroundColor: GlobalStyles.colors.red,
+                          }
+                        : data.type == "outgoing"
+                        ? {
+                            backgroundColor: GlobalStyles.colors.yellow,
+                          }
+                        : {},
+                      styles.badgeTipeLetter,
+                    ]}
                   >
-                    {data.type == "incoming"
-                      ? "Incoming"
-                      : data.type == "disposition"
-                      ? "Disposition"
-                      : data.type == "submitted"
-                      ? "Submitted"
-                      : data.type == "outgoing"
-                      ? "Need Follow Up"
-                      : ""}
-                  </Text>
-                </View>
-              )}
-              {data.status && (
-                <View
-                  style={[
-                    data.status == "In Progress" || data.status == "Submit"
-                      ? {
-                          backgroundColor: GlobalStyles.colors.yellow,
-                        }
-                      : data.status == "Final"
-                      ? {
-                          backgroundColor: GlobalStyles.colors.green,
-                        }
-                      : {
-                          backgroundColor: GlobalStyles.colors.red,
-                          color: GlobalStyles.colors.textWhite,
-                        },
-                    styles.badgeStatus,
-                  ]}
-                >
-                  <Text
-                    style={{
-                      color: GlobalStyles.colors.textWhite,
-                      fontSize: 13,
-                    }}
+                    <Text
+                      style={{
+                        color: GlobalStyles.colors.textWhite,
+                        fontSize: 13,
+                      }}
+                    >
+                      {data.type == "incoming"
+                        ? "Incoming"
+                        : data.type == "disposition"
+                        ? "Disposition"
+                        : data.type == "submitted"
+                        ? "Submitted"
+                        : data.type == "outgoing"
+                        ? "Need Follow Up"
+                        : ""}
+                    </Text>
+                  </View>
+                )}
+                {data.status && (
+                  <View
+                    style={[
+                      data.status == "In Progress" || data.status == "Submit"
+                        ? {
+                            backgroundColor: GlobalStyles.colors.yellow,
+                          }
+                        : data.status == "Final"
+                        ? {
+                            backgroundColor: GlobalStyles.colors.green,
+                          }
+                        : data.status == "Sedang Diproses"
+                        ? {
+                            backgroundColor: GlobalStyles.colors.grey,
+                          }
+                        : {
+                            backgroundColor: GlobalStyles.colors.red,
+                            color: GlobalStyles.colors.textWhite,
+                          },
+                      styles.badgeStatus,
+                    ]}
                   >
-                    {data.status == "Final"
-                      ? "Sudah Ditandatangani"
-                      : data.status}
-                  </Text>
-                </View>
-              )}
+                    <Text
+                      style={{
+                        color: GlobalStyles.colors.textWhite,
+                        fontSize: 13,
+                      }}
+                    >
+                      {data.status == "Final"
+                        ? "Sudah Ditandatangani"
+                        : data.status == "Sedang Diproses"
+                        ? "Proses TTDE"
+                        : data.status}
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
       <Divider />
     </>
@@ -310,6 +346,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     borderLeftColor: GlobalStyles.colors.red,
     borderRadius: 0,
+  },
+  cardDisabled: {
+    borderLeftWidth: 3,
+    borderLeftColor: GlobalStyles.colors.grey,
+    borderRadius: 0,
+    backgroundColor: GlobalStyles.colors.disabled,
   },
   containerCard: {
     justifyContent: "flex-end",
