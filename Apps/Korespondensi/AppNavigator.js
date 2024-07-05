@@ -207,6 +207,7 @@ import {
 } from "react-native-responsive-screen";
 import { setNotifIos, setTypeMenu } from "../../store/SuperApps";
 import { ListFaq } from "../Faq/ListFaq";
+import NeedSignList from "./List/NeedSignList";
 
 const Stack = createNativeStackNavigator();
 
@@ -1244,6 +1245,11 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="NeedFollowUpList"
             component={NeedFollowUpList}
+            options={{ header: toolbarBack }}
+          />
+          <Stack.Screen
+            name="NeedSignList"
+            component={NeedSignList}
             options={{ header: toolbarBack }}
           />
           <Stack.Screen

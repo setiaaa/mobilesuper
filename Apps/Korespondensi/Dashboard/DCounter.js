@@ -42,9 +42,19 @@ function DCounter() {
       navName: "NeedFollowUpList",
     },
     {
+      icon: "email-edit-outline",
+      color: "rgba(73, 189, 101, 0.6)",
+      navName: "NeedSignList",
+    },
+    {
       icon: "inbox-arrow-down",
       color: "rgba(24, 104, 171, 0.6)",
       navName: "IncomingUnread",
+    },
+    {
+      icon: "inbox-arrow-down",
+      color: "rgba(236, 202, 12, 0.6)",
+      navName: "InternalUnread",
     },
     {
       icon: "email-send-outline",
@@ -56,33 +66,28 @@ function DCounter() {
       color: "rgba(180, 179, 179, 0.6)",
       navName: "ConceptNumb",
     },
-    {
-      icon: "inbox-arrow-down",
-      color: "rgba(236, 202, 12, 0.6)",
-      navName: "InternalUnread",
-    },
   ];
   useEffect(() => {
     setIsCounter([
       { count: 1, type: "onprogress", value: "-" },
       {
         count: 2,
-        type: "agenda_in",
+        type: "sign",
         value: "-",
       },
       {
         count: 3,
-        type: "agenda_disposition",
+        type: "agenda_in",
         value: "-",
       },
       {
         count: 4,
-        type: "draft",
+        type: "internal",
         value: "-",
       },
       {
         count: 5,
-        type: "internal",
+        type: "agenda_disposition",
         value: "-",
       },
     ]);
@@ -111,7 +116,30 @@ function DCounter() {
       const response = await getHTTP(
         nde_api.dashboard + "?attr=" + selectedAttr?.code
       );
-      setIsCounter(response.data);
+      // setIsCounter(response.data);
+      setIsCounter([
+        { count: 1, type: "onprogress", value: response.data[0].value },
+        {
+          count: 2,
+          type: "sign",
+          value: response.data[5].value,
+        },
+        {
+          count: 3,
+          type: "agenda_in",
+          value: response.data[1].value,
+        },
+        {
+          count: 4,
+          type: "internal",
+          value: response.data[4].value,
+        },
+        {
+          count: 5,
+          type: "agenda_disposition",
+          value: response.data[2].value,
+        },
+      ]);
       setIsLoading(false);
     } catch (error) {
       if (error.response.status == null && error.status == null) {
@@ -119,22 +147,22 @@ function DCounter() {
           { count: 1, type: "onprogress", value: "-" },
           {
             count: 2,
-            type: "agenda_in",
+            type: "sign",
             value: "-",
           },
           {
             count: 3,
-            type: "agenda_disposition",
+            type: "agenda_in",
             value: "-",
           },
           {
             count: 4,
-            type: "draft",
+            type: "internal",
             value: "-",
           },
           {
             count: 5,
-            type: "internal",
+            type: "agenda_disposition",
             value: "-",
           },
         ]);
@@ -160,10 +188,9 @@ function DCounter() {
       <LoadingOverlay visible={isLoading} />
     </>
   );
-  const renderItem = ({ item, index }) =>
-    index != 3 && (
-      <CardDCounter data={item} icon={icon[index]} navigation={navigation} />
-    );
+  const renderItem = ({ item, index }) => (
+    <CardDCounter data={item} icon={icon[index]} navigation={navigation} />
+  );
 
   // const [visible, setVisible] = useState(false);
 
@@ -255,7 +282,7 @@ function DCounter() {
         </Card>
       )} */}
       {isCounter?.length != 0 && (
-        <View style={{ height: "90%" }}>
+        <View style={{ height: "100%" }}>
           <FlatList
             keyExtractor={(item) => item.count}
             data={isCounter}

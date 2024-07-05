@@ -11,13 +11,14 @@ import {
   TouchableOpacity,
   TextInput,
   Dimensions,
+  Alert,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
 import LoadingOverlay from "../../../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../../../constants/styles";
 import { nde_api } from "../../../utils/api.config";
-import { getHTTP, handlerError } from "../../../utils/http";
+import { getHTTP, handlerError, postHTTP } from "../../../utils/http";
 import { initData } from "../../../utils/list";
 import {
   BottomSheetModal,
@@ -39,12 +40,17 @@ import {
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import Checkbox from "expo-checkbox";
+import {
+  removeAllSelectedList,
+  setSelectedList,
+} from "../../../store/listBulk";
 
-function NeedFollowUpList({ route }) {
+function NeedSignList({ route }) {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [startDate, setStartDate] = useState(null);
@@ -58,6 +64,9 @@ function NeedFollowUpList({ route }) {
     { id: "", name: "SEMUA UNIT KERJA" },
   ]);
   const [selectedDivisi, setSelectedDivisi] = useState({});
+  const { profile } = useSelector((state) => state.profile);
+  const [selectedAll, setSelectedAll] = useState(false);
+  const selectedId = useSelector((state) => state.listbulk.list);
   const [isFocus, setIsFocus] = useState();
   const { width: screenWidth } = Dimensions.get("window");
   const navigation = useNavigation();
@@ -84,6 +93,7 @@ function NeedFollowUpList({ route }) {
   useFocusEffect(
     useCallback(() => {
       setList([]);
+      dispatch(removeAllSelectedList());
       refresh();
     }, [])
   );
@@ -94,6 +104,7 @@ function NeedFollowUpList({ route }) {
   }, [divisionList]);
   useEffect(() => {
     filter(1);
+    dispatch(removeAllSelectedList());
   }, [startDate, endDate, isSearchQuery, isSearchFilter, selectedDivisi]);
 
   async function getDivisionList() {
@@ -120,7 +131,7 @@ function NeedFollowUpList({ route }) {
     setIsLoading(true);
     try {
       let response = await getHTTP(
-        nde_api.needfollowup.replace("{$page}", page + "&sign=0")
+        nde_api.needfollowup.replace("{$page}", page + "&sign=1")
       );
       let data = initData(list, response.data);
       setList(data);
@@ -134,7 +145,7 @@ function NeedFollowUpList({ route }) {
         handlerError(
           error,
           "Peringatan!",
-          "List Surat Keluar Perlu Diproses tidak berfungsi"
+          "List Surat Keluar Perlu Tandatangan tidak berfungsi"
         );
       }
     }
@@ -198,7 +209,7 @@ function NeedFollowUpList({ route }) {
           word +
           "&division=" +
           division +
-          "&sign=0";
+          "&sign=1";
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
@@ -219,7 +230,7 @@ function NeedFollowUpList({ route }) {
         handlerError(
           error,
           "Peringatan!",
-          "List Surat Keluar Perlu Diproses tidak berfungsi"
+          "List Surat Keluar Perlu Tandatangan tidak berfungsi"
         );
       }
     }
@@ -261,7 +272,7 @@ function NeedFollowUpList({ route }) {
             onPress={() => {
               navigation.navigate("NeedFollowUpDetail", {
                 id: data.id,
-                title: "Detail Surat Keluar\nPerlu Diproses",
+                title: "Detail Surat Keluar\nPerlu Tandatangan",
               });
             }}
           />
@@ -283,9 +294,9 @@ function NeedFollowUpList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter
-          ? "Surat Perlu Diproses tidak ditemukan"
+          ? "Surat Perlu Tandatangan tidak ditemukan"
           : list?.count == 0
-          ? "Anda tidak memilki Surat Perlu Diproses"
+          ? "Anda tidak memilki Surat Perlu Tandatangan"
           : "Pencarian..."}
       </Text>
     </View>
@@ -304,6 +315,7 @@ function NeedFollowUpList({ route }) {
     setIsLoading(true);
     setStartDate();
     setEndDate();
+    setSelectedAll(false);
     setSearchQuery("");
     setSelectedDivisi({});
     setIsSearchFilter(false);
@@ -365,6 +377,33 @@ function NeedFollowUpList({ route }) {
       <LoadingOverlay visible={isLoading} />
     </>
   );
+  function setDataSelected() {
+    list.results.map((x) =>
+      x.children.map((y) => dispatch(setSelectedList(y)))
+    );
+  }
+  async function bulkApprove() {
+    try {
+      setIsLoading(true);
+      let payload = { ids: selectedId };
+      response = await postHTTP(nde_api.letterbulkapprove, payload);
+      if (response?.data?.status == "Error") {
+        Alert.alert("Gagal!", response?.data?.msg);
+      } else {
+        Alert.alert("Berhasil!", response?.data?.msg, [
+          {
+            text: "Ok",
+            onPress: () => refresh(),
+          },
+        ]);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      handlerError(error, "Peringatan!", "Tandatangan semua tidak berfungsi!");
+      //   Alert.alert("Tes", error);
+      setIsLoading(false);
+    }
+  }
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -383,13 +422,13 @@ function NeedFollowUpList({ route }) {
               setIsSearchFilter(true);
             }}
           />
-          {divisionList && (
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                marginBottom: isSearchFilter && startDate != null ? 0 : 16,
-              }}
-            >
+          <View
+            style={{
+              backgroundColor: COLORS.white,
+              marginBottom: isSearchFilter && startDate != null ? 0 : 16,
+            }}
+          >
+            {divisionList && (
               <Dropdown
                 style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
                 placeholderStyle={styles.placeholderStyle}
@@ -411,8 +450,46 @@ function NeedFollowUpList({ route }) {
                   setIsSearchFilter(true);
                 }}
               />
-            </View>
-          )}
+            )}
+            {profile?.is_pass == "true" && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  maxWidth: "95%",
+                  alignItems: "center",
+                  margin: 10,
+                  justifyContent: "space-between",
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Checkbox
+                    value={selectedAll}
+                    onValueChange={(item) => {
+                      setSelectedAll(item);
+                      if (item) {
+                        setDataSelected();
+                      } else {
+                        dispatch(removeAllSelectedList());
+                      }
+                    }}
+                    color={selectedAll === true ? COLORS.lighter : null}
+                    style={{ marginRight: 10 }}
+                  />
+                  <Text>Pilih Semua</Text>
+                </View>
+                <Button
+                  style={[styles.button]}
+                  labelStyle={{ fontSize: 13 }}
+                  mode="contained"
+                  compact
+                  onPress={bulkApprove}
+                >
+                  Tanda Tangan
+                </Button>
+              </View>
+            )}
+          </View>
           {isSearchFilter && startDate != null && (
             <View
               style={{
@@ -527,7 +604,7 @@ function NeedFollowUpList({ route }) {
                       <Text style={{ fontSize: 15, fontWeight: 500 }}>
                         Menyaring Surat Keluar
                       </Text>
-                      <Text>Perlu Diproses</Text>
+                      <Text>Perlu Tandatangan</Text>
                     </View>
                     <TouchableOpacity onPress={refresh}>
                       <Text
@@ -771,7 +848,7 @@ function NeedFollowUpList({ route }) {
   );
 }
 
-export default NeedFollowUpList;
+export default NeedSignList;
 
 const styles = StyleSheet.create({
   notFound: {
@@ -823,9 +900,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   button: {
-    backgroundColor: GlobalStyles.colors.approve,
-    marginBottom: 16,
-    borderTopWidth: 1,
+    backgroundColor: COLORS.infoDanger,
   },
   buttonText: {
     fontSize: GlobalStyles.font.lg,

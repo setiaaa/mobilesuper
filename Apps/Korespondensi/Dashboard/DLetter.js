@@ -53,6 +53,10 @@ function DLetter() {
       navName: "NeedFollowUpList",
     },
     {
+      icon: "email-edit-outline",
+      navName: "NeedSignList",
+    },
+    {
       icon: "email-search-outline",
       navName: "TrackingList",
     },
@@ -115,11 +119,16 @@ function DLetter() {
         },
         {
           count: 5,
+          type: "sign",
+          value: response.data[5].value,
+        },
+        {
+          count: 6,
           type: "tracking",
           value: "",
         },
         {
-          count: 6,
+          count: 7,
           type: "submitted",
           value: "",
         },

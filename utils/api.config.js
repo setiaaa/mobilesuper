@@ -107,6 +107,7 @@ export const nde_api = {
   lettersubmit: Config.base_url + Config.api.lettersubmit,
   letteridsave: Config.base_url + Config.api.letteridsave,
   letteridapprove: Config.base_url + Config.api.letteridapprove,
+  letterbulkapprove: Config.base_url + Config.api.letterbulkapprove,
   letteridfinish: Config.base_url + Config.api.letteridfinish,
   letteridreturn: Config.base_url + Config.api.letteridreturn,
   letteridreturntokonseptor:
