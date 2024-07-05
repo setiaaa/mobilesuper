@@ -848,13 +848,13 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="Bankom"
             component={Bankom}
             options={{
               headerShown: false,
             }}
-          /> */}
+          />
           <Stack.Screen
             name="DokumenLain"
             component={DokumenLain}
