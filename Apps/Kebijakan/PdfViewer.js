@@ -6,20 +6,122 @@ import {
   View,
   Dim,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {} from "react-native-safe-area-context";
 import { COLORS, FONTSIZE, FONTWEIGHT } from "../../config/SuperAppps";
 import { useSelector } from "react-redux";
 import Pdf from "react-native-pdf";
+import WebView from "react-native-webview";
+import * as FileSystem from "expo-file-system";
+import PdfRendererView from "react-native-pdf-renderer";
 
 const PdfViewer = ({ route }) => {
-  const { data } = route.params;
+  const { data, type } = route.params;
   const navigation = useNavigation();
-  useEffect(() => {}, []);
   const { device } = useSelector((state) => state.apps);
   const pdfResource = { uri: data.link, chace: true };
+
+  const inject = `
+    (async function () {
+        var { pdfjsLib } = globalThis;
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
+
+        var pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 0.8,
+            canvas = document.getElementById('the-canvas'),
+            ctx = canvas.getContext('2d');
+
+        /**
+    * Get page info from document, resize canvas accordingly, and render page.
+    * @param num Page number.
+    */
+        function renderPage(num) {
+            pageRendering = true;
+            // Using promise to fetch the page
+            pdfDoc.getPage(num).then(function (page) {
+                var viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                // Render PDF page into canvas context
+                var renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                var renderTask = page.render(renderContext);
+
+                if (num <= pdfDoc.numPages) {
+                      canvas = document.createElement("canvas");
+                      ctx = canvas.getContext('2d');
+
+                      document.body.appendChild(canvas);
+
+                      // onNextPage()
+                }
+
+                // Wait for rendering to finish
+                renderTask.promise.then(function () {
+                    pageRendering = false;
+                    if(num <= pdfDoc.numPages){
+                      num++;
+                      renderPage(num);
+                    }
+                });
+            });
+
+            // Update page counters
+            document.getElementById('page_num').textContent = num;
+        }
+
+        /**
+         * If another page rendering in progress, waits until the rendering is
+         * finised. Otherwise, executes rendering immediately.
+         */
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        /**
+         * Displays next page.
+         */
+        function onNextPage() {
+          if (pageNum >= pdfDoc.numPages) {
+            return;
+          }else{
+              pageNum++;
+            queueRenderPage(pageNum);
+          }
+        }
+
+        try {
+            const response = await fetch('${data.link}');
+            const blob = await response.blob();
+
+            pdfjsLib.getDocument(URL.createObjectURL(blob)).promise.then(function (pdfDoc_) {
+                pdfDoc = pdfDoc_;
+
+                // Initial/first page rendering
+                renderPage(pageNum)
+            });
+
+        } catch (error) {
+            console.error('Error loading PDF:', error);
+            window.ReactNativeWebView.postMessage('Error loading PDF: ' + error.message);
+        }
+    })();
+
+    
+  `;
+
   return (
     <>
       <View
@@ -55,15 +157,41 @@ const PdfViewer = ({ route }) => {
                 </View> */}
       </View>
       <View style={{ flex: 1 }}>
-        <Pdf
-          trustAllCerts={false}
-          source={pdfResource}
-          style={{
-            flex: 1,
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
-          }}
-        />
+        {type !== undefined ? (
+          <WebView
+            originWhitelist={["*"]}
+            source={{
+              uri: "https://portal.kkp.go.id/assets/mobileViewer/index.html",
+            }}
+            style={{ flex: 1 }}
+            allowFileAccess={true}
+            androidLayerType={"software"}
+            mixedContentMode={"always"}
+            allowUniversalAccessFromFileURLs={true}
+            scalesPageToFit={false}
+            injectedJavaScript={inject}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            onMessage={(event) => {
+              console.log(
+                "Received message from WebView:",
+                event.nativeEvent.data
+              );
+            }}
+          />
+        ) : (
+          <Pdf
+            trustAllCerts={false}
+            source={{
+              uri: pdfResource,
+            }}
+            style={{
+              flex: 1,
+              width: Dimensions.get("window").width,
+              height: Dimensions.get("window").height,
+            }}
+          />
+        )}
       </View>
     </>
   );

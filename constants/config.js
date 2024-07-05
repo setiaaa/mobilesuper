@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import { maps, notFound } from "../config/images";
+import { avatar, maps, notFound } from "../config/images";
 
 const extra = Constants.expoConfig.extra;
 export const Config = {
@@ -13,6 +13,7 @@ export const Config = {
   notFound: notFound[extra.id],
   oneSignalAppId: extra.oneSignalAppId,
   maps: maps[extra.id],
+  avatar: avatar[extra.id],
   statusbarAuth: extra.statusBarAuth,
   statusbarAuthenticated: extra.statusBarAuthtenticated,
   editInpro: extra.editInpro,
@@ -100,6 +101,7 @@ export const Config = {
     lettersubmit: extra.api.lettersubmit,
     letteridsave: extra.api.letteridsave,
     letteridapprove: extra.api.letteridapprove,
+    letterbulkapprove: extra.api.letterbulkapprove,
     letteridfinish: extra.api.letteridfinish,
     letteridreturn: extra.api.letteridreturn,
     letteridreturntokonseptor: extra.api.letteridreturntokonseptor,
@@ -121,6 +123,7 @@ export const Config = {
     titlebydivisionid: extra.api.titlebydivisionid,
     parabydivisionid: extra.api.parabydivisionid,
     titleSearch: extra.api.titleSearch,
+    divisionList: extra.api.divisionList,
     personallist: extra.api.personallist,
     personaladd: extra.api.personaladd,
     personaldel: extra.api.personaldel,

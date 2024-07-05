@@ -29,6 +29,8 @@ import Survey from "./Survey";
 import KalenderPersonal from "./KalenderPersonal";
 import AksiPerubahan from "./AksiPerubahan";
 import FaqReducer from "./Faq";
+import Kepegawain from "./Kepegawain";
+import listBulk from "./listBulk";
 
 export const store = configureStore({
   reducer: {
@@ -61,5 +63,7 @@ export const store = configureStore({
     kalenderPersonal: KalenderPersonal,
     aksiperubahan: AksiPerubahan,
     Faq: FaqReducer,
+    kepegawaian: Kepegawain,
+    listbulk: listBulk,
   },
 });

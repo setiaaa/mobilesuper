@@ -60,6 +60,13 @@ const HelpDesk = Config.base_url_helpdesk;
 const Survey = BASE_URL + "bridge/";
 
 const Attendence = BASE_URL + "attendence/";
+const Kepegawaian = BASE_URL + "bridge/profile/all/";
+const DetailKepegawaian = BASE_URL + "bridge/pegawai-profile/";
+const DataPribadi = BASE_URL + "bridge/admintools/profile/";
+const DataDetailPribadi = BASE_URL + "bridge/pegawai-profile/";
+const FilterUnitKerja = BASE_URL + "bridge/unitkerja/option/";
+const Nominatif = BASE_URL + "bridge/unitkerja/pegawai/";
+const NominatifReport = BASE_URL + "bridge/unitkerja/report/";
 // faq
 const Faq = BASE_URL + "bridge/admintools/";
 
@@ -1946,6 +1953,20 @@ export const putTandaTangan = createAsyncThunk(
   }
 );
 
+export const tandaTanganMentri = createAsyncThunk(
+  "digitalsign/tandaTanganMentri",
+  async (data) => {
+    const respon = await axios.put(
+      `${digitalSign}document/approve2/`,
+      data.payload,
+      { headers: { Authorization: data.token } }
+    );
+    return {
+      data: respon?.data,
+    };
+  }
+);
+
 //Cuti
 export const getCutiPersonal = createAsyncThunk(
   "cuti/getCutiPersonal",
@@ -2383,6 +2404,124 @@ export const getFaq = createAsyncThunk(
       });
       return respon?.data.results;
     }
+  }
+);
+
+//kepegawaian
+export const getDataIPASN = createAsyncThunk(
+  "kepegawaian/getDataIPASN",
+  async ({ token, page, search }) => {
+    const respon = await axios.get(
+      `${Kepegawaian}?type=ipasn&limit=${page}&offset=0&search=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getDataDetailIPASN = createAsyncThunk(
+  "kepegawaian/getDataDetailIPASN",
+  async ({ token, id }) => {
+    console.log(id);
+    const respon = await axios.get(`${DetailKepegawaian}${id}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getDataPribadi = createAsyncThunk(
+  "kepegawaian/getDataPribadi",
+  async ({ token, page, search }) => {
+    const respon = await axios.get(
+      `${DataPribadi}?limit=${page}&offset=0&search=${search}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getDataPribadiDetail = createAsyncThunk(
+  "kepegawaian/getDataPribadiDetail",
+  async ({ token, id }) => {
+    console.log(id);
+    const respon = await axios.get(`${DataDetailPribadi}${id}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getFilterUnitKerja = createAsyncThunk(
+  "kepegawaian/getFilterUnitKerja",
+  async ({ token }) => {
+    const respon = await axios.get(`${FilterUnitKerja}`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getNominatif = createAsyncThunk(
+  "kepegawaian/getNominatif",
+  async ({
+    token,
+    filterUnitKerja,
+    firstGolongan,
+    secondGolongan,
+    firstEselon,
+    secondEselon,
+    statusPegawai,
+    tahunTMT,
+    page,
+    search,
+  }) => {
+    const respon = await axios.get(
+      `${Nominatif}?unker=${filterUnitKerja?.value}&status_pegawai=${
+        statusPegawai?.key
+      }&nama=${search}&echelon_start=${firstEselon?.key}&echelon_end=${
+        secondEselon?.key
+      }&golongan_start=${firstGolongan?.key}&golongan_end=${
+        secondGolongan?.key
+      }&tahun_tmt=${tahunTMT?.key ? tahunTMT?.key : ""}&page=${page}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+export const getNominatifReport = createAsyncThunk(
+  "kepegawaian/getNominatifReport",
+  async ({
+    token,
+    filterUnitKerja,
+    firstGolongan,
+    secondGolongan,
+    firstEselon,
+    secondEselon,
+    statusPegawai,
+    tahunTMT,
+    page,
+  }) => {
+    const respon = await axios.get(
+      `${NominatifReport}?unker=${filterUnitKerja?.value}&status_pegawai=${
+        statusPegawai?.key
+      }&nama=&echelon_start=${firstEselon?.key}&echelon_end=${
+        secondEselon?.key
+      }&golongan_start=${firstGolongan?.key}&golongan_end=${
+        secondGolongan?.key
+      }&tahun_tmt=${tahunTMT?.key ? tahunTMT.key : ""}&page=${page}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
   }
 );
 

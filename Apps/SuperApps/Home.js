@@ -127,9 +127,11 @@ export const Home = () => {
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(false);
   const [modalBankom, setModalBankom] = useState(false);
+  const [modalKepegawaian, setModalKepegawaian] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
   const [dataNotif, setDataNotif] = useState();
   const [menuBankom, setMenuBankom] = useState([]);
+  const [menuKepegawaian, setMenuKepegawaian] = useState([]);
   const animation = useRef(null);
   const [radius, setRadius] = useState(false);
   const isFocused = useIsFocused();
@@ -308,6 +310,7 @@ export const Home = () => {
       roleLaporan.includes(item)
     );
     let tmpMenu = [];
+    let tmpMenuKepegawaian = [];
     tmpMenu.push(
       <View
         style={{
@@ -604,6 +607,150 @@ export const Home = () => {
       null;
     }
 
+    tmpMenuKepegawaian.push(
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalKepegawaian(false);
+            navigation.navigate("IPASN");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 36,
+                height: device === "tablet" ? 60 : 36,
+              }}
+              source={require("../../assets/superApp/IPASN.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          IPASN
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalKepegawaian(false);
+            navigation.navigate("MainPegawaiIPASN");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 39,
+                height: device === "tablet" ? 60 : 38,
+              }}
+              source={require("../../assets/superApp/Pegawai2.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Pegawai
+        </Text>
+      </View>,
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setModalKepegawaian(false);
+            navigation.navigate("Nominatif");
+          }}
+        >
+          <View
+            style={[
+              device == "tablet" ? styles.cardAppsTablet : styles.cardApps,
+              {
+                backgroundColor: COLORS.secondary,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                width: device === "tablet" ? 60 : 30,
+                height: device === "tablet" ? 60 : 36,
+              }}
+              source={require("../../assets/superApp/NominatifPeg.png")}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: fontSizeResponsive("H4", device),
+            textAlign: "center",
+            width: 300,
+          }}
+        >
+          Nominatif Pegawai
+        </Text>
+      </View>
+    );
+    setMenuKepegawaian(tmpMenuKepegawaian);
     setMenuBankom(tmpMenu);
   }, [profile]);
 
@@ -833,7 +980,7 @@ export const Home = () => {
               <View>
                 <Image
                   source={{
-                    uri: Config.base_url + "bridge/" + profile.avatar,
+                    uri: Config.base_url + "bridge/" + profile.avatar_signed,
                   }}
                   style={{
                     width: device === "tablet" ? 100 : 50,
@@ -851,6 +998,7 @@ export const Home = () => {
                 <CardApps
                   handlePressModal={handlePressModal}
                   setModalBankom={setModalBankom}
+                  setModalKepegawaian={setModalKepegawaian}
                   closeBottomSheet={closeBottomSheet}
                 />
                 <Portal>
@@ -906,6 +1054,7 @@ export const Home = () => {
                         <View style={{ marginVertical: 20 }}>
                           <CardAppsB
                             setModalBankom={setModalBankom}
+                            setModalKepegawaian={setModalKepegawaian}
                             closeBottomSheet={closeBottomSheet}
                           />
                         </View>
@@ -1056,6 +1205,80 @@ export const Home = () => {
                 </View>
                 <FlatList
                   data={formatData(menuBankom, numColumns)}
+                  renderItem={renderRow}
+                  keyExtractor={(row, index) => `row_${index}`}
+                  columnWrapperStyle={{
+                    marginHorizontal: "5%",
+                    gap: 5,
+                  }}
+                  numColumns={numColumns}
+                />
+              </View>
+            </View>
+          </Modal>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalKepegawaian}
+            onRequestClose={() => {
+              setModalKepegawaian(false);
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                Platform.OS === "ios"
+                  ? styles.iOSBackdrop
+                  : styles.androidBackdrop,
+                styles.backdrop,
+              ]}
+            />
+            <View
+              style={{
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: COLORS.white,
+                  width: "90%",
+                  borderRadius: 10,
+                }}
+              >
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginTop: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderBottomWidth: 2,
+                    borderBottomColor: COLORS.grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: FONTWEIGHT.bold,
+                    }}
+                  >
+                    Kepegawaian
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalKepegawaian(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close-outline"
+                      size={24}
+                      color={COLORS.lighter}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <FlatList
+                  data={formatData(menuKepegawaian, numColumns)}
                   renderItem={renderRow}
                   keyExtractor={(row, index) => `row_${index}`}
                   columnWrapperStyle={{

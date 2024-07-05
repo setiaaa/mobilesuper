@@ -106,6 +106,94 @@ export const Profile = () => {
   const rolePreShare = ["PRESHARE.USER"];
   const roleTaskManagement = ["TASK.USER"];
   const roleLaporan = ["LAPORAN_BSRE"];
+  const pejabatTinggi = [
+    "196503101989031016",
+    "196301121990031002",
+    "196605191993032003",
+    "196611261999031001",
+    "197604172003121005",
+    "197805232002121004",
+    "196909021997031002",
+    "196701161997031002",
+    "196508311991031002",
+    "197707102001121001",
+    "196212301990031006",
+    "220316603002",
+    "197902052005021001",
+    "210218512041",
+    "197507102005021001",
+    "197309041999031004",
+    "210118309029",
+    "198211282009121001",
+    "220929310003",
+    "170818308021",
+    "196508251994031004",
+    "196710041999032001",
+    "197407012003121003",
+    "197106191994031001",
+    "197306141997031001",
+    "68030557",
+    "197203282005021001",
+    "197306141997031001",
+    "196507241990031004",
+    "196710041999032001",
+    "197805022005021001",
+    "197502152002121001",
+    "196505181987032002",
+    "197202021996031003",
+    "197112122001121003",
+    "197706202003121002",
+    "196610271991011001",
+    "196607241995031001",
+    "197610162001121002",
+    "196606041999031005",
+    "197605222005021002",
+    "197504142002122003",
+    "197101071999031002",
+    "196603121991031002",
+    "197404211998032002",
+    "197501042000031001",
+    "196911231994031004",
+    "197406122005021002",
+    "197108271999011001",
+    "196609261994031002",
+    "197309302001121001",
+    "196510291994031003",
+    "196904241994031002",
+    "196902231994032001",
+    "196804071993032002",
+    "196802251993031003",
+    "196412171990032003",
+    "196705021993032001",
+    "196510011990031002",
+    "198011282005021001",
+    "196705021993032001",
+    "190001",
+    "196407211994031004",
+    "197608031999031004",
+    "197406261999031004",
+    "197910292003121004",
+    "196902062001122003",
+    "197801122002121001",
+    "196809212001121001",
+    "197311302001121001",
+    "197303241998031002",
+    "197406261999031004",
+    "197006241991022001",
+    "196611301987021001",
+    "197208122001121002",
+    "196904221992031002",
+    "197204021998031005",
+    "196605141993032001",
+    "197106191994031001",
+    "198209202005021001",
+    "197907152002122001",
+    "196711061990031003",
+    "197301081998031002",
+    "197303031998031002",
+    "196510221994031001",
+    "197204102002122003",
+  ];
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -117,12 +205,16 @@ export const Profile = () => {
   const isRolePreShare = profile.roles_access?.some((item) =>
     rolePreShare.includes(item)
   );
+
+  const isPejabatTinggi = pejabatTinggi?.some((item) => item === profile.nip);
   // const isRoleTaskManagement = profile.roles_access?.some((item) =>
   //     roleTaskManagement.includes(item)
   // );
   const isRoleEvent = profile.roles_access?.some((item) =>
     roleEvent.includes(item)
   );
+
+  console.log(isPejabatTinggi);
 
   useEffect(() => {
     let tmpMenu = [];
@@ -215,6 +307,24 @@ export const Profile = () => {
         },
         titleStyle: {
           width: null,
+        },
+      },
+      {
+        title: "Kepegawaian",
+        navigation: "KepegawaianApps",
+        image: require("../../assets/superApp/pegawai.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 30,
+          },
+          height: {
+            tablet: 40,
+            hp: 24,
+          },
+        },
+        titleStyle: {
+          width: wp(15),
         },
       },
       {
@@ -586,7 +696,7 @@ export const Profile = () => {
             }}
           >
             <Image
-              source={{ uri: BASE_URL + profile.avatar }}
+              source={{ uri: BASE_URL + profile.avatar_signed }}
               style={{
                 width: device === "tablet" ? 100 : 61,
                 height: device === "tablet" ? 100 : 61,
@@ -923,62 +1033,65 @@ export const Profile = () => {
           {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
         </View>
 
-        <View
-          style={{
-            marginTop: 20,
-            justifyContent: "center",
-            alignItems: "flex-start",
-            paddingHorizontal: "5%",
-          }}
-        >
+        {isPejabatTinggi && (
           <View
             style={{
-              flexDirection: "row",
-              gap: 10,
-              alignItems: "center",
-              backgroundColor: COLORS.white,
-              padding: 10,
-              borderRadius: 8,
-              width: "100%",
-              justifyContent: "space-between",
-              //shadow ios
-              shadowOffset: { width: -2, height: 4 },
-              shadowColor: "#171717",
-              shadowOpacity: 0.2,
-              //shadow android
-              elevation: 2,
+              marginTop: 20,
+              justifyContent: "center",
+              alignItems: "flex-start",
+              paddingHorizontal: "5%",
             }}
           >
-            <View>
-              <Text style={{ fontWeight: FONTWEIGHT.bold }}>
-                Pengaturan Menu
-              </Text>
-              {isEnabled ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    handlePressModal();
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginVertical: 10,
-                      color: COLORS.info,
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                alignItems: "center",
+                backgroundColor: COLORS.white,
+                padding: 10,
+                borderRadius: 8,
+                width: "100%",
+                justifyContent: "space-between",
+                //shadow ios
+                shadowOffset: { width: -2, height: 4 },
+                shadowColor: "#171717",
+                shadowOpacity: 0.2,
+                //shadow android
+                elevation: 2,
+              }}
+            >
+              <View>
+                <Text style={{ fontWeight: FONTWEIGHT.bold }}>
+                  Pengaturan Menu
+                </Text>
+                {isEnabled ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      handlePressModal();
                     }}
                   >
-                    Pilih menu yang ingin ditampilkan
-                  </Text>
-                </TouchableOpacity>
-              ) : null}
+                    <Text
+                      style={{
+                        marginVertical: 10,
+                        color: COLORS.info,
+                      }}
+                    >
+                      Pilih menu yang ingin ditampilkan
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? COLORS.white : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={(val) => toggleSwitch(val)}
+                value={isEnabled}
+              />
             </View>
-            <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={isEnabled ? COLORS.white : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={(val) => toggleSwitch(val)}
-              value={isEnabled}
-            />
           </View>
-        </View>
+        )}
+
         <Portal>
           <BottomSheetModal
             ref={bottomSheetModalRef}
