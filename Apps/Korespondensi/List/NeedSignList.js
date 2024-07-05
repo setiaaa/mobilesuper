@@ -478,15 +478,17 @@ function NeedSignList({ route }) {
                   />
                   <Text>Pilih Semua</Text>
                 </View>
-                <Button
-                  style={[styles.button]}
-                  labelStyle={{ fontSize: 13 }}
-                  mode="contained"
-                  compact
-                  onPress={bulkApprove}
-                >
-                  Tanda Tangan
-                </Button>
+                {selectedId.length != 0 && (
+                  <Button
+                    style={[styles.button]}
+                    labelStyle={{ fontSize: 13 }}
+                    mode="contained"
+                    compact
+                    onPress={bulkApprove}
+                  >
+                    Tanda Tangan
+                  </Button>
+                )}
               </View>
             )}
           </View>
