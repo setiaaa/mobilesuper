@@ -189,7 +189,6 @@ export const MyTask = () => {
     setDataList(arrList);
   }, [choiceKategori]);
 
-
   const handleChoiceSubmit = () => {
     if (choiceTipe.value === "Dashboard") {
       dispatch(getListDashboardTM({ token: token, page: page }));

@@ -1,3 +1,4 @@
+import { FontWeight } from "@shopify/react-native-skia";
 import moment from "moment/min/moment-with-locales";
 
 export const COLORS = {
@@ -41,6 +42,12 @@ export const fontSizeResponsive = (type, device) => {
     H4: device === "phone" ? 11 : 22,
     H5: device === "phone" ? 10 : 21,
     Judul: device === "phone" ? 17 : 28,
+    textS: device === "phone" ? textStyle.textS : 22,
+    textM: device === "phone" ? textStyle.textM : 24,
+    textL: device === "phone" ? textStyle.textL : 26,
+    headingS: device === "phone" ? textStyle.headingS : 22,
+    headingM: device === "phone" ? textStyle.headingM : 23,
+    headingL: device === "phone" ? textStyle.headingL : 25,
   };
   return data[type];
 };
@@ -94,6 +101,58 @@ export const DATETIME = {
 
 export const PADDING = {
   Page: 20,
+};
+
+export const spacing = {
+  small: 4,
+  medium: 8,
+  default: 16,
+  large: 24,
+  extraLarge: 48,
+};
+
+export const textStyle = {
+  textS: {
+    fontsize: 12,
+    lineHeight: 16,
+  },
+  textM: {
+    fontsize: 14,
+    lineHeight: 20,
+  },
+  textL: {
+    fontsize: 16,
+    lineHeight: 24,
+  },
+  headingS: {
+    fontsize: 20,
+    lineHeight: 28,
+    fontWeight: 800,
+  },
+  headingM: {
+    fontsize: 28,
+    lineHeight: 36,
+    fontWeight: 800,
+  },
+  headingL: {
+    fontsize: 36,
+    lineHeight: 44,
+    fontWeight: 800,
+  },
+};
+
+export const shadow = {
+  cardShadow: {
+    shadowColor: "#171717",
+    shadowOffset: {
+      width: -2,
+      height: 4,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4.65,
+
+    elevation: 2,
+  },
 };
 
 export const fixedDateString = (tanggal) => {

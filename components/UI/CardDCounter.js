@@ -5,7 +5,7 @@ import { COLORS } from "../../config/SuperAppps";
 
 function CardDCounter({ data, icon, navigation }) {
   const avatarIcon = StyleSheet.compose(styles.avatarIcon, {
-    backgroundColor: icon.color,
+    backgroundColor: icon?.color,
   });
   return (
     <Card
@@ -77,7 +77,7 @@ function CardDCounter({ data, icon, navigation }) {
           <Avatar.Icon
             {...props}
             size={50}
-            icon={icon.icon}
+            icon={icon?.icon}
             color={COLORS.white}
             style={avatarIcon}
           />

@@ -2389,24 +2389,6 @@ export const postAttendence = createAsyncThunk(
   }
 );
 
-//Faq
-export const getFaq = createAsyncThunk(
-  "faq/getFaq",
-  async ({ token, search }) => {
-    if (search === "") {
-      const respon = await axios.get(`${Faq}/faq/`, {
-        headers: { Authorization: token },
-      });
-      return respon?.data.results;
-    } else {
-      const respon = await axios.get(`${Faq}/faq/?title=${search}`, {
-        headers: { Authorization: token },
-      });
-      return respon?.data.results;
-    }
-  }
-);
-
 //kepegawaian
 export const getDataIPASN = createAsyncThunk(
   "kepegawaian/getDataIPASN",
@@ -2517,6 +2499,70 @@ export const getNominatifReport = createAsyncThunk(
       }&golongan_start=${firstGolongan?.key}&golongan_end=${
         secondGolongan?.key
       }&tahun_tmt=${tahunTMT?.key ? tahunTMT.key : ""}&page=${page}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return respon?.data.results;
+  }
+);
+
+//Faq
+export const getFaq = createAsyncThunk(
+  "faq/getFaq",
+  async ({ token, search }) => {
+    if (search === "") {
+      const respon = await axios.get(`${Faq}/faq/?limit=500`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    } else {
+      const respon = await axios.get(`${Faq}/faq/?title=${search}`, {
+        headers: { Authorization: token },
+      });
+      return respon?.data.results;
+    }
+  }
+);
+
+export const getFaqCategory = createAsyncThunk(
+  "faq/getFaqCategory",
+  async ({ token }) => {
+    const respon = await axios.get(`${Faq}/faq/category/`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getFaqByCategory = createAsyncThunk(
+  "faq/getFaqByCategory",
+  async ({ token, idCategory }) => {
+    const respon = await axios.get(
+      `${Faq}/faq/?limit=500&category_id=${idCategory}`,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return { respon: respon?.data.results, id: idCategory };
+  }
+);
+
+export const getFaqGroup = createAsyncThunk(
+  "faq/getFaqGroup",
+  async ({ token }) => {
+    const respon = await axios.get(`${Faq}/faq/group/?limit=100`, {
+      headers: { Authorization: token },
+    });
+    return respon?.data.results;
+  }
+);
+
+export const getFaqByGroup = createAsyncThunk(
+  "faq/getFaqByGroup",
+  async ({ token, idGroup }) => {
+    const respon = await axios.get(
+      `${Faq}/faq/?limit=100&group_id=${idGroup}`,
       {
         headers: { Authorization: token },
       }
