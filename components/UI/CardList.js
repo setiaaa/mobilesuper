@@ -144,6 +144,11 @@ function CardList({ data, tipe, onPress }) {
                   )}
                 </Text>
               </View>
+              {(tipe == "agendain" || tipe == "needfollowup") && (
+                <Text style={{ fontSize: 12, color: COLORS.infoDanger }}>
+                  Unit Kerja: {data?.unker}
+                </Text>
+              )}
               <Text style={{ fontSize: 13, fontWeight: 400 }}>
                 {data?.subject}
               </Text>

@@ -37,6 +37,7 @@ function ActionInprogress({ id, data, page }) {
   let sender = useSelector((state) => state.addressbook.sender);
   let copytos = useSelector((state) => state.addressbook.copytos);
   let approver = useSelector((state) => state.addressbook.approver);
+  let { profile } = useSelector((state) => state.profile);
   let add_approver = useSelector(
     (state) => state.addressbook.additional_approver
   );
@@ -180,7 +181,8 @@ function ActionInprogress({ id, data, page }) {
       } else if (
         passphrase.length == 0 &&
         data?.current + 1 == data?.tracker?.approvers?.length &&
-        tipe == "Setujui"
+        tipe == "Setujui" &&
+        profile.is_pass != "true"
       ) {
         Alert.alert("Peringatan!", "Silakan isi passphrase");
         setisLoading(false);
@@ -1008,6 +1010,7 @@ function ActionInprogress({ id, data, page }) {
                   />
 
                   {tipe == "Setujui" &&
+                    profile.is_pass != "true" &&
                     data?.current + 1 == data?.tracker?.approvers?.length && (
                       <>
                         <View style={{ flexDirection: "row" }}>
