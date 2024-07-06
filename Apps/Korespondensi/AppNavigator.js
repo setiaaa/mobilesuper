@@ -250,29 +250,6 @@ function AuthenticatedStack({ route }) {
     });
     deviceRoot();
     //cek version di sini
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive||background/) &&
-        nextAppState === "active"
-      ) {
-        // checkversion
-        if (Platform.OS === "android") {
-          checkVersionAndroid();
-        } else if (Platform.OS === "ios") {
-          checkVersionIos();
-        }
-        appState.current = nextAppState;
-      }
-    });
-    // checkversion
-    if (Platform.OS === "android") {
-      checkVersionAndroid();
-    } else if (Platform.OS === "ios") {
-      checkVersionIos();
-    }
-    return () => {
-      subscription.remove();
-    };
   }, []);
 
   const isEmulator = () => {

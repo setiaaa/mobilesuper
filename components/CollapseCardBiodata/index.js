@@ -573,7 +573,7 @@ export const CollapseCardBiodata = ({ profile, device, data }) => {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 8,
-    width: "100%",
+    width: 390,
     paddingHorizontal: spacing.default,
   },
   cardCollapse: {
