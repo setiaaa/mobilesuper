@@ -12,6 +12,7 @@ import {
   TextInput,
   Image,
   Modal,
+  Dimensions,
 } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import CardList from "../../../components/UI/CardList";
@@ -40,10 +41,11 @@ import {
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-native-modern-datepicker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
+import { Dropdown } from "react-native-element-dropdown";
 
 function IncomingList({ route }) {
   const [list, setList] = useState([]);
@@ -55,6 +57,13 @@ function IncomingList({ route }) {
   const [isSearchFilter, setIsSearchFilter] = useState(false);
   const [isSearchQuery, setIsSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const { profile } = useSelector((state) => state.profile);
+  const [divisionList, setDivisionList] = useState([
+    { id: "", name: "SEMUA UNIT KERJA" },
+  ]);
+  const [selectedDivisi, setSelectedDivisi] = useState({});
+  const [isFocus, setIsFocus] = useState();
+  const { width: screenWidth } = Dimensions.get("window");
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const unread = route.params.unread;
@@ -94,9 +103,34 @@ function IncomingList({ route }) {
   );
 
   useEffect(() => {
+    if (divisionList.length == 1) {
+      getDivisionList();
+    }
+  }, [divisionList]);
+  useEffect(() => {
     filter(1);
-  }, [startDate, endDate, isSearchQuery, isSearchFilter]);
+  }, [startDate, endDate, isSearchQuery, isSearchFilter, selectedDivisi]);
 
+  async function getDivisionList() {
+    try {
+      let response = await getHTTP(nde_api.divisionList);
+      let gabung = divisionList.concat(response.data);
+      setDivisionList(gabung);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      if (error?.response?.status == 401 || error?.status == 401) {
+        Sentry.captureEvent(error?.response);
+        dispatch(logout());
+      } else {
+        handlerError(
+          error,
+          "Peringatan!",
+          "Daftar Divisi pada penyaringan tidak berfungsi"
+        );
+      }
+    }
+  }
   async function getAgendaIn(page) {
     setIsLoading(true);
     try {
@@ -125,16 +159,25 @@ function IncomingList({ route }) {
   const filter = async (page) => {
     setIsLoading(true);
     try {
-      if (startDate == null && endDate == null && searchQuery.length == 0) {
+      if (
+        startDate == null &&
+        endDate == null &&
+        searchQuery.length == 0 &&
+        selectedDivisi.id == undefined
+      ) {
         getAgendaIn(1);
       } else if (
         !isSearchFilter &&
-        (startDate != null || endDate != null || searchQuery.length != 0)
+        (startDate != null ||
+          endDate != null ||
+          searchQuery.length != 0 ||
+          selectedDivisi.id != undefined)
       ) {
       } else {
         let start;
         let end;
         let word;
+        let division = "";
         if (startDate == undefined || startDate == null) {
           start = "";
         } else {
@@ -155,6 +198,11 @@ function IncomingList({ route }) {
         } else {
           word = isSearchQuery;
         }
+        if (selectedDivisi.id == undefined) {
+          division = "";
+        } else {
+          division = selectedDivisi.id;
+        }
         let url;
         if (unread) {
           url = nde_api.agendainunread;
@@ -162,7 +210,15 @@ function IncomingList({ route }) {
           url = nde_api.agendain;
         }
         url =
-          url + "&start_date=" + start + "&end_date=" + end + "&query=" + word;
+          url +
+          "&start_date=" +
+          start +
+          "&end_date=" +
+          end +
+          "&query=" +
+          word +
+          "&division=" +
+          division;
         let response = await getHTTP(url.replace("{$page}", page));
         if (response) {
           setIsSearchFilter(true);
@@ -270,6 +326,7 @@ function IncomingList({ route }) {
     setStartDate();
     setEndDate();
     setSearchQuery("");
+    setSelectedDivisi({});
     setIsSearchFilter(false);
     if (!isSearchFilter) {
       getAgendaIn(1);
@@ -290,7 +347,11 @@ function IncomingList({ route }) {
           onPress={() => {
             setSearchQuery("");
             setIsSearchQuery("");
-            setIsSearchFilter(false);
+            if (selectedDivisi.id == undefined && startDate == null) {
+              setIsSearchFilter(false);
+            } else {
+              setIsSearchFilter(true);
+            }
             if (startDate == null && endDate == null) {
               setList([]);
             }
@@ -347,7 +408,38 @@ function IncomingList({ route }) {
               setIsSearchFilter(true);
             }}
           />
-          {isSearchFilter && (
+
+          {divisionList && profile?.is_pass == "true" && (
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+                marginBottom: isSearchFilter && startDate != null ? 0 : 16,
+              }}
+            >
+              <Dropdown
+                style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                iconStyle={styles.iconStyle}
+                itemTextStyle={{ fontSize: 13 }}
+                data={divisionList}
+                maxHeight={300}
+                labelField="name"
+                valueField="id"
+                placeholder={!isFocus ? "Pilih Unit Kerja" : "..."}
+                value={divisionList[0]}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(item) => {
+                  setSelectedDivisi(item);
+                  setIsFocus(false);
+                  setList([]);
+                  setIsSearchFilter(true);
+                }}
+              />
+            </View>
+          )}
+          {isSearchFilter && startDate != null && (
             <View
               style={{
                 flexDirection: "row",
@@ -364,7 +456,9 @@ function IncomingList({ route }) {
                   },
                 ]}
               >
-                {isSearchQuery.length != 0 && startDate == null
+                {isSearchQuery.length != 0 &&
+                startDate == null &&
+                selectedDivisi.id == undefined
                   ? "Cari: "
                   : "Saring : "}
               </Text>
@@ -375,7 +469,10 @@ function IncomingList({ route }) {
                     onClose={() => {
                       setStartDate(null);
                       setEndDate(null);
-                      if (searchQuery.length == 0) {
+                      if (
+                        searchQuery.length == 0 &&
+                        selectedDivisi.id == undefined
+                      ) {
                         setIsSearchFilter(false);
                         setIsLoading(true);
                       }
@@ -393,7 +490,11 @@ function IncomingList({ route }) {
                     onClose={() => {
                       setSearchQuery("");
                       setIsSearchQuery("");
-                      if (startDate == null && endDate == null) {
+                      if (
+                        startDate == null &&
+                        endDate == null &&
+                        selectedDivisi.id == undefined
+                      ) {
                         setIsSearchFilter(false);
                         setIsLoading(true);
                       }
@@ -764,5 +865,26 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 16,
+  },
+  badge: { marginBottom: 5 },
+  dropdown: {
+    margin: 10,
+    marginTop: 0,
+    borderWidth: 1,
+    minHeight: 40,
+    width: "95%",
+    padding: 5,
+    borderRadius: 6,
+    borderColor: "#D0D5DD",
+  },
+  placeholderStyle: {
+    fontSize: 13,
+  },
+  selectedTextStyle: {
+    fontSize: 13,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
   },
 });

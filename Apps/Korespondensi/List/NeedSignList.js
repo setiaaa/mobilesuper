@@ -153,7 +153,7 @@ function NeedSignList({ route }) {
         handlerError(
           error,
           "Peringatan!",
-          "List Surat Keluar Perlu Tandatangan tidak berfungsi"
+          "List Surat Keluar Perlu TTD Elektronik tidak berfungsi"
         );
       }
     }
@@ -239,7 +239,7 @@ function NeedSignList({ route }) {
         handlerError(
           error,
           "Peringatan!",
-          "List Surat Keluar Perlu Tandatangan tidak berfungsi"
+          "List Surat Keluar Perlu TTD Elektronik tidak berfungsi"
         );
       }
     }
@@ -281,7 +281,7 @@ function NeedSignList({ route }) {
             onPress={() => {
               navigation.navigate("NeedFollowUpDetail", {
                 id: data.id,
-                title: "Detail Surat Keluar\nPerlu Tandatangan",
+                title: "Detail Surat Keluar\nPerlu TTD Elektronik",
               });
             }}
           />
@@ -348,7 +348,7 @@ function NeedSignList({ route }) {
             setSearchQuery("");
             setIsSearchQuery("");
             dispatch(setSelectedAll(false));
-            if (selectedDivisi.id == undefined) {
+            if (selectedDivisi.id == undefined && startDate == null) {
               setIsSearchFilter(false);
             } else {
               setIsSearchFilter(true);
@@ -423,7 +423,11 @@ function NeedSignList({ route }) {
       }
       setIsLoading(false);
     } catch (error) {
-      handlerError(error, "Peringatan!", "Tandatangan semua tidak berfungsi!");
+      handlerError(
+        error,
+        "Peringatan!",
+        "TTD Elektronik semua tidak berfungsi!"
+      );
       //   Alert.alert("Tes", error);
       setIsLoading(false);
     }
@@ -452,7 +456,7 @@ function NeedSignList({ route }) {
               marginBottom: isSearchFilter && startDate != null ? 0 : 16,
             }}
           >
-            {divisionList && (
+            {divisionList && profile?.is_pass == "true" && (
               <Dropdown
                 style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
                 placeholderStyle={styles.placeholderStyle}
@@ -636,7 +640,7 @@ function NeedSignList({ route }) {
                       <Text style={{ fontSize: 15, fontWeight: 500 }}>
                         Menyaring Surat Keluar
                       </Text>
-                      <Text>Perlu Tandatangan</Text>
+                      <Text>Perlu TTD Elektronik</Text>
                     </View>
                     <TouchableOpacity onPress={refresh}>
                       <Text
