@@ -46,7 +46,7 @@ export const CardApps = ({
   const rolePreShare = ["PRESHARE.USER"];
   const roleTaskManagement = ["TASK.USER"];
   const roleLaporan = ["LAPORAN_BSRE"];
-  const rolePerizinanMenteri = "88888";
+  const rolePerizinanMenteri = ["PERIZINAN_MENTERI"];
 
   const isRoleLaporan = profile.roles_access?.some((item) =>
     roleLaporan.includes(item)
@@ -65,9 +65,9 @@ export const CardApps = ({
     roleEvent.includes(item)
   );
 
-  const isRoleMenteri = profile.nip === rolePerizinanMenteri;
-
-  console.log(isRoleMenteri);
+  const isRoleMenteri = profile.roles_access?.some((item) =>
+    roleEvent.includes(item)
+  );
 
   const isTablet = Device.DeviceType.TABLET;
 
