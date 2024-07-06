@@ -326,7 +326,11 @@ function NeedFollowUpList({ route }) {
           onPress={() => {
             setSearchQuery("");
             setIsSearchQuery("");
-            setIsSearchFilter(false);
+            if (selectedDivisi.id == undefined && startDate == null) {
+              setIsSearchFilter(false);
+            } else {
+              setIsSearchFilter(true);
+            }
             if (startDate == null && endDate == null) {
               setList([]);
             }
