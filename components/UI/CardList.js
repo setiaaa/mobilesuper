@@ -9,7 +9,6 @@ import { Config } from "../../constants/config";
 import { TouchableOpacity } from "react-native";
 import { Image } from "react-native";
 import { COLORS, FONTSIZE } from "../../config/SuperAppps";
-// import Checkbox from "expo-checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedList } from "../../store/listBulk";
 
@@ -127,7 +126,7 @@ function CardList({ data, tipe, onPress }) {
                     ? "checked"
                     : "unchecked"
                 }
-                color={GlobalStyles.colors.tertiery}
+                color={GlobalStyles.colors.blue}
                 onPress={() => {
                   if (!data?.progress) {
                     dispatch(setSelectedList(data));

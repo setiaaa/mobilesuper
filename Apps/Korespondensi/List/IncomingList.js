@@ -244,13 +244,13 @@ function IncomingList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter && unread
-          ? "Surat masuk belum dibaca tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : isSearchFilter && !unread
-          ? "Surat masuk tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : list?.count == 0 && unread
-          ? "Anda tidak memiliki surat masuk belum dibaca"
+          ? "Tidak ada dokumen"
           : list?.count == 0 && !unread
-          ? "Anda tidak memiliki surat masuk"
+          ? "Tidak ada dokumen"
           : "Pencarian..."}
       </Text>
     </View>

@@ -283,9 +283,9 @@ function NeedFollowUpList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter
-          ? "Surat Perlu Diproses tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : list?.count == 0
-          ? "Anda tidak memilki Surat Perlu Diproses"
+          ? "Tidak ada dokumen"
           : "Pencarian..."}
       </Text>
     </View>

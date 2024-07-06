@@ -243,13 +243,13 @@ function DispositionList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter && unread
-          ? "Disposisi belum dibaca tidak titemukan"
+          ? "Dokumen tidak ditemukan"
           : isSearchFilter && !unread
-          ? "Disposisi tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : list?.count == 0 && unread
-          ? "Anda tidak memiliki disposisi belum dibaca"
+          ? "Tidak ada dokumen"
           : list?.count == 0 && !unread
-          ? "Anda tidak memilki disposisi"
+          ? "Tidak ada dokumen"
           : "Pencarian..."}
       </Text>
     </View>

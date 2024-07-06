@@ -230,9 +230,9 @@ function TrackingList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter
-          ? "Surat Keluar Lacak tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : list?.count == 0
-          ? "Anda tidak memilki Surat Keluar Lacak"
+          ? "Tidak ada dokumen"
           : "Pencarian..."}
       </Text>
     </View>

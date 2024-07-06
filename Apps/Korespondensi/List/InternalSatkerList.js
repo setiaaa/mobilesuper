@@ -251,13 +251,13 @@ function InternalSatkerList({ route }) {
         {isLoading
           ? "Pencarian..."
           : isSearchFilter && unread
-          ? "Internal Satker Belum Dibaca tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : isSearchFilter && !unread
-          ? "Internal Satker tidak ditemukan"
+          ? "Dokumen tidak ditemukan"
           : list?.count == 0 && unread
-          ? "Anda tidak memiliki Internal Satker Belum Dibaca"
+          ? "Tidak ada dokumen"
           : list?.count == 0 && !unread
-          ? "Anda tidak memiliki Internal Satker"
+          ? "Tidak ada dokumen"
           : "Pencarian..."}
       </Text>
     </View>
