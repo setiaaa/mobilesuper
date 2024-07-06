@@ -456,7 +456,7 @@ function NeedSignList({ route }) {
               marginBottom: isSearchFilter && startDate != null ? 0 : 16,
             }}
           >
-            {divisionList && (
+            {divisionList && profile?.is_pass == "true" && (
               <Dropdown
                 style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
                 placeholderStyle={styles.placeholderStyle}

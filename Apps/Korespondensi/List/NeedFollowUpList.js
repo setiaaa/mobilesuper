@@ -39,7 +39,7 @@ import {
 } from "../../../config/SuperAppps";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../../store/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "@sentry/react-native";
 import { Dropdown } from "react-native-element-dropdown";
@@ -54,6 +54,7 @@ function NeedFollowUpList({ route }) {
   const [isSearchFilter, setIsSearchFilter] = useState(false);
   const [isSearchQuery, setIsSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const { profile } = useSelector((state) => state.profile);
   const [divisionList, setDivisionList] = useState([
     { id: "", name: "SEMUA UNIT KERJA" },
   ]);
@@ -387,7 +388,7 @@ function NeedFollowUpList({ route }) {
               setIsSearchFilter(true);
             }}
           />
-          {divisionList && (
+          {divisionList && profile?.is_pass == "true" && (
             <View
               style={{
                 backgroundColor: COLORS.white,
