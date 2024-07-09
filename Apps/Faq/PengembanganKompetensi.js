@@ -29,7 +29,7 @@ import { CardListFaq } from "../../components/CardListFaq";
 import { useNavigation } from "@react-navigation/native";
 import { Dropdown } from "../../components/DropDown";
 
-export const AplikasiPortalKKP = () => {
+export const PengembanganKompetensi = () => {
   const dispatch = useDispatch();
   const [collapse, setCollapse] = useState({
     id: "",
@@ -38,7 +38,7 @@ export const AplikasiPortalKKP = () => {
   const { faqCategory, faqByCategory, faqGroup, faqByGroup, loading } =
     useSelector((state) => state.Faq);
 
-  const idAP = faqCategory?.lists[2]?.id;
+  const idPK = faqCategory?.lists[3]?.id;
   const [search, setSearch] = useState("");
   const [token, setToken] = useState("");
   const navigation = useNavigation();
@@ -55,11 +55,11 @@ export const AplikasiPortalKKP = () => {
   }, [token]);
 
   useEffect(() => {
-    if (idAP != undefined) {
-      dispatch(getFaqByCategory({ token: token, idCategory: idAP }));
+    if (idPK != undefined) {
+      dispatch(getFaqByCategory({ token: token, idCategory: idPK }));
       dispatch(getFaqGroup({ token }));
     }
-  }, [token, idAP]);
+  }, [token, idPK]);
 
   let dataGroup =
     faqGroup?.lists?.map((item) => ({
@@ -68,7 +68,7 @@ export const AplikasiPortalKKP = () => {
     })) ?? null;
 
   if (dataGroup && dataGroup.length > 2) {
-    dataGroup = dataGroup.slice(0, -2);
+    dataGroup = dataGroup.slice(-2);
   }
   // Nambah Group untuk all faq
   // dataGroup.push({ key: "0", value: "All" });

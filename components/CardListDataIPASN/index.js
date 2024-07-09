@@ -96,7 +96,7 @@ export const CardListDataIPASN = ({ item, token }) => {
                 : item.ipasn_nilai <= 80 && item.ipasn_nilai > 70
                 ? COLORS.warningLight
                 : item.ipasn_nilai <= 60 && item.ipasn_nilai > 50
-                ? COLORS.orange
+                ? "rgb(255,249,196)"
                 : COLORS.infoDangerLight,
             padding: 6,
             borderRadius: 8,
@@ -112,7 +112,7 @@ export const CardListDataIPASN = ({ item, token }) => {
                   : item.ipasn_nilai <= 80 && item.ipasn_nilai > 70
                   ? COLORS.warning
                   : item.ipasn_nilai <= 60 && item.ipasn_nilai > 50
-                  ? COLORS.orange
+                  ? "rgb(251, 192,45)"
                   : COLORS.danger,
             }}
           >

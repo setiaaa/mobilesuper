@@ -43,7 +43,7 @@ function DCounter() {
     },
     {
       icon: "email-edit-outline",
-      color: "rgba(73, 189, 101, 0.6)",
+      color: "#49b0aa",
       navName: "NeedSignList",
     },
     {

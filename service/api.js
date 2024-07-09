@@ -2463,13 +2463,21 @@ export const getNominatif = createAsyncThunk(
     search,
   }) => {
     const respon = await axios.get(
-      `${Nominatif}?unker=${filterUnitKerja?.value}&status_pegawai=${
-        statusPegawai?.key
-      }&nama=${search}&echelon_start=${firstEselon?.key}&echelon_end=${
-        secondEselon?.key
-      }&golongan_start=${firstGolongan?.key}&golongan_end=${
-        secondGolongan?.key
-      }&tahun_tmt=${tahunTMT?.key ? tahunTMT?.key : ""}&page=${page}`,
+      `${Nominatif}?unker=${
+        filterUnitKerja.value === undefined ? "" : filterUnitKerja.value
+      }&status_pegawai=${
+        statusPegawai.key === undefined ? "" : statusPegawai.key
+      }&nama=${search}&echelon_start=${
+        firstEselon.key === undefined ? "" : firstEselon.key
+      }&echelon_end=${
+        secondEselon.key === undefined ? "" : secondEselon.key
+      }&golongan_start=${
+        firstGolongan.key === undefined ? "" : firstGolongan.key
+      }&golongan_end=${
+        secondGolongan.key === undefined ? "" : secondGolongan.key
+      }&tahun_tmt=${
+        tahunTMT.key === undefined ? "" : tahunTMT.key ? tahunTMT?.key : ""
+      }&page=${page}`,
       {
         headers: { Authorization: token },
       }

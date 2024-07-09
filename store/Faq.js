@@ -21,6 +21,8 @@ const FaqSlice = createSlice({
       DDR: [],
       R: [],
       AP: [],
+      PK: [],
+      SA: [],
     },
     faqGroup: {
       lists: [],
@@ -78,6 +80,10 @@ const FaqSlice = createSlice({
           state.faqByCategory.R = action.payload.respon;
         } else if (action.payload.id == state.faqCategory.lists[2].id) {
           state.faqByCategory.AP = action.payload.respon;
+        } else if (action.payload.id == state.faqCategory.lists[3].id) {
+          state.faqByCategory.PK = action.payload.respon;
+        } else if (action.payload.id == state.faqCategory.lists[4].id) {
+          state.faqByCategory.SA = action.payload.respon;
         }
         state.loading = false;
       })

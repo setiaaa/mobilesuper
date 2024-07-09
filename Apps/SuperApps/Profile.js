@@ -264,6 +264,32 @@ export const Profile = () => {
         },
       },
       {
+        title: "Digital Sign",
+        navigation: "MainDigitalSign",
+        image: require("../../assets/superApp/digitalsign.png"),
+        imagestyle: {
+          width: {
+            tablet: 50,
+            hp: 28,
+          },
+          height: {
+            tablet: 50,
+            hp: 35,
+          },
+        },
+        titleStyle: {
+          width: null,
+        },
+        // subMenu: [
+        //   {
+        //     title: "Dokumen Lain",
+        //   },
+        //   {
+        //     title: "Verifikasi",
+        //   },
+        // ],
+      },
+      {
         title: "Cuti",
         navigation: "MainCuti",
         image: require("../../assets/superApp/cuti.png"),
@@ -361,24 +387,24 @@ export const Profile = () => {
         //   },
         // ],
       },
-      {
-        title: "Pegawai",
-        navigation: "ListPegawai",
-        image: require("../../assets/superApp/pegawai.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 30,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-      },
+      // {
+      //   title: "Pegawai",
+      //   navigation: "ListPegawai",
+      //   image: require("../../assets/superApp/pegawai.png"),
+      //   imagestyle: {
+      //     width: {
+      //       tablet: 50,
+      //       hp: 28,
+      //     },
+      //     height: {
+      //       tablet: 50,
+      //       hp: 30,
+      //     },
+      //   },
+      //   titleStyle: {
+      //     width: null,
+      //   },
+      // },
       {
         title: "Survei Layanan",
         navigation: "SurveyLayanan",
@@ -465,61 +491,6 @@ export const Profile = () => {
         },
       });
     }
-    if (isRoleLaporan) {
-      tmpMenu.splice(3, 0, {
-        title: "Digital Sign",
-        navigation: "MainDigitalSign",
-        image: require("../../assets/superApp/digitalsign.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 35,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-        // subMenu: [
-        //   {
-        //     title: "Dokumen Lain",
-        //   },
-        //   {
-        //     title: "Verifikasi",
-        //   },
-        // ],
-      });
-    } else {
-      tmpMenu.splice(3, 0, {
-        title: "Digital Sign",
-        navigation: "DokumenLain",
-        image: require("../../assets/superApp/digitalsign.png"),
-        imagestyle: {
-          width: {
-            tablet: 50,
-            hp: 28,
-          },
-          height: {
-            tablet: 50,
-            hp: 35,
-          },
-        },
-        titleStyle: {
-          width: null,
-        },
-        // subMenu: [
-        //   {
-        //     title: "Dokumen Lain",
-        //   },
-        //   {
-        //     title: "Verifikasi",
-        //   },
-        // ],
-      });
-    }
     if (isRoleEvent) {
       tmpMenu.push({
         title: "Agenda Rapat",
@@ -544,13 +515,16 @@ export const Profile = () => {
     // Log Perbaikan
     tmpLog.push(
       {
-        description: "Penambahan Menu Lite",
+        description: "Penambahan Menu Kepegawaian",
       },
       {
-        description: "Penambahan Push Notif",
+        description: "Update Korespondensi",
       },
       {
-        description: "Penambahan Menu Faq",
+        description: "Penambahan Menu Perizinan Menteri",
+      },
+      {
+        description: "Penambahan Menu FAQ",
       }
     );
     // setMenu(JSON.stringify(tmpMenu));

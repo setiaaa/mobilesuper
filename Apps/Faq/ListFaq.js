@@ -121,7 +121,7 @@ export const ListFaq = () => {
           style={{
             flexDirection: "row",
             marginVertical: spacing.default,
-            height: "75%",
+            height: "80%",
             flexGrow: 0,
           }}
         >

@@ -47,7 +47,6 @@ export const CardListPerizinanMenteri = ({
     // const data = event.listsprogress.find(item => item.id === id)
     dispatch(getDetailDigisign(params));
   };
-  console.log(item);
   const BASE_URL = Config.base_url + "bridge";
   return (
     <View
@@ -55,7 +54,6 @@ export const CardListPerizinanMenteri = ({
       style={{
         backgroundColor: "white",
         borderRadius: 16,
-        width: "90%",
         flex: 1,
         marginTop: 10,
         marginHorizontal: "5%",
@@ -70,7 +68,11 @@ export const CardListPerizinanMenteri = ({
       }}
     >
       <TouchableOpacity
-        style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 16,
+        }}
         onPress={() => {
           getDetail(item.id);
           navigation.navigate("DetailPerizinanMenteri", {
@@ -101,17 +103,24 @@ export const CardListPerizinanMenteri = ({
             color={isSelected === true ? COLORS.lighter : null}
           />
         ) : null}
-        <View style={{ flexDirection: "column", width: "100%" }}>
-          <Text
-            style={{
-              fontSize: fontSizeResponsive("H3", device),
-              textAlign: "justify",
-              fontWeight: FONTWEIGHT.bold,
-              width: "100%",
-            }}
-          >
-            Perihal : {item?.subject}
-          </Text>
+        <View
+          style={{
+            flexDirection: "column",
+            flex: 1,
+          }}
+        >
+          <View style={{ flexDirection: "row", flex: 1 }}>
+            <Text
+              style={{
+                fontSize: fontSizeResponsive("H3", device),
+                textAlign: "justify",
+                fontWeight: FONTWEIGHT.bold,
+                flexWrap: "wrap",
+              }}
+            >
+              Perihal : {item?.subject}
+            </Text>
+          </View>
           <View
             style={{
               backgroundColor: COLORS.lighter,

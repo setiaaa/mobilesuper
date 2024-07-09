@@ -107,10 +107,10 @@ export const CardAppsB = ({
         >
           <TouchableOpacity
             onPress={() => {
-              if (item.navigation === "bankom") {
-                setModalBankom(true);
-              } else if (item.navigation === "KepegawaianApps") {
-                setModalKepegawaian(true);
+              if (item.title === "Pengembangan Kompetensi") {
+                navigation.navigate(item.navigation, item.title);
+              } else if (item.title === "Kepegawaian") {
+                navigation.navigate(item.navigation, item.title);
               } else {
                 navigation.navigate(item.navigation);
               }

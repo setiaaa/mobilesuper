@@ -115,6 +115,8 @@ import { DataPribadi } from "../Apps/Kepegawaian/DataPribadi";
 import { DashboardDanReport } from "../Apps/Faq/DashboardDanReport";
 import { Regulasi } from "../Apps/Faq/Regulasi";
 import { AplikasiPortalKKP } from "../Apps/Faq/AplikasiPortalKKP";
+import { PengembanganKompetensi } from "../Apps/Faq/PengembanganKompetensi";
+import { SuperApps } from "../Apps/Faq/SuperApps";
 
 const Tab = createBottomTabNavigator();
 const Top = createMaterialTopTabNavigator();
@@ -1169,7 +1171,7 @@ export const TopsFaq = () => {
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.tertiary,
           tabBarLabelStyle: {
-            fontSize: fontSizeResponsive("H6", device),
+            fontSize: fontSizeResponsive("H5", device),
             textTransform: "none",
             fontWeight: FONTWEIGHT.bold,
           },
@@ -1194,6 +1196,20 @@ export const TopsFaq = () => {
           component={AplikasiPortalKKP}
           options={{
             title: "Aplikasi Portal KKP",
+          }}
+        />
+        <Top.Screen
+          name="PengembanganKompetensi"
+          component={PengembanganKompetensi}
+          options={{
+            title: "Pengembangan Kompetensi",
+          }}
+        />
+        <Top.Screen
+          name="SuperApps"
+          component={SuperApps}
+          options={{
+            title: "SuperApps",
           }}
         />
       </Top.Navigator>

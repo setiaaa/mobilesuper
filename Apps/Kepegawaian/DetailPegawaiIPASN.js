@@ -7,6 +7,7 @@ import {
   fontSizeResponsive,
   FONTWEIGHT,
   PADDING,
+  spacing,
 } from "../../config/SuperAppps";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -421,14 +422,7 @@ export const DetailPegawaiIPASN = ({ route }) => {
         </View>
       </View>
 
-      <View
-        style={{
-          marginTop: 20,
-          justifyContent: "center",
-          alignItems: "center",
-          marginBottom: 40,
-        }}
-      >
+      <View style={{ paddingVertical: spacing.default }}>
         <CollapseCardBiodata profile={profile} device={device} />
         {/* <CollapseCardLinimasa linimasa={linimasa} /> */}
       </View>

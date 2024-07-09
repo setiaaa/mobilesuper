@@ -215,6 +215,7 @@ import { NominatifList } from "../Kepegawaian/NominatifList";
 import { PerizinanMenteri } from "../DigitalSignature/PerizinanMenteri";
 import { DetailPerizinanMenteri } from "../DigitalSignature/DetailPerizinanMenteri";
 import NeedSignList from "./List/NeedSignList";
+import { ListAplikasiKepegawaian } from "../Kepegawaian/ListAplikasiKepegawaian";
 
 const Stack = createNativeStackNavigator();
 
@@ -848,13 +849,13 @@ function AuthenticatedStack({ route }) {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Bankom"
             component={Bankom}
             options={{
               headerShown: false,
             }}
-          />
+          /> */}
           <Stack.Screen
             name="DokumenLain"
             component={DokumenLain}
@@ -1505,6 +1506,13 @@ function AuthenticatedStack({ route }) {
           <Stack.Screen
             name="DetailPerizinanMenteri"
             component={DetailPerizinanMenteri}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ListAplikasiKepegawaian"
+            component={ListAplikasiKepegawaian}
             options={{
               headerShown: false,
             }}
